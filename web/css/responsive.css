@@ -1,0 +1,305 @@
+
+.userbox-display-for-1024 {
+	line-height: 13px;
+	background: #FEF9DB;
+	padding: 10px;
+}
+.display-for-1024 {
+	display: none;
+}
+.display-for-phones {
+	display: none;
+}
+
+@media screen and (max-width: 1210px) {
+
+	.container {
+		width: 960px;
+	}
+	.pins-head {
+		margin-left: 9px;
+		margin-top: 9px;
+	}
+	.page {
+		padding-top: 48px;
+	}
+	.page-container {
+		background: url('../img/back-body-small.jpg') 100% 0% no-repeat;
+	}
+	.page-alert {
+		margin-left: 405px;
+	}
+	.hidden-for-1024 {
+		display: none;
+	}
+	.display-for-1024 {
+		display: block;
+	}
+
+	.menu a {
+		padding: 13.5px;
+	}
+	.title {
+		margin-right: 20px;
+	}
+	.logo {
+		max-height: 48px;
+	}
+	.userbox {
+		float: right;
+	}
+	.userbox-link {
+		width: 20px;
+		padding: 5px;
+		padding-left: 13px;
+		padding-top: 14px;
+		margin-left: 48px;
+		height: 29px;
+	}
+	.userbox-link-icon {
+		position: absolute;
+		margin-left: 0;
+		margin-top: 4px;
+	}
+	.userbox-clicked .userbox-link {
+		width: 18px;
+		padding: 5px;
+		padding-left: 13px;
+		padding-top: 14px;
+		margin-left: 48px;
+		height: 29px;
+	}
+	.userbox-menu-clicked {
+		position: absolute;
+		background: white;
+		margin-left: -119px;
+		width: 204px;
+		border: 1px solid #cecece;
+		border-top: 0;
+		color: #222222;
+		font-size: 11px;
+		z-index: 100;
+	}
+	.avatar {
+		max-height: 48px;
+	}
+	.content {
+		width: 765px;
+	}
+	.sidebar {
+		width: 190px;
+	}
+	.sidebar-title {
+		margin-top: 25px;
+		margin-bottom: 5px;
+		float: left;
+		width: 175px;
+		height: 25px;
+		padding: 5px;
+		padding-left: 10px;
+		font-size: 12px;
+		color: white;
+		font-weight: lighter;
+		background: url('../img/back-title.png') no-repeat;
+		z-index: 50;
+	}
+	.footer {
+		width: 150px;
+		background: none
+	}
+
+}
+
+
+@media screen and (max-width: 1000px) {
+
+	.container {
+		width: 95%;
+		margin: 0 auto;
+	}
+	.pins-head {
+		margin-left: 9px;
+		margin-top: 9px;
+	}
+	.page {
+		padding-top: 48px;
+	}
+	.page-container {
+		background: none;
+	}
+	.page-alert {
+		margin-left: 405px;
+	}
+	.hidden-for-phones {
+		display: none;
+	}
+	.display-for-phones {
+		display: block;
+	}
+
+	.page-title {
+		font-size: 22px;
+	}
+	.page-title-icon {
+		max-height: 35px;
+	}
+	.title {
+		display: none;
+	}
+	.userbox {
+		float: right;
+	}
+	.menu-link-text {
+		font-size: 13px;
+	}
+	.userbox-link {
+		width: 20px;
+		padding: 5px;
+		padding-left: 13px;
+		padding-top: 14px;
+		margin-left: 48px;
+		height: 29px;
+	}
+	.userbox-link-icon {
+		position: absolute;
+		margin-left: 0;
+		margin-top: 4px;
+	}
+	.userbox-clicked .userbox-link {
+		width: 18px;
+		padding: 5px;
+		padding-left: 13px;
+		padding-top: 14px;
+		margin-left: 48px;
+		height: 29px;
+	}
+	.userbox-menu-clicked {
+		position: absolute;
+		background: white;
+		margin-left: -119px;
+		width: 204px;
+		border: 1px solid #cecece;
+		border-top: 0;
+		color: #222222;
+		font-size: 11px;
+		z-index: 100;
+	}
+	.avatar {
+		max-height: 48px;
+	}
+	.content {
+		width: 100%;
+		min-height: 0;
+	}
+	.sidebar {
+		display: none;
+	}
+	.footer {
+		display: none;
+	}
+
+}
+
+
+@media screen and (max-width: 775px) {
+
+	body {
+		padding: 0;
+		margin: 0;
+	}
+	.container {
+		width: 95%;
+		margin: 0 auto;
+	}
+	.pins-head {
+		margin-left: 9px;
+		margin-top: 9px;
+	}
+	.page {
+		padding-top: 30px;
+	}
+	.page-container {
+		background: none;
+	}
+	.page-alert {
+		margin-left: 405px;
+	}
+	.hidden-for-phones {
+		display: none;
+	}
+	.display-for-phones {
+		display: block;
+	}
+
+	#overlay-content {
+		margin-top: 50px;
+	}
+
+	.title {
+		display: none;
+	}
+	.userbox {
+		float: right;
+	}
+	.icon-head {
+		float: none;
+		margin: 0;
+		margin-left: 4px;
+		margin-top: 2px;
+		margin-bottom: -2px;
+	}
+	.menu {
+		margin: 0;
+	}
+	.menu a {
+		padding: 10px
+	}
+	.menu-link-text {
+		display: none;
+	}
+	.userbox-link {
+		width: 17px;
+		padding: 5px;
+		padding-left: 9px;
+		padding-top: 10px;
+		margin-left: 41px;
+		height: 26px;
+	}
+	.userbox-link-icon {
+		position: absolute;
+		margin-left: 0;
+		margin-top: 4px;
+	}
+	.userbox-clicked .userbox-link {
+		width: 15px;
+		padding: 5px;
+		padding-left: 9px;
+		padding-top: 10px;
+		margin-left: 41px;
+		height: 26px;
+	}
+	.userbox-menu-clicked {
+		position: absolute;
+		background: white;
+		margin-left: -105px;
+		width: 175px;
+		border: 1px solid #cecece;
+		border-top: 0;
+		color: #222222;
+		font-size: 13px;
+		z-index: 100;
+	}
+	.avatar {
+		max-height: 41px;
+	}
+	.content {
+		width: 100%;
+	}
+	.sidebar {
+		display: none;
+	}
+	.footer {
+		display: none;
+	}
+
+}

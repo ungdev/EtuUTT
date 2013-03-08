@@ -1,0 +1,84 @@
+
+# Global strings: title, logo, footer, etc.
+# Used in base.html.twig
+base:
+    # Title
+    title: Site étudiant de l'UTT
+
+    # Logo
+    logo:
+        alt: Logo du site
+        title: Site étudiant de l'UTT
+
+    # Header menu
+    menu:
+        home: Accueil
+        events: Evènements
+        forums: Forums
+        associations: Associations
+        search: Recherche
+        more: Plus
+
+    # User account box
+    user:
+        # Users types
+        types:
+            student: Etudiant
+            association: Association
+            utt: Personnel
+            external: Exterieur
+
+        # User menu
+        menu:
+            flux: Mon flux
+            account: Mon compte
+            buckutt: Mon compte BuckUTT
+            dailymail: Mon dailymail
+            emails: Mes e-mails
+            table: Mon emploi du temps
+            logout: Déconnexion
+            help: Aide
+
+    # Sidebar
+    sidebar:
+        services:
+            title: Services
+            items:
+                uvs: Les UV
+                trombi: Le trombinoscope
+                table: Cumul d'emplois du temps
+                wiki: Wiki des associations
+        etu:
+            title: EtuUTT
+            items:
+                team: L'équipe
+                suggest: Suggestions
+                bugs: Signaler un bug
+
+    # Footer
+    footer:
+        # Links
+        legalities: Mentions légales
+        help_us: Nous aider
+        developers: Développeurs
+
+        # Authors and version
+        text: "Réalisé par l’UNG<br />Propulsé par Symfony 2<br /><br />Version 10-alpha"
+        mobile_text: "Réalisé par l’UNG<br />Version 10-alpha"
+
+
+
+
+
+# Flux translations
+# Used in Main/index.html.twig
+flux:
+
+    # Sidebar
+    sidebar:
+        parameters:
+            title: Paramètres de mon flux
+            items:
+                suscribtions: Gérer mes abonnements
+                notifications: Gérer mes notifications
+                parameters: Paramètres

@@ -1,0 +1,16 @@
+
+<ul class="list-vertical list-vertical-linked sidebar-menu">
+	{% for item in items %}
+		<li {{ item.itemAttributesString }}>
+			<a href="{{ item.url }}" {{ item.linkAttributesString }}>
+				{% if item.hasIcon %}
+					<i class="{{ item.icon }}"></i>
+				{% else %}
+					<i class="etu-no-icon"></i>
+				{% endif %}
+
+				{{ item.translation|trans }}
+			</a>
+		</li>
+	{% endfor %}
+</ul>

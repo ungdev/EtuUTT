@@ -1,0 +1,5 @@
+etu_core:
+    resource: "@EtuCoreBundle/Controller/"
+    type:     annotation
+    prefix:   /
+

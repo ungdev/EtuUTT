@@ -1,0 +1,6 @@
+
+{% for block in blocks %}
+	<h4 class="sidebar-title">{{ block.title|trans }}</h4>
+
+	{{ block.rendered|raw }}
+{% endfor %}

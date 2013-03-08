@@ -1,0 +1,22 @@
+
+<ul class="list-vertical list-vertical-linked">
+	{% for item in items %}
+		{% if item.isSeparator %}
+			</ul>
+			<hr class="separator" />
+			<ul class="list-vertical list-vertical-linked">
+		{% else %}
+			<li {{ item.itemAttributesString }}>
+				<a href="{{ item.url }}" {{ item.linkAttributesString }}>
+					{% if item.hasIcon %}
+						<i class="{{ item.icon }}"></i>
+					{% else %}
+						<i class="etu-no-icon"></i>
+					{% endif %}
+
+					{{ item.translation|trans }}
+				</a>
+			</li>
+		{% endif %}
+	{% endfor %}
+</ul>

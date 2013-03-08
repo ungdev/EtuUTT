@@ -1,0 +1,130 @@
+
+/*
+ * Page d'accueil
+ */
+.homepage-events-title {
+	font-weight: lighter;
+	padding: 10px;
+	margin: 0;
+	margin-bottom: 17px;;
+	font-size: 22px;
+}
+.homepage-events {
+	padding: 0;
+	margin: 0 auto;
+	width: 95%;
+}
+.homepage-event {
+	display: block;
+	padding: 0.5%;
+	padding-top: 1.5%;
+	margin: 0.5%;
+	width: 31%;
+	float: left;
+	text-align: center;
+	border: 1px solid #e5e5e5;
+}
+.homepage-event:hover {
+	background: #f5f5f5;
+}
+.homepage-event img {
+	width: 80%;
+}
+
+/*
+ * Mon flux
+ */
+.flux {
+	background: #f5f5f5;
+}
+
+[class^="notif-icon-"],
+[class*=" notif-icon-"] {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	margin-right: 10px;
+	line-height: 24px;
+	vertical-align: text-top;
+	background-image: url("../img/big-icons-sprite.png");
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	float: left;
+	opacity: 0.5;
+}
+
+.notif-icon-briefcase { background-position: 0 0; }
+.notif-icon-forum { background-position: 0 -24px; }
+.notif-icon-mail { background-position: 0 -48px; }
+.notif-icon-event { background-position: 0 -72px; }
+
+.notif {
+	display: block;
+	padding: 10px 15px;
+	border-bottom: 1px solid #e5e5e5;
+	background: #f5f5f5;
+}
+.notif:hover h4 {
+	text-decoration: underline;
+}
+.notif-new {
+	background: white;
+	font-weight: bold;
+}
+.notif-new:hover h4 {
+	text-decoration: underline;
+}
+.notif-new .notif-title {
+	font-weight: bold;
+}
+.notif-new i[class^="notif-icon-"], .notif-new i[class*=" notif-icon-"] {
+	opacity: 1;
+}
+.notif-date {
+	float: right;
+	font-size: 11px;
+	font-weight: normal;
+	color: #8a8a8a;
+	padding-top: 4px;
+}
+.notif-data {
+	color: #1d5da2;
+}
+.notif-title {
+	font-size: 13px;
+	float: left;
+	margin: 0;
+	padding: 4px 10px;
+	font-weight: lighter;
+	color: #222;
+	opacity: 0.8;
+}
+.notif-new .notif-title, .super-notif .notif-title {
+	opacity: 1;
+}
+
+.super-notif, .super-notif:hover {
+	background: #fcf8e3;
+	border-top: 1px solid #fcf8e3;
+	border-bottom: 1px solid #fbeed5;
+}
+.super-notif, .super-notif .notif-data, .super-notif h4 {
+	color: #c09853;
+	font-weight: bold;
+}
+.super-notif i[class^="notif-icon-"], .super-notif i[class*=" notif-icon-"] {
+	opacity: 1;
+}
+.super-notif:hover h4 {
+	text-decoration: underline;
+}
+
+@media screen and (max-width: 775px) {
+	[class^="notif-icon-"],
+	[class*=" notif-icon-"] {
+		display: none;
+	}
+	.notif {
+		padding: 5px 7px;
+	}
+}

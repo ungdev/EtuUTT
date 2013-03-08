@@ -1,0 +1,37 @@
+
+parameters:
+    etu.menu.user_builder.class: Etu\CoreBundle\Menu\UserMenu\UserMenuBuilder
+    etu.menu.user_renderer.class: Etu\CoreBundle\Menu\UserMenu\UserMenuRenderer
+    etu.menu.user_twig_extension.class: Etu\CoreBundle\Twig\Extension\UserMenuRendererExtension
+
+    etu.menu.sidebar_builder.class: Etu\CoreBundle\Menu\Sidebar\SidebarBuilder
+    etu.menu.sidebar_renderer.class: Etu\CoreBundle\Menu\Sidebar\SidebarRenderer
+    etu.menu.sidebar_twig_extension.class: Etu\CoreBundle\Twig\Extension\SidebarRendererExtension
+
+services:
+
+    # User menu
+    etu.menu.user_builder:
+        class: %etu.menu.user_builder.class%
+        arguments: [@router]
+    etu.menu.user_renderer:
+        class: %etu.menu.user_renderer.class%
+        arguments: [@twig]
+    etu.menu.user_twig_extension:
+        class: %etu.menu.user_twig_extension.class%
+        arguments: [@etu.menu.user_builder, @etu.menu.user_renderer]
+        tags:
+            - { name: twig.extension }
+
+    # Sidebar
+    etu.menu.sidebar_builder:
+        class: %etu.menu.sidebar_builder.class%
+        arguments: [@router]
+    etu.menu.sidebar_renderer:
+        class: %etu.menu.sidebar_renderer.class%
+        arguments: [@twig]
+    etu.menu.sidebar_twig_extension:
+        class: %etu.menu.sidebar_twig_extension.class%
+        arguments: [@etu.menu.sidebar_builder, @etu.menu.sidebar_renderer]
+        tags:
+            - { name: twig.extension }

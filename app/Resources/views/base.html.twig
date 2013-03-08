@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr" class="bg-soft-grey">
+	<head>
+		<meta charset="utf-8">
+
+		<title>{% block title %}Mon flux{% endblock %} - {{ 'base.title'|trans }}</title>
+
+		<meta name="description" content="Site étu de l'UTT" />
+		<meta name="author" content="Titouan Galopin" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		{# Assets managment with Assetic: to use in production, but too slow for development
+
+		{% stylesheets
+			'bootstrap/css/bootstrap.min.css'
+			'bootstrap/css/bootstrap-responsive.min.css'
+
+			'css/global.css'
+			'css/icons.css'
+			'css/head.css'
+			'css/page.css'
+			'css/sidebar.css'
+			'css/footer.css'
+			'css/responsive.css'
+			'css/content.css'
+
+			filter='cssrewrite'
+			output='css/compiled.css'
+		%}
+			<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+		{% endstylesheets %}
+		#}
+
+		<link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('css/global.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('css/icons.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('css/head.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('css/page.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('css/menu.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('css/footer.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('css/responsive.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('css/content.css') }}" type="text/css" />
+
+		{% block stylesheets %}{% endblock %}
+	</head>
+	<body class="bg-soft-grey">
+		<header class="bg-dark-blue fixed head">
+			<div class="container">
+				<div class="pull-left title">
+					<h1 class="seo-title">{{ block('title') }} - {{ 'base.title'|trans }}</h1>
+
+					<a href="{{ path('homepage') }}">
+						<img src="{{ asset('img/logo.jpg') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="logo" />
+					</a>
+				</div>
+
+				<nav class="pull-left">
+					<ul class="list-horizontal list-horizontal-linked menu" id="head-menu-list">
+						<li class="first active">
+							<span class="pins pins-alert pins-head">2</span>
+							<a href="">
+								<i class="icon icon-head icon-head-home"></i>
+								<span class="menu-link-text">{{ 'base.menu.home'|trans }}</span>
+							</a>
+						</li>
+						<li>
+							<a href="">
+								<i class="icon icon-head icon-head-events"></i>
+								<span class="menu-link-text">{{ 'base.menu.events'|trans }}</span>
+							</a>
+						</li>
+						<li>
+							<a href="">
+								<i class="icon icon-head icon-head-forums"></i>
+								<span class="menu-link-text">{{ 'base.menu.forums'|trans }}</span>
+							</a>
+						</li>
+						<li class="hidden-for-phones">
+							<a href="">
+								<i class="icon icon-head icon-head-associations"></i>
+								<span class="menu-link-text">{{ 'base.menu.associations'|trans }}</span>
+							</a>
+						</li>
+						<li class="hidden-for-phones last">
+							<a href="">
+								<i class="icon icon-head icon-head-search"></i>
+								<span class="menu-link-text">{{ 'base.menu.search'|trans }}</span>
+							</a>
+						</li>
+						<li class="display-for-phones last" id="more">
+							<a href="">
+								<i class="icon icon-head icon-head-plus"></i>
+								<span class="menu-link-text">{{ 'base.menu.more'|trans }}</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+
+				<div class="pull-right userbox">
+					<img src="img/avatar.jpg" alt="Titouan Galopin" title="Avatar de Titouan Galopin" class="pull-left avatar" />
+
+					<a href="" class="userbox-link">
+						<i class="icon-chevron-down userbox-link-icon"></i>
+
+								<span class="hidden-for-1024">
+									Titouan Galopin<br />
+									<span class="color-soft">{{ 'base.user.types.student'|trans }}</span>
+								</span>
+					</a>
+
+					<div class="userbox-menu">
+						<div class="userbox-display-for-1024 display-for-1024">
+							Titouan Galopin<br />
+							<span class="color-soft">{{ 'base.user.types.student'|trans }}</span>
+						</div>
+
+						{{ render_user_menu() }}
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<div id="overlay"></div>
+
+		<div id="overlay-content">
+			<ul class="list-vertical list-vertical-linked overlay-menu">
+				<li class="first active">
+					<a href="">
+						<i class="etu-icon-briefcase"></i>
+						Les UVs
+					</a>
+				</li>
+				<li>
+					<a href="">
+						<i class="etu-icon-book"></i>
+						Le trombinoscope
+					</a>
+				</li>
+				<li>
+					<a href="">
+						<i class="etu-icon-info"></i>
+						Wiki des associations
+					</a>
+				</li>
+			</ul>
+
+			<hr class="separator" />
+
+			<ul class="list-vertical list-vertical-linked overlay-menu">
+				<li class="first active">
+					<a href="">
+						<i class="etu-icon-users"></i>
+						L’équipe
+					</a>
+				</li>
+				<li>
+					<a href="">
+						<i class="etu-icon-comment"></i>
+						Suggestions
+					</a>
+				</li>
+				<li>
+					<a href="">
+						<i class="etu-icon-warning"></i>
+						Signaler un bug
+					</a>
+				</li>
+			</ul>
+
+			<hr class="separator" />
+
+			<ul class="list-vertical list-vertical-linked overlay-menu">
+				<li class="first active">
+					<a href="">
+						Changer de langue (Français)
+					</a>
+				</li>
+			</ul>
+
+			<p class="clear footer-description footer-description-mobiles">
+				{{ 'base.footer.mobile_text'|trans|raw }}
+			</p>
+		</div>
+
+		<section class="page">
+			<div class="container page-container">
+
+				<h2 class="page-title source-sans-pro">
+					{% block titleIcon %}
+						<img src="{{ asset('img/icon-title-flux.png') }}" alt="Icone de la page" class="page-title-icon" />
+					{% endblock %}
+
+					{{ block('title') }}
+				</h2>
+
+				<div class="content">
+					{% block content %}{% endblock %}
+				</div>
+
+				<div class="sidebar">
+					{{ render_sidebar() }}
+				</div>
+
+				<footer class="footer">
+					<div id="change-locale" class="change-locale">
+						<ul class="list-vertical list-vertical-linked change-locale-menu">
+							<li>
+								<a href="">
+									English
+								</a>
+							</li>
+							<li>
+								<a href="">
+									中国的
+								</a>
+							</li>
+						</ul>
+					</div>
+					<p>
+						<a href="" id="change-locale-link" class="footer-link">
+							Français
+						</a>
+						<br />
+						<a href="" id="next-change-locale-link" class="footer-link">
+							{{ 'base.footer.legalities'|trans }}
+						</a>
+						<br />
+						<a href="" class="footer-link">
+							{{ 'base.footer.help_us'|trans }}
+						</a>
+						<br />
+						<a href="" class="footer-link">
+							{{ 'base.footer.developers'|trans }}
+						</a>
+					</p>
+					<p class="clear footer-description">
+						{{ 'base.footer.text'|trans|raw }}
+					</p>
+				</footer>
+
+			</div>
+		</section>
+
+		<script src="{{ asset('js/jquery-1.8.2.min.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('js/common.js') }}" type="text/javascript"></script>
+
+		{% block javascripts %}{% endblock %}
+	</body>
+</html>
