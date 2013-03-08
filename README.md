@@ -9,12 +9,5 @@ EtuUTT est la refonte de 2013 du site internet étudiant de l'UTT
 la qualité du code et l'aspect esthétique. Cette refonte n'utilise pas
 le code de l'ancienne version.
 
-Auteurs
----------------------
-
-      - Titouan Galopin
-      - Thibault Marquand
-      - Youenn Piolet
-
 > **Note :** EtuUTT utilise Symfony 2.2.
 
