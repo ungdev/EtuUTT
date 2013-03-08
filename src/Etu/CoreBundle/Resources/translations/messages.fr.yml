@@ -64,6 +64,7 @@ base:
 
         # Authors and version
         text: "Réalisé par l’UNG<br />Propulsé par Symfony 2<br /><br />Version 10-alpha"
+        1col_text: "Réalisé par l’UNG - Propulsé par Symfony 2 - Version 10-alpha"
         mobile_text: "Réalisé par l’UNG<br />Version 10-alpha"
 
 

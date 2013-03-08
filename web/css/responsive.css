@@ -11,7 +11,7 @@
 	display: none;
 }
 
-@media screen and (max-width: 1210px) {
+@media screen and (max-width: 1230px) {
 
 	.container {
 		width: 960px;
@@ -85,6 +85,9 @@
 	}
 	.content {
 		width: 765px;
+	}
+	.content-full {
+		width: 960px;
 	}
 	.sidebar {
 		width: 190px;

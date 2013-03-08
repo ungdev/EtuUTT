@@ -1,0 +1,62 @@
+{% extends '::base.html.twig' %}
+
+{% block page %}
+	<section class="page">
+		<div class="container page-container">
+
+			<h2 class="page-title source-sans-pro">
+				{% block titleIcon %}
+					<img src="{{ asset('img/icon-title-flux.png') }}" alt="Icone de la page" class="page-title-icon" />
+				{% endblock %}
+
+				{{ block('title') }}
+			</h2>
+
+			<div class="content">
+				{% block content %}{% endblock %}
+			</div>
+
+			<div class="sidebar">
+				{{ render_sidebar() }}
+			</div>
+
+			<footer class="footer">
+				<div id="change-locale" class="change-locale">
+					<ul class="list-vertical list-vertical-linked change-locale-menu">
+						<li>
+							<a href="">
+								English
+							</a>
+						</li>
+						<li>
+							<a href="">
+								中国的
+							</a>
+						</li>
+					</ul>
+				</div>
+				<p>
+					<a href="" id="change-locale-link" class="footer-link">
+						Français
+					</a>
+					<br />
+					<a href="" id="next-change-locale-link" class="footer-link">
+						{{ 'base.footer.legalities'|trans }}
+					</a>
+					<br />
+					<a href="" class="footer-link">
+						{{ 'base.footer.help_us'|trans }}
+					</a>
+					<br />
+					<a href="" class="footer-link">
+						{{ 'base.footer.developers'|trans }}
+					</a>
+				</p>
+				<p class="clear footer-description">
+					{{ 'base.footer.text'|trans|raw }}
+				</p>
+			</footer>
+
+		</div>
+	</section>
+{% endblock %}

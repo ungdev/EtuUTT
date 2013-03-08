@@ -1,0 +1,41 @@
+{% extends '::base.html.twig' %}
+
+{% block page %}
+	<section class="page">
+		<div class="container page-container">
+
+			<h2 class="page-title source-sans-pro">
+				{% block titleIcon %}
+					<img src="{{ asset('img/icon-title-flux.png') }}" alt="Icone de la page" class="page-title-icon" />
+				{% endblock %}
+
+				{{ block('title') }}
+			</h2>
+
+			<div class="content content-full">
+				{% block content %}{% endblock %}
+			</div>
+
+		</div>
+	</section>
+
+	<footer class="container footer-bottom">
+		<p>
+			<a href="" class="footer-link">
+				Français
+			</a>
+			<a href="" id="next-change-locale-link" class="footer-link">
+				{{ 'base.footer.legalities'|trans }}
+			</a>
+			<a href="" class="footer-link">
+				{{ 'base.footer.help_us'|trans }}
+			</a>
+			<a href="" class="footer-link">
+				{{ 'base.footer.developers'|trans }}
+			</a>
+			<span class="pull-right">
+				{{ 'base.footer.1col_text'|trans|raw }}
+			</span>
+		</p>
+	</footer>
+{% endblock %}
