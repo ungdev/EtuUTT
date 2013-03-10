@@ -1,8 +1,9 @@
 
-# Symfony #
-###########
+# EtuUTT #
+##########
 
 /web/bundles/
+/web/wiki/LocalSettings.php
 /app/bootstrap.php.cache
 /app/config/parameters.yml
 /app/cache/*

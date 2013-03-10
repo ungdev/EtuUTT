@@ -16,14 +16,14 @@
 				{% block content %}{% endblock %}
 			</div>
 
-			<div class="sidebar">
-				<div style="margin-top: 15px; text-align:center;">
+			<div class="sidebar"
+				{{ render_sidebar() }}
+
+				<!--<div style="margin-top: 15px; text-align:center;">
 					<strong>Par l'UTT Net Group</strong>
 					<br />
 					<img src="{{ asset('img/ung-logo.png') }}" style="max-width: 80px; margin-top:10px;" />
-				</div>
-
-				{{ render_sidebar() }}
+				</div>-->
 			</div>
 
 			<footer class="footer">
