@@ -1,11 +1,18 @@
 
-etu_user:
-    resource: "@EtuUserBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
+# Load the core routes
 etu_core:
     resource: "@EtuCoreBundle/Controller/"
     type:     annotation
     prefix:   /
 
+# Load the user routes
+etu_user:
+    resource: "@EtuUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+# Load modules routes
+etu_modules:
+    resource: .
+    type:     modules
+    prefix:   /

@@ -25,16 +25,6 @@ abstract class Module extends Bundle
 	abstract public function getTitle();
 
 	/**
-	 * Module author
-	 *
-	 * @return string
-	 */
-	public function getAuthor()
-	{
-		return 'anonymous';
-	}
-
-	/**
 	 * Module description
 	 *
 	 * @return string
@@ -47,4 +37,27 @@ abstract class Module extends Bundle
 	 * @return array
 	 */
 	abstract public function getRequirements();
+
+	/**
+	 * Module author
+	 *
+	 * @return string
+	 */
+	public function getAuthor()
+	{
+		return 'anonymous';
+	}
+
+	/**
+	 * Module author
+	 *
+	 * @return string
+	 */
+	public function getRouting()
+	{
+		return array(
+			'type' => 'annotation',
+			'resource' => '@'.$this->getName().'/Controller/',
+		);
+	}
 }

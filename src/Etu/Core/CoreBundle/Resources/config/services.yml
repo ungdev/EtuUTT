@@ -1,5 +1,7 @@
 
 parameters:
+    etu.core.routing_loader.class: Etu\Core\CoreBundle\Framework\Routing\ModulesRoutingLoader
+
     etu.menu.user_builder.class: Etu\Core\CoreBundle\Menu\UserMenu\UserMenuBuilder
     etu.menu.user_renderer.class: Etu\Core\CoreBundle\Menu\UserMenu\UserMenuRenderer
     etu.menu.user_twig_extension.class: Etu\Core\CoreBundle\Twig\Extension\UserMenuRendererExtension
@@ -9,6 +11,13 @@ parameters:
     etu.menu.sidebar_twig_extension.class: Etu\Core\CoreBundle\Twig\Extension\SidebarRendererExtension
 
 services:
+
+    # Router register
+    etu.core.routing_loader:
+        class: %etu.core.routing_loader.class%
+        arguments: [@kernel]
+        tags:
+            - { name: routing.loader }
 
     # User menu
     etu.menu.user_builder:

@@ -1,6 +1,6 @@
 <?php
 
-use Etu\CoreBundle\Framework\Definition\Module;
+use Etu\Core\CoreBundle\Framework\Definition\Module;
 
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpKernel\Exception\FatalErrorException;
@@ -15,7 +15,7 @@ class AppKernel extends Kernel
 	/**
 	 * @var array
 	 */
-	protected $modules;
+	protected $modules = array();
 
 	/**
 	 * Register the bundles (and by the way the modules).
@@ -59,7 +59,7 @@ class AppKernel extends Kernel
 
 	    if (isset($modules['modules'])) {
 		    if (! is_array($modules['modules'])) {
-			    throw new FatalErrorException(sprintf('Key "modules" in app/config/modules.yml must be an array'));
+			    throw new FatalErrorException('Key "modules" in app/config/modules.yml must be an array');
 		    }
 
 		    foreach ($modules['modules'] as $module) {
@@ -74,6 +74,11 @@ class AppKernel extends Kernel
 					if ($module instanceof Module) {
 						$bundles[] = $module;
 						$this->registerModuleDefinition($module);
+					} else {
+						throw new FatalErrorException(sprintf(
+							'Module %s must be an instance of Etu\Core\CoreBundle\Framework\Definition\Module.',
+							get_class($module)
+						));
 					}
 			    }
 		    }
@@ -93,7 +98,7 @@ class AppKernel extends Kernel
     }
 
 	/**
-	 * @param Etu\CoreBundle\Framework\Definition\Module $module
+	 * @param \Etu\Core\CoreBundle\Framework\Definition\Module $module
 	 * @return AppKernel
 	 */
 	public function registerModuleDefinition(Module $module)
@@ -103,7 +108,7 @@ class AppKernel extends Kernel
 	}
 
 	/**
-	 * @return array
+	 * @return \Etu\Core\CoreBundle\Framework\Definition\Module[]
 	 */
 	public function getModulesDefinitions()
 	{
