@@ -1,3 +1,8 @@
+etu_user:
+    resource: "@EtuUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 etu_core:
     resource: "@EtuCoreBundle/Controller/"
     type:     annotation
