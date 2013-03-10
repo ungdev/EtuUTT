@@ -1,8 +1,8 @@
 <?php
 
 use Etu\Core\CoreBundle\Framework\Definition\Module;
+use Etu\Core\CoreBundle\Framework\EtuKernel;
 
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpKernel\Exception\FatalErrorException;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
@@ -10,13 +10,8 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 /**
  * EtuUTT AppKernel. Redefine the way to load bundles for the modules system.
  */
-class AppKernel extends Kernel
+class AppKernel extends EtuKernel
 {
-	/**
-	 * @var array
-	 */
-	protected $modules = array();
-
 	/**
 	 * Register the bundles (and by the way the modules).
 	 *
@@ -51,9 +46,7 @@ class AppKernel extends Kernel
         }
 
 	    /*
-	     * Modules bundles, loaded dynamically using the app/config/modules.yml
-	     *
-	     * @todo Remove this strict dependency to Yaml
+	     * Modules bundles, loaded dynamically from app/config/modules.yml
 	     */
 	    $modules = Symfony\Component\Yaml\Yaml::parse($this->getRootDir().'/config/modules.yml');
 
@@ -84,6 +77,8 @@ class AppKernel extends Kernel
 		    }
 	    }
 
+		$this->checkModulesIntegrity();
+
         return $bundles;
     }
 
@@ -96,22 +91,4 @@ class AppKernel extends Kernel
     {
         $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
     }
-
-	/**
-	 * @param \Etu\Core\CoreBundle\Framework\Definition\Module $module
-	 * @return AppKernel
-	 */
-	public function registerModuleDefinition(Module $module)
-	{
-		$this->modules[$module->getName()] = $module;
-		return $this;
-	}
-
-	/**
-	 * @return \Etu\Core\CoreBundle\Framework\Definition\Module[]
-	 */
-	public function getModulesDefinitions()
-	{
-		return $this->modules;
-	}
 }
