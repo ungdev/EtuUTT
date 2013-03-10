@@ -4,6 +4,8 @@ namespace Etu\CoreBundle\Controller;
 
 use Etu\CoreBundle\Framework\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
+
 // Import @Route() and @Template() annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

@@ -11,11 +11,11 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 abstract class Module extends Bundle
 {
 	/**
-	 * Module title
+	 * Module identifier (to be required by other modules)
 	 *
 	 * @return string
 	 */
-	abstract public function getTitle();
+	abstract public function getIdentifier();
 
 	/**
 	 * Module author
@@ -35,7 +35,7 @@ abstract class Module extends Bundle
 	abstract public function getDescription();
 
 	/**
-	 * Define the modules requirements (the other required modules)
+	 * Define the modules requirements (the other required modules) using the identifiers
 	 *
 	 * @return array
 	 */
