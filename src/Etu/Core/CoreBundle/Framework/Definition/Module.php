@@ -11,6 +11,11 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 abstract class Module extends Bundle
 {
 	/**
+	 * @var boolean
+	 */
+	private $enabled = false;
+
+	/**
 	 * Module identifier (to be required by other modules)
 	 *
 	 * @return string
@@ -59,5 +64,23 @@ abstract class Module extends Bundle
 			'type' => 'annotation',
 			'resource' => '@'.$this->getName().'/Controller/',
 		);
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function isEnabled()
+	{
+		return $this->enabled;
+	}
+
+	/**
+	 * @param boolean $enabled
+	 * @return Module
+	 */
+	public function setEnabled($enabled)
+	{
+		$this->enabled = $enabled;
+		return $this;
 	}
 }

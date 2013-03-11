@@ -1,15 +1,17 @@
 <?php
 
-namespace Etu\Core\UserBundle\Controller;
+namespace Etu\Module\%name%Bundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Etu\Core\CoreBundle\Framework\Definition\Controller;
+
+// Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class DefaultController extends Controller
 {
     /**
-     * @Route("/user/{name}")
+     * @Route("/hello/{name}")
      * @Template()
      */
     public function indexAction($name)

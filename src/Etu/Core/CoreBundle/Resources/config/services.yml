@@ -1,5 +1,6 @@
 
 parameters:
+    etu.core.modules_manager.class: Etu\Core\CoreBundle\Framework\Module\ModulesManager
     etu.core.routing_loader.class: Etu\Core\CoreBundle\Framework\Routing\ModulesRoutingLoader
 
     etu.menu.user_builder.class: Etu\Core\CoreBundle\Menu\UserMenu\UserMenuBuilder
@@ -11,6 +12,11 @@ parameters:
     etu.menu.sidebar_twig_extension.class: Etu\Core\CoreBundle\Twig\Extension\SidebarRendererExtension
 
 services:
+
+    # Modules manager
+    etu.core.modules_manager:
+        class: %etu.core.modules_manager.class%
+        arguments: [@kernel]
 
     # Router register
     etu.core.routing_loader:
