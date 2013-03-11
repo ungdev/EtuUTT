@@ -22,7 +22,6 @@ dans le code, par soucis de simplicité et de diffusion.
 
 Elle a été écrite par :
       - Titouan Galopin
-      - Thibault Marquand
       - Youenn Piolet
 
 Elle se décompose en deux grands parties : la première est dédiée à l'ajout
