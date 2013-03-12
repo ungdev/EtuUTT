@@ -1,10 +1,10 @@
 <?php
 
-namespace Etu\Module\UVBundle;
+namespace Etu\Module\WikiBundle;
 
 use Etu\Core\CoreBundle\Framework\Definition\Module;
 
-class EtuModuleUVBundle extends Module
+class EtuModuleWikiBundle extends Module
 {
 	/**
 	 * Module identifier (to be required by other modules)
@@ -13,7 +13,7 @@ class EtuModuleUVBundle extends Module
 	 */
 	public function getIdentifier()
 	{
-		return 'uv';
+		return 'wiki';
 	}
 
 	/**
@@ -23,7 +23,7 @@ class EtuModuleUVBundle extends Module
 	 */
 	public function getTitle()
 	{
-		return 'Les UV';
+		return 'Wiki';
 	}
 
 	/**
@@ -33,7 +33,7 @@ class EtuModuleUVBundle extends Module
 	 */
 	public function getAuthor()
 	{
-		return 'Titouan Galopin';
+		return 'anonymous';
 	}
 
 	/**
@@ -43,7 +43,7 @@ class EtuModuleUVBundle extends Module
 	 */
 	public function getDescription()
 	{
-		return 'Module de gestion et d\'affichage des UV de l\'UTT';
+		return 'Default module description';
 	}
 
 	/**
@@ -53,6 +53,8 @@ class EtuModuleUVBundle extends Module
 	 */
 	public function getRequirements()
 	{
-		return array();
+		return array(
+			// Insert your requirements here
+		);
 	}
 }
