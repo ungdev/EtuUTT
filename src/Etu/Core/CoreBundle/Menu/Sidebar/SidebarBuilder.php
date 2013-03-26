@@ -49,14 +49,6 @@ class SidebarBuilder
 					->setIcon('etu-icon-users')
 					->setUrl('')
 				->end()
-				->add('base.sidebar.etu.items.suggest')
-					->setIcon('etu-icon-comment')
-					->setUrl('')
-				->end()
-				->add('base.sidebar.etu.items.bugs')
-					->setIcon('etu-icon-warning')
-					->setUrl('')
-				->end()
 			->end()
 		;
 	}

@@ -1,6 +1,6 @@
 <?php
 
-namespace Etu\Module\WikiBundle\DependencyInjection;
+namespace Etu\Module\BugsBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -13,7 +13,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
 	    $treeBuilder = new TreeBuilder();
-	    $rootNode = $treeBuilder->root('etu_wiki');
-	    return $treeBuilder;
+	    $rootNode = $treeBuilder->root('etu_bugs');
+		return $treeBuilder;
     }
 }

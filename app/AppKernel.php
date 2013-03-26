@@ -30,11 +30,15 @@ class AppKernel extends EtuKernel
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             // new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
-            new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+
+	        new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
+
             new Etu\Core\CoreBundle\EtuCoreBundle(),
             new Etu\Core\UserBundle\EtuUserBundle(),
         );
@@ -56,8 +60,14 @@ class AppKernel extends EtuKernel
 		    }
 
 		    foreach ($modules['modules'] as $module) {
-			    if (file_exists($this->getRootDir().'/../src/'.str_replace('\\', '/', $module).'.php')) {
-				    require $this->getRootDir().'/../src/'.str_replace('\\', '/', $module).'.php';
+			    $bundleFile = 'src/'.str_replace('\\', '/', $module).'.php';
+
+			    if (file_exists($this->getRootDir().'/../'.$bundleFile)) {
+				    require $this->getRootDir().'/../'.$bundleFile;
+			    } else {
+				    throw new \RuntimeException(sprintf(
+					    'Module "%s" can not be loaded (file "%s" not found)', $module, $bundleFile
+				    ));
 			    }
 
 			    if (class_exists($module, false)) {
@@ -69,10 +79,14 @@ class AppKernel extends EtuKernel
 						$this->registerModuleDefinition($module);
 					} else {
 						throw new FatalErrorException(sprintf(
-							'Module %s must be an instance of Etu\Core\CoreBundle\Framework\Definition\Module.',
+							'Module "%s" must be an instance of Etu\Core\CoreBundle\Framework\Definition\Module.',
 							get_class($module)
 						));
 					}
+			    } else {
+				    throw new \RuntimeException(sprintf(
+					    'Module "%s" can not be loaded (class not found)', $module
+				    ));
 			    }
 		    }
 	    }

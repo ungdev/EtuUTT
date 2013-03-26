@@ -3,6 +3,7 @@ jms_security_extra:
     expressions: true
 
 security:
+
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
 

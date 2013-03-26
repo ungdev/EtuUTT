@@ -3,6 +3,7 @@
 namespace Etu\Core\CoreBundle\Framework\Definition;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Component\Routing\Router;
 
 /**
  * Module class. A module is a bundle with some more informations, as a title,
@@ -14,6 +15,11 @@ abstract class Module extends Bundle
 	 * @var boolean
 	 */
 	private $enabled = false;
+
+	/**
+	 * @var Router
+	 */
+	private $router = null;
 
 	/**
 	 * Module identifier (to be required by other modules)
@@ -54,6 +60,23 @@ abstract class Module extends Bundle
 	}
 
 	/**
+	 * Check if the module must boot or not using the context
+	 *
+	 * @return boolean
+	 */
+	public function mustBoot()
+	{
+		return true;
+	}
+
+	/**
+	 * Execute actions on module boot
+	 *
+	 * @return string
+	 */
+	public function onModuleBoot() { }
+
+	/**
 	 * Module author
 	 *
 	 * @return string
@@ -64,6 +87,41 @@ abstract class Module extends Bundle
 			'type' => 'annotation',
 			'resource' => '@'.$this->getName().'/Controller/',
 		);
+	}
+
+	/**
+	 * @return \Etu\Core\CoreBundle\Menu\Sidebar\SidebarBuilder
+	 */
+	public function getSidebarBuilder()
+	{
+		return $this->container->get('etu.menu.sidebar_builder');
+	}
+
+	/**
+	 * @return \Etu\Core\CoreBundle\Menu\UserMenu\UserMenuBuilder
+	 */
+	public function getUserMenuBuilder()
+	{
+		return $this->container->get('etu.menu.user_builder');
+	}
+
+	/**
+	 * @param \Symfony\Component\Routing\Router $router
+	 * @return Module
+	 */
+	public function setRouter(Router $router)
+	{
+		$this->router = $router;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Symfony\Component\Routing\Router
+	 */
+	public function getRouter()
+	{
+		return $this->router;
 	}
 
 	/**

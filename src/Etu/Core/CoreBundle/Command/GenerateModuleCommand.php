@@ -63,11 +63,11 @@ For instance, the UVBundle module name is "UV".
 		}
 
 		$output->writeln("\n\n".
-			'What is your module identifier?'."\n".
-			'Its identifier is a unique string that will be used'."\n".
-			'by other modules that requires it.'."\n".
-			'It should be a lowercase string.'."\n".
-			'For instance, the UVBundle module identifier is "uv".'."\n"
+				'What is your module identifier?'."\n".
+				'Its identifier is a unique string that will be used'."\n".
+				'by other modules that requires it.'."\n".
+				'It should be a lowercase string.'."\n".
+				'For instance, the UVBundle module identifier is "uv".'."\n"
 		);
 
 		$identifier = $dialog->ask(
@@ -77,6 +77,11 @@ For instance, the UVBundle module name is "UV".
 
 		$this->createTree($name);
 		$this->createFiles($name, $identifier);
+
+		$output->writeln("\n\n".
+				'The module has been generated. If you want to enable it, edit'."\n".
+				'`app/AppKernel.php` and `app/config/modules.yml`.'
+		);
 	}
 
 	/**

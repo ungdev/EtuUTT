@@ -6,7 +6,7 @@ $('#change-locale-link').click(function() {
 	return false;
 });
 
-$('.userbox').click(function() {
+$('.userbox-link').click(function() {
 	$('.userbox').toggleClass('userbox-clicked');
 	$('.userbox-menu').toggleClass('userbox-menu-clicked');
 	$('.userbox-menu').toggle();
@@ -56,4 +56,8 @@ $('body').click(function() {
 
 	$('#overlay').hide();
 	$('#overlay-content').hide();
+});
+
+$('.userbox a').click(function() {
+	return true;
 });

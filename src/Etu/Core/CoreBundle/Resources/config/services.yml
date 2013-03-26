@@ -11,6 +11,8 @@ parameters:
     etu.menu.sidebar_renderer.class: Etu\Core\CoreBundle\Menu\Sidebar\SidebarRenderer
     etu.menu.sidebar_twig_extension.class: Etu\Core\CoreBundle\Twig\Extension\SidebarRendererExtension
 
+    etu.modules_boot_listener.class: Etu\Core\CoreBundle\Listener\ModulesBootListener
+
 services:
 
     # Modules manager
@@ -50,3 +52,10 @@ services:
         arguments: [@etu.menu.sidebar_builder, @etu.menu.sidebar_renderer]
         tags:
             - { name: twig.extension }
+
+    # Module boot listener
+    etu.modules_boot_listener:
+        class: %etu.modules_boot_listener.class%
+        arguments: [@security.context, @kernel]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

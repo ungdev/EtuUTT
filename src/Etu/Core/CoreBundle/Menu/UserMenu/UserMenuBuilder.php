@@ -61,7 +61,7 @@ class UserMenuBuilder
 			->end()
 			->add('base.user.menu.logout')
 				->setIcon('etu-icon-power')
-				->setUrl('')
+				->setUrl($router->generate('user_disconnect'))
 			->end()
 			->addSeparator()
 			->add('base.user.menu.help')

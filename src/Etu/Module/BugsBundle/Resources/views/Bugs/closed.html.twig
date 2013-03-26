@@ -1,0 +1,59 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'bugs.index.page.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/bugs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<ul class="nav nav-tabs bugs-tabs">
+		<li>
+			<a href="{{ path('bugs_index') }}">{{ 'bugs.index.page.opened'|trans }}</a>
+		</li>
+		<li class="active bugs-tabs-resolved-active">
+			<a href="{{ path('bugs_closed') }}">{{ 'bugs.index.page.resolved'|trans }}</a>
+		</li>
+		<li class="pull-right">
+			<a href="">
+				<i class="icon-plus"></i>
+				{{ 'bugs.index.page.create'|trans }}
+			</a>
+		</li>
+	</ul>
+
+	<div class="padding20-sides">
+		<table class="table bugs-table">
+			<thead>
+			<tr>
+				<th class="bugs-table-number">{{ 'bugs.index.table.number'|trans }}</th>
+				<th class="bugs-table-title">{{ 'bugs.index.table.title'|trans }}</th>
+				<th class="bugs-table-author">{{ 'bugs.index.table.author'|trans }}</th>
+				<th class="bugs-table-createdAt">{{ 'bugs.index.table.created_at'|trans }}</th>
+			</tr>
+			</thead>
+			<tbody>
+			{% for bug in bugs %}
+				<tr>
+					<td class="bugs-table-number">
+						{{ bug.number }}
+					</td>
+					<td class="bugs-table-title">
+						<a href="{{ path('bugs_view', {'number': bug.number}) }}">
+							{{ bug.title }}
+						</a>
+					</td>
+					<td class="bugs-table-author">{{ bug.user.login }}</td>
+					<td class="bugs-table-createdAt">{{ bug.createdAt|date('d/m/Y H:i') }}</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5">
+						{{ 'bugs.index.table.no_bug_opened'|trans }}
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}

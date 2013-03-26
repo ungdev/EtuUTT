@@ -10,6 +10,11 @@ base:
         alt: Logo du site
         title: Site étudiant de l'UTT
 
+    # Logo
+    page_icon:
+        alt: Icône de la page
+        title: Icône de la page
+
     # Header menu
     menu:
         home: Accueil
@@ -52,8 +57,6 @@ base:
             title: EtuUTT
             items:
                 team: L'équipe
-                suggest: Suggestions
-                bugs: Signaler un bug
 
     # Footer
     footer:
@@ -67,6 +70,16 @@ base:
         1col_text: "Réalisé par l’UNG - Propulsé par Symfony 2 - Version 10-alpha"
         mobile_text: "Réalisé par l’UNG<br />Version 10-alpha"
 
+
+
+
+
+# Homepage
+# Used in Main/index.html.twig
+home:
+    index:
+        page:
+            title: Accueil
 
 
 

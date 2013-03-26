@@ -8,6 +8,15 @@ a, a:active, a:hover, a:visited, a:focus {
 	-moz-outline-style: none;
 }
 
+a {
+	text-decoration: none;
+	color: #224880;
+}
+a:hover {
+	text-decoration: underline;
+	color: #224880;
+}
+
 /*
  * Global tool classes
  */
@@ -75,6 +84,26 @@ a, a:active, a:hover, a:visited, a:focus {
 	border: 0;
 	border-bottom: 1px solid #cecece;
 	margin: 10px 0;
+}
+
+/* Paddings */
+.padding5-all {
+	padding: 5px;
+}
+.padding10-all {
+	padding: 10px;
+}
+.padding20-all {
+	padding: 20px;
+}
+.padding5-sides {
+	padding: 0 5px;
+}
+.padding10-sides {
+	padding: 0 10px;
+}
+.padding20-sides {
+	padding: 0 20px;
 }
 
 /* Pins */

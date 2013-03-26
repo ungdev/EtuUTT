@@ -3,10 +3,9 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>{% block title %}Mon flux{% endblock %} - {{ 'base.title'|trans }}</title>
+		<title>{% block title %}{{ 'home.index.page.title' }}{% endblock %} - {{ 'base.title'|trans }}</title>
 
-		<meta name="description" content="Site étu de l'UTT" />
-		<meta name="author" content="Titouan Galopin" />
+		<meta name="description" content="{{ 'base.title'|trans }}" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		{# Assets managment with Assetic: to use in production, but too slow for development
@@ -92,29 +91,51 @@
 								<span class="menu-link-text">{{ 'base.menu.more'|trans }}</span>
 							</a>
 						</li>
+						{% if not app.user %}
+							<li class="last connect_link">
+								<a href="{{ path('user_connect') }}">
+									<i class="icon icon-head icon-head-connexion"></i>
+									<span class="menu-link-text">Connexion</span>
+								</a>
+							</li>
+						{% endif %}
 					</ul>
 				</nav>
 
 				<div class="pull-right userbox">
-					<img src="img/avatar.jpg" alt="Titouan Galopin" title="Avatar de Titouan Galopin" class="pull-left avatar" />
+					{% if app.user %}
+					<img src="{{ app.user.jpegPhoto }}" alt="Titouan Galopin" title="Titouan Galopin" class="pull-left avatar" />
 
 					<a href="" class="userbox-link">
 						<i class="icon-chevron-down userbox-link-icon"></i>
 
-								<span class="hidden-for-1024">
-									Titouan Galopin<br />
-									<span class="color-soft">{{ 'base.user.types.student'|trans }}</span>
-								</span>
+						<span class="hidden-for-1024">
+							{{ app.user.fullName }}<br />
+							<span class="color-soft">
+								{% if app.user.isStudent %}
+									{{ 'base.user.types.student'|trans }}
+								{% else %}
+									{{ 'base.user.types.utt'|trans }}
+								{% endif %}
+							</span>
+						</span>
 					</a>
 
 					<div class="userbox-menu">
 						<div class="userbox-display-for-1024 display-for-1024">
-							Titouan Galopin<br />
-							<span class="color-soft">{{ 'base.user.types.student'|trans }}</span>
+							{{ app.user.fullName }}<br />
+							<span class="color-soft">
+								{% if app.user.isStudent %}
+									{{ 'base.user.types.student'|trans }}
+								{% else %}
+									{{ 'base.user.types.utt'|trans }}
+								{% endif %}
+							</span>
 						</div>
 
 						{{ render_user_menu() }}
 					</div>
+					{% endif %}
 				</div>
 			</div>
 		</header>
@@ -126,19 +147,19 @@
 				<li class="first active">
 					<a href="">
 						<i class="etu-icon-briefcase"></i>
-						Les UVs
+						{{ 'base.sidebar.services.items.uvs'|trans }}
 					</a>
 				</li>
 				<li>
 					<a href="">
 						<i class="etu-icon-book"></i>
-						Le trombinoscope
+						{{ 'base.sidebar.services.items.trombi'|trans }}
 					</a>
 				</li>
 				<li>
 					<a href="">
 						<i class="etu-icon-info"></i>
-						Wiki des associations
+						{{ 'base.sidebar.services.items.wiki'|trans }}
 					</a>
 				</li>
 			</ul>
@@ -149,19 +170,19 @@
 				<li class="first active">
 					<a href="">
 						<i class="etu-icon-users"></i>
-						L’équipe
+						{{ 'base.sidebar.etu.items.team'|trans }}
 					</a>
 				</li>
 				<li>
 					<a href="">
 						<i class="etu-icon-comment"></i>
-						Suggestions
+						{{ 'bugs.sidebar.items.suggest'|trans }}
 					</a>
 				</li>
 				<li>
 					<a href="">
 						<i class="etu-icon-warning"></i>
-						Signaler un bug
+						{{ 'bugs.sidebar.items.bugs'|trans }}
 					</a>
 				</li>
 			</ul>

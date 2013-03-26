@@ -1,0 +1,72 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'bugs.view.page.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/bugs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<ul class="nav nav-tabs bugs-tabs">
+		<li>
+			<a href="{{ path('bugs_index') }}">
+				<i class="icon-chevron-left"></i>
+				Retour à la liste
+			</a>
+		</li>
+	</ul>
+
+	<div class="padding20-sides">
+		<h3 class="bugs-view-title">{{ bug.title }}</h3>
+
+		<div class="hidden-for-phones">
+			<div class="row-fluid">
+				<div class="span1">
+					<img src="{{ bug.user.avatarUrl }}" />
+				</div>
+				<div class="span11">
+					<div class="well">
+						{{ bug.body }}
+					</div>
+					<p class="pull-right bugs-view-date">#1 - Posté le {{ bug.createdAt|date('d/m/Y à H:i') }}</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="display-for-phones">
+			<div class="well">
+				{{ bug.body }}
+			</div>
+			<p class="pull-right bugs-view-date">#1 - Posté le {{ bug.createdAt|date('d/m/Y à H:i') }}</p>
+
+			<div class="clear"></div>
+		</div>
+
+		{% for key, comment in comments %}
+			<hr />
+
+			<div class="hidden-for-phones">
+				<div class="row-fluid">
+					<div class="span1">
+						<img src="{{ comment.user.avatarUrl }}" />
+					</div>
+					<div class="span11">
+						<div>
+							{{ comment.body }}
+						</div>
+						<p class="pull-right bugs-view-date">#{{ key + 2 }} - Posté le {{ comment.createdAt|date('d/m/Y à H:i') }}</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="display-for-phones">
+				<div>
+					{{ comment.body }}
+				</div>
+				<p class="pull-right bugs-view-date">#{{ key + 2 }} - Posté le {{ comment.createdAt|date('d/m/Y à H:i') }}</p>
+
+				<div class="clear"></div>
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}

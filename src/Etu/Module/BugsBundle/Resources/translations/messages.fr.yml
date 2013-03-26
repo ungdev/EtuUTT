@@ -1,0 +1,21 @@
+
+bugs:
+    sidebar:
+        items:
+            suggest: Suggestions
+            bugs: Signaler un bug
+    index:
+        page:
+            title: Bugs et erreurs
+            opened: Ouverts
+            resolved: Résolus
+            create: Signaler un bug
+        table:
+            number: "#"
+            title: Titre
+            author: Auteur
+            created_at: Date de création
+            no_bug_opened: Aucun bug ouvert signalé pour le moment
+    view:
+        page:
+            title: Détails du bug
