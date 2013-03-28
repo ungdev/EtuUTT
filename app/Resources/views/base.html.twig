@@ -39,6 +39,8 @@
 		<link rel="stylesheet" href="{{ asset('css/responsive.css') }}" type="text/css" />
 		<link rel="stylesheet" href="{{ asset('css/content.css') }}" type="text/css" />
 
+		<link rel="stylesheet" href="{{ asset('redactor-js/redactor/redactor.css') }}" />
+
 		{% block stylesheets %}{% endblock %}
 	</head>
 	<body class="bg-soft-grey">
@@ -104,7 +106,7 @@
 
 				<div class="pull-right userbox">
 					{% if app.user %}
-					<img src="{{ app.user.jpegPhoto }}" alt="Titouan Galopin" title="Titouan Galopin" class="pull-left avatar" />
+					<img src="{{ asset('photos/'~app.user.avatar) }}" alt="{{ app.user.fullName }}" title="{{ app.user.fullName }}" class="pull-left avatar" />
 
 					<a href="" class="userbox-link">
 						<i class="icon-chevron-down userbox-link-icon"></i>
@@ -205,6 +207,8 @@
 		{% block page %}{% endblock %}
 
 		<script src="{{ asset('js/jquery-1.8.2.min.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('redactor-js/redactor/redactor.min.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('redactor-js/redactor/langs/fr.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('js/common.js') }}" type="text/javascript"></script>
 
 		{% block javascripts %}{% endblock %}

@@ -14,13 +14,6 @@ class User
 	protected $login;
 
 	/**
-	 * User password encrypted using the salt
-	 *
-	 * @var string
-	 */
-	protected $password;
-
-	/**
 	 * Student number
 	 *      => ldap[user][supannempid]
 	 * @var integer

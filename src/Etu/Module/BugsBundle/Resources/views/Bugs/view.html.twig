@@ -11,62 +11,130 @@
 		<li>
 			<a href="{{ path('bugs_index') }}">
 				<i class="icon-chevron-left"></i>
-				Retour à la liste
+				{{ 'bugs.view.page.back'|trans }}
 			</a>
 		</li>
 	</ul>
 
 	<div class="padding20-sides">
-		<h3 class="bugs-view-title">{{ bug.title }}</h3>
+		{% if message %}
+			<div class="alert alert-success">
+				{{ message|trans }}
+			</div>
+		{% endif %}
 
-		<div class="hidden-for-phones">
-			<div class="row-fluid">
-				<div class="span1">
-					<img src="{{ bug.user.avatarUrl }}" />
+		<h3>{{ bug.title }}</h3>
+
+		<hr />
+
+		{% if bug.assignee %}
+			<div class="alert alert-info">
+				{{ 'bugs.view.page.assigned_to'|trans({'%name%': bug.assignee.login}) }}
+			</div>
+
+			<hr />
+		{% endif %}
+
+		<div class="etu-comment">
+			<div class="etu-comment-avatar">
+				<img src="{{ asset('photos/'~bug.user.avatar) }}" />
+			</div>
+			<div class="etu-comment-infos">
+				<div class="etu-comment-date">
+					<small>
+						#1 - {{ bug.user.login }}
+					</small>
+					<small class="pull-right">{{ time_diff(bug.createdAt)|ucfirst }}</small>
 				</div>
-				<div class="span11">
-					<div class="well">
-						{{ bug.body }}
-					</div>
-					<p class="pull-right bugs-view-date">#1 - Posté le {{ bug.createdAt|date('d/m/Y à H:i') }}</p>
+				<div class="etu-comment-body">
+					{{ bug.body|nl2br }}
 				</div>
 			</div>
-		</div>
-
-		<div class="display-for-phones">
-			<div class="well">
-				{{ bug.body }}
-			</div>
-			<p class="pull-right bugs-view-date">#1 - Posté le {{ bug.createdAt|date('d/m/Y à H:i') }}</p>
 
 			<div class="clear"></div>
 		</div>
 
 		{% for key, comment in comments %}
-			<hr />
-
-			<div class="hidden-for-phones">
-				<div class="row-fluid">
-					<div class="span1">
-						<img src="{{ comment.user.avatarUrl }}" />
+			<div class="etu-comment">
+				<div class="etu-comment-avatar">
+					<img src="{{ asset('photos/'~comment.user.avatar) }}" />
+				</div>
+				<div class="etu-comment-infos">
+					<div class="etu-comment-date">
+						<small>
+							#{{ key+2 }} - {{ comment.user.login }}
+						</small>
+						<small class="pull-right">{{ time_diff(comment.createdAt)|ucfirst }}</small>
 					</div>
-					<div class="span11">
-						<div>
-							{{ comment.body }}
-						</div>
-						<p class="pull-right bugs-view-date">#{{ key + 2 }} - Posté le {{ comment.createdAt|date('d/m/Y à H:i') }}</p>
+					<div class="etu-comment-body">
+						{{ comment.body|nl2br }}
 					</div>
 				</div>
-			</div>
-
-			<div class="display-for-phones">
-				<div>
-					{{ comment.body }}
-				</div>
-				<p class="pull-right bugs-view-date">#{{ key + 2 }} - Posté le {{ comment.createdAt|date('d/m/Y à H:i') }}</p>
 
 				<div class="clear"></div>
 			</div>
 		{% endfor %}
+
+
+		<div class="bugs-view-comment">
+			<h4>{{ 'bugs.view.comment.comment'|trans }}</h4>
+
+			<form method="post">
+				<div class="control-group">
+					<div class="hidden">{{ form_label(form.body, 'bugs.view.comment.body'|trans) }}</div>
+					<div>{{ form_widget(form.body, {'attr': {'class': 'bugs-view-comment-textarea redactor'}}) }}</div>
+				</div>
+				<div class="control-group">
+					{{ form_rest(form) }}
+					<input type="submit" class="btn pull-right" value="{{ 'bugs.view.comment.comment'|trans }}" />
+				</div>
+			</form>
+		</div>
+
+		{% if app.user.hasPermission('bugs.admin') %}
+		<div class="bugs-view-comment hidden-for-phones">
+			<h4>{{ 'bugs.view.admin.title'|trans }}</h4>
+
+			<hr />
+
+			<div class="row-fluid">
+				<div class="span6">
+					<h5>{{ 'bugs.view.admin.assigne'|trans }}</h5>
+
+					<form method="post" action="" class="form-inline">
+						<input type="text" placeholder="{{ 'bugs.view.admin.assigne_placeholder'|trans }}" />
+						<button type="submit" class="btn">{{ 'bugs.view.admin.assigne'|trans }}</button>
+					</form>
+				</div>
+				<div class="span6">
+					<h5>{{ 'bugs.view.admin.edit_criticality'|trans }}</h5>
+
+					<form method="post" action="" class="form-inline">
+						{{ form_widget(updateForm.criticality) }}
+						<button type="submit" class="btn">{{ 'bugs.view.admin.edit'|trans }}</button>
+					</form>
+				</div>
+			</div>
+
+			<div class="row-fluid">
+				<div class="span6">
+					<h5>{{ 'bugs.view.admin.fix_with_commit'|trans }}</h5>
+
+					<form method="post" action="" class="form-inline">
+						<input type="text" placeholder="{{ 'bugs.view.admin.fix_with_commit_placeholder'|trans }}" />
+						<button type="submit" class="btn">{{ 'bugs.view.admin.fix'|trans }}</button>
+					</form>
+				</div>
+				<div class="span6">
+					<h5>{{ 'bugs.view.admin.fix_without_commit'|trans }}</h5>
+
+					<form method="post" action="" class="form-inline">
+						<button type="submit" class="btn">{{ 'bugs.view.admin.fix'|trans }}</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+
 	</div>
 {% endblock %}

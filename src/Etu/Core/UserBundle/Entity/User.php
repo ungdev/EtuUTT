@@ -8,11 +8,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * User
  *
- * @ORM\Table(name="etu_users", indexes={ @ORM\Index(name="search_idx", columns={"login", "mail"}) })
+ * @ORM\Table(name="etu_users", indexes={ @ORM\Index(name="search", columns={"login", "mail"}) })
  * @ORM\Entity
  */
 class User implements UserInterface, \Serializable
 {
+	const SEX_MALE = 'male';
+	const SEX_FEMALE = 'female';
+
     /**
      * @var integer
      *
@@ -34,161 +37,161 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @var string
 	 *
-	 * @ORM\Column(name="password", type="string", length=100)
+	 * @ORM\Column(name="password", type="string", length=100, nullable=true)
 	 */
 	protected $password;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="studentId", type="integer")
+     * @ORM\Column(name="studentId", type="integer", nullable=true)
      */
     protected $studentId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="mail", type="string", length=100)
+     * @ORM\Column(name="mail", type="string", length=100, nullable=true)
      */
     protected $mail;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="fullName", type="string", length=255)
+     * @ORM\Column(name="fullName", type="string", length=255, nullable=true)
      */
     protected $fullName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="firstName", type="string", length=255)
+     * @ORM\Column(name="firstName", type="string", length=255, nullable=true)
      */
     protected $firstName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lastName", type="string", length=255)
+     * @ORM\Column(name="lastName", type="string", length=255, nullable=true)
      */
     protected $lastName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="formation", type="string", length=255)
+     * @ORM\Column(name="formation", type="string", length=255, nullable=true)
      */
     protected $formation;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="niveau", type="string", length=255)
+     * @ORM\Column(name="niveau", type="string", length=255, nullable=true)
      */
     protected $niveau;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="filiere", type="string", length=255)
+     * @ORM\Column(name="filiere", type="string", length=255, nullable=true)
      */
     protected $filiere;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="phoneNumber", type="string", length=255)
+     * @ORM\Column(name="phoneNumber", type="string", length=255, nullable=true)
      */
     protected $phoneNumber;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
      */
     protected $title;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="room", type="string", length=255)
+     * @ORM\Column(name="room", type="string", length=255, nullable=true)
      */
     protected $room;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="avatar", type="string", length=255)
+	 * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
 	 */
 	protected $avatar;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="sex", type="string", length=50)
+	 * @ORM\Column(name="sex", type="string", length=50, nullable=true)
 	 */
 	protected $sex;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="nationality", type="string", length=50)
+	 * @ORM\Column(name="nationality", type="string", length=50, nullable=true)
 	 */
 	protected $nationality;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="adress", type="string", length=100)
+	 * @ORM\Column(name="adress", type="string", length=100, nullable=true)
 	 */
 	protected $adress;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="postalCode", type="string", length=50)
+	 * @ORM\Column(name="postalCode", type="string", length=50, nullable=true)
 	 */
 	protected $postalCode;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="city", type="string", length=100)
+	 * @ORM\Column(name="city", type="string", length=100, nullable=true)
 	 */
 	protected $city;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="country", type="string", length=50)
+	 * @ORM\Column(name="country", type="string", length=50, nullable=true)
 	 */
 	protected $country;
 
 	/**
 	 * @var \DateTime
 	 *
-	 * @ORM\Column(name="birthday", type="date")
+	 * @ORM\Column(name="birthday", type="date", nullable=true)
 	 */
 	protected $birthday;
 
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="age", type="integer")
+	 * @ORM\Column(name="age", type="integer", nullable=true)
 	 */
 	protected $age;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="personnalMail", type="string", length=100)
+	 * @ORM\Column(name="personnalMail", type="string", length=100, nullable=true)
 	 */
 	protected $personnalMail;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="language", type="string", length=10)
+	 * @ORM\Column(name="language", type="string", length=10, nullable=true)
 	 */
 	protected $language;
 
@@ -202,7 +205,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var boolean
 	 *
-	 * @ORM\Column(name="countNotifications", type="smallint")
+	 * @ORM\Column(name="countNotifications", type="smallint", nullable=true)
 	 */
 	protected $countNotifications;
 
@@ -210,7 +213,7 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *     > For trombi
 	 *
-	 * @ORM\Column(name="surnom", type="string", length=100)
+	 * @ORM\Column(name="surnom", type="string", length=100, nullable=true)
 	 */
 	protected $surnom;
 
@@ -218,7 +221,7 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *     > For trombi
 	 *
-	 * @ORM\Column(name="jadis", type="string", length=100)
+	 * @ORM\Column(name="jadis", type="string", length=100, nullable=true)
 	 */
 	protected $jadis;
 
@@ -226,7 +229,7 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *     > For trombi
 	 *
-	 * @ORM\Column(name="passions", type="text")
+	 * @ORM\Column(name="passions", type="text", nullable=true)
 	 */
 	protected $passions;
 
@@ -234,7 +237,7 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *     > For trombi
 	 *
-	 * @ORM\Column(name="website", type="string", length=100)
+	 * @ORM\Column(name="website", type="string", length=100, nullable=true)
 	 */
 	protected $website;
 
@@ -243,7 +246,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @var object
 	 *
-	 * @ORM\Column(name="ldapInformations", type="object")
+	 * @ORM\Column(name="ldapInformations", type="object", nullable=true)
 	 */
 	protected $ldapInformations;
 
@@ -255,6 +258,15 @@ class User implements UserInterface, \Serializable
 	 * @ORM\Column(name="keepActive", type="boolean")
 	 */
 	protected $keepActive;
+
+	/**
+	 * Permissions on EtuUTT
+	 *
+	 * @var boolean
+	 *
+	 * @ORM\Column(name="permissions", type="array")
+	 */
+	protected $permissions = array();
 
 
 
@@ -990,5 +1002,44 @@ class User implements UserInterface, \Serializable
 	public function getWebsite()
 	{
 		return $this->website;
+	}
+
+	/**
+	 * @param boolean $permissions
+	 * @return User
+	 */
+	public function setPermissions($permissions)
+	{
+		$this->permissions = $permissions;
+
+		return $this;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getPermissions()
+	{
+		return $this->permissions;
+	}
+
+	/**
+	 * @param string $permission
+	 * @return bool
+	 */
+	public function hasPermission($permission)
+	{
+		return in_array($permission, $this->permissions);
+	}
+
+	/**
+	 * @param string $permission
+	 * @return User
+	 */
+	public function addPermission($permission)
+	{
+		$this->permissions[] = $permission;
+
+		return $this;
 	}
 }

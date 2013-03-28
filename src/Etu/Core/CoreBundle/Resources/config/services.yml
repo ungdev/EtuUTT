@@ -13,6 +13,11 @@ parameters:
 
     etu.modules_boot_listener.class: Etu\Core\CoreBundle\Listener\ModulesBootListener
 
+    etu.twig.string_manipulation.class: Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension
+    etu.twig.notif_helper.class: Etu\Core\CoreBundle\Twig\Extension\NotificationHelperExtension
+
+    etu.notifs.helper_manager.class: Etu\Core\CoreBundle\Notification\Helper\HelperManager
+
 services:
 
     # Modules manager
@@ -59,3 +64,19 @@ services:
         arguments: [@security.context, @kernel]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    # String manipulation
+    etu.twig.string_manipulation:
+        class: %etu.twig.string_manipulation.class%
+        tags:
+            - { name: twig.extension }
+
+    # Notifications helpers
+    etu.notifs.helper_manager:
+        class: %etu.notifs.helper_manager.class%
+
+    etu.twig.notif_helper:
+        class: %etu.twig.notif_helper.class%
+        arguments: [@etu.notifs.helper_manager]
+        tags:
+            - { name: twig.extension }

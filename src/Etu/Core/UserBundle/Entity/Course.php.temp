@@ -19,7 +19,7 @@ class Course
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
 	/**
 	 * @var User $user
@@ -27,42 +27,42 @@ class Course
 	 * @ORM\ManyToOne(targetEntity="User")
 	 * @ORM\JoinColumn()
 	 */
-    private $user;
+    protected $user;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="start", type="time")
      */
-    private $start;
+    protected $start;
 
     /**
      * @var string
      *
      * @ORM\Column(name="end", type="time")
      */
-    private $end;
+    protected $end;
 
 	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="week", type="string", length=10)
 	 */
-	private $week;
+	protected $week;
 
 	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="fullName", type="string", length=50)
 	 */
-	private $type;
+	protected $type;
 
 	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="room", type="string", length=50)
 	 */
-	private $room;
+	protected $room;
 
 	/**
 	 * @param string $end

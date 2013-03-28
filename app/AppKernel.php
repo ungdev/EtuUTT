@@ -21,24 +21,34 @@ class AppKernel extends EtuKernel
 	public function registerBundles()
     {
 	    /*
-	     * Basic bundles, required to load the rest
+	     * Basic bundles, required to load the website
 	     */
         $bundles = array(
+
+	        // Symfony
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
+	        // Disable Assetic for the developpment
             // new Symfony\Bundle\AsseticBundle\AsseticBundle(),
 
+	        // Doctrine
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
 
+	        // Sensio extra
 	        new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
+	        // JMS extra
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
 
+	        // Knp libraries
+	        new Knp\Bundle\TimeBundle\KnpTimeBundle(),
+
+	        // EtuUTT
             new Etu\Core\CoreBundle\EtuCoreBundle(),
             new Etu\Core\UserBundle\EtuUserBundle(),
         );

@@ -16,6 +16,33 @@ bugs:
             author: Auteur
             created_at: Date de création
             no_bug_opened: Aucun bug ouvert signalé pour le moment
+            assigned_to: assigné à %name%
     view:
         page:
+            back: Retour à la liste
             title: Détails du bug
+            posted_at: Posté le
+            assigned_to: Ce bug est assigné à %name%
+        comment:
+            body: Commentaire
+            comment: Commenter
+        message:
+            creation: Votre commentaire a été ajouté
+        admin:
+            title: Administrer
+            assigne: Assigner
+            assigne_placeholder: Assigner à ...
+            edit_criticality: Modifier la criticité
+            edit: Modifier
+            fix_with_commit: Résoudre avec un commit
+            fix_with_commit_placeholder: Commit ...
+            fix_without_commit: Résoudre sans commit
+            fix_with_commit_placeholder: Commit ...
+            fix: Résoudre
+            criticality:
+                critical: Problème critique
+                security: Problème de sécurité
+                major: Problème majeur
+                minor: Problème mineur
+                visual: Problème visuel
+                typo: Coquille

@@ -61,3 +61,14 @@ $('body').click(function() {
 $('.userbox a').click(function() {
 	return true;
 });
+
+$(function() {
+	$('.redactor').redactor({
+		fixed: true,
+		lang: 'es',
+		buttons: ['formatting', '|', 'bold', 'italic', 'deleted', '|',
+			'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
+			'image', 'video', 'file', 'table', 'link', '|',
+			'fontcolor', 'backcolor', '|', 'alignment']
+	});
+});

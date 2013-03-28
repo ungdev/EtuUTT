@@ -2,8 +2,9 @@
 # Global strings: title, logo, footer, etc.
 # Used in base.html.twig
 base:
-    # Title
     title: Site étudiant de l'UTT
+    date: %d/%m/%y à %hh%i
+    by: par
 
     # Logo
     logo:

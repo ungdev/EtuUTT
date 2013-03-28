@@ -14,27 +14,37 @@ use Etu\Core\UserBundle\Entity\User;
 class Issue
 {
 	/**
+	 * Issues criticalities
+	 */
+	const CRITICALITY_TYPO = 'typo';
+	const CRITICALITY_VISUAL = 'visual';
+	const CRITICALITY_MINOR = 'minor';
+	const CRITICALITY_MAJOR = 'major';
+	const CRITICALITY_CRITICAL = 'critical';
+	const CRITICALITY_SECURITY = 'security';
+
+	/**
 	 * @var integer
 	 *
 	 * @ORM\Column(name="id", type="integer")
 	 * @ORM\Id
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
-	private $id;
+	protected $id;
 
 	/**
 	 * @var integer
 	 *
 	 * @ORM\Column(name="number", type="integer")
 	 */
-	private $number;
+	protected $number;
 
 	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="title", type="string", length=100)
 	 */
-	private $title;
+	protected $title;
 
 	/**
 	 * @var User $user
@@ -42,21 +52,21 @@ class Issue
 	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
 	 * @ORM\JoinColumn()
 	 */
-	private $user;
+	protected $user;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="type", type="string", length=20)
+	 * @ORM\Column(name="criticality", type="string", length=20)
 	 */
-	private $type;
+	protected $criticality;
 
 	/**
 	 * @var boolean
 	 *
 	 * @ORM\Column(name="is_opened", type="boolean")
 	 */
-	private $isOpened;
+	protected $isOpened;
 
 	/**
 	 * @var User $user
@@ -64,33 +74,297 @@ class Issue
 	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
 	 * @ORM\JoinColumn()
 	 */
-	private $assignee;
+	protected $assignee;
 
 	/**
 	 * @var \DateTime
 	 *
 	 * @ORM\Column(name="createdAt", type="datetime")
 	 */
-	private $createdAt;
+	protected $createdAt;
 
 	/**
 	 * @var \DateTime
 	 *
 	 * @ORM\Column(name="updatedAt", type="datetime")
 	 */
-	private $updatedAt;
+	protected $updatedAt;
 
 	/**
 	 * @var \DateTime
 	 *
 	 * @ORM\Column(name="closedAt", type="datetime")
 	 */
-	private $closedAt;
+	protected $closedAt;
 
 	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="body", type="text")
 	 */
-	private $body;
+	protected $body;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="commit", type="string", length=255)
+	 */
+	protected $commit;
+
+
+	/**
+	 * @param \Etu\Core\UserBundle\Entity\User $assignee
+	 * @return Issue
+	 */
+	public function setAssignee($assignee)
+	{
+		$this->assignee = $assignee;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Etu\Core\UserBundle\Entity\User
+	 */
+	public function getAssignee()
+	{
+		return $this->assignee;
+	}
+
+	/**
+	 * @param string $body
+	 * @return Issue
+	 */
+	public function setBody($body)
+	{
+		$this->body = $body;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getBody()
+	{
+		return $this->body;
+	}
+
+	/**
+	 * @param \DateTime $closedAt
+	 * @return Issue
+	 */
+	public function setClosedAt($closedAt)
+	{
+		$this->closedAt = $closedAt;
+
+		return $this;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getClosedAt()
+	{
+		return $this->closedAt;
+	}
+
+	/**
+	 * @param \DateTime $createdAt
+	 * @return Issue
+	 */
+	public function setCreatedAt($createdAt)
+	{
+		$this->createdAt = $createdAt;
+
+		return $this;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getCreatedAt()
+	{
+		return $this->createdAt;
+	}
+
+	/**
+	 * @param int $id
+	 * @return Issue
+	 */
+	public function setId($id)
+	{
+		$this->id = $id;
+
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
+
+	/**
+	 * @param boolean $isOpened
+	 * @return Issue
+	 */
+	public function setIsOpened($isOpened)
+	{
+		$this->isOpened = $isOpened;
+
+		return $this;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getIsOpened()
+	{
+		return $this->isOpened;
+	}
+
+	/**
+	 * @param int $number
+	 * @return Issue
+	 */
+	public function setNumber($number)
+	{
+		$this->number = $number;
+
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getNumber()
+	{
+		return $this->number;
+	}
+
+	/**
+	 * @param string $title
+	 * @return Issue
+	 */
+	public function setTitle($title)
+	{
+		$this->title = $title;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTitle()
+	{
+		return $this->title;
+	}
+
+	/**
+	 * @param string $type
+	 * @return Issue
+	 */
+	public function setType($type)
+	{
+		$this->type = $type;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getType()
+	{
+		return $this->type;
+	}
+
+	/**
+	 * @param \DateTime $updatedAt
+	 * @return Issue
+	 */
+	public function setUpdatedAt($updatedAt)
+	{
+		$this->updatedAt = $updatedAt;
+
+		return $this;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getUpdatedAt()
+	{
+		return $this->updatedAt;
+	}
+
+	/**
+	 * @param \Etu\Core\UserBundle\Entity\User $user
+	 * @return Issue
+	 */
+	public function setUser($user)
+	{
+		$this->user = $user;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Etu\Core\UserBundle\Entity\User
+	 */
+	public function getUser()
+	{
+		return $this->user;
+	}
+
+	/**
+	 * @param string $commit
+	 * @return Issue
+	 */
+	public function setCommit($commit)
+	{
+		$this->commit = $commit;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCommit()
+	{
+		return $this->commit;
+	}
+
+	/**
+	 * @param string $criticality
+	 * @return Issue
+	 */
+	public function setCriticality($criticality)
+	{
+		if (in_array($criticality, array(
+			self::CRITICALITY_CRITICAL,
+			self::CRITICALITY_MAJOR,
+			self::CRITICALITY_MINOR,
+			self::CRITICALITY_SECURITY,
+			self::CRITICALITY_VISUAL,
+			self::CRITICALITY_TYPO,
+		))) {
+				$this->criticality = $criticality;
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCriticality()
+	{
+		return $this->criticality;
+	}
 }

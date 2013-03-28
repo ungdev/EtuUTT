@@ -3,19 +3,28 @@ parameters:
     etu.user.authentication_listener.class: Etu\Core\UserBundle\Security\Listener\KernelListener
     etu.user.crypting.class: Etu\Core\UserBundle\Security\Encrypt\Encrypt
 
+    etu.notifs.followed_helper.class: Etu\Core\UserBundle\Notification\Helper\FollowedHelper
+
     etu.ldap.host: ldap.utt.fr
     etu.ldap.port: 389
 
 services:
 
     # Users authentication
-   etu.user.authentication_listener:
+    etu.user.authentication_listener:
         class: %etu.user.authentication_listener.class%
         arguments: [@security.context, @session]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
     # Password crypting
-   etu.user.crypting:
+    etu.user.crypting:
         class: %etu.user.crypting.class%
         arguments: [%secret%]
+
+    # Notificaions helper
+    etu.notifs.followed_helper:
+        class: %etu.notifs.followed_helper.class%
+        arguments: [@twig]
+        tags:
+            - { name: etu.notifs_helper }

@@ -20,7 +20,7 @@ class Comment
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
 	/**
 	 * @var User $user
@@ -28,29 +28,52 @@ class Comment
 	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
 	 * @ORM\JoinColumn()
 	 */
-    private $user;
+	protected $user;
+
+	/**
+	 * @var Issue $user
+	 *
+	 * @ORM\ManyToOne(targetEntity="Issue")
+	 * @ORM\JoinColumn()
+	 */
+	protected $issue;
 
     /**
      * @var string
      *
      * @ORM\Column(name="body", type="text")
      */
-    private $body;
+    protected $body;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="createdAt", type="datetime")
      */
-    private $createdAt;
+    protected $createdAt;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="updatedAt", type="datetime")
-     */
-    private $updatedAt;
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="updatedAt", type="datetime")
+	 */
+	protected $updatedAt;
 
+	/**
+	 * Is this comment and update of the issue or a real user comment?
+	 *
+	 * @var boolean
+	 *
+	 * @ORM\Column(name="isStateUpdate", type="boolean")
+	 */
+	protected $isStateUpdate = false;
+
+
+	public function __construct()
+	{
+		$this->createdAt = new \DateTime();
+		$this->updatedAt = new \DateTime();
+	}
 
     /**
      * Get id
@@ -84,6 +107,25 @@ class Comment
     {
         return $this->user;
     }
+
+	/**
+	 * @return \Etu\Module\BugsBundle\Entity\Issue
+	 */
+	public function getIssue()
+	{
+		return $this->issue;
+	}
+
+	/**
+	 * @param \Etu\Module\BugsBundle\Entity\Issue $issue
+	 * @return Comment
+	 */
+	public function setIssue($issue)
+	{
+		$this->issue = $issue;
+
+		return $this;
+	}
 
     /**
      * Set body
@@ -153,4 +195,23 @@ class Comment
     {
         return $this->updatedAt;
     }
+
+	/**
+	 * @param boolean $isStateUpdate
+	 * @return Comment
+	 */
+	public function setIsStateUpdate($isStateUpdate)
+	{
+		$this->isStateUpdate = $isStateUpdate;
+
+		return $this;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getIsStateUpdate()
+	{
+		return $this->isStateUpdate;
+	}
 }

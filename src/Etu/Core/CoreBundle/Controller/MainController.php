@@ -3,6 +3,7 @@
 namespace Etu\Core\CoreBundle\Controller;
 
 
+use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
@@ -37,6 +38,15 @@ class MainController extends Controller
 				->end()
 			->end();
 
-		return array();
+		$em = $this->getDoctrine()->getManager();
+
+		$notif = new Notification();
+		$notif->setUser($this->getUser());
+		$notif->setModule('user');
+		$notif->setHelper('user_followed');
+		$notif->setIsNew(true);
+		$notif->addEntity($em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => 'ladunean')));
+
+		return array('notif' => $notif);
 	}
 }
