@@ -2,13 +2,14 @@
 
 namespace Etu\Core\UserBundle\Security\Listener;
 
+use Doctrine\Bundle\DoctrineBundle\Registry;
+
+use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Security\Authentication\AnonymousToken;
-use Etu\Core\UserBundle\Security\Authentication\AnonymousUser;
 use Etu\Core\UserBundle\Security\Authentication\UserToken;
 
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\SecurityContext;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Listener to connect CAS and Symfony.
@@ -28,15 +29,22 @@ class KernelListener
 	protected $session;
 
 	/**
+	 * @var Registry
+	 */
+	protected $doctrine;
+
+	/**
 	 * Constructor
 	 *
 	 * @param SecurityContext $securityContext
 	 * @param Session         $session
+	 * @param Registry        $doctrine
 	 */
-	public function __construct(SecurityContext $securityContext, Session $session)
+	public function __construct(SecurityContext $securityContext, Session $session, Registry $doctrine)
 	{
 		$this->securityContext = $securityContext;
 		$this->session = $session;
+		$this->doctrine = $doctrine;
 	}
 
 	/**
@@ -44,8 +52,12 @@ class KernelListener
 	 */
 	public function onKernelRequest()
 	{
-		if ($this->session->get('user') instanceof UserInterface) {
-			$this->securityContext->setToken(new UserToken($this->session->get('user')));
+		if (is_int($this->session->get('user')) && $this->session->get('user') > 0) {
+			$user = $this->doctrine->getManager()
+				->getRepository('EtuUserBundle:User')
+				->findOneBy(array('id' => $this->session->get('user')));
+
+			$this->securityContext->setToken(new UserToken($user));
 		} else {
 			$this->securityContext->setToken(new AnonymousToken());
 		}

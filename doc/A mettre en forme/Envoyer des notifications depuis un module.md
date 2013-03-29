@@ -5,10 +5,7 @@ Envoyer des notifications depuis un module
 Le système de notifications d'EtuUTT est géré par le CoreBundle. Il utilise
 les tags du "service container" de Symfony.
 
-Pour ajouter une notification, il faut d'abord créer un type de notification
-(par exemple, il existe des types "mail", "event", "uv", ...).
-
-Le système de notifications utilise le concept de Helper : un helper est une
+Pour ajouter une notification, il faut d'abord créer un Helper : une
 classe qui sait comment afficher un type précis de notification.
 
 Créons donc notre helper, en prenant l'exemple d'une notification d'évènement:

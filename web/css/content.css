@@ -154,33 +154,47 @@
 }
 
 /*
- * Bugs et suggestions
+ * Profil et compte utilisateur
  */
-.bugs-tabs {
-	background: #f6f6f6;
+.profile-infos-label {
+	display: block;
+	float: left;
+	width: 35%;
+	font-weight: bold;
 }
-.bugs-tabs .active a {
-	border-top: 0;
-	border-left: 0;
-	border-radius: 0;
-	padding-top: 9px;
+.profile-infos-value {
+	margin-left: 35%;
 }
-.bugs-tabs .active a:hover {
-	border-top: 0;
-	border-left: 0;
-	border-radius: 0;
-	padding-top: 9px;
-}
-.bugs-tabs > li > a {
-	border-top: 0;
-	border-left: 0;
-	border-radius: 0;
-	padding-top: 9px;
-}
-.bugs-tabs-resolved-active {
-	border-left: 1px solid #e5e5e5;
+.profile-block-action {
+	text-align: right;
+	padding-top: 10px;
+	padding-right: 22px;
 }
 
+.profileEdit-avatar {
+	text-align: center;
+}
+.profileEdit-avatar img {
+	width: 50%;
+}
+.profileEdit-fixedValue {
+	font-weight: bold;
+	padding-top: 4px;
+}
+.profileEdit-privacy-select {
+	width: 100px;
+}
+.avatarUploadBox-form {
+	text-align: center;
+}
+
+.profile-avatar {
+	text-align: center;
+}
+
+/*
+ * Bugs et suggestions
+ */
 .bugs-table-number {
 	width: 25px;
 }
@@ -202,7 +216,17 @@
 	height: 150px;
 }
 
+@media screen and (max-width: 1000px) {
+	.profile-infos-value {
+		margin-left: 0;
+	}
+}
+
 @media screen and (max-width: 775px) {
+
+	.profile-infos-value {
+		margin-left: 0;
+	}
 
 	.etu-comment-avatar {
 		display: none;

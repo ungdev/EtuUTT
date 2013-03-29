@@ -103,7 +103,7 @@ ask you to keep or delete him or her.
 
 		// Add users in database from LDAP
 		if (empty($toAddInDb) && empty($toRemoveFromDb)) {
-			$output->writeln("Database already sync with LDAP.");
+			$output->writeln("Database already sync with LDAP.\n");
 			return;
 		}
 
@@ -118,6 +118,12 @@ ask you to keep or delete him or her.
 
 		foreach ($toAddInDb as $login) {
 			$ldapUser = $ldapStudents[$login];
+
+			if (file_exists(__DIR__.'/../../../../../web/photos/'.$ldapUser->getLogin().'.jpg')) {
+				$i++;
+				$bar->update($i);
+				continue;
+			}
 
 			// Resize photo
 			try {
@@ -149,7 +155,6 @@ ask you to keep or delete him or her.
 			$user->setLdapInformations($ldapUser);
 			$user->setIsStudent(true);
 			$user->setKeepActive(false);
-			$user->setCountNotifications(0);
 
 			$em->persist($user);
 
@@ -157,7 +162,7 @@ ask you to keep or delete him or her.
 			$bar->update($i);
 		}
 
-		$output->writeln("Importing users ...");
+		$output->writeln("\nImporting users ...");
 
 		$em->flush();
 

@@ -2,6 +2,8 @@
 
 namespace Etu\Core\CoreBundle\Menu\UserMenu;
 
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
+
 /**
  * Default user menu. Edited by controllers on the fly.
  */
@@ -26,9 +28,9 @@ class UserMenuBuilder
 	 * Constructor
 	 * Initialize some default items.
 	 *
-	 * @param \Symfony\Bundle\FrameworkBundle\Routing\Router $router
+	 * @param Router $router
 	 */
-	public function __construct(\Symfony\Bundle\FrameworkBundle\Routing\Router $router)
+	public function __construct(Router $router)
 	{
 		$this->items = array();
 		$this->lastPosition = 0;
@@ -41,7 +43,7 @@ class UserMenuBuilder
 			->end()
 			->add('base.user.menu.account')
 				->setIcon('etu-icon-user')
-				->setUrl('')
+				->setUrl($router->generate('user_profile'))
 			->end()
 			->add('base.user.menu.buckutt')
 				->setIcon('etu-icon-duck')

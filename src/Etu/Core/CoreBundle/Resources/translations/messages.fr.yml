@@ -45,6 +45,11 @@ base:
             logout: Déconnexion
             help: Aide
 
+        # Sex
+        sex:
+            male: Homme
+            female: Femme
+
     # Sidebar
     sidebar:
         services:

@@ -27,6 +27,35 @@ a:hover {
 	font-weight: lighter;
 }
 
+/* Block */
+.block {
+	background: #FFFFFF;
+	border: 1px solid #DDDDDD;
+	border-radius: 4px;
+	margin: 15px 0;
+	padding: 39px 0 14px;
+	position: relative;
+}
+.block-title {
+	background: #F5F5F5;
+	border: 1px solid #DDDDDD;
+	border-radius: 4px 0 4px 0;
+	color: #9DA0A4;
+	font-size: 12px;
+	font-weight: bold;
+	left: -1px;
+	padding: 3px 7px;
+	position: absolute;
+	top: -1px;
+}
+.subblock {
+	border-top: 1px solid #DDDDDD;
+	padding: 5px 7px;
+}
+.subblock-first {
+	border-top: 0;
+}
+
 /* Clear the float */
 .clear {
 	clear: both;

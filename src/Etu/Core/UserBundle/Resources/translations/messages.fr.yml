@@ -1,1 +1,55 @@
 
+user:
+
+    # Global informations privacy
+    privacy:
+        public: Public
+        private: Privé
+
+    # Authentication
+    auth:
+        confirm: Vous êtes bien connecté
+
+    # Profile
+    profile:
+        completion: Votre profil est complété à %completion% %. Complètez-le entièrement pour obtenir un badge !
+        completed: Votre profil est complet. Merci de votre participation !
+        title: Mon profil
+        edit: Modifier
+        edit_avatar: Modifier ma photo
+        age: %age% ans
+        titles:
+            informations: Mes informations
+            trombi: Trombinoscope
+            badges: Badges
+
+    # Profile edition
+    profileEdit:
+        confirm: Vous avez bien modifié votre compte
+        name: Nom
+        mail: E-mail
+        studentId: Numéro étudiant
+        formation: Formation
+        phoneNumber: Numéro de tél.
+        sex: Sexe
+        nationality: Nationalité
+        adress: Adresse
+        postalCode: Code postal
+        city: Ville
+        country: Pays
+        birthday: Date de naissance
+        birthdayOnlyAge:
+            label: Afficher mon âge
+            desc: Afficher l'âge sur le profil (seulement si la date de naissance est privée)
+        personnalMail: E-mail perso.
+        language: Langue d'affichage
+        website: Site web (public)
+        facebook: Facebook (public)
+        twitter: Twitter (public)
+        linkedin: LinkedIn (public)
+        viadeo: Viadeo (public)
+
+    # Avatar upload
+    avatarUpload:
+        file: Image
+        confirm: Vous avez bien modifié votre photo

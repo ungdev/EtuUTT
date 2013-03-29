@@ -14,7 +14,9 @@ class EtuModuleBugsBundle extends Module
 	 */
 	public function mustBoot()
 	{
-		return $this->container->get('session')->get('user') instanceof UserInterface;
+		return
+			is_int($this->container->get('session')->get('user'))
+				&& $this->container->get('session')->get('user') > 0;
 	}
 
 	/**

@@ -3,6 +3,10 @@
 namespace Etu\Core\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Imagine\Gd\Image;
+use Imagine\Gd\Imagine;
+use Imagine\Image\Box;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -15,6 +19,9 @@ class User implements UserInterface, \Serializable
 {
 	const SEX_MALE = 'male';
 	const SEX_FEMALE = 'female';
+
+	const PRIVACY_PUBLIC = 100;
+	const PRIVACY_PRIVATE = 200;
 
     /**
      * @var integer
@@ -97,12 +104,19 @@ class User implements UserInterface, \Serializable
      */
     protected $filiere;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="phoneNumber", type="string", length=255, nullable=true)
-     */
-    protected $phoneNumber;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="phoneNumber", type="string", length=30, nullable=true)
+	 */
+	protected $phoneNumber;
+
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="phoneNumberPrivacy", type="integer")
+	 */
+	protected $phoneNumberPrivacy;
 
     /**
      * @var string
@@ -133,11 +147,25 @@ class User implements UserInterface, \Serializable
 	protected $sex;
 
 	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="sexPrivacy", type="integer")
+	 */
+	protected $sexPrivacy;
+
+	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="nationality", type="string", length=50, nullable=true)
 	 */
 	protected $nationality;
+
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="nationalityPrivacy", type="integer")
+	 */
+	protected $nationalityPrivacy;
 
 	/**
 	 * @var string
@@ -147,11 +175,25 @@ class User implements UserInterface, \Serializable
 	protected $adress;
 
 	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="adressPrivacy", type="integer")
+	 */
+	protected $adressPrivacy;
+
+	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="postalCode", type="string", length=50, nullable=true)
 	 */
 	protected $postalCode;
+
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="postalCodePrivacy", type="integer")
+	 */
+	protected $postalCodePrivacy;
 
 	/**
 	 * @var string
@@ -161,11 +203,25 @@ class User implements UserInterface, \Serializable
 	protected $city;
 
 	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="cityPrivacy", type="integer")
+	 */
+	protected $cityPrivacy;
+
+	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="country", type="string", length=50, nullable=true)
 	 */
 	protected $country;
+
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="countryPrivacy", type="integer")
+	 */
+	protected $countryPrivacy;
 
 	/**
 	 * @var \DateTime
@@ -177,9 +233,16 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="age", type="integer", nullable=true)
+	 * @ORM\Column(name="birthdayPrivacy", type="integer")
 	 */
-	protected $age;
+	protected $birthdayPrivacy;
+
+	/**
+	 * @var boolean
+	 *
+	 * @ORM\Column(name="birthdayDisplayOnlyAge", type="boolean")
+	 */
+	protected $birthdayDisplayOnlyAge;
 
 	/**
 	 * @var string
@@ -187,6 +250,13 @@ class User implements UserInterface, \Serializable
 	 * @ORM\Column(name="personnalMail", type="string", length=100, nullable=true)
 	 */
 	protected $personnalMail;
+
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="personnalMailPrivacy", type="integer")
+	 */
+	protected $personnalMailPrivacy;
 
 	/**
 	 * @var string
@@ -201,13 +271,6 @@ class User implements UserInterface, \Serializable
 	 * @ORM\Column(name="isStudent", type="boolean")
 	 */
 	protected $isStudent;
-
-	/**
-	 * @var boolean
-	 *
-	 * @ORM\Column(name="countNotifications", type="smallint", nullable=true)
-	 */
-	protected $countNotifications;
 
 	/**
 	 * @var string
@@ -235,11 +298,38 @@ class User implements UserInterface, \Serializable
 
 	/**
 	 * @var string
-	 *     > For trombi
 	 *
 	 * @ORM\Column(name="website", type="string", length=100, nullable=true)
 	 */
 	protected $website;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="facebook", type="string", length=100, nullable=true)
+	 */
+	protected $facebook;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="twitter", type="string", length=100, nullable=true)
+	 */
+	protected $twitter;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="linkedin", type="string", length=100, nullable=true)
+	 */
+	protected $linkedin;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="viadeo", type="string", length=100, nullable=true)
+	 */
+	protected $viadeo;
 
 	/**
 	 * LDAP root informations
@@ -262,11 +352,27 @@ class User implements UserInterface, \Serializable
 	/**
 	 * Permissions on EtuUTT
 	 *
-	 * @var boolean
+	 * @var array
 	 *
 	 * @ORM\Column(name="permissions", type="array")
 	 */
 	protected $permissions = array();
+
+	/**
+	 * Badges
+	 *
+	 * @var array
+	 *
+	 * @ORM\Column(name="badges", type="array")
+	 */
+	protected $badges = array();
+
+	/**
+	 * Temporary variable to store uploaded file during photo update
+	 *
+	 * @var UploadedFile
+	 */
+	public $file;
 
 
 
@@ -274,6 +380,68 @@ class User implements UserInterface, \Serializable
 	 * Methods
 	 */
 
+	public function __construct()
+	{
+		$this->keepActive = false;
+		$this->phoneNumberPrivacy = self::PRIVACY_PUBLIC;
+		$this->sexPrivacy = self::PRIVACY_PUBLIC;
+		$this->nationalityPrivacy = self::PRIVACY_PUBLIC;
+		$this->adressPrivacy = self::PRIVACY_PUBLIC;
+		$this->postalCodePrivacy = self::PRIVACY_PUBLIC;
+		$this->cityPrivacy = self::PRIVACY_PUBLIC;
+		$this->countryPrivacy = self::PRIVACY_PUBLIC;
+		$this->birthdayPrivacy = self::PRIVACY_PUBLIC;
+		$this->birthdayDisplayOnlyAge = false;
+		$this->personnalMailPrivacy = self::PRIVACY_PUBLIC;
+	}
+
+	/**
+	 * Upload the photo
+	 *
+	 * @return boolean
+	 */
+	public function upload() {
+		if (null === $this->file) {
+			return false;
+		}
+
+		// Upload and resize
+		$imagine = new Imagine();
+
+		$image = $imagine->open($this->file->getPathname());
+
+		$image->thumbnail(new Box(200, 200), Image::THUMBNAIL_OUTBOUND)->save(
+			__DIR__ . '/../../../../../web/photos/'.$this->getLogin().'.jpg'
+		);
+
+		$this->avatar = $this->getLogin().'.jpg';
+
+		return true;
+	}
+
+	/**
+	 * @return integer
+	 */
+	public function getProfileCompletion()
+	{
+		$infos = array(
+			$this->phoneNumber, $this->sex, $this->nationality, $this->adress, $this->postalCode, $this->city,
+			$this->country, $this->birthday, $this->personnalMail, $this->surnom, $this->jadis, $this->passions
+		);
+
+		$completion = 0;
+		$count = 0;
+
+		foreach ($infos as $value) {
+			$count++;
+
+			if (! empty($value)) {
+				$completion++;
+			}
+		}
+
+		return round($completion / $count, 2) * 100;
+	}
 
 	/**
 	 * @inheritDoc
@@ -342,7 +510,6 @@ class User implements UserInterface, \Serializable
 			$this->city,
 			$this->country,
 			$this->birthday,
-			$this->age,
 			$this->personnalMail,
 			$this->language,
 			$this->isStudent,
@@ -383,7 +550,6 @@ class User implements UserInterface, \Serializable
 			$this->city,
 			$this->country,
 			$this->birthday,
-			$this->age,
 			$this->personnalMail,
 			$this->language,
 			$this->isStudent,
@@ -413,25 +579,6 @@ class User implements UserInterface, \Serializable
 	public function getAdress()
 	{
 		return $this->adress;
-	}
-
-	/**
-	 * @param int $age
-	 * @return User
-	 */
-	public function setAge($age)
-	{
-		$this->age = $age;
-
-		return $this;
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getAge()
-	{
-		return $this->age;
 	}
 
 	/**
@@ -473,6 +620,14 @@ class User implements UserInterface, \Serializable
 	}
 
 	/**
+	 * @return integer
+	 */
+	public function getAge()
+	{
+		return $this->birthday->diff(new \DateTime())->y;
+	}
+
+	/**
 	 * @param string $city
 	 * @return User
 	 */
@@ -489,25 +644,6 @@ class User implements UserInterface, \Serializable
 	public function getCity()
 	{
 		return $this->city;
-	}
-
-	/**
-	 * @param boolean $countNotifications
-	 * @return User
-	 */
-	public function setCountNotifications($countNotifications)
-	{
-		$this->countNotifications = $countNotifications;
-
-		return $this;
-	}
-
-	/**
-	 * @return boolean
-	 */
-	public function getCountNotifications()
-	{
-		return $this->countNotifications;
 	}
 
 	/**
@@ -535,6 +671,10 @@ class User implements UserInterface, \Serializable
 	 */
 	public function setFiliere($filiere)
 	{
+		if ($filiere == 'NC') {
+			$filiere = null;
+		}
+
 		$this->filiere = $filiere;
 
 		return $this;
@@ -573,6 +713,10 @@ class User implements UserInterface, \Serializable
 	 */
 	public function setFormation($formation)
 	{
+		if ($formation == 'NC') {
+			$formation = null;
+		}
+
 		$this->formation = $formation;
 
 		return $this;
@@ -801,6 +945,10 @@ class User implements UserInterface, \Serializable
 	 */
 	public function setNiveau($niveau)
 	{
+		if ($niveau == 'NC') {
+			$niveau = null;
+		}
+
 		$this->niveau = $niveau;
 
 		return $this;
@@ -858,6 +1006,10 @@ class User implements UserInterface, \Serializable
 	 */
 	public function setPhoneNumber($phoneNumber)
 	{
+		if ($phoneNumber == 'NC') {
+			$phoneNumber = null;
+		}
+
 		$this->phoneNumber = $phoneNumber;
 
 		return $this;
@@ -896,6 +1048,10 @@ class User implements UserInterface, \Serializable
 	 */
 	public function setRoom($room)
 	{
+		if ($room == 'NC') {
+			$room = null;
+		}
+
 		$this->room = $room;
 
 		return $this;
@@ -934,6 +1090,10 @@ class User implements UserInterface, \Serializable
 	 */
 	public function setStudentId($studentId)
 	{
+		if ($studentId == 'NC') {
+			$studentId = null;
+		}
+
 		$this->studentId = $studentId;
 
 		return $this;
@@ -972,6 +1132,10 @@ class User implements UserInterface, \Serializable
 	 */
 	public function setTitle($title)
 	{
+		if ($title == 'NC') {
+			$title = null;
+		}
+
 		$this->title = $title;
 
 		return $this;
@@ -1041,5 +1205,376 @@ class User implements UserInterface, \Serializable
 		$this->permissions[] = $permission;
 
 		return $this;
+	}
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return User
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Set phoneNumberPrivacy
+     *
+     * @param integer $phoneNumberPrivacy
+     * @return User
+     */
+    public function setPhoneNumberPrivacy($phoneNumberPrivacy)
+    {
+        $this->phoneNumberPrivacy = $phoneNumberPrivacy;
+
+        return $this;
+    }
+
+    /**
+     * Get phoneNumberPrivacy
+     *
+     * @return integer
+     */
+    public function getPhoneNumberPrivacy()
+    {
+        return $this->phoneNumberPrivacy;
+    }
+
+    /**
+     * Set sexPrivacy
+     *
+     * @param integer $sexPrivacy
+     * @return User
+     */
+    public function setSexPrivacy($sexPrivacy)
+    {
+        $this->sexPrivacy = $sexPrivacy;
+
+        return $this;
+    }
+
+    /**
+     * Get sexPrivacy
+     *
+     * @return integer
+     */
+    public function getSexPrivacy()
+    {
+        return $this->sexPrivacy;
+    }
+
+    /**
+     * Set nationalityPrivacy
+     *
+     * @param integer $nationalityPrivacy
+     * @return User
+     */
+    public function setNationalityPrivacy($nationalityPrivacy)
+    {
+        $this->nationalityPrivacy = $nationalityPrivacy;
+
+        return $this;
+    }
+
+    /**
+     * Get nationalityPrivacy
+     *
+     * @return integer
+     */
+    public function getNationalityPrivacy()
+    {
+        return $this->nationalityPrivacy;
+    }
+
+    /**
+     * Set adressPrivacy
+     *
+     * @param integer $adressPrivacy
+     * @return User
+     */
+    public function setAdressPrivacy($adressPrivacy)
+    {
+        $this->adressPrivacy = $adressPrivacy;
+
+        return $this;
+    }
+
+    /**
+     * Get adressPrivacy
+     *
+     * @return integer
+     */
+    public function getAdressPrivacy()
+    {
+        return $this->adressPrivacy;
+    }
+
+    /**
+     * Set postalCodePrivacy
+     *
+     * @param integer $postalCodePrivacy
+     * @return User
+     */
+    public function setPostalCodePrivacy($postalCodePrivacy)
+    {
+        $this->postalCodePrivacy = $postalCodePrivacy;
+
+        return $this;
+    }
+
+    /**
+     * Get postalCodePrivacy
+     *
+     * @return integer
+     */
+    public function getPostalCodePrivacy()
+    {
+        return $this->postalCodePrivacy;
+    }
+
+    /**
+     * Set cityPrivacy
+     *
+     * @param integer $cityPrivacy
+     * @return User
+     */
+    public function setCityPrivacy($cityPrivacy)
+    {
+        $this->cityPrivacy = $cityPrivacy;
+
+        return $this;
+    }
+
+    /**
+     * Get cityPrivacy
+     *
+     * @return integer
+     */
+    public function getCityPrivacy()
+    {
+        return $this->cityPrivacy;
+    }
+
+    /**
+     * Set countryPrivacy
+     *
+     * @param integer $countryPrivacy
+     * @return User
+     */
+    public function setCountryPrivacy($countryPrivacy)
+    {
+        $this->countryPrivacy = $countryPrivacy;
+
+        return $this;
+    }
+
+    /**
+     * Get countryPrivacy
+     *
+     * @return integer
+     */
+    public function getCountryPrivacy()
+    {
+        return $this->countryPrivacy;
+    }
+
+    /**
+     * Set birthdayPrivacy
+     *
+     * @param integer $birthdayPrivacy
+     * @return User
+     */
+    public function setBirthdayPrivacy($birthdayPrivacy)
+    {
+        $this->birthdayPrivacy = $birthdayPrivacy;
+
+        return $this;
+    }
+
+    /**
+     * Get birthdayPrivacy
+     *
+     * @return integer
+     */
+    public function getBirthdayPrivacy()
+    {
+        return $this->birthdayPrivacy;
+    }
+
+    /**
+     * Set birthdayDisplayOnlyAge
+     *
+     * @param boolean $birthdayDisplayOnlyAge
+     * @return User
+     */
+    public function setBirthdayDisplayOnlyAge($birthdayDisplayOnlyAge)
+    {
+        $this->birthdayDisplayOnlyAge = $birthdayDisplayOnlyAge;
+
+        return $this;
+    }
+
+    /**
+     * Get birthdayDisplayOnlyAge
+     *
+     * @return boolean
+     */
+    public function getBirthdayDisplayOnlyAge()
+    {
+        return $this->birthdayDisplayOnlyAge;
+    }
+
+    /**
+     * Set personnalMailPrivacy
+     *
+     * @param integer $personnalMailPrivacy
+     * @return User
+     */
+    public function setPersonnalMailPrivacy($personnalMailPrivacy)
+    {
+        $this->personnalMailPrivacy = $personnalMailPrivacy;
+
+        return $this;
+    }
+
+    /**
+     * Get personnalMailPrivacy
+     *
+     * @return integer
+     */
+    public function getPersonnalMailPrivacy()
+    {
+        return $this->personnalMailPrivacy;
+    }
+
+	/**
+	 * @param array $badges
+	 * @return User
+	 */
+	public function setBadges(array $badges)
+	{
+		$this->badges = $badges;
+
+		return $this;
+	}
+
+	/**
+	 * @param string $badgeName
+	 * @return boolean
+	 */
+	public function hasBadge($badgeName)
+	{
+		return in_array($badgeName, $this->badges);
+	}
+
+	/**
+	 * @param string $badgeName
+	 * @return User
+	 */
+	public function addBadge($badgeName)
+	{
+		$this->badges[] = $badgeName;
+
+		return $this;
+	}
+
+	/**
+	 * @param string $badgeName
+	 * @return User
+	 */
+	public function removeBadge($badgeName)
+	{
+		if (($key = array_search($badgeName, $this->badges)) !== false) {
+			unset($this->badges[$key]);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getBadges()
+	{
+		return $this->badges;
+	}
+
+	/**
+	 * @param string $facebook
+	 * @return User
+	 */
+	public function setFacebook($facebook)
+	{
+		$this->facebook = $facebook;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getFacebook()
+	{
+		return $this->facebook;
+	}
+
+	/**
+	 * @param string $linkedin
+	 * @return User
+	 */
+	public function setLinkedin($linkedin)
+	{
+		$this->linkedin = $linkedin;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLinkedin()
+	{
+		return $this->linkedin;
+	}
+
+	/**
+	 * @param string $twitter
+	 * @return User
+	 */
+	public function setTwitter($twitter)
+	{
+		$this->twitter = $twitter;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTwitter()
+	{
+		return $this->twitter;
+	}
+
+	/**
+	 * @param string $viadeo
+	 * @return User
+	 */
+	public function setViadeo($viadeo)
+	{
+		$this->viadeo = $viadeo;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getViadeo()
+	{
+		return $this->viadeo;
 	}
 }

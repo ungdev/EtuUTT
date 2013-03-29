@@ -28,6 +28,6 @@ class Controller extends BaseController
 	 */
 	public function createAccessDeniedResponse()
 	{
-		$this->redirect($this->generateUrl('user_connect'));
+		return $this->redirect($this->generateUrl('user_connect'));
 	}
 }

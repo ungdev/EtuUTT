@@ -58,7 +58,7 @@
 					<ul class="list-horizontal list-horizontal-linked menu" id="head-menu-list">
 						<li class="first active">
 							<span class="pins pins-alert pins-head">2</span>
-							<a href="">
+							<a href="{{ path('homepage') }}">
 								<i class="icon icon-head icon-head-home"></i>
 								<span class="menu-link-text">{{ 'base.menu.home'|trans }}</span>
 							</a>
@@ -141,6 +141,16 @@
 				</div>
 			</div>
 		</header>
+
+		{% set message = false %}
+
+		{% if app.session.flashBag.has('message') %}
+			{% set message = app.session.flashBag.get('message') %}
+
+			<div class="page-alert alert alert-{{ message.type }} hidden-for-1024">
+				{{ message.message|trans }}
+			</div>
+		{% endif %}
 
 		<div id="overlay"></div>
 

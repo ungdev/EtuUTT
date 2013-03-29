@@ -16,7 +16,7 @@
 .page-alert {
 	position: absolute;
 	width: 500px;
-	margin-top: 15px;
+	margin-top: 65px;
 	margin-left: 660px;
 	font-size: 12px;
 	z-index: 50;
@@ -29,6 +29,32 @@
 }
 .page-title-icon {
 	margin-right: 10px;
+}
+
+/* Tabs */
+.page-tabs {
+	background: #f6f6f6;
+}
+.page-tabs .active a {
+	border-top: 0;
+	border-left: 0;
+	border-radius: 0;
+	padding-top: 9px;
+}
+.page-tabs .active a:hover {
+	border-top: 0;
+	border-left: 0;
+	border-radius: 0;
+	padding-top: 9px;
+}
+.page-tabs > li > a {
+	border-top: 0;
+	border-left: 0;
+	border-radius: 0;
+	padding-top: 9px;
+}
+.page-tabs-resolved-active {
+	border-left: 1px solid #e5e5e5;
 }
 
 /* Page content */

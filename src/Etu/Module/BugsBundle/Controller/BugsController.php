@@ -2,16 +2,16 @@
 
 namespace Etu\Module\BugsBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
-
-// Import annotations
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Module\BugsBundle\Entity\Comment;
 use Etu\Module\BugsBundle\Entity\Issue;
+
+use Doctrine\ORM\EntityManager;
+
+// Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Class BugsController
@@ -28,7 +28,7 @@ class BugsController extends Controller
 	public function indexAction()
 	{
 		if (! $this->getUser()) {
-			$this->createAccessDeniedResponse();
+			return $this->createAccessDeniedResponse();
 		}
 
 		/** @var $em EntityManager */

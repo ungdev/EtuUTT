@@ -130,14 +130,15 @@
 	.page-container {
 		background: none;
 	}
-	.page-alert {
-		margin-left: 405px;
+	.page-alert-mobile {
+		margin-bottom: 5px;
+		font-size: 12px;
 	}
 	.hidden-for-phones {
-		display: none;
+		display: none !important;
 	}
 	.display-for-phones {
-		display: block;
+		display: block !important;
 	}
 
 	.page-title {
@@ -231,14 +232,11 @@
 	.page-container {
 		background: none;
 	}
-	.page-alert {
-		margin-left: 405px;
-	}
 	.hidden-for-phones {
-		display: none;
+		display: none !important;
 	}
 	.display-for-phones {
-		display: block;
+		display: block !important;
 	}
 
 	#overlay-content {

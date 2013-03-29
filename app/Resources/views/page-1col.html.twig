@@ -12,6 +12,12 @@
 				{{ block('title') }}
 			</h2>
 
+			{% if message %}
+				<div class="page-alert-mobile alert alert-{{ message.type }} display-for-1024">
+					{{ message.message|trans }}
+				</div>
+			{% endif %}
+
 			<div class="content content-full">
 				{% block content %}{% endblock %}
 			</div>

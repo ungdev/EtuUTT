@@ -2,19 +2,22 @@
 
 namespace Etu\Core\UserBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
+
+use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Ldap\LdapManager;
+
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
-class MainController extends Controller
+class AuthController extends Controller
 {
 	/**
 	 * @Route("/user", name="user_connect")
@@ -81,14 +84,16 @@ class MainController extends Controller
 			$user->setLdapInformations($ldapUser);
 			$user->setIsStudent(true);
 			$user->setKeepActive(false);
-			$user->setCountNotifications(0);
 
 			$em->persist($user);
 			$em->flush();
 		}
 
-		$this->get('session')->set('user', $user);
-		$this->get('session')->getFlashBag()->set('success', 'Vous êtes bien connecté');
+		$this->get('session')->set('user', $user->getId());
+		$this->get('session')->getFlashBag()->set('message', array(
+			'type' => 'success',
+			'message' => 'user.auth.confirm'
+		));
 
 		return $this->redirect($this->generateUrl('homepage'));
 	}

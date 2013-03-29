@@ -1,0 +1,40 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'base.user.menu.account'|trans }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<ul class="nav nav-tabs page-tabs">
+		<li>
+			<a href="{{ path('user_profile') }}">
+				<i class="icon-chevron-left"></i>
+				Retour sur mon compte
+			</a>
+		</li>
+	</ul>
+
+	<div class="padding20-sides profile-avatar">
+		<form method="post" {{ form_enctype(form) }}>
+			{{ form_errors(form) }}
+
+			<img src="{{ asset('photos/'~app.user.avatar) }}" alt="{{ app.user.fullName }}" title="{{ app.user.fullName }}" />
+
+			<p>
+				<br />
+				<label>{{ form_label(form.file, 'user.avatarUpload.file'|trans) }}</label>
+				{{ form_widget(form.file) }}
+				<br />
+				<span class="help-block">{{ form_errors(form.file) }}</span>
+			</p>
+
+			<div class="controls">
+				{{ form_rest(form) }}
+
+				<button type="submit" class="btn">{{ 'user.profile.edit'|trans }}</button>
+			</div>
+		</form>
+	</div>
+{% endblock %}
