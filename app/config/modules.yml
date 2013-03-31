@@ -1,3 +1,2 @@
 
-modules:
-    - Etu\Module\BugsBundle\EtuModuleBugsBundle
+modules: []

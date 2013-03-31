@@ -359,6 +359,15 @@ class User implements UserInterface, \Serializable
 	protected $permissions = array();
 
 	/**
+	 * If the user is admin, he has all permissions, even from the new modules
+	 *
+	 * @var boolean
+	 *
+	 * @ORM\Column(name="isAdmin", type="boolean")
+	 */
+	protected $isAdmin;
+
+	/**
 	 * Badges
 	 *
 	 * @var array
@@ -383,6 +392,7 @@ class User implements UserInterface, \Serializable
 	public function __construct()
 	{
 		$this->keepActive = false;
+		$this->isAdmin = false;
 		$this->phoneNumberPrivacy = self::PRIVACY_PUBLIC;
 		$this->sexPrivacy = self::PRIVACY_PUBLIC;
 		$this->nationalityPrivacy = self::PRIVACY_PUBLIC;

@@ -6,6 +6,7 @@ namespace Etu\Core\CoreBundle\Controller;
 use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 
+use Etu\Core\CoreBundle\Framework\Module\ModulesManager;
 use Symfony\Component\HttpFoundation\Response;
 
 // Import @Route() and @Template() annotations

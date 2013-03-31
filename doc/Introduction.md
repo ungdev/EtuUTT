@@ -22,10 +22,5 @@ dans le code, par soucis de simplicité et de diffusion.
 
 Elle a été écrite par :
       - Titouan Galopin
-      - Youenn Piolet
-
-Elle se décompose en deux grands parties : la première est dédiée à l'ajout
-d'un module et des possibilités qui en découlent, la deuxième concerne plutôt
-le fonctionnement réel du site, où sont les éléments qui font fonctionner quoi.
 
 > **Note :** EtuUTT utilise Symfony 2.2.

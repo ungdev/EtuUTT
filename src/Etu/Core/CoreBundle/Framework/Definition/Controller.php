@@ -24,6 +24,14 @@ class Controller extends BaseController
 	}
 
 	/**
+	 * @return \Etu\Core\CoreBundle\Framework\EtuKernel
+	 */
+	public function getKernel()
+	{
+		return $this->get('kernel');
+	}
+
+	/**
 	 * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
 	 */
 	public function createAccessDeniedResponse()

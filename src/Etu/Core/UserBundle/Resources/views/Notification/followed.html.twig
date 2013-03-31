@@ -2,8 +2,12 @@
 <a href="" class="notif{% if notif.isSuper %} super-notif{% elseif notif.isNew %} notif-new{% endif %}">
 	<img src="{{ asset('img/notifs/mail.png') }}" />
 
-	<h4 class="notif-title">
+	<h4 class="notif-title hidden-for-phones">
 		Vous avez <span class="notif-data">3</span> nouveaux e-mails
+	</h4>
+
+	<h4 class="notif-title display-for-phones">
+		<span class="notif-data">3</span> nouveaux e-mails
 	</h4>
 
 	<div class="notif-date">
