@@ -12,18 +12,25 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function getConfigTreeBuilder()
-    {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('etu_user');
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getConfigTreeBuilder()
+	{
+		$treeBuilder = new TreeBuilder();
+		$rootNode = $treeBuilder->root('etu_user');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+		$rootNode
+			->children()
+				->arrayNode('ldap')
+				->isRequired()
+				->children()
+					->scalarNode('host')->isRequired()->end()
+					->integerNode('port')->isRequired()->end()
+				->end()
+			->end();
 
-        return $treeBuilder;
-    }
+
+		return $treeBuilder;
+	}
 }

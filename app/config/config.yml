@@ -69,3 +69,10 @@ swiftmailer:
     spool:     { type: memory }
 
 
+
+# EtuUTT
+etu_user:
+    ldap:
+        host: ldap.utt.fr
+        port: 389
+

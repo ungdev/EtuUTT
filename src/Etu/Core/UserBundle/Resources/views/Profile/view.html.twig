@@ -53,108 +53,133 @@
 			</div>
 
 			<div class="span9">
-				<div class="form-horizontal">
-					<div class="control-group">
-						<label class="control-label">{{ 'user.view.name'|trans }}</label>
-						<div class="controls profileEdit-fixedValue">
-							{{ user.fullName }}
-						</div>
+				<div class="view-group view-group-first">
+					<div class="view-label">{{ 'user.view.name'|trans }}</div>
+					<div class="view-value">
+						{{ user.fullName }}
 					</div>
-					<div class="control-group">
-						<label class="control-label">{{ 'user.view.studentId'|trans }}</label>
-						<div class="controls profileEdit-fixedValue">
-							{{ user.studentId }}
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label">{{ 'user.view.mail'|trans }}</label>
-						<div class="controls profileEdit-fixedValue">
-							{{ user.mail }}
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label">{{ 'user.view.formation'|trans }}</label>
-						<div class="controls profileEdit-fixedValue">
-							{{ user.niveau }} {{ user.filiere }} ({{ user.formation }})
-						</div>
-					</div>
-
-					{% if is_public(user.sexPrivacy) %}
-						<div class="control-group">
-							<label class="control-label">{{ 'user.view.sex'|trans }}</label>
-							<div class="controls profileEdit-fixedValue">
-								{{ ('base.user.sex.'~user.sex)|trans }}
-							</div>
-						</div>
-					{% endif %}
-
-					{% if is_public(user.nationalityPrivacy) %}
-						<div class="control-group">
-							<label class="control-label">{{ 'user.view.nationality'|trans }}</label>
-							<div class="controls profileEdit-fixedValue">
-								{{ user.nationality }}
-							</div>
-						</div>
-					{% endif %}
-
-					{% if
-							is_public(user.adressPrivacy)
-						or	is_public(user.postalCodePrivacy)
-						or	is_public(user.cityPrivacy)
-						or	is_public(user.countryPrivacy)
-					%}
-						<div class="control-group">
-							<label class="control-label">{{ 'user.view.adress'|trans }}</label>
-							<div class="controls profileEdit-fixedValue">
-
-								{% if is_public(app.user.adressPrivacy) %}
-									{{ app.user.adress }}
-									<br />
-								{% endif %}
-
-								{% if is_public(app.user.postalCodePrivacy) %}
-									{{ app.user.postalCode }}
-									<br />
-								{% endif %}
-
-								{% if is_public(app.user.cityPrivacy) %}
-									{{ app.user.city }}
-									<br />
-								{% endif %}
-
-								{% if is_public(app.user.countryPrivacy) %}
-									{{ app.user.country }}
-									<br />
-								{% endif %}
-							</div>
-						</div>
-					{% endif %}
-
-					{% if is_public(user.birthdayPrivacy) %}
-						<div class="control-group">
-							<label class="control-label">{{ 'user.view.birthday'|trans }}</label>
-							<div class="controls profileEdit-fixedValue">
-								{{ user.birthday }})
-							</div>
-						</div>
-					{% elseif user.birthdayDisplayOnlyAge %}
-						<div class="control-group">
-							<label class="control-label">{{ 'user.view.age'|trans }}</label>
-							<div class="controls profileEdit-fixedValue">
-								{{ 'user.profile.age'|trans({'%age%': user.age}) }}
-							</div>
-						</div>
-					{% endif %}
-
-					{% if is_public(user.personnalMailPrivacy) %}
-						<div class="control-group">
-							<label class="control-label">{{ 'user.view.personnalMail'|trans }}</label>
-							<div class="controls profileEdit-fixedValue">
-								{{ user.personnalMail }})
-							</div>
-						</div>
-					{% endif %}
 				</div>
+				<div class="view-group">
+					<div class="view-label">{{ 'user.view.studentId'|trans }}</div>
+					<div class="view-value">
+						{{ user.studentId }}
+					</div>
+				</div>
+				<div class="view-group">
+					<div class="view-label">{{ 'user.view.mail'|trans }}</div>
+					<div class="view-value">
+						{{ user.mail }}
+					</div>
+				</div>
+				<div class="view-group">
+					<div class="view-label">{{ 'user.view.formation'|trans }}</div>
+					<div class="view-value">
+						{{ user.niveau }} {{ user.filiere }} ({{ user.formation }})
+					</div>
+				</div>
+
+				{% if is_public(user.sexPrivacy) %}
+					<div class="view-group">
+						<div class="view-label">{{ 'user.view.sex'|trans }}</div>
+						<div class="view-value">
+							{{ ('base.user.sex.'~user.sex)|trans }}
+						</div>
+					</div>
+				{% endif %}
+
+				{% if is_public(user.nationalityPrivacy) %}
+					<div class="view-group">
+						<div class="view-label">{{ 'user.view.nationality'|trans }}</div>
+						<div class="view-value">
+							{{ user.nationality }}
+						</div>
+					</div>
+				{% endif %}
+
+				{% if
+				is_public(user.adressPrivacy)
+				or	is_public(user.postalCodePrivacy)
+				or	is_public(user.cityPrivacy)
+				or	is_public(user.countryPrivacy)
+				%}
+					<div class="view-group">
+						<div class="view-label">{{ 'user.view.adress'|trans }}</div>
+						<div class="view-value">
+
+							{% if is_public(app.user.adressPrivacy) %}
+								{{ app.user.adress }}
+								<br />
+							{% endif %}
+
+							{% if is_public(app.user.postalCodePrivacy) %}
+								{{ app.user.postalCode }}
+								<br />
+							{% endif %}
+
+							{% if is_public(app.user.cityPrivacy) %}
+								{{ app.user.city }}
+								<br />
+							{% endif %}
+
+							{% if is_public(app.user.countryPrivacy) %}
+								{{ app.user.country }}
+								<br />
+							{% endif %}
+						</div>
+					</div>
+				{% endif %}
+
+				{% if is_public(user.birthdayPrivacy) %}
+					<div class="view-group">
+						<div class="view-label">{{ 'user.view.birthday'|trans }}</div>
+						<div class="view-value">
+							{{ user.birthday }}
+						</div>
+					</div>
+				{% elseif user.birthdayDisplayOnlyAge %}
+					<div class="view-group">
+						<div class="view-label">{{ 'user.view.age'|trans }}</div>
+						<div class="view-value">
+							{{ 'user.profile.age'|trans({'%age%': user.age}) }}
+						</div>
+					</div>
+				{% endif %}
+
+				{% if is_public(user.personnalMailPrivacy) %}
+					<div class="view-group">
+						<div class="view-label">{{ 'user.view.personnalMail'|trans }}</div>
+						<div class="view-value">
+							{{ user.personnalMail }}
+						</div>
+					</div>
+				{% endif %}
+
+				{% if user.surnom %}
+					<div class="view-group">
+						<div class="view-label">{{ 'user.view.surnom'|trans }}</div>
+						<div class="view-value">
+							{{ user.surnom }}
+						</div>
+					</div>
+				{% endif %}
+
+				{% if user.jadis %}
+					<div class="view-group">
+						<div class="view-label">{{ 'user.view.jadis'|trans }}</div>
+						<div class="view-value">
+							{{ user.jadis|e|nl2br }}
+						</div>
+					</div>
+				{% endif %}
+
+				{% if user.surnom %}
+					<div class="view-group">
+						<div class="view-label">{{ 'user.view.passions'|trans }}</div>
+						<div class="view-value">
+							{{ user.passions|e|nl2br }}
+						</div>
+					</div>
+				{% endif %}
 			</div>
 		</div>
 	</div>

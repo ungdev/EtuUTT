@@ -188,11 +188,11 @@
 
 					<div class="subblock subblock-first">
 						<div class="profile-infos-label hidden-for-phones">
-							{{ 'user.trombiEdit.surnom'|trans }}
+							{{ 'user.profile.surnom'|trans }}
 						</div>
 						<div class="profile-infos-value">
 							{{ app.user.surnom }}
-							<i class="icon-lock" title="{{ 'user.privacy.private'|trans }}"></i>
+							<i class="icon-globe" title="{{ 'user.privacy.public'|trans }}"></i>
 						</div>
 						<div class="clear"></div>
 					</div>
@@ -207,11 +207,11 @@
 					{% endif %}
 
 						<div class="profile-infos-label hidden-for-phones">
-							{{ 'user.trombiEdit.jadis'|trans }}
+							{{ 'user.profile.jadis'|trans }}
 						</div>
 						<div class="profile-infos-value">
 							{{ app.user.jadis|limit(100) }}
-							<i class="icon-lock" title="{{ 'user.privacy.private'|trans }}"></i>
+							<i class="icon-globe" title="{{ 'user.privacy.public'|trans }}"></i>
 						</div>
 						<div class="clear"></div>
 					</div>
@@ -226,11 +226,11 @@
 					{% endif %}
 
 						<div class="profile-infos-label hidden-for-phones">
-							{{ 'user.trombiEdit.passions'|trans }}
+							{{ 'user.profile.passions'|trans }}
 						</div>
 						<div class="profile-infos-value">
 							{{ app.user.passions|limit(100) }}
-							<i class="icon-lock" title="{{ 'user.privacy.private'|trans }}"></i>
+							<i class="icon-globe" title="{{ 'user.privacy.public'|trans }}"></i>
 						</div>
 						<div class="clear"></div>
 					</div>

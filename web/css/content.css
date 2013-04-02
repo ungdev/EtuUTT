@@ -216,6 +216,25 @@
 	height: 120px;
 }
 
+.view-group {
+	border-top: 1px solid #eee;
+	padding: 5px 7px;
+}
+.view-group-first {
+	border-top: 0;
+}
+.view-label {
+	font-weight: bold;
+	float: left;
+	width: 150px;
+	padding: 5px 10px;
+	text-align: right;
+}
+.view-value {
+	padding: 5px;
+	margin-left: 200px;
+}
+
 /*
  * Bugs et suggestions
  */

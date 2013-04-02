@@ -61,10 +61,8 @@ ask you to keep or delete him or her.
 		 */
 		$output->writeln("\nLoading LDAP users ...");
 
-		$ldap = new LdapManager(
-			$this->getContainer()->getParameter('etu.ldap.host'),
-			$this->getContainer()->getParameter('etu.ldap.port')
-		);
+		/** @var $ldap LdapManager */
+		$ldap = $this->getContainer()->get('etu.user.ldap');
 
 		$ldapStudents = $ldap->getStudents();
 		$ldapLogins = array();

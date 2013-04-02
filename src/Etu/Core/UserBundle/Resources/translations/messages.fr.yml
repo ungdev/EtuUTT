@@ -34,6 +34,9 @@ user:
         viewPublic: Voir mon profil public
         edit: Modifier
         edit_avatar: Modifier ma photo
+        surnom: Surnom
+        jadis: Jadis
+        passions: Passions
         age: %age% ans
         titles:
             informations: Mes informations
@@ -73,9 +76,9 @@ user:
 
     # Trombi edition
     trombiEdit:
-        surnom: Surnom
-        jadis: Jadis
-        passions: Passions
+        surnom: Surnom (public)
+        jadis: Jadis (public)
+        passions: Passions (public)
 
     # View a profile
     view:
@@ -95,3 +98,6 @@ user:
         adress: Adresse
         birthday: Date de naissance
         age: Age
+        surnom: Surnom
+        jadis: Jadis
+        passions: Passions

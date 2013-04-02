@@ -24,5 +24,8 @@ class EtuUserExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+	    $container->setParameter('etu.ldap.host', $config['ldap']['host']);
+	    $container->setParameter('etu.ldap.port', $config['ldap']['port']);
     }
 }

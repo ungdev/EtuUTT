@@ -3,12 +3,11 @@
 namespace Etu\Core\UserBundle\Controller;
 
 use Etu\Core\UserBundle\Entity\Organization;
+use Etu\Core\UserBundle\Ldap\LdapManager;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\User;
-use Etu\Core\UserBundle\Ldap\LdapManager;
 
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Gd\Image;
@@ -239,10 +238,8 @@ class AuthController extends Controller
 		if (! $user && $useLdap) {
 			$imagine = new Imagine();
 
-			$ldap = new LdapManager(
-				$this->container->getParameter('etu.ldap.host'),
-				$this->container->getParameter('etu.ldap.port')
-			);
+			/** @var $ldap LdapManager */
+			$ldap = $this->get('etu.user.ldap');
 
 			$ldapUser = $ldap->getUser($login);
 
