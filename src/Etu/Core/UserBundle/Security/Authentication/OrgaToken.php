@@ -15,20 +15,20 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
 
 /**
- * User token
+ * Organization token
  *
  * @author Titouan Galopin <galopintitouan@gmail.com>
  */
-class UserToken extends AbstractToken
+class OrgaToken extends AbstractToken
 {
-    public function __construct($user)
+    public function __construct($orga)
     {
-	    if (! $user || ! $user instanceof UserInterface) {
+	    if (! $orga || ! $orga instanceof UserInterface) {
 		    $this->setAuthenticated(false);
 
 		    parent::__construct(array());
 	    } else {
-		    $roles = $user->getRoles();
+		    $roles = $orga->getRoles();
 
 		    if (! $roles) {
 			    $roles = array();
@@ -36,7 +36,7 @@ class UserToken extends AbstractToken
 
 		    parent::__construct($roles);
 
-		    $this->setUser($user);
+		    $this->setUser($orga);
 		    $this->setAuthenticated(true);
 	    }
     }

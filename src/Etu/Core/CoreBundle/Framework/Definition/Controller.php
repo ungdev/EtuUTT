@@ -36,6 +36,11 @@ class Controller extends BaseController
 	 */
 	public function createAccessDeniedResponse()
 	{
+		$this->get('session')->getFlashBag()->set('message', array(
+			'type' => 'error',
+			'message' => 'user.auth.needAuth'
+		));
+
 		return $this->redirect($this->generateUrl('user_connect'));
 	}
 }

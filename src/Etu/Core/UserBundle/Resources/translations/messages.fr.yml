@@ -8,13 +8,30 @@ user:
 
     # Authentication
     auth:
+        connect:
+            desc: "Vous n'êtes pas authentifié(e) sur le CAS. Veuillez choisir une méthode d'authentification pour EtuUTT :"
+        connectExternal:
+            title: Connexion d'un exterieur
+            desc: Connectez-vous en utilisant l'identifiant et le mot de passe qui vous ont été fournis par l'UNG.
+            identifier: Identifiant
+            password: Mot de passe
+            submit: Connexion
+        connectOrga:
+            title: Connexion d'une asso.
+            desc: Connectez-vous en utilisant l'identifiant et le mot de passe qui vous ont été fournis par l'UNG.
+            identifier: Identifiant
+            password: Mot de passe
+            submit: Connexion
         confirm: Vous êtes bien connecté
+        error: La connexion a échoué, vos identifiants semblent incorrects
+        needAuth: Vous devez être connecté pour accéder à cette page
 
     # Profile
     profile:
         completion: Votre profil est complété à %completion% %. Complètez-le entièrement pour obtenir un badge !
         completed: Votre profil est complet. Merci de votre participation !
         title: Mon profil
+        viewPublic: Voir mon profil public
         edit: Modifier
         edit_avatar: Modifier ma photo
         age: %age% ans
@@ -53,3 +70,28 @@ user:
     avatarUpload:
         file: Image
         confirm: Vous avez bien modifié votre photo
+
+    # Trombi edition
+    trombiEdit:
+        surnom: Surnom
+        jadis: Jadis
+        passions: Passions
+
+    # View a profile
+    view:
+        title: Détail d'un profil
+        name: Nom
+        mail: E-mail
+        studentId: Numéro étudiant
+        formation: Formation
+        website: Site web
+        facebook: Facebook
+        twitter: Twitter
+        linkedin: LinkedIn
+        viadeo: Viadeo
+        phoneNumber: Numéro de tél.
+        sex: Sexe
+        nationality: Nationalité
+        adress: Adresse
+        birthday: Date de naissance
+        age: Age

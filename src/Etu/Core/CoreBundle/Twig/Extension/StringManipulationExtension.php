@@ -25,12 +25,25 @@ class StringManipulationExtension extends \Twig_Extension
 		return array(
 			'ucfirst' => new \Twig_Filter_Function('ucfirst'),
 			'urlencode' => new \Twig_Filter_Function('urlencode'),
+			'limit' => new \Twig_Filter_Method($this, 'limit'),
 			'camelize' => new \Twig_Filter_Method($this, 'camelize'),
 			'uncamelize' => new \Twig_Filter_Method($this, 'uncamelize'),
 			'seems_utf8' => new \Twig_Filter_Method($this, 'seemsUtf8'),
 			'unaccent' => new \Twig_Filter_Method($this, 'unaccent'),
 			'slugify' => new \Twig_Filter_Method($this, 'slugify'),
 		);
+	}
+
+	/**
+	 * Limit a text size
+	 *
+	 * @param string $str
+	 * @param integer $length
+	 * @return bool
+	 */
+	public static function limit($str, $length)
+	{
+		return (strlen($str) > $length) ? substr($str, 0, $length).'...' : $str;
 	}
 
 	/**

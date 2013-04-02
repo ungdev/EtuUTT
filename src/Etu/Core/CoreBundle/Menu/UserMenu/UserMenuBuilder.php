@@ -39,7 +39,7 @@ class UserMenuBuilder
 		$this
 			->add('base.user.menu.flux')
 				->setIcon('etu-icon-list')
-				->setUrl('')
+				->setUrl($router->generate('homepage'))
 			->end()
 			->add('base.user.menu.account')
 				->setIcon('etu-icon-user')

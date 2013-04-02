@@ -1,7 +1,8 @@
 <?php
 
-namespace Etu\Core\CoreBundle\Listener;
+namespace Etu\Core\CoreBundle\Framework\Listener;
 
+use Etu\Core\CoreBundle\Framework\Twig\GlobalAccessorObject;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Routing\Router;
@@ -46,7 +47,8 @@ class ModulesBootListener
 	 */
 	public function onKernelRequest(GetResponseEvent $event)
 	{
-		foreach ($this->modules as $module) {
+		// Boot modules
+		foreach ($this->modules as &$module) {
 			if ($module->mustBoot()) {
 				$module->setContainer($this->container);
 				$module->setRouter($this->router);
@@ -54,5 +56,10 @@ class ModulesBootListener
 				$module->setEnabled(true);
 			}
 		}
+
+		// Create Twig accessor object
+		$app = new GlobalAccessorObject($this->container->get('etu.core.modules_manager')->getModules());
+
+		$this->container->get('twig')->addGlobal('etu', $app);
 	}
 }

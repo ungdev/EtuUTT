@@ -1,0 +1,74 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'user.profile.titles.trombi'|trans }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('facebox/src/facebox.css') }}" type="text/css" />
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('facebox/src/facebox.js') }}" type="text/javascript"></script>
+
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			$('#avatarUploadLink').attr('href', '#avatarUploadBox');
+
+			$('a[rel*=facebox]').facebox({
+				loading_image : '{{ asset('facebox/src/loading.gif') }}',
+				close_image   : '{{ asset('facebox/src/closelabel.gif') }}'
+			})
+		})
+	</script>
+{% endblock %}
+
+{% block content %}
+	<ul class="nav nav-tabs page-tabs">
+		<li>
+			<a href="{{ path('user_profile') }}">
+				<i class="icon-chevron-left"></i>
+				Retour sur mon compte
+			</a>
+		</li>
+	</ul>
+
+	<div class="padding20-sides">
+		<form method="post">
+			{{ form_errors(form) }}
+
+			<div class="form-horizontal">
+				<div class="control-group">
+					<label class="control-label">{{ form_label(form.surnom, 'user.trombiEdit.surnom'|trans) }}</label>
+					<div class="controls">
+						{{ form_widget(form.surnom) }}
+						<span class="help-block">{{ form_errors(form.surnom) }}</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{{ form_label(form.jadis, 'user.trombiEdit.jadis'|trans) }}</label>
+					<div class="controls">
+						{{ form_widget(form.jadis) }}
+						<span class="help-block">{{ form_errors(form.jadis) }}</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{{ form_label(form.passions, 'user.trombiEdit.passions'|trans) }}</label>
+					<div class="controls">
+						{{ form_widget(form.passions) }}
+						<span class="help-block">{{ form_errors(form.passions) }}</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+						{{ form_rest(form) }}
+
+						<button type="submit" class="btn">{{ 'user.profile.edit'|trans }}</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+{% endblock %}

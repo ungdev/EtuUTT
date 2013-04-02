@@ -6,6 +6,7 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Security\Authentication\AnonymousToken;
+use Etu\Core\UserBundle\Security\Authentication\OrgaToken;
 use Etu\Core\UserBundle\Security\Authentication\UserToken;
 
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -52,13 +53,26 @@ class KernelListener
 	 */
 	public function onKernelRequest()
 	{
-		if (is_int($this->session->get('user')) && $this->session->get('user') > 0) {
+		if (is_int($this->session->get('orga')) && $this->session->get('orga') > 0) {
+			$this->session->set('user', null);
+
+			$orga = $this->doctrine->getManager()
+				->getRepository('EtuUserBundle:Organization')
+				->findOneBy(array('id' => $this->session->get('orga')));
+
+			$this->securityContext->setToken(new OrgaToken($orga));
+		} elseif (is_int($this->session->get('user')) && $this->session->get('user') > 0) {
+			$this->session->set('orga', null);
+
 			$user = $this->doctrine->getManager()
 				->getRepository('EtuUserBundle:User')
 				->findOneBy(array('id' => $this->session->get('user')));
 
 			$this->securityContext->setToken(new UserToken($user));
 		} else {
+			$this->session->set('user', null);
+			$this->session->set('orga', null);
+
 			$this->securityContext->setToken(new AnonymousToken());
 		}
 	}

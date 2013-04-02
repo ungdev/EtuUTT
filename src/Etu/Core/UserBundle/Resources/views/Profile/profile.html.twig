@@ -15,13 +15,21 @@
 			{% else %}
 				{{ 'user.profile.completion'|trans({'%completion%': app.user.profileCompletion}) }}
 			{% endif %}
+
+			<span class="pull-right">
+				<a href="{{ path('user_view', {'login': app.user.login}) }}">
+					{{ 'user.profile.viewPublic'|trans }}
+				</a>
+			</span>
 		</p>
 
 		<div class="progress">
 			<div
 				class="bar {% if app.user.profileCompletion == 100 %} bar-success{% endif %}"
 				style="width: {{ app.user.profileCompletion }}%;">
-				{{ app.user.profileCompletion }} %
+				{% if app.user.profileCompletion > 10 %}
+					{{ app.user.profileCompletion }} %
+				{% endif %}
 			</div>
 		</div>
 
@@ -172,6 +180,74 @@
 
 			<div class="span6 block">
 				<div class="block-title">{{ 'user.profile.titles.trombi'|trans }}</div>
+
+				{% set first = true %}
+
+				{% if app.user.surnom %}
+					{% set first = false %}
+
+					<div class="subblock subblock-first">
+						<div class="profile-infos-label hidden-for-phones">
+							{{ 'user.trombiEdit.surnom'|trans }}
+						</div>
+						<div class="profile-infos-value">
+							{{ app.user.surnom }}
+							<i class="icon-lock" title="{{ 'user.privacy.private'|trans }}"></i>
+						</div>
+						<div class="clear"></div>
+					</div>
+				{% endif %}
+
+				{% if app.user.jadis %}
+					{% if first %}
+						{% set first = false %}
+						<div class="subblock subblock-first">
+					{% else %}
+						<div class="subblock">
+					{% endif %}
+
+						<div class="profile-infos-label hidden-for-phones">
+							{{ 'user.trombiEdit.jadis'|trans }}
+						</div>
+						<div class="profile-infos-value">
+							{{ app.user.jadis|limit(100) }}
+							<i class="icon-lock" title="{{ 'user.privacy.private'|trans }}"></i>
+						</div>
+						<div class="clear"></div>
+					</div>
+				{% endif %}
+
+				{% if app.user.passions %}
+					{% if first %}
+						{% set first = false %}
+						<div class="subblock subblock-first">
+					{% else %}
+						<div class="subblock">
+					{% endif %}
+
+						<div class="profile-infos-label hidden-for-phones">
+							{{ 'user.trombiEdit.passions'|trans }}
+						</div>
+						<div class="profile-infos-value">
+							{{ app.user.passions|limit(100) }}
+							<i class="icon-lock" title="{{ 'user.privacy.private'|trans }}"></i>
+						</div>
+						<div class="clear"></div>
+					</div>
+				{% endif %}
+
+				{% if not app.user.surnom and not app.user.jadis and not app.user.passions %}
+					<div class="subblock subblock-first">
+						Vous n'avez pas encore personnalisé votre fiche trominoscope.
+						N'hésitez pas à le faire dès que possible !
+					</div>
+				{% endif %}
+
+				<p class="profile-block-action">
+					<a href="{{ path('user_trombi_edit') }}" class="btn">
+						{{ 'user.profile.edit'|trans }}
+					</a>
+				</p>
 			</div>
 		</div>
 

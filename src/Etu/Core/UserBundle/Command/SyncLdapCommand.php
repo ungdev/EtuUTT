@@ -50,9 +50,9 @@ For each user that don\'t exit anymore in the LDAP, the command will
 ask you to keep or delete him or her.
 ');
 
-		$start = $dialog->ask($output, 'Start now (y/n) [y]? ', 'y');
+		$startNow = $dialog->ask($output, 'Start now (y/n) [y]? ', 'y') == 'y';
 
-		if ($start != 'y') {
+		if (! $startNow) {
 			return;
 		}
 
@@ -79,13 +79,13 @@ ask you to keep or delete him or her.
 		/*
 		 * Database
 		 */
-		$output->writeln('Loading database users ...');
+		$output->writeln("Loading database users ...\n");
 
 		/** @var EntityManager $em */
 		$em = $this->getContainer()->get('doctrine')->getManager();
 
 		/** @var User[] $dbStudents */
-		$dbStudents = $em->getRepository('EtuUserBundle:User')->findAll();
+		$dbStudents = $em->getRepository('EtuUserBundle:User')->findBy(array('keepActive' => false));
 		$dbLogins = array();
 
 		foreach ($dbStudents as $key => $dbStudent) {
@@ -101,75 +101,162 @@ ask you to keep or delete him or her.
 		$toAddInDb = array_diff($ldapLogins, $dbLogins);
 		$toRemoveFromDb = array_diff($dbLogins, $ldapLogins);
 
-		// Add users in database from LDAP
+		// Already sync ?
 		if (empty($toAddInDb) && empty($toRemoveFromDb)) {
 			$output->writeln("Database already sync with LDAP.\n");
 			return;
 		}
 
-		$output->writeln("Creating avatars ...");
+		// Need to add some users ?
+		if (! empty($toAddInDb)) {
+			$output->writeln("Creating avatars ...");
 
-		$imagine = new Imagine();
+			$imagine = new Imagine();
 
-		$bar = new ProgressBar('%fraction% [%bar%] %percent%', '=>', ' ', 80, count($toAddInDb));
-		$bar->update(0);
+			$bar = new ProgressBar('%fraction% [%bar%] %percent%', '=>', ' ', 80, count($toAddInDb));
+			$bar->update(0);
 
-		$i = 0;
+			$i = 0;
 
-		foreach ($toAddInDb as $login) {
-			$ldapUser = $ldapStudents[$login];
-
-			if (file_exists(__DIR__.'/../../../../../web/photos/'.$ldapUser->getLogin().'.jpg')) {
-				$i++;
-				$bar->update($i);
-				continue;
-			}
-
-			// Resize photo
-			try {
-				$image = $imagine->open('http://local-sig.utt.fr/Pub/trombi/individu/'.$ldapUser->getStudentId().'.jpg');
-
-				$image->copy()
-					->thumbnail(new Box(200, 200), Image::THUMBNAIL_OUTBOUND)
-					->save(__DIR__.'/../../../../../web/photos/'.$ldapUser->getLogin().'.jpg');
+			foreach ($toAddInDb as $login) {
+				$ldapUser = $ldapStudents[$login];
 
 				$avatar = $ldapUser->getLogin().'.jpg';
-			} catch (InvalidArgumentException $e) {
-				$avatar = 'default-avatar.png';
+
+				if (! file_exists(__DIR__.'/../../../../../web/photos/'.$ldapUser->getLogin().'.jpg')) {
+					// Resize photo
+					try {
+						$image = $imagine->open('http://local-sig.utt.fr/Pub/trombi/individu/'.$ldapUser->getStudentId().'.jpg');
+
+						$image->copy()
+							->thumbnail(new Box(200, 200), Image::THUMBNAIL_OUTBOUND)
+							->save(__DIR__.'/../../../../../web/photos/'.$ldapUser->getLogin().'.jpg');
+					} catch (InvalidArgumentException $e) {
+						$avatar = 'default-avatar.png';
+					}
+				}
+
+				$user = new User();
+				$user->setAvatar($avatar);
+				$user->setLogin($ldapUser->getLogin());
+				$user->setFullName($ldapUser->getFullName());
+				$user->setFirstName($ldapUser->getFirstName());
+				$user->setLastName($ldapUser->getLastName());
+				$user->setFiliere($ldapUser->getFiliere());
+				$user->setFormation(ucfirst(strtolower($ldapUser->getFormation())));
+				$user->setNiveau($ldapUser->getNiveau());
+				$user->setMail($ldapUser->getMail());
+				$user->setPhoneNumber($ldapUser->getPhoneNumber());
+				$user->setRoom($ldapUser->getRoom());
+				$user->setStudentId($ldapUser->getStudentId());
+				$user->setTitle($ldapUser->getTitle());
+				$user->setLdapInformations($ldapUser);
+				$user->setIsStudent(true);
+				$user->setKeepActive(false);
+				$user->setPassword($this->getContainer()->get('etu.user.crypting')->encrypt($user->getPassword()));
+
+				$em->persist($user);
+
+				$i++;
+				$bar->update($i);
 			}
 
-			$user = new User();
-			$user->setAvatar($avatar);
-			$user->setLogin($ldapUser->getLogin());
-			$user->setFullName($ldapUser->getFullName());
-			$user->setFirstName($ldapUser->getFirstName());
-			$user->setLastName($ldapUser->getLastName());
-			$user->setFiliere($ldapUser->getFiliere());
-			$user->setFormation(ucfirst(strtolower($ldapUser->getFormation())));
-			$user->setNiveau($ldapUser->getNiveau());
-			$user->setMail($ldapUser->getMail());
-			$user->setPhoneNumber($ldapUser->getPhoneNumber());
-			$user->setRoom($ldapUser->getRoom());
-			$user->setStudentId($ldapUser->getStudentId());
-			$user->setTitle($ldapUser->getTitle());
-			$user->setLdapInformations($ldapUser);
-			$user->setIsStudent(true);
-			$user->setKeepActive(false);
+			$output->writeln("\nImporting users ...");
 
-			$em->persist($user);
+			$em->flush();
 
-			$i++;
-			$bar->update($i);
+			$output->writeln("Imported.\n");
 		}
 
-		$output->writeln("\nImporting users ...");
+		// Need to delete some users ?
+		if (! empty($toRemoveFromDb)) {
+			if (count($toRemoveFromDb) == 1) {
+				$output->writeln('There is 1 user (`'.reset($toRemoveFromDb).'`) which is not in the LDAP but in the database.');
+				$output->writeln("How do you want to deal with it?\n");
 
-		$em->flush();
+				$output->writeln("1 - Delete it");
+				$output->writeln("2 - Keep it\n");
 
-		$output->writeln("Imported.\n");
+				$choice = $dialog->ask($output, 'What do you choose [1]? ', '1');
 
-		if (empty($toRemoveFromDb)) {
-			return;
+				if ($choice == '2') {
+					$choice = '3';
+				}
+			} else {
+				$output->writeln('There are '.count($toRemoveFromDb).' users which are not in the LDAP but in the database.');
+				$output->writeln("How do you want to deal with them?\n");
+
+				$output->writeln("1 - Delete all of them");
+				$output->writeln("2 - Ask me for some to keep, delete the rest");
+				$output->writeln("3 - Keep all of them\n");
+
+				$choice = $dialog->ask($output, 'What do you choose [2]? ', '2');
+			}
+
+			// First choice: do nothing, all will be do after
+
+			// Second choice: aske for which to keep
+			if ($choice == '2') {
+				$output->writeln("Keep blank to finish the list\n");
+
+				$loginToKeep = null;
+				$count = 0;
+
+				while (1) {
+					$loginToKeep = $dialog->ask($output, 'Login to keep: ');
+
+					if (empty($loginToKeep)) {
+						break;
+					}
+
+					if (($key = array_search($loginToKeep, $toRemoveFromDb)) !== false) {
+						// Set the user as keep for the next sync
+						$user = $dbStudents[$loginToKeep];
+						$user->setKeepActive(true);
+						$em->persist($user);
+
+						// Unset the user from remove process
+						unset($toRemoveFromDb[$key]);
+
+						$count++;
+					} else {
+						$output->writeln("The login can not be found. Please retry.\n");
+					}
+				}
+
+				$output->writeln($count.' user(s) to keep');
+
+				$em->flush();
+			}
+
+			// Keep all the users
+			elseif ($choice == '3') {
+				$count = 0;
+
+				foreach ($toRemoveFromDb as $login) {
+					// Set the user as keep for the next sync
+					$user = $dbStudents[$login];
+					$user->setKeepActive(true);
+					$em->persist($user);
+
+					// Unset the user from remove process
+					$key = array_search($login, $toRemoveFromDb);
+					unset($toRemoveFromDb[$key]);
+
+					$count++;
+				}
+
+				$output->writeln($count.' user(s) to keep');
+			}
+
+			// Remove the not-kept users
+			foreach ($toRemoveFromDb as $login) {
+				$em->remove($dbStudents[$login]);
+			}
+
+			$em->flush();
+
+			$output->writeln("Done.\n");
 		}
 	}
 }

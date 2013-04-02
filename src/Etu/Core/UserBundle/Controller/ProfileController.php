@@ -2,6 +2,7 @@
 
 namespace Etu\Core\UserBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\User;
 
@@ -16,7 +17,7 @@ class ProfileController extends Controller
 	 */
 	public function profileAction()
 	{
-		if (! $this->getUser()) {
+		if (! $this->getUser() instanceof User) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -29,7 +30,7 @@ class ProfileController extends Controller
 	 */
 	public function profileEditAction()
 	{
-		if (! $this->getUser()) {
+		if (! $this->getUser() instanceof User) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -107,7 +108,7 @@ class ProfileController extends Controller
 				'message' => 'user.profileEdit.confirm'
 			));
 
-			return $this->redirect($this->generateUrl('user_profile_edit'));
+			return $this->redirect($this->generateUrl('user_profile'));
 		}
 
 		// Avatar lightbox
@@ -127,7 +128,7 @@ class ProfileController extends Controller
 	 */
 	public function profileAvatarAction()
 	{
-		if (! $this->getUser()) {
+		if (! $this->getUser() instanceof User) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -158,6 +159,83 @@ class ProfileController extends Controller
 
 		return array(
 			'form' => $form->createView()
+		);
+	}
+
+	/**
+	 * @Route("/user/trombi/edit", name="user_trombi_edit")
+	 * @Template()
+	 */
+	public function trombiEditAction()
+	{
+		if (! $this->getUser() instanceof User) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $user User */
+		$user = $this->getUser();
+
+		$form = $this->createFormBuilder($user)
+			->add('surnom', null, array('required' => false))
+			->add('jadis', null, array('required' => false, 'attr' => array('class' => 'trombi-textarea')))
+			->add('passions', null, array('required' => false, 'attr' => array('class' => 'trombi-textarea')))
+			->getForm();
+
+		$request = $this->getRequest();
+
+		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+			$em = $this->getDoctrine()->getManager();
+
+			if ($user->getProfileCompletion() == 100 && ! $user->hasBadge('profile_completed')) {
+				$user->addBadge('profile_completed');
+			}
+
+			if ($user->getProfileCompletion() != 100 && $user->hasBadge('profile_completed')) {
+				$user->removeBadge('profile_completed');
+			}
+
+			$em->persist($user);
+			$em->flush();
+
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'user.profileEdit.confirm'
+			));
+
+			return $this->redirect($this->generateUrl('user_profile'));
+		}
+
+		return array(
+			'form' => $form->createView()
+		);
+	}
+
+	/**
+	 * @Route("/user/{login}", name="user_view")
+	 * @Template()
+	 */
+	public function viewAction($login)
+	{
+		if (! $this->getUser() instanceof User) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		if ($login != $this->getUser()->getLogin()) {
+			/** @var $em EntityManager */
+			$em = $this->getDoctrine()->getManager();
+
+			/** @var $user User */
+			$user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
+
+			if (! $user) {
+				throw $this->createNotFoundException('Login "'.$login.'" not found');
+			}
+		} else {
+			$user = $this->getUser();
+		}
+
+		return array(
+			'user' => $user
 		);
 	}
 }

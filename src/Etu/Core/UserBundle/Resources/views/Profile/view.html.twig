@@ -1,0 +1,161 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'user.view.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<div class="padding20-all">
+		<div class="row-fluid">
+			<div class="span3">
+				<div class="profileEdit-avatar">
+					<img src="{{ asset('photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
+				</div>
+
+				<hr />
+
+				{% if user.website %}
+					<p>
+						<strong>{{ 'user.view.website'|trans }}</strong><br />
+						{{ user.website }}
+					</p>
+				{% endif %}
+
+				{% if user.facebook %}
+					<p>
+						<strong>{{ 'user.view.facebook'|trans }}</strong><br />
+						{{ user.facebook }}
+					</p>
+				{% endif %}
+
+				{% if user.twitter %}
+					<p>
+						<strong>{{ 'user.view.twitter'|trans }}</strong><br />
+						{{ user.twitter }}
+					</p>
+				{% endif %}
+
+				{% if user.linkedin %}
+					<p>
+						<strong>{{ 'user.view.linkedin'|trans }}</strong><br />
+						{{ user.linkedin }}
+					</p>
+				{% endif %}
+
+				{% if user.viadeo %}
+					<p>
+						<strong>{{ 'user.view.viadeo'|trans }}</strong><br />
+						{{ user.viadeo }}
+					</p>
+				{% endif %}
+			</div>
+
+			<div class="span9">
+				<div class="form-horizontal">
+					<div class="control-group">
+						<label class="control-label">{{ 'user.view.name'|trans }}</label>
+						<div class="controls profileEdit-fixedValue">
+							{{ user.fullName }}
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">{{ 'user.view.studentId'|trans }}</label>
+						<div class="controls profileEdit-fixedValue">
+							{{ user.studentId }}
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">{{ 'user.view.mail'|trans }}</label>
+						<div class="controls profileEdit-fixedValue">
+							{{ user.mail }}
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">{{ 'user.view.formation'|trans }}</label>
+						<div class="controls profileEdit-fixedValue">
+							{{ user.niveau }} {{ user.filiere }} ({{ user.formation }})
+						</div>
+					</div>
+
+					{% if is_public(user.sexPrivacy) %}
+						<div class="control-group">
+							<label class="control-label">{{ 'user.view.sex'|trans }}</label>
+							<div class="controls profileEdit-fixedValue">
+								{{ ('base.user.sex.'~user.sex)|trans }}
+							</div>
+						</div>
+					{% endif %}
+
+					{% if is_public(user.nationalityPrivacy) %}
+						<div class="control-group">
+							<label class="control-label">{{ 'user.view.nationality'|trans }}</label>
+							<div class="controls profileEdit-fixedValue">
+								{{ user.nationality }}
+							</div>
+						</div>
+					{% endif %}
+
+					{% if
+							is_public(user.adressPrivacy)
+						or	is_public(user.postalCodePrivacy)
+						or	is_public(user.cityPrivacy)
+						or	is_public(user.countryPrivacy)
+					%}
+						<div class="control-group">
+							<label class="control-label">{{ 'user.view.adress'|trans }}</label>
+							<div class="controls profileEdit-fixedValue">
+
+								{% if is_public(app.user.adressPrivacy) %}
+									{{ app.user.adress }}
+									<br />
+								{% endif %}
+
+								{% if is_public(app.user.postalCodePrivacy) %}
+									{{ app.user.postalCode }}
+									<br />
+								{% endif %}
+
+								{% if is_public(app.user.cityPrivacy) %}
+									{{ app.user.city }}
+									<br />
+								{% endif %}
+
+								{% if is_public(app.user.countryPrivacy) %}
+									{{ app.user.country }}
+									<br />
+								{% endif %}
+							</div>
+						</div>
+					{% endif %}
+
+					{% if is_public(user.birthdayPrivacy) %}
+						<div class="control-group">
+							<label class="control-label">{{ 'user.view.birthday'|trans }}</label>
+							<div class="controls profileEdit-fixedValue">
+								{{ user.birthday }})
+							</div>
+						</div>
+					{% elseif user.birthdayDisplayOnlyAge %}
+						<div class="control-group">
+							<label class="control-label">{{ 'user.view.age'|trans }}</label>
+							<div class="controls profileEdit-fixedValue">
+								{{ 'user.profile.age'|trans({'%age%': user.age}) }}
+							</div>
+						</div>
+					{% endif %}
+
+					{% if is_public(user.personnalMailPrivacy) %}
+						<div class="control-group">
+							<label class="control-label">{{ 'user.view.personnalMail'|trans }}</label>
+							<div class="controls profileEdit-fixedValue">
+								{{ user.personnalMail }})
+							</div>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

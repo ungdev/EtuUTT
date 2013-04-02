@@ -2,11 +2,8 @@
 
 namespace Etu\Core\CoreBundle\Controller;
 
-
-use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 
-use Etu\Core\CoreBundle\Framework\Module\ModulesManager;
 use Symfony\Component\HttpFoundation\Response;
 
 // Import @Route() and @Template() annotations
@@ -20,6 +17,39 @@ class MainController extends Controller
 	 * @Template()
 	 */
 	public function indexAction()
+	{
+		if (! $this->getUser()) {
+			return $this->indexAnonymousAction();
+		}
+
+		if ($this->getUser() && $this->getUser()->getIsOrga()) {
+			return $this->indexOrgaAction();
+		}
+
+		return $this->indexUserAction();
+	}
+
+
+	/**
+	 * @return Response
+	 */
+	protected function indexAnonymousAction()
+	{
+		return $this->render('EtuCoreBundle:Main:indexAnonymous.html.twig');
+	}
+
+	/**
+	 * @return Response
+	 */
+	protected function indexOrgaAction()
+	{
+		return $this->render('EtuCoreBundle:Main:indexOrga.html.twig');
+	}
+
+	/**
+	 * @return Response
+	 */
+	protected function indexUserAction()
 	{
 		// Add a block to the sidebar about the current flux
 		$this->getSidebarBuilder()
@@ -35,15 +65,6 @@ class MainController extends Controller
 				->end()
 			->end();
 
-		$em = $this->getDoctrine()->getManager();
-
-		$notif = new Notification();
-		$notif->setUser($this->getUser());
-		$notif->setModule('user');
-		$notif->setHelper('user_followed');
-		$notif->setIsNew(true);
-		$notif->addEntity($em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => 'ladunean')));
-
-		return array('notif' => $notif);
+		return $this->render('EtuCoreBundle:Main:index.html.twig');
 	}
 }

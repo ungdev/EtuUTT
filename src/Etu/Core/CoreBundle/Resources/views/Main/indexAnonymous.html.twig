@@ -1,0 +1,104 @@
+{% extends '::page-1col.html.twig' %}
+
+{% block title %}{{ 'main.indexAnonymous.title'|trans }}{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('nivo-slider/nivo-slider.css') }}" />
+	<link rel="stylesheet" href="{{ asset('slider/theme/style.css') }}" />
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('nivo-slider/jquery.nivo.slider.pack.js') }}" type="text/javascript"></script>
+
+	<script type="text/javascript">
+		$(window).load(function() {
+			$('#slider').nivoSlider();
+		});
+	</script>
+{% endblock %}
+
+{% block content %}
+	<div class="padding20-all">
+		<h3>Bienvenue sur le site étudiant de l'Université de Technologie de Troyes</h3>
+
+		<p>
+			Le site étudiant est le site est le site qui connecte la communauté des UTTiens.
+			Il offre de nombreux services aux étudiants de l'UTT en complément des services officiels pour faciliter
+			leur intégration et leur vie étudiante.
+		</p>
+		<br />
+		<div class="row-fluid">
+			<div class="span4">
+				<h4>Prochainement à l'UTT</h4>
+
+				<div class="well">
+					<h5>
+						Le Gala UTT !
+						<small class="pull-right">Le 18 mai</small>
+					</h5>
+
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, consequuntur culpa delectus
+						eaque esse inventore iure nulla optio quaerat quam, quo, repudiandae ullam. Adipisci dicta
+						dolorem expedita quos reiciendis tenetur.
+					</p>
+				</div>
+			</div>
+			<div class="span8">
+				<h4>Actualités</h4>
+
+				<div class="well">
+					<h5>
+						Le Gala UTT !
+						<small class="pull-right">Le 31 mars à 14h12</small>
+					</h5>
+
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, consequuntur culpa delectus
+						eaque esse inventore iure nulla optio quaerat quam, quo, repudiandae ullam. Adipisci dicta
+						dolorem expedita quos reiciendis tenetur.
+					</p>
+				</div>
+
+				<div class="well">
+					<h5>
+						Le Gala UTT !
+						<small class="pull-right">Le 30 mars à 17h10</small>
+					</h5>
+
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, consequuntur culpa delectus
+						eaque esse inventore iure nulla optio quaerat quam, quo, repudiandae ullam. Adipisci dicta
+						dolorem expedita quos reiciendis tenetur.
+					</p>
+				</div>
+
+				<div class="well">
+					<h5>
+						Le Gala UTT !
+						<small class="pull-right">Le 25 mars à 08h45</small>
+					</h5>
+
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, consequuntur culpa delectus
+						eaque esse inventore iure nulla optio quaerat quam, quo, repudiandae ullam. Adipisci dicta
+						dolorem expedita quos reiciendis tenetur.
+					</p>
+				</div>
+
+				<div class="well">
+					<h5>
+						Le Gala UTT !
+						<small class="pull-right">Le 18 mars à 18h26</small>
+					</h5>
+
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, consequuntur culpa delectus
+						eaque esse inventore iure nulla optio quaerat quam, quo, repudiandae ullam. Adipisci dicta
+						dolorem expedita quos reiciendis tenetur.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

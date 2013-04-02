@@ -1,0 +1,35 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'base.menu.connexion'|trans }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<div class="padding20-all">
+		<p>
+			{{ 'user.auth.connect.desc'|trans }}
+		</p>
+		<ul class="thumbnails connect-choices">
+			<li class="span3">
+				<a href="{{ path('user_connect_cas') }}" class="thumbnail">
+					<img src="{{ asset('img/connect/cas.png') }}" />
+					En utilisant le CAS
+				</a>
+			</li>
+			<li class="span3">
+				<a href="{{ path('user_connect_external') }}" class="thumbnail">
+					<img src="{{ asset('img/connect/external.png') }}" />
+					En utilisant un compte exterieur
+				</a>
+			</li>
+			<li class="span3">
+				<a href="{{ path('user_connect_orga') }}" class="thumbnail">
+					<img src="{{ asset('img/connect/orga.png') }}" />
+					En tant qu'association
+				</a>
+			</li>
+		</ul>
+	</div>
+{% endblock %}

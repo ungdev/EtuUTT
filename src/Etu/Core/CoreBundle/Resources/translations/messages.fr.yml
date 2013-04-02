@@ -24,14 +24,14 @@ base:
         associations: Associations
         search: Recherche
         more: Plus
+        connexion: Connexion
 
     # User account box
     user:
         # Users types
         types:
             student: Etudiant
-            association: Association
-            utt: Personnel
+            orga: Association
             external: Exterieur
 
         # User menu
@@ -44,6 +44,7 @@ base:
             table: Mon emploi du temps
             logout: Déconnexion
             help: Aide
+            orgaAdmin: Administration
 
         # Sex
         sex:
@@ -82,10 +83,14 @@ base:
 
 # Homepage
 # Used in Main/index.html.twig
-home:
+main:
     index:
-        page:
-            title: Accueil
+        title: Mon flux
+    indexAnonymous:
+        title: Accueil
+    indexOrga:
+        title: Administration
+
 
 
 

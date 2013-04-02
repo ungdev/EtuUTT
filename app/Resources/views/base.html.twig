@@ -97,7 +97,7 @@
 							<li class="last connect_link">
 								<a href="{{ path('user_connect') }}">
 									<i class="icon icon-head icon-head-connexion"></i>
-									<span class="menu-link-text">Connexion</span>
+									<span class="menu-link-text">{{ 'base.menu.connexion'|trans }}</span>
 								</a>
 							</li>
 						{% endif %}
@@ -116,8 +116,10 @@
 							<span class="color-soft">
 								{% if app.user.isStudent %}
 									{{ 'base.user.types.student'|trans }}
+								{% elseif app.user.isOrga %}
+									{{ 'base.user.types.orga'|trans }}
 								{% else %}
-									{{ 'base.user.types.utt'|trans }}
+									{{ 'base.user.types.external'|trans }}
 								{% endif %}
 							</span>
 						</span>
@@ -129,13 +131,41 @@
 							<span class="color-soft">
 								{% if app.user.isStudent %}
 									{{ 'base.user.types.student'|trans }}
+								{% elseif app.user.isOrga %}
+									{{ 'base.user.types.orga'|trans }}
 								{% else %}
-									{{ 'base.user.types.utt'|trans }}
+									{{ 'base.user.types.external'|trans }}
 								{% endif %}
 							</span>
 						</div>
 
-						{{ render_user_menu() }}
+						{% if not app.user.isOrga %}
+							{{ render_user_menu() }}
+						{% else %}
+							<ul class="list-vertical list-vertical-linked">
+								<li >
+									<a href="{{ path('homepage') }}" >
+										<i class="etu-icon-gear"></i>
+										{{ 'base.user.menu.orgaAdmin'|trans }}
+									</a>
+								</li>
+								<li >
+									<a href="{{ path('user_disconnect') }}">
+										<i class="etu-icon-power"></i>
+										{{ 'base.user.menu.logout'|trans }}
+									</a>
+								</li>
+							</ul>
+							<hr class="separator" />
+							<ul class="list-vertical list-vertical-linked">
+								<li >
+									<a href="" >
+										<i class="etu-icon-question"></i>
+										{{ 'base.user.menu.help'|trans }}
+									</a>
+								</li>
+							</ul>
+						{% endif %}
 					</div>
 					{% endif %}
 				</div>
@@ -185,6 +215,7 @@
 						{{ 'base.sidebar.etu.items.team'|trans }}
 					</a>
 				</li>
+				{% if etu.moduleEnabled('bugs') %}
 				<li>
 					<a href="">
 						<i class="etu-icon-comment"></i>
@@ -197,6 +228,7 @@
 						{{ 'bugs.sidebar.items.bugs'|trans }}
 					</a>
 				</li>
+				{% endif %}
 			</ul>
 
 			<hr class="separator" />

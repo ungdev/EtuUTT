@@ -1,6 +1,6 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block title %}Mon flux{% endblock %}
+{% block title %}{{ 'main.index.title'|trans }}{% endblock %}
 
 {% block content %}
 	<div class="flux">
@@ -18,8 +18,6 @@
 				<div class="clear"></div>
 			</a>
 		</div>
-
-		{{ render_notif(notif) }}
 
 		<a href="" class="notif notif-new">
 			<img src="{{ asset('img/notifs/mail.png') }}" />

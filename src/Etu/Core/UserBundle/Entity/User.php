@@ -3,6 +3,7 @@
 namespace Etu\Core\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Etu\Core\UserBundle\Collection\UserOptionsCollection;
 use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
@@ -284,7 +285,7 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *     > For trombi
 	 *
-	 * @ORM\Column(name="jadis", type="string", length=100, nullable=true)
+	 * @ORM\Column(name="jadis", type="text", nullable=true)
 	 */
 	protected $jadis;
 
@@ -377,6 +378,15 @@ class User implements UserInterface, \Serializable
 	protected $badges = array();
 
 	/**
+	 * Modules options (no format, just an array stored to be sued by modules as they want)
+	 *
+	 * @var UserOptionsCollection
+	 *
+	 * @ORM\Column(name="options", type="object")
+	 */
+	protected $options;
+
+	/**
 	 * Temporary variable to store uploaded file during photo update
 	 *
 	 * @var UploadedFile
@@ -403,6 +413,8 @@ class User implements UserInterface, \Serializable
 		$this->birthdayPrivacy = self::PRIVACY_PUBLIC;
 		$this->birthdayDisplayOnlyAge = false;
 		$this->personnalMailPrivacy = self::PRIVACY_PUBLIC;
+		$this->options = new UserOptionsCollection();
+		$this->password = substr($this->getSalt(), 0, 6);
 	}
 
 	/**
@@ -427,6 +439,14 @@ class User implements UserInterface, \Serializable
 		$this->avatar = $this->getLogin().'.jpg';
 
 		return true;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getIsOrga()
+	{
+		return false;
 	}
 
 	/**
@@ -474,7 +494,7 @@ class User implements UserInterface, \Serializable
 	 */
 	public function getPassword()
 	{
-		return substr(md5($this->login), 0, 8);
+		return $this->password;
 	}
 
 	/**
@@ -1586,5 +1606,32 @@ class User implements UserInterface, \Serializable
 	public function getViadeo()
 	{
 		return $this->viadeo;
+	}
+
+	/**
+	 * @param boolean $isAdmin
+	 * @return User
+	 */
+	public function setIsAdmin($isAdmin)
+	{
+		$this->isAdmin = $isAdmin;
+
+		return $this;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getIsAdmin()
+	{
+		return $this->isAdmin;
+	}
+
+	/**
+	 * @return \Etu\Core\UserBundle\Collection\UserOptionsCollection
+	 */
+	public function getOptions()
+	{
+		return $this->options;
 	}
 }

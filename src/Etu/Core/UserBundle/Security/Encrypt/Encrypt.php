@@ -28,18 +28,15 @@ class Encrypt
 	 */
 	public function encrypt($text)
 	{
-		srand((double) microtime() * 1000000);
-
-		$encryptKey = md5(rand(0,32000));
 		$count = 0;
 		$result = '';
 
 		for ($i = 0; $i < strlen($text); $i++) {
-			if ($count == strlen($encryptKey)) {
+			if ($count == strlen($this->key)) {
 				$count = 0;
 			}
 
-			$result.= substr($encryptKey, $count, 1).(substr($text, $i, 1) ^ substr($encryptKey, $count, 1) );
+			$result .= substr($this->key, $count, 1).(substr($text, $i, 1) ^ substr($this->key, $count, 1) );
 			$count++;
 		}
 

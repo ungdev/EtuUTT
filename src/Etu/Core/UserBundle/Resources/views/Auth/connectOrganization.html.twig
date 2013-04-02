@@ -1,0 +1,62 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'user.auth.connectOrga.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<ul class="nav nav-tabs page-tabs">
+		<li>
+			<a href="{{ path('user_connect') }}">
+				<i class="icon-chevron-left"></i>
+				Changer de méthode de connexion
+			</a>
+		</li>
+	</ul>
+
+	<div class="padding20-all">
+		<p>
+			{{ 'user.auth.connectOrga.desc'|trans }}
+			<br />
+			<br />
+			{{ form_errors(form) }}
+		</p>
+		<div class="row-fluid">
+			<div class="span2"></div>
+			<div class="span4">
+				<form method="post" class="form-horizontal">
+					<div class="control-group">
+						<label class="control-label">
+							{{ form_label(form.login, 'user.auth.connectOrga.identifier'|trans) }}
+						</label>
+						<div class="controls">
+							{{ form_widget(form.login) }}
+							<span class="help-block">{{ form_errors(form.login) }}</span>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">
+							{{ form_label(form.password, 'user.auth.connectOrga.password'|trans) }}
+						</label>
+						<div class="controls">
+							{{ form_widget(form.password) }}
+							<span class="help-block">{{ form_errors(form.password) }}</span>
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="controls">
+							{{ form_rest(form) }}
+
+							<button type="submit" class="btn">
+								{{ 'user.auth.connectOrga.submit'|trans }}
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="span6"></div>
+		</div>
+	</div>
+{% endblock %}
