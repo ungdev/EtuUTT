@@ -3,7 +3,6 @@
 namespace Etu\Module\BugsBundle;
 
 use Etu\Core\CoreBundle\Framework\Definition\Module;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class EtuModuleBugsBundle extends Module
 {
