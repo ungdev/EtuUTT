@@ -1,0 +1,17 @@
+
+{
+	"name": "ung/etuutt-api",
+	"description": "EtuUTT API",
+	"minimum-stability": "stable",
+
+	"require": {
+		"silex/silex": "dev-master"
+	},
+
+	"authors": [
+		{
+			"name": "Titouan Galopin",
+			"email": "galopintitouan@gmail.com"
+		}
+	]
+}

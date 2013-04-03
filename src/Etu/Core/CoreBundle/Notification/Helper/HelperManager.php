@@ -46,7 +46,7 @@ class HelperManager
 		}
 
 		throw new \InvalidArgumentException(sprintf(
-			'Notification render help "%s" no found', $helperName
+			'Render helper "%s" not found', $helperName
 		));
 	}
 

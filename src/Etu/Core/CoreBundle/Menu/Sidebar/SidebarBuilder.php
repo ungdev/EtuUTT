@@ -2,6 +2,8 @@
 
 namespace Etu\Core\CoreBundle\Menu\Sidebar;
 
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
+
 /**
  * Default sidebar. Edited by controllers on the fly.
  */
@@ -18,9 +20,9 @@ class SidebarBuilder
 	protected $lastPosition;
 
 	/**
-	 * @param \Symfony\Bundle\FrameworkBundle\Routing\Router $router
+	 * @param Router $router
 	 */
-	public function __construct(\Symfony\Bundle\FrameworkBundle\Routing\Router $router)
+	public function __construct(Router $router)
 	{
 		$this->blocks = array();
 		$this->lastPosition = 0;

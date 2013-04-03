@@ -96,6 +96,7 @@ class Notification
 		$this->date = new \DateTime();
 		$this->expiration = new \DateTime();
 		$this->isSuper = false;
+		$this->isNew = true;
 	}
 
 	/**

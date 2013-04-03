@@ -2,8 +2,11 @@
 
 namespace Etu\Core\CoreBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
+use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 
+use Etu\Core\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 
 // Import @Route() and @Template() annotations
@@ -65,6 +68,22 @@ class MainController extends Controller
 				->end()
 			->end();
 
-		return $this->render('EtuCoreBundle:Main:index.html.twig');
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		$notifications = $em
+			->createQueryBuilder()
+			->select('n')
+			->from('EtuCoreBundle:Notification', 'n')
+			->where('n.user = :user')
+			->orderBy('n.isSuper', 'DESC')
+			->addOrderBy('n.date', 'DESC')
+			->setParameter('user', $this->getUser()->getId())
+			->getQuery()
+			->getResult();
+
+		return $this->render('EtuCoreBundle:Main:index.html.twig', array(
+			'notifs' => $notifications
+		));
 	}
 }
