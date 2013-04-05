@@ -82,6 +82,10 @@
 	opacity: 0.7;
 }
 
+.no-notif {
+	width: 70%;
+	margin: 0 auto;
+}
 .notif {
 	display: block;
 	padding: 10px 15px;

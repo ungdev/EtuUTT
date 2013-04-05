@@ -88,6 +88,26 @@ class LdapManager
 	}
 
 	/**
+	 * @param $login
+	 * @return bool|Model\Organization
+	 */
+	public function getOrga($login)
+	{
+		$infos = ldap_get_entries(
+			$this->connection,
+			ldap_list(
+				$this->connection, 'ou=people,dc=utt,dc=fr', 'uid='.$login
+			)
+		);
+
+		if (empty($infos[0]) || ! isset($infos[0])) {
+			return false;
+		}
+
+		return $this->mapOrga($infos[0]);
+	}
+
+	/**
 	 * @param array $values
 	 * @return Model\User
 	 */
@@ -144,5 +164,28 @@ class LdapManager
 		$user->setUvs($uvs);
 
 		return $user;
+	}
+
+	/**
+	 * @param array $values
+	 * @return Model\Organization
+	 */
+	private function mapOrga(array $values)
+	{
+		if (
+			! isset($values['uid'])
+			|| ! isset($values['mail'])
+			|| ! isset($values['displayname'])
+		) {
+			return false;
+		}
+
+		$orga = new Model\Organization();
+		$orga->setLogin($values['uid'][0]);
+		$orga->setMail($values['mail'][0]);
+		$orga->setFullName($values['displayname'][0]);
+		$orga->setIsStudent(false);
+
+		return $orga;
 	}
 }

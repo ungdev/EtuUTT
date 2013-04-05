@@ -2,8 +2,6 @@
 
 namespace Etu\Core\UserBundle\Ldap\Model;
 
-use Symfony\Component\Security\Core\User\UserInterface;
-
 class User
 {
 	/**

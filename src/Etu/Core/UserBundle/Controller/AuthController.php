@@ -243,6 +243,14 @@ class AuthController extends Controller
 
 			$ldapUser = $ldap->getUser($login);
 
+			// If we can't use a classic user, try with an organization
+			if (! $ldapUser) {
+				$ldapUser = $ldap->getOrga($login);
+
+				var_dump($ldapUser);
+				exit;
+			}
+
 			// Resize photo
 			try {
 				$image = $imagine->open('http://local-sig.utt.fr/Pub/trombi/individu/'.$ldapUser->getStudentId().'.jpg');

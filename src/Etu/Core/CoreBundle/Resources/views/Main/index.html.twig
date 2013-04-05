@@ -3,11 +3,24 @@
 {% block title %}{{ 'main.index.title'|trans }}{% endblock %}
 
 {% block content %}
+	{% if not notifs %}
+		<div class="no-notif padding20-all">
+			<h4>{{ 'main.index.no_notif.message'|trans }}</h4>
+			<p>
+				{{ 'main.index.no_notif.suscribe'|trans }}
+			</p>
+			<p class="pull-right">
+				<a href="">{{ 'main.index.no_notif.learn_more'|trans }}</a>
+			</p>
+			<div class="clear"></div>
+		</div>
+	{% else %}
 	<div class="flux">
 		{% for notif in notifs %}
 			{{ render_notif(notif) }}
 		{% endfor %}
 
+		<!--
 		<div class="super-notifs">
 			<a href="" class="notif super-notif">
 				<img src="{{ asset('img/notifs/event.png') }}" />
@@ -148,5 +161,8 @@
 
 			<div class="clear"></div>
 		</a>
+		-->
+
 	</div>
+	{% endif %}
 {% endblock %}

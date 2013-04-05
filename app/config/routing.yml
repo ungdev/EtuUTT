@@ -11,6 +11,10 @@ etu_user:
     type:     annotation
     prefix:   /
 
+# Load FOS Routing
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
 # Load modules routes
 etu_modules:
     resource: .

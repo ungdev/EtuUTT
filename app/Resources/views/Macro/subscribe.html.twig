@@ -1,0 +1,46 @@
+
+{% macro block(entityType, entityId) %}
+	<div class="subscription-state">
+		{% if is_subscriber(app.user, entityType, entityId) %}
+			<a href="#"
+			   id="{{ entityType~'-'~entityId~'-unsubscribe' }}"
+			   data-entityType="{{ entityType }}"
+			   data-entityId="{{ entityId }}"
+			   class="btn btn-primary subscription-unsubscribe subscription-first"
+			   title="{{ 'notifs.subscribe.unfollow'|trans }}">
+				<i class="icon-remove icon-white"></i>
+				{{ 'notifs.subscribe.follower'|trans }}
+			</a>
+
+			<a href="#"
+			   id="{{ entityType~'-'~entityId~'-subscribe' }}"
+			   data-entityType="{{ entityType }}"
+			   data-entityId="{{ entityId }}"
+			   class="btn subscription-subscribe subscription-hidden subscription-second"
+			   title="{{ 'notifs.subscribe.follow'|trans }}">
+				<i class="icon-star"></i>
+				{{ 'notifs.subscribe.follow'|trans }}
+			</a>
+		{% else %}
+			<a href="#"
+			   id="{{ entityType~'-'~entityId~'-subscribe' }}"
+			   data-entityType="{{ entityType }}"
+			   data-entityId="{{ entityId }}"
+			   class="btn subscription-subscribe subscription-first"
+			   title="{{ 'notifs.subscribe.follow'|trans }}">
+				<i class="icon-star"></i>
+				{{ 'notifs.subscribe.follow'|trans }}
+			</a>
+
+			<a href="#"
+			   id="{{ entityType~'-'~entityId~'-unsubscribe' }}"
+			   data-entityType="{{ entityType }}"
+			   data-entityId="{{ entityId }}"
+			   class="btn btn-primary subscription-unsubscribe subscription-hidden subscription-second"
+			   title="{{ 'notifs.subscribe.unfollow'|trans }}">
+				<i class="icon-remove icon-white"></i>
+				{{ 'notifs.subscribe.follower'|trans }}
+			</a>
+		{% endif %}
+	</div>
+{% endmacro %}

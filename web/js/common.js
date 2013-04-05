@@ -71,4 +71,42 @@ $(function() {
 			'image', 'video', 'file', 'table', 'link', '|',
 			'fontcolor', 'backcolor', '|', 'alignment']
 	});
+
+	$('.subscription-subscribe').click(function() {
+		var url = Routing.generate('notifs_subscribe', {
+			'entityType': $(this).attr('data-entityType'),
+			'entityId': $(this).attr('data-entityId')
+		});
+
+		var id = $(this).attr('id').replace('-subscribe', '');
+
+		$.getJSON(url, function(data) {
+			console.log(data);
+
+			if (typeof data.status != 'undefined' && data.status == 200) {
+				$('#'+ id +'-subscribe').hide();
+				$('#'+ id +'-unsubscribe').show();
+			} else {
+				alert('Error !');
+			}
+		});
+	});
+
+	$('.subscription-unsubscribe').click(function() {
+		var url = Routing.generate('notifs_unsubscribe', {
+			'entityType': $(this).attr('data-entityType'),
+			'entityId': $(this).attr('data-entityId')
+		});
+
+		var id = $(this).attr('id').replace('-unsubscribe', '');
+
+		$.getJSON(url, function(data) {
+			if (typeof data.status != 'undefined' && data.status == 200) {
+				$('#'+ id +'-unsubscribe').hide();
+				$('#'+ id +'-subscribe').show();
+			} else {
+				alert('Error !');
+			}
+		});
+	});
 });

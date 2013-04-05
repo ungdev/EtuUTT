@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-	<ul class="nav nav-tabs bugs-tabs">
+	<ul class="nav nav-tabs page-tabs">
 		<li>
 			<a href="{{ path('bugs_index') }}">
 				<i class="icon-chevron-left"></i>
@@ -16,14 +16,33 @@
 		</li>
 	</ul>
 
-	<div class="padding20-sides">
-		{% if message %}
-			<div class="alert alert-success">
-				{{ message|trans }}
-			</div>
-		{% endif %}
+	{{ etu_subscribe.block('issue', bug.id) }}
 
-		<h3>{{ bug.title }}</h3>
+	<div class="padding20-sides">
+
+		<h3>
+			{{ bug.title }}
+
+			{% if bug.criticality == 'security' %}
+				<span class="label label-important">
+					{{ ('bugs.criticality.'~bug.criticality)|trans }}
+				</span>
+			{% elseif bug.criticality == 'critical' or bug.criticality == 'major' %}
+				<span class="label label-warning">
+					{{ ('bugs.criticality.'~bug.criticality)|trans }}
+				</span>
+			{% elseif bug.criticality == 'minor' %}
+				<span class="label label-info">
+					{{ ('bugs.criticality.'~bug.criticality)|trans }}
+				</span>
+			{% else %}
+				<span class="label">
+					{{ ('bugs.criticality.'~bug.criticality)|trans }}
+				</span>
+			{% endif %}
+		</h3>
+
+
 
 		<hr />
 
@@ -47,7 +66,7 @@
 					<small class="pull-right">{{ time_diff(bug.createdAt)|ucfirst }}</small>
 				</div>
 				<div class="etu-comment-body">
-					{{ bug.body|nl2br }}
+					{{ bug.body|raw }}
 				</div>
 			</div>
 
@@ -67,7 +86,7 @@
 						<small class="pull-right">{{ time_diff(comment.createdAt)|ucfirst }}</small>
 					</div>
 					<div class="etu-comment-body">
-						{{ comment.body|nl2br }}
+						{{ comment.body|raw }}
 					</div>
 				</div>
 

@@ -7,15 +7,15 @@
 {% endblock %}
 
 {% block content %}
-	<ul class="nav nav-tabs bugs-tabs">
-		<li class="active">
+	<ul class="nav nav-tabs page-tabs">
+		<li class="active page-tabs-resolved-active">
 			<a href="{{ path('bugs_index') }}">{{ 'bugs.index.page.opened'|trans }}</a>
 		</li>
 		<li>
 			<a href="{{ path('bugs_closed') }}">{{ 'bugs.index.page.resolved'|trans }}</a>
 		</li>
 		<li class="pull-right">
-			<a href="">
+			<a href="{{ path('bugs_create') }}">
 				<i class="icon-plus"></i>
 				{{ 'bugs.index.page.create'|trans }}
 			</a>
@@ -24,14 +24,14 @@
 
 	<div class="padding20-sides">
 		<table class="table table-hover table-bordered bugs-table">
-			{% for bug in bugs %}
+			{% for number, bug in pagination %}
 				<tr>
 					<td class="bugs-table-number">
-						#{{ bug.number }}
+						#{{ number + 1 }}
 					</td>
 					<td>
 						<strong>
-							<a href="{{ path('bugs_view', {'number': bug.number, 'slug': bug.title|slugify}) }}">
+							<a href="{{ path('bugs_view', {'id': bug.id, 'slug': bug.title|slugify}) }}">
 								{{ bug.title }}
 							</a>
 						</strong>
@@ -40,6 +40,24 @@
 							{{ 'base.by'|trans }} {{ bug.user.login }} - {{ time_diff(bug.createdAt) }}
 							{% if bug.assignee %}
 								- {{ 'bugs.index.table.assigned_to'|trans({'%name%': bug.assignee.login}) }}
+							{% endif %}
+							-
+							{% if bug.criticality == 'security' %}
+								<span class="label label-important">
+									{{ ('bugs.criticality.'~bug.criticality)|trans }}
+								</span>
+							{% elseif bug.criticality == 'critical' or bug.criticality == 'major' %}
+								<span class="label label-warning">
+									{{ ('bugs.criticality.'~bug.criticality)|trans }}
+								</span>
+							{% elseif bug.criticality == 'minor' %}
+								<span class="label label-info">
+									{{ ('bugs.criticality.'~bug.criticality)|trans }}
+								</span>
+							{% else %}
+								<span class="label">
+									{{ ('bugs.criticality.'~bug.criticality)|trans }}
+								</span>
 							{% endif %}
 						</small>
 					</td>
@@ -52,5 +70,10 @@
 				</tr>
 			{% endfor %}
 		</table>
+
+		{# display navigation #}
+		<div class="navigation">
+			{{ knp_pagination_render(pagination) }}
+		</div>
 	</div>
 {% endblock %}

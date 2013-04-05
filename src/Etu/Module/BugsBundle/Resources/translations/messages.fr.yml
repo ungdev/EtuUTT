@@ -1,9 +1,18 @@
 
 bugs:
+    criticality:
+        critical: Problème critique
+        security: Problème de sécurité
+        major: Problème majeur
+        minor: Problème mineur
+        visual: Problème visuel
+        typo: Coquille
+
     sidebar:
         items:
             suggest: Suggestions
             bugs: Signaler un bug
+
     index:
         page:
             title: Bugs et erreurs
@@ -17,6 +26,14 @@ bugs:
             created_at: Date de création
             no_bug_opened: Aucun bug ouvert signalé pour le moment
             assigned_to: assigné à %name%
+
+    create:
+        title: Titre
+        criticality: Criticité
+        body: Explications
+        submit: Signaler
+        confirm: Votre problème a été signalé. Merci de votre participation !
+
     view:
         page:
             back: Retour à la liste
@@ -39,10 +56,3 @@ bugs:
             fix_without_commit: Résoudre sans commit
             fix_with_commit_placeholder: Commit ...
             fix: Résoudre
-            criticality:
-                critical: Problème critique
-                security: Problème de sécurité
-                major: Problème majeur
-                minor: Problème mineur
-                visual: Problème visuel
-                typo: Coquille

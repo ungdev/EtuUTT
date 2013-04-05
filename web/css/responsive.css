@@ -29,6 +29,9 @@
 	.page-alert {
 		margin-left: 405px;
 	}
+	.page-tabs > li > a {
+		font-size: 12px;
+	}
 	.hidden-for-1024 {
 		display: none;
 	}

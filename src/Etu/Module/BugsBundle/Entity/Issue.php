@@ -33,13 +33,6 @@ class Issue
 	protected $id;
 
 	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="number", type="integer")
-	 */
-	protected $number;
-
-	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="title", type="string", length=100)
@@ -86,31 +79,37 @@ class Issue
 	/**
 	 * @var \DateTime
 	 *
-	 * @ORM\Column(name="updatedAt", type="datetime")
+	 * @ORM\Column(name="updatedAt", type="datetime", nullable=true)
 	 */
 	protected $updatedAt;
 
 	/**
 	 * @var \DateTime
 	 *
-	 * @ORM\Column(name="closedAt", type="datetime")
+	 * @ORM\Column(name="closedAt", type="datetime", nullable=true)
 	 */
 	protected $closedAt;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="body", type="text")
+	 * @ORM\Column(name="body", type="text", nullable=true)
 	 */
 	protected $body;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="commit", type="string", length=255)
+	 * @ORM\Column(name="commit", type="string", length=255, nullable=true)
 	 */
 	protected $commit;
 
+
+	public function __construct()
+	{
+		$this->createdAt = new \DateTime();
+		$this->isOpened = true;
+	}
 
 	/**
 	 * @param \Etu\Core\UserBundle\Entity\User $assignee
@@ -224,25 +223,6 @@ class Issue
 	public function getIsOpened()
 	{
 		return $this->isOpened;
-	}
-
-	/**
-	 * @param int $number
-	 * @return Issue
-	 */
-	public function setNumber($number)
-	{
-		$this->number = $number;
-
-		return $this;
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getNumber()
-	{
-		return $this->number;
 	}
 
 	/**

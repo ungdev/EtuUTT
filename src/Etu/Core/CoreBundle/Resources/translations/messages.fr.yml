@@ -86,6 +86,10 @@ base:
 main:
     index:
         title: Mon flux
+        no_notif:
+            message: Vous n'avez pas de notification !
+            suscribe: Abonnez-vous à des éléments d'EtuUTT pour suivre ce qui vous intéresse à l'UTT !
+            learn_more: En savoir plus
     indexAnonymous:
         title: Accueil
     indexOrga:
@@ -107,3 +111,13 @@ flux:
                 suscribtions: Gérer mes abonnements
                 notifications: Gérer mes notifications
                 parameters: Paramètres
+
+
+notifs:
+    subscribe:
+        confirm: Vous êtes désormais abonné à cet élément
+        follower: Abonné
+        unfollow: Se désabonner
+        follow: S'abonner
+    unsubscribe:
+        confirm: Vous êtes bien désabonné à cet élément

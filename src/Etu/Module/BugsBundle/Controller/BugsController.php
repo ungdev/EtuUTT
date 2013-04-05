@@ -2,6 +2,7 @@
 
 namespace Etu\Module\BugsBundle\Controller;
 
+use Etu\Core\CoreBundle\Entity\Subscription;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Module\BugsBundle\Entity\Comment;
@@ -14,18 +15,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * Class BugsController
- * @package Etu\Module\BugsBundle\Controller
- *
  * @Route("/bugs")
  */
 class BugsController extends Controller
 {
 	/**
-	 * @Route("/", name="bugs_index")
+	 * @Route("/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="bugs_index")
 	 * @Template()
 	 */
-	public function indexAction()
+	public function indexAction($page = 1)
 	{
 		if (! $this->getUser()) {
 			return $this->createAccessDeniedResponse();
@@ -34,17 +32,18 @@ class BugsController extends Controller
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
 
-		$bugs = $em->createQueryBuilder()
+		$query = $em->createQueryBuilder()
 			->select('i, u, a')
 			->from('EtuModuleBugsBundle:Issue', 'i')
 			->leftJoin('i.user', 'u')
 			->leftJoin('i.assignee', 'a')
 			->where('i.isOpened = 1')
-			->setMaxResults(20)
-			->getQuery()
-			->getResult();
+			->orderBy('i.createdAt', 'DESC')
+			->setMaxResults(20);
 
-		return array('bugs' => $bugs);
+		$pagination = $this->get('knp_paginator')->paginate($query, $page, 20);
+
+		return array('pagination' => $pagination);
 	}
 
 	/**
@@ -53,16 +52,82 @@ class BugsController extends Controller
 	 */
 	public function closedAction()
 	{
+		if (! $this->getUser()) {
+			return $this->createAccessDeniedResponse();
+		}
+
 		return array(
 			'bugs' => array()
 		);
 	}
 
 	/**
-	 * @Route("/{number}-{slug}", requirements = {"number" = "\d+"}, name="bugs_view")
+	 * @Route("/create", name="bugs_create")
 	 * @Template()
 	 */
-	public function viewAction($number, $slug)
+	public function createAction()
+	{
+		if (! $this->getUser()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$bug = new Issue();
+		$bug->setUser($this->getUser());
+
+		$form = $this->createFormBuilder($bug)
+			->add('title')
+			->add('criticality', 'choice', array(
+				'choices' => array(
+					Issue::CRITICALITY_SECURITY => 'bugs.criticality.security',
+					Issue::CRITICALITY_CRITICAL => 'bugs.criticality.critical',
+					Issue::CRITICALITY_MAJOR => 'bugs.criticality.major',
+					Issue::CRITICALITY_MINOR => 'bugs.criticality.minor',
+					Issue::CRITICALITY_VISUAL => 'bugs.criticality.visual',
+					Issue::CRITICALITY_TYPO => 'bugs.criticality.typo',
+				)))
+			->add('body')
+			->getForm();
+
+		$request = $this->getRequest();
+
+		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+			$em = $this->getDoctrine()->getManager();
+
+			$bug->setBody($this->stripRedactorTags($bug->getBody()));
+
+			$em->persist($bug);
+			$em->flush();
+
+			// Subscribe automatically the user at the issue
+			$subscription = new Subscription();
+			$subscription->setUser($this->getUser());
+			$subscription->setEntityType('issue');
+			$subscription->setEntityId($bug->getId());
+
+			$em->persist($subscription);
+			$em->flush();
+
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'bugs.create.confirm'
+			));
+
+			return $this->redirect($this->generateUrl('bugs_view', array(
+				'id' => $bug->getId(),
+				'slug' => StringManipulationExtension::slugify($bug->getTitle()),
+			)));
+		}
+
+		return array(
+			'form' => $form->createView()
+		);
+	}
+
+	/**
+	 * @Route("/{id}-{slug}", requirements = {"number" = "\d+"}, name="bugs_view")
+	 * @Template()
+	 */
+	public function viewAction($id, $slug)
 	{
 		if (! $this->getUser()) {
 			return $this->createAccessDeniedResponse();
@@ -77,14 +142,14 @@ class BugsController extends Controller
 			->from('EtuModuleBugsBundle:Issue', 'i')
 			->leftJoin('i.user', 'u')
 			->leftJoin('i.assignee', 'a')
-			->where('i.number = :number')
-			->setParameter('number', $number)
+			->where('i.id = :id')
+			->setParameter('id', $id)
 			->setMaxResults(1)
 			->getQuery()
 			->getOneOrNullResult();
 
 		if (! $bug) {
-			throw $this->createNotFoundException('Issue number #'.$number.' not found');
+			throw $this->createNotFoundException('Issue #'.$id.' not found');
 		}
 
 		if (StringManipulationExtension::slugify($bug->getTitle()) != $slug) {
@@ -115,12 +180,22 @@ class BugsController extends Controller
 
 		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
 
+			// Create the comment
 			$comment->setBody($this->stripRedactorTags($comment->getBody()));
-
 			$em->persist($comment);
-			$em->flush();
 
-			$message = 'bugs.view.message.creation';
+			// Subscribe automatically the user at the issue
+			$this->getSubscriptionsManager()->subscribe($this->getUser(), 'issue', $bug->getId());
+
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'bugs.view.message.creation'
+			));
+
+			return $this->redirect($this->generateUrl('bugs_view', array(
+				'id' => $bug->getId(),
+				'slug' => StringManipulationExtension::slugify($bug->getTitle()),
+			)));
 		} else {
 			$message = null;
 		}
@@ -128,12 +203,12 @@ class BugsController extends Controller
 		$updateForm = $this->createFormBuilder($bug)
 			->add('criticality', 'choice', array(
 				'choices' => array(
-					Issue::CRITICALITY_CRITICAL => 'bugs.view.admin.criticality.critical',
-					Issue::CRITICALITY_SECURITY => 'bugs.view.admin.criticality.security',
-					Issue::CRITICALITY_MAJOR => 'bugs.view.admin.criticality.major',
-					Issue::CRITICALITY_MINOR => 'bugs.view.admin.criticality.minor',
-					Issue::CRITICALITY_VISUAL => 'bugs.view.admin.criticality.visual',
-					Issue::CRITICALITY_TYPO => 'bugs.view.admin.criticality.typo',
+					Issue::CRITICALITY_CRITICAL => 'bugs.criticality.critical',
+					Issue::CRITICALITY_SECURITY => 'bugs.criticality.security',
+					Issue::CRITICALITY_MAJOR => 'bugs.criticality.major',
+					Issue::CRITICALITY_MINOR => 'bugs.criticality.minor',
+					Issue::CRITICALITY_VISUAL => 'bugs.criticality.visual',
+					Issue::CRITICALITY_TYPO => 'bugs.criticality.typo',
 				)
 			))
 			->getForm();

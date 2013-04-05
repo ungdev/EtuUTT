@@ -32,6 +32,22 @@ class Controller extends BaseController
 	}
 
 	/**
+	 * @return \Etu\Core\CoreBundle\Notification\SubscriptionsManager
+	 */
+	public function getSubscriptionsManager()
+	{
+		return $this->get('etu.notifs.subscriber');
+	}
+
+	/**
+	 * @return \Etu\Core\CoreBundle\Notification\NotificationSender
+	 */
+	public function getNotificationsSender()
+	{
+		return $this->get('etu.notifs.sender');
+	}
+
+	/**
 	 * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
 	 */
 	public function createAccessDeniedResponse()

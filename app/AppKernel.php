@@ -47,6 +47,10 @@ class AppKernel extends EtuKernel
 
 	        // Knp libraries
 	        new Knp\Bundle\TimeBundle\KnpTimeBundle(),
+	        new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+
+	        // FOS libraries
+	        new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
 
 	        // EtuUTT
             new Etu\Core\CoreBundle\EtuCoreBundle(),

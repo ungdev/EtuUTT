@@ -150,3 +150,20 @@ a:hover {
 	margin-left: 12px;
 	margin-top: 12px;
 }
+
+/* Subscription state */
+.subscription-state {
+	float: right;
+	margin-right: 20px;
+}
+.subscription-hidden {
+	display: none;
+}
+.subscription-first {
+	margin: 0;
+	margin-top: -4px;
+}
+.subscription-second {
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
