@@ -220,13 +220,13 @@
 				</li>
 				{% if etu.moduleEnabled('bugs') %}
 				<li>
-					<a href="">
+					<a href="{{ path('bugs_suggestions') }}">
 						<i class="etu-icon-comment"></i>
 						{{ 'bugs.sidebar.items.suggest'|trans }}
 					</a>
 				</li>
 				<li>
-					<a href="">
+					<a href="{{ path('bugs_index') }}">
 						<i class="etu-icon-warning"></i>
 						{{ 'bugs.sidebar.items.bugs'|trans }}
 					</a>

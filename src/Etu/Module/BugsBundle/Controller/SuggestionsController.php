@@ -17,7 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class SuggestionsController extends Controller
 {
     /**
-     * @Route("/", name="bugs_suggestions")
+     * @Route("", name="bugs_suggestions")
      * @Template()
      */
     public function indexAction()

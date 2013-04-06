@@ -414,7 +414,6 @@ class User implements UserInterface, \Serializable
 		$this->birthdayDisplayOnlyAge = false;
 		$this->personnalMailPrivacy = self::PRIVACY_PUBLIC;
 		$this->options = new UserOptionsCollection();
-		$this->password = substr($this->getSalt(), 0, 6);
 	}
 
 	/**

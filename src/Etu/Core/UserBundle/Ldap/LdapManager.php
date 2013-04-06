@@ -24,7 +24,7 @@ class LdapManager
 	}
 
 	/**
-	 * @return Model\User[]
+	 * @return Model\User[]|Model\Organization[]
 	 */
 	public function getAll()
 	{
@@ -39,10 +39,10 @@ class LdapManager
 
 		foreach ($infos as $values) {
 			if (! is_numeric($values)) {
-				$user = $this->map($values);
-
-				if ($user !== false) {
+				if (($user = $this->map($values)) !== false) {
 					$users[] = $user;
+				} elseif (($orga = $this->mapOrga($values)) !== false) {
+					$users[] = $orga;
 				}
 			}
 		}
@@ -55,16 +55,50 @@ class LdapManager
 	 */
 	public function getStudents()
 	{
-		$students = array();
+		$result = array();
 		$users = $this->getAll();
 
 		foreach ($users as $user) {
-			if ($user->getIsStudent()) {
-				$students[] = $user;
+			if ($user instanceof Model\User && $user->getIsStudent()) {
+				$result[] = $user;
 			}
 		}
 
-		return $students;
+		return $result;
+	}
+
+	/**
+	 * @return Model\User[]
+	 */
+	public function getUsers()
+	{
+		$result = array();
+		$users = $this->getAll();
+
+		foreach ($users as $user) {
+			if ($user instanceof Model\User) {
+				$result[] = $user;
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * @return Model\Organization[]
+	 */
+	public function getOrgas()
+	{
+		$result = array();
+		$users = $this->getAll();
+
+		foreach ($users as $user) {
+			if ($user instanceof Model\Organization) {
+				$result[] = $user;
+			}
+		}
+
+		return $result;
 	}
 
 	/**
@@ -115,22 +149,15 @@ class LdapManager
 	{
 		if (
 			! isset($values['uid'])
-			|| ! isset($values['supannempid'])
-			|| ! isset($values['mail'])
-			|| ! isset($values['displayname'])
-			|| ! isset($values['givenname'])
-			|| ! isset($values['sn'])
-			|| ! isset($values['formation'])
-			|| ! isset($values['niveau'])
-			|| ! isset($values['filiere'])
-			|| ! isset($values['telephonenumber'])
-			|| ! isset($values['title'])
-			|| ! isset($values['roomnumber'])
-			|| ! isset($values['jpegphoto'])
-			|| ! isset($values['uv'])
-			|| ! isset($values['employeetype'])
+			||  ! isset($values['supannempid'])
+			||  ! isset($values['mail'])
+			||  ! isset($values['employeetype'])
 		) {
 			return false;
+		}
+
+		if (! isset($values['uv'])) {
+			$values['uv'] = array();
 		}
 
 		$user = new Model\User();

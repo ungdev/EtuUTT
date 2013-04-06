@@ -20,6 +20,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class AuthController extends Controller
 {
 	/**
+	 * Connect the user or the organization automatically if possible,
+	 * ask for method to connect otherwise.
+	 *
 	 * @Route("/user", name="user_connect")
 	 * @Template()
 	 */
@@ -246,9 +249,6 @@ class AuthController extends Controller
 			// If we can't use a classic user, try with an organization
 			if (! $ldapUser) {
 				$ldapUser = $ldap->getOrga($login);
-
-				var_dump($ldapUser);
-				exit;
 			}
 
 			// Resize photo

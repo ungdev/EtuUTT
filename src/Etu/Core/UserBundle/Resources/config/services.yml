@@ -3,7 +3,9 @@ parameters:
     etu.user.authentication_listener.class: Etu\Core\UserBundle\Security\Listener\KernelListener
     etu.user.crypting.class: Etu\Core\UserBundle\Security\Encrypt\Encrypt
     etu.user.twig.privacy_extension.class: Etu\Core\UserBundle\Twig\Extension\PrivacyExtension
+
     etu.user.ldap.class: Etu\Core\UserBundle\Ldap\LdapManager
+    etu.user.sync.class: Etu\Core\UserBundle\Sync\Synchronizer
 
     etu.notifs.followed_helper.class: Etu\Core\UserBundle\Notification\Helper\FollowedHelper
 
@@ -20,6 +22,10 @@ services:
     etu.user.ldap:
         class: %etu.user.ldap.class%
         arguments: [%etu.ldap.host%, %etu.ldap.port%]
+
+    etu.user.sync:
+        class: %etu.user.sync.class%
+        arguments: [@etu.user.ldap, @doctrine]
 
     # Password crypting
     etu.user.crypting:

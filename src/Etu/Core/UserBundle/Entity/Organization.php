@@ -62,35 +62,35 @@ class Organization implements UserInterface, \Serializable
 	 *
 	 * @ORM\Column(name="contactMail", type="string", length=100, nullable=true)
 	 */
-	protected $contactMail = '';
+	protected $contactMail;
 
 	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="contactPhone", type="string", length=100, nullable=true)
 	 */
-	protected $contactPhone = '';
+	protected $contactPhone;
 
 	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="contactElse", type="text", nullable=true)
 	 */
-	protected $contactElse = '';
+	protected $contactElse;
 
 	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="website", type="string", length=100, nullable=true)
 	 */
-	protected $website = '';
+	protected $website;
 
 	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="logo", type="string", length=100, nullable=true)
 	 */
-	protected $logo = '';
+	protected $logo;
 
 	/**
 	 * @var integer
