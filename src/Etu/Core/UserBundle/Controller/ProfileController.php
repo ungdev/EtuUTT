@@ -234,8 +234,15 @@ class ProfileController extends Controller
 			$user = $this->getUser();
 		}
 
+		$from = null;
+
+		if (in_array($this->getRequest()->get('from'), array('search'))) {
+			$from = $this->getRequest()->get('from');
+		}
+
 		return array(
-			'user' => $user
+			'user' => $user,
+			'from' => $from
 		);
 	}
 }

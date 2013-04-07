@@ -42,5 +42,7 @@
 				{{ 'notifs.subscribe.follower'|trans }}
 			</a>
 		{% endif %}
+
+		<img src="{{ asset('img/loader.gif') }}" class="subscription-hidden" id="{{ entityType~'-'~entityId~'-loader' }}" />
 	</div>
 {% endmacro %}

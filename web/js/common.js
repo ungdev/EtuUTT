@@ -80,14 +80,19 @@ $(function() {
 
 		var id = $(this).attr('id').replace('-subscribe', '');
 
+		$('#'+ id +'-subscribe').hide();
+		$('#'+ id +'-loader').show();
+
 		$.getJSON(url, function(data) {
-			console.log(data);
+			$('#'+ id +'-loader').hide();
 
 			if (typeof data.status != 'undefined' && data.status == 200) {
 				$('#'+ id +'-subscribe').hide();
 				$('#'+ id +'-unsubscribe').show();
 			} else {
-				alert('Error !');
+				$('#'+ id +'-subscribe').show();
+
+				alert('Une erreur s\'est produite. Veuillez réessayer ou signaler le problème.');
 			}
 		});
 	});
@@ -100,12 +105,19 @@ $(function() {
 
 		var id = $(this).attr('id').replace('-unsubscribe', '');
 
+		$('#'+ id +'-unsubscribe').hide();
+		$('#'+ id +'-loader').show();
+
 		$.getJSON(url, function(data) {
+			$('#'+ id +'-loader').hide();
+
 			if (typeof data.status != 'undefined' && data.status == 200) {
 				$('#'+ id +'-unsubscribe').hide();
 				$('#'+ id +'-subscribe').show();
 			} else {
-				alert('Error !');
+				$('#'+ id +'-unsubscribe').show();
+
+				alert('Une erreur s\'est produite. Veuillez réessayer ou signaler le problème.');
 			}
 		});
 	});

@@ -7,6 +7,26 @@
 {% endblock %}
 
 {% block content %}
+	{% if from == 'search' %}
+		<ul class="nav nav-tabs page-tabs">
+			<li>
+				<a href="">
+					<i class="icon-chevron-left"></i>
+					Retour à la recherche
+				</a>
+			</li>
+		</ul>
+	{% else %}
+		<ul class="nav nav-tabs page-tabs">
+			<li>
+				<a href="">
+					<i class="icon-chevron-left"></i>
+					Trombinoscope
+				</a>
+			</li>
+		</ul>
+	{% endif %}
+
 	<div class="padding20-all">
 		<div class="row-fluid">
 			<div class="span3">
@@ -78,7 +98,7 @@
 					</div>
 				</div>
 
-				{% if is_public(user.sexPrivacy) %}
+				{% if is_public(user.sexPrivacy) and user.sex %}
 					<div class="view-group">
 						<div class="view-label">{{ 'user.view.sex'|trans }}</div>
 						<div class="view-value">
@@ -87,7 +107,7 @@
 					</div>
 				{% endif %}
 
-				{% if is_public(user.nationalityPrivacy) %}
+				{% if is_public(user.nationalityPrivacy) and user.nationality %}
 					<div class="view-group">
 						<div class="view-label">{{ 'user.view.nationality'|trans }}</div>
 						<div class="view-value">
@@ -97,31 +117,36 @@
 				{% endif %}
 
 				{% if
-				is_public(user.adressPrivacy)
-				or	is_public(user.postalCodePrivacy)
-				or	is_public(user.cityPrivacy)
-				or	is_public(user.countryPrivacy)
+						(is_public(user.adressPrivacy)
+						or	is_public(user.postalCodePrivacy)
+						or	is_public(user.cityPrivacy)
+						or	is_public(user.countryPrivacy))
+					and
+						user.adress
+						or	user.postalCode
+						or	user.city
+						or	user.country
 				%}
 					<div class="view-group">
 						<div class="view-label">{{ 'user.view.adress'|trans }}</div>
 						<div class="view-value">
 
-							{% if is_public(app.user.adressPrivacy) %}
+							{% if is_public(app.user.adressPrivacy) and user.adress %}
 								{{ app.user.adress }}
 								<br />
 							{% endif %}
 
-							{% if is_public(app.user.postalCodePrivacy) %}
+							{% if is_public(app.user.postalCodePrivacy) and user.postalCode %}
 								{{ app.user.postalCode }}
 								<br />
 							{% endif %}
 
-							{% if is_public(app.user.cityPrivacy) %}
+							{% if is_public(app.user.cityPrivacy) and user.city %}
 								{{ app.user.city }}
 								<br />
 							{% endif %}
 
-							{% if is_public(app.user.countryPrivacy) %}
+							{% if is_public(app.user.countryPrivacy) and user.country %}
 								{{ app.user.country }}
 								<br />
 							{% endif %}
@@ -129,14 +154,14 @@
 					</div>
 				{% endif %}
 
-				{% if is_public(user.birthdayPrivacy) %}
+				{% if is_public(user.birthdayPrivacy) and user.birthday %}
 					<div class="view-group">
 						<div class="view-label">{{ 'user.view.birthday'|trans }}</div>
 						<div class="view-value">
 							{{ user.birthday }}
 						</div>
 					</div>
-				{% elseif user.birthdayDisplayOnlyAge %}
+				{% elseif user.birthdayDisplayOnlyAge and user.birthday %}
 					<div class="view-group">
 						<div class="view-label">{{ 'user.view.age'|trans }}</div>
 						<div class="view-value">
@@ -145,7 +170,7 @@
 					</div>
 				{% endif %}
 
-				{% if is_public(user.personnalMailPrivacy) %}
+				{% if is_public(user.personnalMailPrivacy) and user.personnalMail %}
 					<div class="view-group">
 						<div class="view-label">{{ 'user.view.personnalMail'|trans }}</div>
 						<div class="view-value">
@@ -172,7 +197,7 @@
 					</div>
 				{% endif %}
 
-				{% if user.surnom %}
+				{% if user.passions %}
 					<div class="view-group">
 						<div class="view-label">{{ 'user.view.passions'|trans }}</div>
 						<div class="view-value">
