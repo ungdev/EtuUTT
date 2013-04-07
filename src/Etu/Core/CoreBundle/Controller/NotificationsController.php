@@ -26,6 +26,13 @@ class NotificationsController extends Controller
 	 */
 	public function subscribeAction($entityType, $entityId)
 	{
+		if (! $this->getUserLayer()->isUser()) {
+			return new Response(json_encode(array(
+				'status' => 403,
+				'message' => 'You are not allowed to access this URL as anonymous.'
+			)));
+		}
+
 		$this->getSubscriptionsManager()->subscribe($this->getUser(), $entityType, $entityId);
 
 		return new Response(json_encode(array(
@@ -45,6 +52,13 @@ class NotificationsController extends Controller
 	 */
 	public function unsubscribeAction($entityType, $entityId)
 	{
+		if (! $this->getUserLayer()->isUser()) {
+			return new Response(json_encode(array(
+				'status' => 403,
+				'message' => 'You are not allowed to access this URL as anonymous.'
+			)));
+		}
+
 		$this->getSubscriptionsManager()->unsubscribe($this->getUser(), $entityType, $entityId);
 
 		return new Response(json_encode(array(

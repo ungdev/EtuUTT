@@ -21,28 +21,28 @@ use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
  */
 class UserToken extends AbstractToken
 {
-    public function __construct($user)
-    {
-	    if (! $user || ! $user instanceof UserInterface) {
-		    $this->setAuthenticated(false);
+	public function __construct($user)
+	{
+		if (! $user || ! $user instanceof UserInterface) {
+			$this->setAuthenticated(false);
 
-		    parent::__construct(array());
-	    } else {
-		    $roles = $user->getRoles();
+			parent::__construct(array());
+		} else {
+			$roles = $user->getRoles();
 
-		    if (! $roles) {
-			    $roles = array();
-		    }
+			if (! $roles) {
+				$roles = array();
+			}
 
-		    parent::__construct($roles);
+			parent::__construct($roles);
 
-		    $this->setUser($user);
-		    $this->setAuthenticated(true);
-	    }
-    }
+			$this->setUser($user);
+			$this->setAuthenticated(true);
+		}
+	}
 
-    public function getCredentials()
-    {
-    	return '';
-    }
+	public function getCredentials()
+	{
+		return '';
+	}
 }

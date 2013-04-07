@@ -23,7 +23,7 @@ class AuthController extends Controller
 	 */
 	public function connectAction()
 	{
-		if ($this->getUser() instanceof User || $this->getUser() instanceof Organization) {
+		if ($this->getUserLayer()->isConnected()) {
 			return $this->redirect($this->generateUrl('homepage'));
 		}
 
@@ -96,7 +96,7 @@ class AuthController extends Controller
 	 */
 	public function connectCasAction()
 	{
-		if ($this->getUser() instanceof User || $this->getUser() instanceof Organization) {
+		if ($this->getUserLayer()->isConnected()) {
 			return $this->redirect($this->generateUrl('homepage'));
 		}
 
@@ -177,7 +177,7 @@ class AuthController extends Controller
 	 */
 	public function connectExternalAction()
 	{
-		if ($this->getUser() instanceof User || $this->getUser() instanceof Organization) {
+		if ($this->getUserLayer()->isConnected()) {
 			return $this->redirect($this->generateUrl('homepage'));
 		}
 
@@ -227,7 +227,7 @@ class AuthController extends Controller
 	 */
 	public function disconnectAction()
 	{
-		if (! $this->getUser() instanceof User && ! $this->getUser() instanceof Organization) {
+		if (! $this->getUserLayer()->isConnected()) {
 			return $this->redirect($this->generateUrl('homepage'));
 		}
 

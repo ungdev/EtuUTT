@@ -59,4 +59,12 @@ class Controller extends BaseController
 
 		return $this->redirect($this->generateUrl('user_connect'));
 	}
+
+	/**
+	 * @return \Etu\Core\UserBundle\Security\Layer\ConnectedLayer
+	 */
+	public function getUserLayer()
+	{
+		return new \Etu\Core\UserBundle\Security\Layer\ConnectedLayer($this->getUser());
+	}
 }

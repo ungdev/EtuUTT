@@ -230,7 +230,7 @@
 		margin-top: 9px;
 	}
 	.page {
-		padding-top: 30px;
+		padding-top: 25px;
 	}
 	.page-container {
 		background: none;
@@ -314,4 +314,15 @@
 		display: none;
 	}
 
+}
+
+
+@media screen and (max-width: 500px) {
+	.page-container {
+		width: 100%;
+;	}
+	.content {
+		border-left: 0;
+		border-right: 0;
+	}
 }

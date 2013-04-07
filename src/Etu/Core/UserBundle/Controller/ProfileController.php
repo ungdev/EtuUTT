@@ -17,7 +17,7 @@ class ProfileController extends Controller
 	 */
 	public function profileAction()
 	{
-		if (! $this->getUser() instanceof User) {
+		if (! $this->getUserLayer()->isUser()) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -30,7 +30,7 @@ class ProfileController extends Controller
 	 */
 	public function profileEditAction()
 	{
-		if (! $this->getUser() instanceof User) {
+		if (! $this->getUserLayer()->isUser()) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -128,7 +128,7 @@ class ProfileController extends Controller
 	 */
 	public function profileAvatarAction()
 	{
-		if (! $this->getUser() instanceof User) {
+		if (! $this->getUserLayer()->isUser()) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -168,7 +168,7 @@ class ProfileController extends Controller
 	 */
 	public function trombiEditAction()
 	{
-		if (! $this->getUser() instanceof User) {
+		if (! $this->getUserLayer()->isUser()) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -216,7 +216,7 @@ class ProfileController extends Controller
 	 */
 	public function viewAction($login)
 	{
-		if (! $this->getUser() instanceof User) {
+		if (! $this->getUserLayer()->isConnected()) {
 			return $this->createAccessDeniedResponse();
 		}
 

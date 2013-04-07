@@ -21,28 +21,28 @@ use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
  */
 class OrgaToken extends AbstractToken
 {
-    public function __construct($orga)
-    {
-	    if (! $orga || ! $orga instanceof UserInterface) {
-		    $this->setAuthenticated(false);
+	public function __construct($orga)
+	{
+		if (! $orga || ! $orga instanceof UserInterface) {
+			$this->setAuthenticated(false);
 
-		    parent::__construct(array());
-	    } else {
-		    $roles = $orga->getRoles();
+			parent::__construct(array());
+		} else {
+			$roles = $orga->getRoles();
 
-		    if (! $roles) {
-			    $roles = array();
-		    }
+			if (! $roles) {
+				$roles = array();
+			}
 
-		    parent::__construct($roles);
+			parent::__construct($roles);
 
-		    $this->setUser($orga);
-		    $this->setAuthenticated(true);
-	    }
-    }
+			$this->setUser($orga);
+			$this->setAuthenticated(true);
+		}
+	}
 
-    public function getCredentials()
-    {
-    	return '';
-    }
+	public function getCredentials()
+	{
+		return '';
+	}
 }

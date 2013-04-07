@@ -21,15 +21,15 @@ class MainController extends Controller
 	 */
 	public function indexAction()
 	{
-		if (! $this->getUser()) {
-			return $this->indexAnonymousAction();
+		if ($this->getUserLayer()->isConnected()) {
+			return $this->indexUserAction();
 		}
 
-		if ($this->getUser() && $this->getUser()->getIsOrga()) {
+		if ($this->getUserLayer()->isOrga()) {
 			return $this->indexOrgaAction();
 		}
 
-		return $this->indexUserAction();
+		return $this->indexAnonymousAction();
 	}
 
 
