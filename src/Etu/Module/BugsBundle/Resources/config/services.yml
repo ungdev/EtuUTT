@@ -1,4 +1,12 @@
 
-parameters: ~
+parameters:
+    etu.notifs.bugs_new_comment.class: Etu\Module\BugsBundle\Notification\Helper\NewCommentHelper
 
-services: ~
+services:
+
+    # Notifications helper
+    etu.notifs.bugs_new_comment:
+        class: %etu.notifs.bugs_new_comment.class%
+        arguments: [@twig]
+        tags:
+            - { name: etu.notifs_helper }

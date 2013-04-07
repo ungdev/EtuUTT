@@ -1,5 +1,9 @@
 
 bugs:
+    notifs:
+        newComment:
+            text: '<span class="notif-data">%userName%</span> a commenté le bug <span class="notif-data">%bugName%</span>'
+
     criticality:
         critical: Problème critique
         security: Problème de sécurité

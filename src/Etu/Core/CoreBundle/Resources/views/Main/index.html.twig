@@ -2,6 +2,8 @@
 
 {% block title %}{{ 'main.index.title'|trans }}{% endblock %}
 
+{% block main_menu_link_homepage %} active{% endblock %}
+
 {% block content %}
 	{% if not notifs %}
 		<div class="no-notif padding20-all">

@@ -1,16 +1,14 @@
 <?php
 
-namespace Etu\Core\UserBundle\Notification\Helper;
+namespace Etu\Module\BugsBundle\Notification\Helper;
 
 use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Notification\Helper\HelperInterface;
 
 /**
- * Helper interface
- *
- * An helper is a class that know how to display a given kind of notification
+ * Notification for a new comment on an issue
  */
-class FollowedHelper implements HelperInterface
+class NewCommentHelper implements HelperInterface
 {
 	/**
 	 * @var \Twig_Environment
@@ -30,7 +28,7 @@ class FollowedHelper implements HelperInterface
 	 */
 	public function getName()
 	{
-		return 'user_followed';
+		return 'bugs_new_comment';
 	}
 
 	/**
@@ -39,6 +37,8 @@ class FollowedHelper implements HelperInterface
 	 */
 	public function render(Notification $notification)
 	{
-		return $this->twig->render('EtuUserBundle:Notification:followed.html.twig', array('notif' => $notification));
+		return $this->twig->render('EtuModuleBugsBundle:Notification:newComment.html.twig', array(
+			'notif' => $notification
+		));
 	}
 }

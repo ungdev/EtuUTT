@@ -63,6 +63,17 @@ $('.userbox a').click(function() {
 });
 
 $(function() {
+
+	// Find new notifications
+	$.getJSON(Routing.generate('notifs_new'), function(data) {
+		if (typeof data.status != 'undefined' && data.status == 200) {
+			$('#head-menu-home-pins').text(data.result);
+			$('#head-menu-home-pins').show();
+		}
+	});
+
+
+	// Load Redactor
 	$('.redactor').redactor({
 		fixed: true,
 		lang: 'es',
@@ -72,6 +83,8 @@ $(function() {
 			'fontcolor', 'backcolor', '|', 'alignment']
 	});
 
+
+	// Suscribe
 	$('.subscription-subscribe').click(function() {
 		var url = Routing.generate('notifs_subscribe', {
 			'entityType': $(this).attr('data-entityType'),
@@ -97,6 +110,8 @@ $(function() {
 		});
 	});
 
+
+	// Unsuscribe
 	$('.subscription-unsubscribe').click(function() {
 		var url = Routing.generate('notifs_unsubscribe', {
 			'entityType': $(this).attr('data-entityType'),

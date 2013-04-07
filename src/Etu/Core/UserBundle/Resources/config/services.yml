@@ -7,8 +7,6 @@ parameters:
     etu.user.ldap.class: Etu\Core\UserBundle\Ldap\LdapManager
     etu.user.sync.class: Etu\Core\UserBundle\Sync\Synchronizer
 
-    etu.notifs.followed_helper.class: Etu\Core\UserBundle\Notification\Helper\FollowedHelper
-
 services:
 
     # Users authentication
@@ -31,13 +29,6 @@ services:
     etu.user.crypting:
         class: %etu.user.crypting.class%
         arguments: [%secret%]
-
-    # Notifications helper
-    etu.notifs.followed_helper:
-        class: %etu.notifs.followed_helper.class%
-        arguments: [@twig]
-        tags:
-            - { name: etu.notifs_helper }
 
     # Privacy
     etu.user.twig.privacy_extension:

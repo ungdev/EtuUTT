@@ -59,8 +59,9 @@
 
 				<nav class="pull-left">
 					<ul class="list-horizontal list-horizontal-linked menu" id="head-menu-list">
-						<li class="first active">
-							<span class="pins pins-alert pins-head">2</span>
+						<li class="first{% block main_menu_link_homepage %}{% endblock %}">
+							<span id="head-menu-home-pins" class="pins pins-alert pins-head">0</span>
+
 							<a href="{{ path('homepage') }}">
 								<i class="icon icon-head icon-head-home"></i>
 								<span class="menu-link-text">{{ 'base.menu.home'|trans }}</span>

@@ -67,4 +67,15 @@ class Controller extends BaseController
 	{
 		return new \Etu\Core\UserBundle\Security\Layer\ConnectedLayer($this->getUser());
 	}
+
+	/**
+	 * @return \Etu\Core\CoreBundle\Framework\Definition\Module
+	 */
+	public function getCurrentBundle()
+	{
+		$bundles = $this->getKernel()->getBundles();
+		$currentShortName = $this->getRequest()->attributes->get('_template')->get('bundle');
+
+		return (isset($bundles[$currentShortName])) ? $bundles[$currentShortName] : false;
+	}
 }

@@ -6,6 +6,7 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Entity\Subscription;
+use Etu\Core\UserBundle\Entity\User;
 
 class NotificationSender
 {
@@ -23,7 +24,7 @@ class NotificationSender
 	}
 
 	/**
-	 * Sen a notification to all the subscribers of given entity
+	 * Send a notification to all the subscribers of given entity
 	 *
 	 * @param string $entityType
 	 * @param string $entityId
@@ -48,11 +49,47 @@ class NotificationSender
 			->getQuery()
 			->getResult();
 
+		$this->sendTo($subscriptions, $notification);
+
+		return true;
+	}
+
+	/**
+	 * Send a notification to the given users
+	 *
+	 * @param User[]|Subscription[] $users
+	 * @param Notification $notification
+	 * @return bool
+	 * @throws \InvalidArgumentException
+	 */
+	public function sendTo(array $users, Notification $notification)
+	{
+		foreach ($users as $key => $user) {
+			if ($user instanceof Subscription) {
+				$users[$key] = $user->getUser();
+			} elseif (! $user instanceof User) {
+				if (is_object($user)) {
+					$type = get_class($user);
+				} else {
+					$type = gettype($user);
+				}
+
+				throw new \InvalidArgumentException(sprintf(
+					'NotificationSender::sendTo() is only able to send notifications to users
+					(User or Subscription instances, %s given for key %s)', $type, $key
+				));
+			}
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->doctrine->getManager();
+
 		// Send it to all the subscribers
-		foreach ($subscriptions as $subscription) {
+		foreach ($users as $user) {
 			$notif = new Notification();
+			$notif->setUser($user);
+
 			$notif->setHelper($notification->getHelper());
-			$notif->setUser($notification->getUser());
 			$notif->setExpiration($notification->getExpiration());
 			$notif->setEntities($notification->getEntities());
 			$notif->setModule($notification->getModule());

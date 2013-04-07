@@ -5,6 +5,7 @@ namespace Etu\Core\CoreBundle\Controller;
 use Doctrine\ORM\EntityManager;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
+use Etu\Core\CoreBundle\Notification\Helper\HelperInterface;
 use Etu\Core\UserBundle\Entity\User;
 
 use Symfony\Component\HttpFoundation\Response;
@@ -71,7 +72,11 @@ class MainController extends Controller
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
 
-		$notifications = $em
+		// Load only notifications we should display, ie. notifications sent from
+		// currently enabled modules
+		$where = array();
+
+		$query = $em
 			->createQueryBuilder()
 			->select('n')
 			->from('EtuCoreBundle:Notification', 'n')
@@ -79,8 +84,16 @@ class MainController extends Controller
 			->orderBy('n.isSuper', 'DESC')
 			->addOrderBy('n.date', 'DESC')
 			->setParameter('user', $this->getUser()->getId())
-			->getQuery()
-			->getResult();
+			->setMaxResults(50);
+
+		foreach ($this->getKernel()->getModulesDefinitions() as $module) {
+			$identifier = $module->getIdentifier();
+
+			$where[] = 'n.module = :'.$identifier;
+			$query->setParameter($identifier, $identifier);
+		}
+
+		$notifications = $query->andWhere(implode(' OR ', $where))->getQuery()->getResult();
 
 		return $this->render('EtuCoreBundle:Main:index.html.twig', array(
 			'notifs' => $notifications

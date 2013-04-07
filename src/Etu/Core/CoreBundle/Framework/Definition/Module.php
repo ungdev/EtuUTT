@@ -14,12 +14,12 @@ abstract class Module extends Bundle
 	/**
 	 * @var boolean
 	 */
-	private $enabled = false;
+	protected $enabled = false;
 
 	/**
 	 * @var Router
 	 */
-	private $router = null;
+	protected $router = null;
 
 	/**
 	 * Module identifier (to be required by other modules)

@@ -162,6 +162,22 @@ class Notification
 	}
 
 	/**
+	 * @return object
+	 */
+	public function getFirstEntity()
+	{
+		return reset($this->entities);
+	}
+
+	/**
+	 * @return integer
+	 */
+	public function countEntities()
+	{
+		return count($this->entities);
+	}
+
+	/**
 	 * @param \DateTime $expiration
 	 * @return Notification
 	 */

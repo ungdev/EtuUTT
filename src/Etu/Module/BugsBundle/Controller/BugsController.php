@@ -2,6 +2,7 @@
 
 namespace Etu\Module\BugsBundle\Controller;
 
+use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Entity\Subscription;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
@@ -170,7 +171,15 @@ class BugsController extends Controller
 		$comment = new Comment();
 		$comment->setIssue($bug);
 		$comment->setUser($this->getUser());
-		$comment->setCreatedAt(new \DateTime());
+
+		/*
+		$notif = new Notification();
+		$notif->setModule($this->getCurrentBundle()->getIdentifier());
+		$notif->setHelper('bugs_new_comment');
+		$notif->addEntity($comment);
+
+		$this->getNotificationsSender()->sendTo(array($this->getUser()), $notif);
+		 */
 
 		$form = $this->createFormBuilder($comment)
 			->add('body')
