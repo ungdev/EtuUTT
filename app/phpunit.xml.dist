@@ -14,9 +14,8 @@
     bootstrap                   = "bootstrap.php.cache" >
 
     <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>../src/*/*Bundle/Tests</directory>
-            <directory>../src/*/Bundle/*Bundle/Tests</directory>
+        <testsuite name="EtuUTT Test Suite">
+            <directory>../src/Etu/*/*Bundle/Tests</directory>
         </testsuite>
     </testsuites>
 
@@ -30,10 +29,8 @@
         <whitelist>
             <directory>../src</directory>
             <exclude>
-                <directory>../src/*/*Bundle/Resources</directory>
-                <directory>../src/*/*Bundle/Tests</directory>
-                <directory>../src/*/Bundle/*Bundle/Resources</directory>
-                <directory>../src/*/Bundle/*Bundle/Tests</directory>
+                <directory>../src/Etu/*/*Bundle/Resources</directory>
+                <directory>../src/Etu/*/*Bundle/Tests</directory>
             </exclude>
         </whitelist>
     </filter>

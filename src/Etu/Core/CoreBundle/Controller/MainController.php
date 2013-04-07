@@ -4,6 +4,7 @@ namespace Etu\Core\CoreBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 
+use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Notification\Helper\HelperInterface;
 use Etu\Core\UserBundle\Entity\User;
@@ -93,10 +94,25 @@ class MainController extends Controller
 			$query->setParameter($identifier, $identifier);
 		}
 
+		/** @var $notifications Notification[] */
 		$notifications = $query->andWhere(implode(' OR ', $where))->getQuery()->getResult();
 
-		return $this->render('EtuCoreBundle:Main:index.html.twig', array(
+		$this->get('twig')->addGlobal('etu_count_new_notifs', 0);
+
+		$view = $this->render('EtuCoreBundle:Main:index.html.twig', array(
 			'notifs' => $notifications
 		));
+
+		// Set notifications as viewed
+		foreach ($notifications as $notif) {
+			if ($notif->getIsNew()) {
+				$notif->setIsNew(false);
+				$em->persist($notif);
+			}
+		}
+
+		$em->flush();
+
+		return $view;
 	}
 }

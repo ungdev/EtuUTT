@@ -73,7 +73,6 @@ class NotificationsController extends Controller
 	 *      name="notifs_new",
 	 *      options={"expose"=true}
 	 * )
-	 * @Cache(expire=60)
 	 */
 	public function newAction()
 	{
@@ -84,37 +83,11 @@ class NotificationsController extends Controller
 			)));
 		}
 
-		/** @var $em EntityManager */
-		$em = $this->getDoctrine()->getManager();
-
-		// Load only notifications we should display, ie. notifications sent from
-		// currently enabled modules
-		$where = array();
-
-		$query = $em
-			->createQueryBuilder()
-			->select('COUNT(n)')
-			->from('EtuCoreBundle:Notification', 'n')
-			->where('n.user = :user')
-			->andWhere('n.isNew = 1')
-			->setParameter('user', $this->getUser()->getId());
-
-		foreach ($this->getKernel()->getModulesDefinitions() as $module) {
-			$identifier = $module->getIdentifier();
-
-			$where[] = 'n.module = :'.$identifier;
-			$query->setParameter($identifier, $identifier);
-		}
-
-		$count = $query->andWhere(implode(' OR ', $where))->getQuery()->getScalarResult();
-
-		if (! isset($count[0][1])) {
-			$count[0][1] = 0;
-		}
+		$globals = $this->get('twig')->getGlobals();
 
 		return new Response(json_encode(array(
 			'status' => 200,
-			'result' => $count[0][1]
+			'result' => $globals['etu_count_new_notifs']
 		)));
 	}
 }

@@ -90,6 +90,7 @@ main:
             message: Vous n'avez pas de notification !
             suscribe: Abonnez-vous à des éléments d'EtuUTT pour suivre ce qui vous intéresse à l'UTT !
             learn_more: En savoir plus
+        new_notifs: nouvelle(s) notification(s)
     indexAnonymous:
         title: Accueil
     indexOrga:

@@ -4,6 +4,29 @@
 
 {% block main_menu_link_homepage %} active{% endblock %}
 
+{% block checkout_notifications %}
+	{% if app.user and not app.user.isOrga %}
+		<script>
+			window.setInterval(function(){
+				// Find new notifications
+				$.getJSON(Routing.generate('notifs_new'), function(data) {
+					if (typeof data.status != 'undefined' && data.status == 200) {
+						if (data.result > 0) {
+							$('#head-menu-home-pins').text(data.result);
+							$('#head-menu-home-pins').show();
+
+							setCountTitle(data.result);
+
+							$('#alert-new-notifs-count').text(data.result);
+							$('#alert-new-notifs').show();
+						}
+					}
+				});
+			}, 10 * 1000); // 10 seconds
+		</script>
+	{% endif %}
+{% endblock %}
+
 {% block content %}
 	{% if not notifs %}
 		<div class="no-notif padding20-all">
@@ -18,6 +41,12 @@
 		</div>
 	{% else %}
 	<div class="flux">
+		<div id="alert-new-notifs">
+			<a href="{{ path('homepage') }}" class="alert-new-notifs">
+				<span id="alert-new-notifs-count">0</span> {{ 'main.index.new_notifs'|trans }}
+			</a>
+		</div>
+
 		{% for notif in notifs %}
 			{{ render_notif(notif) }}
 		{% endfor %}

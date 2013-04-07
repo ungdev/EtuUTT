@@ -10,6 +10,8 @@ user:
     auth:
         connect:
             desc: "Veuillez choisir une méthode d'authentification pour EtuUTT :"
+            cas: En utilisant le CAS
+            external: En utilisant un compte exterieur
         connectExternal:
             title: Connexion d'un exterieur
             desc: Connectez-vous en utilisant l'identifiant et le mot de passe qui vous ont été fournis par l'UNG.

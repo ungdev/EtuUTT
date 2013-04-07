@@ -179,7 +179,7 @@ class BugsController extends Controller
 		$notif->addEntity($comment);
 
 		$this->getNotificationsSender()->sendTo(array($this->getUser()), $notif);
-		 */
+		*/
 
 		$form = $this->createFormBuilder($comment)
 			->add('body')

@@ -150,6 +150,9 @@ a:hover {
 	margin-left: 12px;
 	margin-top: 12px;
 }
+.pins-head-hidden {
+	display: none;
+}
 
 /* Subscription state */
 .subscription-state {

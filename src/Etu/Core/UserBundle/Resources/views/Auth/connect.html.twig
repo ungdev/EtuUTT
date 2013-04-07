@@ -15,13 +15,13 @@
 			<li class="span3">
 				<a href="{{ path('user_connect_cas') }}" class="thumbnail">
 					<img src="{{ asset('img/connect/cas.png') }}" />
-					En utilisant le CAS
+					{{ 'user.auth.connect.cas'|trans }}
 				</a>
 			</li>
 			<li class="span3">
 				<a href="{{ path('user_connect_external') }}" class="thumbnail">
 					<img src="{{ asset('img/connect/external.png') }}" />
-					En utilisant un compte exterieur
+					{{ 'user.auth.connect.external'|trans }}
 				</a>
 			</li>
 		</ul>

@@ -148,6 +148,21 @@
 	text-decoration: underline;
 }
 
+#alert-new-notifs {
+	display: none;
+}
+.alert-new-notifs {
+	display: block;
+	padding: 10px 15px;
+	border-bottom: 1px solid #e5e5e5;
+	background: #fff;
+	-moz-box-shadow: inset 0 0 2px #c0c0c0;
+	-webkit-box-shadow: inset 0 0 2px #c0c0c0;
+	box-shadow: inset 0 0 2px #c0c0c0;
+	text-align: center;
+}
+
+
 @media screen and (max-width: 775px) {
 	.notif img  {
 		display: none;

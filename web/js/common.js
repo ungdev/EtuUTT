@@ -1,4 +1,15 @@
 
+var title = document.title;
+
+function setCountTitle(count) {
+	if (/\([\d]+\)/.test(title)) {
+		title = title.split(') ');
+		document.title = '(' + count + ') ' + title[1];
+	} else {
+		document.title = '(' + count + ') ' + title;
+	}
+}
+
 $('#change-locale-link').click(function() {
 	$('#change-locale-link').toggleClass('change-locale-link');
 	$('#next-change-locale-link').toggleClass('next-change-locale-link');
@@ -63,15 +74,6 @@ $('.userbox a').click(function() {
 });
 
 $(function() {
-
-	// Find new notifications
-	$.getJSON(Routing.generate('notifs_new'), function(data) {
-		if (typeof data.status != 'undefined' && data.status == 200) {
-			$('#head-menu-home-pins').text(data.result);
-			$('#head-menu-home-pins').show();
-		}
-	});
-
 
 	// Load Redactor
 	$('.redactor').redactor({

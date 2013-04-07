@@ -90,4 +90,12 @@ class ConnectedLayer
 	{
 		return $this->isUser() && $this->user->getKeepActive();
 	}
+
+	/**
+	 * @return \Etu\Core\UserBundle\Entity\User
+	 */
+	public function getUser()
+	{
+		return $this->user;
+	}
 }
