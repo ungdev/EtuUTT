@@ -28,6 +28,7 @@ class AuthController extends Controller
 		}
 
 		$this->initializeCAS();
+		\phpCAS::setNoCasServerValidation();
 
 		if (\phpCAS::isAuthenticated()) {
 
@@ -100,7 +101,7 @@ class AuthController extends Controller
 		}
 
 		$this->initializeCAS();
-
+		\phpCAS::setNoCasServerValidation();
 		\phpCAS::forceAuthentication();
 
 		// Try to connect user
@@ -235,9 +236,8 @@ class AuthController extends Controller
 		$this->get('session')->clear();
 		$this->get('session')->getFlashBag()->set('success', 'Vous êtes bien déconnecté');
 
-		require __DIR__.'/../Resources/lib/phpCAS/CAS.php';
-
-		\phpCAS::client('1.0', 'cas.utt.fr', 443, '/cas/', false);
+		$this->initializeCAS();
+		\phpCAS::setNoCasServerValidation();
 		\phpCAS::logoutWithRedirectService($this->generateUrl('homepage'));
 
 		return new Response();
@@ -255,7 +255,12 @@ class AuthController extends Controller
 		 */
 		require __DIR__.'/../Resources/lib/phpCAS/CAS.php';
 
-		\phpCAS::client('1.0', 'cas.utt.fr', 443, '/cas/', false);
-		\phpCAS::setNoCasServerValidation();
+		\phpCAS::client(
+			$this->container->getParameter('etu.cas.version'),
+			$this->container->getParameter('etu.cas.host'),
+			$this->container->getParameter('etu.cas.port'),
+			$this->container->getParameter('etu.cas.path'),
+			$this->container->getParameter('etu.cas.change_session_id')
+		);
 	}
 }

@@ -88,5 +88,12 @@ etu_user:
         host: ldap.utt.fr
         port: 389
 
+    cas:
+        version: '1.0'
+        host: cas.utt.fr
+        port: 443
+        path: '/cas/'
+        change_session_id: false
+
 
 

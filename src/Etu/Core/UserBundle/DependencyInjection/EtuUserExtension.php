@@ -27,5 +27,11 @@ class EtuUserExtension extends Extension
 
 	    $container->setParameter('etu.ldap.host', $config['ldap']['host']);
 	    $container->setParameter('etu.ldap.port', $config['ldap']['port']);
+
+	    $container->setParameter('etu.cas.version', $config['cas']['version']);
+	    $container->setParameter('etu.cas.host', $config['cas']['host']);
+	    $container->setParameter('etu.cas.port', $config['cas']['port']);
+	    $container->setParameter('etu.cas.path', $config['cas']['path']);
+	    $container->setParameter('etu.cas.change_session_id', $config['cas']['change_session_id']);
     }
 }
