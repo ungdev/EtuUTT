@@ -9,7 +9,7 @@ user:
     # Authentication
     auth:
         connect:
-            desc: "Vous n'êtes pas authentifié(e) sur le CAS. Veuillez choisir une méthode d'authentification pour EtuUTT :"
+            desc: "Veuillez choisir une méthode d'authentification pour EtuUTT :"
         connectExternal:
             title: Connexion d'un exterieur
             desc: Connectez-vous en utilisant l'identifiant et le mot de passe qui vous ont été fournis par l'UNG.

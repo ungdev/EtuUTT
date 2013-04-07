@@ -55,16 +55,16 @@ class ElementToImport
 	public function import()
 	{
 		if ($this->element instanceof User) {
-			$this->importUser();
+			return $this->importUser();
 		} else {
-			$this->importOrganization();
+			return $this->importOrganization();
 		}
 	}
 
 	/**
 	 * Import a user in the database
 	 */
-	protected function importUser()
+	protected function importUser($flush = false)
 	{
 		$imagine = new Imagine();
 		$webDirectory = __DIR__.'/../../../../../../../web';
@@ -103,12 +103,18 @@ class ElementToImport
 		$user->setKeepActive(false);
 
 		$this->doctrine->getManager()->persist($user);
+
+		if ($flush) {
+			$this->doctrine->getManager()->flush();
+		}
+
+		return $user;
 	}
 
 	/**
 	 * Import an organization in the database
 	 */
-	protected function importOrganization()
+	protected function importOrganization($flush = false)
 	{
 		$orga = new \Etu\Core\UserBundle\Entity\Organization();
 		$orga->setLogo('default-logo.png');
@@ -117,6 +123,12 @@ class ElementToImport
 		$orga->setName($this->element->getFullName());
 
 		$this->doctrine->getManager()->persist($orga);
+
+		if ($flush) {
+			$this->doctrine->getManager()->flush();
+		}
+
+		return $orga;
 	}
 
 	/**

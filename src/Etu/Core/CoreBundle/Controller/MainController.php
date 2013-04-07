@@ -21,15 +21,6 @@ class MainController extends Controller
 	 */
 	public function indexAction()
 	{
-		$iterator = $this->get('etu.user.sync')->createOrgasSyncProcess()->getImportIterator();
-
-		foreach ($iterator as $user) {
-			$user->import();
-			exit;
-		}
-
-		exit;
-
 		if (! $this->getUser()) {
 			return $this->indexAnonymousAction();
 		}
