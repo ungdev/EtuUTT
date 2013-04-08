@@ -3,10 +3,7 @@
 namespace Etu\Core\CoreBundle\Framework\Module;
 
 use Etu\Core\CoreBundle\Framework\EtuKernel;
-use ReflectionProperty;
-use ReflectionClass;
 use Etu\Core\CoreBundle\Framework\Definition\Module;
-use JMS\AopBundle\Exception\RuntimeException;
 
 
 /**
