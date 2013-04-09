@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Etu\Core\UserBundle\Sync\Synchronizer | API</title>
+                    <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../../../classes.html">Classes</a></li>
+                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">API</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../../../Etu/Core/UserBundle/Sync.html">Etu\Core\UserBundle\Sync</a>\Synchronizer</h1>
+    </div>
+        <div class="content">
+                <p>class    <strong>Synchronizer</strong></p>
+
+            <div class="description">
+            <p>Synchronization process manager</p>
+            <p></p>
+        </div>
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(<a href="../../../../Etu/Core/UserBundle/Ldap/LdapManager.html"><abbr title="Etu\Core\UserBundle\Ldap\LdapManager">LdapManager</abbr></a> $ldap, <abbr title="Doctrine\Bundle\DoctrineBundle\Registry">Registry</abbr> $doctrine)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Sync/Process.html"><abbr title="Etu\Core\UserBundle\Sync\Process">Process</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_createUsersSyncProcess">createUsersSyncProcess</a>()
+                    <p>Create a process to synchronize users between the LDAP and the database (import LDAP users and remove old databse users)</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Sync/Process.html"><abbr title="Etu\Core\UserBundle\Sync\Process">Process</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_createOrgasSyncProcess">createOrgasSyncProcess</a>()
+                    <p>Create a process to import organizations from the LDAP (this process is not able to remove organizations from database)</p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">at line 30</div>
+        <code>            public            
+    <strong>__construct</strong>(<a href="../../../../Etu/Core/UserBundle/Ldap/LdapManager.html"><abbr title="Etu\Core\UserBundle\Ldap\LdapManager">LdapManager</abbr></a> $ldap, <abbr title="Doctrine\Bundle\DoctrineBundle\Registry">Registry</abbr> $doctrine)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../../Etu/Core/UserBundle/Ldap/LdapManager.html"><abbr title="Etu\Core\UserBundle\Ldap\LdapManager">LdapManager</abbr></a></td>
+                <td>$ldap</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Doctrine\Bundle\DoctrineBundle\Registry">Registry</abbr></td>
+                <td>$doctrine</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_createUsersSyncProcess">
+        <div class="location">at line 42</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Sync/Process.html"><abbr title="Etu\Core\UserBundle\Sync\Process">Process</abbr></a>
+    <strong>createUsersSyncProcess</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Create a process to synchronize users between the LDAP and the database (import LDAP users and remove old databse users)</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Sync/Process.html"><abbr title="Etu\Core\UserBundle\Sync\Process">Process</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_createOrgasSyncProcess">
+        <div class="location">at line 95</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Sync/Process.html"><abbr title="Etu\Core\UserBundle\Sync\Process">Process</abbr></a>
+    <strong>createOrgasSyncProcess</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Create a process to import organizations from the LDAP (this process is not able to remove organizations from database)</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Sync/Process.html"><abbr title="Etu\Core\UserBundle\Sync\Process">Process</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

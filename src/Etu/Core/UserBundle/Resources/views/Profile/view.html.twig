@@ -16,6 +16,15 @@
 				</a>
 			</li>
 		</ul>
+	{% elseif from == 'profile' %}
+		<ul class="nav nav-tabs page-tabs">
+			<li>
+				<a href="{{ path('user_profile') }}">
+					<i class="icon-chevron-left"></i>
+					Mon compte
+				</a>
+			</li>
+		</ul>
 	{% else %}
 		<ul class="nav nav-tabs page-tabs">
 			<li>
@@ -36,62 +45,79 @@
 
 				<hr />
 
-				{% if user.website %}
-					<p>
-						<strong>{{ 'user.view.website'|trans }}</strong><br />
-						{{ user.website }}
-					</p>
-				{% endif %}
+				<div class="hidden-for-phones">
+					{% if user.website %}
+						<p>
+							<strong>{{ 'user.view.website'|trans }}</strong><br />
+							{{ user.website }}
+						</p>
+					{% endif %}
 
-				{% if user.facebook %}
-					<p>
-						<strong>{{ 'user.view.facebook'|trans }}</strong><br />
-						{{ user.facebook }}
-					</p>
-				{% endif %}
+					{% if user.facebook %}
+						<p>
+							<strong>{{ 'user.view.facebook'|trans }}</strong><br />
+							{{ user.facebook }}
+						</p>
+					{% endif %}
 
-				{% if user.twitter %}
-					<p>
-						<strong>{{ 'user.view.twitter'|trans }}</strong><br />
-						{{ user.twitter }}
-					</p>
-				{% endif %}
+					{% if user.twitter %}
+						<p>
+							<strong>{{ 'user.view.twitter'|trans }}</strong><br />
+							{{ user.twitter }}
+						</p>
+					{% endif %}
 
-				{% if user.linkedin %}
-					<p>
-						<strong>{{ 'user.view.linkedin'|trans }}</strong><br />
-						{{ user.linkedin }}
-					</p>
-				{% endif %}
+					{% if user.linkedin %}
+						<p>
+							<strong>{{ 'user.view.linkedin'|trans }}</strong><br />
+							{{ user.linkedin }}
+						</p>
+					{% endif %}
 
-				{% if user.viadeo %}
-					<p>
-						<strong>{{ 'user.view.viadeo'|trans }}</strong><br />
-						{{ user.viadeo }}
-					</p>
-				{% endif %}
+					{% if user.viadeo %}
+						<p>
+							<strong>{{ 'user.view.viadeo'|trans }}</strong><br />
+							{{ user.viadeo }}
+						</p>
+					{% endif %}
+				</div>
 			</div>
 
 			<div class="span9">
 				<div class="view-group view-group-first">
+					<div class="view-icon"><i class="icon-user"></i></div>
 					<div class="view-label">{{ 'user.view.name'|trans }}</div>
 					<div class="view-value">
 						{{ user.fullName }}
 					</div>
 				</div>
 				<div class="view-group">
+					<div class="view-icon"><i class="icon-barcode"></i></div>
 					<div class="view-label">{{ 'user.view.studentId'|trans }}</div>
 					<div class="view-value">
 						{{ user.studentId }}
 					</div>
 				</div>
 				<div class="view-group">
+					<div class="view-icon"><i class="icon-envelope"></i></div>
 					<div class="view-label">{{ 'user.view.mail'|trans }}</div>
 					<div class="view-value">
 						{{ user.mail }}
 					</div>
 				</div>
+
+				{% if is_public(user.personnalMailPrivacy) and user.personnalMail %}
+					<div class="view-group">
+						<div class="view-icon"><i class="icon-envelope"></i></div>
+						<div class="view-label">{{ 'user.view.personnalMail'|trans }}</div>
+						<div class="view-value">
+							{{ user.personnalMail }}
+						</div>
+					</div>
+				{% endif %}
+
 				<div class="view-group">
+					<div class="view-icon"><i class="icon-book"></i></div>
 					<div class="view-label">{{ 'user.view.formation'|trans }}</div>
 					<div class="view-value">
 						{{ user.niveau }} {{ user.filiere }} ({{ user.formation }})
@@ -128,6 +154,7 @@
 						or	user.country
 				%}
 					<div class="view-group">
+						<div class="view-icon"><i class="icon-map-marker"></i></div>
 						<div class="view-label">{{ 'user.view.adress'|trans }}</div>
 						<div class="view-value">
 
@@ -156,6 +183,7 @@
 
 				{% if is_public(user.birthdayPrivacy) and user.birthday %}
 					<div class="view-group">
+						<div class="view-icon"><i class="icon-map-marker"></i></div>
 						<div class="view-label">{{ 'user.view.birthday'|trans }}</div>
 						<div class="view-value">
 							{{ user.birthday }}
@@ -163,18 +191,10 @@
 					</div>
 				{% elseif user.birthdayDisplayOnlyAge and user.birthday %}
 					<div class="view-group">
+						<div class="view-icon"><i class="icon-calendar"></i></div>
 						<div class="view-label">{{ 'user.view.age'|trans }}</div>
 						<div class="view-value">
 							{{ 'user.profile.age'|trans({'%age%': user.age}) }}
-						</div>
-					</div>
-				{% endif %}
-
-				{% if is_public(user.personnalMailPrivacy) and user.personnalMail %}
-					<div class="view-group">
-						<div class="view-label">{{ 'user.view.personnalMail'|trans }}</div>
-						<div class="view-value">
-							{{ user.personnalMail }}
 						</div>
 					</div>
 				{% endif %}
@@ -190,6 +210,7 @@
 
 				{% if user.jadis %}
 					<div class="view-group">
+						<div class="view-icon"><i class="icon-edit"></i></div>
 						<div class="view-label">{{ 'user.view.jadis'|trans }}</div>
 						<div class="view-value">
 							{{ user.jadis|e|nl2br }}
@@ -199,6 +220,7 @@
 
 				{% if user.passions %}
 					<div class="view-group">
+						<div class="view-icon"><i class="icon-headphones"></i></div>
 						<div class="view-label">{{ 'user.view.passions'|trans }}</div>
 						<div class="view-value">
 							{{ user.passions|e|nl2br }}

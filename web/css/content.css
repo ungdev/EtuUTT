@@ -242,6 +242,9 @@
 .view-group-first {
 	border-top: 0;
 }
+.view-icon {
+	display: none;
+}
 .view-label {
 	font-weight: bold;
 	float: left;
@@ -252,6 +255,21 @@
 .view-value {
 	padding: 5px;
 	margin-left: 200px;
+}
+
+@media screen and (max-width: 775px) {
+	.view-label {
+		display: none;
+	}
+	.view-value {
+		margin-left: 40px;
+	}
+	.view-icon {
+		display: block;
+		float: left;
+		padding: 5px 10px;
+		text-align: right;
+	}
 }
 
 /*

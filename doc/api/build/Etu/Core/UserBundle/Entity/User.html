@@ -1,0 +1,4422 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Etu\Core\UserBundle\Entity\User | API</title>
+                    <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../../../classes.html">Classes</a></li>
+                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">API</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../../../Etu/Core/UserBundle/Entity.html">Etu\Core\UserBundle\Entity</a>\User</h1>
+    </div>
+        <div class="content">
+                <p>class    <strong>User</strong>        implements
+        <abbr title="Symfony\Component\Security\Core\User\UserInterface">UserInterface</abbr>, <a href="http://php.net/Serializable"><abbr title="Serializable">Serializable</abbr></a></p>
+
+            <div class="description">
+            <p>User</p>
+            <p></p>
+        </div>
+    
+            <h2>Constants</h2>
+
+            <table>
+                    <tr>
+                <td>SEX_MALE</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SEX_FEMALE</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>PRIVACY_PUBLIC</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>PRIVACY_PRIVATE</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+            </table>
+
+    
+            <h2>Properties</h2>
+
+            <table>
+                    <tr>
+                <td class="type" id="property_file">
+                                                            <abbr title="Symfony\Component\HttpFoundation\File\UploadedFile">UploadedFile</abbr>
+                </td>
+                <td>$file</td>
+                <td class="last">Temporary variable to store uploaded file during photo update</td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    boolean
+                </td>
+                <td class="last">
+                    <a href="#method_upload">upload</a>()
+                    <p>Upload the photo</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    boolean
+                </td>
+                <td class="last">
+                    <a href="#method_getIsOrga">getIsOrga</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    integer
+                </td>
+                <td class="last">
+                    <a href="#method_getProfileCompletion">getProfileCompletion</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_getUsername">getUsername</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_getSalt">getSalt</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_getPassword">getPassword</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_getRoles">getRoles</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_eraseCredentials">eraseCredentials</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_serialize">serialize</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_unserialize">unserialize</a>($serialized)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setAdress">setAdress</a>(string $adress)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getAdress">getAdress</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setAvatar">setAvatar</a>(string $avatar)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getAvatar">getAvatar</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setBirthday">setBirthday</a>(<a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a> $birthday)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_getBirthday">getBirthday</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    integer
+                </td>
+                <td class="last">
+                    <a href="#method_getAge">getAge</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setCity">setCity</a>(string $city)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getCity">getCity</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setCountry">setCountry</a>(string $country)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getCountry">getCountry</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setFiliere">setFiliere</a>(string $filiere)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getFiliere">getFiliere</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setFirstName">setFirstName</a>(string $firstName)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getFirstName">getFirstName</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setFormation">setFormation</a>(string $formation)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getFormation">getFormation</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setFullName">setFullName</a>(string $fullName)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getFullName">getFullName</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setId">setId</a>(int $id)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    int
+                </td>
+                <td class="last">
+                    <a href="#method_getId">getId</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setIsStudent">setIsStudent</a>(boolean $isStudent)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    boolean
+                </td>
+                <td class="last">
+                    <a href="#method_getIsStudent">getIsStudent</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setJadis">setJadis</a>(string $jadis)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getJadis">getJadis</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setKeepActive">setKeepActive</a>(boolean $keepActive)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    boolean
+                </td>
+                <td class="last">
+                    <a href="#method_getKeepActive">getKeepActive</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setLanguage">setLanguage</a>(string $language)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getLanguage">getLanguage</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setLastName">setLastName</a>(string $lastName)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getLastName">getLastName</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setLdapInformations">setLdapInformations</a>(object $ldapInformations)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    object
+                </td>
+                <td class="last">
+                    <a href="#method_getLdapInformations">getLdapInformations</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setLogin">setLogin</a>(string $login)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getLogin">getLogin</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setMail">setMail</a>(string $mail)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getMail">getMail</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setNationality">setNationality</a>(string $nationality)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getNationality">getNationality</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setNiveau">setNiveau</a>(string $niveau)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getNiveau">getNiveau</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setPassions">setPassions</a>(string $passions)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getPassions">getPassions</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setPersonnalMail">setPersonnalMail</a>(string $personnalMail)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getPersonnalMail">getPersonnalMail</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setPhoneNumber">setPhoneNumber</a>(string $phoneNumber)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getPhoneNumber">getPhoneNumber</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setPostalCode">setPostalCode</a>(string $postalCode)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getPostalCode">getPostalCode</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setRoom">setRoom</a>(string $room)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getRoom">getRoom</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setSex">setSex</a>(string $sex)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getSex">getSex</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setStudentId">setStudentId</a>(int $studentId)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    int
+                </td>
+                <td class="last">
+                    <a href="#method_getStudentId">getStudentId</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setSurnom">setSurnom</a>(string $surnom)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getSurnom">getSurnom</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setTitle">setTitle</a>(string $title)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getTitle">getTitle</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setWebsite">setWebsite</a>(string $website)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getWebsite">getWebsite</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setPermissions">setPermissions</a>(boolean $permissions)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    boolean
+                </td>
+                <td class="last">
+                    <a href="#method_getPermissions">getPermissions</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    bool
+                </td>
+                <td class="last">
+                    <a href="#method_hasPermission">hasPermission</a>(string $permission)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_addPermission">addPermission</a>(string $permission)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setPassword">setPassword</a>(string $password)
+                    <p>Set password</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setPhoneNumberPrivacy">setPhoneNumberPrivacy</a>(integer $phoneNumberPrivacy)
+                    <p>Set phoneNumberPrivacy</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    integer
+                </td>
+                <td class="last">
+                    <a href="#method_getPhoneNumberPrivacy">getPhoneNumberPrivacy</a>()
+                    <p>Get phoneNumberPrivacy</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setSexPrivacy">setSexPrivacy</a>(integer $sexPrivacy)
+                    <p>Set sexPrivacy</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    integer
+                </td>
+                <td class="last">
+                    <a href="#method_getSexPrivacy">getSexPrivacy</a>()
+                    <p>Get sexPrivacy</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setNationalityPrivacy">setNationalityPrivacy</a>(integer $nationalityPrivacy)
+                    <p>Set nationalityPrivacy</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    integer
+                </td>
+                <td class="last">
+                    <a href="#method_getNationalityPrivacy">getNationalityPrivacy</a>()
+                    <p>Get nationalityPrivacy</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setAdressPrivacy">setAdressPrivacy</a>(integer $adressPrivacy)
+                    <p>Set adressPrivacy</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    integer
+                </td>
+                <td class="last">
+                    <a href="#method_getAdressPrivacy">getAdressPrivacy</a>()
+                    <p>Get adressPrivacy</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setPostalCodePrivacy">setPostalCodePrivacy</a>(integer $postalCodePrivacy)
+                    <p>Set postalCodePrivacy</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    integer
+                </td>
+                <td class="last">
+                    <a href="#method_getPostalCodePrivacy">getPostalCodePrivacy</a>()
+                    <p>Get postalCodePrivacy</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setCityPrivacy">setCityPrivacy</a>(integer $cityPrivacy)
+                    <p>Set cityPrivacy</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    integer
+                </td>
+                <td class="last">
+                    <a href="#method_getCityPrivacy">getCityPrivacy</a>()
+                    <p>Get cityPrivacy</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setCountryPrivacy">setCountryPrivacy</a>(integer $countryPrivacy)
+                    <p>Set countryPrivacy</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    integer
+                </td>
+                <td class="last">
+                    <a href="#method_getCountryPrivacy">getCountryPrivacy</a>()
+                    <p>Get countryPrivacy</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setBirthdayPrivacy">setBirthdayPrivacy</a>(integer $birthdayPrivacy)
+                    <p>Set birthdayPrivacy</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    integer
+                </td>
+                <td class="last">
+                    <a href="#method_getBirthdayPrivacy">getBirthdayPrivacy</a>()
+                    <p>Get birthdayPrivacy</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setBirthdayDisplayOnlyAge">setBirthdayDisplayOnlyAge</a>(boolean $birthdayDisplayOnlyAge)
+                    <p>Set birthdayDisplayOnlyAge</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    boolean
+                </td>
+                <td class="last">
+                    <a href="#method_getBirthdayDisplayOnlyAge">getBirthdayDisplayOnlyAge</a>()
+                    <p>Get birthdayDisplayOnlyAge</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setPersonnalMailPrivacy">setPersonnalMailPrivacy</a>(integer $personnalMailPrivacy)
+                    <p>Set personnalMailPrivacy</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    integer
+                </td>
+                <td class="last">
+                    <a href="#method_getPersonnalMailPrivacy">getPersonnalMailPrivacy</a>()
+                    <p>Get personnalMailPrivacy</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setBadges">setBadges</a>(array $badges)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    boolean
+                </td>
+                <td class="last">
+                    <a href="#method_hasBadge">hasBadge</a>(string $badgeName)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_addBadge">addBadge</a>(string $badgeName)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_removeBadge">removeBadge</a>(string $badgeName)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    array
+                </td>
+                <td class="last">
+                    <a href="#method_getBadges">getBadges</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setFacebook">setFacebook</a>(string $facebook)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getFacebook">getFacebook</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setLinkedin">setLinkedin</a>(string $linkedin)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getLinkedin">getLinkedin</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setTwitter">setTwitter</a>(string $twitter)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getTwitter">getTwitter</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setViadeo">setViadeo</a>(string $viadeo)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getViadeo">getViadeo</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setIsAdmin">setIsAdmin</a>(boolean $isAdmin)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    boolean
+                </td>
+                <td class="last">
+                    <a href="#method_getIsAdmin">getIsAdmin</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Collection/UserOptionsCollection.html"><abbr title="Etu\Core\UserBundle\Collection\UserOptionsCollection">UserOptionsCollection</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_getOptions">getOptions</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">at line 402</div>
+        <code>            public            
+    <strong>__construct</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_upload">
+        <div class="location">at line 424</div>
+        <code>            public            boolean
+    <strong>upload</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Upload the photo</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getIsOrga">
+        <div class="location">at line 446</div>
+        <code>            public            boolean
+    <strong>getIsOrga</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getProfileCompletion">
+        <div class="location">at line 454</div>
+        <code>            public            integer
+    <strong>getProfileCompletion</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>integer</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getUsername">
+        <div class="location">at line 478</div>
+        <code>            public            
+    <strong>getUsername</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getSalt">
+        <div class="location">at line 486</div>
+        <code>            public            
+    <strong>getSalt</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getPassword">
+        <div class="location">at line 494</div>
+        <code>            public            
+    <strong>getPassword</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getRoles">
+        <div class="location">at line 502</div>
+        <code>            public            
+    <strong>getRoles</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_eraseCredentials">
+        <div class="location">at line 510</div>
+        <code>            public            
+    <strong>eraseCredentials</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_serialize">
+        <div class="location">at line 517</div>
+        <code>            public            
+    <strong>serialize</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+            
+            
+                            <h4>See also</h4>
+
+                    <table>
+                    <tr>
+                <td>\Serializable::serialize()</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+                <h3 id="method_unserialize">
+        <div class="location">at line 557</div>
+        <code>            public            
+    <strong>unserialize</strong>($serialized)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$serialized</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                            <h4>See also</h4>
+
+                    <table>
+                    <tr>
+                <td>\Serializable::unserialize()</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+                <h3 id="method_setAdress">
+        <div class="location">at line 598</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setAdress</strong>(string $adress)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$adress</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getAdress">
+        <div class="location">at line 608</div>
+        <code>            public            string
+    <strong>getAdress</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setAvatar">
+        <div class="location">at line 617</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setAvatar</strong>(string $avatar)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$avatar</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getAvatar">
+        <div class="location">at line 627</div>
+        <code>            public            string
+    <strong>getAvatar</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setBirthday">
+        <div class="location">at line 636</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setBirthday</strong>(<a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a> $birthday)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a></td>
+                <td>$birthday</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getBirthday">
+        <div class="location">at line 646</div>
+        <code>            public            <a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a>
+    <strong>getBirthday</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getAge">
+        <div class="location">at line 654</div>
+        <code>            public            integer
+    <strong>getAge</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>integer</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setCity">
+        <div class="location">at line 663</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setCity</strong>(string $city)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$city</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getCity">
+        <div class="location">at line 673</div>
+        <code>            public            string
+    <strong>getCity</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setCountry">
+        <div class="location">at line 682</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setCountry</strong>(string $country)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$country</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getCountry">
+        <div class="location">at line 692</div>
+        <code>            public            string
+    <strong>getCountry</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setFiliere">
+        <div class="location">at line 701</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setFiliere</strong>(string $filiere)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$filiere</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getFiliere">
+        <div class="location">at line 715</div>
+        <code>            public            string
+    <strong>getFiliere</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setFirstName">
+        <div class="location">at line 724</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setFirstName</strong>(string $firstName)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$firstName</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getFirstName">
+        <div class="location">at line 734</div>
+        <code>            public            string
+    <strong>getFirstName</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setFormation">
+        <div class="location">at line 743</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setFormation</strong>(string $formation)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$formation</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getFormation">
+        <div class="location">at line 757</div>
+        <code>            public            string
+    <strong>getFormation</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setFullName">
+        <div class="location">at line 766</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setFullName</strong>(string $fullName)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$fullName</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getFullName">
+        <div class="location">at line 776</div>
+        <code>            public            string
+    <strong>getFullName</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setId">
+        <div class="location">at line 785</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setId</strong>(int $id)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>int</td>
+                <td>$id</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getId">
+        <div class="location">at line 795</div>
+        <code>            public            int
+    <strong>getId</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setIsStudent">
+        <div class="location">at line 804</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setIsStudent</strong>(boolean $isStudent)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>boolean</td>
+                <td>$isStudent</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getIsStudent">
+        <div class="location">at line 814</div>
+        <code>            public            boolean
+    <strong>getIsStudent</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setJadis">
+        <div class="location">at line 823</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setJadis</strong>(string $jadis)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$jadis</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getJadis">
+        <div class="location">at line 833</div>
+        <code>            public            string
+    <strong>getJadis</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setKeepActive">
+        <div class="location">at line 842</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setKeepActive</strong>(boolean $keepActive)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>boolean</td>
+                <td>$keepActive</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getKeepActive">
+        <div class="location">at line 852</div>
+        <code>            public            boolean
+    <strong>getKeepActive</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setLanguage">
+        <div class="location">at line 861</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setLanguage</strong>(string $language)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$language</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getLanguage">
+        <div class="location">at line 871</div>
+        <code>            public            string
+    <strong>getLanguage</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setLastName">
+        <div class="location">at line 880</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setLastName</strong>(string $lastName)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$lastName</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getLastName">
+        <div class="location">at line 890</div>
+        <code>            public            string
+    <strong>getLastName</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setLdapInformations">
+        <div class="location">at line 899</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setLdapInformations</strong>(object $ldapInformations)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>object</td>
+                <td>$ldapInformations</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getLdapInformations">
+        <div class="location">at line 909</div>
+        <code>            public            object
+    <strong>getLdapInformations</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>object</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setLogin">
+        <div class="location">at line 918</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setLogin</strong>(string $login)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$login</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getLogin">
+        <div class="location">at line 928</div>
+        <code>            public            string
+    <strong>getLogin</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setMail">
+        <div class="location">at line 937</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setMail</strong>(string $mail)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$mail</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getMail">
+        <div class="location">at line 947</div>
+        <code>            public            string
+    <strong>getMail</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setNationality">
+        <div class="location">at line 956</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setNationality</strong>(string $nationality)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$nationality</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getNationality">
+        <div class="location">at line 966</div>
+        <code>            public            string
+    <strong>getNationality</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setNiveau">
+        <div class="location">at line 975</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setNiveau</strong>(string $niveau)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$niveau</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getNiveau">
+        <div class="location">at line 989</div>
+        <code>            public            string
+    <strong>getNiveau</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setPassions">
+        <div class="location">at line 998</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setPassions</strong>(string $passions)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$passions</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getPassions">
+        <div class="location">at line 1008</div>
+        <code>            public            string
+    <strong>getPassions</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setPersonnalMail">
+        <div class="location">at line 1017</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setPersonnalMail</strong>(string $personnalMail)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$personnalMail</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getPersonnalMail">
+        <div class="location">at line 1027</div>
+        <code>            public            string
+    <strong>getPersonnalMail</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setPhoneNumber">
+        <div class="location">at line 1036</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setPhoneNumber</strong>(string $phoneNumber)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$phoneNumber</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getPhoneNumber">
+        <div class="location">at line 1050</div>
+        <code>            public            string
+    <strong>getPhoneNumber</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setPostalCode">
+        <div class="location">at line 1059</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setPostalCode</strong>(string $postalCode)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$postalCode</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getPostalCode">
+        <div class="location">at line 1069</div>
+        <code>            public            string
+    <strong>getPostalCode</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setRoom">
+        <div class="location">at line 1078</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setRoom</strong>(string $room)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$room</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getRoom">
+        <div class="location">at line 1092</div>
+        <code>            public            string
+    <strong>getRoom</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setSex">
+        <div class="location">at line 1101</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setSex</strong>(string $sex)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$sex</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getSex">
+        <div class="location">at line 1111</div>
+        <code>            public            string
+    <strong>getSex</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setStudentId">
+        <div class="location">at line 1120</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setStudentId</strong>(int $studentId)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>int</td>
+                <td>$studentId</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getStudentId">
+        <div class="location">at line 1134</div>
+        <code>            public            int
+    <strong>getStudentId</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setSurnom">
+        <div class="location">at line 1143</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setSurnom</strong>(string $surnom)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$surnom</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getSurnom">
+        <div class="location">at line 1153</div>
+        <code>            public            string
+    <strong>getSurnom</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setTitle">
+        <div class="location">at line 1162</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setTitle</strong>(string $title)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$title</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getTitle">
+        <div class="location">at line 1176</div>
+        <code>            public            string
+    <strong>getTitle</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setWebsite">
+        <div class="location">at line 1185</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setWebsite</strong>(string $website)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$website</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getWebsite">
+        <div class="location">at line 1195</div>
+        <code>            public            string
+    <strong>getWebsite</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setPermissions">
+        <div class="location">at line 1204</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setPermissions</strong>(boolean $permissions)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>boolean</td>
+                <td>$permissions</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getPermissions">
+        <div class="location">at line 1214</div>
+        <code>            public            boolean
+    <strong>getPermissions</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_hasPermission">
+        <div class="location">at line 1223</div>
+        <code>            public            bool
+    <strong>hasPermission</strong>(string $permission)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$permission</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_addPermission">
+        <div class="location">at line 1232</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>addPermission</strong>(string $permission)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$permission</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setPassword">
+        <div class="location">at line 1245</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setPassword</strong>(string $password)</code>
+    </h3>
+    <div class="details">
+        <p>Set password</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$password</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setPhoneNumberPrivacy">
+        <div class="location">at line 1258</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setPhoneNumberPrivacy</strong>(integer $phoneNumberPrivacy)</code>
+    </h3>
+    <div class="details">
+        <p>Set phoneNumberPrivacy</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$phoneNumberPrivacy</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getPhoneNumberPrivacy">
+        <div class="location">at line 1270</div>
+        <code>            public            integer
+    <strong>getPhoneNumberPrivacy</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get phoneNumberPrivacy</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>integer</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setSexPrivacy">
+        <div class="location">at line 1281</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setSexPrivacy</strong>(integer $sexPrivacy)</code>
+    </h3>
+    <div class="details">
+        <p>Set sexPrivacy</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$sexPrivacy</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getSexPrivacy">
+        <div class="location">at line 1293</div>
+        <code>            public            integer
+    <strong>getSexPrivacy</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get sexPrivacy</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>integer</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setNationalityPrivacy">
+        <div class="location">at line 1304</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setNationalityPrivacy</strong>(integer $nationalityPrivacy)</code>
+    </h3>
+    <div class="details">
+        <p>Set nationalityPrivacy</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$nationalityPrivacy</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getNationalityPrivacy">
+        <div class="location">at line 1316</div>
+        <code>            public            integer
+    <strong>getNationalityPrivacy</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get nationalityPrivacy</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>integer</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setAdressPrivacy">
+        <div class="location">at line 1327</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setAdressPrivacy</strong>(integer $adressPrivacy)</code>
+    </h3>
+    <div class="details">
+        <p>Set adressPrivacy</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$adressPrivacy</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getAdressPrivacy">
+        <div class="location">at line 1339</div>
+        <code>            public            integer
+    <strong>getAdressPrivacy</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get adressPrivacy</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>integer</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setPostalCodePrivacy">
+        <div class="location">at line 1350</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setPostalCodePrivacy</strong>(integer $postalCodePrivacy)</code>
+    </h3>
+    <div class="details">
+        <p>Set postalCodePrivacy</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$postalCodePrivacy</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getPostalCodePrivacy">
+        <div class="location">at line 1362</div>
+        <code>            public            integer
+    <strong>getPostalCodePrivacy</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get postalCodePrivacy</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>integer</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setCityPrivacy">
+        <div class="location">at line 1373</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setCityPrivacy</strong>(integer $cityPrivacy)</code>
+    </h3>
+    <div class="details">
+        <p>Set cityPrivacy</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$cityPrivacy</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getCityPrivacy">
+        <div class="location">at line 1385</div>
+        <code>            public            integer
+    <strong>getCityPrivacy</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get cityPrivacy</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>integer</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setCountryPrivacy">
+        <div class="location">at line 1396</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setCountryPrivacy</strong>(integer $countryPrivacy)</code>
+    </h3>
+    <div class="details">
+        <p>Set countryPrivacy</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$countryPrivacy</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getCountryPrivacy">
+        <div class="location">at line 1408</div>
+        <code>            public            integer
+    <strong>getCountryPrivacy</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get countryPrivacy</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>integer</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setBirthdayPrivacy">
+        <div class="location">at line 1419</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setBirthdayPrivacy</strong>(integer $birthdayPrivacy)</code>
+    </h3>
+    <div class="details">
+        <p>Set birthdayPrivacy</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$birthdayPrivacy</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getBirthdayPrivacy">
+        <div class="location">at line 1431</div>
+        <code>            public            integer
+    <strong>getBirthdayPrivacy</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get birthdayPrivacy</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>integer</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setBirthdayDisplayOnlyAge">
+        <div class="location">at line 1442</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setBirthdayDisplayOnlyAge</strong>(boolean $birthdayDisplayOnlyAge)</code>
+    </h3>
+    <div class="details">
+        <p>Set birthdayDisplayOnlyAge</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>boolean</td>
+                <td>$birthdayDisplayOnlyAge</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getBirthdayDisplayOnlyAge">
+        <div class="location">at line 1454</div>
+        <code>            public            boolean
+    <strong>getBirthdayDisplayOnlyAge</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get birthdayDisplayOnlyAge</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setPersonnalMailPrivacy">
+        <div class="location">at line 1465</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setPersonnalMailPrivacy</strong>(integer $personnalMailPrivacy)</code>
+    </h3>
+    <div class="details">
+        <p>Set personnalMailPrivacy</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$personnalMailPrivacy</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getPersonnalMailPrivacy">
+        <div class="location">at line 1477</div>
+        <code>            public            integer
+    <strong>getPersonnalMailPrivacy</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get personnalMailPrivacy</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>integer</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setBadges">
+        <div class="location">at line 1486</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setBadges</strong>(array $badges)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$badges</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_hasBadge">
+        <div class="location">at line 1497</div>
+        <code>            public            boolean
+    <strong>hasBadge</strong>(string $badgeName)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$badgeName</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_addBadge">
+        <div class="location">at line 1506</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>addBadge</strong>(string $badgeName)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$badgeName</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_removeBadge">
+        <div class="location">at line 1517</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>removeBadge</strong>(string $badgeName)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$badgeName</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getBadges">
+        <div class="location">at line 1529</div>
+        <code>            public            array
+    <strong>getBadges</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setFacebook">
+        <div class="location">at line 1538</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setFacebook</strong>(string $facebook)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$facebook</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getFacebook">
+        <div class="location">at line 1548</div>
+        <code>            public            string
+    <strong>getFacebook</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setLinkedin">
+        <div class="location">at line 1557</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setLinkedin</strong>(string $linkedin)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$linkedin</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getLinkedin">
+        <div class="location">at line 1567</div>
+        <code>            public            string
+    <strong>getLinkedin</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setTwitter">
+        <div class="location">at line 1576</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setTwitter</strong>(string $twitter)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$twitter</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getTwitter">
+        <div class="location">at line 1586</div>
+        <code>            public            string
+    <strong>getTwitter</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setViadeo">
+        <div class="location">at line 1595</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setViadeo</strong>(string $viadeo)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$viadeo</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getViadeo">
+        <div class="location">at line 1605</div>
+        <code>            public            string
+    <strong>getViadeo</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setIsAdmin">
+        <div class="location">at line 1614</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setIsAdmin</strong>(boolean $isAdmin)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>boolean</td>
+                <td>$isAdmin</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getIsAdmin">
+        <div class="location">at line 1624</div>
+        <code>            public            boolean
+    <strong>getIsAdmin</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getOptions">
+        <div class="location">at line 1632</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Collection/UserOptionsCollection.html"><abbr title="Etu\Core\UserBundle\Collection\UserOptionsCollection">UserOptionsCollection</abbr></a>
+    <strong>getOptions</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Collection/UserOptionsCollection.html"><abbr title="Etu\Core\UserBundle\Collection\UserOptionsCollection">UserOptionsCollection</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

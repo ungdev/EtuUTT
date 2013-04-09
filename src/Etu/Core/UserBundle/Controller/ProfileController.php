@@ -236,7 +236,7 @@ class ProfileController extends Controller
 
 		$from = null;
 
-		if (in_array($this->getRequest()->get('from'), array('search'))) {
+		if (in_array($this->getRequest()->get('from'), array('search', 'profile'))) {
 			$from = $this->getRequest()->get('from');
 		}
 

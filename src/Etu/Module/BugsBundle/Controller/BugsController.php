@@ -192,6 +192,7 @@ class BugsController extends Controller
 			// Create the comment
 			$comment->setBody($this->stripRedactorTags($comment->getBody()));
 			$em->persist($comment);
+			$em->flush();
 
 			// Subscribe automatically the user at the issue
 			$this->getSubscriptionsManager()->subscribe($this->getUser(), 'issue', $bug->getId());
