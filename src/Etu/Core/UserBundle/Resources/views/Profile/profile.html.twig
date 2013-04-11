@@ -17,7 +17,7 @@
 			{% endif %}
 
 			<span class="pull-right hidden-for-phones">
-				<a href="{{ path('user_view', {'login': app.user.login}) }}">
+				<a href="{{ path('user_view', {'login': app.user.login}) }}?from=profile">
 					{{ 'user.profile.viewPublic'|trans }}
 				</a>
 			</span>

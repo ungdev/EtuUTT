@@ -49,6 +49,7 @@ user:
 
     # Profile edition
     profileEdit:
+        back: Retour sur mon compte
         confirm: Vous avez bien modifié votre compte
         name: Nom
         mail: E-mail
