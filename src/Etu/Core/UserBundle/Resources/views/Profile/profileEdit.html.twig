@@ -110,24 +110,33 @@
 								{{ app.user.fullName }} ({{ app.user.login }})
 							</div>
 						</div>
+
+						{% if app.user.studentId %}
 						<div class="control-group hidden-for-phones">
 							<label class="control-label">{{ 'user.profileEdit.studentId'|trans }}</label>
 							<div class="controls profileEdit-fixedValue">
 								{{ app.user.studentId }}
 							</div>
 						</div>
+						{% endif %}
+
+						{% if app.user.mail %}
 						<div class="control-group hidden-for-phones">
 							<label class="control-label">{{ 'user.profileEdit.mail'|trans }}</label>
 							<div class="controls profileEdit-fixedValue">
 								{{ app.user.mail }}
 							</div>
 						</div>
+						{% endif %}
+
+						{% if app.user.niveau or app.user.filiere or app.user.formation %}
 						<div class="control-group hidden-for-phones">
 							<label class="control-label">{{ 'user.profileEdit.formation'|trans }}</label>
 							<div class="controls profileEdit-fixedValue">
 								{{ app.user.niveau }} {{ app.user.filiere }} ({{ app.user.formation }})
 							</div>
 						</div>
+						{% endif %}
 
 						<div class="control-group">
 							<label class="control-label">{{ form_label(form.phoneNumber, 'user.profileEdit.phoneNumber'|trans) }}</label>

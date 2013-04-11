@@ -24,6 +24,8 @@ user:
             identifier: Identifiant
             password: Mot de passe
             submit: Connexion
+        logout:
+            confirm: Vous êtes bien déconnecté
         confirm: Vous êtes bien connecté
         error: La connexion a échoué, vos identifiants semblent incorrects
         needAuth: Vous devez être connecté pour accéder à cette page

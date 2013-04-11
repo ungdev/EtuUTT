@@ -348,6 +348,14 @@ class phpCAS
         phpCAS :: traceEnd();
     }
 
+	/**
+	 * @return \CAS_Client
+	 */
+	public static function getClient()
+	{
+		return self::$_PHPCAS_CLIENT;
+	}
+
     /**
      * phpCAS proxy initializer.
      *

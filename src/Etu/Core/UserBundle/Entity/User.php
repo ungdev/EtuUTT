@@ -4,6 +4,7 @@ namespace Etu\Core\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Etu\Core\UserBundle\Collection\UserOptionsCollection;
+use Etu\Core\UserBundle\Ldap\Model\User as LdapUser;
 use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
@@ -13,7 +14,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * User
  *
- * @ORM\Table(name="etu_users", indexes={ @ORM\Index(name="search", columns={"login", "mail"}) })
+ * @ORM\Table(
+ *      name="etu_users",
+ *      uniqueConstraints={@ORM\UniqueConstraint(name="search", columns={"login", "mail"})}
+ * )
  * @ORM\Entity
  */
 class User implements UserInterface, \Serializable
@@ -402,7 +406,9 @@ class User implements UserInterface, \Serializable
 	public function __construct()
 	{
 		$this->keepActive = false;
+		$this->isStudent = true;
 		$this->isAdmin = false;
+		$this->avatar = 'default-avatar.png';
 		$this->phoneNumberPrivacy = self::PRIVACY_PUBLIC;
 		$this->sexPrivacy = self::PRIVACY_PUBLIC;
 		$this->nationalityPrivacy = self::PRIVACY_PUBLIC;
@@ -414,6 +420,9 @@ class User implements UserInterface, \Serializable
 		$this->birthdayDisplayOnlyAge = false;
 		$this->personnalMailPrivacy = self::PRIVACY_PUBLIC;
 		$this->options = new UserOptionsCollection();
+		$this->badges = array();
+		$this->permissions = array();
+		$this->ldapInformations = new LdapUser();
 	}
 
 	/**

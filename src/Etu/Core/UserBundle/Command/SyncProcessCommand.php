@@ -5,6 +5,8 @@ namespace Etu\Core\UserBundle\Command;
 use Etu\Core\UserBundle\Command\Util\ProgressBar;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Ldap\LdapManager;
+use Etu\Core\UserBundle\Sync\Iterator\ImportIterator;
+use Etu\Core\UserBundle\Sync\Iterator\RemoveIterator;
 use Etu\Core\UserBundle\Sync\Synchronizer;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Gd\Image;
@@ -41,7 +43,7 @@ class SyncProcessCommand extends ContainerAwareCommand
 		$dialog = $this->getHelperSet()->get('dialog');
 
 		$output->writeln('
-	Welcome to the EtuUTT users synchronisation manager
+	Welcome to the EtuUTT users manager
 
 This command helps you to synchronise database with LDAP.
 
@@ -60,8 +62,12 @@ ask you to keep or delete him/her.
 
 		$output->writeln('----------------------------------------');
 
+		/** @var $usersImportIterator ImportIterator */
 		$usersImportIterator = $synchronizer->createUsersSyncProcess()->getImportIterator();
+
+		/** @var $usersImportIterator RemoveIterator */
 		$usersRemoveIterator = $synchronizer->createUsersSyncProcess()->getRemoveIterator();
+
 		$output->writeln(sprintf('%s user(s) to import from LDAP', $usersImportIterator->count()));
 		$output->writeln(sprintf('%s user(s) to remove/keep in database', $usersRemoveIterator->count()));
 
@@ -105,7 +111,13 @@ ask you to keep or delete him/her.
 		$i = 1;
 
 		foreach($usersImportIterator as $user) {
-			$user->import();
+
+			// Flush each five elements
+			if ($i % 5 == 0) {
+				$user->import(true);
+			} else {
+				$user->import(false);
+			}
 
 			$bar->update($i);
 			$i++;

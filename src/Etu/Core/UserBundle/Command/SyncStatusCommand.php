@@ -33,6 +33,12 @@ class SyncStatusCommand extends ContainerAwareCommand
 	{
 		$container = $this->getContainer();
 
+		$output->writeln('
+	Welcome to the EtuUTT users manager
+
+This command helps you to check the state of synchronization between LDAP
+and database.
+');
 
 		// Users
 

@@ -11,6 +11,7 @@ use Etu\Core\UserBundle\Entity\Organization;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class AuthController extends Controller
 {
@@ -31,7 +32,6 @@ class AuthController extends Controller
 		\phpCAS::setNoCasServerValidation();
 
 		if (\phpCAS::isAuthenticated()) {
-
 			// Try to connect user automatically
 			$login = \phpCAS::getUser();
 
@@ -92,7 +92,6 @@ class AuthController extends Controller
 
 	/**
 	 * @Route("/user/cas", name="user_connect_cas")
-	 * @Template()
 	 */
 	public function connectCasAction()
 	{
@@ -100,6 +99,14 @@ class AuthController extends Controller
 			return $this->redirect($this->generateUrl('homepage'));
 		}
 
+		// Catch the CAS ticket to connect emails
+		$ticket = $this->getRequest()->get('ticket', false);
+
+		if (! empty($ticket) && is_string($ticket)) {
+			$this->get('session')->set('ticket', $ticket);
+		}
+
+		// Otherwise, load phpCAS
 		$this->initializeCAS();
 		\phpCAS::setNoCasServerValidation();
 		\phpCAS::forceAuthentication();
@@ -223,7 +230,6 @@ class AuthController extends Controller
 
 	/**
 	 * @Route("/user/disconnect", name="user_disconnect")
-	 * @Template()
 	 */
 	public function disconnectAction()
 	{
@@ -234,13 +240,16 @@ class AuthController extends Controller
 		$this->get('session')->set('orga', null);
 		$this->get('session')->set('user', null);
 		$this->get('session')->clear();
-		$this->get('session')->getFlashBag()->set('success', 'Vous êtes bien déconnecté');
+		$this->get('session')->getFlashBag()->set('message', array(
+			'type' => 'success',
+			'message' => 'user.auth.logout.confirm'
+		));
 
 		$this->initializeCAS();
 		\phpCAS::setNoCasServerValidation();
-		\phpCAS::logoutWithRedirectService($this->generateUrl('homepage'));
+		\phpCAS::logoutWithRedirectService('https://openutt.utt.fr');
 
-		return new Response();
+		return $this->redirect($this->generateUrl('homepage'));
 	}
 
 	/**
@@ -262,5 +271,7 @@ class AuthController extends Controller
 			$this->container->getParameter('etu.cas.path'),
 			$this->container->getParameter('etu.cas.change_session_id')
 		);
+
+		\phpCAS::setDebug(__DIR__.'/../Resources/temp/logs.txt');
 	}
 }

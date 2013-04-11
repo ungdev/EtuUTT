@@ -9,6 +9,7 @@ use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Notification\Helper\HelperInterface;
 use Etu\Core\UserBundle\Entity\User;
 
+use Etu\Core\UserBundle\Imap\ImapManager;
 use Symfony\Component\HttpFoundation\Response;
 
 // Import @Route() and @Template() annotations
@@ -56,22 +57,10 @@ class MainController extends Controller
 	 */
 	protected function indexUserAction()
 	{
-		// Add a block to the sidebar about the current flux
-		$this->getSidebarBuilder()
-			->addBlock('flux.sidebar.parameters.title')
-				->setPosition(0)
-				->add('flux.sidebar.parameters.items.suscribtions')
-					->setIcon('etu-icon-star')
-					->setUrl('')
-				->end()
-				->add('flux.sidebar.parameters.items.parameters')
-					->setIcon('etu-icon-gear')
-					->setUrl('')
-				->end()
-			->end();
-
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
+
+		// $imap = new ImapManager($this->get('session')->get('ticket'));
 
 		// Load only notifications we should display, ie. notifications sent from
 		// currently enabled modules

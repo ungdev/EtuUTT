@@ -2,6 +2,9 @@
 
 namespace Etu\Core\CoreBundle\Framework\Definition;
 
+use Etu\Core\UserBundle\Entity\Organization;
+use Etu\Core\UserBundle\Entity\User;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -66,6 +69,20 @@ class Controller extends BaseController
 	public function getUserLayer()
 	{
 		return new \Etu\Core\UserBundle\Security\Layer\ConnectedLayer($this->getUser());
+	}
+
+	/**
+	 * Get a user from the Security Context
+	 *
+	 * @return User|Organization
+	 *
+	 * @throws \LogicException If SecurityBundle is not available
+	 *
+	 * @see Symfony\Component\Security\Core\Authentication\Token\TokenInterface::getUser()
+	 */
+	public function getUser()
+	{
+		return parent::getUser();
 	}
 
 	/**

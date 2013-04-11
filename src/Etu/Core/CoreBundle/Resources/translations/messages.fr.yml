@@ -5,6 +5,7 @@ base:
     title: Site étudiant de l'UTT
     date: %d/%m/%y à %hh%i
     by: par
+    no_info: Pas d'information
 
     # Logo
     logo:

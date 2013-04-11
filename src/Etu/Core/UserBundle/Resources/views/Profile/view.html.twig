@@ -91,13 +91,18 @@
 						{{ user.fullName }}
 					</div>
 				</div>
+
+				{% if user.studentId %}
 				<div class="view-group">
 					<div class="view-icon"><i class="icon-barcode"></i></div>
 					<div class="view-label">{{ 'user.view.studentId'|trans }}</div>
 					<div class="view-value">
-						{{ user.studentId }}
+						{{ user.studentId  }}
 					</div>
 				</div>
+				{% endif %}
+
+				{% if user.mail %}
 				<div class="view-group">
 					<div class="view-icon"><i class="icon-envelope"></i></div>
 					<div class="view-label">{{ 'user.view.mail'|trans }}</div>
@@ -105,6 +110,7 @@
 						{{ user.mail }}
 					</div>
 				</div>
+				{% endif %}
 
 				{% if is_public(user.personnalMailPrivacy) and user.personnalMail %}
 					<div class="view-group">
@@ -116,6 +122,7 @@
 					</div>
 				{% endif %}
 
+				{% if user.niveau or user.filiere or user.formation %}
 				<div class="view-group">
 					<div class="view-icon"><i class="icon-book"></i></div>
 					<div class="view-label">{{ 'user.view.formation'|trans }}</div>
@@ -123,6 +130,7 @@
 						{{ user.niveau }} {{ user.filiere }} ({{ user.formation }})
 					</div>
 				</div>
+				{% endif %}
 
 				{% if is_public(user.sexPrivacy) and user.sex %}
 					<div class="view-group">
