@@ -78,7 +78,7 @@ $(function() {
 	// Load Redactor
 	$('.redactor').redactor({
 		fixed: true,
-		lang: 'es',
+		lang: 'fr',
 		buttons: ['formatting', '|', 'bold', 'italic', 'deleted', '|',
 			'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
 			'image', 'video', 'file', 'table', 'link', '|',
