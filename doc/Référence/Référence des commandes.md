@@ -11,10 +11,6 @@ Ce document référence toutes les commandes fournies par EtuCoreBundle et EtuUs
 
 Génère un squelette de module prèt à l'emploi.
 
-### Création d'un utilisateur
-
-*/!\ : Pas encore disponible*
-
 ### Ajouter une permission à un utilisateur
 
 **etu:users:grant**
@@ -42,3 +38,10 @@ Synchronise le LDAP et la base de données.
 *Etu\Core\UserBundle\Command\SyncStatusCommand*
 
 Compare la base de données et le LDAP pour déterminer les différences.
+
+### Création d'un utilisateur
+
+**etu:users:create**
+*Etu\Core\UserBundle\Command\CreateUserCommand*
+
+Créer une utilisateur.

@@ -31,8 +31,6 @@ class AppKernel extends EtuKernel
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
-	        // Disable Assetic for the developpment
-            // new Symfony\Bundle\AsseticBundle\AsseticBundle(),
 
 	        // Doctrine
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),

@@ -9,9 +9,15 @@
 {% block content %}
 	<ul class="nav nav-tabs page-tabs">
 		<li>
-			<a href="{{ path('bugs_index') }}">
-				<i class="icon-chevron-left"></i>
-				{{ 'bugs.view.page.back'|trans }}
+			<a href="{{ path('bugs_index') }}">{{ 'bugs.index.page.opened'|trans }}</a>
+		</li>
+		<li>
+			<a href="{{ path('bugs_closed') }}">{{ 'bugs.index.page.resolved'|trans }}</a>
+		</li>
+		<li class="pull-right">
+			<a href="{{ path('bugs_create') }}">
+				<i class="icon-plus"></i>
+				{{ 'bugs.index.page.create'|trans }}
 			</a>
 		</li>
 	</ul>

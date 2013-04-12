@@ -1,0 +1,32 @@
+
+/*
+ * Bugs et suggestions
+ */
+.bugs-table-number {
+	width: 25px;
+}
+
+.bugs-view-title {
+	font-size: 18px;
+}
+.bugs-view-date {
+	color: #666;
+	font-size: 11px;
+	font-style: italic;
+}
+.bugs-view-comment {
+	padding-top: 50px;
+}
+.bugs-view-comment-textarea {
+	width: 97%;
+	height: 150px;
+}
+
+@media screen and (max-width: 775px) {
+	.bugs-tabs > li > a {
+		font-size: 12px;
+	}
+	.bugs-table-number {
+		width: 2%;
+	}
+}

@@ -172,15 +172,6 @@ class BugsController extends Controller
 		$comment->setIssue($bug);
 		$comment->setUser($this->getUser());
 
-		/*
-		$notif = new Notification();
-		$notif->setModule($this->getCurrentBundle()->getIdentifier());
-		$notif->setHelper('bugs_new_comment');
-		$notif->addEntity($comment);
-
-		$this->getNotificationsSender()->sendTo(array($this->getUser()), $notif);
-		*/
-
 		$form = $this->createFormBuilder($comment)
 			->add('body')
 			->getForm();
@@ -194,7 +185,29 @@ class BugsController extends Controller
 			$em->persist($comment);
 			$em->flush();
 
-			// Subscribe automatically the user at the issue
+			// Send notifications to subscribers
+			$subscriptions = $em
+				->createQueryBuilder()
+				->select('s, u')
+				->from('EtuCoreBundle:Subscription', 's')
+				->leftJoin('s.user', 'u')
+				->where('s.entityType = :entityType')
+				->andWhere('s.entityId = :entityId')
+				->andWhere('s.user != :currentUser')
+				->setParameter('currentUser', $this->getUser()->getId())
+				->setParameter('entityType', 'issue')
+				->setParameter('entityId', $bug->getId())
+				->getQuery()
+				->getResult();
+
+			$notif = new Notification();
+			$notif->setModule($this->getCurrentBundle()->getIdentifier());
+			$notif->setHelper('bugs_new_comment');
+			$notif->addEntity($comment);
+
+			$this->getNotificationsSender()->sendTo($subscriptions, $notif);
+
+			// Subscribe automatically the user
 			$this->getSubscriptionsManager()->subscribe($this->getUser(), 'issue', $bug->getId());
 
 			$this->get('session')->getFlashBag()->set('message', array(

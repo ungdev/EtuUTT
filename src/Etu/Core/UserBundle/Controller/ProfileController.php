@@ -3,6 +3,7 @@
 namespace Etu\Core\UserBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\User;
 

@@ -11,27 +11,6 @@
 		<meta name="description" content="{{ 'base.title'|trans }}" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-		{# Assets managment with Assetic: to use in production, but too slow for development
-
-		{% stylesheets
-			'bootstrap/css/bootstrap.min.css'
-			'bootstrap/css/bootstrap-responsive.min.css'
-
-			'css/global.css'
-			'css/icons.css'
-			'css/head.css'
-			'css/page.css'
-			'css/sidebar.css'
-			'css/responsive.css'
-			'css/content.css'
-
-			filter='cssrewrite'
-			output='css/compiled.css'
-		%}
-			<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-		{% endstylesheets %}
-		#}
-
 		<link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}" type="text/css" />
 		<link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" />
 		<link rel="stylesheet" href="{{ asset('css/global.css') }}" type="text/css" />
@@ -41,6 +20,9 @@
 		<link rel="stylesheet" href="{{ asset('css/menu.css') }}" type="text/css" />
 		<link rel="stylesheet" href="{{ asset('css/responsive.css') }}" type="text/css" />
 		<link rel="stylesheet" href="{{ asset('css/content.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('css/bundles/core.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('css/bundles/user.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('css/bundles/bugs.css') }}" type="text/css" />
 
 		<link rel="stylesheet" href="{{ asset('redactor-js/redactor/redactor.css') }}" />
 
@@ -278,7 +260,7 @@
 								}
 							}
 						});
-					}, 10 * 1000); // 10 seconds
+					}, 5 * 1000); // 10 seconds
 				</script>
 			{% endif %}
 		{% endblock %}
