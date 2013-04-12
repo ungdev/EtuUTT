@@ -4,10 +4,17 @@
 	<img src="{{ asset('img/notifs/forum.png') }}" />
 
 	<h4 class="notif-title">
-		{{ 'bugs.notifs.newComment.text'|trans({
-			'%userName%': notif.firstEntity.user.fullName,
-			'%bugName%': notif.firstEntity.issue.title
-		})|raw }}
+		{% if app.user.id == notif.firstEntity.issue.user.id %}
+			{{ 'bugs.notifs.newComment.your'|trans({
+				'%userName%': notif.firstEntity.user.fullName,
+				'%bugName%': notif.firstEntity.issue.title
+			})|raw }}
+		{% else %}
+			{{ 'bugs.notifs.newComment.other'|trans({
+				'%userName%': notif.firstEntity.user.fullName,
+				'%bugName%': notif.firstEntity.issue.title
+			})|raw }}
+		{% endif %}
 	</h4>
 
 	<div class="notif-date">

@@ -6,6 +6,7 @@ use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Entity\Subscription;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
+use Etu\Core\CoreBundle\Util\RedactorJsEscaper;
 use Etu\Module\BugsBundle\Entity\Comment;
 use Etu\Module\BugsBundle\Entity\Issue;
 
@@ -48,18 +49,30 @@ class BugsController extends Controller
 	}
 
 	/**
-	 * @Route("/closed", name="bugs_closed")
+	 * @Route("/closed/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="bugs_closed")
 	 * @Template()
 	 */
-	public function closedAction()
+	public function closedAction($page = 1)
 	{
 		if (! $this->getUser()) {
 			return $this->createAccessDeniedResponse();
 		}
 
-		return array(
-			'bugs' => array()
-		);
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		$query = $em->createQueryBuilder()
+			->select('i, u, a')
+			->from('EtuModuleBugsBundle:Issue', 'i')
+			->leftJoin('i.user', 'u')
+			->leftJoin('i.assignee', 'a')
+			->where('i.isOpened = 0')
+			->orderBy('i.createdAt', 'DESC')
+			->setMaxResults(20);
+
+		$pagination = $this->get('knp_paginator')->paginate($query, $page, 20);
+
+		return array('pagination' => $pagination);
 	}
 
 	/**
@@ -94,7 +107,7 @@ class BugsController extends Controller
 		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 
-			$bug->setBody($this->stripRedactorTags($bug->getBody()));
+			$bug->setBody(RedactorJsEscaper::escape($bug->getBody()));
 
 			$em->persist($bug);
 			$em->flush();
@@ -125,7 +138,7 @@ class BugsController extends Controller
 	}
 
 	/**
-	 * @Route("/{id}-{slug}", requirements = {"number" = "\d+"}, name="bugs_view")
+	 * @Route("/{id}-{slug}", requirements = {"id" = "\d+"}, name="bugs_view")
 	 * @Template()
 	 */
 	public function viewAction($id, $slug)
@@ -178,10 +191,10 @@ class BugsController extends Controller
 
 		$request = $this->getRequest();
 
-		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+		if ($bug->isOpen() && $request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
 
 			// Create the comment
-			$comment->setBody($this->stripRedactorTags($comment->getBody()));
+			$comment->setBody(RedactorJsEscaper::escape($comment->getBody()));
 			$em->persist($comment);
 			$em->flush();
 
@@ -219,8 +232,6 @@ class BugsController extends Controller
 				'id' => $bug->getId(),
 				'slug' => StringManipulationExtension::slugify($bug->getTitle()),
 			)));
-		} else {
-			$message = null;
 		}
 
 		$updateForm = $this->createFormBuilder($bug)
@@ -240,36 +251,7 @@ class BugsController extends Controller
 			'bug' => $bug,
 			'comments' => $comments,
 			'form' => $form->createView(),
-			'updateForm' => $updateForm->createView(),
-			'message' => $message
+			'updateForm' => $updateForm->createView()
 		);
-	}
-
-	/**
-	 * Protect a string from XSS injections allowing RedactorJS tags
-	 *
-	 * @param $str
-	 * @return string
-	 */
-	private function stripRedactorTags($str)
-	{
-		// Catch YouTube videos
-		$str = preg_replace(
-			'/<iframe.+src="https?:\/\/www.youtube.com\/embed\/([a-z0-9_\-]+)".+><\/iframe>/iU',
-			'https://www.youtube.com/watch?v=$1',
-			$str
-		);
-
-		// Strip tags
-		$str = strip_tags($str, '<code><span><div><label><a><br><p><b><i><del><strike><u><img><blockquote><mark><cite><small><ul><ol><li><hr><dl><dt><dd><sup><sub><big><pre><code><figure><figcaption><strong><em><table><tr><td><th><tbody><thead><tfoot><h1><h2><h3><h4><h5><h6>');
-
-		// Reload YouTube videos
-		$str = preg_replace(
-			'/https?:\/\/www.youtube.com\/watch\?v=([a-z0-9_\-]+)/i',
-			'<iframe width="560" height="315" src="http://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>',
-			$str
-		);
-
-		return $str;
 	}
 }

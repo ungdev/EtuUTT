@@ -226,6 +226,25 @@ class Issue
 	}
 
 	/**
+	 * @param $isOpen
+	 * @return $this
+	 */
+	public function setOpen($isOpen)
+	{
+		$this->isOpened = $isOpen;
+
+		return $this;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function isOpen()
+	{
+		return $this->isOpened;
+	}
+
+	/**
 	 * @param string $title
 	 * @return Issue
 	 */

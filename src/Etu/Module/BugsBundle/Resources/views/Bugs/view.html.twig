@@ -52,9 +52,68 @@
 
 		<hr />
 
-		{% if bug.assignee %}
+		{% if bug.assignee and bug.isOpen %}
 			<div class="alert alert-info">
-				{{ 'bugs.view.page.assigned_to'|trans({'%name%': bug.assignee.login}) }}
+				{{ 'bugs.view.page.assigned_to'|trans({'%name%': bug.assignee.fullName}) }}
+			</div>
+
+			<hr />
+		{% elseif bug.assignee and not bug.isOpen %}
+			<div class="alert alert-success">
+				{{ 'bugs.view.page.resolved_by'|trans({'%name%': bug.assignee.fullName}) }}
+			</div>
+
+			<hr />
+		{% elseif not bug.isOpen %}
+			<div class="alert alert-success">
+				{{ 'bugs.view.page.resolved'|trans }}
+			</div>
+
+			<hr />
+		{% endif %}
+
+		{% if app.user.hasPermission('bugs.admin') %}
+			<div class="bugs-view-admin hidden-for-phones">
+				<div class="row-fluid">
+					<div class="span5">
+						<h5>{{ 'bugs.view.admin.assigne'|trans }}</h5>
+
+						{% if bug.assignee %}
+							<a href="{{ path('bugs_admin_unassign', {'id': bug.id, 'slug': bug.title|slugify}) }}">
+								{{ 'bugs.view.admin.unassign'|trans({'%name%': bug.assignee.fullName}) }}
+							</a>
+						{% else %}
+							<form method="post" action="{{ path('bugs_admin_assign', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="form-inline">
+								<input name="assignee" class="user-autocomplete" type="text" placeholder="{{ 'bugs.view.admin.assigne_placeholder'|trans }}" />
+								<button type="submit" class="btn">{{ 'bugs.view.admin.assigne'|trans }}</button>
+							</form>
+						{% endif %}
+					</div>
+
+					<div class="span5">
+						<h5>{{ 'bugs.view.admin.edit_criticality'|trans }}</h5>
+
+						<form method="post" action="{{ path('bugs_admin_criticality', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="form-inline">
+							{{ form_widget(updateForm.criticality) }}
+							{{ form_rest(updateForm) }}
+							<button type="submit" class="btn">{{ 'bugs.view.admin.edit'|trans }}</button>
+						</form>
+					</div>
+
+					<div class="span2">
+						<h5>{{ 'bugs.view.admin.state'|trans }}</h5>
+
+						{% if bug.isOpen %}
+							<a href="{{ path('bugs_admin_close', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="btn">
+								{{ 'bugs.view.admin.fix'|trans }}
+							</a>
+						{% else %}
+							<a href="{{ path('bugs_admin_open', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="btn">
+								{{ 'bugs.view.admin.unfix'|trans }}
+							</a>
+						{% endif %}
+					</div>
+				</div>
 			</div>
 
 			<hr />
@@ -67,7 +126,7 @@
 			<div class="etu-comment-infos">
 				<div class="etu-comment-date">
 					<small>
-						#1 - {{ bug.user.login }}
+						#1 - {{ bug.user.fullName }}
 					</small>
 					<small class="pull-right">{{ time_diff(bug.createdAt)|ucfirst }}</small>
 				</div>
@@ -80,27 +139,35 @@
 		</div>
 
 		{% for key, comment in comments %}
-			<div class="etu-comment">
-				<div class="etu-comment-avatar">
-					<img src="{{ asset('photos/'~comment.user.avatar) }}" />
-				</div>
-				<div class="etu-comment-infos">
-					<div class="etu-comment-date">
-						<small>
-							#{{ key+2 }} - {{ comment.user.login }}
-						</small>
-						<small class="pull-right">{{ time_diff(comment.createdAt)|ucfirst }}</small>
-					</div>
-					<div class="etu-comment-body">
-						{{ comment.body|raw }}
-					</div>
-				</div>
+			{% if comment.isStateUpdate %}
+				<div class="etu-comment-state-update">
+					<strong>{{ comment.body|raw }}</strong>
 
-				<div class="clear"></div>
-			</div>
+					<div class="clear"></div>
+				</div>
+			{% else %}
+				<div class="etu-comment">
+					<div class="etu-comment-avatar">
+						<img src="{{ asset('photos/'~comment.user.avatar) }}" />
+					</div>
+					<div class="etu-comment-infos">
+						<div class="etu-comment-date">
+							<small>
+								#{{ key+2 }} - {{ comment.user.fullName }}
+							</small>
+							<small class="pull-right">{{ time_diff(comment.createdAt)|ucfirst }}</small>
+						</div>
+						<div class="etu-comment-body">
+							{{ comment.body|raw }}
+						</div>
+					</div>
+
+					<div class="clear"></div>
+				</div>
+			{% endif %}
 		{% endfor %}
 
-
+		{% if bug.isOpen %}
 		<div class="bugs-view-comment">
 			<h4>{{ 'bugs.view.comment.comment'|trans }}</h4>
 
@@ -114,50 +181,6 @@
 					<input type="submit" class="btn pull-right" value="{{ 'bugs.view.comment.comment'|trans }}" />
 				</div>
 			</form>
-		</div>
-
-		{% if app.user.hasPermission('bugs.admin') %}
-		<div class="bugs-view-comment hidden-for-phones">
-			<h4>{{ 'bugs.view.admin.title'|trans }}</h4>
-
-			<hr />
-
-			<div class="row-fluid">
-				<div class="span6">
-					<h5>{{ 'bugs.view.admin.assigne'|trans }}</h5>
-
-					<form method="post" action="" class="form-inline">
-						<input type="text" placeholder="{{ 'bugs.view.admin.assigne_placeholder'|trans }}" />
-						<button type="submit" class="btn">{{ 'bugs.view.admin.assigne'|trans }}</button>
-					</form>
-				</div>
-				<div class="span6">
-					<h5>{{ 'bugs.view.admin.edit_criticality'|trans }}</h5>
-
-					<form method="post" action="" class="form-inline">
-						{{ form_widget(updateForm.criticality) }}
-						<button type="submit" class="btn">{{ 'bugs.view.admin.edit'|trans }}</button>
-					</form>
-				</div>
-			</div>
-
-			<div class="row-fluid">
-				<div class="span6">
-					<h5>{{ 'bugs.view.admin.fix_with_commit'|trans }}</h5>
-
-					<form method="post" action="" class="form-inline">
-						<input type="text" placeholder="{{ 'bugs.view.admin.fix_with_commit_placeholder'|trans }}" />
-						<button type="submit" class="btn">{{ 'bugs.view.admin.fix'|trans }}</button>
-					</form>
-				</div>
-				<div class="span6">
-					<h5>{{ 'bugs.view.admin.fix_without_commit'|trans }}</h5>
-
-					<form method="post" action="" class="form-inline">
-						<button type="submit" class="btn">{{ 'bugs.view.admin.fix'|trans }}</button>
-					</form>
-				</div>
-			</div>
 		</div>
 		{% endif %}
 

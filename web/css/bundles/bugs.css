@@ -14,8 +14,11 @@
 	font-size: 11px;
 	font-style: italic;
 }
+.bugs-view-admin {
+	margin: -10px 0;
+}
 .bugs-view-comment {
-	padding-top: 50px;
+	padding: 50px 0;
 }
 .bugs-view-comment-textarea {
 	width: 97%;

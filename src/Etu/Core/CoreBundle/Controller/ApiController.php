@@ -11,11 +11,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class AjaxController extends Controller
+/**
+ * @Route("/api")
+ */
+class ApiController extends Controller
 {
 	/**
 	 * @Route(
-	 *      "/subscribe/{entityType}/{entityId}",
+	 *      "/follow/{entityType}/{entityId}",
 	 *      requirements={"entityType"="[a-z]+", "entityId" = "\d+"},
 	 *      defaults={"_format"="json"},
 	 *      name="notifs_subscribe",
@@ -41,7 +44,7 @@ class AjaxController extends Controller
 
 	/**
 	 * @Route(
-	 *      "/unsubscribe/{entityType}/{entityId}",
+	 *      "/unfollow/{entityType}/{entityId}",
 	 *      requirements={"entityType"="[a-z]+", "entityId" = "\d+"},
 	 *      defaults={"_format"="json"},
 	 *      name="notifs_unsubscribe",
@@ -67,7 +70,7 @@ class AjaxController extends Controller
 
 	/**
 	 * @Route(
-	 *      "/notifs/new",
+	 *      "/notif/new",
 	 *      name="notifs_new",
 	 *      options={"expose"=true}
 	 * )

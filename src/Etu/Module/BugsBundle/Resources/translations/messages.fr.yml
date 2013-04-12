@@ -2,7 +2,8 @@
 bugs:
     notifs:
         newComment:
-            text: '<span class="notif-data">%userName%</span> a commenté le bug <span class="notif-data">%bugName%</span>'
+            your: '<span class="notif-data">%userName%</span> a commenté votre bug <span class="notif-data">%bugName%</span>'
+            ohter: '<span class="notif-data">%userName%</span> a commenté le bug <span class="notif-data">%bugName%</span>'
 
     criticality:
         critical: Problème critique
@@ -44,6 +45,8 @@ bugs:
             title: Détails du bug
             posted_at: Posté le
             assigned_to: Ce bug est assigné à %name%
+            resolved: Ce bug a été résolu
+            resolved_by: Ce bug a été résolu par %name%
         comment:
             body: Commentaire
             comment: Commenter
@@ -53,10 +56,27 @@ bugs:
             title: Administrer
             assigne: Assigner
             assigne_placeholder: Assigner à ...
+            unassign: Supprimer l'assignation de %name%
             edit_criticality: Modifier la criticité
             edit: Modifier
-            fix_with_commit: Résoudre avec un commit
-            fix_with_commit_placeholder: Commit ...
-            fix_without_commit: Résoudre sans commit
-            fix_with_commit_placeholder: Commit ...
+            state: Etat
             fix: Résoudre
+            unfix: Réouvrir
+
+    admin:
+        assign:
+            assignee_not_found: L'utilisateur n'a pas été trouvé
+            success: L'utilisateur a bien été assigné au bug
+            message: %adminName% a assigné %userName% au bug
+        unassign:
+            success: L'utilisateur a bien été désassigné du bug
+            message: %adminName% a supprimé l'assignation de %userName% au bug
+        criticality:
+            success: La criticté du bug a bien été modifiée
+            message: %adminName% a changé la criticité de ce bug de %before% à %after%
+        open:
+            success: Le bug a bien été réouvert
+            message: Réouvert par %adminName%
+        close:
+            success: Le bug a bien été marqué comme résolu
+            message: Fermé par %adminName%
