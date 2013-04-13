@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\User;
 
+use Etu\Core\UserBundle\Schedule\ScheduleApi;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -21,6 +22,11 @@ class ProfileController extends Controller
 		if (! $this->getUserLayer()->isUser()) {
 			return $this->createAccessDeniedResponse();
 		}
+
+		$scheduleApi = new ScheduleApi();
+
+		var_dump($scheduleApi->findScheduleByStudentId(35236));
+		exit;
 
 		return array();
 	}

@@ -52,36 +52,42 @@
 							<a href="{{ path('homepage') }}">
 								<i class="icon icon-head icon-head-home"></i>
 								<span class="menu-link-text">{{ 'base.menu.home'|trans }}</span>
+								<div class="clear"></div>
 							</a>
 						</li>
 						<li>
 							<a href="">
 								<i class="icon icon-head icon-head-events"></i>
 								<span class="menu-link-text">{{ 'base.menu.events'|trans }}</span>
+								<div class="clear"></div>
 							</a>
 						</li>
 						<li>
 							<a href="">
 								<i class="icon icon-head icon-head-forums"></i>
 								<span class="menu-link-text">{{ 'base.menu.forums'|trans }}</span>
+								<div class="clear"></div>
 							</a>
 						</li>
 						<li class="hidden-for-phones">
 							<a href="">
 								<i class="icon icon-head icon-head-associations"></i>
 								<span class="menu-link-text">{{ 'base.menu.associations'|trans }}</span>
+								<div class="clear"></div>
 							</a>
 						</li>
 						<li class="hidden-for-phones last">
 							<a href="">
 								<i class="icon icon-head icon-head-search"></i>
 								<span class="menu-link-text">{{ 'base.menu.search'|trans }}</span>
+								<div class="clear"></div>
 							</a>
 						</li>
 						<li class="display-for-phones last" id="more">
 							<a href="">
 								<i class="icon icon-head icon-head-plus"></i>
 								<span class="menu-link-text">{{ 'base.menu.more'|trans }}</span>
+								<div class="clear"></div>
 							</a>
 						</li>
 						{% if not app.user %}
@@ -89,6 +95,7 @@
 								<a href="{{ path('user_connect') }}">
 									<i class="icon icon-head icon-head-connexion"></i>
 									<span class="menu-link-text">{{ 'base.menu.connexion'|trans }}</span>
+									<div class="clear"></div>
 								</a>
 							</li>
 						{% endif %}

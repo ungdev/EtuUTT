@@ -3,7 +3,7 @@ bugs:
     notifs:
         newComment:
             your: '<span class="notif-data">%userName%</span> a commenté votre bug <span class="notif-data">%bugName%</span>'
-            ohter: '<span class="notif-data">%userName%</span> a commenté le bug <span class="notif-data">%bugName%</span>'
+            other: '<span class="notif-data">%userName%</span> a commenté le bug <span class="notif-data">%bugName%</span>'
 
     criticality:
         critical: Problème critique
