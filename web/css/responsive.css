@@ -40,7 +40,9 @@
 	}
 
 	.menu a {
-		padding: 13.5px;
+		padding: 14px;
+		padding-top: 15px;
+		padding-bottom: 13px;
 	}
 	.title {
 		margin-right: 20px;
@@ -53,11 +55,11 @@
 	}
 	.userbox-link {
 		width: 20px;
+		height: 30px;
 		padding: 5px;
 		padding-left: 13px;
-		padding-top: 14px;
-		margin-left: 48px;
-		height: 29px;
+		padding-top: 15px;
+		margin-left: 51px;
 	}
 	.userbox-link-icon {
 		position: absolute;
@@ -66,16 +68,16 @@
 	}
 	.userbox-clicked .userbox-link {
 		width: 18px;
+		height: 30px;
 		padding: 5px;
 		padding-left: 13px;
-		padding-top: 14px;
-		margin-left: 48px;
-		height: 29px;
+		padding-top: 15px;
+		margin-left: 51px;
 	}
 	.userbox-menu-clicked {
 		position: absolute;
 		background: white;
-		margin-left: -119px;
+		margin-left: -117px;
 		width: 204px;
 		border: 1px solid #cecece;
 		border-top: 0;
@@ -84,7 +86,8 @@
 		z-index: 100;
 	}
 	.avatar {
-		max-height: 48px;
+		max-height: 51px;
+		max-width: 51px;
 	}
 	.content {
 		width: 765px;
@@ -153,13 +156,13 @@
 	.title {
 		display: none;
 	}
+	.menu a {
+		padding: 14px;
+		padding-top: 15px;
+		padding-bottom: 13px;
+	}
 	.userbox {
 		float: right;
-	}
-	.menu-link-text {
-		font-size: 13px;
-		float: left;
-		padding-top: 1px;
 	}
 	.connect_link {
 		position: absolute;
@@ -167,41 +170,6 @@
 	}
 	.connect_link, .connect_link a {
 		border: 0;
-	}
-	.userbox-link {
-		width: 20px;
-		padding: 5px;
-		padding-left: 13px;
-		padding-top: 14px;
-		margin-left: 48px;
-		height: 29px;
-	}
-	.userbox-link-icon {
-		position: absolute;
-		margin-left: 0;
-		margin-top: 4px;
-	}
-	.userbox-clicked .userbox-link {
-		width: 18px;
-		padding: 5px;
-		padding-left: 13px;
-		padding-top: 14px;
-		margin-left: 48px;
-		height: 29px;
-	}
-	.userbox-menu-clicked {
-		position: absolute;
-		background: white;
-		margin-left: -119px;
-		width: 204px;
-		border: 1px solid #cecece;
-		border-top: 0;
-		color: #222222;
-		font-size: 11px;
-		z-index: 100;
-	}
-	.avatar {
-		max-height: 48px;
 	}
 	.content {
 		width: 100%;

@@ -20,6 +20,7 @@
 /* Menu and Menu items */
 .menu a {
 	padding: 18px;
+	padding-bottom: 15px;
 	color: #e5e5e5;
 	border-right: 1px solid #313944;
 	border-left: 1px solid #414b5c;
