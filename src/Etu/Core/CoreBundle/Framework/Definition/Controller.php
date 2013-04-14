@@ -57,18 +57,18 @@ class Controller extends BaseController
 	{
 		$this->get('session')->getFlashBag()->set('message', array(
 			'type' => 'error',
-			'message' => 'user.auth.needAuth'
+			'message' => 'user.auth.denied'
 		));
 
 		return $this->redirect($this->generateUrl('user_connect'));
 	}
 
 	/**
-	 * @return \Etu\Core\UserBundle\Security\Layer\ConnectedLayer
+	 * @return \Etu\Core\UserBundle\Security\Layer\UserLayer
 	 */
 	public function getUserLayer()
 	{
-		return new \Etu\Core\UserBundle\Security\Layer\ConnectedLayer($this->getUser());
+		return new \Etu\Core\UserBundle\Security\Layer\UserLayer($this->getUser());
 	}
 
 	/**

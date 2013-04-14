@@ -13,9 +13,7 @@ class EtuModuleBugsBundle extends Module
 	 */
 	public function mustBoot()
 	{
-		return
-			is_int($this->container->get('session')->get('user'))
-				&& $this->container->get('session')->get('user') > 0;
+		return $this->getSessionLayer()->isUser();
 	}
 
 	/**

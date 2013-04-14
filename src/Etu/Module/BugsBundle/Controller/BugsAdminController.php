@@ -29,8 +29,8 @@ class BugsAdminController extends Controller
 	 */
 	public function assignAction($id, $slug)
 	{
-		if (! $this->getUser() || ! $this->getUser()->hasPermission('bugs.admin')) {
-			throw new AccessDeniedHttpException('You are not allowed to see this page');
+		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('bugs.admin')) {
+			return $this->createAccessDeniedResponse();
 		}
 
 		/** @var $em EntityManager */
@@ -109,8 +109,8 @@ class BugsAdminController extends Controller
 	 */
 	public function unassignAction($id, $slug)
 	{
-		if (! $this->getUser() || ! $this->getUser()->hasPermission('bugs.admin')) {
-			throw new AccessDeniedHttpException('You are not allowed to see this page');
+		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('bugs.admin')) {
+			return $this->createAccessDeniedResponse();
 		}
 
 		/** @var $em EntityManager */
@@ -175,8 +175,8 @@ class BugsAdminController extends Controller
 	 */
 	public function criticalityAction($id, $slug)
 	{
-		if (! $this->getUser() || ! $this->getUser()->hasPermission('bugs.admin')) {
-			throw new AccessDeniedHttpException('You are not allowed to see this page');
+		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('bugs.admin')) {
+			return $this->createAccessDeniedResponse();
 		}
 
 		/** @var $em EntityManager */
@@ -288,8 +288,8 @@ class BugsAdminController extends Controller
 	 */
 	public function closeAction($id, $slug)
 	{
-		if (! $this->getUser() || ! $this->getUser()->hasPermission('bugs.admin')) {
-			throw new AccessDeniedHttpException('You are not allowed to see this page');
+		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('bugs.admin')) {
+			return $this->createAccessDeniedResponse();
 		}
 
 		/** @var $em EntityManager */
@@ -351,8 +351,8 @@ class BugsAdminController extends Controller
 	 */
 	public function openAction($id, $slug)
 	{
-		if (! $this->getUser() || ! $this->getUser()->hasPermission('bugs.admin')) {
-			throw new AccessDeniedHttpException('You are not allowed to see this page');
+		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('bugs.admin')) {
+			return $this->createAccessDeniedResponse();
 		}
 
 		/** @var $em EntityManager */

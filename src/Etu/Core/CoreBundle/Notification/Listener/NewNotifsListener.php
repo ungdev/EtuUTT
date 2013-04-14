@@ -5,7 +5,7 @@ namespace Etu\Core\CoreBundle\Notification\Listener;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Framework\EtuKernel;
-use Etu\Core\UserBundle\Security\Layer\ConnectedLayer;
+use Etu\Core\UserBundle\Security\Layer\UserLayer;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Core\SecurityContext;
 
@@ -50,7 +50,7 @@ class NewNotifsListener
 	 */
 	public function onKernelRequest($event)
 	{
-		$layer = new ConnectedLayer($this->securityContext->getToken()->getUser());
+		$layer = new UserLayer($this->securityContext->getToken()->getUser());
 		$count = 0;
 
 		if ($layer->isUser()) {

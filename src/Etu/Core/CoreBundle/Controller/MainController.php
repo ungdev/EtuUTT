@@ -24,7 +24,7 @@ class MainController extends Controller
 	 */
 	public function indexAction()
 	{
-		if ($this->getUserLayer()->isConnected()) {
+		if ($this->getUserLayer()->isUser()) {
 			return $this->indexUserAction();
 		}
 

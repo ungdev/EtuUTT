@@ -27,7 +27,7 @@ class BugsController extends Controller
 	 */
 	public function indexAction($page = 1)
 	{
-		if (! $this->getUser()) {
+		if (! $this->getUserLayer()->isUser()) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -54,7 +54,7 @@ class BugsController extends Controller
 	 */
 	public function closedAction($page = 1)
 	{
-		if (! $this->getUser()) {
+		if (! $this->getUserLayer()->isUser()) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -81,7 +81,7 @@ class BugsController extends Controller
 	 */
 	public function createAction()
 	{
-		if (! $this->getUser()) {
+		if (! $this->getUserLayer()->isUser()) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -143,7 +143,7 @@ class BugsController extends Controller
 	 */
 	public function viewAction($id, $slug)
 	{
-		if (! $this->getUser()) {
+		if (! $this->getUserLayer()->isUser()) {
 			return $this->createAccessDeniedResponse();
 		}
 

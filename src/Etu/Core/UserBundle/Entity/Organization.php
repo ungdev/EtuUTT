@@ -263,6 +263,15 @@ class Organization implements UserInterface, \Serializable
 	}
 
 	/**
+	 * @param $permission
+	 * @return bool
+	 */
+	public function hasPermission($permission)
+	{
+		return false;
+	}
+
+	/**
 	 * @param string $contactElse
 	 * @return Organization
 	 */

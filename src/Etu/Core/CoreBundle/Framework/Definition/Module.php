@@ -2,6 +2,9 @@
 
 namespace Etu\Core\CoreBundle\Framework\Definition;
 
+use Etu\Core\UserBundle\Entity\Organization;
+use Etu\Core\UserBundle\Entity\User;
+use Etu\Core\UserBundle\Security\Layer\SessionLayer;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\Routing\Router;
 
@@ -103,6 +106,14 @@ abstract class Module extends Bundle
 	public function getUserMenuBuilder()
 	{
 		return $this->container->get('etu.menu.user_builder');
+	}
+
+	/**
+	 * @return SessionLayer
+	 */
+	public function getSessionLayer()
+	{
+		return new SessionLayer($this->container->get('session'));
 	}
 
 	/**

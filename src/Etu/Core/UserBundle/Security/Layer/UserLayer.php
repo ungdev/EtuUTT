@@ -15,12 +15,12 @@ use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Core\UserBundle\Entity\User;
 
 /**
- * Abstract layer to find if the given user is an organization, a student,
+ * Layer based on Symfony security to find if the current user is an organization, a student,
  * a UTT member, an external or an anonymous.
  *
  * @author Titouan Galopin <galopintitouan@gmail.com>
  */
-class ConnectedLayer
+class UserLayer
 {
 	/**
 	 * @var User
@@ -36,6 +36,8 @@ class ConnectedLayer
 	}
 
 	/**
+	 * Connected user or organization
+	 *
 	 * @return bool
 	 */
 	public function isConnected()
@@ -44,6 +46,8 @@ class ConnectedLayer
 	}
 
 	/**
+	 * Connected user
+	 *
 	 * @return bool
 	 */
 	public function isUser()
@@ -52,6 +56,8 @@ class ConnectedLayer
 	}
 
 	/**
+	 * Connected organization
+	 *
 	 * @return bool
 	 */
 	public function isOrga()
@@ -60,6 +66,8 @@ class ConnectedLayer
 	}
 
 	/**
+	 * Connected organization
+	 *
 	 * @return bool
 	 */
 	public function isOrganization()
@@ -68,6 +76,8 @@ class ConnectedLayer
 	}
 
 	/**
+	 * Connected user as student
+	 *
 	 * @return bool
 	 */
 	public function isStudent()
@@ -76,6 +86,8 @@ class ConnectedLayer
 	}
 
 	/**
+	 * Connected user as UTT member
+	 *
 	 * @return bool
 	 */
 	public function isUttMember()
@@ -84,6 +96,8 @@ class ConnectedLayer
 	}
 
 	/**
+	 * Connected user as external
+	 *
 	 * @return bool
 	 */
 	public function isExternal()
@@ -92,7 +106,9 @@ class ConnectedLayer
 	}
 
 	/**
-	 * @return \Etu\Core\UserBundle\Entity\User
+	 * Get the user or the organization
+	 *
+	 * @return \Etu\Core\UserBundle\Entity\User|\Etu\Core\UserBundle\Entity\Organization
 	 */
 	public function getUser()
 	{
