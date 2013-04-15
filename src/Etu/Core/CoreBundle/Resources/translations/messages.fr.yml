@@ -73,6 +73,7 @@ base:
         legalities: Mentions légales
         help_us: Nous aider
         developers: Développeurs
+        change_locale: Changer de langue
 
         # Authors and version
         text: "Réalisé par l’UNG<br />Propulsé par Symfony 2<br /><br />Version 10-alpha"

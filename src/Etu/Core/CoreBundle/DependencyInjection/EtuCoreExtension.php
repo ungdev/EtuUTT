@@ -24,5 +24,8 @@ class EtuCoreExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+	    $container->setParameter('etu.domain', $config['domain']);
+	    $container->setParameter('etu.translation.languages', $config['translation']['languages']);
     }
 }

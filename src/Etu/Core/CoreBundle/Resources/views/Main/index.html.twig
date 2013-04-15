@@ -11,18 +11,20 @@
 				// Find new notifications
 				$.getJSON(Routing.generate('notifs_new'), function(data) {
 					if (typeof data.status != 'undefined' && data.status == 200) {
-						if (data.result > 0) {
-							$('#head-menu-home-pins').text(data.result);
+						if (data.result.count > 0) {
+							$('#head-menu-home-pins').text(data.result.count);
 							$('#head-menu-home-pins').show();
-
-							setCountTitle(data.result);
-
-							$('#alert-new-notifs-count').text(data.result);
+							setCountTitle(data.result.count);
+							$('#alert-new-notifs-count').text(data.result.count);
 							$('#alert-new-notifs').show();
+						} else {
+							$('#head-menu-home-pins').hide();
+							removeCountTitle();
+							$('#alert-new-notifs').hide();
 						}
 					}
 				});
-			}, 5 * 1000); // 10 seconds
+			}, 5 * 1000); // 5 seconds
 		</script>
 	{% endif %}
 {% endblock %}

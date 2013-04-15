@@ -74,6 +74,10 @@ class AuthController extends Controller
 					'message' => 'user.auth.confirm'
 				));
 
+				if (in_array($user->getLanguage(), $this->container->getParameter('etu.translation.languages'))) {
+					$this->get('session')->set('_locale', $user->getLanguage());
+				}
+
 				return $this->redirect($this->generateUrl('homepage'));
 			} elseif ($user instanceof Organization) {
 				$this->get('session')->set('orga', $user->getId());
@@ -160,6 +164,10 @@ class AuthController extends Controller
 				'type' => 'success',
 				'message' => 'user.auth.confirm'
 			));
+
+			if (in_array($user->getLanguage(), $this->container->getParameter('etu.translation.languages'))) {
+				$this->get('session')->set('_locale', $user->getLanguage());
+			}
 		} elseif ($user instanceof Organization) {
 			$this->get('session')->set('orga', $user->getId());
 			$this->get('session')->getFlashBag()->set('message', array(
@@ -212,6 +220,10 @@ class AuthController extends Controller
 					'message' => 'user.auth.confirm'
 				));
 
+				if (in_array($user->getLanguage(), $this->container->getParameter('etu.translation.languages'))) {
+					$this->get('session')->set('_locale', $user->getLanguage());
+				}
+
 				return $this->redirect($this->generateUrl('homepage'));
 			} else {
 				$this->get('session')->getFlashBag()->set('message', array(
@@ -247,7 +259,7 @@ class AuthController extends Controller
 
 		$this->initializeCAS();
 		\phpCAS::setNoCasServerValidation();
-		\phpCAS::logoutWithRedirectService('https://openutt.utt.fr');
+		\phpCAS::logoutWithRedirectService('http://'.$this->container->getParameter('etu.domain'));
 
 		return $this->redirect($this->generateUrl('homepage'));
 	}

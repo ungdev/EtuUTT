@@ -16,6 +16,7 @@ parameters:
     etu.menu.sidebar_twig_extension.class: Etu\Core\CoreBundle\Twig\Extension\SidebarRendererExtension
 
     etu.modules_boot_listener.class: Etu\Core\CoreBundle\Framework\Listener\ModulesBootListener
+    etu.locale_listener.class: Etu\Core\CoreBundle\Framework\Listener\LocaleListener
 
     etu.twig.string_manipulation.class: Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension
     etu.twig.notif_helper.class: Etu\Core\CoreBundle\Twig\Extension\NotificationHelperExtension
@@ -86,6 +87,13 @@ services:
     etu.modules_boot_listener:
         class: %etu.modules_boot_listener.class%
         arguments: [@security.context, @kernel]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    # Locale listener
+    etu.locale_listener:
+        class: %etu.locale_listener.class%
+        arguments: [@session, @translator]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 

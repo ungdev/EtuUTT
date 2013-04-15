@@ -10,30 +10,57 @@ function setCountTitle(count) {
 	}
 }
 
-$('#change-locale-link').click(function() {
-	$('#change-locale-link').toggleClass('change-locale-link');
-	$('#next-change-locale-link').toggleClass('next-change-locale-link');
-	$('#change-locale').toggle();
-	return false;
-});
-
-$('.userbox-link').click(function() {
-	$('.userbox').toggleClass('userbox-clicked');
-	$('.userbox-menu').toggleClass('userbox-menu-clicked');
-	$('.userbox-menu').toggle();
-	return false;
-});
-
-$('#more').click(function() {
-	if (! $(this).hasClass('active')) {
-		$('#head-menu-list li').each(function() {
-			if ($(this).hasClass('active')) {
-				$(this).removeClass('active').addClass('old-active');
-			}
-		});
-
-		$(this).addClass('active');
+function removeCountTitle() {
+	if (/\([\d]+\)/.test(title)) {
+		title = title.split(') ');
+		document.title = title[1];
 	} else {
+		document.title =title;
+	}
+}
+
+$(function() {
+
+	$('#change-locale-link').click(function() {
+		$('#change-locale-link').toggleClass('change-locale-link');
+		$('#next-change-locale-link').toggleClass('next-change-locale-link');
+		$('#change-locale').toggle();
+		return false;
+	});
+
+	$('.userbox-link').click(function() {
+		$('.userbox').toggleClass('userbox-clicked');
+		$('.userbox-menu').toggleClass('userbox-menu-clicked');
+		$('.userbox-menu').toggle();
+		return false;
+	});
+
+	$('#more').click(function() {
+		if (! $(this).hasClass('active')) {
+			$('#head-menu-list li').each(function() {
+				if ($(this).hasClass('active')) {
+					$(this).removeClass('active').addClass('old-active');
+				}
+			});
+
+			$(this).addClass('active');
+		} else {
+			$('#head-menu-list li').each(function() {
+				if ($(this).hasClass('old-active')) {
+					$(this).removeClass('old-active').addClass('active');
+				}
+			});
+
+			$(this).removeClass('active');
+		}
+
+		$('#overlay').toggle();
+		$('#menu-mobile').toggle();
+
+		return false;
+	});
+
+	$('.change-locale').click(function() {
 		$('#head-menu-list li').each(function() {
 			if ($(this).hasClass('old-active')) {
 				$(this).removeClass('old-active').addClass('active');
@@ -41,39 +68,55 @@ $('#more').click(function() {
 		});
 
 		$(this).removeClass('active');
-	}
+		$('#menu-mobile').hide();
 
-	$('#overlay').toggle();
-	$('#overlay-content').toggle();
+		$('#overlay').show();
+		$('#change-locale-choices').show();
 
-	return false;
-});
+		return false;
+	});
 
-$('body').click(function() {
-	$('.userbox').removeClass('userbox-clicked');
-	$('.userbox-menu').removeClass('userbox-menu-clicked');
-	$('.userbox-menu').hide();
-	$('#change-locale-link').removeClass('change-locale-link');
-	$('#next-change-locale-link').removeClass('next-change-locale-link');
-	$('#change-locale').hide();
+	$('body').click(function() {
+		$('.userbox').removeClass('userbox-clicked');
+		$('.userbox-menu').removeClass('userbox-menu-clicked');
+		$('.userbox-menu').hide();
 
-	$('#head-menu-list li').each(function() {
-		if ($(this).hasClass('old-active')) {
-			$(this).removeClass('old-active').addClass('active');
+		$('#head-menu-list li').each(function() {
+			if ($(this).hasClass('old-active')) {
+				$(this).removeClass('old-active').addClass('active');
+			}
+		});
+
+		$(this).removeClass('active');
+
+		$('#overlay').hide();
+		$('#menu-mobile').hide();
+		$('#change-locale-choices').hide();
+	});
+
+	$(document).keypress(function(event) {
+		if (event.keyCode == 27) {
+			$('.userbox').removeClass('userbox-clicked');
+			$('.userbox-menu').removeClass('userbox-menu-clicked');
+			$('.userbox-menu').hide();
+
+			$('#head-menu-list li').each(function() {
+				if ($(this).hasClass('old-active')) {
+					$(this).removeClass('old-active').addClass('active');
+				}
+			});
+
+			$(this).removeClass('active');
+
+			$('#overlay').hide();
+			$('#menu-mobile').hide();
+			$('#change-locale-choices').hide();
 		}
 	});
 
-	$(this).removeClass('active');
-
-	$('#overlay').hide();
-	$('#overlay-content').hide();
-});
-
-$('.userbox a').click(function() {
-	return true;
-});
-
-$(function() {
+	$('.userbox a').click(function() {
+		return true;
+	});
 
 	// Load Redactor
 	$('.redactor').redactor({

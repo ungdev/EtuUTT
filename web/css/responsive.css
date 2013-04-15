@@ -161,6 +161,16 @@
 		padding-top: 15px;
 		padding-bottom: 13px;
 	}
+
+	#menu-mobile {
+		left: 33%;
+		width: 34%;
+	}
+	#change-locale-choices {
+		left: 33%;
+		width: 34%;
+	}
+
 	.userbox {
 		float: right;
 	}
@@ -212,8 +222,15 @@
 		display: block !important;
 	}
 
-	#overlay-content {
-		margin-top: 50px;
+	#menu-mobile {
+		margin-top: 70px;
+		left: 33%;
+		width: 34%;
+	}
+	#change-locale-choices {
+		margin-top: 70px;
+		left: 33%;
+		width: 34%;
 	}
 
 	.title {
@@ -294,5 +311,16 @@
 	.content {
 		border-left: 0;
 		border-right: 0;
+	}
+
+	#menu-mobile {
+		margin-top: 70px;
+		left: 0;
+		width: 100%;
+	}
+	#change-locale-choices {
+		margin-top: 70px;
+		left: 0;
+		width: 100%;
 	}
 }

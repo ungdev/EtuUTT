@@ -162,9 +162,11 @@
 			</div>
 		{% endif %}
 
+		{# Overlay #}
 		<div id="overlay"></div>
 
-		<div id="overlay-content">
+		{# Mobile "Plus" menu #}
+		<div id="menu-mobile">
 			<ul class="list-vertical list-vertical-linked overlay-menu">
 				<li class="first active">
 					<a href="">
@@ -196,18 +198,18 @@
 					</a>
 				</li>
 				{% if etu.moduleEnabled('bugs') %}
-				<li>
-					<a href="{{ path('bugs_suggestions') }}">
-						<i class="etu-icon-comment"></i>
-						{{ 'bugs.sidebar.items.suggest'|trans }}
-					</a>
-				</li>
-				<li>
-					<a href="{{ path('bugs_index') }}">
-						<i class="etu-icon-warning"></i>
-						{{ 'bugs.sidebar.items.bugs'|trans }}
-					</a>
-				</li>
+					<li>
+						<a href="{{ path('bugs_suggestions') }}">
+							<i class="etu-icon-comment"></i>
+							{{ 'bugs.sidebar.items.suggest'|trans }}
+						</a>
+					</li>
+					<li>
+						<a href="{{ path('bugs_index') }}">
+							<i class="etu-icon-warning"></i>
+							{{ 'bugs.sidebar.items.bugs'|trans }}
+						</a>
+					</li>
 				{% endif %}
 			</ul>
 
@@ -215,8 +217,8 @@
 
 			<ul class="list-vertical list-vertical-linked overlay-menu">
 				<li class="first active">
-					<a href="">
-						Changer de langue (Français)
+					<a href="#" class="change-locale">
+						{{ 'base.footer.change_locale'|trans }}
 					</a>
 				</li>
 			</ul>
@@ -224,6 +226,36 @@
 			<p class="clear footer-description footer-description-mobiles">
 				{{ 'base.footer.mobile_text'|trans|raw }}
 			</p>
+		</div>
+
+		{# Change the locale (available languages) #}
+		<div id="change-locale-choices">
+			<ul class="list-vertical list-vertical-linked overlay-menu">
+				<li class="first">
+					<a href="{{ path('change_locale', {'lang': 'fr'}) }}" class="change-locale">
+						<img src="{{ asset('img/lang/fr.png') }}" />
+						Français
+					</a>
+				</li>
+				<li>
+					<a href="{{ path('change_locale', {'lang': 'en'}) }}" class="change-locale">
+						<img src="{{ asset('img/lang/en.png') }}" />
+						English
+					</a>
+				</li>
+				<li>
+					<a href="{{ path('change_locale', {'lang': 'es'}) }}" class="change-locale">
+						<img src="{{ asset('img/lang/es.png') }}" />
+						Español
+					</a>
+				</li>
+				<li>
+					<a href="{{ path('change_locale', {'lang': 'cn'}) }}" class="change-locale">
+						<img src="{{ asset('img/lang/cn.png') }}" />
+						中国的
+					</a>
+				</li>
+			</ul>
 		</div>
 
 		{% block page %}{% endblock %}
@@ -244,15 +276,17 @@
 						// Find new notifications
 						$.getJSON(Routing.generate('notifs_new'), function(data) {
 							if (typeof data.status != 'undefined' && data.status == 200) {
-								if (data.result > 0) {
-									$('#head-menu-home-pins').text(data.result);
+								if (data.result.count > 0) {
+									$('#head-menu-home-pins').text(data.result.count);
 									$('#head-menu-home-pins').show();
-
-									setCountTitle(data.result);
+									setCountTitle(data.result.count);
+								} else {
+									$('#head-menu-home-pins').hide();
+									removeCountTitle();
 								}
 							}
 						});
-					}, 5 * 1000); // 10 seconds
+					}, 5 * 1000); // 5 seconds
 				</script>
 			{% endif %}
 		{% endblock %}

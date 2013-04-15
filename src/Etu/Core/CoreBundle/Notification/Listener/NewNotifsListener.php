@@ -51,7 +51,7 @@ class NewNotifsListener
 	public function onKernelRequest($event)
 	{
 		$layer = new UserLayer($this->securityContext->getToken()->getUser());
-		$count = 0;
+		$notifications = array();
 
 		if ($layer->isUser()) {
 			/** @var $em EntityManager */
@@ -63,7 +63,7 @@ class NewNotifsListener
 
 			$query = $em
 				->createQueryBuilder()
-				->select('COUNT(n)')
+				->select('n')
 				->from('EtuCoreBundle:Notification', 'n')
 				->where('n.user = :user')
 				->andWhere('n.isNew = 1')
@@ -76,13 +76,10 @@ class NewNotifsListener
 				$query->setParameter($identifier, $identifier);
 			}
 
-			$count = $query->andWhere(implode(' OR ', $where))->getQuery()->getScalarResult();
-
-			if (isset($count[0][1])) {
-				$count = (int) $count[0][1];
-			}
+			$notifications = $query->andWhere(implode(' OR ', $where))->getQuery()->getResult();
 		}
 
-		$this->twig->addGlobal('etu_count_new_notifs', $count);
+		$this->twig->addGlobal('etu_count_new_notifs', count($notifications));
+		$this->twig->addGlobal('etu_new_notifs', $notifications);
 	}
 }

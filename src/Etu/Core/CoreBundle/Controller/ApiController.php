@@ -70,7 +70,7 @@ class ApiController extends Controller
 
 	/**
 	 * @Route(
-	 *      "/notif/new",
+	 *      "/notifs/new",
 	 *      name="notifs_new",
 	 *      options={"expose"=true}
 	 * )
@@ -88,7 +88,7 @@ class ApiController extends Controller
 
 		return new Response(json_encode(array(
 			'status' => 200,
-			'result' => $globals['etu_count_new_notifs']
+			'result' => array('count' => $globals['etu_count_new_notifs'], 'notifs' => $globals['etu_new_notifs'])
 		)));
 	}
 }

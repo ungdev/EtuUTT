@@ -35,6 +35,27 @@ class MainController extends Controller
 		return $this->indexAnonymousAction();
 	}
 
+	/**
+	 * @Route("/change-locale/{lang}", name="change_locale")
+	 * @Template()
+	 */
+	public function changeLocaleAction($lang)
+	{
+		// Change locale if the given locale is available
+		if (in_array($lang, $this->container->getParameter('etu.translation.languages'))) {
+			$this->get('session')->set('_locale', $lang);
+		}
+
+		$referer = $this->getRequest()->server->get('HTTP_REFERER');
+
+		// Check if the referer is in the excepted domain, to redirect wisely
+		if ($this->container->getParameter('etu.domain') == parse_url($referer, PHP_URL_HOST)) {
+			return $this->redirect($referer);
+		}
+
+		return $this->redirect($this->generateUrl('homepage'));
+	}
+
 
 	/**
 	 * @return Response

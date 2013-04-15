@@ -122,39 +122,3 @@
 .footer-bottom .footer-description {
 	float: right;
 }
-
-/* Change locale link */
-.change-locale {
-	display: none;
-	margin-top: 20px;
-	position: absolute;
-	background: white;
-	border: 1px solid #cecece;
-	width: 149px;
-	color: #222222;
-	font-size: 11px;
-	font-style: normal;
-	z-index: 50;
-}
-.change-locale-link {
-	position: absolute;
-	z-index: 60;
-	background: white;
-	border: 1px solid #cecece !important;
-	border-bottom: 0 !important;
-}
-.next-change-locale-link {
-	padding-top: 2px !important;
-}
-
-/* Change locale link clicked: menu displayed */
-.change-locale-menu a {
-	color: #222222;
-	font-size: 11px;
-	padding: 0 10px;
-	width: 129px;
-}
-.change-locale-menu a:hover {
-	background: #e3e3e3;
-	text-decoration: none;
-}

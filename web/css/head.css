@@ -4,7 +4,7 @@
 	-moz-box-shadow: 0 0 5px #888;
 	-webkit-box-shadow: 0 0 5px#888;
 	box-shadow: 0 0 5px #888;
-	z-index: 100;
+	z-index: 220;
 }
 
 /* Title to hide using CSS, for accessibility */
@@ -104,7 +104,7 @@
 	color: #888888;
 }
 
-/* Overlay for the menu using small devices */
+/* Overlay */
 #overlay {
 	display: none;
 	position: fixed;
@@ -114,21 +114,7 @@
 	top: 0;
 	background: black;
 	opacity: 0.5;
-}
-#overlay-content {
-	display: none;
-	z-index: 90;
-	position: fixed;
-	left: 0;
-	top: 0;
-	width: 100%;
-	margin-top: 60px;
-	padding: 10px 0;
-	background: white;
-	opacity: 1;
-	-moz-box-shadow: 0 0 5px #606060;
-	-webkit-box-shadow: 0 0 5px#606060;
-	box-shadow: 0 0 5px #606060;
+	z-index: 200;
 }
 .overlay-menu a {
 	padding: 10px 15px;
@@ -140,4 +126,43 @@
 }
 .overlay-menu a i {
 	margin-top: 0;
+}
+.overlay-menu a img {
+	float: left;
+	margin-top: 5px;
+	margin-right: 10px;
+}
+
+/* Mobile menu */
+#menu-mobile {
+	display: none;
+	z-index: 230;
+	position: fixed;
+	left: 40%;
+	top: 0;
+	width: 20%;
+	margin-top: 100px;
+	padding: 10px 0;
+	background: white;
+	opacity: 1;
+	-moz-box-shadow: 0 0 5px #606060;
+	-webkit-box-shadow: 0 0 5px#606060;
+	box-shadow: 0 0 5px #606060;
+}
+
+/* Change locale box */
+#change-locale-choices {
+	display: none;
+	z-index: 230;
+	position: fixed;
+	left: 40%;
+	top: 0;
+	width: 20%;
+	margin-top: 100px;
+	padding: 10px 0;
+	background: white;
+	opacity: 1;
+	-moz-box-shadow: 0 0 5px #606060;
+	-webkit-box-shadow: 0 0 5px#606060;
+	box-shadow: 0 0 5px #606060;
 }
