@@ -36,6 +36,22 @@ class MainController extends Controller
 	}
 
 	/**
+	 * @Route("/change-locale/redirect/{url}", name="change_locale_redirect")
+	 * @Template()
+	 */
+	public function changeLocaleRedirectAction($url)
+	{
+		$url = urldecode($url);
+
+		// Redirect wisely
+		if ($this->container->getParameter('etu.domain') == parse_url($url, PHP_URL_HOST)) {
+			return $this->redirect($url);
+		}
+
+		return $this->redirect($this->generateUrl('homepage'));
+	}
+
+	/**
 	 * @Route("/change-locale/{lang}", name="change_locale")
 	 * @Template()
 	 */
@@ -44,16 +60,23 @@ class MainController extends Controller
 		// Change locale if the given locale is available
 		if (in_array($lang, $this->container->getParameter('etu.translation.languages'))) {
 			$this->get('session')->set('_locale', $lang);
+
+			// Change user language
+			if ($this->getUserLayer()->isUser()) {
+				/** @var $em EntityManager */
+				$em = $this->getDoctrine()->getManager();
+
+				$user = $this->getUser();
+				$user->setLanguage($lang);
+
+				$em->persist($user);
+				$em->flush();
+			}
 		}
 
-		$referer = $this->getRequest()->server->get('HTTP_REFERER');
-
-		// Check if the referer is in the excepted domain, to redirect wisely
-		if ($this->container->getParameter('etu.domain') == parse_url($referer, PHP_URL_HOST)) {
-			return $this->redirect($referer);
-		}
-
-		return $this->redirect($this->generateUrl('homepage'));
+		return $this->redirect($this->generateUrl('change_locale_redirect', array(
+			'url' => urlencode($this->getRequest()->server->get('HTTP_REFERER'))
+		)));
 	}
 
 

@@ -1,29 +1,65 @@
-{% extends '::page-2cols.html.twig' %}
+{% extends '::base.html.twig' %}
 
 {% block title %}{{ 'base.menu.connexion'|trans }}{% endblock %}
 
-{% block titleIcon %}
-	<img src="{{ asset('img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
-{% endblock %}
+{% block page %}
+	<section class="page">
+		<div class="container page-container">
 
-{% block content %}
-	<div class="padding20-all">
+			<h2 class="page-title source-sans-pro">
+				<img src="{{ asset('img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+
+				{{ block('title') }}
+			</h2>
+
+			{% if message %}
+				<div class="page-alert-mobile alert alert-{{ message.type }} display-for-1024">
+					{{ message.message|trans }}
+				</div>
+			{% endif %}
+
+			<div class="content content-connect">
+				<div class="padding20-all">
+					<p>
+						{{ 'user.auth.connect.desc'|trans }}
+					</p>
+					<ul class="thumbnails connect-choices">
+						<li class="span3">
+							<a href="{{ path('user_connect_cas') }}" class="thumbnail">
+								<img src="{{ asset('img/connect/cas.png') }}" />
+								{{ 'user.auth.connect.cas'|trans }}
+							</a>
+						</li>
+						<li class="span3">
+							<a href="{{ path('user_connect_external') }}" class="thumbnail">
+								<img src="{{ asset('img/connect/external.png') }}" />
+								{{ 'user.auth.connect.external'|trans }}
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+	</section>
+
+	<footer class="container footer-bottom">
 		<p>
-			{{ 'user.auth.connect.desc'|trans }}
+			<a href="#" class="footer-link change-locale">
+				{{ 'base.footer.change_locale'|trans }}
+			</a>
+			<a href="" id="next-change-locale-link" class="footer-link">
+				{{ 'base.footer.legalities'|trans }}
+			</a>
+			<a href="" class="footer-link">
+				{{ 'base.footer.help_us'|trans }}
+			</a>
+			<a href="" class="footer-link">
+				{{ 'base.footer.developers'|trans }}
+			</a>
+			<span class="pull-right">
+				{{ 'base.footer.1col_text'|trans|raw }}
+			</span>
 		</p>
-		<ul class="thumbnails connect-choices">
-			<li class="span3">
-				<a href="{{ path('user_connect_cas') }}" class="thumbnail">
-					<img src="{{ asset('img/connect/cas.png') }}" />
-					{{ 'user.auth.connect.cas'|trans }}
-				</a>
-			</li>
-			<li class="span3">
-				<a href="{{ path('user_connect_external') }}" class="thumbnail">
-					<img src="{{ asset('img/connect/external.png') }}" />
-					{{ 'user.auth.connect.external'|trans }}
-				</a>
-			</li>
-		</ul>
-	</div>
+	</footer>
 {% endblock %}

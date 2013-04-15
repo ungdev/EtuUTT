@@ -21,13 +21,6 @@ function removeCountTitle() {
 
 $(function() {
 
-	$('#change-locale-link').click(function() {
-		$('#change-locale-link').toggleClass('change-locale-link');
-		$('#next-change-locale-link').toggleClass('next-change-locale-link');
-		$('#change-locale').toggle();
-		return false;
-	});
-
 	$('.userbox-link').click(function() {
 		$('.userbox').toggleClass('userbox-clicked');
 		$('.userbox-menu').toggleClass('userbox-menu-clicked');
@@ -114,7 +107,7 @@ $(function() {
 		}
 	});
 
-	$('.userbox a').click(function() {
+	$('.userbox a, #menu-mobile a, #change-locale-choices a').click(function() {
 		return true;
 	});
 

@@ -39,4 +39,21 @@ class ScheduleApi
 
 		return $courses;
 	}
+
+	/**
+	 * @param integer $page
+	 * @return bool
+	 */
+	public function findPage($page)
+	{
+		$result = json_decode($this->browser->request(array('all' => '1', 'page' => $page)));
+
+		$courses = array();
+
+		foreach ($result->content as $values) {
+			$courses[] = new Course($values);
+		}
+
+		return $courses;
+	}
 }

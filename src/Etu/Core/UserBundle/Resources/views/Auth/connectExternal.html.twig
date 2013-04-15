@@ -1,4 +1,4 @@
-{% extends '::page-2cols.html.twig' %}
+{% extends '::page-1col.html.twig' %}
 
 {% block title %}{{ 'user.auth.connectExternal.title'|trans }}{% endblock %}
 
@@ -11,7 +11,7 @@
 		<li>
 			<a href="{{ path('user_connect') }}">
 				<i class="icon-chevron-left"></i>
-				Changer de méthode de connexion
+				{{ 'user.auth.change'|trans }}
 			</a>
 		</li>
 	</ul>

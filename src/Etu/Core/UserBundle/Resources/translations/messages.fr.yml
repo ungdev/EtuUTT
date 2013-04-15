@@ -29,6 +29,7 @@ user:
         confirm: Vous êtes bien connecté
         error: La connexion a échoué, vos identifiants semblent incorrects
         denied: Vous n'avez pas le droit d'accéder à cette page
+        change: Changer de méthode de connexion
 
     # Profile
     profile:
