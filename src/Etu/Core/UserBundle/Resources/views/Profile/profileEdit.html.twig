@@ -38,8 +38,8 @@
 	<div class="padding20-sides">
 		<div class="hidden" id="avatarUploadBox">
 			<div class="avatarUploadBox-form">
-				<form method="post" action="{{ path('user_profile_avatar') }}" {{ form_enctype(avatarForm) }}>
-					<h4>{{ 'user.profile.edit_avatar'|trans }}</h4>
+				<form method="post" action="">
+					<h4>{{ 'orga.edit.logo_title'|trans }}</h4>
 
 					<img src="{{ asset('photos/'~app.user.avatar) }}" style="max-width: 100px;" alt="{{ app.user.fullName }}" title="{{ app.user.fullName }}" />
 

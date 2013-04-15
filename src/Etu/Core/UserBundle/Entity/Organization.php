@@ -93,6 +93,14 @@ class Organization implements UserInterface, \Serializable
 	protected $logo;
 
 	/**
+	 * @ var string
+	 *
+	 * @ ORM\Column(name="description", type="text", nullable=true)
+	 *
+	protected $description;
+	 * */
+
+	/**
 	 * @var integer
 	 *
 	 * @ORM\Column(name="countMembers", type="integer", nullable=true)
@@ -112,8 +120,9 @@ class Organization implements UserInterface, \Serializable
 	 * Methods
 	 */
 
-	public function __construct()
+	public function __toString()
 	{
+		return $this->name;
 	}
 
 	/**
@@ -132,7 +141,7 @@ class Organization implements UserInterface, \Serializable
 		$image = $imagine->open($this->file->getPathname());
 
 		$image->thumbnail(new Box(200, 200), Image::THUMBNAIL_OUTBOUND)->save(
-			__DIR__ . '/../../../../../web/photos/'.$this->login.'.jpg'
+			__DIR__ . '/../../../../../web/logos/'.$this->login.'.jpg'
 		);
 
 		$this->logo = $this->login.'.jpg';
@@ -448,5 +457,24 @@ class Organization implements UserInterface, \Serializable
 	public function getWebsite()
 	{
 		return $this->website;
+	}
+
+	/**
+	 * @param string $description
+	 * @return Organization
+	 */
+	public function setDescription($description)
+	{
+		$this->description = $description;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getDescription()
+	{
+		return $this->description;
 	}
 }

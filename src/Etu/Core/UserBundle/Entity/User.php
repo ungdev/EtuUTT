@@ -425,6 +425,11 @@ class User implements UserInterface, \Serializable
 		$this->ldapInformations = new LdapUser();
 	}
 
+	public function __toString()
+	{
+		return $this->fullName;
+	}
+
 	/**
 	 * Upload the photo
 	 *

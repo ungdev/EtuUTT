@@ -7,6 +7,10 @@ parameters:
     etu.menu.user_renderer.class: Etu\Core\CoreBundle\Menu\UserMenu\UserMenuRenderer
     etu.menu.user_twig_extension.class: Etu\Core\CoreBundle\Twig\Extension\UserMenuRendererExtension
 
+    etu.menu.orga_builder.class: Etu\Core\CoreBundle\Menu\OrgaMenu\OrgaMenuBuilder
+    etu.menu.orga_renderer.class: Etu\Core\CoreBundle\Menu\OrgaMenu\OrgaMenuRenderer
+    etu.menu.orga_twig_extension.class: Etu\Core\CoreBundle\Twig\Extension\OrgaMenuRendererExtension
+
     etu.menu.sidebar_builder.class: Etu\Core\CoreBundle\Menu\Sidebar\SidebarBuilder
     etu.menu.sidebar_renderer.class: Etu\Core\CoreBundle\Menu\Sidebar\SidebarRenderer
     etu.menu.sidebar_twig_extension.class: Etu\Core\CoreBundle\Twig\Extension\SidebarRendererExtension
@@ -23,6 +27,8 @@ parameters:
 
     etu.notifs.helper_manager.class: Etu\Core\CoreBundle\Notification\Helper\HelperManager
 
+    etu.redactor_type.class: Etu\Core\CoreBundle\Form\RedactorType
+
 services:
 
     # Modules manager
@@ -37,7 +43,7 @@ services:
         tags:
             - { name: routing.loader }
 
-    # User menu
+    # Users menu
     etu.menu.user_builder:
         class: %etu.menu.user_builder.class%
         arguments: [@router]
@@ -47,6 +53,19 @@ services:
     etu.menu.user_twig_extension:
         class: %etu.menu.user_twig_extension.class%
         arguments: [@etu.menu.user_builder, @etu.menu.user_renderer]
+        tags:
+            - { name: twig.extension }
+
+    # Organizations menu
+    etu.menu.orga_builder:
+        class: %etu.menu.orga_builder.class%
+        arguments: [@router]
+    etu.menu.orga_renderer:
+        class: %etu.menu.orga_renderer.class%
+        arguments: [@twig]
+    etu.menu.orga_twig_extension:
+        class: %etu.menu.orga_twig_extension.class%
+        arguments: [@etu.menu.orga_builder, @etu.menu.orga_renderer]
         tags:
             - { name: twig.extension }
 
@@ -106,4 +125,10 @@ services:
         arguments: [@security.context, @doctrine, @twig, @kernel]
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelRequest }
+
+    # Redactor
+    etu.redactor_type:
+        class: %etu.redactor_type.class%
+        tags:
+            - { name: form.type, alias: redactor }
 

@@ -46,6 +46,7 @@ base:
             logout: Déconnexion
             help: Aide
             orgaAdmin: Administration
+            members: Membres
 
         # Sex
         sex:

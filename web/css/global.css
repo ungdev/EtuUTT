@@ -21,6 +21,12 @@ a:hover {
  * Global tool classes
  */
 
+/* Redactor */
+.redactor {
+	width: 95%;
+	margin-bottom: 5px;
+}
+
 /* Police */
 .source-sans-pro {
 	font-family: 'Source Sans Pro', Arial;

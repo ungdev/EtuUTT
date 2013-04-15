@@ -29,7 +29,7 @@ class MainController extends Controller
 		}
 
 		if ($this->getUserLayer()->isOrga()) {
-			return $this->indexOrgaAction();
+			return $this->redirect($this->generateUrl('orga_admin'));
 		}
 
 		return $this->indexAnonymousAction();
@@ -42,14 +42,6 @@ class MainController extends Controller
 	protected function indexAnonymousAction()
 	{
 		return $this->render('EtuCoreBundle:Main:indexAnonymous.html.twig');
-	}
-
-	/**
-	 * @return Response
-	 */
-	protected function indexOrgaAction()
-	{
-		return $this->render('EtuCoreBundle:Main:indexOrga.html.twig');
 	}
 
 	/**
