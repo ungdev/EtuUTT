@@ -88,9 +88,14 @@ user:
 
     # View a profile
     view:
+        back:
+            search: Retour à la recherche
+            profile: Mon compte
+            trombi: Trombinoscope
         title: Détail d'un profil
         name: Nom
         mail: E-mail
+        uvs: UVs actuelles
         studentId: Numéro étudiant
         formation: Formation
         website: Site web

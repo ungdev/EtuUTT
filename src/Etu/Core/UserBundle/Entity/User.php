@@ -28,6 +28,14 @@ class User implements UserInterface, \Serializable
 	const PRIVACY_PUBLIC = 100;
 	const PRIVACY_PRIVATE = 200;
 
+	static public $branches = array(
+		'ISI', 'MTE', 'SI', 'SIT', 'SM', 'SRT', 'TC'
+	);
+
+	static public $levels = array(
+		'1', '2', '3', '4', '5', '6', '7', '8', '9', '10'
+	);
+
     /**
      * @var integer
      *
@@ -337,6 +345,13 @@ class User implements UserInterface, \Serializable
 	protected $viadeo;
 
 	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="uvs", type="string", length=100, nullable=true)
+	 */
+	protected $uvs;
+
+	/**
 	 * LDAP root informations
 	 *
 	 * @var object
@@ -423,11 +438,30 @@ class User implements UserInterface, \Serializable
 		$this->badges = array();
 		$this->permissions = array();
 		$this->ldapInformations = new LdapUser();
+		$this->uvs = '';
 	}
 
 	public function __toString()
 	{
 		return $this->fullName;
+	}
+
+	/**
+	 * Return avilable branches and levels for forms
+	 *
+	 * @return array
+	 */
+	static public function availableBranches()
+	{
+		$result = array();
+
+		foreach (self::$branches as $branch) {
+			foreach (self::$levels as $level) {
+				$result[] = $branch.$level;
+			}
+		}
+
+		return $result;
 	}
 
 	/**
@@ -1638,6 +1672,33 @@ class User implements UserInterface, \Serializable
 	public function getIsAdmin()
 	{
 		return $this->isAdmin;
+	}
+
+	/**
+	 * @param string $uvs
+	 * @return User
+	 */
+	public function setUvs($uvs)
+	{
+		$this->uvs = $uvs;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getUvs()
+	{
+		return $this->uvs;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function displayUvs()
+	{
+		return implode(', ', explode('|', $this->uvs));
 	}
 
 	/**

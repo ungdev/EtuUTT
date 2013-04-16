@@ -22,7 +22,6 @@
 		<link rel="stylesheet" href="{{ asset('css/content.css') }}" type="text/css" />
 		<link rel="stylesheet" href="{{ asset('css/bundles/core.css') }}" type="text/css" />
 		<link rel="stylesheet" href="{{ asset('css/bundles/user.css') }}" type="text/css" />
-		<link rel="stylesheet" href="{{ asset('css/bundles/bugs.css') }}" type="text/css" />
 
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" type="text/css" />
 		<link rel="stylesheet" href="{{ asset('redactor-js/redactor/redactor.css') }}" />
@@ -167,6 +166,7 @@
 
 		{# Mobile "Plus" menu #}
 		<div id="menu-mobile">
+			{% if app.user %}
 			<ul class="list-vertical list-vertical-linked overlay-menu">
 				<li class="first active">
 					<a href="">
@@ -174,12 +174,14 @@
 						{{ 'base.sidebar.services.items.uvs'|trans }}
 					</a>
 				</li>
+				{% if etu.moduleEnabled('trombi') %}
 				<li>
-					<a href="">
+					<a href="{{ path('trombi_index') }}">
 						<i class="etu-icon-book"></i>
 						{{ 'base.sidebar.services.items.trombi'|trans }}
 					</a>
 				</li>
+				{% endif %}
 				<li>
 					<a href="">
 						<i class="etu-icon-info"></i>
@@ -189,6 +191,7 @@
 			</ul>
 
 			<hr class="separator" />
+			{% endif %}
 
 			<ul class="list-vertical list-vertical-linked overlay-menu">
 				<li class="first active">
@@ -197,7 +200,7 @@
 						{{ 'base.sidebar.etu.items.team'|trans }}
 					</a>
 				</li>
-				{% if etu.moduleEnabled('bugs') %}
+				{% if etu.moduleEnabled('bugs') and app.user %}
 					<li>
 						<a href="{{ path('bugs_suggestions') }}">
 							<i class="etu-icon-comment"></i>

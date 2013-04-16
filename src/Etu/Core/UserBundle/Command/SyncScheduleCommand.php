@@ -19,7 +19,7 @@ class SyncScheduleCommand extends ContainerAwareCommand
 	protected function configure()
 	{
 		$this
-			->setName('etu:users:sync-schedule')
+			->setName('etu:db:sync-schedule')
 			->setDescription('Synchronize officials schedules with database schedules.')
 			->addOption('force', 'f', InputOption::VALUE_OPTIONAL)
 		;

@@ -1,0 +1,19 @@
+
+trombi:
+    main:
+        index:
+            title: Trombinoscope
+            uncomplete_profile:
+                title: Votre profil est incomplet
+                desc: Votre profil doit être complet (privé ou public) pour pouvoir utiliser le trombinoscope
+                link: Mon compte
+            search_title: Rechercher un étudiant
+            search: Rechercher
+            more: Plus de critères
+            name: Nom
+            studentId: Numéro d'étudiant
+            uv: UVs (séparées par des virgules)
+            phone: Numéro de téléphone
+            personnalMail: E-mail personnel
+            branche: Branche
+            explainations: Effectuez votre recherche en utilisant le formulaire ci-dessus

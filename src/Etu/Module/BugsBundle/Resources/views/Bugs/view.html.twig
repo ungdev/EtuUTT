@@ -1,5 +1,9 @@
 {% extends '::page-2cols.html.twig' %}
 
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/bundles/bugs.css') }}" type="text/css" />
+{% endblock %}
+
 {% block title %}{{ 'bugs.view.page.title'|trans }}{% endblock %}
 
 {% block titleIcon %}

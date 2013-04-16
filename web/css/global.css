@@ -21,6 +21,11 @@ a:hover {
  * Global tool classes
  */
 
+/* Pagination */
+.pagination {
+	text-align: center;
+}
+
 /* Redactor */
 .redactor {
 	width: 95%;

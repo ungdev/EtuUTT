@@ -6,10 +6,8 @@ use Doctrine\ORM\EntityManager;
 
 use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
-use Etu\Core\CoreBundle\Notification\Helper\HelperInterface;
 use Etu\Core\UserBundle\Entity\User;
 
-use Etu\Core\UserBundle\Imap\ImapManager;
 use Symfony\Component\HttpFoundation\Response;
 
 // Import @Route() and @Template() annotations

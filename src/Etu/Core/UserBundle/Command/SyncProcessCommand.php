@@ -27,7 +27,7 @@ class SyncProcessCommand extends ContainerAwareCommand
 	protected function configure()
 	{
 		$this
-			->setName('etu:users:sync')
+			->setName('etu:db:sync')
 			->setDescription('Synchronize users with the LDAP')
 		;
 	}

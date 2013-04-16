@@ -101,6 +101,7 @@ class ElementToImport
 		$user->setLdapInformations($this->element);
 		$user->setIsStudent($this->element->getIsStudent());
 		$user->setKeepActive(false);
+		$user->setUvs(implode('|', $this->element->getUvs()));
 
 		$this->doctrine->getManager()->persist($user);
 

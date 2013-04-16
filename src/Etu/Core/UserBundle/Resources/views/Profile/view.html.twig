@@ -12,7 +12,7 @@
 			<li>
 				<a href="">
 					<i class="icon-chevron-left"></i>
-					Retour à la recherche
+					{{ 'user.view.back.search'|trans }}
 				</a>
 			</li>
 		</ul>
@@ -21,16 +21,16 @@
 			<li>
 				<a href="{{ path('user_profile') }}">
 					<i class="icon-chevron-left"></i>
-					Mon compte
+					{{ 'user.view.back.profile'|trans }}
 				</a>
 			</li>
 		</ul>
-	{% else %}
+	{% elseif from == 'trombi' and etu.moduleEnabled('trombi') %}
 		<ul class="nav nav-tabs page-tabs">
 			<li>
-				<a href="">
+				<a href="{{ path('trombi_index') }}">
 					<i class="icon-chevron-left"></i>
-					Trombinoscope
+					{{ 'user.view.back.trombi'|trans }}
 				</a>
 			</li>
 		</ul>
@@ -103,13 +103,22 @@
 				{% endif %}
 
 				{% if user.mail %}
-				<div class="view-group">
-					<div class="view-icon"><i class="icon-envelope"></i></div>
-					<div class="view-label">{{ 'user.view.mail'|trans }}</div>
-					<div class="view-value">
-						{{ user.mail }}
+					<div class="view-group">
+						<div class="view-icon"><i class="icon-envelope"></i></div>
+						<div class="view-label">{{ 'user.view.mail'|trans }}</div>
+						<div class="view-value">
+							{{ user.mail }}
+						</div>
 					</div>
-				</div>
+				{% endif %}
+
+				{% if user.uvs %}
+					<div class="view-group">
+						<div class="view-label">{{ 'user.view.uvs'|trans }}</div>
+						<div class="view-value">
+							{{ user.displayUvs }}
+						</div>
+					</div>
 				{% endif %}
 
 				{% if is_public(user.personnalMailPrivacy) and user.personnalMail %}

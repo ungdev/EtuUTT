@@ -23,11 +23,6 @@ class ProfileController extends Controller
 			return $this->createAccessDeniedResponse();
 		}
 
-		$scheduleApi = new ScheduleApi();
-
-		var_dump($scheduleApi->findScheduleByStudentId(35236));
-		exit;
-
 		return array();
 	}
 
@@ -213,7 +208,7 @@ class ProfileController extends Controller
 	}
 
 	/**
-	 * @Route("/user/{login}", name="user_view")
+	 * @Route("/user/{login}", name="user_view", options={"expose"=true})
 	 * @Template()
 	 */
 	public function viewAction($login)
@@ -238,7 +233,7 @@ class ProfileController extends Controller
 
 		$from = null;
 
-		if (in_array($this->getRequest()->get('from'), array('search', 'profile'))) {
+		if (in_array($this->getRequest()->get('from'), array('search', 'profile', 'trombi'))) {
 			$from = $this->getRequest()->get('from');
 		}
 
