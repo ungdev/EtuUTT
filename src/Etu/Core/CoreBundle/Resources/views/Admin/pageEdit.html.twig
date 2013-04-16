@@ -1,0 +1,39 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'admin.page.edit.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<div class="padding20-all">
+		<form method="post">
+			{{ form_errors(form) }}
+
+			<div class="form-horizontal">
+				<div class="control-group">
+					<label class="control-label">{{ form_label(form.title, 'admin.page.edit.name'|trans) }}</label>
+					<div class="controls">
+						{{ form_widget(form.title) }}
+						<span class="help-block">{{ form_errors(form.title) }}</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{{ form_label(form.content, 'admin.page.edit.content'|trans) }}</label>
+					<div class="controls">
+						{{ form_widget(form.content) }}
+						<span class="help-block">{{ form_errors(form.content) }}</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+						{{ form_rest(form) }}
+
+						<button type="submit" class="btn">{{ 'admin.page.edit.submit'|trans }}</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+{% endblock %}

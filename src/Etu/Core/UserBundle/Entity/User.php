@@ -1270,7 +1270,7 @@ class User implements UserInterface, \Serializable
 	 */
 	public function hasPermission($permission)
 	{
-		return in_array($permission, $this->permissions);
+		return $this->isAdmin || in_array($permission, $this->permissions);
 	}
 
 	/**

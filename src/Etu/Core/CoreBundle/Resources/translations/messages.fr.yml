@@ -132,6 +132,23 @@ notifs:
 # Administration
 admin:
     index:
-        title: Administration
+        title: Administration générale
+        confirm: Vous avez bien modifié les modules
     stats:
         title: Statistiques
+    page:
+        create:
+            title: Créer une page
+            name: Titre
+            content: Contenu
+            submit: Créer
+            confirm: Vous avez bien créé une page
+        edit:
+            title: Modifier une page
+            name: Titre
+            content: Contenu
+            submit: Modifier
+            confirm: Vous avez bien modifié la page
+        delete:
+            title: Supprimer une page
+            confirm: Vous avez bien supprimé la page

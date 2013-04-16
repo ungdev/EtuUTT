@@ -5,6 +5,7 @@ namespace Etu\Core\CoreBundle\Controller;
 use Doctrine\ORM\EntityManager;
 
 use Etu\Core\CoreBundle\Entity\Notification;
+use Etu\Core\CoreBundle\Entity\Page;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\User;
 
@@ -77,6 +78,24 @@ class MainController extends Controller
 		)));
 	}
 
+	/**
+	 * @Route("/page/{slug}", name="page_view")
+	 * @Template()
+	 */
+	public function pageAction($slug)
+	{
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $page Page */
+		$page = $em->getRepository('EtuCoreBundle:Page')->findOneBySlug($slug);
+
+		if (! $page) {
+			$this->createNotFoundException('Invalid slug');
+		}
+
+		return array('page' => $page);
+	}
 
 	/**
 	 * @return Response

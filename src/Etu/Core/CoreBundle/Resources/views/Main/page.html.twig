@@ -1,0 +1,13 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ page.title }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/page.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<div class="padding20-all">
+		{{ page.content|raw }}
+	</div>
+{% endblock %}

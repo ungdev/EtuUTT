@@ -39,11 +39,26 @@ class ModulesManager
 	}
 
 	/**
-	 * @return \Etu\Core\CoreBundle\Framework\Definition\Module[]
+	 * @return array|\Etu\Core\CoreBundle\Framework\Definition\Module[]
 	 */
 	public function getModules()
 	{
 		return $this->modules;
+	}
+
+	/**
+	 * @param $identifer
+	 * @return bool|Module
+	 */
+	public function getModuleByIdentifier($identifer)
+	{
+		foreach ($this->modules as $module) {
+			if ($module->getIdentifier() == $identifer) {
+				return $module;
+			}
+		}
+
+		return false;
 	}
 
 	/**

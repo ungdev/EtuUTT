@@ -2,6 +2,10 @@
 
 {% block title %}{{ 'admin.stats.title'|trans }}{% endblock %}
 
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
 {% block javascripts %}
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<script type="text/javascript">
@@ -29,6 +33,10 @@
 
 {% block content %}
 	<div class="padding20-all">
+		<p class="alert visible-phone">
+			Seules les statistiques générales sont accessibles sur mobile.
+		</p>
+
 		<h3>Statistiques générales</h3>
 
 		<div class="block">
@@ -36,7 +44,7 @@
 
 			<div class="row-fluid">
 				<div class="span6">
-					<table class="table">
+					<table class="table table-hover">
 						<tbody>
 							<tr>
 								<td style="width: 80%; border-top: 0;">Nombre de visiteurs uniques</td>
@@ -54,164 +62,162 @@
 					</table>
 				</div>
 				<div class="span6">
-					<table class="table">
-						<tbody>
-						{% if averageDuration is not null %}
-							<tr>
-								<td style="width: 80%; border-top: 0;">Durée moyenne d'une visite</td>
-								<td style="border-top: 0;"><strong>{{ averageDuration|date('i') }} sec</strong></td>
-							</tr>
-						{% endif %}
-						{% if averageTimeToLoad is not null %}
-							<tr>
-								<td>Durée moyenne de génération d'une page</td>
-								<td><strong>{{ averageTimeToLoad }} ms</strong></td>
-							</tr>
-						{% endif %}
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-
-		<div class="row-fluid">
-			<div class="span6">
-				<div class="block">
-					<div class="block-title">Nombre de visiteurs uniques le mois dernier</div>
-
-					<div id="unique_visitors" style="width: 100%; height: 200px;"></div>
-				</div>
-			</div>
-			<div class="span6">
-				<div class="block">
-					<div class="block-title">Nombre de chargements de pages le mois dernier</div>
-
-					<div id="pages_calls" style="width: 100%; height: 200px;"></div>
-				</div>
-			</div>
-		</div>
-
-		<h3>Visiteurs</h3>
-
-		<div class="row-fluid">
-			<div class="span6">
-				<div class="block">
-					<div class="block-title">Navigateurs</div>
-
-					<div id="browsers" style="width: 100%; height: 200px;"></div>
-				</div>
-			</div>
-			<div class="span6">
-				<div class="block">
-					<div class="block-title">Platformes</div>
-
-					<div id="platforms" style="width: 100%; height: 200px;"></div>
-				</div>
-			</div>
-		</div>
-
-		<div class="row-fluid">
-			<div class="span6">
-				<div class="block">
-					<div class="block-title">Versions des navigateurs les plus utilisées</div>
-
 					<table class="table table-hover">
-						<thead>
-						<tr>
-							<th style="width: 25px;">#</th>
-							<th>Nom</th>
-							<th style="width: 100px;">Visiteurs</th>
-							<th style="width: 100px;">Pourcentage</th>
-						</tr>
-						</thead>
 						<tbody>
-						{% for browser in browsersVersions %}
-							<tr>
-								<td>{{ browser.place }}</td>
-								<td>{{ browser.name }}</td>
-								<td>{{ browser.nb }}</td>
-								<td>{{ browser.percentage }} %</td>
-							</tr>
-						{% else %}
-							<tr>
-								<td colspan="4">Pas d'information disponible</td>
-							</tr>
-						{% endfor %}
-						</tbody>
-					</table>
-				</div>
-			</div>
-
-			<div class="span6">
-				<div class="block">
-					<div class="block-title">Routes les plus utilisées</div>
-
-					<table class="table table-hover">
-						<thead>
 						<tr>
-							<th style="width: 25px;">#</th>
-							<th>Route</th>
-							<th style="width: 100px;">Visiteurs</th>
-							<th style="width: 100px;">Pourcentage</th>
+							<td style="width: 70%; border-top: 0;">Durée moyenne d'une visite</td>
+							<td style="border-top: 0;"><strong>{{ averageDuration }} sec</strong></td>
 						</tr>
-						</thead>
-						<tbody>
-						{% for route in mostUsedRoutes %}
-							<tr>
-								<td>{{ route.place }}</td>
-								<td>{{ route.route }}</td>
-								<td>{{ route.nb }}</td>
-								<td>{{ route.percentage }} %</td>
-							</tr>
-						{% else %}
-							<tr>
-								<td colspan="4">Pas d'information disponible</td>
-							</tr>
-						{% endfor %}
+						<tr>
+							<td>Durée moyenne de génération d'une page</td>
+							<td><strong>{{ averageTimeToLoad }} ms</strong></td>
+						</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
 		</div>
 
-		<h3>Sources de traffic</h3>
+		<div class="hidden-phone">
+			<div class="row-fluid">
+				<div class="span6">
+					<div class="block">
+						<div class="block-title">Nombre de visiteurs uniques le mois dernier</div>
 
-		<div class="row-fluid">
-			<div class="span6">
-				<div class="block">
-					<div class="block-title">Sources de visiteurs</div>
+						<div id="unique_visitors" style="width: 100%; height: 200px;"></div>
+					</div>
+				</div>
+				<div class="span6">
+					<div class="block">
+						<div class="block-title">Nombre de chargements de pages le mois dernier</div>
 
-					<table class="table table-hover">
-						<thead>
-						<tr>
-							<th style="width: 25px;">#</th>
-							<th style="width: 50%;">Domaine</th>
-							<th>Visiteurs</th>
-							<th>Pourcentage</th>
-						</tr>
-						</thead>
-						<tbody>
-						{% for source in allExternalSources %}
-							<tr>
-								<td>{{ source.place }}</td>
-								<td>{{ source.domain }}</td>
-								<td>{{ source.nb }}</td>
-								<td>{{ source.percentage }} %</td>
-							</tr>
-						{% else %}
-							<tr>
-								<td colspan="4">No external source available.</td>
-							</tr>
-						{% endfor %}
-						</tbody>
-					</table>
+						<div id="pages_calls" style="width: 100%; height: 200px;"></div>
+					</div>
 				</div>
 			</div>
-			<div class="span6">
-				<div class="block">
-					<div class="block-title">Sources les plus importantes de visiteurs</div>
 
-					<div id="externalSources" style="width: 100%; height: 250px;"></div>
+			<h3>Visiteurs</h3>
+
+			<div class="row-fluid">
+				<div class="span6">
+					<div class="block">
+						<div class="block-title">Navigateurs</div>
+
+						<div id="browsers" style="width: 100%; height: 200px;"></div>
+					</div>
+				</div>
+				<div class="span6">
+					<div class="block">
+						<div class="block-title">Platformes</div>
+
+						<div id="platforms" style="width: 100%; height: 200px;"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row-fluid">
+				<div class="span6">
+					<div class="block">
+						<div class="block-title">Versions des navigateurs les plus utilisées</div>
+
+						<table class="table table-hover">
+							<thead>
+							<tr>
+								<th style="width: 25px;">#</th>
+								<th>Nom</th>
+								<th style="width: 100px;">Visiteurs</th>
+								<th style="width: 100px;">Pourcentage</th>
+							</tr>
+							</thead>
+							<tbody>
+							{% for browser in browsersVersions %}
+								<tr>
+									<td>{{ browser.place }}</td>
+									<td>{{ browser.name }}</td>
+									<td>{{ browser.nb }}</td>
+									<td>{{ browser.percentage }} %</td>
+								</tr>
+							{% else %}
+								<tr>
+									<td colspan="4">Pas d'information disponible</td>
+								</tr>
+							{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="span6">
+					<div class="block">
+						<div class="block-title">Routes les plus utilisées</div>
+
+						<table class="table table-hover">
+							<thead>
+							<tr>
+								<th style="width: 25px;">#</th>
+								<th>Route</th>
+								<th style="width: 100px;">Visiteurs</th>
+								<th style="width: 100px;">Pourcentage</th>
+							</tr>
+							</thead>
+							<tbody>
+							{% for route in mostUsedRoutes %}
+								<tr>
+									<td>{{ route.place }}</td>
+									<td>{{ route.route }}</td>
+									<td>{{ route.nb }}</td>
+									<td>{{ route.percentage }} %</td>
+								</tr>
+							{% else %}
+								<tr>
+									<td colspan="4">Pas d'information disponible</td>
+								</tr>
+							{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<h3>Sources de traffic</h3>
+
+			<div class="row-fluid">
+				<div class="span6">
+					<div class="block">
+						<div class="block-title">Sources de visiteurs</div>
+
+						<table class="table table-hover">
+							<thead>
+							<tr>
+								<th style="width: 25px;">#</th>
+								<th style="width: 50%;">Domaine</th>
+								<th>Visiteurs</th>
+								<th>Pourcentage</th>
+							</tr>
+							</thead>
+							<tbody>
+							{% for source in allExternalSources %}
+								<tr>
+									<td>{{ source.place }}</td>
+									<td>{{ source.domain }}</td>
+									<td>{{ source.nb }}</td>
+									<td>{{ source.percentage }} %</td>
+								</tr>
+							{% else %}
+								<tr>
+									<td colspan="4">No external source available.</td>
+								</tr>
+							{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="span6">
+					<div class="block">
+						<div class="block-title">Sources les plus importantes de visiteurs</div>
+
+						<div id="externalSources" style="width: 100%; height: 250px;"></div>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -101,8 +101,14 @@ class KernelListener
 			->from('TgaAudienceBundle:VisitorSession', 's')
 			->leftJoin('s.calls', 'c')
 			->where('s.ip = :ip')
+			->andWhere('s.platform = :platform')
+			->andWhere('s.browser = :browser')
+			->andWhere('s.browserVersion = :browserVersion')
 			->andWhere('s.lastVisit > :invalidateTime')
 			->setParameter('ip', $this->request->getClientIp())
+			->setParameter('platform', $infos['platform'])
+			->setParameter('browser', $infos['browser'])
+			->setParameter('browserVersion', $infos['version'])
 			->setParameter('invalidateTime', time() - $this->config['sessionDuration'])
 			->getQuery()
 			->getOneOrNullResult();
@@ -155,7 +161,19 @@ class KernelListener
 		$version = 'Unknown';
 
 		// First get the platform
-		if(preg_match('/linux/i', $u_agent)) {
+		if(preg_match('/android/i', $u_agent)) {
+			$platform = 'Android';
+		}
+		elseif(preg_match('/iphone/i', $u_agent)) {
+			$platform = 'iPhone';
+		}
+		elseif(preg_match('/ipod/i', $u_agent)) {
+			$platform = 'iPod';
+		}
+		elseif(preg_match('/ipad/i', $u_agent)) {
+			$platform = 'iPad';
+		}
+		elseif(preg_match('/linux/i', $u_agent)) {
 			$platform = 'Linux';
 		}
 		elseif(preg_match('/macintosh|mac os x/i', $u_agent)) {

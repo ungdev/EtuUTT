@@ -1,0 +1,22 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'admin.page.delete.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<div class="padding20-all">
+		<p>Etes-vous sur de vouloir supprimer la page "{{ page.title }}" ?</p>
+
+		<p>
+			<a href="{{ path('admin_page_delete_confirm', {'id': page.id}) }}" class="btn btn-primary">
+				Oui, supprimer
+			</a>
+			<a href="{{ path('admin_index') }}" class="btn">
+				Non, annuler
+			</a>
+		</p>
+	</div>
+{% endblock %}

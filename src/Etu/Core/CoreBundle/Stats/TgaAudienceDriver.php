@@ -77,13 +77,14 @@ class TgaAudienceDriver
 			}
 		}
 
-		$averageVisitedPages = round(($pagesCallsCount - $uniqueVisitorsCount) / $uniqueVisitorsCount, 2);
-		$averageTimeToLoad = round($averageTimeToLoad / $callsCount, 2) * 1000;
+		if ($uniqueVisitorsCount > 0) {
+			$averageVisitedPages = round(($pagesCallsCount - $uniqueVisitorsCount) / $uniqueVisitorsCount, 2);
+			$averageDuration = round($averageDuration / $uniqueVisitorsCount, 2);
+		}
 
-		$averageDuration = $averageDuration / $uniqueVisitorsCount;
-
-		if($averageDuration == 0)
-			$averageDuration = null;
+		if ($callsCount > 0) {
+			$averageTimeToLoad = round($averageTimeToLoad / $callsCount, 2) * 1000;
+		}
 
 		foreach($uniqueVisitors as $date => $count) {
 			unset($uniqueVisitors[$date]);
@@ -178,7 +179,7 @@ class TgaAudienceDriver
 		$i = 1;
 
 		foreach($routes as $route => $nb) {
-			if($i > 50)
+			if($i > 10)
 				break;
 
 			$mostUsedRoutes[$route] = array(
@@ -196,7 +197,7 @@ class TgaAudienceDriver
 		$mostUsedBrowsers = array();
 
 		foreach($browsersVersions as $browsersVersion => $nb) {
-			if($i > 50)
+			if($i > 10)
 				break;
 
 			$mostUsedBrowsers[$browsersVersion] = array(
