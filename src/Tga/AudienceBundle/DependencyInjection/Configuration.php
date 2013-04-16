@@ -32,8 +32,8 @@ class Configuration implements ConfigurationInterface
 		$rootNode
 			->children()
 				->integerNode('session_duration')->defaultValue(300)->end()
-				->variableNode('disabled_routes')->end()
-				->variableNode('environnements')->end()
+				->variableNode('disabled_routes')->defaultValue(array())->end()
+				->variableNode('environnements')->defaultValue(array('prod'))->end()
 			->end();
 
 		return $treeBuilder;

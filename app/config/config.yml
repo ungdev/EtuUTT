@@ -65,6 +65,16 @@ knp_paginator:
         sortable: EtuCoreBundle:Pagination:sortable_link.html.twig # sort link template
 
 
+# TgaAudienceBundle
+tga_audience:
+    session_duration: 300           # Duration meanwhile a visitor is unique
+    disabled_routes:                # List of disabled routes to not track with the bundle
+        - _wdt
+        - fos_js_routing_js
+        - notifs_new
+        - admin_stats
+        - admin_index
+    environnements: ['prod', 'dev'] # List of environnements where the bundle will track requests
 
 # EtuUTT
 etu_core:

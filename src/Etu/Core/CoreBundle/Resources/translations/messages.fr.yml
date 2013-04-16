@@ -46,6 +46,7 @@ base:
             logout: Déconnexion
             help: Aide
             admin: Administration
+            stats: Statistiques
             members: Membres
 
         # Sex
@@ -132,3 +133,5 @@ notifs:
 admin:
     index:
         title: Administration
+    stats:
+        title: Statistiques

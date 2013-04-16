@@ -51,7 +51,7 @@ class AppKernel extends EtuKernel
 	        new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
 
 	        // Tga
-	        // new Tga\AudienceBundle\TgaAudienceBundle(),
+	        new Tga\AudienceBundle\TgaAudienceBundle(),
 
 	        // EtuUTT
             new Etu\Core\CoreBundle\EtuCoreBundle(),
