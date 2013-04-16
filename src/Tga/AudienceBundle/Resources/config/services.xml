@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="tga_audience.manager.class">Tga\AudienceBundle\AudienceManager</parameter>
+        <parameter key="tga_audience.kernel_listener.class">Tga\AudienceBundle\Listener\KernelListener</parameter>
+    </parameters>
+
+    <services>
+
+        <service id="tga_audience" class="%tga_audience.manager.class%"></service>
+
+        <service id="tga_audience.kernel_listener" class="%tga_audience.kernel_listener.class%">
+            <argument type="service" id="service_container" />
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
+            <tag name="kernel.event_listener" event="kernel.terminate" method="onKernelTerminate" />
+        </service>
+
+    </services>
+</container>

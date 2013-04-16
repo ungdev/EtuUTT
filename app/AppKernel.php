@@ -50,6 +50,9 @@ class AppKernel extends EtuKernel
 	        // FOS libraries
 	        new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
 
+	        // Tga
+	        // new Tga\AudienceBundle\TgaAudienceBundle(),
+
 	        // EtuUTT
             new Etu\Core\CoreBundle\EtuCoreBundle(),
             new Etu\Core\UserBundle\EtuUserBundle(),

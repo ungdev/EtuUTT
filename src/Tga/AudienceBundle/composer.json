@@ -1,0 +1,23 @@
+{
+    "name": "tga/audience",
+    "description": "TgaAudience bundle to create website stats easily with Symfony 2.",
+    "keywords": ["Audience", "Tga", "Statistics", "Stats", "PHP"],
+    "homepage": "http://titouangalopin.com/",
+    "license": "Creative Commons BY-NC 3.0",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Titouan Galopin",
+            "email": "galopintitouan@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Tga\\AudienceBundle": ""
+        }
+    },
+    "target-dir": "Tga/AudienceBundle",
+    "require": {
+        "php": ">=5.3"
+    }
+}

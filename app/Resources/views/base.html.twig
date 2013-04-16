@@ -142,6 +142,19 @@
 
 						{% if not app.user.isOrga %}
 							{{ render_user_menu() }}
+
+							{% if app.user.isAdmin %}
+								<hr class="separator" />
+
+								<ul class="list-vertical list-vertical-linked">
+									<li>
+										<a href="{{ path('admin_index') }}">
+											<i class="etu-icon-gear"></i>
+											{{ 'base.user.menu.admin'|trans }}
+										</a>
+									</li>
+								</ul>
+							{% endif %}
 						{% else %}
 							{{ render_orga_menu() }}
 						{% endif %}
@@ -201,12 +214,6 @@
 					</a>
 				</li>
 				{% if etu.moduleEnabled('bugs') and app.user %}
-					<li>
-						<a href="{{ path('bugs_suggestions') }}">
-							<i class="etu-icon-comment"></i>
-							{{ 'bugs.sidebar.items.suggest'|trans }}
-						</a>
-					</li>
 					<li>
 						<a href="{{ path('bugs_index') }}">
 							<i class="etu-icon-warning"></i>

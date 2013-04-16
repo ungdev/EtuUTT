@@ -1,0 +1,57 @@
+{% extends 'TgaAudienceBundle::layout.html.twig' %}
+
+{% block title %}Traffic sources{% endblock %}
+
+{% block traffic %} class="current"{% endblock %}
+
+{% block content %}
+	<h3>Traffic sources</h3>
+
+	<div class="row">
+		<div class="span7">
+			<h4>External sources</h4>
+
+			<table class="table table-hover">
+				<thead>
+				<tr>
+						<th style="width: 25px;">#</th>
+						<th>Domain</th>
+						<th style="width: 100px;">Visitors</th>
+						<th style="width: 100px;">Percentage</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for source in allExternalSources %}
+					<tr>
+						<td>{{ source.place }}</td>
+						<td>{{ source.domain }}</td>
+						<td>{{ source.nb }}</td>
+						<td>{{ source.percentage }} %</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="4">No external source available.</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<div class="span5">
+			<h4>Most important external sources</h4>
+			<div id="externalSources" style="width: 100%; height: 250px;"></div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+		google.load("visualization", "1", { packages:["corechart"] });
+		google.setOnLoadCallback(drawChart);
+
+		function drawChart() {
+			var browsers = new google.visualization.PieChart(document.getElementById('externalSources'));
+			browsers.draw(google.visualization.arrayToDataTable({{ externalSources|raw }}), {});
+		}
+	</script>
+{% endblock %}

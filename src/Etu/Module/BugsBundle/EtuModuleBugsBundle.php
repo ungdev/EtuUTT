@@ -23,10 +23,6 @@ class EtuModuleBugsBundle extends Module
 	{
 		$this->getSidebarBuilder()
 			->getBlock('base.sidebar.etu.title')
-				->add('bugs.sidebar.items.suggest')
-					->setIcon('etu-icon-comment')
-					->setUrl($this->getRouter()->generate('bugs_suggestions'))
-				->end()
 				->add('bugs.sidebar.items.bugs')
 					->setIcon('etu-icon-warning')
 					->setUrl($this->getRouter()->generate('bugs_index'))

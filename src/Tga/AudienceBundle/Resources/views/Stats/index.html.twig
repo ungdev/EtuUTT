@@ -1,0 +1,66 @@
+{% extends 'TgaAudienceBundle::layout.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block dashboard %} class="current"{% endblock %}
+
+{% block content %}
+	<h3>Dashboard</h3>
+
+	<div class="row">
+		<div class="span8">
+			<h4>Unique visitors last month</h4>
+			<div id="unique_visitors" style="width: 100%; height: 300px;"></div>
+
+			<h4>Pages calls last month</h4>
+			<div id="pages_calls" style="width: 100%; height: 300px;"></div>
+		</div>
+		<div class="span4">
+			<h4>Statistics for this month</h4>
+			<table class="table table-bordered">
+				<tbody>
+					<tr>
+						<td style="width: 170px;">Unique visitors</td>
+						<td><strong>{{ uniqueVisitorsCount }}</strong></td>
+					</tr>
+					<tr>
+						<td>Pages calls</td>
+						<td><strong>{{ pagesCallsCount }}</strong></td>
+					</tr>
+					<tr>
+						<td>Number of pages visited after the first</td>
+						<td><strong>{{ averageVisitedPages }}</strong></td>
+					</tr>
+					{% if averageDuration is not null %}
+						<tr>
+							<td>Duration of a visit</td>
+							<td><strong>{{ averageDuration|date('i') }} sec</strong></td>
+						</tr>
+					{% endif %}
+					{% if averageTimeToLoad is not null %}
+						<tr>
+							<td>Page generation time</td>
+							<td><strong>{{ averageTimeToLoad }} ms</strong></td>
+						</tr>
+					{% endif %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+		google.load("visualization", "1", { packages:["corechart"] });
+		google.setOnLoadCallback(drawChart);
+
+		function drawChart() {
+			var unique_visitors = new google.visualization.LineChart(document.getElementById('unique_visitors'));
+			unique_visitors.draw(google.visualization.arrayToDataTable({{ uniqueVisitors|raw }}), {});
+
+			var pages_calls = new google.visualization.LineChart(document.getElementById('pages_calls'));
+			pages_calls.draw(google.visualization.arrayToDataTable({{ pagesCalls|raw }}), {});
+		}
+	</script>
+{% endblock %}

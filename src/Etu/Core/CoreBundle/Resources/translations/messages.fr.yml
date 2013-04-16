@@ -45,7 +45,7 @@ base:
             table: Mon emploi du temps
             logout: Déconnexion
             help: Aide
-            orgaAdmin: Administration
+            admin: Administration
             members: Membres
 
         # Sex
@@ -125,3 +125,10 @@ notifs:
         follow: S'abonner
     unsubscribe:
         confirm: Vous êtes bien désabonné à cet élément
+
+
+
+# Administration
+admin:
+    index:
+        title: Administration

@@ -37,7 +37,7 @@ class OrgaMenuBuilder
 		$this->separatorCount = 0;
 
 		$this
-			->add('base.user.menu.orgaAdmin')
+			->add('base.user.menu.admin')
 				->setIcon('etu-icon-gear')
 				->setUrl($router->generate('homepage'))
 			->end()
