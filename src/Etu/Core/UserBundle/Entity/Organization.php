@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
+use Imagine\Image\Color;
+use Imagine\Image\Point;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -32,15 +34,6 @@ class Organization implements UserInterface, \Serializable
 	 * @ORM\Column(name="login", type="string", length=50)
 	 */
 	protected $login;
-
-	/**
-	 * Password for who are not in CAS
-	 *
-	 * @var string
-	 *
-	 * @ORM\Column(name="password", type="string", length=100, nullable=true)
-	 */
-	protected $password;
 
 	/**
 	 * @var User $president
@@ -74,9 +67,9 @@ class Organization implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="contactElse", type="text", nullable=true)
+	 * @ORM\Column(name="description", type="text", nullable=true)
 	 */
-	protected $contactElse;
+	protected $description;
 
 	/**
 	 * @var string
@@ -120,6 +113,12 @@ class Organization implements UserInterface, \Serializable
 	 * Methods
 	 */
 
+	public function __construct()
+	{
+		$this->logo = 'default-logo.png';
+		$this->countMembers = 1;
+	}
+
 	public function __toString()
 	{
 		return $this->name;
@@ -138,11 +137,19 @@ class Organization implements UserInterface, \Serializable
 		// Upload and resize
 		$imagine = new Imagine();
 
-		$image = $imagine->open($this->file->getPathname());
+		$logo = $imagine->create(new Box(200, 200), new Color('FFF'));
+		$image = $imagine->open($this->file->getPathname())->thumbnail(new Box(200, 200), Image::THUMBNAIL_INSET);
 
-		$image->thumbnail(new Box(200, 200), Image::THUMBNAIL_OUTBOUND)->save(
-			__DIR__ . '/../../../../../web/logos/'.$this->login.'.jpg'
-		);
+		if ($image->getSize()->getWidth() < 200) {
+			$point = new Point((200 - $image->getSize()->getWidth()) / 2, 0);
+		} elseif ($image->getSize()->getHeight() < 200) {
+			$point = new Point(0, (200 - $image->getSize()->getHeight()) / 2);
+		} else {
+			$point = new Point(0, 0);
+		}
+
+		$logo->paste($image, $point);
+		$logo->save(__DIR__ . '/../../../../../web/logos/'.$this->login.'.jpg');
 
 		$this->logo = $this->login.'.jpg';
 
@@ -202,18 +209,7 @@ class Organization implements UserInterface, \Serializable
 	 */
 	public function getPassword()
 	{
-		return $this->password;
-	}
-
-	/**
-	 * @param string $password
-	 * @return Organization
-	 */
-	public function setPassword($password)
-	{
-		$this->password = $password;
-
-		return $this;
+		return substr($this->getSalt(), 0, 8);
 	}
 
 	/**
@@ -281,25 +277,6 @@ class Organization implements UserInterface, \Serializable
 	}
 
 	/**
-	 * @param string $contactElse
-	 * @return Organization
-	 */
-	public function setContactElse($contactElse)
-	{
-		$this->contactElse = $contactElse;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getContactElse()
-	{
-		return $this->contactElse;
-	}
-
-	/**
 	 * @param string $contactMail
 	 * @return Organization
 	 */
@@ -335,6 +312,25 @@ class Organization implements UserInterface, \Serializable
 	public function getContactPhone()
 	{
 		return $this->contactPhone;
+	}
+
+	/**
+	 * @param string $description
+	 * @return Organization
+	 */
+	public function setDescription($description)
+	{
+		$this->description = $description;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getDescription()
+	{
+		return $this->description;
 	}
 
 	/**
@@ -457,24 +453,5 @@ class Organization implements UserInterface, \Serializable
 	public function getWebsite()
 	{
 		return $this->website;
-	}
-
-	/**
-	 * @param string $description
-	 * @return Organization
-	 */
-	public function setDescription($description)
-	{
-		$this->description = $description;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getDescription()
-	{
-		return $this->description;
 	}
 }

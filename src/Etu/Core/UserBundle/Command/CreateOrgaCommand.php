@@ -46,7 +46,6 @@ This command helps you to create an organization using the command.
 		$orga = new Organization();
 		$orga->setName($dialog->ask($output, 'Name: '));
 		$orga->setLogin($dialog->ask($output, 'Identifier: '));
-		$orga->setPassword($this->getContainer()->get('etu.user.crypting')->encrypt($dialog->ask($output, 'Password: ')));
 
 		$em->persist($orga);
 		$em->flush();

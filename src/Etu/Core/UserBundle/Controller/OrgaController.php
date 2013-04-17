@@ -24,16 +24,18 @@ class OrgaController extends Controller
 
 		$orga = $this->getUser();
 
-		$orga->setPresident($orga->getPresident()->getFullName());
+		if ($orga->getPresident()) {
+			$orga->setPresident($orga->getPresident()->getFullName());
+		}
 
 		// Classic form
 		$form = $this->createFormBuilder($orga)
 			->add('name')
 			->add('president', 'user')
 			->add('contactMail', 'email')
-			->add('contactPhone')
-			->add('contactElse', 'redactor')
-			->add('website')
+			->add('contactPhone', null, array('required' => false))
+			->add('description', 'redactor')
+			->add('website', null, array('required' => false))
 			->getForm();
 
 		$request = $this->getRequest();
@@ -96,7 +98,34 @@ class OrgaController extends Controller
 			return $this->createAccessDeniedResponse();
 		}
 
-		return array();
+		$orga = $this->getUser();
+
+		// Avatar lightbox
+		$form = $this->createFormBuilder($orga)
+			->add('file', 'file')
+			->getForm();
+
+		$request = $this->getRequest();
+
+		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+			$em = $this->getDoctrine()->getManager();
+
+			$orga->upload();
+
+			$em->persist($orga);
+			$em->flush();
+
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'orga.logoUpload.confirm'
+			));
+
+			return $this->redirect($this->generateUrl('orga_admin'));
+		}
+
+		return array(
+			'form' => $form->createView()
+		);
 	}
 
 	/**

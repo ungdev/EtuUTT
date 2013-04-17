@@ -59,22 +59,5 @@ and database.
 		));
 
 		$output->write("\n");
-
-
-		// Organizations
-
-		$output->writeln("\nFinding organizations differences ...");
-
-		/** @var $synchronizer Synchronizer */
-		$synchronizer = $container->get('etu.user.sync');
-
-		$output->writeln('----------------------------------------');
-
-		$output->writeln(sprintf(
-			'%s organization(s) to import from LDAP',
-			$synchronizer->createOrgasSyncProcess()->getImportIterator()->count()
-		));
-
-		$output->write("\n");
 	}
 }

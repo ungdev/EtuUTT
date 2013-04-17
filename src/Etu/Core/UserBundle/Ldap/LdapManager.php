@@ -9,6 +9,8 @@ class LdapManager
 	 */
 	protected $connection;
 
+	public $logs;
+
 	/**
 	 * @param $host
 	 * @param $port
@@ -17,6 +19,7 @@ class LdapManager
 	public function __construct($host, $port)
 	{
 		$this->connection = ldap_connect($host, $port);
+		$this->logs = array();
 
 		if (! $this->connection) {
 			throw new \RuntimeException(sprintf('LDAP connection to %s:%s failed.', $host, $port));
@@ -153,6 +156,23 @@ class LdapManager
 			||  ! isset($values['mail'])
 			||  ! isset($values['employeetype'])
 		) {
+			$log = 'uid => '.$values['uid'][0]."\n";
+
+			if (isset($values['displayname'])) {
+				$log .= 'displayname => '.$values['displayname'][0]."\n";
+			}
+			if (isset($values['supannempid'])) {
+				$log .= 'supannempid => '.$values['supannempid'][0]."\n";
+			}
+			if (isset($values['mail'])) {
+				$log .= 'mail => '.$values['mail'][0]."\n";
+			}
+			if (isset($values['employeetype'])) {
+				$log .= 'employeetype => '. $values['employeetype'][0]."\n";
+			}
+
+			$this->logs[] = $log;
+
 			return false;
 		}
 

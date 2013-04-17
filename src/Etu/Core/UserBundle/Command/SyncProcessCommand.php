@@ -73,21 +73,7 @@ ask you to keep or delete him/her.
 
 		$output->write("\n");
 
-
-		// Organizations
-		$output->writeln("\nFinding organizations differences ...");
-
-		/** @var $synchronizer Synchronizer */
-		$synchronizer = $container->get('etu.user.sync');
-
-		$output->writeln('----------------------------------------');
-
-		$orgasImportIterator = $synchronizer->createOrgasSyncProcess()->getImportIterator();
-		$output->writeln(sprintf('%s organization(s) to import from LDAP', $orgasImportIterator->count()));
-
-		$output->write("\n");
-
-		$countActions = $usersImportIterator->count() + $usersRemoveIterator->count() + $orgasImportIterator->count();
+		$countActions = $usersImportIterator->count() + $usersRemoveIterator->count();
 
 		if ($countActions === 0) {
 			$output->writeln("Database already sync with LDAP.\n");
@@ -124,25 +110,6 @@ ask you to keep or delete him/her.
 		}
 
 		$container->get('doctrine')->getManager()->flush();
-
-
-		// Import organizations
-		$output->write("\n\n");
-		$output->writeln('Importing organizations ...');
-
-		$bar = new ProgressBar('%fraction% [%bar%] %percent%', '=>', ' ', 80, $orgasImportIterator->count());
-		$bar->update(0);
-		$i = 1;
-
-		foreach($orgasImportIterator as $orga) {
-			$orga->import();
-
-			$bar->update($i);
-			$i++;
-		}
-
-		$container->get('doctrine')->getManager()->flush();
-
 
 		// Remove users
 		$output->write("\n\n");

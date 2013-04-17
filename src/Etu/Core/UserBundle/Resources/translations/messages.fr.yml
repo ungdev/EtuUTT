@@ -79,6 +79,7 @@ user:
     avatarUpload:
         file: Image
         confirm: Vous avez bien modifié votre photo
+        back: Retour sur mon compte
 
     # Trombi edition
     trombiEdit:
@@ -121,28 +122,29 @@ orga:
         president_not_found: Le président n'a pas été trouvé
         name:
             label: Nom
-            desc: Nom officiel de l'association (nécessaire)
+            desc: Nom officiel de l'association
         president:
             label: Président
-            desc: Membre président de l'association (nécessaire)
+            desc: Membre président de l'association
         contactMail:
             label: E-mail de contact
-            desc: E-mail de contact de l'association (nécessaire)
+            desc: E-mail de contact de l'association
         contactPhone:
             label: Téléphone de contact
-            desc: Numéro de téléphone de contact de l'association (facultatif)
-        contactElse:
-            label: Autres coordonnées
-            desc: Autres coordonnées de contact (horaires, fax, etc.) (facultatif)
+            desc: Numéro de téléphone de contact de l'association
+        description:
+            label: Description
+            desc: Description de l'association (rôle au sein de l'UTT)
         website:
             label: Site internet
-            desc: Site internet officiel de l'association (facultatif)
+            desc: Site internet officiel de l'association
         logo:
             edit: Modifier le logo
-            desc: Logo de l'association (facultatif)
+            desc: Logo de l'association
 
     # Avatar upload
     logoUpload:
         title: Modifier votre logo
         file: Image
-        confirm: Vous avez bien modifié votre photo
+        confirm: Vous avez bien modifié votre logo
+        back: Retour

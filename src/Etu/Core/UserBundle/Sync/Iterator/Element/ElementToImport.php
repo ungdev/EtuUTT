@@ -8,7 +8,6 @@ use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 
-use Etu\Core\UserBundle\Ldap\Model\Organization;
 use Etu\Core\UserBundle\Ldap\Model\User;
 
 /**
@@ -17,7 +16,7 @@ use Etu\Core\UserBundle\Ldap\Model\User;
 class ElementToImport
 {
 	/**
-	 * @var Organization|User
+	 * @var User
 	 */
 	protected $element;
 
@@ -28,12 +27,12 @@ class ElementToImport
 
 	/**
 	 * @param Registry $doctrine
-	 * @param User|Organization $element
+	 * @param User $element
 	 * @throws \RuntimeException
 	 */
-	public function __construct(Registry $doctrine, $element)
+	public function __construct(Registry $doctrine, User $element)
 	{
-		if (! $element instanceof User && ! $element instanceof Organization) {
+		if (! $element instanceof User) {
 			if (is_object($element)) {
 				$type = get_class($element);
 			} else {
@@ -41,7 +40,7 @@ class ElementToImport
 			}
 
 			throw new \RuntimeException(sprintf(
-				'EtuUTT synchonizer can only import User and Organization objects (%s given)', $type
+				'EtuUTT synchonizer can only import User objects (%s given)', $type
 			));
 		}
 
@@ -56,8 +55,6 @@ class ElementToImport
 	{
 		if ($this->element instanceof User) {
 			return $this->importUser();
-		} else {
-			return $this->importOrganization();
 		}
 	}
 
@@ -110,26 +107,6 @@ class ElementToImport
 		}
 
 		return $user;
-	}
-
-	/**
-	 * Import an organization in the database
-	 */
-	protected function importOrganization($flush = false)
-	{
-		$orga = new \Etu\Core\UserBundle\Entity\Organization();
-		$orga->setLogo('default-logo.png');
-		$orga->setLogin($this->element->getLogin());
-		$orga->setContactMail($this->element->getMail());
-		$orga->setName($this->element->getFullName());
-
-		$this->doctrine->getManager()->persist($orga);
-
-		if ($flush) {
-			$this->doctrine->getManager()->flush();
-		}
-
-		return $orga;
 	}
 
 	/**

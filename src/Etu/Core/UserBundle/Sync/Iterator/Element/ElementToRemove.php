@@ -25,7 +25,7 @@ class ElementToRemove
 	 * @param User $element
 	 * @throws \RuntimeException
 	 */
-	public function __construct(Registry $doctrine, $element)
+	public function __construct(Registry $doctrine, User $element)
 	{
 		if (! $element instanceof User) {
 			if (is_object($element)) {

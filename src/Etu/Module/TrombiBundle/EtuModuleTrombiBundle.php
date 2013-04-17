@@ -13,7 +13,7 @@ class EtuModuleTrombiBundle extends Module
 	 */
 	public function mustBoot()
 	{
-		return $this->getSessionLayer()->isUser();
+		return $this->getSessionLayer()->isConnected();
 	}
 
 	/**
