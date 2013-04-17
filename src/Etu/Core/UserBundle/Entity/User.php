@@ -29,11 +29,14 @@ class User implements UserInterface, \Serializable
 	const PRIVACY_PRIVATE = 200;
 
 	static public $branches = array(
-		'ISI', 'MTE', 'SI', 'SIT', 'SM', 'SRT', 'TC'
+		'ISI' => 'ISI', 'MTE' => 'MTE', 'SI' => 'SI',
+		'SIT' => 'SIT', 'SM' => 'SM', 'SRT' => 'SRT',
+		'TC' => 'TC'
 	);
 
 	static public $levels = array(
-		'1', '2', '3', '4', '5', '6', '7', '8', '9', '10'
+		'1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5',
+		'6' => '6', '7' => '7', '8' => '8', '9' => '9', '10' => '10'
 	);
 
     /**

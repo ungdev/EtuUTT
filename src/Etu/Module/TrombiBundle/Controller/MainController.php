@@ -84,6 +84,12 @@ class MainController extends Controller
 			if ($user->getFiliere() && $user->getNiveau()) {
 				$users->andWhere('u.niveau = :niveau')
 					->setParameter('niveau', $user->getFiliere().$user->getNiveau());
+			} elseif ($user->getFiliere()) {
+				$users->andWhere('u.niveau LIKE :niveau')
+					->setParameter('niveau', $user->getFiliere().'%');
+			} elseif ($user->getNiveau()) {
+				$users->andWhere('u.niveau LIKE :niveau')
+					->setParameter('niveau', '%'.$user->getNiveau());
 			}
 
 			if ($user->getPersonnalMail()) {

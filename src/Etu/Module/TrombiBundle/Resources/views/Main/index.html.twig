@@ -102,9 +102,17 @@
 				<p id="explainations" class="muted trombi-search-explainations">
 					{{ 'trombi.main.index.explainations'|trans }}
 				</p>
+			{% elseif pagination.count == 0 %}
+				<p class="muted trombi-search-explainations">
+					{{ 'trombi.main.index.no_results'|trans }}
+				</p>
 			{% else %}
 				{# display navigation #}
 				<div class="navigation">
+					<br />
+					<p>
+						{{ 'trombi.main.index.count'|transchoice(pagination.totalItemCount, {'%count%': pagination.totalItemCount}) }}
+					</p>
 					{{ knp_pagination_render(pagination) }}
 				</div>
 
@@ -129,10 +137,6 @@
 
 							<div class="clear"></div>
 						</a>
-					</li>
-					{% else %}
-					<li class="muted trombi-search-explainations">
-						{{ 'trombi.main.index.no_results'|trans }}
 					</li>
 					{% endfor %}
 				</ul>
