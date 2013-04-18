@@ -2,11 +2,8 @@
 
 namespace Etu\Module\BugsBundle\Controller;
 
-use Etu\Core\CoreBundle\Entity\Notification;
-use Etu\Core\CoreBundle\Entity\Subscription;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
-use Etu\Core\CoreBundle\Util\RedactorJsEscaper;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Module\BugsBundle\Entity\Comment;
 use Etu\Module\BugsBundle\Entity\Issue;

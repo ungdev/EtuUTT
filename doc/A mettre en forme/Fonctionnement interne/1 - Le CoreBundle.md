@@ -39,7 +39,7 @@ des modules en utilisant le fichier de configuration `app/config/modules.yml`.
 > **Note:** Un problème persiste dans cette notion de module-bundle : les routes restent
 > importées à la main, via routing.yml. Pour éviter de devoir modifier routing.yml à
 > chaque activation ou désactivation de module, le CoreBundle dispose d'un RoutingLoader
-> spécialisé, cpable de charger les routes des modules activés seulement (en utilisant
+> spécialisé, capable de charger les routes des modules activés seulement (en utilisant
 > la méthode `getRouting()` de la classe `Etu\Core\CoreBundle\Framework\Definition\Module`).
 
 
@@ -60,8 +60,7 @@ $container->get('etu.menu.sidebar_builder') // ...;
 $container->get('etu.menu.user_builder') // ...;
 ```
 
-> **Note:** Le tutoriel de modification des menus est disponible dans la partie
-> "Les modules"
+> **Note:** Le tutoriel de modification des menus est disponible dans les tutoriels.
 
 Le CoreBundle créé donc par la même occasion deux fonctions Twig (`render_sidebar()`
 et `render_user_menu()`) afin d'afficher dans les templates Twig la sidebar et le

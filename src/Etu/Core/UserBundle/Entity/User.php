@@ -1282,7 +1282,22 @@ class User implements UserInterface, \Serializable
 	 */
 	public function addPermission($permission)
 	{
-		$this->permissions[] = $permission;
+		if (! in_array($permission, $this->permissions)) {
+			$this->permissions[] = $permission;
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @param string $permission
+	 * @return User
+	 */
+	public function removePermission($permission)
+	{
+		if (($key = array_search($permission, $this->permissions)) !== false) {
+			unset($this->permissions[$key]);
+		}
 
 		return $this;
 	}
