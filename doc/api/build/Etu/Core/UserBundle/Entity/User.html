@@ -68,6 +68,20 @@
 
             <table>
                     <tr>
+                <td class="type" id="property_branches">
+                    static                                        
+                </td>
+                <td>$branches</td>
+                <td class="last"></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_levels">
+                    static                                        
+                </td>
+                <td>$levels</td>
+                <td class="last"></td>
+            </tr>
+                    <tr>
                 <td class="type" id="property_file">
                                                             <abbr title="Symfony\Component\HttpFoundation\File\UploadedFile">UploadedFile</abbr>
                 </td>
@@ -87,6 +101,26 @@
                 <td class="last">
                     <a href="#method___construct">__construct</a>()
                     <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___toString">__toString</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    static&nbsp;array
+                </td>
+                <td class="last">
+                    <a href="#method_availableBranches">availableBranches</a>()
+                    <p>Return avilable branches and levels for forms</p>
                 </td>
                 <td></td>
             </tr>
@@ -845,6 +879,16 @@
                     <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
                 </td>
                 <td class="last">
+                    <a href="#method_removePermission">removePermission</a>(string $permission)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
                     <a href="#method_setPassword">setPassword</a>(string $password)
                     <p>Set password</p>
                 </td>
@@ -1202,6 +1246,36 @@
             </tr>
                     <tr>
                 <td class="type">
+                    <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setUvs">setUvs</a>(string $uvs)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getUvs">getUvs</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_displayUvs">displayUvs</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
                     <a href="../../../../Etu/Core/UserBundle/Collection/UserOptionsCollection.html"><abbr title="Etu\Core\UserBundle\Collection\UserOptionsCollection">UserOptionsCollection</abbr></a>
                 </td>
                 <td class="last">
@@ -1216,7 +1290,7 @@
         <h2>Details</h2>
 
                         <h3 id="method___construct">
-        <div class="location">at line 402</div>
+        <div class="location">at line 424</div>
         <code>            public            
     <strong>__construct</strong>()</code>
     </h3>
@@ -1230,8 +1304,47 @@
                     </div>
     </div>
 
+                <h3 id="method___toString">
+        <div class="location">at line 447</div>
+        <code>            public            
+    <strong>__toString</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_availableBranches">
+        <div class="location">at line 457</div>
+        <code>        static    public            array
+    <strong>availableBranches</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Return avilable branches and levels for forms</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
                 <h3 id="method_upload">
-        <div class="location">at line 424</div>
+        <div class="location">at line 475</div>
         <code>            public            boolean
     <strong>upload</strong>()</code>
     </h3>
@@ -1255,7 +1368,7 @@
     </div>
 
                 <h3 id="method_getIsOrga">
-        <div class="location">at line 446</div>
+        <div class="location">at line 497</div>
         <code>            public            boolean
     <strong>getIsOrga</strong>()</code>
     </h3>
@@ -1279,7 +1392,7 @@
     </div>
 
                 <h3 id="method_getProfileCompletion">
-        <div class="location">at line 454</div>
+        <div class="location">at line 505</div>
         <code>            public            integer
     <strong>getProfileCompletion</strong>()</code>
     </h3>
@@ -1303,7 +1416,7 @@
     </div>
 
                 <h3 id="method_getUsername">
-        <div class="location">at line 478</div>
+        <div class="location">at line 529</div>
         <code>            public            
     <strong>getUsername</strong>()</code>
     </h3>
@@ -1318,7 +1431,7 @@
     </div>
 
                 <h3 id="method_getSalt">
-        <div class="location">at line 486</div>
+        <div class="location">at line 537</div>
         <code>            public            
     <strong>getSalt</strong>()</code>
     </h3>
@@ -1333,7 +1446,7 @@
     </div>
 
                 <h3 id="method_getPassword">
-        <div class="location">at line 494</div>
+        <div class="location">at line 545</div>
         <code>            public            
     <strong>getPassword</strong>()</code>
     </h3>
@@ -1348,7 +1461,7 @@
     </div>
 
                 <h3 id="method_getRoles">
-        <div class="location">at line 502</div>
+        <div class="location">at line 553</div>
         <code>            public            
     <strong>getRoles</strong>()</code>
     </h3>
@@ -1363,7 +1476,7 @@
     </div>
 
                 <h3 id="method_eraseCredentials">
-        <div class="location">at line 510</div>
+        <div class="location">at line 561</div>
         <code>            public            
     <strong>eraseCredentials</strong>()</code>
     </h3>
@@ -1378,7 +1491,7 @@
     </div>
 
                 <h3 id="method_serialize">
-        <div class="location">at line 517</div>
+        <div class="location">at line 568</div>
         <code>            public            
     <strong>serialize</strong>()</code>
     </h3>
@@ -1402,7 +1515,7 @@
     </div>
 
                 <h3 id="method_unserialize">
-        <div class="location">at line 557</div>
+        <div class="location">at line 608</div>
         <code>            public            
     <strong>unserialize</strong>($serialized)</code>
     </h3>
@@ -1436,7 +1549,7 @@
     </div>
 
                 <h3 id="method_setAdress">
-        <div class="location">at line 598</div>
+        <div class="location">at line 649</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setAdress</strong>(string $adress)</code>
     </h3>
@@ -1470,7 +1583,7 @@
     </div>
 
                 <h3 id="method_getAdress">
-        <div class="location">at line 608</div>
+        <div class="location">at line 659</div>
         <code>            public            string
     <strong>getAdress</strong>()</code>
     </h3>
@@ -1494,7 +1607,7 @@
     </div>
 
                 <h3 id="method_setAvatar">
-        <div class="location">at line 617</div>
+        <div class="location">at line 668</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setAvatar</strong>(string $avatar)</code>
     </h3>
@@ -1528,7 +1641,7 @@
     </div>
 
                 <h3 id="method_getAvatar">
-        <div class="location">at line 627</div>
+        <div class="location">at line 678</div>
         <code>            public            string
     <strong>getAvatar</strong>()</code>
     </h3>
@@ -1552,7 +1665,7 @@
     </div>
 
                 <h3 id="method_setBirthday">
-        <div class="location">at line 636</div>
+        <div class="location">at line 687</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setBirthday</strong>(<a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a> $birthday)</code>
     </h3>
@@ -1586,7 +1699,7 @@
     </div>
 
                 <h3 id="method_getBirthday">
-        <div class="location">at line 646</div>
+        <div class="location">at line 697</div>
         <code>            public            <a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a>
     <strong>getBirthday</strong>()</code>
     </h3>
@@ -1610,7 +1723,7 @@
     </div>
 
                 <h3 id="method_getAge">
-        <div class="location">at line 654</div>
+        <div class="location">at line 705</div>
         <code>            public            integer
     <strong>getAge</strong>()</code>
     </h3>
@@ -1634,7 +1747,7 @@
     </div>
 
                 <h3 id="method_setCity">
-        <div class="location">at line 663</div>
+        <div class="location">at line 714</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setCity</strong>(string $city)</code>
     </h3>
@@ -1668,7 +1781,7 @@
     </div>
 
                 <h3 id="method_getCity">
-        <div class="location">at line 673</div>
+        <div class="location">at line 724</div>
         <code>            public            string
     <strong>getCity</strong>()</code>
     </h3>
@@ -1692,7 +1805,7 @@
     </div>
 
                 <h3 id="method_setCountry">
-        <div class="location">at line 682</div>
+        <div class="location">at line 733</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setCountry</strong>(string $country)</code>
     </h3>
@@ -1726,7 +1839,7 @@
     </div>
 
                 <h3 id="method_getCountry">
-        <div class="location">at line 692</div>
+        <div class="location">at line 743</div>
         <code>            public            string
     <strong>getCountry</strong>()</code>
     </h3>
@@ -1750,7 +1863,7 @@
     </div>
 
                 <h3 id="method_setFiliere">
-        <div class="location">at line 701</div>
+        <div class="location">at line 752</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setFiliere</strong>(string $filiere)</code>
     </h3>
@@ -1784,7 +1897,7 @@
     </div>
 
                 <h3 id="method_getFiliere">
-        <div class="location">at line 715</div>
+        <div class="location">at line 766</div>
         <code>            public            string
     <strong>getFiliere</strong>()</code>
     </h3>
@@ -1808,7 +1921,7 @@
     </div>
 
                 <h3 id="method_setFirstName">
-        <div class="location">at line 724</div>
+        <div class="location">at line 775</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setFirstName</strong>(string $firstName)</code>
     </h3>
@@ -1842,7 +1955,7 @@
     </div>
 
                 <h3 id="method_getFirstName">
-        <div class="location">at line 734</div>
+        <div class="location">at line 785</div>
         <code>            public            string
     <strong>getFirstName</strong>()</code>
     </h3>
@@ -1866,7 +1979,7 @@
     </div>
 
                 <h3 id="method_setFormation">
-        <div class="location">at line 743</div>
+        <div class="location">at line 794</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setFormation</strong>(string $formation)</code>
     </h3>
@@ -1900,7 +2013,7 @@
     </div>
 
                 <h3 id="method_getFormation">
-        <div class="location">at line 757</div>
+        <div class="location">at line 808</div>
         <code>            public            string
     <strong>getFormation</strong>()</code>
     </h3>
@@ -1924,7 +2037,7 @@
     </div>
 
                 <h3 id="method_setFullName">
-        <div class="location">at line 766</div>
+        <div class="location">at line 817</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setFullName</strong>(string $fullName)</code>
     </h3>
@@ -1958,7 +2071,7 @@
     </div>
 
                 <h3 id="method_getFullName">
-        <div class="location">at line 776</div>
+        <div class="location">at line 827</div>
         <code>            public            string
     <strong>getFullName</strong>()</code>
     </h3>
@@ -1982,7 +2095,7 @@
     </div>
 
                 <h3 id="method_setId">
-        <div class="location">at line 785</div>
+        <div class="location">at line 836</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setId</strong>(int $id)</code>
     </h3>
@@ -2016,7 +2129,7 @@
     </div>
 
                 <h3 id="method_getId">
-        <div class="location">at line 795</div>
+        <div class="location">at line 846</div>
         <code>            public            int
     <strong>getId</strong>()</code>
     </h3>
@@ -2040,7 +2153,7 @@
     </div>
 
                 <h3 id="method_setIsStudent">
-        <div class="location">at line 804</div>
+        <div class="location">at line 855</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setIsStudent</strong>(boolean $isStudent)</code>
     </h3>
@@ -2074,7 +2187,7 @@
     </div>
 
                 <h3 id="method_getIsStudent">
-        <div class="location">at line 814</div>
+        <div class="location">at line 865</div>
         <code>            public            boolean
     <strong>getIsStudent</strong>()</code>
     </h3>
@@ -2098,7 +2211,7 @@
     </div>
 
                 <h3 id="method_setJadis">
-        <div class="location">at line 823</div>
+        <div class="location">at line 874</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setJadis</strong>(string $jadis)</code>
     </h3>
@@ -2132,7 +2245,7 @@
     </div>
 
                 <h3 id="method_getJadis">
-        <div class="location">at line 833</div>
+        <div class="location">at line 884</div>
         <code>            public            string
     <strong>getJadis</strong>()</code>
     </h3>
@@ -2156,7 +2269,7 @@
     </div>
 
                 <h3 id="method_setKeepActive">
-        <div class="location">at line 842</div>
+        <div class="location">at line 893</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setKeepActive</strong>(boolean $keepActive)</code>
     </h3>
@@ -2190,7 +2303,7 @@
     </div>
 
                 <h3 id="method_getKeepActive">
-        <div class="location">at line 852</div>
+        <div class="location">at line 903</div>
         <code>            public            boolean
     <strong>getKeepActive</strong>()</code>
     </h3>
@@ -2214,7 +2327,7 @@
     </div>
 
                 <h3 id="method_setLanguage">
-        <div class="location">at line 861</div>
+        <div class="location">at line 912</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setLanguage</strong>(string $language)</code>
     </h3>
@@ -2248,7 +2361,7 @@
     </div>
 
                 <h3 id="method_getLanguage">
-        <div class="location">at line 871</div>
+        <div class="location">at line 922</div>
         <code>            public            string
     <strong>getLanguage</strong>()</code>
     </h3>
@@ -2272,7 +2385,7 @@
     </div>
 
                 <h3 id="method_setLastName">
-        <div class="location">at line 880</div>
+        <div class="location">at line 931</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setLastName</strong>(string $lastName)</code>
     </h3>
@@ -2306,7 +2419,7 @@
     </div>
 
                 <h3 id="method_getLastName">
-        <div class="location">at line 890</div>
+        <div class="location">at line 941</div>
         <code>            public            string
     <strong>getLastName</strong>()</code>
     </h3>
@@ -2330,7 +2443,7 @@
     </div>
 
                 <h3 id="method_setLdapInformations">
-        <div class="location">at line 899</div>
+        <div class="location">at line 950</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setLdapInformations</strong>(object $ldapInformations)</code>
     </h3>
@@ -2364,7 +2477,7 @@
     </div>
 
                 <h3 id="method_getLdapInformations">
-        <div class="location">at line 909</div>
+        <div class="location">at line 960</div>
         <code>            public            object
     <strong>getLdapInformations</strong>()</code>
     </h3>
@@ -2388,7 +2501,7 @@
     </div>
 
                 <h3 id="method_setLogin">
-        <div class="location">at line 918</div>
+        <div class="location">at line 969</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setLogin</strong>(string $login)</code>
     </h3>
@@ -2422,7 +2535,7 @@
     </div>
 
                 <h3 id="method_getLogin">
-        <div class="location">at line 928</div>
+        <div class="location">at line 979</div>
         <code>            public            string
     <strong>getLogin</strong>()</code>
     </h3>
@@ -2446,7 +2559,7 @@
     </div>
 
                 <h3 id="method_setMail">
-        <div class="location">at line 937</div>
+        <div class="location">at line 988</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setMail</strong>(string $mail)</code>
     </h3>
@@ -2480,7 +2593,7 @@
     </div>
 
                 <h3 id="method_getMail">
-        <div class="location">at line 947</div>
+        <div class="location">at line 998</div>
         <code>            public            string
     <strong>getMail</strong>()</code>
     </h3>
@@ -2504,7 +2617,7 @@
     </div>
 
                 <h3 id="method_setNationality">
-        <div class="location">at line 956</div>
+        <div class="location">at line 1007</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setNationality</strong>(string $nationality)</code>
     </h3>
@@ -2538,7 +2651,7 @@
     </div>
 
                 <h3 id="method_getNationality">
-        <div class="location">at line 966</div>
+        <div class="location">at line 1017</div>
         <code>            public            string
     <strong>getNationality</strong>()</code>
     </h3>
@@ -2562,7 +2675,7 @@
     </div>
 
                 <h3 id="method_setNiveau">
-        <div class="location">at line 975</div>
+        <div class="location">at line 1026</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setNiveau</strong>(string $niveau)</code>
     </h3>
@@ -2596,7 +2709,7 @@
     </div>
 
                 <h3 id="method_getNiveau">
-        <div class="location">at line 989</div>
+        <div class="location">at line 1040</div>
         <code>            public            string
     <strong>getNiveau</strong>()</code>
     </h3>
@@ -2620,7 +2733,7 @@
     </div>
 
                 <h3 id="method_setPassions">
-        <div class="location">at line 998</div>
+        <div class="location">at line 1049</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setPassions</strong>(string $passions)</code>
     </h3>
@@ -2654,7 +2767,7 @@
     </div>
 
                 <h3 id="method_getPassions">
-        <div class="location">at line 1008</div>
+        <div class="location">at line 1059</div>
         <code>            public            string
     <strong>getPassions</strong>()</code>
     </h3>
@@ -2678,7 +2791,7 @@
     </div>
 
                 <h3 id="method_setPersonnalMail">
-        <div class="location">at line 1017</div>
+        <div class="location">at line 1068</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setPersonnalMail</strong>(string $personnalMail)</code>
     </h3>
@@ -2712,7 +2825,7 @@
     </div>
 
                 <h3 id="method_getPersonnalMail">
-        <div class="location">at line 1027</div>
+        <div class="location">at line 1078</div>
         <code>            public            string
     <strong>getPersonnalMail</strong>()</code>
     </h3>
@@ -2736,7 +2849,7 @@
     </div>
 
                 <h3 id="method_setPhoneNumber">
-        <div class="location">at line 1036</div>
+        <div class="location">at line 1087</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setPhoneNumber</strong>(string $phoneNumber)</code>
     </h3>
@@ -2770,7 +2883,7 @@
     </div>
 
                 <h3 id="method_getPhoneNumber">
-        <div class="location">at line 1050</div>
+        <div class="location">at line 1101</div>
         <code>            public            string
     <strong>getPhoneNumber</strong>()</code>
     </h3>
@@ -2794,7 +2907,7 @@
     </div>
 
                 <h3 id="method_setPostalCode">
-        <div class="location">at line 1059</div>
+        <div class="location">at line 1110</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setPostalCode</strong>(string $postalCode)</code>
     </h3>
@@ -2828,7 +2941,7 @@
     </div>
 
                 <h3 id="method_getPostalCode">
-        <div class="location">at line 1069</div>
+        <div class="location">at line 1120</div>
         <code>            public            string
     <strong>getPostalCode</strong>()</code>
     </h3>
@@ -2852,7 +2965,7 @@
     </div>
 
                 <h3 id="method_setRoom">
-        <div class="location">at line 1078</div>
+        <div class="location">at line 1129</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setRoom</strong>(string $room)</code>
     </h3>
@@ -2886,7 +2999,7 @@
     </div>
 
                 <h3 id="method_getRoom">
-        <div class="location">at line 1092</div>
+        <div class="location">at line 1143</div>
         <code>            public            string
     <strong>getRoom</strong>()</code>
     </h3>
@@ -2910,7 +3023,7 @@
     </div>
 
                 <h3 id="method_setSex">
-        <div class="location">at line 1101</div>
+        <div class="location">at line 1152</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setSex</strong>(string $sex)</code>
     </h3>
@@ -2944,7 +3057,7 @@
     </div>
 
                 <h3 id="method_getSex">
-        <div class="location">at line 1111</div>
+        <div class="location">at line 1162</div>
         <code>            public            string
     <strong>getSex</strong>()</code>
     </h3>
@@ -2968,7 +3081,7 @@
     </div>
 
                 <h3 id="method_setStudentId">
-        <div class="location">at line 1120</div>
+        <div class="location">at line 1171</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setStudentId</strong>(int $studentId)</code>
     </h3>
@@ -3002,7 +3115,7 @@
     </div>
 
                 <h3 id="method_getStudentId">
-        <div class="location">at line 1134</div>
+        <div class="location">at line 1185</div>
         <code>            public            int
     <strong>getStudentId</strong>()</code>
     </h3>
@@ -3026,7 +3139,7 @@
     </div>
 
                 <h3 id="method_setSurnom">
-        <div class="location">at line 1143</div>
+        <div class="location">at line 1194</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setSurnom</strong>(string $surnom)</code>
     </h3>
@@ -3060,7 +3173,7 @@
     </div>
 
                 <h3 id="method_getSurnom">
-        <div class="location">at line 1153</div>
+        <div class="location">at line 1204</div>
         <code>            public            string
     <strong>getSurnom</strong>()</code>
     </h3>
@@ -3084,7 +3197,7 @@
     </div>
 
                 <h3 id="method_setTitle">
-        <div class="location">at line 1162</div>
+        <div class="location">at line 1213</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setTitle</strong>(string $title)</code>
     </h3>
@@ -3118,7 +3231,7 @@
     </div>
 
                 <h3 id="method_getTitle">
-        <div class="location">at line 1176</div>
+        <div class="location">at line 1227</div>
         <code>            public            string
     <strong>getTitle</strong>()</code>
     </h3>
@@ -3142,7 +3255,7 @@
     </div>
 
                 <h3 id="method_setWebsite">
-        <div class="location">at line 1185</div>
+        <div class="location">at line 1236</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setWebsite</strong>(string $website)</code>
     </h3>
@@ -3176,7 +3289,7 @@
     </div>
 
                 <h3 id="method_getWebsite">
-        <div class="location">at line 1195</div>
+        <div class="location">at line 1246</div>
         <code>            public            string
     <strong>getWebsite</strong>()</code>
     </h3>
@@ -3200,7 +3313,7 @@
     </div>
 
                 <h3 id="method_setPermissions">
-        <div class="location">at line 1204</div>
+        <div class="location">at line 1255</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setPermissions</strong>(boolean $permissions)</code>
     </h3>
@@ -3234,7 +3347,7 @@
     </div>
 
                 <h3 id="method_getPermissions">
-        <div class="location">at line 1214</div>
+        <div class="location">at line 1265</div>
         <code>            public            boolean
     <strong>getPermissions</strong>()</code>
     </h3>
@@ -3258,7 +3371,7 @@
     </div>
 
                 <h3 id="method_hasPermission">
-        <div class="location">at line 1223</div>
+        <div class="location">at line 1274</div>
         <code>            public            bool
     <strong>hasPermission</strong>(string $permission)</code>
     </h3>
@@ -3292,7 +3405,7 @@
     </div>
 
                 <h3 id="method_addPermission">
-        <div class="location">at line 1232</div>
+        <div class="location">at line 1283</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>addPermission</strong>(string $permission)</code>
     </h3>
@@ -3325,8 +3438,42 @@
                     </div>
     </div>
 
+                <h3 id="method_removePermission">
+        <div class="location">at line 1296</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>removePermission</strong>(string $permission)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$permission</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
                 <h3 id="method_setPassword">
-        <div class="location">at line 1245</div>
+        <div class="location">at line 1311</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setPassword</strong>(string $password)</code>
     </h3>
@@ -3360,7 +3507,7 @@
     </div>
 
                 <h3 id="method_setPhoneNumberPrivacy">
-        <div class="location">at line 1258</div>
+        <div class="location">at line 1324</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setPhoneNumberPrivacy</strong>(integer $phoneNumberPrivacy)</code>
     </h3>
@@ -3394,7 +3541,7 @@
     </div>
 
                 <h3 id="method_getPhoneNumberPrivacy">
-        <div class="location">at line 1270</div>
+        <div class="location">at line 1336</div>
         <code>            public            integer
     <strong>getPhoneNumberPrivacy</strong>()</code>
     </h3>
@@ -3418,7 +3565,7 @@
     </div>
 
                 <h3 id="method_setSexPrivacy">
-        <div class="location">at line 1281</div>
+        <div class="location">at line 1347</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setSexPrivacy</strong>(integer $sexPrivacy)</code>
     </h3>
@@ -3452,7 +3599,7 @@
     </div>
 
                 <h3 id="method_getSexPrivacy">
-        <div class="location">at line 1293</div>
+        <div class="location">at line 1359</div>
         <code>            public            integer
     <strong>getSexPrivacy</strong>()</code>
     </h3>
@@ -3476,7 +3623,7 @@
     </div>
 
                 <h3 id="method_setNationalityPrivacy">
-        <div class="location">at line 1304</div>
+        <div class="location">at line 1370</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setNationalityPrivacy</strong>(integer $nationalityPrivacy)</code>
     </h3>
@@ -3510,7 +3657,7 @@
     </div>
 
                 <h3 id="method_getNationalityPrivacy">
-        <div class="location">at line 1316</div>
+        <div class="location">at line 1382</div>
         <code>            public            integer
     <strong>getNationalityPrivacy</strong>()</code>
     </h3>
@@ -3534,7 +3681,7 @@
     </div>
 
                 <h3 id="method_setAdressPrivacy">
-        <div class="location">at line 1327</div>
+        <div class="location">at line 1393</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setAdressPrivacy</strong>(integer $adressPrivacy)</code>
     </h3>
@@ -3568,7 +3715,7 @@
     </div>
 
                 <h3 id="method_getAdressPrivacy">
-        <div class="location">at line 1339</div>
+        <div class="location">at line 1405</div>
         <code>            public            integer
     <strong>getAdressPrivacy</strong>()</code>
     </h3>
@@ -3592,7 +3739,7 @@
     </div>
 
                 <h3 id="method_setPostalCodePrivacy">
-        <div class="location">at line 1350</div>
+        <div class="location">at line 1416</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setPostalCodePrivacy</strong>(integer $postalCodePrivacy)</code>
     </h3>
@@ -3626,7 +3773,7 @@
     </div>
 
                 <h3 id="method_getPostalCodePrivacy">
-        <div class="location">at line 1362</div>
+        <div class="location">at line 1428</div>
         <code>            public            integer
     <strong>getPostalCodePrivacy</strong>()</code>
     </h3>
@@ -3650,7 +3797,7 @@
     </div>
 
                 <h3 id="method_setCityPrivacy">
-        <div class="location">at line 1373</div>
+        <div class="location">at line 1439</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setCityPrivacy</strong>(integer $cityPrivacy)</code>
     </h3>
@@ -3684,7 +3831,7 @@
     </div>
 
                 <h3 id="method_getCityPrivacy">
-        <div class="location">at line 1385</div>
+        <div class="location">at line 1451</div>
         <code>            public            integer
     <strong>getCityPrivacy</strong>()</code>
     </h3>
@@ -3708,7 +3855,7 @@
     </div>
 
                 <h3 id="method_setCountryPrivacy">
-        <div class="location">at line 1396</div>
+        <div class="location">at line 1462</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setCountryPrivacy</strong>(integer $countryPrivacy)</code>
     </h3>
@@ -3742,7 +3889,7 @@
     </div>
 
                 <h3 id="method_getCountryPrivacy">
-        <div class="location">at line 1408</div>
+        <div class="location">at line 1474</div>
         <code>            public            integer
     <strong>getCountryPrivacy</strong>()</code>
     </h3>
@@ -3766,7 +3913,7 @@
     </div>
 
                 <h3 id="method_setBirthdayPrivacy">
-        <div class="location">at line 1419</div>
+        <div class="location">at line 1485</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setBirthdayPrivacy</strong>(integer $birthdayPrivacy)</code>
     </h3>
@@ -3800,7 +3947,7 @@
     </div>
 
                 <h3 id="method_getBirthdayPrivacy">
-        <div class="location">at line 1431</div>
+        <div class="location">at line 1497</div>
         <code>            public            integer
     <strong>getBirthdayPrivacy</strong>()</code>
     </h3>
@@ -3824,7 +3971,7 @@
     </div>
 
                 <h3 id="method_setBirthdayDisplayOnlyAge">
-        <div class="location">at line 1442</div>
+        <div class="location">at line 1508</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setBirthdayDisplayOnlyAge</strong>(boolean $birthdayDisplayOnlyAge)</code>
     </h3>
@@ -3858,7 +4005,7 @@
     </div>
 
                 <h3 id="method_getBirthdayDisplayOnlyAge">
-        <div class="location">at line 1454</div>
+        <div class="location">at line 1520</div>
         <code>            public            boolean
     <strong>getBirthdayDisplayOnlyAge</strong>()</code>
     </h3>
@@ -3882,7 +4029,7 @@
     </div>
 
                 <h3 id="method_setPersonnalMailPrivacy">
-        <div class="location">at line 1465</div>
+        <div class="location">at line 1531</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setPersonnalMailPrivacy</strong>(integer $personnalMailPrivacy)</code>
     </h3>
@@ -3916,7 +4063,7 @@
     </div>
 
                 <h3 id="method_getPersonnalMailPrivacy">
-        <div class="location">at line 1477</div>
+        <div class="location">at line 1543</div>
         <code>            public            integer
     <strong>getPersonnalMailPrivacy</strong>()</code>
     </h3>
@@ -3940,7 +4087,7 @@
     </div>
 
                 <h3 id="method_setBadges">
-        <div class="location">at line 1486</div>
+        <div class="location">at line 1552</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setBadges</strong>(array $badges)</code>
     </h3>
@@ -3974,7 +4121,7 @@
     </div>
 
                 <h3 id="method_hasBadge">
-        <div class="location">at line 1497</div>
+        <div class="location">at line 1563</div>
         <code>            public            boolean
     <strong>hasBadge</strong>(string $badgeName)</code>
     </h3>
@@ -4008,7 +4155,7 @@
     </div>
 
                 <h3 id="method_addBadge">
-        <div class="location">at line 1506</div>
+        <div class="location">at line 1572</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>addBadge</strong>(string $badgeName)</code>
     </h3>
@@ -4042,7 +4189,7 @@
     </div>
 
                 <h3 id="method_removeBadge">
-        <div class="location">at line 1517</div>
+        <div class="location">at line 1583</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>removeBadge</strong>(string $badgeName)</code>
     </h3>
@@ -4076,7 +4223,7 @@
     </div>
 
                 <h3 id="method_getBadges">
-        <div class="location">at line 1529</div>
+        <div class="location">at line 1595</div>
         <code>            public            array
     <strong>getBadges</strong>()</code>
     </h3>
@@ -4100,7 +4247,7 @@
     </div>
 
                 <h3 id="method_setFacebook">
-        <div class="location">at line 1538</div>
+        <div class="location">at line 1604</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setFacebook</strong>(string $facebook)</code>
     </h3>
@@ -4134,7 +4281,7 @@
     </div>
 
                 <h3 id="method_getFacebook">
-        <div class="location">at line 1548</div>
+        <div class="location">at line 1614</div>
         <code>            public            string
     <strong>getFacebook</strong>()</code>
     </h3>
@@ -4158,7 +4305,7 @@
     </div>
 
                 <h3 id="method_setLinkedin">
-        <div class="location">at line 1557</div>
+        <div class="location">at line 1623</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setLinkedin</strong>(string $linkedin)</code>
     </h3>
@@ -4192,7 +4339,7 @@
     </div>
 
                 <h3 id="method_getLinkedin">
-        <div class="location">at line 1567</div>
+        <div class="location">at line 1633</div>
         <code>            public            string
     <strong>getLinkedin</strong>()</code>
     </h3>
@@ -4216,7 +4363,7 @@
     </div>
 
                 <h3 id="method_setTwitter">
-        <div class="location">at line 1576</div>
+        <div class="location">at line 1642</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setTwitter</strong>(string $twitter)</code>
     </h3>
@@ -4250,7 +4397,7 @@
     </div>
 
                 <h3 id="method_getTwitter">
-        <div class="location">at line 1586</div>
+        <div class="location">at line 1652</div>
         <code>            public            string
     <strong>getTwitter</strong>()</code>
     </h3>
@@ -4274,7 +4421,7 @@
     </div>
 
                 <h3 id="method_setViadeo">
-        <div class="location">at line 1595</div>
+        <div class="location">at line 1661</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setViadeo</strong>(string $viadeo)</code>
     </h3>
@@ -4308,7 +4455,7 @@
     </div>
 
                 <h3 id="method_getViadeo">
-        <div class="location">at line 1605</div>
+        <div class="location">at line 1671</div>
         <code>            public            string
     <strong>getViadeo</strong>()</code>
     </h3>
@@ -4332,7 +4479,7 @@
     </div>
 
                 <h3 id="method_setIsAdmin">
-        <div class="location">at line 1614</div>
+        <div class="location">at line 1680</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
     <strong>setIsAdmin</strong>(boolean $isAdmin)</code>
     </h3>
@@ -4366,7 +4513,7 @@
     </div>
 
                 <h3 id="method_getIsAdmin">
-        <div class="location">at line 1624</div>
+        <div class="location">at line 1690</div>
         <code>            public            boolean
     <strong>getIsAdmin</strong>()</code>
     </h3>
@@ -4389,8 +4536,90 @@
                     </div>
     </div>
 
+                <h3 id="method_setUvs">
+        <div class="location">at line 1699</div>
+        <code>            public            <a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a>
+    <strong>setUvs</strong>(string $uvs)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$uvs</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Etu/Core/UserBundle/Entity/User.html"><abbr title="Etu\Core\UserBundle\Entity\User">User</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getUvs">
+        <div class="location">at line 1709</div>
+        <code>            public            string
+    <strong>getUvs</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_displayUvs">
+        <div class="location">at line 1717</div>
+        <code>            public            string
+    <strong>displayUvs</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
                 <h3 id="method_getOptions">
-        <div class="location">at line 1632</div>
+        <div class="location">at line 1725</div>
         <code>            public            <a href="../../../../Etu/Core/UserBundle/Collection/UserOptionsCollection.html"><abbr title="Etu\Core\UserBundle\Collection\UserOptionsCollection">UserOptionsCollection</abbr></a>
     <strong>getOptions</strong>()</code>
     </h3>
