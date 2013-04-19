@@ -2,6 +2,9 @@
 
 namespace Etu\Core\CoreBundle\Framework\Listener;
 
+use Etu\Core\CoreBundle\Framework\Definition\Module;
+use Etu\Core\CoreBundle\Framework\Module\ModulesCollection;
+use Etu\Core\CoreBundle\Framework\Module\ModulesManager;
 use Etu\Core\CoreBundle\Framework\Twig\GlobalAccessorObject;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -11,14 +14,9 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 class ModulesBootListener
 {
 	/**
-	 * @var SecurityContextInterface
+	 * @var ModulesManager
 	 */
-	protected $securityContext;
-
-	/**
-	 * @var array
-	 */
-	protected $modules;
+	protected $modulesManager;
 
 	/**
 	 * @var Router
@@ -26,20 +24,25 @@ class ModulesBootListener
 	protected $router;
 
 	/**
+	 * @var GlobalAccessorObject
+	 */
+	protected $globalAccessorObject;
+
+	/**
 	 * @var Container
 	 */
 	protected $container;
 
-	/**
-	 * @param SecurityContextInterface $securityContext
-	 * @param \AppKernel               $kernel
-	 */
-	public function __construct(SecurityContextInterface $securityContext, \AppKernel $kernel)
+
+	public function __construct(Router $router,
+	                            ModulesManager $modulesManager,
+	                            GlobalAccessorObject $globalAccessorObject,
+	                            Container $container)
 	{
-		$this->securityContext = $securityContext;
-		$this->modules = $kernel->getModulesDefinitions();
-		$this->router = $kernel->getContainer()->get('router');
-		$this->container = $kernel->getContainer();
+		$this->modulesManager = $modulesManager;
+		$this->router = $router;
+		$this->globalAccessorObject = $globalAccessorObject;
+		$this->container = $container;
 	}
 
 	/**
@@ -47,8 +50,11 @@ class ModulesBootListener
 	 */
 	public function onKernelRequest(GetResponseEvent $event)
 	{
+		$modules = $this->modulesManager->getModules();
+
 		// Boot modules
-		foreach ($this->modules as &$module) {
+		foreach ($modules as &$module) {
+			/** @var $module Module */
 			if ($module->mustBoot()) {
 				$module->setContainer($this->container);
 				$module->setRouter($this->router);
@@ -57,9 +63,7 @@ class ModulesBootListener
 			}
 		}
 
-		// Create Twig accessor object
-		$app = new GlobalAccessorObject($this->container->get('etu.core.modules_manager')->getModules());
-
-		$this->container->get('twig')->addGlobal('etu', $app);
+		// Give an access from Twig
+		$this->globalAccessorObject->set('modules', $modules);
 	}
 }

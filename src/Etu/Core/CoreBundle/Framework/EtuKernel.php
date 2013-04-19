@@ -4,6 +4,7 @@ namespace Etu\Core\CoreBundle\Framework;
 
 use Etu\Core\CoreBundle\Framework\Definition\Module;
 use Etu\Core\CoreBundle\Framework\Exception\ModuleNotFoundException;
+use Etu\Core\CoreBundle\Framework\Module\ModulesCollection;
 use Symfony\Component\HttpKernel\Kernel;
 
 
@@ -39,7 +40,7 @@ abstract class EtuKernel extends Kernel
 
 	/**
 	 * @param \Etu\Core\CoreBundle\Framework\Definition\Module $module
-	 * @return AppKernel
+	 * @return \AppKernel
 	 */
 	public function registerModuleDefinition(Module $module)
 	{
@@ -48,7 +49,7 @@ abstract class EtuKernel extends Kernel
 	}
 
 	/**
-	 * @return \Etu\Core\CoreBundle\Framework\Definition\Module[]
+	 * @return ModulesCollection
 	 */
 	public function getModulesDefinitions()
 	{

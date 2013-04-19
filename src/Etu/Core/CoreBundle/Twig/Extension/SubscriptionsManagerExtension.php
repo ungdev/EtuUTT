@@ -18,11 +18,18 @@ class SubscriptionsManagerExtension extends \Twig_Extension
 	protected $manager;
 
 	/**
-	 * @param SubscriptionsManager $manager
+	 * @var \Twig_Environment
 	 */
-	public function __construct(SubscriptionsManager $manager)
+	protected $twig;
+
+	/**
+	 * @param SubscriptionsManager $manager
+	 * @param \Twig_Environment    $twig
+	 */
+	public function __construct(SubscriptionsManager $manager, \Twig_Environment $twig)
 	{
 		$this->manager = $manager;
+		$this->twig = $twig;
 	}
 
 	/**
@@ -42,6 +49,7 @@ class SubscriptionsManagerExtension extends \Twig_Extension
 			// 'notifs_subscribe' => new \Twig_Function_Method($this, 'subscribe'),
 			// 'notifs_unsubscribe' => new \Twig_Function_Method($this, 'unsubscribe'),
 			'is_subscriber' => new \Twig_Function_Method($this, 'isSubscriber'),
+			'render_subscribe_button' => new \Twig_Function_Method($this, 'renderButton', array('is_safe' => array('html'))),
 		);
 	}
 
@@ -77,5 +85,18 @@ class SubscriptionsManagerExtension extends \Twig_Extension
 	public function isSubscriber(User $user, $entityType, $entityId)
 	{
 		return $this->manager->isSubscriber($user, $entityType, $entityId);
+	}
+
+	/**
+	 * @param $entityType
+	 * @param $entityId
+	 * @return bool
+	 */
+	public function renderButton($entityType, $entityId)
+	{
+		return $this->twig->render('EtuCoreBundle:Subscriptions:button.html.twig', array(
+			'entityType' => $entityType,
+			'entityId' => $entityId,
+		));
 	}
 }

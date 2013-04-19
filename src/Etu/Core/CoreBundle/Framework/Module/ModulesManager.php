@@ -39,11 +39,11 @@ class ModulesManager
 	}
 
 	/**
-	 * @return array|\Etu\Core\CoreBundle\Framework\Definition\Module[]
+	 * @return ModulesCollection
 	 */
 	public function getModules()
 	{
-		return $this->modules;
+		return new ModulesCollection($this->modules);
 	}
 
 	/**

@@ -5,13 +5,14 @@ namespace Etu\Core\UserBundle\Controller;
 use Etu\Core\UserBundle\Ldap\LdapManager;
 use Etu\Core\UserBundle\Sync\Iterator\Element\ElementToImport;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
-use Etu\Core\UserBundle\Entity\User;
-use Etu\Core\UserBundle\Entity\Organization;
+use Etu\Core\UserBundle\Ldap\Model\User;
+use Etu\Core\UserBundle\Ldap\Model\Organization;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class AuthController extends Controller
 {
@@ -61,9 +62,16 @@ class AuthController extends Controller
 				}
 
 				// We caught a user that is not in the database : we import it !
-				if ($ldapUser) {
+				if ($ldapUser instanceof User) {
 					$import = new ElementToImport($this->getDoctrine(), $ldapUser);
 					$user = $import->import(true);
+				} elseif ($ldapUser instanceof Organization) {
+					$this->get('session')->getFlashBag()->set('message', array(
+						'type' => 'success',
+						'message' => 'user.auth.connectOrga.errorExistsLdap'
+					));
+
+					return $this->redirect($this->generateUrl('homepage'));
 				}
 			}
 
@@ -143,22 +151,28 @@ class AuthController extends Controller
 				$ldapUser = $ldap->getOrga($login);
 			}
 
-			// We definitely can't connect the user
-			if (! $ldapUser) {
+			// We caught a user that is not in the database : we import it !
+			if ($ldapUser instanceof User) {
+				$import = new ElementToImport($this->getDoctrine(), $ldapUser);
+				$user = $import->import(true);
+			} elseif ($ldapUser instanceof Organization) {
 				$this->get('session')->getFlashBag()->set('message', array(
 					'type' => 'success',
+					'message' => 'user.auth.connectOrga.errorExistsLdap'
+				));
+
+				return $this->redirect($this->generateUrl('homepage'));
+			} else {
+				$this->get('session')->getFlashBag()->set('message', array(
+					'type' => 'error',
 					'message' => 'user.auth.error'
 				));
 
 				return $this->redirect($this->generateUrl('user_connect'));
 			}
-
-			// We caught a user that is not in the database : we import it !
-			$import = new ElementToImport($this->getDoctrine(), $ldapUser);
-			$user = $import->import(true);
 		}
 
-		if ($user instanceof User) {
+		if ($user instanceof \Etu\Core\UserBundle\Entity\User) {
 			$this->get('session')->set('user', $user->getId());
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
@@ -168,7 +182,7 @@ class AuthController extends Controller
 			if (in_array($user->getLanguage(), $this->container->getParameter('etu.translation.languages'))) {
 				$this->get('session')->set('_locale', $user->getLanguage());
 			}
-		} elseif ($user instanceof Organization) {
+		} elseif ($user instanceof \Etu\Core\UserBundle\Entity\Organization) {
 			$this->get('session')->set('orga', $user->getId());
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',

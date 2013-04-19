@@ -24,6 +24,7 @@ user:
             identifier: Identifiant
             password: Mot de passe
             submit: Connexion
+            errorExistsLdap: Cette association existe bien mais doit être autorisée à se connecter par l'UNG
         logout:
             confirm: Vous êtes bien déconnecté
         confirm: Vous êtes bien connecté

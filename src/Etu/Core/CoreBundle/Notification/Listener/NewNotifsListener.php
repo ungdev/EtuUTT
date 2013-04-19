@@ -3,8 +3,9 @@
 namespace Etu\Core\CoreBundle\Notification\Listener;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
-use Etu\Core\CoreBundle\Framework\EtuKernel;
+use Etu\Core\CoreBundle\Framework\Twig\GlobalAccessorObject;
 use Etu\Core\UserBundle\Security\Layer\UserLayer;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Core\SecurityContext;
@@ -22,26 +23,29 @@ class NewNotifsListener
 	protected $securityContext;
 
 	/**
-	 * @var \Twig_Environment
+	 * @var GlobalAccessorObject
 	 */
-	protected $twig;
+	protected $globalAccessor;
 
 	/**
-	 * @var EtuKernel
+	 * @var \AppKernel
 	 */
 	protected $kernel;
 
 	/**
-	 * @param SecurityContext   $securityContext
-	 * @param Registry          $doctrine
-	 * @param \Twig_Environment $twig
-	 * @param EtuKernel         $kernel
+	 * @param SecurityContext      $securityContext
+	 * @param Registry             $doctrine
+	 * @param GlobalAccessorObject $globalAccessor
+	 * @param \AppKernel           $kernel
 	 */
-	public function __construct(SecurityContext $securityContext, Registry $doctrine, \Twig_Environment $twig, EtuKernel $kernel)
+	public function __construct(SecurityContext $securityContext,
+	                            Registry $doctrine,
+	                            GlobalAccessorObject $globalAccessor,
+	                            \AppKernel $kernel)
 	{
 		$this->doctrine = $doctrine;
 		$this->securityContext = $securityContext;
-		$this->twig = $twig;
+		$this->globalAccessor = $globalAccessor;
 		$this->kernel = $kernel;
 	}
 
@@ -79,7 +83,8 @@ class NewNotifsListener
 			$notifications = $query->andWhere(implode(' OR ', $where))->getQuery()->getResult();
 		}
 
-		$this->twig->addGlobal('etu_count_new_notifs', count($notifications));
-		$this->twig->addGlobal('etu_new_notifs', $notifications);
+		$this->globalAccessor->set('notifs', new ArrayCollection());
+		$this->globalAccessor->get('notifs')->set('new', $notifications);
+		$this->globalAccessor->get('notifs')->set('new_count', count($notifications));
 	}
 }

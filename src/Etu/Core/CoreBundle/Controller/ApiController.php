@@ -84,11 +84,12 @@ class ApiController extends Controller
 			)));
 		}
 
-		$globals = $this->get('twig')->getGlobals();
-
 		return new Response(json_encode(array(
 			'status' => 200,
-			'result' => array('count' => $globals['etu_count_new_notifs'], 'notifs' => $globals['etu_new_notifs'])
+			'result' => array(
+				'count' => $this->get('etu.twig.global_accessor')->get('notifs')->get('new_count'),
+				'notifs' => $this->get('etu.twig.global_accessor')->get('notifs')->get('new')
+			)
 		)));
 	}
 }

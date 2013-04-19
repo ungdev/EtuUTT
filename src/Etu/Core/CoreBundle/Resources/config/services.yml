@@ -21,6 +21,9 @@ parameters:
     etu.twig.string_manipulation.class: Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension
     etu.twig.notif_helper.class: Etu\Core\CoreBundle\Twig\Extension\NotificationHelperExtension
 
+    etu.twig.global_accessor.class: Etu\Core\CoreBundle\Framework\Twig\GlobalAccessorObject
+    etu.twig.global_listener.class: Etu\Core\CoreBundle\Framework\Listener\TwigGlobalListener
+
     etu.notifs.listener.class: Etu\Core\CoreBundle\Notification\Listener\NewNotifsListener
     etu.notifs.sender.class: Etu\Core\CoreBundle\Notification\NotificationSender
     etu.notifs.subscriber.class: Etu\Core\CoreBundle\Notification\SubscriptionsManager
@@ -86,7 +89,7 @@ services:
     # Module boot listener
     etu.modules_boot_listener:
         class: %etu.modules_boot_listener.class%
-        arguments: [@security.context, @kernel]
+        arguments: [@router, @etu.core.modules_manager, @etu.twig.global_accessor, @service_container]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
@@ -102,6 +105,15 @@ services:
         class: %etu.twig.string_manipulation.class%
         tags:
             - { name: twig.extension }
+
+    # Global accessor
+    etu.twig.global_accessor:
+        class: %etu.twig.global_accessor.class%
+    etu.twig.global_listener:
+        class: %etu.twig.global_listener.class%
+        arguments: [@twig, @etu.twig.global_accessor]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
     # Notifications helpers
     etu.notifs.helper_manager:
@@ -124,13 +136,13 @@ services:
 
     etu.notifs.subscriber.twig:
         class: %etu.notifs.subscriber.twig.class%
-        arguments: [@etu.notifs.subscriber]
+        arguments: [@etu.notifs.subscriber, @twig]
         tags:
             - { name: twig.extension }
 
     etu.notifs.listener:
         class: %etu.notifs.listener.class%
-        arguments: [@security.context, @doctrine, @twig, @kernel]
+        arguments: [@security.context, @doctrine, @etu.twig.global_accessor, @kernel]
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelRequest }
 

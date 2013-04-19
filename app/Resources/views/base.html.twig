@@ -1,6 +1,4 @@
 
-{% import ':Macro:subscribe.html.twig' as etu_subscribe %}
-
 <!DOCTYPE html>
 <html lang="fr" class="bg-soft-grey">
 	<head>
@@ -42,10 +40,10 @@
 				<nav class="pull-left">
 					<ul class="list-horizontal list-horizontal-linked menu" id="head-menu-list">
 						<li class="first{% block main_menu_link_homepage %}{% endblock %}">
-							{% if etu_count_new_notifs == 0 %}
+							{% if etu.notifs.new_count == 0 %}
 							<span id="head-menu-home-pins" class="pins pins-alert pins-head pins-head-hidden">0</span>
 							{% else %}
-							<span id="head-menu-home-pins" class="pins pins-alert pins-head">{{ etu_count_new_notifs }}</span>
+							<span id="head-menu-home-pins" class="pins pins-alert pins-head">{{ etu.notifs.new_count }}</span>
 							{% endif %}
 
 							<a href="{{ path('homepage') }}">
@@ -193,7 +191,7 @@
 						{{ 'base.sidebar.services.items.uvs'|trans }}
 					</a>
 				</li>
-				{% if etu.moduleEnabled('trombi') %}
+				{% if etu.modules.isEnabled('trombi') %}
 				<li>
 					<a href="{{ path('trombi_index') }}">
 						<i class="etu-icon-book"></i>
@@ -219,7 +217,7 @@
 						{{ 'base.sidebar.etu.items.team'|trans }}
 					</a>
 				</li>
-				{% if etu.moduleEnabled('bugs') and app.user %}
+				{% if etu.modules.isEnabled('bugs') and app.user %}
 					<li>
 						<a href="{{ path('bugs_index') }}">
 							<i class="etu-icon-warning"></i>
@@ -268,7 +266,7 @@
 				<li>
 					<a href="{{ path('change_locale', {'lang': 'cn'}) }}">
 						<img src="{{ asset('img/lang/cn.png') }}" />
-						中国的
+						???
 					</a>
 				</li>
 			</ul>
