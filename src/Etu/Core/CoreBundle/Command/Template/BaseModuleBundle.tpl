@@ -7,6 +7,14 @@ use Etu\Core\CoreBundle\Framework\Definition\Module;
 class EtuModule%name%Bundle extends Module
 {
 	/**
+	 * @return bool
+	 */
+	public function mustBoot()
+	{
+		return true;
+	}
+
+	/**
 	 * Module identifier (to be required by other modules)
 	 *
 	 * @return string

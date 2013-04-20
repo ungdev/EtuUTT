@@ -16,6 +16,7 @@
 				<tr>
 					<th style="width: 50px;">#</th>
 					<th>Nom</th>
+					<th class="hidden-phone">Auteur</th>
 					<th class="hidden-phone">Description</th>
 				</tr>
 				</thead>
@@ -24,6 +25,7 @@
 					<tr>
 						<td><input type="checkbox" name="modules[{{ module.identifier }}]" {% if module.enabled %} checked="checked"{% endif %} /></td>
 						<td>{{ module.title }}</td>
+						<td>{{ module.author }}</td>
 						<td class="hidden-phone">{{ module.description }}</td>
 					</tr>
 				{% endfor %}

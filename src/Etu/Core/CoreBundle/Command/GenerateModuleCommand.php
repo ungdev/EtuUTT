@@ -137,6 +137,22 @@ For instance, the UVBundle module name is "UV".
 			file_get_contents(__DIR__.'/Template/Resources/config/services.yml')
 		);
 		file_put_contents(
+			$this->modulesDirectory.'/'.$name.'Bundle/Resources/translations/messages.cn.yml',
+			file_get_contents(__DIR__.'/Template/Resources/translations/messages.cn.yml')
+		);
+		file_put_contents(
+			$this->modulesDirectory.'/'.$name.'Bundle/Resources/translations/messages.en.yml',
+			file_get_contents(__DIR__.'/Template/Resources/translations/messages.en.yml')
+		);
+		file_put_contents(
+			$this->modulesDirectory.'/'.$name.'Bundle/Resources/translations/messages.es.yml',
+			file_get_contents(__DIR__.'/Template/Resources/translations/messages.es.yml')
+		);
+		file_put_contents(
+			$this->modulesDirectory.'/'.$name.'Bundle/Resources/translations/messages.fr.yml',
+			file_get_contents(__DIR__.'/Template/Resources/translations/messages.fr.yml')
+		);
+		file_put_contents(
 			$this->modulesDirectory.'/'.$name.'Bundle/Resources/views/Default/index.html.twig',
 			file_get_contents(__DIR__.'/Template/Resources/views/Default/index.html.twig')
 		);

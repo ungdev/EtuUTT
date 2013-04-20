@@ -16,6 +16,9 @@ a:hover {
 	text-decoration: underline;
 	color: #224880;
 }
+textarea {
+	width: 95%;
+}
 
 /*
  * Global tool classes

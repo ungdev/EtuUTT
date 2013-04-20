@@ -96,6 +96,14 @@
 						<span class="help-block">{{ form_errors(form.contactPhone) }}</span>
 					</div>
 					<div class="control-group">
+						<label class="control-label">{{ 'orga.edit.descriptionShort.label'|trans }}</label>
+						<div class="controls">
+							{{ form_widget(form.descriptionShort) }}
+							<span class="help-block">{{ 'orga.edit.descriptionShort.desc'|trans }}</span>
+						</div>
+						<span class="help-block">{{ form_errors(form.descriptionShort) }}</span>
+					</div>
+					<div class="control-group">
 						<label class="control-label">{{ 'orga.edit.description.label'|trans }}</label>
 						<div class="controls">
 							{{ form_widget(form.description) }}

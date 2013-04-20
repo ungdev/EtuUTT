@@ -49,7 +49,7 @@ class TgaAudienceDriver
 			->getQuery()
 			->getResult();
 
-		for($i = 1; $i <= 30; $i++) {
+		for($i = 1; $i <= date('d'); $i++) {
 			$uniqueVisitors[$i] = 0;
 			$pagesCalls[$i] = 0;
 		}

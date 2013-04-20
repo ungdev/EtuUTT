@@ -135,7 +135,10 @@ orga:
             desc: Numéro de téléphone de contact de l'association
         description:
             label: Description
-            desc: Description de l'association (rôle au sein de l'UTT)
+            desc: Description de l'association
+        descriptionShort:
+            label: Courte description
+            desc: Version courte de la description (rôle au sein de l'UTT)
         website:
             label: Site internet
             desc: Site internet officiel de l'association

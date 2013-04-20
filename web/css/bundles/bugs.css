@@ -24,13 +24,6 @@
 .bug-meta {
 	font-style: italic;
 }
-
-
-
-.bugs-table-number {
-	width: 25px;
-}
-
 .bugs-view-title {
 	font-size: 18px;
 }
@@ -53,8 +46,5 @@
 @media screen and (max-width: 775px) {
 	.bugs-tabs > li > a {
 		font-size: 12px;
-	}
-	.bugs-table-number {
-		width: 2%;
 	}
 }

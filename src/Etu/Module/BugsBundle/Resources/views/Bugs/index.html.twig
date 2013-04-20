@@ -32,6 +32,11 @@
 	</ul>
 
 	<div class="padding20-sides">
+		{# display navigation #}
+		<div class="navigation">
+			{{ knp_pagination_render(pagination) }}
+		</div>
+
 		{% for number, bug in pagination %}
 			<a href="{{ path('bugs_view', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="bug{% if number == 0 %} bug-first{% endif %}">
 				<h5 class="bug-title">
@@ -70,6 +75,10 @@
 					{{ time_diff(bug.createdAt)|ucfirst }}
 				</small>
 			</a>
+		{% else %}
+			<p>
+				{{ 'bugs.index.table.no_bug_opened'|trans }}
+			</p>
 		{% endfor %}
 
 		{# display navigation #}

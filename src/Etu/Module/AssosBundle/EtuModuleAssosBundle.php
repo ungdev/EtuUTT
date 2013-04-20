@@ -7,6 +7,16 @@ use Etu\Core\CoreBundle\Framework\Definition\Module;
 class EtuModuleAssosBundle extends Module
 {
 	/**
+	 * Must boot for everyone
+	 *
+	 * @return bool
+	 */
+	public function mustBoot()
+	{
+		return true;
+	}
+
+	/**
 	 * Module identifier (to be required by other modules)
 	 *
 	 * @return string
@@ -43,7 +53,7 @@ class EtuModuleAssosBundle extends Module
 	 */
 	public function getDescription()
 	{
-		return 'Met en place la liste des associations et leurs recherche.';
+		return 'Met en place la liste et la recherche d\'associations';
 	}
 
 	/**

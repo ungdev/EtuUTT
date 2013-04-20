@@ -1,0 +1,69 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/bundles/assos.css') }}" type="text/css" />
+{% endblock %}
+
+{% block title %}{{ 'assos.view.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/assos.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<ul class="nav nav-tabs page-tabs">
+		<li>
+			<a href="{{ path('orgas_index') }}">
+				<i class="icon-chevron-left"></i>
+				{{ 'assos.view.back'|trans }}
+			</a>
+		</li>
+	</ul>
+
+	<div class="padding20-all">
+
+		<div class="row-fluid">
+			<div class="span3">
+				<div class="profileEdit-avatar">
+					<img src="{{ asset('logos/'~orga.logo) }}" alt="{{ orga.name }}" title="{{ orga.name }}" />
+				</div>
+
+				<hr />
+
+				<p>
+					<strong>{{ 'assos.view.name'|trans }}</strong><br />
+					{{ orga.name }}
+				</p>
+
+				{% if orga.president %}
+					<p>
+						<strong>{{ 'assos.view.president'|trans }}</strong><br />
+						{{ orga.president.fullName }}
+					</p>
+				{% endif %}
+
+				<p>
+					<strong>{{ 'assos.view.contactMail'|trans }}</strong><br />
+					<a href="mailto:{{ orga.contactMail }}">{{ orga.contactMail }}</a>
+				</p>
+
+				{% if orga.website %}
+					<p>
+						<strong>{{ 'assos.view.website'|trans }}</strong><br />
+						<a href="{{ orga.website }}">{{ orga.website }}</a>
+					</p>
+				{% endif %}
+
+				{% if orga.contactPhone %}
+					<p>
+						<strong>{{ 'assos.view.contactPhone'|trans }}</strong><br />
+						{{ orga.contactPhone }}
+					</p>
+				{% endif %}
+			</div>
+			<div class="span9">
+				{{ orga.description|raw }}
+			</div>
+		</div>
+	</div>
+{% endblock %}

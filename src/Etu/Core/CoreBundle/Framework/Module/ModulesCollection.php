@@ -11,6 +11,22 @@ use Etu\Core\CoreBundle\Framework\Definition\Module;
 class ModulesCollection extends ArrayCollection
 {
 	/**
+	 * Initializes a new ModulesCollection.
+	 *
+	 * @param Module[] $modules
+	 */
+	public function __construct(array $modules = array())
+	{
+		$constructed = array();
+
+		foreach ($modules as $module) {
+			$constructed[$module->getIdentifier()] = $module;
+		}
+
+		parent::__construct($constructed);
+	}
+
+	/**
 	 * @param string $identifier
 	 * @return bool
 	 */

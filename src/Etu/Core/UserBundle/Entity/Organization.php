@@ -74,6 +74,13 @@ class Organization implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
+	 * @ORM\Column(name="descriptionShort", type="string", length=200, nullable=true)
+	 */
+	protected $descriptionShort;
+
+	/**
+	 * @var string
+	 *
 	 * @ORM\Column(name="website", type="string", length=100, nullable=true)
 	 */
 	protected $website;
@@ -86,19 +93,11 @@ class Organization implements UserInterface, \Serializable
 	protected $logo;
 
 	/**
-	 * @ var string
-	 *
-	 * @ ORM\Column(name="description", type="text", nullable=true)
-	 *
-	protected $description;
-	 * */
-
-	/**
 	 * @var integer
 	 *
 	 * @ORM\Column(name="countMembers", type="integer", nullable=true)
 	 */
-	protected $countMembers = 0;
+	protected $countMembers;
 
 	/**
 	 * Temporary variable to store uploaded file during photo update
@@ -331,6 +330,25 @@ class Organization implements UserInterface, \Serializable
 	public function getDescription()
 	{
 		return $this->description;
+	}
+
+	/**
+	 * @param string $descriptionShort
+	 * @return Organization
+	 */
+	public function setDescriptionShort($descriptionShort)
+	{
+		$this->descriptionShort = $descriptionShort;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getDescriptionShort()
+	{
+		return $this->descriptionShort;
 	}
 
 	/**

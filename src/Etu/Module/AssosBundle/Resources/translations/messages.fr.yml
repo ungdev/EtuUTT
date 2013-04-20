@@ -1,0 +1,14 @@
+
+assos:
+    index:
+        title: Les associations
+        president: Président
+    view:
+        title: Détail d'une assocation
+        back: Retour à la liste
+        name: Nom
+        president: Président
+        contactMail: E-mail de contact
+        contactPhone: Téléphone de contact
+        description: Description
+        website: Site internet
