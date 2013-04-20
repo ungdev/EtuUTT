@@ -1,0 +1,18 @@
+
+<a href="{{ path('bugs_view', {'id': notif.firstEntity.id, 'slug': notif.firstEntity.title|slugify}) }}"
+   class="notif{% if notif.isSuper %} super-notif{% elseif notif.isNew %} notif-new{% endif %}">
+	<img src="{{ asset('img/notifs/bug.png') }}" />
+
+	<h4 class="notif-title">
+		{{ 'bugs.notifs.newOpened'|trans({
+			'%userName%': notif.firstEntity.user.fullName,
+			'%bugName%': notif.firstEntity.title
+		})|raw }}
+	</h4>
+
+	<div class="notif-date">
+		{{ time_diff(notif.date)|ucfirst }}
+	</div>
+
+	<div class="clear"></div>
+</a>

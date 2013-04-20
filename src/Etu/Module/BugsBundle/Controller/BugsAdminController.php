@@ -13,7 +13,6 @@ use Doctrine\ORM\EntityManager;
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * @Route("/bugs/admin")
@@ -403,5 +402,86 @@ class BugsAdminController extends Controller
 			'id' => $bug->getId(),
 			'slug' => StringManipulationExtension::slugify($bug->getTitle())
 		)));
+	}
+
+	/**
+	 * @Route("/{id}-{slug}/delete", requirements = {"id" = "\d+"}, name="bugs_admin_delete")
+	 * @Template()
+	 */
+	public function deleteAction($id, $slug)
+	{
+		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('bugs.admin')) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $bug Issue */
+		$bug = $em->createQueryBuilder()
+			->select('i, u, a')
+			->from('EtuModuleBugsBundle:Issue', 'i')
+			->leftJoin('i.user', 'u')
+			->leftJoin('i.assignee', 'a')
+			->where('i.id = :id')
+			->setParameter('id', $id)
+			->setMaxResults(1)
+			->getQuery()
+			->getOneOrNullResult();
+
+		if (! $bug) {
+			throw $this->createNotFoundException('Issue #'.$id.' not found');
+		}
+
+		if (StringManipulationExtension::slugify($bug->getTitle()) != $slug) {
+			throw $this->createNotFoundException('Invalid slug');
+		}
+
+		return array(
+			'bug' => $bug
+		);
+	}
+
+	/**
+	 * @Route("/{id}-{slug}/delete/confirm", requirements = {"id" = "\d+"}, name="bugs_admin_delete_confirm")
+	 * @Template()
+	 */
+	public function deleteConfirmAction($id, $slug)
+	{
+		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('bugs.admin')) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $bug Issue */
+		$bug = $em->createQueryBuilder()
+			->select('i, u, a')
+			->from('EtuModuleBugsBundle:Issue', 'i')
+			->leftJoin('i.user', 'u')
+			->leftJoin('i.assignee', 'a')
+			->where('i.id = :id')
+			->setParameter('id', $id)
+			->setMaxResults(1)
+			->getQuery()
+			->getOneOrNullResult();
+
+		if (! $bug) {
+			throw $this->createNotFoundException('Issue #'.$id.' not found');
+		}
+
+		if (StringManipulationExtension::slugify($bug->getTitle()) != $slug) {
+			throw $this->createNotFoundException('Invalid slug');
+		}
+
+		$em->remove($bug);
+
+		$this->get('session')->getFlashBag()->set('message', array(
+			'type' => 'success',
+			'message' => 'bugs.admin.delete.success'
+		));
+
+		return $this->redirect($this->generateUrl('bugs_index'));
 	}
 }

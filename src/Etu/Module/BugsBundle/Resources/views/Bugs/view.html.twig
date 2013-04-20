@@ -123,7 +123,7 @@
 			<hr />
 		{% endif %}
 
-		<div class="etu-comment">
+		<div class="etu-comment" id="1">
 			<div class="etu-comment-avatar">
 				<img src="{{ asset('photos/'~bug.user.avatar) }}" />
 			</div>
@@ -132,10 +132,30 @@
 					<small>
 						#1 - {{ bug.user.fullName }}
 					</small>
-					<small class="pull-right">{{ time_diff(bug.createdAt)|ucfirst }}</small>
+					<small class="pull-right">
+						{{ time_diff(bug.createdAt)|ucfirst }}
+					</small>
 				</div>
 				<div class="etu-comment-body">
 					{{ bug.body|raw }}
+
+					{% if bug.user.id == app.user.id or app.user.isAdmin %}
+						<p class="pull-right">
+							<a href="{{ path('bugs_edit', {'slug': bug.title|slugify, 'id': bug.id}) }}"
+							   class="btn btn-small">
+								<i class="icon-edit"></i>
+								{{ 'bugs.view.edit'|trans }}
+							</a>
+
+							{% if app.user.isAdmin %}
+								<a href="{{ path('bugs_admin_delete', {'slug': bug.title|slugify, 'id': bug.id}) }}"
+								   class="btn btn-small">
+									<i class="icon-remove"></i>
+									{{ 'bugs.view.delete'|trans }}
+								</a>
+							{% endif %}
+						</p>
+					{% endif %}
 				</div>
 			</div>
 
@@ -150,7 +170,7 @@
 					<div class="clear"></div>
 				</div>
 			{% else %}
-				<div class="etu-comment">
+				<div class="etu-comment" id="{{ key+2 }}">
 					<div class="etu-comment-avatar">
 						<img src="{{ asset('photos/'~comment.user.avatar) }}" />
 					</div>
@@ -159,10 +179,22 @@
 							<small>
 								#{{ key+2 }} - {{ comment.user.fullName }}
 							</small>
-							<small class="pull-right">{{ time_diff(comment.createdAt)|ucfirst }}</small>
+							<small class="pull-right">
+								{{ time_diff(comment.createdAt)|ucfirst }}
+							</small>
 						</div>
 						<div class="etu-comment-body">
 							{{ comment.body|raw }}
+
+							{% if comment.user.id == app.user.id or app.user.isAdmin %}
+								<p class="pull-right">
+									<a href="{{ path('bugs_edit_comment', {'issueId': bug.id, 'slug': bug.title|slugify, 'id': comment.id}) }}"
+									   class="btn btn-small">
+										<i class="icon-edit"></i>
+										{{ 'bugs.view.edit'|trans }}
+									</a>
+								</p>
+							{% endif %}
 						</div>
 					</div>
 

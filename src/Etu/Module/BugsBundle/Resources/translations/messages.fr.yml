@@ -4,6 +4,7 @@ bugs:
         newComment:
             your: '<span class="notif-data">%userName%</span> a commenté votre bug <span class="notif-data">%bugName%</span>'
             other: '<span class="notif-data">%userName%</span> a commenté le bug <span class="notif-data">%bugName%</span>'
+        newOpened: '<span class="notif-data">%userName%</span> a signalé un nouveau bug <span class="notif-data">%bugName%</span>'
 
     criticality:
         critical: Problème critique
@@ -32,14 +33,9 @@ bugs:
             no_bug_opened: Aucun bug ouvert signalé pour le moment
             assigned_to: assigné à %name%
 
-    create:
-        title: Titre
-        criticality: Criticité
-        body: Explications
-        submit: Signaler
-        confirm: Votre problème a été signalé. Merci de votre participation !
-
     view:
+        edit: Modifier
+        delete: Supprimer
         page:
             back: Retour à la liste
             title: Détails du bug
@@ -63,6 +59,21 @@ bugs:
             fix: Résoudre
             unfix: Réouvrir
 
+    create:
+        title: Titre
+        criticality: Criticité
+        body: Explications
+        submit: Signaler
+        confirm: Votre problème a été signalé. Merci de votre participation !
+
+    edit:
+        name: Modifier un bug
+        title: Titre
+        criticality: Criticité
+        body: Explications
+        submit: Modifier
+        confirm: Votre problème a bien été modifié.
+
     admin:
         assign:
             assignee_not_found: L'utilisateur n'a pas été trouvé
@@ -80,3 +91,9 @@ bugs:
         close:
             success: Le bug a bien été marqué comme résolu
             message: Fermé par %adminName%
+        delete:
+            title: Supprimer un bug
+            sure: Voulez-vous vraiment supprimer le bug %bugName% ?
+            yes: Oui, supprimer
+            no: Non, annuler
+            success: Le bug a bien été supprimé

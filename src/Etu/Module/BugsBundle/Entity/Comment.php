@@ -101,7 +101,7 @@ class Comment
     /**
      * Get user
      *
-     * @return \stdClass
+     * @return \Etu\Core\UserBundle\Entity\User
      */
     public function getUser()
     {

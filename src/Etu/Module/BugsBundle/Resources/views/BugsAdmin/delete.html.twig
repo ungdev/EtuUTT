@@ -1,0 +1,42 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/bundles/bugs.css') }}" type="text/css" />
+{% endblock %}
+
+{% block title %}{{ 'bugs.admin.delete.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/bugs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<ul class="nav nav-tabs page-tabs">
+		<li>
+			<a href="{{ path('bugs_index') }}">{{ 'bugs.index.page.opened'|trans }}</a>
+		</li>
+		<li>
+			<a href="{{ path('bugs_closed') }}">{{ 'bugs.index.page.resolved'|trans }}</a>
+		</li>
+		<li class="pull-right">
+			<a href="{{ path('bugs_create') }}">
+				<i class="icon-plus"></i>
+				{{ 'bugs.index.page.create'|trans }}
+			</a>
+		</li>
+	</ul>
+
+	<div class="padding20-sides">
+		<p>
+			{{ 'bugs.admin.delete.sure'|trans({'%bugName%': bug.title}) }}
+		</p>
+		<p>
+			<a href="{{ path('bugs_admin_delete_confirm', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="btn btn-primary">
+				{{ 'bugs.admin.delete.yes'|trans }}
+			</a>
+			<a href="{{ path('bugs_view', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="btn">
+				{{ 'bugs.admin.delete.no'|trans }}
+			</a>
+		</p>
+	</div>
+{% endblock %}
