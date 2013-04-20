@@ -27,6 +27,14 @@ class Controller extends BaseController
 	}
 
 	/**
+	 * @return \Etu\Core\CoreBundle\Menu\AdminMenu\AdminBuilder
+	 */
+	public function getAdminMenuBuilder()
+	{
+		return $this->get('etu.menu.admin_builder');
+	}
+
+	/**
 	 * @return \Etu\Core\CoreBundle\Framework\EtuKernel
 	 */
 	public function getKernel()

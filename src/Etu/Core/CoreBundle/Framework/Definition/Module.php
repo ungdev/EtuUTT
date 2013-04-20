@@ -109,6 +109,14 @@ abstract class Module extends Bundle
 	}
 
 	/**
+	 * @return \Etu\Core\CoreBundle\Menu\AdminMenu\AdminBuilder
+	 */
+	public function getAdminMenuBuilder()
+	{
+		return $this->container->get('etu.menu.admin_builder');
+	}
+
+	/**
 	 * @return SessionLayer
 	 */
 	public function getSessionLayer()

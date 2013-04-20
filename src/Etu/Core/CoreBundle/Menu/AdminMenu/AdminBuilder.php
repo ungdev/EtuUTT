@@ -15,21 +15,18 @@ class AdminBuilder extends SidebarBuilder
 	 */
 	public function __construct(Router $router)
 	{
-		parent::__construct($router);
+		$this->blocks = array();
+		$this->lastPosition = 0;
 
 		$this
-			->addBlock('base.sidebar.services.title')
-				->add('base.sidebar.services.items.uvs')
-					->setIcon('etu-icon-briefcase')
-					->setUrl('')
+			->addBlock('base.admin_menu.title')
+				->add('base.admin_menu.items.dashboard')
+					->setIcon('etu-icon-gear')
+					->setUrl($router->generate('admin_index'))
 				->end()
-				->add('base.sidebar.services.items.table')
-					->setIcon('etu-icon-table')
-					->setUrl('')
-				->end()
-				->add('base.sidebar.services.items.wiki')
-					->setIcon('etu-icon-info')
-					->setUrl('')
+				->add('base.admin_menu.items.stats')
+					->setIcon('etu-icon-chart')
+					->setUrl($router->generate('admin_stats'))
 				->end()
 			->end()
 		;

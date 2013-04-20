@@ -68,6 +68,13 @@ base:
             items:
                 team: L'équipe
 
+    # Admin
+    admin_menu:
+        title: Administration générale
+        items:
+            dashboard: Tableau de bord
+            stats: Statistiques
+
     # Footer
     footer:
         # Links
