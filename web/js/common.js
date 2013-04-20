@@ -138,7 +138,6 @@ $(function() {
 			$('#'+ id +'-loader').hide();
 
 			if (typeof data.status != 'undefined' && data.status == 200) {
-				$('#'+ id +'-subscribe').hide();
 				$('#'+ id +'-unsubscribe').show();
 			} else {
 				$('#'+ id +'-subscribe').show();
@@ -165,7 +164,6 @@ $(function() {
 			$('#'+ id +'-loader').hide();
 
 			if (typeof data.status != 'undefined' && data.status == 200) {
-				$('#'+ id +'-unsubscribe').hide();
 				$('#'+ id +'-subscribe').show();
 			} else {
 				$('#'+ id +'-unsubscribe').show();

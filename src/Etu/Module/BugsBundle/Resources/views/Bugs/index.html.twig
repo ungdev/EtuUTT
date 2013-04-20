@@ -10,6 +10,11 @@
 	<img src="{{ asset('img/titles/bugs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
+{% block sidebar %}
+	{{ render_subscribe_button('issue', 0) }}
+	{{ parent() }}
+{% endblock %}
+
 {% block content %}
 	<ul class="nav nav-tabs page-tabs">
 		<li class="active page-tabs-resolved-active">
@@ -26,10 +31,7 @@
 		</li>
 	</ul>
 
-	{# Subscribe button for all bugs #}
-	{{ render_subscribe_button('issue', 0) }}
-
-	<div class="padding20-all">
+	<div class="padding20-sides">
 		{% for number, bug in pagination %}
 			<a href="{{ path('bugs_view', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="bug{% if number == 0 %} bug-first{% endif %}">
 				<h5 class="bug-title">
@@ -56,8 +58,11 @@
 
 				<small class="muted bug-meta">
 					{{ 'base.by'|trans|ucfirst }} {{ bug.user.fullName }}
+
 					{% if bug.assignee %}
-						({{ 'bugs.index.table.assigned_to'|trans({'%name%': bug.assignee.fullName}) }})
+						<span class="text-success">
+							({{ 'bugs.index.table.assigned_to'|trans({'%name%': bug.assignee.fullName}) }})
+						</span>
 					{% endif %}
 				</small>
 

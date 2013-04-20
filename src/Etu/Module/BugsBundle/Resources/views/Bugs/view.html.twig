@@ -10,6 +10,11 @@
 	<img src="{{ asset('img/titles/bugs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
+{% block sidebar %}
+	{{ render_subscribe_button('issue', bug.id) }}
+	{{ parent() }}
+{% endblock %}
+
 {% block content %}
 	<ul class="nav nav-tabs page-tabs">
 		<li>
@@ -25,8 +30,6 @@
 			</a>
 		</li>
 	</ul>
-
-	{{ render_subscribe_button('issue', bug.id) }}
 
 	<div class="padding20-sides">
 

@@ -167,17 +167,30 @@ a:hover {
 
 /* Subscription state */
 .subscription-state {
-	float: right;
-	margin-right: 20px;
+	position: absolute;
+	text-align: center;
+	margin-top: -15px;
+	width: 247px;
 }
 .subscription-hidden {
 	display: none;
 }
-.subscription-first {
-	margin: 0;
-	margin-top: -4px;
-}
 .subscription-second {
 	padding-top: 6px;
 	padding-bottom: 6px;
+}
+.subscription-loader {
+	margin-top: 5px;
+}
+
+
+@media screen and (max-width: 1230px) {
+	.subscription-state {
+		width: 190px;
+	}
+}
+@media screen and (max-width: 1000px) {
+	.subscription-state {
+		display: none;
+	}
 }
