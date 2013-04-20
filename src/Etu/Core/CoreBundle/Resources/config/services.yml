@@ -15,6 +15,9 @@ parameters:
     etu.menu.sidebar_renderer.class: Etu\Core\CoreBundle\Menu\Sidebar\SidebarRenderer
     etu.menu.sidebar_twig_extension.class: Etu\Core\CoreBundle\Twig\Extension\SidebarRendererExtension
 
+    etu.menu.admin_builder.class: Etu\Core\CoreBundle\Menu\AdminMenu\AdminBuilder
+    etu.menu.admin_twig_extension.class: Etu\Core\CoreBundle\Twig\Extension\AdminMenuRendererExtension
+
     etu.modules_boot_listener.class: Etu\Core\CoreBundle\Framework\Listener\ModulesBootListener
     etu.locale_listener.class: Etu\Core\CoreBundle\Framework\Listener\LocaleListener
 
@@ -83,6 +86,16 @@ services:
     etu.menu.sidebar_twig_extension:
         class: %etu.menu.sidebar_twig_extension.class%
         arguments: [@etu.menu.sidebar_builder, @etu.menu.sidebar_renderer]
+        tags:
+            - { name: twig.extension }
+
+    # Admin menu
+    etu.menu.admin_builder:
+        class: %etu.menu.admin_builder.class%
+        arguments: [@router]
+    etu.menu.admin_twig_extension:
+        class: %etu.menu.admin_twig_extension.class%
+        arguments: [@etu.menu.admin_builder, @etu.menu.sidebar_renderer]
         tags:
             - { name: twig.extension }
 

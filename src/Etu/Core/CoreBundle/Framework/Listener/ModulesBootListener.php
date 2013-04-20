@@ -50,7 +50,7 @@ class ModulesBootListener
 	 */
 	public function onKernelRequest(GetResponseEvent $event)
 	{
-		$modules = $this->modulesManager->getModules();
+		$modules = $this->modulesManager->getEnabledModules();
 
 		// Boot modules
 		foreach ($modules as &$module) {
@@ -64,6 +64,6 @@ class ModulesBootListener
 		}
 
 		// Give an access from Twig
-		$this->globalAccessorObject->set('modules', $modules);
+		$this->globalAccessorObject->set('modules', $this->modulesManager->getModules());
 	}
 }

@@ -1,0 +1,9 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block sidebar %}
+	{{ render_admin_menu() }}
+{% endblock %}

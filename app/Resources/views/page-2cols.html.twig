@@ -23,7 +23,9 @@
 			</div>
 
 			<div class="sidebar">
-				{{ render_sidebar() }}
+				{% block sidebar %}
+					{{ render_sidebar() }}
+				{% endblock %}
 
 				<!--<div style="margin-top: 15px; text-align:center;">
 					<strong>Par l'UTT Net Group</strong>

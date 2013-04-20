@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 /**
  * Default sidebar. Edited by controllers on the fly.
  */
-class AdminBuilder
+class SidebarBuilder
 {
 	/**
 	 * @var array

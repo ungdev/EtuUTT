@@ -43,7 +43,26 @@ class ModulesManager
 	 */
 	public function getModules()
 	{
-		return new ModulesCollection($this->modules);
+		$modules = $this->modules;
+		ksort($modules);
+
+		return new ModulesCollection($modules);
+	}
+
+	/**
+	 * @return ModulesCollection
+	 */
+	public function getEnabledModules()
+	{
+		$modules = array();
+
+		foreach ($this->modules as $module) {
+			if ($module->isEnabled()) {
+				$modules[$module->getIdentifier()] = $module;
+			}
+		}
+
+		return new ModulesCollection($modules);
 	}
 
 	/**

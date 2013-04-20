@@ -5,12 +5,12 @@ namespace Etu\Module\TrombiBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
+use Etu\Core\UserBundle\Entity\User;
+use Symfony\Component\HttpFoundation\Response;
 
 // Import annotations
-use Etu\Core\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Response;
 
 class MainController extends Controller
 {
