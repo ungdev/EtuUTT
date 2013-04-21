@@ -154,11 +154,11 @@ class Notification
 	}
 
 	/**
-	 * @return array
+	 * @return integer
 	 */
-	public function getEntities()
+	public function countEntities()
 	{
-		return $this->entities;
+		return count($this->entities);
 	}
 
 	/**
@@ -166,15 +166,24 @@ class Notification
 	 */
 	public function getFirstEntity()
 	{
-		return reset($this->entities);
+		return $this->getEntity(1);
 	}
 
 	/**
-	 * @return integer
+	 * @param integer $number
+	 * @return object
 	 */
-	public function countEntities()
+	public function getEntity($number)
 	{
-		return count($this->entities);
+		return (isset($this->entities[$number - 1])) ? $this->entities[$number - 1] : false;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getEntities()
+	{
+		return $this->entities;
 	}
 
 	/**

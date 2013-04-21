@@ -53,7 +53,7 @@ class EtuModuleAssosBundle extends Module
 	 */
 	public function getDescription()
 	{
-		return 'Met en place la liste et la recherche d\'associations';
+		return 'Met en place la liste des associations';
 	}
 
 	/**

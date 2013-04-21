@@ -7,9 +7,8 @@
 			   data-entityType="{{ entityType }}"
 			   data-entityId="{{ entityId }}"
 			   class="btn btn-primary subscription-unsubscribe subscription-first"
-			   title="{{ 'notifs.subscribe.unfollow'|trans }}">
-				<i class="icon-remove icon-white"></i>
-				{{ 'notifs.subscribe.follower'|trans }}
+			   title="{{ 'notifs.subscribe.follower'|trans }}">
+				{{ 'notifs.subscribe.unfollow'|trans }}
 			</a>
 
 			<a href="#"
@@ -18,7 +17,6 @@
 			   data-entityId="{{ entityId }}"
 			   class="btn subscription-subscribe subscription-hidden subscription-second"
 			   title="{{ 'notifs.subscribe.follow'|trans }}">
-				<i class="icon-star"></i>
 				{{ 'notifs.subscribe.follow'|trans }}
 			</a>
 		{% else %}
@@ -28,7 +26,6 @@
 			   data-entityId="{{ entityId }}"
 			   class="btn subscription-subscribe subscription-first"
 			   title="{{ 'notifs.subscribe.follow'|trans }}">
-				<i class="icon-star"></i>
 				{{ 'notifs.subscribe.follow'|trans }}
 			</a>
 
@@ -37,12 +34,13 @@
 			   data-entityType="{{ entityType }}"
 			   data-entityId="{{ entityId }}"
 			   class="btn btn-primary subscription-unsubscribe subscription-hidden subscription-second"
-			   title="{{ 'notifs.subscribe.unfollow'|trans }}">
-				<i class="icon-remove icon-white"></i>
-				{{ 'notifs.subscribe.follower'|trans }}
+			   title="{{ 'notifs.subscribe.follower'|trans }}">
+				{{ 'notifs.subscribe.unfollow'|trans }}
 			</a>
 		{% endif %}
 
 		<img src="{{ asset('img/loader.gif') }}" class="subscription-hidden subscription-loader" id="{{ entityType~'-'~entityId~'-loader' }}" />
 	</div>
+
+	<br class="clear" /><br />
 {% endif %}

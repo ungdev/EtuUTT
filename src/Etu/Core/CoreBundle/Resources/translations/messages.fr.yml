@@ -128,7 +128,7 @@ flux:
 notifs:
     subscribe:
         confirm: Vous êtes désormais abonné à cet élément
-        follower: Abonné
+        follower: Vous êtes abonné à cette page
         unfollow: Se désabonner
         follow: S'abonner
     unsubscribe:

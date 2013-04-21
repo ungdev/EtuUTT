@@ -5,15 +5,57 @@
 
 	<h4 class="notif-title">
 		{% if app.user.id == notif.firstEntity.issue.user.id %}
-			{{ 'bugs.notifs.newComment.your'|trans({
-				'%userName%': notif.firstEntity.user.fullName,
-				'%bugName%': notif.firstEntity.issue.title
-			})|raw }}
+			{% if notif.countEntities == 1 %}
+				{{ 'bugs.notifs.newComment.your.one'|trans({
+					'%userName%': highlight_notif_data(notif.firstEntity.user.fullName),
+					'%bugName%': highlight_notif_data(notif.firstEntity.issue.title)
+				})|raw }}
+			{% elseif notif.countEntities == 2 %}
+				{{ 'bugs.notifs.newComment.your.two'|trans({
+					'%first%': highlight_notif_data(notif.getEntity(1).user.fullName),
+					'%second%': highlight_notif_data(notif.getEntity(2).user.fullName),
+					'%bugName%': highlight_notif_data(notif.getEntity(1).issue.title)
+				})|raw }}
+			{% elseif notif.countEntities == 3 %}
+				{{ 'bugs.notifs.newComment.your.more_single'|trans({
+					'%first%': highlight_notif_data(notif.getEntity(1).user.fullName),
+					'%second%': highlight_notif_data(notif.getEntity(2).user.fullName),
+					'%bugName%': highlight_notif_data(notif.firstEntity.issue.title)
+				})|raw }}
+			{% else %}
+				{{ 'bugs.notifs.newComment.your.more_single'|trans({
+					'%first%': highlight_notif_data(notif.getEntity(1).user.fullName),
+					'%second%': highlight_notif_data(notif.getEntity(2).user.fullName),
+					'%count%': notif.countEntities,
+					'%bugName%': highlight_notif_data(notif.firstEntity.issue.title)
+				})|raw }}
+			{% endif %}
 		{% else %}
-			{{ 'bugs.notifs.newComment.other'|trans({
-				'%userName%': notif.firstEntity.user.fullName,
-				'%bugName%': notif.firstEntity.issue.title
-			})|raw }}
+			{% if notif.countEntities == 1 %}
+				{{ 'bugs.notifs.newComment.other.one'|trans({
+					'%userName%': highlight_notif_data(notif.firstEntity.user.fullName),
+					'%bugName%': highlight_notif_data(notif.firstEntity.issue.title)
+				})|raw }}
+			{% elseif notif.countEntities == 2 %}
+				{{ 'bugs.notifs.newComment.other.two'|trans({
+					'%first%': highlight_notif_data(notif.getEntity(1).user.fullName),
+					'%second%': highlight_notif_data(notif.getEntity(2).user.fullName),
+					'%bugName%': highlight_notif_data(notif.getEntity(1).issue.title)
+				})|raw }}
+			{% elseif notif.countEntities == 3 %}
+				{{ 'bugs.notifs.newComment.other.more_single'|trans({
+					'%first%': highlight_notif_data(notif.getEntity(1).user.fullName),
+					'%second%': highlight_notif_data(notif.getEntity(2).user.fullName),
+					'%bugName%': highlight_notif_data(notif.firstEntity.issue.title)
+				})|raw }}
+			{% else %}
+				{{ 'bugs.notifs.newComment.other.more_single'|trans({
+					'%first%': highlight_notif_data(notif.getEntity(1).user.fullName),
+					'%second%': highlight_notif_data(notif.getEntity(2).user.fullName),
+					'%count%': notif.countEntities,
+					'%bugName%': highlight_notif_data(notif.firstEntity.issue.title)
+				})|raw }}
+			{% endif %}
 		{% endif %}
 	</h4>
 

@@ -231,6 +231,8 @@ class ProfileController extends Controller
 			$user = $this->getUser();
 		}
 
+
+
 		$from = null;
 
 		if (in_array($this->getRequest()->get('from'), array('search', 'profile', 'trombi'))) {

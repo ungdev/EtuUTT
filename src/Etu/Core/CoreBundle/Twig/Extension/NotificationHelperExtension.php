@@ -40,6 +40,7 @@ class NotificationHelperExtension extends \Twig_Extension
 	{
 		return array(
 			'render_notif' => new \Twig_Function_Method($this, 'render', array('is_safe' => array('html'))),
+			'highlight_notif_data' => new \Twig_Function_Method($this, 'highlight', array('is_safe' => array('html'))),
 		);
 	}
 
@@ -50,5 +51,14 @@ class NotificationHelperExtension extends \Twig_Extension
 	public function render(Notification $notification)
 	{
 		return $this->helperManager->getHelper($notification->getHelper())->render($notification);
+	}
+
+	/**
+	 * @param $string
+	 * @return string
+	 */
+	public function highlight($string)
+	{
+		return sprintf('<span class="notif-data">%s</span>', $string);
 	}
 }

@@ -123,6 +123,25 @@ class Issue
 	}
 
 	/**
+	 * Close the bug
+	 */
+	public function close()
+	{
+		$this->setOpen(false);
+		$this->setUpdatedAt(new \DateTime());
+		$this->setClosedAt(new \DateTime());
+	}
+
+	/**
+	 * Open the bug
+	 */
+	public function open()
+	{
+		$this->setOpen(true);
+		$this->setUpdatedAt(new \DateTime());
+	}
+
+	/**
 	 * @return \Etu\Core\UserBundle\Entity\User
 	 */
 	public function getAssignee()

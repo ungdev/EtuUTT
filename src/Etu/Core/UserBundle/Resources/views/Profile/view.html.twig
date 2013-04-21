@@ -25,7 +25,7 @@
 				</a>
 			</li>
 		</ul>
-	{% elseif from == 'trombi' and etu.moduleEnabled('trombi') %}
+	{% elseif from == 'trombi' and etu.modules.isEnabled('trombi') %}
 		<ul class="nav nav-tabs page-tabs">
 			<li>
 				<a href="{{ path('trombi_index') }}">
@@ -116,7 +116,11 @@
 					<div class="view-group">
 						<div class="view-label">{{ 'user.view.uvs'|trans }}</div>
 						<div class="view-value">
-							{{ user.displayUvs }}
+							{% if etu.modules.isEnabled('uv') %}
+								{% for uv in user.uvsList %}{% if loop.index > 1 %}, {% endif %}<a href="">{{ uv }}</a>{% endfor %}
+							{% else %}
+								{{ user.displayUvs }}
+							{% endif %}
 						</div>
 					</div>
 				{% endif %}

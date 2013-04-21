@@ -212,7 +212,7 @@ class AuthController extends Controller
 
 		$em = $this->getDoctrine()->getManager();
 
-		$user = new User();
+		$user = new \Etu\Core\UserBundle\Entity\User();
 
 		$form = $this->createFormBuilder($user)
 			->add('login')

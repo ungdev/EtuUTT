@@ -97,10 +97,57 @@ class NotificationSender
 			$notif->setIsNew($notification->getIsNew());
 			$notif->setIsSuper($notification->getIsSuper());
 
-			$em->persist($notif);
+			$this->send($notif, false);
 		}
 
 		$em->flush();
+
+		return true;
+	}
+
+	/**
+	 * Send a notification
+	 *
+	 * @param Notification $notif
+	 * @param bool         $flush
+	 * @return bool
+	 */
+	public function send(Notification $notif, $flush = true)
+	{
+		/** @var $em EntityManager */
+		$em = $this->doctrine->getManager();
+
+		if (! $notif->getIsSuper()) {
+			$oldNotif = $em->createQueryBuilder()
+				->select('n')
+				->from('EtuCoreBundle:Notification', 'n')
+				->where('n.isNew = 1')
+				->andWhere('n.isSuper = 0')
+				->andWhere('n.helper = :helper')
+				->andWhere('n.user = :user')
+				->andWhere('n.module = :module')
+				->setParameter('helper', $notif->getHelper())
+				->setParameter('user', $notif->getUser())
+				->setParameter('module', $notif->getModule())
+				->setMaxResults(1)
+				->getQuery()
+				->getOneOrNullResult();
+
+			if ($oldNotif instanceof Notification) {
+				$oldNotif->setEntities(array_merge($oldNotif->getEntities(), $notif->getEntities()));
+				$oldNotif->setDate($notif->getDate());
+
+				$em->persist($oldNotif);
+			} else {
+				$em->persist($notif);
+			}
+		} else {
+			$em->persist($notif);
+		}
+
+		if ($flush) {
+			$em->flush();
+		}
 
 		return true;
 	}

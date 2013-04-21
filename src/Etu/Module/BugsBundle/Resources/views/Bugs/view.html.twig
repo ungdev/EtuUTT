@@ -12,6 +12,7 @@
 
 {% block sidebar %}
 	{{ render_subscribe_button('issue', bug.id) }}
+
 	{{ parent() }}
 {% endblock %}
 
@@ -133,7 +134,7 @@
 			<div class="etu-comment-infos">
 				<div class="etu-comment-date">
 					<small>
-						#1 - {{ bug.user.fullName }}
+						<a href="#1">#1</a> - {{ bug.user.fullName }}
 					</small>
 					<small class="pull-right">
 						{{ time_diff(bug.createdAt)|ucfirst }}
@@ -165,22 +166,30 @@
 			<div class="clear"></div>
 		</div>
 
-		{% for key, comment in comments %}
+		{% set count = 2 %}
+
+		{% for comment in comments %}
 			{% if comment.isStateUpdate %}
 				<div class="etu-comment-state-update">
-					<strong>{{ comment.body|raw }}</strong>
+					<strong class="pull-left">
+						{{ comment.body|raw }}
+					</strong>
+
+					<small class="muted pull-right">
+						{{ time_diff(comment.createdAt)|ucfirst }}
+					</small>
 
 					<div class="clear"></div>
 				</div>
 			{% else %}
-				<div class="etu-comment" id="{{ key+2 }}">
+				<div class="etu-comment" id="{{ count }}">
 					<div class="etu-comment-avatar">
 						<img src="{{ asset('photos/'~comment.user.avatar) }}" />
 					</div>
 					<div class="etu-comment-infos">
 						<div class="etu-comment-date">
 							<small>
-								#{{ key+2 }} - {{ comment.user.fullName }}
+								<a href="#{{ count }}">#{{ count }}</a> - {{ comment.user.fullName }}
 							</small>
 							<small class="pull-right">
 								{{ time_diff(comment.createdAt)|ucfirst }}
@@ -204,6 +213,8 @@
 					<div class="clear"></div>
 				</div>
 			{% endif %}
+
+			{% set count = count + 1 %}
 		{% endfor %}
 
 		{% if bug.isOpen %}

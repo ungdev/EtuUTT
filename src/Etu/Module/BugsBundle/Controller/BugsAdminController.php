@@ -311,9 +311,7 @@ class BugsAdminController extends Controller
 			throw $this->createNotFoundException('Invalid slug');
 		}
 
-		$bug->setOpen(false);
-		$bug->setUpdatedAt(new \DateTime());
-
+		$bug->close();
 		$em->persist($bug);
 
 		$comment = new Comment();
@@ -374,9 +372,7 @@ class BugsAdminController extends Controller
 			throw $this->createNotFoundException('Invalid slug');
 		}
 
-		$bug->setOpen(true);
-		$bug->setUpdatedAt(new \DateTime());
-
+		$bug->open();
 		$em->persist($bug);
 
 		$comment = new Comment();
@@ -475,7 +471,23 @@ class BugsAdminController extends Controller
 			throw $this->createNotFoundException('Invalid slug');
 		}
 
+		/** @var $comments Comment[] */
+		$comments = $em->createQueryBuilder()
+			->select('c, u')
+			->from('EtuModuleBugsBundle:Comment', 'c')
+			->leftJoin('c.user', 'u')
+			->where('c.issue = :issue')
+			->setParameter('issue', $bug->getId())
+			->getQuery()
+			->getResult();
+
 		$em->remove($bug);
+
+		foreach ($comments as $comment) {
+			$em->remove($comment);
+		}
+
+		$em->flush();
 
 		$this->get('session')->getFlashBag()->set('message', array(
 			'type' => 'success',

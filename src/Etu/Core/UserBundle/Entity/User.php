@@ -1712,11 +1712,19 @@ class User implements UserInterface, \Serializable
 	}
 
 	/**
+	 * @return array
+	 */
+	public function getUvsList()
+	{
+		return explode('|', $this->uvs);
+	}
+
+	/**
 	 * @return string
 	 */
 	public function displayUvs()
 	{
-		return implode(', ', explode('|', $this->uvs));
+		return implode(', ', $this->getUvsList());
 	}
 
 	/**

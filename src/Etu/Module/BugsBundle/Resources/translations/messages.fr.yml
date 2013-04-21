@@ -2,9 +2,21 @@
 bugs:
     notifs:
         newComment:
-            your: '<span class="notif-data">%userName%</span> a commenté votre bug <span class="notif-data">%bugName%</span>'
-            other: '<span class="notif-data">%userName%</span> a commenté le bug <span class="notif-data">%bugName%</span>'
-        newOpened: '<span class="notif-data">%userName%</span> a signalé un nouveau bug <span class="notif-data">%bugName%</span>'
+            your:
+                one: %userName% a commenté votre bug %bugName%
+                two: %first% et %second% ont commenté votre bug %bugName%
+                more_single: %first%, %second% et 1 autre personne ont commenté votre bug %bugName%
+                more_many: %first%, %second% et %count% autres personnes ont commenté votre bug %bugName%
+            other:
+                one: %userName% a commenté le bug %bugName%
+                two: %first% et %second% ont commenté le bug %bugName%
+                more_single: %first%, %second% et 1 autre personne ont commenté le bug %bugName%
+                more_many: %first%, %second% et %count% autres personnes ont commenté le bug %bugName%
+        newOpened:
+            one: %userName% a signalé un nouveau bug (%bugName%)
+            two: %first% et %second% ont signalé de nouveaux bugs
+            more_single: %first%, %second% et 1 autre personne ont signalé de nouveaux bugs
+            more_many: %first%, %second% et %count% autres personnes ont signalé de nouveaux bugs
 
     criticality:
         critical: Problème critique
@@ -32,6 +44,11 @@ bugs:
             created_at: Date de création
             no_bug_opened: Aucun bug ouvert signalé pour le moment
             assigned_to: assigné à %name%
+
+    closed:
+        no_bug_closed: Aucun bug résolu pour le moment
+        closed_at_by: Résolu par %username%, %date%
+        closed_at: Résolu %date%
 
     view:
         edit: Modifier
@@ -73,6 +90,9 @@ bugs:
         body: Explications
         submit: Modifier
         confirm: Votre problème a bien été modifié.
+
+    editComment:
+        name: Modifier un commentaire
 
     admin:
         assign:

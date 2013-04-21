@@ -27,39 +27,57 @@
 	</ul>
 
 	<div class="padding20-sides">
-		<table class="table table-hover table-bordered bugs-table">
-			{% for number, bug in pagination %}
-				<tr>
-					<td class="bugs-table-number">
-						#{{ number + 1 }}
-					</td>
-					<td>
-						<strong>
-							<a href="{{ path('bugs_view', {'id': bug.id, 'slug': bug.title|slugify}) }}">
-								{{ bug.title }}
-							</a>
-						</strong>
-						<br />
-						<small class="muted">
-							{{ 'base.by'|trans }} {{ bug.user.login }} - {{ time_diff(bug.createdAt) }}
-							{% if bug.assignee %}
-								- {{ 'bugs.index.table.assigned_to'|trans({'%name%': bug.assignee.fullName}) }}
-							{% endif %}
-							-
-							<span class="label">
-								{{ ('bugs.criticality.'~bug.criticality)|trans }}
-							</span>
-						</small>
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td>
-						{{ 'bugs.index.table.no_bug_opened'|trans }}
-					</td>
-				</tr>
-			{% endfor %}
-		</table>
+		{# display navigation #}
+		<div class="navigation">
+			{{ knp_pagination_render(pagination) }}
+		</div>
+
+		{% for number, bug in pagination %}
+			<a href="{{ path('bugs_view', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="bug{% if number == 0 %} bug-first{% endif %}">
+				<h5 class="bug-title">
+					{{ bug.title }}
+
+					<span class="label pull-right hidden-phone">
+						{{ ('bugs.criticality.'~bug.criticality)|trans }}
+					</span>
+				</h5>
+
+				<small class="muted bug-meta hidden-phone">
+					{{ 'base.by'|trans|ucfirst }} {{ bug.user.fullName }}
+
+					{% if bug.assignee %}
+						<span class="text-success">
+							({{ 'bugs.index.table.assigned_to'|trans({'%name%': bug.assignee.fullName}) }})
+						</span>
+					{% endif %}
+				</small>
+
+				<span class="pull-left visible-phone">
+					<span class="label pull-right">
+						{{ ('bugs.criticality.'~bug.criticality)|trans }}
+					</span>
+				</span>
+
+				<small class="muted bug-meta pull-right">
+					{% if bug.assignee %}
+						{{ 'bugs.closed.closed_at_by'|trans({
+							'%username%': bug.assignee.fullName,
+							'%date%': time_diff(bug.closedAt)
+						}) }}
+					{% else %}
+						{{ 'bugs.closed.closed_at'|trans({
+							'%date%': time_diff(bug.closedAt)
+						}) }}
+					{% endif %}
+				</small>
+
+				<div class="clear"></div>
+			</a>
+		{% else %}
+			<p>
+				{{ 'bugs.closed.no_bug_closed'|trans }}
+			</p>
+		{% endfor %}
 
 		{# display navigation #}
 		<div class="navigation">

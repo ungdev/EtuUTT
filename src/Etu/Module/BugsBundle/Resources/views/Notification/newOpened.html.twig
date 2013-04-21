@@ -4,10 +4,28 @@
 	<img src="{{ asset('img/notifs/bug.png') }}" />
 
 	<h4 class="notif-title">
-		{{ 'bugs.notifs.newOpened'|trans({
-			'%userName%': notif.firstEntity.user.fullName,
-			'%bugName%': notif.firstEntity.title
-		})|raw }}
+		{% if notif.countEntities == 1 %}
+			{{ 'bugs.notifs.newOpened.one'|trans({
+				'%userName%': highlight_notif_data(notif.firstEntity.user.fullName),
+				'%bugName%': highlight_notif_data(notif.firstEntity.title)
+			})|raw }}
+		{% elseif notif.countEntities == 2 %}
+			{{ 'bugs.notifs.newOpened.two'|trans({
+				'%first%': highlight_notif_data(notif.getEntity(1).user.fullName),
+				'%second%': highlight_notif_data(notif.getEntity(2).user.fullName)
+			})|raw }}
+		{% elseif notif.countEntities == 3 %}
+			{{ 'bugs.notifs.newOpened.more_single'|trans({
+				'%first%': highlight_notif_data(notif.getEntity(1).user.fullName),
+				'%second%': highlight_notif_data(notif.getEntity(2).user.fullName)
+			})|raw }}
+		{% else %}
+			{{ 'bugs.notifs.newOpened.more_many'|trans({
+				'%first%': highlight_notif_data(notif.getEntity(1).user.fullName),
+				'%second%': highlight_notif_data(notif.getEntity(2).user.fullName),
+				'%count%': notif.countEntities
+			})|raw }}
+		{% endif %}
 	</h4>
 
 	<div class="notif-date">
