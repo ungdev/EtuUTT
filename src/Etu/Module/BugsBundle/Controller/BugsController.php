@@ -130,7 +130,7 @@ class BugsController extends Controller
 
 		$request = $this->getRequest();
 
-		if ($bug->isOpen() && $request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
 
 			// Create the comment
 			$comment->setBody(RedactorJsEscaper::escape($comment->getBody()));

@@ -217,7 +217,6 @@
 			{% set count = count + 1 %}
 		{% endfor %}
 
-		{% if bug.isOpen %}
 		<div class="bugs-view-comment">
 			<h4>{{ 'bugs.view.comment.comment'|trans }}</h4>
 
@@ -232,7 +231,5 @@
 				</div>
 			</form>
 		</div>
-		{% endif %}
-
 	</div>
 {% endblock %}
