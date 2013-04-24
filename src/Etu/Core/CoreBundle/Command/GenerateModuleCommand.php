@@ -93,6 +93,7 @@ For instance, the UVBundle module name is "UV".
 		mkdir($this->modulesDirectory.'/'.$name.'Bundle/DependencyInjection', 0777, true);
 		mkdir($this->modulesDirectory.'/'.$name.'Bundle/Resources/config', 0777, true);
 		mkdir($this->modulesDirectory.'/'.$name.'Bundle/Resources/views/Default', 0777, true);
+		mkdir($this->modulesDirectory.'/'.$name.'Bundle/Resources/translations', 0777, true);
 	}
 
 	/**

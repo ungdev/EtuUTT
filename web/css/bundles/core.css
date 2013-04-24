@@ -144,3 +144,33 @@
     }
 }
 
+/*
+ * Erreurs
+ */
+.content-error {
+	text-align: center;
+	padding-bottom: 0;
+}
+.content-error img {
+	float: left;
+}
+.error-text {
+	padding-top: 55px;
+}
+.error-doh {
+	font-size: 80px;
+	line-height: 90px;
+}
+
+
+@media screen and (max-width: 775px) {
+	.content-error img {
+		display: none;
+	}
+	.error-doh {
+		font-size: 50px;
+		line-height: 60px;
+	}
+}
+
+

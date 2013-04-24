@@ -3,3 +3,5 @@ modules:
     - Etu\Module\BugsBundle\EtuModuleBugsBundle
     - Etu\Module\UVBundle\EtuModuleUVBundle
     - Etu\Module\TrombiBundle\EtuModuleTrombiBundle
+    - Etu\Module\AssosBundle\EtuModuleAssosBundle
+    - Etu\Module\ForumBundle\EtuModuleForumBundle
