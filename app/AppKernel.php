@@ -15,7 +15,8 @@ class AppKernel extends EtuKernel
 	/**
 	 * Register the bundles (and by the way the modules).
 	 *
-	 * @return array|Symfony\Component\HttpKernel\Bundle\BundleInterface[]
+	 * @return array|\Symfony\Component\HttpKernel\Bundle\BundleInterface[]
+	 * @throws RuntimeException
 	 * @throws Symfony\Component\HttpKernel\Exception\FatalErrorException
 	 */
 	public function registerBundles()

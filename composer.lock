@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "b292673666b314b33fb6f05731eeea9d",
+    "hash": "e44ee5228835f8f9ca0ee2e86d46e323",
     "packages": [
         {
             "name": "avalanche123/imagine-bundle",
@@ -57,16 +57,16 @@
         },
         {
             "name": "doctrine/annotations",
-            "version": "v1.1",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "v1.1"
+                "reference": "v1.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/v1.1",
-                "reference": "v1.1",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/v1.1.1",
+                "reference": "v1.1.1",
                 "shasum": ""
             },
             "require": {
@@ -77,6 +77,11 @@
                 "doctrine/cache": "1.*"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
                     "Doctrine\\Common\\Annotations\\": "lib/"
@@ -106,7 +111,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -119,7 +124,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2013-03-17 14:03:10"
+            "time": "2013-04-20 08:30:17"
         },
         {
             "name": "doctrine/cache",
@@ -1231,16 +1236,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpPaginatorBundle.git",
-                "reference": "6d93d89a3c913155d9d1778db4232db0e4d6f3e3"
+                "reference": "e798c5689ff63edfb22df2b65d5094485c0e6bd2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpPaginatorBundle/zipball/6d93d89a3c913155d9d1778db4232db0e4d6f3e3",
-                "reference": "6d93d89a3c913155d9d1778db4232db0e4d6f3e3",
+                "url": "https://api.github.com/repos/KnpLabs/KnpPaginatorBundle/zipball/e798c5689ff63edfb22df2b65d5094485c0e6bd2",
+                "reference": "e798c5689ff63edfb22df2b65d5094485c0e6bd2",
                 "shasum": ""
             },
             "require": {
-                "knplabs/knp-components": ">=1.1,<2.0",
+                "knplabs/knp-components": ">=1.2,<2.0",
                 "php": ">=5.3.3",
                 "symfony/framework-bundle": ">=2.0,<3.0",
                 "twig/twig": ">=1.5,<2.0"
@@ -1281,7 +1286,7 @@
                 "pagination",
                 "paginator"
             ],
-            "time": "2013-04-08 18:28:56"
+            "time": "2013-04-23 07:46:41"
         },
         {
             "name": "knplabs/knp-time-bundle",
@@ -1415,16 +1420,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.4.1",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "1.4.1"
+                "reference": "1.5.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1.4.1",
-                "reference": "1.4.1",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1.5.0",
+                "reference": "1.5.0",
                 "shasum": ""
             },
             "require": {
@@ -1473,7 +1478,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2013-04-01 10:04:58"
+            "time": "2013-04-23 10:09:48"
         },
         {
             "name": "phpoption/phpoption",
@@ -2028,6 +2033,50 @@
             "time": "2013-04-06 10:16:33"
         },
         {
+            "name": "tga/audience",
+            "version": "dev-master",
+            "target-dir": "Tga/AudienceBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tgalopin/AudienceBundle.git",
+                "reference": "686177962a52f3fa31a1f7c3a4d86907f932a8d0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tgalopin/AudienceBundle/zipball/686177962a52f3fa31a1f7c3a4d86907f932a8d0",
+                "reference": "686177962a52f3fa31a1f7c3a4d86907f932a8d0",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/framework-bundle": "2.*"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Tga\\AudienceBundle": ""
+                }
+            },
+            "notification-url": "http://packagist.org/downloads/",
+            "license": [
+                "Apache"
+            ],
+            "authors": [
+                {
+                    "name": "Titouan Galopin",
+                    "email": "galopintitouan@gmail.com"
+                }
+            ],
+            "description": "Audience statistics bundle for Symfony2",
+            "keywords": [
+                "Audience",
+                "analystics",
+                "statistics",
+                "stats",
+                "visitors"
+            ],
+            "time": "2013-04-24 21:33:58"
+        },
+        {
             "name": "twig/extensions",
             "version": "v1.0.0",
             "source": {
@@ -2136,7 +2185,8 @@
         "avalanche123/imagine-bundle": 20,
         "knplabs/knp-time-bundle": 20,
         "knplabs/knp-paginator-bundle": 20,
-        "knplabs/knp-menu": 20
+        "knplabs/knp-menu": 20,
+        "tga/audience": 20
     },
     "platform": {
         "php": ">=5.3.3"

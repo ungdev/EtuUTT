@@ -22,7 +22,8 @@
 		"avalanche123/imagine-bundle": "dev-master",
 		"knplabs/knp-time-bundle": "dev-master",
 		"knplabs/knp-paginator-bundle": "dev-master",
-		"knplabs/knp-menu": "dev-master"
+		"knplabs/knp-menu": "dev-master",
+		"tga/audience": "dev-master"
 	},
 	"scripts": {
 		"post-install-cmd": [
