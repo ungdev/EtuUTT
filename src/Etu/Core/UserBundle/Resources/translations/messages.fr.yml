@@ -152,3 +152,29 @@ orga:
         file: Image
         confirm: Vous avez bien modifié votre logo
         back: Retour
+
+
+admin:
+    user:
+        index:
+            title: Utilisateurs
+        view:
+            admin: Administrer
+            edit: Modifier
+        edit:
+            title: Modifier
+            avatar: Modifier la photo
+            confirm: Vous avez bien modifié le profil
+            back: Retour sur le profil
+        delete:
+            title: Supprimer un utilisateur
+            sure: Voulez-vous vraiment supprimer l'utilisateur %username% ?
+            yes: Oui, supprimer
+            no: Non, annuler
+            confirm: L'utilisateur a bien été supprimé
+            back: Retour sur le profil
+        readonly:
+            confirm_set: L'utilisateur possède maintenant un accès en lecture seule.
+            confirm_unset: L'utilisateur possède maintenant un accès complet.
+        avatar:
+            back: Retour

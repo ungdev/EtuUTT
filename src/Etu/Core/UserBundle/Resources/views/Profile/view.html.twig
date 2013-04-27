@@ -34,6 +34,15 @@
 				</a>
 			</li>
 		</ul>
+	{% elseif from == 'admin' and app.user.isAdmin %}
+		<ul class="nav nav-tabs page-tabs">
+			<li>
+				<a href="{{ path('admin_users_index') }}">
+					<i class="icon-chevron-left"></i>
+					Administration
+				</a>
+			</li>
+		</ul>
 	{% endif %}
 
 	<div class="padding20-all">
@@ -46,6 +55,26 @@
 				<hr />
 
 				<div class="hidden-for-phones">
+					{% if app.user.isAdmin %}
+						<p>
+							<strong>{{ 'admin.user.view.admin'|trans }}</strong>
+						</p>
+						<p>
+							<a href="{{ path('admin_user_edit', {'login': user.login}) }}" class="btn btn-small">
+								Modifier
+							</a>
+						</p>
+						<p>
+							<a href="{{ path('admin_user_toggle_readonly', {'login': user.login}) }}" class="btn btn-small">
+								{% if user.isReadOnly %}
+									Désactiver la lecture seule
+								{% else %}
+									Activer la lecture seule
+								{% endif %}
+							</a>
+						</p>
+					{% endif %}
+
 					{% if user.website %}
 						<p>
 							<strong>{{ 'user.view.website'|trans }}</strong><br />
@@ -121,6 +150,15 @@
 							{% else %}
 								{{ user.displayUvs }}
 							{% endif %}
+						</div>
+					</div>
+				{% endif %}
+
+				{% if is_public(user.phoneNumberPrivacy) and user.phoneNumber %}
+					<div class="view-group">
+						<div class="view-label">{{ 'user.view.phoneNumber'|trans }}</div>
+						<div class="view-value">
+							{{ user.phoneNumber }}
 						</div>
 					</div>
 				{% endif %}

@@ -68,7 +68,7 @@ class EtuModuleTrombiBundle extends Module
 	 */
 	public function getDescription()
 	{
-		return 'Trombinoscope des utilisateurs étudiants';
+		return 'Ajoute un moteur de recherche des étudiants complet';
 	}
 
 	/**

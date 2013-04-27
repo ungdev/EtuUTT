@@ -36,8 +36,12 @@ class AdminController extends Controller
 
 		$request = $this->getRequest();
 
-		if ($request->getMethod() == 'POST' && $request->get('modules')) {
-			$enabledModules = array_keys((array) $request->get('modules'));
+		if ($request->getMethod() == 'POST') {
+			if ($request->get('modules')) {
+				$enabledModules = array_keys((array) $request->get('modules'));
+			} else {
+				$enabledModules = array();
+			}
 
 			foreach ($enabledModules as $key => $module) {
 				if ($module = $modulesManager->getModuleByIdentifier($module)) {

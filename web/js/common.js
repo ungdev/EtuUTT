@@ -21,6 +21,8 @@ function removeCountTitle() {
 
 $(function() {
 
+	$('a[rel*=facebox]').facebox();
+
 	$('.userbox-link').click(function() {
 		$('.userbox').toggleClass('userbox-clicked');
 		$('.userbox-menu').toggleClass('userbox-menu-clicked');
@@ -174,8 +176,10 @@ $(function() {
 	});
 
 	// Users autocomplete
-	$('.user-autocomplete').
-		autocomplete({
+	var usersAutocomplete = $('.user-autocomplete');
+
+	if (usersAutocomplete) {
+		usersAutocomplete.autocomplete({
 			minLength: 3,
 			source: function(request, response) {
 				$.getJSON(Routing.generate('api_users_search'), { term: request.term }, function(data) {
@@ -188,16 +192,20 @@ $(function() {
 					}));
 				});
 			}
-		})
-		.data( "ui-autocomplete" )._renderItem = function(ul, item) {
-			return $("<li style=\"margin-bottom: 3px;\">")
-				.append(
-					"<a>" +
-						"<img src=\"/photos/"+ item.user.avatar +"\" style=\"float: left; max-height: 25px; max-width: 25px; margin-right: 5px;\" />" +
-						"<span style=\"display: block; float: left; margin-top: 0;\">" + item.label + "</span>" +
-						"<div style=\"clear: both;\"></div>" +
-					"</a>"
-				)
-				.appendTo(ul);
-		};
+		});
+
+		if (usersAutocomplete.data("ui-autocomplete")) {
+			usersAutocomplete.data("ui-autocomplete")._renderItem = function(ul, item) {
+				return $("<li style=\"margin-bottom: 3px;\">")
+					.append(
+						"<a>" +
+							"<img src=\"/photos/"+ item.user.avatar +"\" style=\"float: left; max-height: 25px; max-width: 25px; margin-right: 5px;\" />" +
+							"<span style=\"display: block; float: left; margin-top: 0;\">" + item.label + "</span>" +
+							"<div style=\"clear: both;\"></div>" +
+							"</a>"
+					)
+					.appendTo(ul);
+			};
+		}
+	}
 });

@@ -41,7 +41,7 @@ class EtuModuleForumBundle extends Module
 	 */
 	public function getAuthor()
 	{
-		return 'anonymous';
+		return 'Titouan Galopin';
 	}
 
 	/**
@@ -51,7 +51,7 @@ class EtuModuleForumBundle extends Module
 	 */
 	public function getDescription()
 	{
-		return 'Default module description';
+		return 'Module de forum';
 	}
 
 	/**

@@ -1,0 +1,150 @@
+{% extends 'EtuCoreBundle:Admin:layout.html.twig' %}
+
+{% block title %}{{ 'admin.user.index.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/bundles/trombi.css') }}" type="text/css" />
+{% endblock %}
+
+{% block content %}
+
+	<div class="trombi-search-box">
+		<form method="get" action="{{ path('admin_users_index') }}">
+			<h4 class="pull-left">
+				{{ 'trombi.main.index.search_title'|trans }}
+			</h4>
+
+			<p class="pull-right padding10-all">
+				<a href="" class="btn btn-primary">
+					<i class="icon-plus icon-white"></i>
+					Créer un utilisateur
+				</a>
+			</p>
+
+			<div class="clear"></div>
+
+			<div class="row-fluid">
+				<div class="span4">
+					<div class="form-vertical">
+						<div class="control-group">
+							{{ form_label(form.fullName, 'trombi.main.index.name'|trans) }}
+							<div class="controls">
+								{{ form_widget(form.fullName) }}
+							</div>
+							<span class="help-block">{{ form_errors(form.fullName) }}</span>
+						</div>
+						<div class="control-group">
+							{{ form_label(form.uvs, 'trombi.main.index.uv'|trans) }}
+							<div class="controls">
+								{{ form_widget(form.uvs) }}
+							</div>
+							<span class="help-block">{{ form_errors(form.uvs) }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="span4 hidden-phone">
+					<div class="form-vertical">
+						<div class="control-group">
+							{{ form_label(form.studentId, 'trombi.main.index.studentId'|trans) }}
+							<div class="controls">
+								{{ form_widget(form.studentId) }}
+							</div>
+							<span class="help-block">{{ form_errors(form.studentId) }}</span>
+						</div>
+						<div class="control-group">
+							{{ form_label(form.filiere, 'trombi.main.index.branche'|trans) }}
+							<div class="controls">
+								{{ form_widget(form.filiere, {'attr': {'class': 'span4'} }) }}
+								{{ form_widget(form.niveau, {'attr': {'class': 'span4'} }) }}
+							</div>
+							<span class="help-block">
+								{{ form_errors(form.filiere) }}
+								{{ form_errors(form.niveau) }}
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="span4 hidden-phone">
+					<div class="form-vertical">
+						<div class="control-group">
+							{{ form_label(form.phoneNumber, 'trombi.main.index.phone'|trans) }}
+							<div class="controls">
+								{{ form_widget(form.phoneNumber) }}
+							</div>
+							<span class="help-block">{{ form_errors(form.phoneNumber) }}</span>
+						</div>
+						<div class="control-group">
+							{{ form_label(form.personnalMail, 'trombi.main.index.personnalMail'|trans) }}
+							<div class="controls">
+								{{ form_widget(form.personnalMail) }}
+							</div>
+							<span class="help-block">{{ form_errors(form.personnalMail) }}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="trombi-search-submit">
+				{{ form_rest(form) }}
+				<button type="submit" class="btn">{{ 'trombi.main.index.search'|trans }}</button>
+			</div>
+		</form>
+	</div>
+
+	<div class="trombi-search-results">
+		{% if not search %}
+			<p id="explainations" class="muted trombi-search-explainations">
+				{{ 'trombi.main.index.explainations'|trans }}
+			</p>
+		{% elseif pagination.count == 0 %}
+			<p class="muted trombi-search-explainations">
+				{{ 'trombi.main.index.no_results'|trans }}
+			</p>
+		{% else %}
+			{# display navigation #}
+			<div class="navigation">
+				<br />
+				<p>
+					{{ 'trombi.main.index.count'|transchoice(pagination.totalItemCount, {'%count%': pagination.totalItemCount}) }}
+				</p>
+				{{ knp_pagination_render(pagination) }}
+			</div>
+
+			<ul id="search-results" class="trombi-search-results">
+				{% for user in pagination %}
+					<li class="trombi-search-results-item">
+						<a href="{{ path('user_view', {'login': user.login}) }}?from=admin">
+							<img src="{{ asset('photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
+							<h5>{{ user.fullName }}</h5>
+							<p>
+								{{ user.niveau }} {{ user.filiere }} ({{ user.formation }})<br />
+								{{ user.mail }}
+								{% if is_public(user.personnalMailPrivacy) and user.personnalMail %}
+									<br />
+									{{ user.personnalMail }}
+								{% endif %}
+								{% if is_public(user.phoneNumberPrivacy) and user.phoneNumber %}
+									<br />
+									{{ user.phoneNumber }}
+								{% endif %}
+							</p>
+
+							<div class="clear"></div>
+						</a>
+					</li>
+				{% endfor %}
+			</ul>
+
+			<div class="clear"></div>
+
+			{# display navigation #}
+			<div class="navigation">
+				{{ knp_pagination_render(pagination) }}
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

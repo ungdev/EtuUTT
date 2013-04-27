@@ -120,7 +120,7 @@ class ProfileController extends Controller
 	}
 
 	/**
-	 * @Route("/user/profile/avatar", name="user_profile_avatar")
+	 * @Route("/user/profile/avatar", name="user_profile_avatar", options={"expose"=true})
 	 * @Template()
 	 */
 	public function profileAvatarAction()
@@ -231,11 +231,9 @@ class ProfileController extends Controller
 			$user = $this->getUser();
 		}
 
-
-
 		$from = null;
 
-		if (in_array($this->getRequest()->get('from'), array('search', 'profile', 'trombi'))) {
+		if (in_array($this->getRequest()->get('from'), array('search', 'profile', 'trombi', 'admin'))) {
 			$from = $this->getRequest()->get('from');
 		}
 

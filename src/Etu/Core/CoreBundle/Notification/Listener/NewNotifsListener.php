@@ -63,7 +63,7 @@ class NewNotifsListener
 
 			// Load only notifications we should display, ie. notifications sent from
 			// currently enabled modules
-			$where = array();
+			$where = array('n.module = \'core\'', 'n.module = \'user\'');
 
 			$query = $em
 				->createQueryBuilder()

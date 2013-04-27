@@ -391,6 +391,24 @@ class User implements UserInterface, \Serializable
 	protected $isAdmin;
 
 	/**
+	 * Read-only mode enabled fo this user?
+	 *
+	 * @var boolean
+	 *
+	 * @ORM\Column(name="isReadOnly", type="boolean")
+	 */
+	protected $isReadOnly;
+
+	/**
+	 * Read-only expiration date
+	 *
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="readOnlyExpirationDate", type="datetime")
+	 */
+	protected $readOnlyExpirationDate;
+
+	/**
 	 * Badges
 	 *
 	 * @var array
@@ -901,6 +919,14 @@ class User implements UserInterface, \Serializable
 	 * @return boolean
 	 */
 	public function getKeepActive()
+	{
+		return $this->keepActive;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getIsExternal()
 	{
 		return $this->keepActive;
 	}
@@ -1595,6 +1621,60 @@ class User implements UserInterface, \Serializable
 	public function getBadges()
 	{
 		return $this->badges;
+	}
+
+	/**
+	 * @param boolean $isReadOnly
+	 * @return User
+	 */
+	public function setIsReadOnly($isReadOnly)
+	{
+		$this->isReadOnly = (bool) $isReadOnly;
+
+		return $this;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getIsReadOnly()
+	{
+		return $this->isReadOnly;
+	}
+
+	/**
+	 * @param \DateTime $readOnlyExpirationDate
+	 * @return User
+	 */
+	public function setReadOnlyExpirationDate(\DateTime $readOnlyExpirationDate)
+	{
+		$this->readOnlyExpirationDate = $readOnlyExpirationDate;
+
+		return $this;
+	}
+
+	/**
+	 * @param string $dateString
+	 * @return User
+	 */
+	public function setReadOnlyPeriod($dateString)
+	{
+		$interval = \DateInterval::createFromDateString($dateString);
+
+		$date = new \DateTime();
+		$date->add($interval);
+
+		$this->setReadOnlyExpirationDate($date);
+
+		return $this;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getReadOnlyExpirationDate()
+	{
+		return $this->readOnlyExpirationDate;
 	}
 
 	/**

@@ -1,0 +1,2 @@
+
+$('#avatarUploadLink').attr('href', '#avatarUploadBox');
