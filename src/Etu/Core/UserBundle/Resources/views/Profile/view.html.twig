@@ -63,6 +63,9 @@
 							<a href="{{ path('admin_user_edit', {'login': user.login}) }}" class="btn btn-small">
 								Modifier
 							</a>
+							<a href="{{ path('admin_user_delete', {'login': user.login}) }}" class="btn btn-small">
+								Supprimer
+							</a>
 						</p>
 						<p>
 							<a href="{{ path('admin_user_toggle_readonly', {'login': user.login}) }}" class="btn btn-small">

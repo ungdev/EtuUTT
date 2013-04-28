@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 // Import @Route() and @Template() annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Tga\AudienceBundle\Stats\Processor;
 
 /**
  * @Route("/admin")
@@ -101,13 +102,39 @@ class AdminController extends Controller
 			return $this->createAccessDeniedResponse();
 		}
 
-		// Stats
-		$statsDriver = new TgaAudienceDriver($this->getDoctrine());
+		/** @var $processor Processor */
+		$processor = $this->get('tga_audience.stats')->getProcessor();
 
-		return array_merge(
-			$statsDriver->getGlobalStats(),
-			$statsDriver->getVisitorsStats(),
-			$statsDriver->getTrafficStats($this->container->getParameter('etu.domain'))
+		$uniqueVisitors = array_merge(array(array('Date', 'Visitors')), $processor->getUniqueVisitors());
+		$pagesCalls = array_merge(array(array('Date', 'Calls')), $processor->getPageCalls());
+
+		$platforms = array_merge(array(array('Platform', 'Count')), $processor->getPlatforms());
+		$browsers = array_merge(array(array('Browser', 'Count')), $processor->getBrowsers());
+
+		$externalSources = array_merge(array(array('Source', 'Count')), $processor->getExternalSources());
+
+		$allExternalSources = $processor->getMostUsedExternalSources();
+
+		foreach ($allExternalSources as $key => $value) {
+			if (! is_object($value)) {
+				unset($allExternalSources[$key]);
+			}
+		}
+
+		return array(
+			'uniqueVisitors' => json_encode($uniqueVisitors),
+			'uniqueVisitorsCount' => $processor->getUniqueVisitorsCount(),
+			'pagesCalls' => json_encode($pagesCalls),
+			'pagesCallsCount' => $processor->getPageCallsCount(),
+			'averageVisitedPages' => $processor->getAverageVisitedPages(),
+			'averageDuration' => $processor->getAverageDuration(),
+			'averageTimeToLoad' => $processor->getAverageTimeToLoad(),
+			'platforms' => json_encode($platforms),
+			'browsers' => json_encode($browsers),
+			'mostUsedRoutes' => $processor->getMostUsedRoutes(),
+			'browsersVersions' => $processor->getMostUsedBrowsers(),
+			'externalSources' => json_encode($externalSources),
+			'allExternalSources' => $allExternalSources
 		);
 	}
 

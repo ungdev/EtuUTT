@@ -54,6 +54,8 @@ user:
         back: Retour sur mon compte
         confirm: Vous avez bien modifié votre compte
         name: Nom
+        login: Identifiant
+        password: Mot de passe
         mail: E-mail
         studentId: Numéro étudiant
         formation: Formation
@@ -67,7 +69,7 @@ user:
         birthday: Date de naissance
         birthdayOnlyAge:
             label: Afficher mon âge
-            desc: Afficher l'âge sur le profil (seulement si la date de naissance est privée)
+            desc: Afficher seulement l'âge sur le profil (si la date de naissance est privée)
         personnalMail: E-mail perso.
         language: Langue d'affichage
         website: Site web (public)
@@ -161,9 +163,18 @@ admin:
         view:
             admin: Administrer
             edit: Modifier
+        create:
+            title: Créer un utilisateur
+            confirm: Vous avez bien créé un utilisateur
+            back: Retour
+            submit: Créer
         edit:
             title: Modifier
             avatar: Modifier la photo
+            birthday: Date de naissance
+            birthdayOnlyAge:
+                label: Afficher l'âge
+                desc: Afficher seulement l'âge sur le profil (si la date de naissance est privée)
             confirm: Vous avez bien modifié le profil
             back: Retour sur le profil
         delete:

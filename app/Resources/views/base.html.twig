@@ -110,7 +110,7 @@
 							<img src="{{ asset('photos/'~app.user.avatar) }}" alt="{{ app.user.fullName }}" title="{{ app.user.fullName }}" class="pull-left avatar" />
 						{% endif %}
 
-					<a href="" class="userbox-link">
+					<a href="#" class="userbox-link">
 						<i class="icon-chevron-down userbox-link-icon"></i>
 
 						<span class="hidden-for-1024">
@@ -310,7 +310,7 @@
 								}
 							}
 						});
-					}, 5 * 1000); // 5 seconds
+					}, 10 * 1000); // 10 seconds
 				</script>
 			{% endif %}
 		{% endblock %}

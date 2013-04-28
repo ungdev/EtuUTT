@@ -75,7 +75,7 @@ class AuthController extends Controller
 				}
 			}
 
-			if ($user instanceof User) {
+			if ($user instanceof \Etu\Core\UserBundle\Entity\User && ! $user->getIsDeleted()) {
 				$this->get('session')->set('user', $user->getId());
 				$this->get('session')->getFlashBag()->set('message', array(
 					'type' => 'success',
@@ -172,7 +172,7 @@ class AuthController extends Controller
 			}
 		}
 
-		if ($user instanceof \Etu\Core\UserBundle\Entity\User) {
+		if ($user instanceof \Etu\Core\UserBundle\Entity\User && ! $user->getIsDeleted()) {
 			$this->get('session')->set('user', $user->getId());
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
@@ -224,7 +224,8 @@ class AuthController extends Controller
 		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
 			$result = $em->getRepository('EtuUserBundle:User')->findOneBy(array(
 				'login' => $user->getLogin(),
-				'password' => $this->get('etu.user.crypting')->encrypt($user->getPassword())
+				'password' => $this->get('etu.user.crypting')->encrypt($user->getPassword()),
+				'isDeleted' => false,
 			));
 
 			if ($result) {

@@ -29,7 +29,7 @@
 			{{ 'admin.user.delete.sure'|trans({'%username%': user.fullName}) }}
 		</p>
 		<p>
-			<a href="{{ path('admin_user_delete_confirm', {'login': user.login}) }}" class="btn btn-primary">
+			<a href="{{ path('admin_user_delete', {'login': user.login, 'confirm': 'confirm'}) }}" class="btn btn-primary">
 				{{ 'admin.user.delete.yes'|trans }}
 			</a>
 			<a href="{{ path('user_view', {'login': user.login}) }}?from=admin" class="btn">

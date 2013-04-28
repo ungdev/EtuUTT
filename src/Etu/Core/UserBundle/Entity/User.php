@@ -400,6 +400,15 @@ class User implements UserInterface, \Serializable
 	protected $isReadOnly;
 
 	/**
+	 * Deleted?
+	 *
+	 * @var boolean
+	 *
+	 * @ORM\Column(name="isDeleted", type="boolean")
+	 */
+	protected $isDeleted;
+
+	/**
 	 * Read-only expiration date
 	 *
 	 * @var \DateTime
@@ -443,6 +452,9 @@ class User implements UserInterface, \Serializable
 	{
 		$this->keepActive = false;
 		$this->isStudent = true;
+		$this->isReadOnly = false;
+		$this->isDeleted = false;
+		$this->readOnlyExpirationDate = new \DateTime();
 		$this->isAdmin = false;
 		$this->avatar = 'default-avatar.png';
 		$this->phoneNumberPrivacy = self::PRIVACY_PUBLIC;
@@ -1770,6 +1782,25 @@ class User implements UserInterface, \Serializable
 	public function getIsAdmin()
 	{
 		return $this->isAdmin;
+	}
+
+	/**
+	 * @param boolean $isDeleted
+	 * @return User
+	 */
+	public function setIsDeleted($isDeleted)
+	{
+		$this->isDeleted = (boolean) $isDeleted;
+
+		return $this;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getIsDeleted()
+	{
+		return $this->isDeleted;
 	}
 
 	/**

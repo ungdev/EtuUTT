@@ -198,9 +198,9 @@
 							<tbody>
 							{% for source in allExternalSources %}
 								<tr>
-									<td>{{ source.place }}</td>
+									<td>{{ loop.index + 1 }}</td>
 									<td>{{ source.domain }}</td>
-									<td>{{ source.nb }}</td>
+									<td>{{ source.countVisitors }}</td>
 									<td>{{ source.percentage }} %</td>
 								</tr>
 							{% else %}
