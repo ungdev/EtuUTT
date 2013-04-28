@@ -385,6 +385,9 @@ class AdminController extends Controller
 				$user->removeBadge('profile_completed');
 			}
 
+			$user->setPassword($this->get('etu.user.crypting')->encrypt($user->getPassword()));
+			$user->setKeepActive(true);
+
 			$em->persist($user);
 			$em->flush();
 

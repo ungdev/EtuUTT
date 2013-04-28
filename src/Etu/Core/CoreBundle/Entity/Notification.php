@@ -6,27 +6,40 @@ use Doctrine\ORM\Mapping as ORM;
 use Etu\Core\UserBundle\Entity\User;
 
 /**
- * @ORM\Table(name="etu_notifications", indexes={ @ORM\Index(name="search", columns={ "user_id" }) })
+ * @ORM\Table(name="etu_notifications")
  * @ORM\Entity
  */
 class Notification
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="id", type="integer")
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 */
+	protected $id;
 
 	/**
-	 * @var User $user
+	 * @var integer
 	 *
-	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
-	 * @ORM\JoinColumn()
+	 * @ORM\Column(name="authorId", type="integer")
 	 */
-	protected $user;
+	protected $authorId;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="entityType", type="string", length=50)
+	 */
+	protected $entityType;
+
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="entityId", type="integer")
+	 */
+	protected $entityId;
 
 	/**
 	 * Template helper: class loaded to display the notification
@@ -80,13 +93,6 @@ class Notification
 	 */
 	protected $expiration;
 
-	/**
-	 * @var boolean
-	 *
-	 * @ORM\Column(name="isNew", type="boolean")
-	 */
-	protected $isNew;
-
 
 	/**
 	 * Constructor
@@ -96,14 +102,33 @@ class Notification
 		$this->date = new \DateTime();
 		$this->expiration = new \DateTime();
 		$this->isSuper = false;
-		$this->isNew = true;
+		$this->authorId = 0;
+	}
+
+	/**
+	 * @param int $authorId
+	 * @return Notification
+	 */
+	public function setAuthorId($authorId)
+	{
+		$this->authorId = $authorId;
+
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getAuthorId()
+	{
+		return $this->authorId;
 	}
 
 	/**
 	 * @param \DateTime $date
 	 * @return Notification
 	 */
-	public function setDate(\DateTime $date)
+	public function setDate($date)
 	{
 		$this->date = $date;
 
@@ -116,6 +141,15 @@ class Notification
 	public function getDate()
 	{
 		return $this->date;
+	}
+
+	/**
+	 * @param \DateTime $lastVisitHome
+	 * @return bool
+	 */
+	public function isNew(\DateTime $lastVisitHome)
+	{
+		return $lastVisitHome < $this->date;
 	}
 
 	/**
@@ -187,10 +221,48 @@ class Notification
 	}
 
 	/**
+	 * @param int $entityId
+	 * @return Notification
+	 */
+	public function setEntityId($entityId)
+	{
+		$this->entityId = $entityId;
+
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getEntityId()
+	{
+		return $this->entityId;
+	}
+
+	/**
+	 * @param string $entityType
+	 * @return Notification
+	 */
+	public function setEntityType($entityType)
+	{
+		$this->entityType = $entityType;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getEntityType()
+	{
+		return $this->entityType;
+	}
+
+	/**
 	 * @param \DateTime $expiration
 	 * @return Notification
 	 */
-	public function setExpiration(\DateTime $expiration)
+	public function setExpiration($expiration)
 	{
 		$this->expiration = $expiration;
 
@@ -233,25 +305,6 @@ class Notification
 	}
 
 	/**
-	 * @param boolean $isNew
-	 * @return Notification
-	 */
-	public function setIsNew($isNew)
-	{
-		$this->isNew = $isNew;
-
-		return $this;
-	}
-
-	/**
-	 * @return boolean
-	 */
-	public function getIsNew()
-	{
-		return $this->isNew;
-	}
-
-	/**
 	 * @param boolean $isSuper
 	 * @return Notification
 	 */
@@ -288,23 +341,5 @@ class Notification
 	{
 		return $this->module;
 	}
-
-	/**
-	 * @param \Etu\Core\UserBundle\Entity\User $user
-	 * @return Notification
-	 */
-	public function setUser($user)
-	{
-		$this->user = $user;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Etu\Core\UserBundle\Entity\User
-	 */
-	public function getUser()
-	{
-		return $this->user;
-	}
 }
+

@@ -436,6 +436,15 @@ class User implements UserInterface, \Serializable
 	protected $options;
 
 	/**
+	 * Last visit date
+	 *
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="lastVisitHome", type="datetime")
+	 */
+	protected $lastVisitHome;
+
+	/**
 	 * Temporary variable to store uploaded file during photo update
 	 *
 	 * @var UploadedFile
@@ -472,6 +481,7 @@ class User implements UserInterface, \Serializable
 		$this->permissions = array();
 		$this->ldapInformations = new LdapUser();
 		$this->uvs = '';
+		$this->lastVisitHome = new \DateTime('0000-00-00 00:00:00');
 	}
 
 	public function __toString()
@@ -1801,6 +1811,25 @@ class User implements UserInterface, \Serializable
 	public function getIsDeleted()
 	{
 		return $this->isDeleted;
+	}
+
+	/**
+	 * @param \DateTime $lastVisitHome
+	 * @return User
+	 */
+	public function setLastVisitHome($lastVisitHome)
+	{
+		$this->lastVisitHome = $lastVisitHome;
+
+		return $this;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getLastVisitHome()
+	{
+		return $this->lastVisitHome;
 	}
 
 	/**

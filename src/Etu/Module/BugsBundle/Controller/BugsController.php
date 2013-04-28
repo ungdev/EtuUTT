@@ -119,7 +119,6 @@ class BugsController extends Controller
 			->getQuery()
 			->getResult();
 
-
 		$comment = new Comment();
 		$comment->setIssue($bug);
 		$comment->setUser($this->getUser());
@@ -138,26 +137,17 @@ class BugsController extends Controller
 			$em->flush();
 
 			// Send notifications to subscribers
-			$subscriptions = $em
-				->createQueryBuilder()
-				->select('s, u')
-				->from('EtuCoreBundle:Subscription', 's')
-				->leftJoin('s.user', 'u')
-				->where('s.entityType = :entityType')
-				->andWhere('s.entityId = :entityId')
-				->andWhere('s.user != :currentUser')
-				->setParameter('currentUser', $this->getUser()->getId())
-				->setParameter('entityType', 'issue')
-				->setParameter('entityId', $bug->getId())
-				->getQuery()
-				->getResult();
-
 			$notif = new Notification();
-			$notif->setModule($this->getCurrentBundle()->getIdentifier());
-			$notif->setHelper('bugs_new_comment');
-			$notif->addEntity($comment);
 
-			$this->getNotificationsSender()->sendTo($subscriptions, $notif);
+			$notif
+				->setModule($this->getCurrentBundle()->getIdentifier())
+				->setHelper('bugs_new_comment')
+				->setAuthorId($this->getUser()->getId())
+				->setEntityType('issue')
+				->setEntityId($bug->getId())
+				->addEntity($comment);
+
+			$this->getNotificationsSender()->send($notif);
 
 			// Subscribe automatically the user
 			$this->getSubscriptionsManager()->subscribe($this->getUser(), 'issue', $bug->getId());
@@ -233,34 +223,20 @@ class BugsController extends Controller
 			$em->flush();
 
 			// Send notifications to subscribers ("entityId = 0" mean all opened bugs)
-			$subscriptions = $em->createQueryBuilder()
-				->select('s, u')
-				->from('EtuCoreBundle:Subscription', 's')
-				->leftJoin('s.user', 'u')
-				->where('s.entityType = :entityType')
-				->andWhere('s.entityId = :entityId')
-				->andWhere('s.user != :currentUser')
-				->setParameter('currentUser', $this->getUser()->getId())
-				->setParameter('entityType', 'issue')
-				->setParameter('entityId', 0)
-				->getQuery()
-				->getResult();
-
 			$notif = new Notification();
-			$notif->setModule($this->getCurrentBundle()->getIdentifier());
-			$notif->setHelper('bugs_new_opened');
-			$notif->addEntity($bug);
 
-			$this->getNotificationsSender()->sendTo($subscriptions, $notif);
+			$notif
+				->setModule($this->getCurrentBundle()->getIdentifier())
+				->setHelper('bugs_new_opened')
+				->setAuthorId($this->getUser()->getId())
+				->setEntityType('issue')
+				->setEntityId(0)
+				->addEntity($bug);
+
+			$this->getNotificationsSender()->send($notif);
 
 			// Subscribe automatically the user at the issue
-			$subscription = new Subscription();
-			$subscription->setUser($this->getUser());
-			$subscription->setEntityType('issue');
-			$subscription->setEntityId($bug->getId());
-
-			$em->persist($subscription);
-			$em->flush();
+			$this->getSubscriptionsManager()->subscribe($this->getUser(), 'issue', $bug->getId());
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',

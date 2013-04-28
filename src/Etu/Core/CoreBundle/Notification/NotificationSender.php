@@ -24,111 +24,32 @@ class NotificationSender
 	}
 
 	/**
-	 * Send a notification to all the subscribers of given entity
-	 *
-	 * @param string $entityType
-	 * @param string $entityId
-	 * @param Notification $notification
-	 * @return bool
-	 */
-	public function sendToSubscribers($entityType, $entityId, Notification $notification)
-	{
-		/** @var $em EntityManager */
-		$em = $this->doctrine->getManager();
-
-		/** @var $subscriptions Subscription[] */
-		$subscriptions = $em
-			->createQueryBuilder()
-			->select('s, u')
-			->from('EtuCoreBundle:Subscription', 's')
-			->leftJoin('s.user', 'u')
-			->where('s.entityType = :entityType')
-			->andWhere('s.entityId = :entityId')
-			->setParameter('entityType', $entityType)
-			->setParameter('entityId', $entityId)
-			->getQuery()
-			->getResult();
-
-		$this->sendTo($subscriptions, $notification);
-
-		return true;
-	}
-
-	/**
-	 * Send a notification to the given users
-	 *
-	 * @param User[]|Subscription[] $users
-	 * @param Notification $notification
-	 * @return bool
-	 * @throws \InvalidArgumentException
-	 */
-	public function sendTo(array $users, Notification $notification)
-	{
-		foreach ($users as $key => $user) {
-			if ($user instanceof Subscription) {
-				$users[$key] = $user->getUser();
-			} elseif (! $user instanceof User) {
-				if (is_object($user)) {
-					$type = get_class($user);
-				} else {
-					$type = gettype($user);
-				}
-
-				throw new \InvalidArgumentException(sprintf(
-					'NotificationSender::sendTo() is only able to send notifications to users
-					(User or Subscription instances, %s given for key %s)', $type, $key
-				));
-			}
-		}
-
-		/** @var $em EntityManager */
-		$em = $this->doctrine->getManager();
-
-		// Send it to all the subscribers
-		foreach ($users as $user) {
-			$notif = new Notification();
-			$notif->setUser($user);
-
-			$notif->setHelper($notification->getHelper());
-			$notif->setExpiration($notification->getExpiration());
-			$notif->setEntities($notification->getEntities());
-			$notif->setModule($notification->getModule());
-			$notif->setDate($notification->getDate());
-			$notif->setIsNew($notification->getIsNew());
-			$notif->setIsSuper($notification->getIsSuper());
-
-			$this->send($notif, false);
-		}
-
-		$em->flush();
-
-		return true;
-	}
-
-	/**
 	 * Send a notification
 	 *
 	 * @param Notification $notif
-	 * @param bool         $flush
 	 * @return bool
 	 */
-	public function send(Notification $notif, $flush = true)
+	public function send(Notification $notif)
 	{
 		/** @var $em EntityManager */
 		$em = $this->doctrine->getManager();
 
 		if (! $notif->getIsSuper()) {
+			$oldDate = new \DateTime();
+			$oldDate->setTime(date('h') - 1, date('i'), date('s'));
+
 			$oldNotif = $em->createQueryBuilder()
 				->select('n')
 				->from('EtuCoreBundle:Notification', 'n')
-				->where('n.isNew = 1')
+				->where('n.date > :oldDate')
 				->andWhere('n.isSuper = 0')
 				->andWhere('n.helper = :helper')
-				->andWhere('n.user = :user')
-				->andWhere('n.module = :module')
+				->andWhere('n.entityType = :entityType')
+				->andWhere('n.entityId = :entityId')
+				->setParameter('oldDate', $oldDate)
 				->setParameter('helper', $notif->getHelper())
-				->setParameter('user', $notif->getUser())
-				->setParameter('module', $notif->getModule())
+				->setParameter('entityType', $notif->getEntityType())
+				->setParameter('entityId', $notif->getEntityId())
 				->setMaxResults(1)
 				->getQuery()
 				->getOneOrNullResult();
@@ -145,9 +66,7 @@ class NotificationSender
 			$em->persist($notif);
 		}
 
-		if ($flush) {
-			$em->flush();
-		}
+		$em->flush();
 
 		return true;
 	}

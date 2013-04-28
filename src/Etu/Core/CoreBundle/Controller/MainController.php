@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 
 use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Entity\Page;
+use Etu\Core\CoreBundle\Entity\Subscription;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\User;
 
@@ -115,29 +116,57 @@ class MainController extends Controller
 
 		// $imap = new ImapManager($this->get('session')->get('ticket'));
 
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
 		// Load only notifications we should display, ie. notifications sent from
 		// currently enabled modules
-		$where = array();
 
 		$query = $em
 			->createQueryBuilder()
 			->select('n')
 			->from('EtuCoreBundle:Notification', 'n')
-			->where('n.user = :user')
-			->orderBy('n.isSuper', 'DESC')
-			->addOrderBy('n.date', 'DESC')
-			->setParameter('user', $this->getUser()->getId())
+			->where('n.authorId != :userId')
+			->setParameter('userId', $this->getUser()->getId())
 			->setMaxResults(50);
+
+		/*
+		 * Subscriptions
+		 */
+		/** @var $subscriptions Subscription[] */
+		$subscriptions = $this->get('etu.twig.global_accessor')->get('notifs')->get('subscriptions');
+		$subscriptionsWhere = array();
+
+		foreach ($subscriptions as $key => $subscription) {
+			$subscriptionsWhere[] = '(n.entityType = :type_'.$key.' AND n.entityId = :id_'.$key.')';
+
+			$query->setParameter('type_'.$key, $subscription->getEntityType());
+			$query->setParameter('id_'.$key, $subscription->getEntityId());
+		}
+
+		if (! empty($subscriptionsWhere)) {
+			$query = $query->andWhere(implode(' OR ', $subscriptionsWhere));
+		}
+
+		/*
+		 * Modules
+		 */
+		$modulesWhere = array('n.module = \'core\'', 'n.module = \'user\'');
 
 		foreach ($this->getKernel()->getModulesDefinitions() as $module) {
 			$identifier = $module->getIdentifier();
+			$modulesWhere[] = 'n.module = :module_'.$identifier;
 
-			$where[] = 'n.module = :'.$identifier;
-			$query->setParameter($identifier, $identifier);
+			$query->setParameter('module_'.$identifier, $identifier);
 		}
 
+		if (! empty($modulesWhere)) {
+			$query = $query->andWhere(implode(' OR ', $modulesWhere));
+		}
+
+		// Query
 		/** @var $notifications Notification[] */
-		$notifications = $query->andWhere(implode(' OR ', $where))->getQuery()->getResult();
+		$notifications = $query->getQuery()->getResult();
 
 		$this->get('twig')->addGlobal('etu_count_new_notifs', 0);
 
@@ -145,14 +174,10 @@ class MainController extends Controller
 			'notifs' => $notifications
 		));
 
-		// Set notifications as viewed
-		foreach ($notifications as $notif) {
-			if ($notif->getIsNew()) {
-				$notif->setIsNew(false);
-				$em->persist($notif);
-			}
-		}
+		$user = $this->getUser();
+		$user->setLastVisitHome(new \DateTime());
 
+		$em->persist($user);
 		$em->flush();
 
 		return $view;
