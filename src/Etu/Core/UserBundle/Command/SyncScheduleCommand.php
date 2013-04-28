@@ -35,14 +35,6 @@ class SyncScheduleCommand extends ContainerAwareCommand
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		$container = $this->getContainer();
-
-		$output->writeln('
-	This command is not available yet.
-');
-
-		return;
-
 		$output->writeln('
 	Welcome to the EtuUTT schedules manager
 
@@ -55,14 +47,26 @@ To force this, use --force.
 		$output->writeln("\nCreating officials schedules (this will last long) ...");
 		$output->writeln("------------------------------------------------------------\n");
 
+		$tempDirectory = __DIR__.'/../Resources/temp';
+
+		if (! file_exists($tempDirectory.'/schedules')) {
+			mkdir($tempDirectory.'/schedules');
+		}
+
 		$scheduleApi = new ScheduleApi();
 		$content = array();
 
 		for ($page = 1; true; $page++) {
-			// Requesting CRI API
-			$output->writeln('Requesting CRI API (page '.$page.') ...');
+			if (! file_exists($tempDirectory.'/schedules/page-'.$page.'.temp')) {
+				// Requesting CRI API
+				$output->writeln('Requesting CRI API (page '.$page.') ...');
 
-			$pageContent = $scheduleApi->findPage($page);
+				$pageContent = $scheduleApi->findPage($page);
+
+				file_put_contents($tempDirectory.'/schedules/page-'.$page.'.temp', serialize($pageContent));
+			} else {
+				$pageContent = unserialize(file_get_contents($tempDirectory.'/schedules/page-'.$page.'.temp'));
+			}
 
 			if (empty($pageContent)) {
 				break;
