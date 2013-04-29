@@ -12,6 +12,18 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Course
 {
+	const WEEK_ALL = 'T';
+	const WEEK_A = 'A';
+	const WEEK_B = 'B';
+
+	const DAY_MONDAY = 'monday';
+	const DAY_TUESDAY = 'tuesday';
+	const DAY_WENESDAY = 'wenesday';
+	const DAY_THURSDAY = 'thursday';
+	const DAY_FRIDAY = 'friday';
+	const DAY_SATHURDAY = 'sathurday';
+	const DAY_SUNDAY = 'sunday';
+
     /**
      * @var integer
      *
@@ -29,17 +41,24 @@ class Course
 	 */
     protected $user;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="start", type="time")
-     */
-    protected $start;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="day", type="string", length=20)
+	 */
+	protected $day;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="start", type="string", length=10)
+	 */
+	protected $start;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="end", type="time")
+     * @ORM\Column(name="end", type="string", length=10)
      */
     protected $end;
 
@@ -53,7 +72,14 @@ class Course
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="fullName", type="string", length=50)
+	 * @ORM\Column(name="uv", type="string", length=50)
+	 */
+	protected $uv;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="type", type="string", length=50)
 	 */
 	protected $type;
 
@@ -63,6 +89,14 @@ class Course
 	 * @ORM\Column(name="room", type="string", length=50)
 	 */
 	protected $room;
+
+	/**
+	 * Constructor
+ 	 */
+	public function __construct()
+	{
+		$this->room = 'NC';
+	}
 
 	/**
 	 * @param string $end
@@ -111,7 +145,26 @@ class Course
 	}
 
 	/**
-	 * @param int $start
+	 * @param string $day
+	 * @return Course
+	 */
+	public function setDay($day)
+	{
+		$this->day = $day;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getDay()
+	{
+		return $this->day;
+	}
+
+	/**
+	 * @param string $start
 	 * @return Course
 	 */
 	public function setStart($start)
@@ -122,7 +175,7 @@ class Course
 	}
 
 	/**
-	 * @return int
+	 * @return string
 	 */
 	public function getStart()
 	{
@@ -146,6 +199,25 @@ class Course
 	public function getWeek()
 	{
 		return $this->week;
+	}
+
+	/**
+	 * @param string $uv
+	 * @return Course
+	 */
+	public function setUv($uv)
+	{
+		$this->uv = $uv;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getUv()
+	{
+		return $this->uv;
 	}
 
 	/**

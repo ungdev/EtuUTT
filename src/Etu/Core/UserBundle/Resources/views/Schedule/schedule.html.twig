@@ -1,0 +1,51 @@
+{% extends '::page-1col.html.twig' %}
+
+{% block title %}{{ 'schedule.my.view.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<div class="padding20-all">
+
+		<p class="pull-right">
+			<a href="" class="btn"><i class="icon-edit"></i> Modifier</a>
+			<a href="" class="btn"><i class="icon-print"></i> Imprimer</a>
+		</p>
+
+		<div class="clear"></div>
+
+		<div class="schedule-hours">
+			<div class="hour">08:00</div>
+			<div class="hour">09:00</div>
+			<div class="hour">10:00</div>
+			<div class="hour">11:00</div>
+			<div class="hour">12:00</div>
+			<div class="hour">13:00</div>
+			<div class="hour">14:00</div>
+			<div class="hour">15:00</div>
+			<div class="hour">16:00</div>
+			<div class="hour">17:00</div>
+			<div class="hour">18:00</div>
+			<div class="hour">19:00</div>
+		</div>
+		<div class="row-fluid schedule">
+			{% for day, dayCourses in courses %}
+				<div class="span2 schedule-col {% if day != phoneDay %}hidden-phone{% else %}phoneDay{% endif %}">
+					{% for item in dayCourses %}
+						{% if item.type == 'void' %}
+							<div class="item item-void item1"></div>
+						{% else %}
+							<div class="item item-course item{{ item.size }}">
+								<span class="schedule-course-uv">{{ item.course.uv }}</span>
+								<span class="schedule-course-room">{{ item.course.room }}</span>
+								<span class="schedule-course-type">- {{ item.course.type }}</span>
+							</div>
+						{% endif %}
+					{% endfor %}
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

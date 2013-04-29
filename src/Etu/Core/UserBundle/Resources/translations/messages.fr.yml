@@ -155,6 +155,17 @@ orga:
         confirm: Vous avez bien modifié votre logo
         back: Retour
 
+schedule:
+    days:
+        monday: Lundi
+        tuesday: Mardi
+        wenesday: Mercredi
+        thursday: Jeudi
+        friday: Vendredi
+        sathurday: Samedi
+    my:
+        view:
+            title: Mon emploi du temps
 
 admin:
     user:

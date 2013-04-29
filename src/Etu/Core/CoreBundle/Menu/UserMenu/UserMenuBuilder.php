@@ -59,7 +59,7 @@ class UserMenuBuilder
 			->end()
 			->add('base.user.menu.table')
 				->setIcon('etu-icon-table')
-				->setUrl('')
+				->setUrl($router->generate('user_schedule'))
 			->end()
 			->add('base.user.menu.logout')
 				->setIcon('etu-icon-power')

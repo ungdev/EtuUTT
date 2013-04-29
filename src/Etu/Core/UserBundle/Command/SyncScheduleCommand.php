@@ -3,9 +3,10 @@
 namespace Etu\Core\UserBundle\Command;
 
 use Doctrine\ORM\EntityManager;
+use Etu\Core\UserBundle\Command\Util\ProgressBar;
 use Etu\Core\UserBundle\Entity\User;
+use Etu\Core\UserBundle\Schedule\Model\Course;
 use Etu\Core\UserBundle\Schedule\ScheduleApi;
-use Etu\Core\UserBundle\Sync\Synchronizer;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -21,7 +22,7 @@ class SyncScheduleCommand extends ContainerAwareCommand
 		$this
 			->setName('etu:db:sync-schedule')
 			->setDescription('Synchronize officials schedules with database schedules.')
-			->addOption('force', 'f', InputOption::VALUE_OPTIONAL)
+			->addOption('force', 'f', InputOption::VALUE_NONE, 'Force to re-downlaod files')
 		;
 	}
 
@@ -40,8 +41,8 @@ class SyncScheduleCommand extends ContainerAwareCommand
 
 This command helps you to synchronise database\'s with officials schedules.
 
-The command will NOT remove users modification on their schedules by default.
-To force this, use --force.
+By default, the command will use cached version of schedules. If you want to
+re-download schedules, use --force or -f.
 ');
 
 		$output->writeln("\nCreating officials schedules (this will last long) ...");
@@ -54,17 +55,25 @@ To force this, use --force.
 		}
 
 		$scheduleApi = new ScheduleApi();
+
 		$content = array();
+		$readingFromCacheWritten = false;
 
 		for ($page = 1; true; $page++) {
-			if (! file_exists($tempDirectory.'/schedules/page-'.$page.'.temp')) {
+			if (! file_exists($tempDirectory.'/schedules/page-'.$page.'.temp') OR $input->getOption('force')) {
 				// Requesting CRI API
 				$output->writeln('Requesting CRI API (page '.$page.') ...');
 
 				$pageContent = $scheduleApi->findPage($page);
+				$readingFromCacheWritten = false;
 
 				file_put_contents($tempDirectory.'/schedules/page-'.$page.'.temp', serialize($pageContent));
 			} else {
+				if (! $readingFromCacheWritten) {
+					$output->writeln('Reading from cache ...');
+					$readingFromCacheWritten = true;
+				}
+
 				$pageContent = unserialize(file_get_contents($tempDirectory.'/schedules/page-'.$page.'.temp'));
 			}
 
@@ -72,10 +81,62 @@ To force this, use --force.
 				break;
 			}
 
+			/** @var $content Course[] */
 			$content = array_merge($content, $pageContent);
 		}
 
-		var_dump(count($content));
-		exit;
+		$output->writeln('Loading users from database ...');
+
+		/** @var $em EntityManager */
+		$em = $this->getContainer()->get('doctrine')->getManager();
+
+		/** @var $users User[] */
+		$users = $em->getRepository('EtuUserBundle:User')->findAll();
+
+		foreach ($users as $key => $user) {
+			unset($users[$key]);
+
+			$users[$user->getStudentId()] = $user;
+		}
+
+		$output->writeln('Creating schedules ...');
+
+		$bar = new ProgressBar('%fraction% [%bar%] %percent%', '=>', ' ', 80, count($content));
+		$bar->update(0);
+		$i = 1;
+
+		foreach ($content as $criCourse) {
+			if (! isset($users[$criCourse->getStudentId()])) {
+				continue;
+			}
+
+			$course = new \Etu\Core\UserBundle\Entity\Course();
+			$course->setUser($users[$criCourse->getStudentId()]);
+			$course->setDay(str_replace('day_', '', $criCourse->getDay()));
+			$course->setStart($criCourse->getStart());
+			$course->setEnd($criCourse->getEnd());
+			$course->setUv($criCourse->getUv());
+			$course->setType($criCourse->getType());
+			$course->setWeek($criCourse->getWeek());
+
+			if ($criCourse->getRoom()) {
+				$course->setRoom($criCourse->getRoom());
+			}
+
+			$em->persist($course);
+
+			// Flush each 500 elements
+			if ($i % 500 == 0) {
+				$em->flush();
+			}
+
+			$bar->update($i);
+			$i++;
+		}
+
+		$em->flush();
+		$bar->update(count($content));
+
+		$output->writeln("\nDone.\n");
 	}
 }

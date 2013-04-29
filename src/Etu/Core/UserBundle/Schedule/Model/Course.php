@@ -11,13 +11,13 @@ class Course
 	const WEEK_A = 'A';
 	const WEEK_B = 'B';
 
-	const DAY_MONDAY = 'day_monday';
-	const DAY_TUESDAY = 'day_tuesday';
-	const DAY_WENESDAY = 'day_wenesday';
-	const DAY_THURSDAY = 'day_thursday';
-	const DAY_FRIDAY = 'day_friday';
-	const DAY_SATHURDAY = 'day_sathurday';
-	const DAY_SUNDAY = 'day_sunday';
+	const DAY_MONDAY = 'monday';
+	const DAY_TUESDAY = 'tuesday';
+	const DAY_WENESDAY = 'wenesday';
+	const DAY_THURSDAY = 'thursday';
+	const DAY_FRIDAY = 'friday';
+	const DAY_SATHURDAY = 'sathurday';
+	const DAY_SUNDAY = 'sunday';
 
 	/**
 	 * @var string
@@ -95,6 +95,70 @@ class Course
 
 		$this->start = $this->formatHour($values->debut);
 		$this->end = $this->formatHour($values->fin);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getDay()
+	{
+		return $this->day;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getEnd()
+	{
+		return $this->end;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getRoom()
+	{
+		return $this->room;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getStart()
+	{
+		return $this->start;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getStudentId()
+	{
+		return $this->studentId;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getType()
+	{
+		return $this->type;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getUv()
+	{
+		return $this->uv;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getWeek()
+	{
+		return $this->week;
 	}
 
 	protected function formatHour($hour)
