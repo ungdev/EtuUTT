@@ -14,10 +14,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class ScheduleController extends Controller
 {
 	/**
-	 * @Route("/schedule", name="user_schedule")
+	 * @Route("/schedule/{day}", defaults={"day" = "current"}, name="user_schedule")
 	 * @Template()
 	 */
-	public function scheduleAction()
+	public function scheduleAction($day = 'current')
 	{
 		if (! $this->getUserLayer()->isStudent()) {
 			return $this->createAccessDeniedResponse();
@@ -36,9 +36,24 @@ class ScheduleController extends Controller
 			$builder->addCourse($course);
 		}
 
+		$days = array(
+			Course::DAY_MONDAY, Course::DAY_TUESDAY, Course::DAY_WENESDAY,
+			Course::DAY_THURSDAY, Course::DAY_FRIDAY, Course::DAY_SATHURDAY
+		);
+
+		if (! in_array($day, $days)) {
+			if (date('w') == 0) { // Sunday
+				$day = Course::DAY_MONDAY;
+			} else {
+				$day = $days[date('w') - 1];
+			}
+		}
+
 		return array(
 			'courses' => $builder->build(),
-			'phoneDay' => (strtolower(date('l')) != 'sunday') ? strtolower(date('l')) : 'monday'
+			'currentDay' => $day,
+			'currentDateDay' => $days[date('w') - 1],
+			'currentHour' => (int) date('Hi'),
 		);
 	}
 }

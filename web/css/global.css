@@ -74,6 +74,12 @@ textarea {
 .clear {
 	clear: both;
 }
+.clear-left {
+	clear: left;
+}
+.clear-right {
+	clear: right;
+}
 
 /* Block fixed */
 .fixed {

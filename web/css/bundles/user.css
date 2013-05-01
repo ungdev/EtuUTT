@@ -157,49 +157,67 @@
 .schedule {
 	margin-top: 10px;
 }
+.schedule-day-passed, .schedule-hour-passed {
+	background: #dddddd;
+}
 .schedule-col {
 	margin: 0 !important;
 }
 .schedule .item {
-	border-bottom: 1px solid #e5e5e5;
-	border-right: 1px solid #e5e5e5;
+	border-bottom: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
 	text-align: center;
 }
-.schedule .item:first-child {
-	border-top: 1px solid #e5e5e5;
+.schedule .item-half {
+	width: 49%;
+}
+.schedule .item-half-left {
+	float: left;
+}
+.schedule .item-half-right {
+	float: right;
+}
+.schedule .item-first {
+	border-top: 1px solid #cccccc;
 }
 .schedule .item-course {
-	background: #f5f5f5;
+	background: #6e97b9;
+	color: #ffffff;
 }
 .schedule .item1 {
 	height: 20px;
 }
 .schedule .item2 {
-	padding-top: 10px;
+	padding-bottom: 10px;
 	height: 31px;
 }
 .schedule .item3 {
-	padding-top: 20px;
+	padding: 10px 0;
 	height: 42px;
 }
 .schedule .item4 {
-	padding-top: 30px;
+	padding-top: 20px;
+	padding-bottom: 10px;
 	height: 53px;
 }
 .schedule .item5 {
-	padding-top: 40px;
+	padding-top: 30px;
+	padding-bottom: 10px;
 	height: 64px;
 }
 .schedule .item6 {
-	padding-top: 50px;
+	padding-top: 40px;
+	padding-bottom: 10px;
 	height: 75px;
 }
 .schedule .item7 {
-	padding-top: 60px;
+	padding-top: 50px;
+	padding-bottom: 10px;
 	height: 86px;
 }
 .schedule .item8 {
-	padding-top: 70px;
+	padding-top: 60px;
+	padding-bottom: 10px;
 	height: 97px;
 }
 
@@ -210,6 +228,17 @@
 	font-style: italic;
 }
 
+.schedule-days {
+	margin-left: 90px;
+}
+.schedule-days .day {
+	margin: 0 !important;
+	text-align: center;
+	font-weight: bold;
+}
+.schedule-days  .schedule-days-choose {
+	text-align: left;
+}
 .schedule-hours {
 	width: 80px;
 }
@@ -234,6 +263,12 @@
     .phoneDay .item {
 	    border-right: 0;
     }
+	.schedule .item-half {
+		width: 50%;
+	}
+	.schedule-course-type {
+		display: inline;
+	}
 }
 
 @media screen and (max-width: 500px) {

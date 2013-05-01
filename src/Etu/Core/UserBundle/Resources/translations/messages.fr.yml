@@ -166,6 +166,9 @@ schedule:
     my:
         view:
             title: Mon emploi du temps
+            changeDay: Changer de jour
+            edit: Modifier
+            print: Imprimer
 
 admin:
     user:

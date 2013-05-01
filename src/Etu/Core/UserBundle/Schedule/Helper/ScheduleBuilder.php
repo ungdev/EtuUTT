@@ -3,12 +3,15 @@
 namespace Etu\Core\UserBundle\Schedule\Helper;
 
 use Etu\Core\UserBundle\Entity\Course;
+use Etu\Core\UserBundle\Schedule\Model\CourseHalf;
 
 /**
  * Schedule builder using courses.
  */
 class ScheduleBuilder
 {
+	static $colors = array();
+
 	/**
 	 * @var Course[]
 	 */
@@ -41,11 +44,23 @@ class ScheduleBuilder
 	 */
 	public function addCourse(Course $course)
 	{
-		$this->courses[$course->getDay()][$course->getStart()] = array(
-			'type' => 'course',
-			'size' => $this->getBlockSize($course),
-			'course' => $course,
-		);
+		if ($course->getWeek() == 'T') {
+			$this->courses[$course->getDay()][$course->getStart()] = array(
+				'type' => 'course',
+				'size' => $this->getBlockSize($course),
+				'course' => $course,
+			);
+		} else {
+			if (! isset($this->courses[$course->getDay()][$course->getStart()]['courses'])) {
+				$this->courses[$course->getDay()][$course->getStart()] = array(
+					'type' => 'course_half',
+					'size' => $this->getBlockSize($course),
+					'courses' => new CourseHalf(),
+				);
+			}
+
+			$this->courses[$course->getDay()][$course->getStart()]['courses']->addCourse($course);
+		}
 	}
 
 	/**
@@ -57,7 +72,7 @@ class ScheduleBuilder
 			$deleteCount = 0;
 
 			foreach ($dayCourses as $key => $course) {
-				if ($course['type'] == 'course') {
+				if ($course['type'] == 'course' || $course['type'] == 'course_half') {
 					$deleteCount = $course['size'] - 1;
 				} elseif ($deleteCount > 0) {
 					$deleteCount--;
@@ -66,7 +81,16 @@ class ScheduleBuilder
 			}
 		}
 
-		return $this->courses;
+		$courses = array();
+
+		foreach ($this->courses as $day => $dayCourses) {
+			foreach ($dayCourses as $key => $course) {
+				$courses[$day][(int) str_replace(':', '', $key)] = $course;
+				$courses[$day][(int) str_replace(':', '', $key)]['hour'] = $key;
+			}
+		}
+
+		return $courses;
 	}
 
 	/**
