@@ -68,6 +68,7 @@ class Course
 		$this->uv = $values->uv;
 		$this->type = $values->type;
 		$this->studentId = $values->etu_id;
+		$this->room = $values->code_salle_cru;
 
 		if ($values->weekname == 'T') {
 			$this->week = self::WEEK_ALL;

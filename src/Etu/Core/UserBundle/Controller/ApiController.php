@@ -216,4 +216,42 @@ class ApiController extends Controller
 
 		return new Response(json_encode($users));
 	}
+
+	/**
+	 * @Route(
+	 *      "/user/connected",
+	 *      defaults={"_format"="json"},
+	 *      name="api_users_connected",
+	 *      options={"expose"=true}
+	 * )
+	 * @Template()
+	 */
+	public function connectedUserAction()
+	{
+		if (! $this->getUserLayer()->isConnected()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $user User */
+		$user = $em->createQueryBuilder()
+			->select('u')
+			->from('EtuUserBundle:User', 'u')
+			->where('u.id = :id')
+			->setParameter('id', $this->getUser()->getId())
+			->getQuery()
+			->getArrayResult();
+
+		if (! empty($user)) {
+			$user = $user[0];
+
+			unset($user['password'], $user['language'], $user['ldapInformations'], $user['keepActive']);
+
+			return new Response(json_encode($user));
+		}
+
+		return new Response(json_encode(array()));
+	}
 }

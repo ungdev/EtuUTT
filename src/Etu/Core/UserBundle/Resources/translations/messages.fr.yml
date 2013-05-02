@@ -169,6 +169,9 @@ schedule:
             changeDay: Changer de jour
             edit: Modifier
             print: Imprimer
+        edit:
+            title: Modifier
+            back: Retour
 
 admin:
     user:

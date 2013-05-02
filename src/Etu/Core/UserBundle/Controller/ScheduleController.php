@@ -7,12 +7,41 @@ use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\Course;
 use Etu\Core\UserBundle\Schedule\Helper\ScheduleBuilder;
+use Etu\Core\UserBundle\Schedule\ScheduleApi;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class ScheduleController extends Controller
 {
+	/**
+	 * @Route("/schedule/edit", name="user_schedule_edit")
+	 * @Template()
+	 */
+	public function scheduleEditAction()
+	{
+		if (! $this->getUserLayer()->isStudent()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $myCourses Course[] */
+		$courses = $em->getRepository('EtuUserBundle:Course')->findByUser($this->getUser());
+
+		// Builder to create the schedule
+		$builder = new ScheduleBuilder();
+
+		foreach ($courses as $course) {
+			$builder->addCourse($course);
+		}
+
+		return array(
+			'courses' => $builder->build()
+		);
+	}
+
 	/**
 	 * @Route("/schedule/{day}", defaults={"day" = "current"}, name="user_schedule")
 	 * @Template()

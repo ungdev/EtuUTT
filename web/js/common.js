@@ -23,6 +23,10 @@ $(function() {
 
 	$('a[rel*=facebox]').facebox();
 
+	$('.tip').tipsy({
+		gravity: 'n'
+	});
+
 	$('.userbox-link').click(function() {
 		$('.userbox').toggleClass('userbox-clicked');
 		$('.userbox-menu').toggleClass('userbox-menu-clicked');

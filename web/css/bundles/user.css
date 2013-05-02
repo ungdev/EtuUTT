@@ -184,6 +184,11 @@
 	background: #6e97b9;
 	color: #ffffff;
 }
+.schedule-edit-actions {
+	display: none;
+	position: absolute;
+	padding-left: 5px;
+}
 .schedule .item1 {
 	height: 20px;
 }
@@ -195,30 +200,48 @@
 	padding: 10px 0;
 	height: 42px;
 }
+.schedule .item3 .schedule-edit-actions {
+	margin-top: -10px;
+}
 .schedule .item4 {
 	padding-top: 20px;
 	padding-bottom: 10px;
 	height: 53px;
+}
+.schedule .item4 .schedule-edit-actions {
+	margin-top: -20px;
 }
 .schedule .item5 {
 	padding-top: 30px;
 	padding-bottom: 10px;
 	height: 64px;
 }
+.schedule .item5 .schedule-edit-actions {
+	margin-top: -30px;
+}
 .schedule .item6 {
 	padding-top: 40px;
 	padding-bottom: 10px;
 	height: 75px;
+}
+.schedule .item6 .schedule-edit-actions {
+	margin-top: -40px;
 }
 .schedule .item7 {
 	padding-top: 50px;
 	padding-bottom: 10px;
 	height: 86px;
 }
+.schedule .item7 .schedule-edit-actions {
+	margin-top: -50px;
+}
 .schedule .item8 {
 	padding-top: 60px;
 	padding-bottom: 10px;
 	height: 97px;
+}
+.schedule .item8 .schedule-edit-actions {
+	margin-top: -60px;
 }
 
 .schedule-course-uv {
