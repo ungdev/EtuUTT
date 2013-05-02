@@ -60,7 +60,7 @@ class EtuModuleBugsBundle extends Module
 	}
 
 	/**
-	 * @return string
+	 * @return array
 	 */
 	public function getAvailablePermissions()
 	{

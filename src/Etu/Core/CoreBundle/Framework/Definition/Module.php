@@ -80,6 +80,14 @@ abstract class Module extends Bundle
 	public function onModuleBoot() { }
 
 	/**
+	 * @return array
+	 */
+	public function getAvailablePermissions()
+	{
+		return array();
+	}
+
+	/**
 	 * Module author
 	 *
 	 * @return string

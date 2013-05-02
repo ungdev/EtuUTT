@@ -194,6 +194,10 @@ admin:
                 desc: Afficher seulement l'âge sur le profil (si la date de naissance est privée)
             confirm: Vous avez bien modifié le profil
             back: Retour sur le profil
+        permissions:
+            title: Modifier les permissions
+            back: Retour sur le profil
+            submit: Modifier
         delete:
             title: Supprimer un utilisateur
             sure: Voulez-vous vraiment supprimer l'utilisateur %username% ?

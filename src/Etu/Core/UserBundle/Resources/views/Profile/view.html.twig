@@ -68,6 +68,11 @@
 							</a>
 						</p>
 						<p>
+							<a href="{{ path('admin_user_permissions', {'login': user.login}) }}" class="btn btn-small">
+								Modifier ses permissions
+							</a>
+						</p>
+						<p>
 							<a href="{{ path('admin_user_toggle_readonly', {'login': user.login}) }}" class="btn btn-small">
 								{% if user.isReadOnly %}
 									Désactiver la lecture seule

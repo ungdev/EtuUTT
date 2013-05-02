@@ -213,6 +213,65 @@ class AdminController extends Controller
 		);
 	}
 
+	/**
+	 * @Route("/user/{login}/permissions", name="admin_user_permissions")
+	 * @Template()
+	 */
+	public function userPermissionsAction($login)
+	{
+		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $user User */
+		$user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
+
+		if (! $user) {
+			throw $this->createNotFoundException('Login "'.$login.'" not found');
+		}
+
+		$permissions = array();
+		$permissions1 = array();
+		$permissions2 = array();
+
+		foreach ($this->getKernel()->getModulesDefinitions() as $module) {
+			$permissions = array_merge($permissions, $module->getAvailablePermissions());
+		}
+
+		$i = 0;
+
+		foreach ($permissions as $name => $desc) {
+			if ($user->hasPermission($name)) {
+				$permission = array('name' => $name, 'desc' => $desc, 'checked' => true);
+			} else {
+				$permission = array('name' => $name, 'desc' => $desc, 'checked' => false);
+			}
+
+			if ($i % 2 == 0) {
+				$permissions1[] = $permission;
+			} else {
+				$permissions2[] = $permission;
+			}
+
+			$i++;
+		}
+
+		$request = $this->getRequest();
+
+		if ($request->getMethod() == 'POST' && $request->get('permissions')) {
+			return $this->redirect($this->generateUrl('user_view', array('login' => $user->getLogin())));
+		}
+
+		return array(
+			'user' => $user,
+			'permissions1' => $permissions1,
+			'permissions2' => $permissions2
+		);
+	}
+
 
 	/**
 	 * @Route("/user/{login}/avatar", name="admin_user_edit_avatar", options={"expose"=true})
