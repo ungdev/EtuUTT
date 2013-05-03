@@ -151,10 +151,13 @@ notifs:
 admin:
     index:
         title: Administration générale
+    modules:
+        title: Modules
         confirm: Vous avez bien modifié les modules
     stats:
         title: Statistiques
     page:
+        title: Pages statiques
         create:
             title: Créer une page
             name: Titre

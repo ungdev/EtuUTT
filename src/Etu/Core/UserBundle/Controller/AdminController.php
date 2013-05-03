@@ -233,7 +233,10 @@ class AdminController extends Controller
 			throw $this->createNotFoundException('Login "'.$login.'" not found');
 		}
 
-		$permissions = array();
+		$permissions = array(
+			'pages.admin' => 'Peut modifier les pages statiques',
+		);
+
 		$permissions1 = array();
 		$permissions2 = array();
 
@@ -261,7 +264,37 @@ class AdminController extends Controller
 
 		$request = $this->getRequest();
 
-		if ($request->getMethod() == 'POST' && $request->get('permissions')) {
+		if ($request->getMethod() == 'POST' && $request->get('sent')) {
+			if ($request->get('isAdmin')) {
+				$user->setIsAdmin(true);
+
+				$userPermissions = array();
+
+				foreach ($permissions as $permission => $value) {
+					$userPermissions[] = $permission;
+				}
+
+				$user->setPermissions($userPermissions);
+			} elseif ($permissions = $request->get('permissions')) {
+				$user->setIsAdmin(false);
+
+				$userPermissions = array();
+
+				foreach ($permissions as $permission => $value) {
+					$userPermissions[] = $permission;
+				}
+
+				$user->setPermissions($userPermissions);
+			}
+
+			$em->persist($user);
+			$em->flush();
+
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'admin.user.permissions.confirm'
+			));
+
 			return $this->redirect($this->generateUrl('user_view', array('login' => $user->getLogin())));
 		}
 

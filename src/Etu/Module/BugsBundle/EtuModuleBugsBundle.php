@@ -65,8 +65,8 @@ class EtuModuleBugsBundle extends Module
 	public function getAvailablePermissions()
 	{
 		return array(
-			'bugs.admin' => 'Administrer les bugs',
-			'suggests.admin' => 'Administrer les suggestions',
+			'bugs.admin' => 'Peut administrer les bugs',
+			'suggests.admin' => 'Peut administrer les suggestions',
 		);
 	}
 

@@ -1,6 +1,6 @@
 {% extends 'EtuCoreBundle:Admin:layout.html.twig' %}
 
-{% block title %}{{ 'admin.index.title'|trans }}{% endblock %}
+{% block title %}{{ 'base.admin_menu.items.dashboard'|trans }}{% endblock %}
 
 {% block titleIcon %}
 	<img src="{{ asset('img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -8,79 +8,8 @@
 
 {% block content %}
 	<div class="padding20-all">
-		<h3>Modules</h3>
+		<h3>Charge serveur</h3>
 
-		<form method="post" action="">
-			<table class="table table-hover">
-				<thead>
-				<tr>
-					<th style="width: 50px;">#</th>
-					<th>Nom</th>
-					<th class="hidden-phone">Auteur</th>
-					<th class="hidden-phone">Description</th>
-				</tr>
-				</thead>
-				<tbody>
-				{% for module in modules %}
-					<tr>
-						<td><input type="checkbox" name="modules[{{ module.identifier }}]" {% if module.enabled %} checked="checked"{% endif %} /></td>
-						<td>{{ module.title }}</td>
-						<td>{{ module.author }}</td>
-						<td class="hidden-phone">{{ module.description }}</td>
-					</tr>
-				{% endfor %}
-				</tbody>
-			</table>
-
-			<button type="sumbit" class="btn">Activer/désactiver</button>
-		</form>
-
-		<h3>Pages statiques</h3>
-
-		<table class="table table-hover">
-			<thead>
-			<tr>
-				<th style="width: 50px;" class="hidden-phone">#</th>
-				<th style="width: 50%;">Nom</th>
-				<th>Actions</th>
-			</tr>
-			</thead>
-			<tbody>
-			{% for key, page in pages %}
-				<tr>
-					<td class="hidden-phone">{{ key + 1 }}</td>
-					<td>
-						{{ page.title }}
-					</td>
-					<td>
-						<div class="hidden-phone">
-							<a href="{{ path('admin_page_edit', {'id': page.id}) }}" class="btn">
-								<i class="icon-edit"></i> Modifier
-							</a>
-							<a href="{{ path('admin_page_delete', {'id': page.id}) }}" class="btn">
-								<i class="icon-remove"></i> Supprimer
-							</a>
-						</div>
-						<div class="visible-phone">
-							<a href="{{ path('admin_page_edit', {'id': page.id}) }}" class="btn">
-								<i class="icon-edit"></i>
-							</a>
-							<a href="{{ path('admin_page_delete', {'id': page.id}) }}" class="btn">
-								<i class="icon-remove"></i>
-							</a>
-						</div>
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="3">Aucune page pour le moment.</td>
-				</tr>
-			{% endfor %}
-			</tbody>
-		</table>
-
-		<a href="{{ path('admin_page_create') }}" class="btn">
-			<i class="icon-plus"></i> Créer une page
-		</a>
+		<pre>{{ top }}</pre>
 	</div>
 {% endblock %}

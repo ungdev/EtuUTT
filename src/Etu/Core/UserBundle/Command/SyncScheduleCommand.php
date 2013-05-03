@@ -45,7 +45,7 @@ By default, the command will use cached version of schedules. If you want to
 re-download schedules, use --force or -f.
 ');
 
-		$output->writeln("\nCreating officials schedules (this will last long) ...");
+		$output->writeln("\nGetting officials schedules (this will last long) ...");
 		$output->writeln("------------------------------------------------------------\n");
 
 		$tempDirectory = __DIR__.'/../Resources/temp';
@@ -98,6 +98,10 @@ re-download schedules, use --force or -f.
 
 			$users[$user->getStudentId()] = $user;
 		}
+
+		$output->writeln('Deleteing old schedules ...');
+
+		$em->createQuery('DELETE FROM EtuUserBundle:Course')->execute();
 
 		$output->writeln('Creating schedules ...');
 

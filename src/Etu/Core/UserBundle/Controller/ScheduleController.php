@@ -81,8 +81,6 @@ class ScheduleController extends Controller
 		return array(
 			'courses' => $builder->build(),
 			'currentDay' => $day,
-			'currentDateDay' => $days[date('w') - 1],
-			'currentHour' => (int) date('Hi'),
 		);
 	}
 }

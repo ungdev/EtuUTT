@@ -1,0 +1,36 @@
+{% extends 'EtuCoreBundle:Admin:layout.html.twig' %}
+
+{% block title %}{{ 'admin.modules.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<div class="padding20-all">
+		<form method="post" action="">
+			<table class="table table-hover">
+				<thead>
+				<tr>
+					<th style="width: 50px;">#</th>
+					<th>Nom</th>
+					<th class="hidden-phone">Auteur</th>
+					<th class="hidden-phone">Description</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for module in modules %}
+					<tr>
+						<td><input type="checkbox" name="modules[{{ module.identifier }}]" {% if module.enabled %} checked="checked"{% endif %} /></td>
+						<td>{{ module.title }}</td>
+						<td>{{ module.author }}</td>
+						<td class="hidden-phone">{{ module.description }}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+
+			<button type="sumbit" class="btn">Activer/désactiver</button>
+		</form>
+	</div>
+{% endblock %}

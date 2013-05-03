@@ -164,7 +164,7 @@
 							{% for route in mostUsedRoutes %}
 								<tr>
 									<td>{{ route.place }}</td>
-									<td>{{ route.route }}</td>
+									<td>{{ route.route|limit(20) }}</td>
 									<td>{{ route.nb }}</td>
 									<td>{{ route.percentage }} %</td>
 								</tr>
@@ -190,15 +190,15 @@
 							<thead>
 							<tr>
 								<th style="width: 25px;">#</th>
-								<th style="width: 50%;">Domaine</th>
-								<th>Visiteurs</th>
+								<th style="width: 40%;">Domaine</th>
+								<th>Chargements</th>
 								<th>Pourcentage</th>
 							</tr>
 							</thead>
 							<tbody>
 							{% for source in allExternalSources %}
 								<tr>
-									<td>{{ loop.index + 1 }}</td>
+									<td>{{ loop.index }}</td>
 									<td>{{ source.domain }}</td>
 									<td>{{ source.countVisitors }}</td>
 									<td>{{ source.percentage }} %</td>

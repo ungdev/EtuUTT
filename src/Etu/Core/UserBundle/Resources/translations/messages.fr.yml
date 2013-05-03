@@ -192,11 +192,12 @@ admin:
             birthdayOnlyAge:
                 label: Afficher l'âge
                 desc: Afficher seulement l'âge sur le profil (si la date de naissance est privée)
-            confirm: Vous avez bien modifié le profil
+            confirm: Vous avez bien modifié le profil de cet utilisateur
             back: Retour sur le profil
         permissions:
             title: Modifier les permissions
             back: Retour sur le profil
+            confirm: Vous avez bien modifié les permissions de cet utilisateur
             submit: Modifier
         delete:
             title: Supprimer un utilisateur

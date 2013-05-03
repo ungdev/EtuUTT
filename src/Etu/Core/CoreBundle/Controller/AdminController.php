@@ -7,7 +7,7 @@ use Etu\Core\CoreBundle\Entity\Page;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 
 use Etu\Core\CoreBundle\Framework\Module\ModulesManager;
-use Etu\Core\CoreBundle\Stats\TgaAudienceDriver;
+use Etu\Core\CoreBundle\Stats\TopParser;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -26,6 +26,24 @@ class AdminController extends Controller
 	 * @Template()
 	 */
 	public function indexAction()
+	{
+		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$top = explode('cached', shell_exec('top -b -n 1'));
+		$top = $top[0].'cached';
+
+		return array(
+			'top' => $top
+		);
+	}
+
+	/**
+	 * @Route("/modules", name="admin_modules")
+	 * @Template()
+	 */
+	public function modulesAction()
 	{
 		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
 			return $this->createAccessDeniedResponse();
@@ -74,21 +92,14 @@ class AdminController extends Controller
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'admin.index.confirm'
+				'message' => 'admin.modules.confirm'
 			));
 
-			return $this->redirect($this->generateUrl('admin_index'));
+			return $this->redirect($this->generateUrl('admin_modules'));
 		}
-
-		// Pages
-		/** @var $em EntityManager */
-		$em = $this->getDoctrine()->getManager();
-
-		$pages = $em->getRepository('EtuCoreBundle:Page')->findBy(array(), array('title' => 'ASC'));
 
 		return array(
 			'modules' => $modulesManager->getModules(),
-			'pages' => $pages,
 		);
 	}
 
@@ -139,12 +150,32 @@ class AdminController extends Controller
 	}
 
 	/**
+	 * @Route("/pages", name="admin_pages")
+	 * @Template()
+	 */
+	public function pagesAction()
+	{
+		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('pages.admin')) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		$pages = $em->getRepository('EtuCoreBundle:Page')->findBy(array(), array('title' => 'ASC'));
+
+		return array(
+			'pages' => $pages,
+		);
+	}
+
+	/**
 	 * @Route("/page/create", name="admin_page_create")
 	 * @Template()
 	 */
 	public function pageCreateAction()
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
+		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('pages.admin')) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -185,7 +216,7 @@ class AdminController extends Controller
 	 */
 	public function pageEditAction($id)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
+		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('pages.admin')) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -224,7 +255,7 @@ class AdminController extends Controller
 	 */
 	public function pageDeleteAction($id)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
+		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('pages.admin')) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -244,7 +275,7 @@ class AdminController extends Controller
 	 */
 	public function pageDeleteConfirmAction($id)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
+		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('pages.admin')) {
 			return $this->createAccessDeniedResponse();
 		}
 

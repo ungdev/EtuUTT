@@ -1297,7 +1297,7 @@ class User implements UserInterface, \Serializable
 	}
 
 	/**
-	 * @param boolean $permissions
+	 * @param array $permissions
 	 * @return User
 	 */
 	public function setPermissions($permissions)

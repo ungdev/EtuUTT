@@ -158,6 +158,17 @@
 										</a>
 									</li>
 								</ul>
+							{% elseif app.user.hasPermission('pages.admin') %}
+								<hr class="separator" />
+
+								<ul class="list-vertical list-vertical-linked">
+									<li>
+										<a href="{{ path('admin_pages') }}">
+											<i class="etu-icon-book"></i>
+											{{ 'admin.page.title'|trans }}
+										</a>
+									</li>
+								</ul>
 							{% endif %}
 						{% else %}
 							{{ render_orga_menu() }}
