@@ -20,11 +20,22 @@
 				</thead>
 				<tbody>
 				{% for module in modules %}
-					<tr>
-						<td><input type="checkbox" name="modules[{{ module.identifier }}]" {% if module.enabled %} checked="checked"{% endif %} /></td>
+					<tr {% if not module.isReadyToUse %}class="muted"{% endif %}>
+						<td>
+							{% if module.isReadyToUse %}
+								<input type="checkbox" name="modules[{{ module.identifier }}]" {% if module.enabled %} checked="checked"{% endif %} />
+							{% else %}
+								<input type="checkbox" disabled="disabled" />
+							{% endif %}
+						</td>
 						<td>{{ module.title }}</td>
 						<td>{{ module.author }}</td>
-						<td class="hidden-phone">{{ module.description }}</td>
+						<td class="hidden-phone">
+							{{ module.description }}
+							{% if not module.isReadyToUse %}
+								<br /><span class="text-warning">Ce module n'est pas prêt à être utilisé.</span>
+							{% endif %}
+						</td>
 					</tr>
 				{% endfor %}
 				</tbody>

@@ -1,10 +1,10 @@
 <?php
 
-namespace Etu\Module\ForumBundle;
+namespace Etu\Module\EvenementsBundle;
 
 use Etu\Core\CoreBundle\Framework\Definition\Module;
 
-class EtuModuleForumBundle extends Module
+class EtuModuleEvenementsBundle extends Module
 {
 	/**
 	 * @return bool
@@ -29,7 +29,7 @@ class EtuModuleForumBundle extends Module
 	 */
 	public function getIdentifier()
 	{
-		return 'forum';
+		return 'events';
 	}
 
 	/**
@@ -39,7 +39,7 @@ class EtuModuleForumBundle extends Module
 	 */
 	public function getTitle()
 	{
-		return 'Forum';
+		return 'Evenements';
 	}
 
 	/**
@@ -49,7 +49,7 @@ class EtuModuleForumBundle extends Module
 	 */
 	public function getAuthor()
 	{
-		return 'Titouan Galopin';
+		return 'anonymous';
 	}
 
 	/**
@@ -59,7 +59,7 @@ class EtuModuleForumBundle extends Module
 	 */
 	public function getDescription()
 	{
-		return 'Module de forum';
+		return 'Default module description';
 	}
 
 	/**

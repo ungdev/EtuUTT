@@ -53,6 +53,16 @@ abstract class Module extends Bundle
 	abstract public function getRequirements();
 
 	/**
+	 * Module is ready to use ?
+	 *
+	 * @return string
+	 */
+	public function isReadyToUse()
+	{
+		return true;
+	}
+
+	/**
 	 * Module author
 	 *
 	 * @return string
