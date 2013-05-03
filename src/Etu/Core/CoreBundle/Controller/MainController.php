@@ -136,37 +136,41 @@ class MainController extends Controller
 		/** @var $subscriptions Subscription[] */
 		$subscriptions = $this->get('etu.twig.global_accessor')->get('notifs')->get('subscriptions');
 		$subscriptionsWhere = array();
+		$notifications = array();
 
-		foreach ($subscriptions as $key => $subscription) {
-			$subscriptionsWhere[] = '(n.entityType = :type_'.$key.' AND n.entityId = :id_'.$key.')';
+		if (! empty($subscriptions)) {
 
-			$query->setParameter('type_'.$key, $subscription->getEntityType());
-			$query->setParameter('id_'.$key, $subscription->getEntityId());
+			foreach ($subscriptions as $key => $subscription) {
+				$subscriptionsWhere[] = '(n.entityType = :type_'.$key.' AND n.entityId = :id_'.$key.')';
+
+				$query->setParameter('type_'.$key, $subscription->getEntityType());
+				$query->setParameter('id_'.$key, $subscription->getEntityId());
+			}
+
+			if (! empty($subscriptionsWhere)) {
+				$query = $query->andWhere(implode(' OR ', $subscriptionsWhere));
+			}
+
+			/*
+			 * Modules
+			 */
+			$modulesWhere = array('n.module = \'core\'', 'n.module = \'user\'');
+
+			foreach ($this->getKernel()->getModulesDefinitions() as $module) {
+				$identifier = $module->getIdentifier();
+				$modulesWhere[] = 'n.module = :module_'.$identifier;
+
+				$query->setParameter('module_'.$identifier, $identifier);
+			}
+
+			if (! empty($modulesWhere)) {
+				$query = $query->andWhere(implode(' OR ', $modulesWhere));
+			}
+
+			// Query
+			/** @var $notifications Notification[] */
+			$notifications = $query->getQuery()->getResult();
 		}
-
-		if (! empty($subscriptionsWhere)) {
-			$query = $query->andWhere(implode(' OR ', $subscriptionsWhere));
-		}
-
-		/*
-		 * Modules
-		 */
-		$modulesWhere = array('n.module = \'core\'', 'n.module = \'user\'');
-
-		foreach ($this->getKernel()->getModulesDefinitions() as $module) {
-			$identifier = $module->getIdentifier();
-			$modulesWhere[] = 'n.module = :module_'.$identifier;
-
-			$query->setParameter('module_'.$identifier, $identifier);
-		}
-
-		if (! empty($modulesWhere)) {
-			$query = $query->andWhere(implode(' OR ', $modulesWhere));
-		}
-
-		// Query
-		/** @var $notifications Notification[] */
-		$notifications = $query->getQuery()->getResult();
 
 		$this->get('twig')->addGlobal('etu_count_new_notifs', 0);
 

@@ -10,26 +10,24 @@
 	<script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
 
 	<script type="text/javascript">
-		$('.item-course').hover(
-			function () {
-				$(this).find('.schedule-edit-actions').show();
-			},
-			function () {
-				$(this).find('.schedule-edit-actions').hide();
-			}
-		);
+		$(function() {
+			$('#schedule').sortable({
+				items: ".item"
+			});
+		});
 	</script>
 {% endblock %}
 
 {% block content %}
-	<div class="padding20-all">
-
-		<p class="pull-right hidden-phone">
-			<a href="" class="btn">
+	<ul class="nav nav-tabs page-tabs">
+		<li>
+			<a href="{{ path('user_schedule') }}">
 				<i class="icon-chevron-left"></i> {{ 'schedule.my.edit.back'|trans }}
 			</a>
-		</p>
+		</li>
+	</ul>
 
+	<div class="padding20-sides">
 		<div class="clear"></div>
 
 		<div class="row-fluid schedule schedule-days">

@@ -82,35 +82,39 @@ class NewNotifsListener
 			$subscriptions = $em->getRepository('EtuCoreBundle:Subscription')->findBy(array('user' => $layer->getUser()));
 			$subscriptionsWhere = array();
 
-			foreach ($subscriptions as $key => $subscription) {
-				$subscriptionsWhere[] = '(n.entityType = :type_'.$key.' AND n.entityId = :id_'.$key.')';
+			if (! empty($subscriptions)) {
+				foreach ($subscriptions as $key => $subscription) {
+					$subscriptionsWhere[] = '(n.entityType = :type_'.$key.' AND n.entityId = :id_'.$key.')';
 
-				$query->setParameter('type_'.$key, $subscription->getEntityType());
-				$query->setParameter('id_'.$key, $subscription->getEntityId());
+					$query->setParameter('type_'.$key, $subscription->getEntityType());
+					$query->setParameter('id_'.$key, $subscription->getEntityId());
+				}
+
+				if (! empty($subscriptionsWhere)) {
+					$query = $query->andWhere(implode(' OR ', $subscriptionsWhere));
+				}
+
+				/*
+				 * Modules
+				 */
+				$modulesWhere = array('n.module = \'core\'', 'n.module = \'user\'');
+
+				foreach ($this->kernel->getModulesDefinitions() as $module) {
+					$identifier = $module->getIdentifier();
+					$modulesWhere[] = 'n.module = :module_'.$identifier;
+
+					$query->setParameter('module_'.$identifier, $identifier);
+				}
+
+				if (! empty($modulesWhere)) {
+					$query = $query->andWhere(implode(' OR ', $modulesWhere));
+				}
+
+				// Query
+				$notifications = $query->getQuery()->getResult();
+			} else {
+				$notifications = array();
 			}
-
-			if (! empty($subscriptionsWhere)) {
-				$query = $query->andWhere(implode(' OR ', $subscriptionsWhere));
-			}
-
-			/*
-			 * Modules
-			 */
-			$modulesWhere = array('n.module = \'core\'', 'n.module = \'user\'');
-
-			foreach ($this->kernel->getModulesDefinitions() as $module) {
-				$identifier = $module->getIdentifier();
-				$modulesWhere[] = 'n.module = :module_'.$identifier;
-
-				$query->setParameter('module_'.$identifier, $identifier);
-			}
-
-			if (! empty($modulesWhere)) {
-				$query = $query->andWhere(implode(' OR ', $modulesWhere));
-			}
-
-			// Query
-			$notifications = $query->getQuery()->getResult();
 		}
 
 		$this->globalAccessor->set('notifs', new ArrayCollection());

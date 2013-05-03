@@ -266,6 +266,22 @@
 	width: 80px;
 }
 
+.schedule-print .item-half {
+	width: 49.5%;
+}
+.schedule-hours-print {
+	margin-left: 100px;
+}
+.schedule-days-print {
+	margin-left: 200px;
+}
+
+@media screen and (max-width: 1300px) {
+	.schedule-print .item-half {
+		width: 49%;
+	}
+}
+
 @media screen and (max-width: 1230px) {
 	.schedule-hours {
 		width: 60px;

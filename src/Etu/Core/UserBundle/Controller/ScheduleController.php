@@ -43,6 +43,34 @@ class ScheduleController extends Controller
 	}
 
 	/**
+	 * @Route("/schedule/print", name="user_schedule_print")
+	 * @Template()
+	 */
+	public function schedulePrintAction()
+	{
+		if (! $this->getUserLayer()->isStudent()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $myCourses Course[] */
+		$courses = $em->getRepository('EtuUserBundle:Course')->findByUser($this->getUser());
+
+		// Builder to create the schedule
+		$builder = new ScheduleBuilder();
+
+		foreach ($courses as $course) {
+			$builder->addCourse($course);
+		}
+
+		return array(
+			'courses' => $builder->build()
+		);
+	}
+
+	/**
 	 * @Route("/schedule/{day}", defaults={"day" = "current"}, name="user_schedule")
 	 * @Template()
 	 */

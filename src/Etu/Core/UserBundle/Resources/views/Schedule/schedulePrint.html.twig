@@ -1,31 +1,27 @@
-{% extends '::page-1col.html.twig' %}
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
 
-{% block title %}{{ 'schedule.my.view.title'|trans }}{% endblock %}
+		<title>Imprimer mon emploi du temps - {{ 'base.title'|trans }}</title>
 
-{% block titleIcon %}
-	<img src="{{ asset('img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
-{% endblock %}
+		<meta name="description" content="{{ 'base.title'|trans }}" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-{% block javascripts %}
-	<script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
-{% endblock %}
-
-{% block content %}
-	<ul class="nav nav-tabs page-tabs">
-		<li class="pull-right">
-			<a href="{{ path('user_schedule_edit') }}">
-				<i class="icon-edit"></i> {{ 'schedule.my.view.edit'|trans }}
-			</a>
-		</li>
-		<li class="pull-right">
-			<a href="{{ path('user_schedule_print') }}">
-				<i class="icon-print"></i> {{ 'schedule.my.view.print'|trans }}
-			</a>
-		</li>
-	</ul>
-
-	<div class="padding20-side">
-		<div class="row-fluid schedule schedule-days">
+		<link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('css/global.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('css/icons.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('css/head.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('css/page.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('css/menu.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('css/responsive.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('css/content.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('css/bundles/core.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('css/bundles/user.css') }}" type="text/css" />
+	</head>
+	<body>
+		<div class="row-fluid schedule schedule-days schedule-days-print">
 			<div class="span2 day hidden-phone">
 				{{ 'schedule.days.monday'|trans }}
 			</div>
@@ -44,52 +40,11 @@
 			<div class="span2 day hidden-phone">
 				{{ 'schedule.days.sathurday'|trans }}
 			</div>
-			<div class="span12 day schedule-days-choose visible-phone">
-				<div class="btn-group">
-					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-						<i class="icon-calendar"></i>
-						{{ ('schedule.days.'~currentDay)|trans }}
-						<span class="caret"></span>
-					</a>
-					<ul class="dropdown-menu">
-						<li>
-							<a href="{{ path('user_schedule', {'day': 'monday'}) }}">
-								{{ 'schedule.days.monday'|trans }}
-							</a>
-						</li>
-						<li>
-							<a href="{{ path('user_schedule', {'day': 'tuesday'}) }}">
-								{{ 'schedule.days.tuesday'|trans }}
-							</a>
-						</li>
-						<li>
-							<a href="{{ path('user_schedule', {'day': 'wenesday'}) }}">
-								{{ 'schedule.days.wenesday'|trans }}
-							</a>
-						</li>
-						<li>
-							<a href="{{ path('user_schedule', {'day': 'thursday'}) }}">
-								{{ 'schedule.days.thursday'|trans }}
-							</a>
-						</li>
-						<li>
-							<a href="{{ path('user_schedule', {'day': 'friday'}) }}">
-								{{ 'schedule.days.friday'|trans }}
-							</a>
-						</li>
-						<li>
-							<a href="{{ path('user_schedule', {'day': 'sathurday'}) }}">
-								{{ 'schedule.days.sathurday'|trans }}
-							</a>
-						</li>
-					</ul>
-				</div>
-			</div>
 		</div>
 
 		<div class="clear"></div>
 
-		<div class="schedule-hours">
+		<div class="schedule-hours schedule-hours-print">
 			<div class="hour">08:00</div>
 			<div class="hour">09:00</div>
 			<div class="hour">10:00</div>
@@ -103,21 +58,15 @@
 			<div class="hour">18:00</div>
 			<div class="hour">19:00</div>
 		</div>
-		<div class="row-fluid schedule">
+		<div class="row-fluid schedule schedule-print">
 			{% for day, dayCourses in courses %}
-				<div class="span2 schedule-col
-							{% if day != currentDay %}
-								hidden-phone
-							{% else %}
-								phoneDay
-							{% endif %}
-				">
+				<div class="span2 schedule-col">
 					{% for hour, item in dayCourses %}
 						{% if item.type == 'void' %}
 							<div class="item item-void item1 {% if loop.index == 1 %} item-first{% endif %}"></div>
 						{% elseif item.type == 'course' %}
 							<div class="item item-course item{{ item.size }}
-									{% if loop.index == 1 %} item-first{% endif %}">
+										{% if loop.index == 1 %} item-first{% endif %}">
 								<span class="schedule-course-uv">{{ item.course.uv }}</span><br />
 								<span class="schedule-course-room">{{ item.course.room }}</span>
 								<span class="schedule-course-type">- {{ item.course.type }}</span>
@@ -125,13 +74,13 @@
 						{% elseif item.type == 'course_half' %}
 							{% if item.courses.hasCourseBothWeeks %}
 								<div class="item item-half item-half-left item-course item-half-course item{{ item.size }}
-									{% if loop.index == 1 %} item-first{% endif %}">
+										{% if loop.index == 1 %} item-first{% endif %}">
 									<span class="schedule-course-uv">{{ item.courses.courseWeekA.uv }}</span> (A)<br />
 									<span class="schedule-course-room">{{ item.courses.courseWeekA.room }}</span>
 									<span class="schedule-course-type">- {{ item.courses.courseWeekA.type }}</span>
 								</div>
 								<div class="item item-half item-half-right item-course item-half-course item{{ item.size }}
-									{% if loop.index == 1 %} item-first{% endif %}">
+										{% if loop.index == 1 %} item-first{% endif %}">
 									<span class="schedule-course-uv">{{ item.courses.courseWeekB.uv }}</span> (B)<br />
 									<span class="schedule-course-room">{{ item.courses.courseWeekB.room }}</span>
 									<span class="schedule-course-type">- {{ item.courses.courseWeekB.type }}</span>
@@ -139,19 +88,19 @@
 								<div class="clear-right"></div>
 							{% elseif item.courses.hasCourseWeekA %}
 								<div class="item item-half item-half-left item-course item-half-course item{{ item.size }}
-									{% if loop.index == 1 %} item-first{% endif %}">
+										{% if loop.index == 1 %} item-first{% endif %}">
 									<span class="schedule-course-uv">{{ item.courses.courseWeekA.uv }}</span> (A)<br />
 									<span class="schedule-course-room">{{ item.courses.courseWeekA.room }}</span>
 									<span class="schedule-course-type">- {{ item.courses.courseWeekA.type }}</span>
 								</div>
 								<div class="item item-half item-half-right item-void item{{ item.size }}
-									{% if loop.index == 1 %} item-first{% endif %}"></div>
+										{% if loop.index == 1 %} item-first{% endif %}"></div>
 								<div class="clear-right"></div>
 							{% elseif item.courses.hasCourseWeekB %}
 								<div class="item item-half item-half-left item-void item{{ item.size }}
-									{% if loop.index == 1 %} item-first{% endif %}"></div>
+										{% if loop.index == 1 %} item-first{% endif %}"></div>
 								<div class="item item-half item-half-right item-course item-half-course item{{ item.size }}
-									{% if loop.index == 1 %} item-first{% endif %}">
+										{% if loop.index == 1 %} item-first{% endif %}">
 									<span class="schedule-course-uv">{{ item.courses.courseWeekB.uv }}</span> (B)<br />
 									<span class="schedule-course-room">{{ item.courses.courseWeekB.room }}</span>
 									<span class="schedule-course-type">- {{ item.courses.courseWeekB.type }}</span>
@@ -163,5 +112,5 @@
 				</div>
 			{% endfor %}
 		</div>
-	</div>
-{% endblock %}
+	</body>
+</html>
