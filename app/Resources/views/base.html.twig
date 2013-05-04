@@ -153,7 +153,7 @@
 								<ul class="list-vertical list-vertical-linked">
 									<li>
 										<a href="{{ path('admin_index') }}">
-											<i class="etu-icon-gear"></i>
+											<img src="{{ asset('img/icons/gear.png') }}" class="etu-img-icon" />
 											{{ 'base.user.menu.admin'|trans }}
 										</a>
 									</li>
@@ -164,7 +164,7 @@
 								<ul class="list-vertical list-vertical-linked">
 									<li>
 										<a href="{{ path('admin_pages') }}">
-											<i class="etu-icon-book"></i>
+											<img src="{{ asset('img/icons/book.png') }}" class="etu-img-icon" />
 											{{ 'admin.page.title'|trans }}
 										</a>
 									</li>
@@ -198,21 +198,21 @@
 			<ul class="list-vertical list-vertical-linked overlay-menu">
 				<li class="first">
 					<a href="">
-						<i class="etu-icon-briefcase"></i>
+						<img src="{{ asset('img/icons/briefcase.png') }}" class="etu-img-icon" />
 						{{ 'base.sidebar.services.items.uvs'|trans }}
 					</a>
 				</li>
 				{% if etu.modules.isEnabled('trombi') %}
 				<li>
 					<a href="{{ path('trombi_index') }}">
-						<i class="etu-icon-book"></i>
+						<img src="{{ asset('img/icons/book.png') }}" class="etu-img-icon" />
 						{{ 'base.sidebar.services.items.trombi'|trans }}
 					</a>
 				</li>
 				{% endif %}
 				<li>
 					<a href="">
-						<i class="etu-icon-info"></i>
+						<img src="{{ asset('img/icons/information.png') }}" class="etu-img-icon" />
 						{{ 'base.sidebar.services.items.wiki'|trans }}
 					</a>
 				</li>
@@ -225,7 +225,7 @@
 				{% if etu.modules.isEnabled('assos') %}
 					<li>
 						<a href="{{ path('orgas_index') }}">
-							<img src="{{ asset('img/stickman.png') }}" class="overlay-menu-icon" />
+							<img src="{{ asset('img/icons/stickman.png') }}" class="etu-img-icon" />
 							{{ 'base.menu.associations'|trans }}
 						</a>
 					</li>
@@ -233,7 +233,7 @@
 				{% if etu.modules.isEnabled('forum') %}
 					<li>
 						<a href="{{ path('forum_index') }}">
-							<img src="{{ asset('img/baloon-white.png') }}" class="overlay-menu-icon" />
+							<img src="{{ asset('img/icons/balloon-white.png') }}" class="etu-img-icon" />
 							{{ 'base.menu.forums'|trans }}
 						</a>
 					</li>
@@ -241,7 +241,7 @@
 				{% if etu.modules.isEnabled('bugs') and app.user %}
 					<li>
 						<a href="{{ path('bugs_index') }}">
-							<i class="etu-icon-warning"></i>
+							<img src="{{ asset('img/icons/exclamation-red.png') }}" class="etu-img-icon" />
 							{{ 'bugs.sidebar.items.bugs'|trans }}
 						</a>
 					</li>

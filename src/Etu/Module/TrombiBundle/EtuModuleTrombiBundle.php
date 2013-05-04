@@ -25,7 +25,7 @@ class EtuModuleTrombiBundle extends Module
 			->getBlock('base.sidebar.services.title')
 				->add('base.sidebar.services.items.trombi')
 					->setPosition(2)
-					->setIcon('etu-icon-book')
+					->setIcon('book.png')
 					->setUrl($this->router->generate('trombi_index'))
 				->end()
 			->end();

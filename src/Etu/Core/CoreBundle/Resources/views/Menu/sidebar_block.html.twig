@@ -4,7 +4,7 @@
 		<li {{ item.itemAttributesString }}>
 			<a href="{{ item.url }}" {{ item.linkAttributesString }}>
 				{% if item.hasIcon %}
-					<i class="{{ item.icon }}"></i>
+					<img src="{{ asset('img/icons/'~item.icon) }}" class="etu-img-icon" />
 				{% else %}
 					<i class="etu-no-icon"></i>
 				{% endif %}
