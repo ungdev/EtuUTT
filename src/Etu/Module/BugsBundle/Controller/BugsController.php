@@ -129,7 +129,7 @@ class BugsController extends Controller
 
 		$request = $this->getRequest();
 
-		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid() && $this->getUser()->hasPermission('bugs.add')) {
 
 			// Create the comment
 			$comment->setBody(RedactorJsEscaper::escape($comment->getBody()));
@@ -190,7 +190,7 @@ class BugsController extends Controller
 	 */
 	public function createAction()
 	{
-		if (! $this->getUserLayer()->isUser()) {
+		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('bugs.add')) {
 			return $this->createAccessDeniedResponse();
 		}
 

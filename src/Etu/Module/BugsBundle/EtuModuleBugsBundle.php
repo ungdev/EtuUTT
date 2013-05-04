@@ -3,6 +3,7 @@
 namespace Etu\Module\BugsBundle;
 
 use Etu\Core\CoreBundle\Framework\Definition\Module;
+use Etu\Core\CoreBundle\Framework\Definition\Permission;
 
 class EtuModuleBugsBundle extends Module
 {
@@ -65,8 +66,8 @@ class EtuModuleBugsBundle extends Module
 	public function getAvailablePermissions()
 	{
 		return array(
-			'bugs.admin' => 'Peut administrer les bugs',
-			'suggests.admin' => 'Peut administrer les suggestions',
+			new Permission('bugs.add', Permission::DEFAULT_ENABLED, 'Peut ajouter/commenter un bug'),
+			new Permission('bugs.admin', Permission::DEFAULT_DISABLED, 'Peut administrer les bugs'),
 		);
 	}
 

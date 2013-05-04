@@ -3,8 +3,10 @@
 namespace Etu\Core\CoreBundle\Framework;
 
 use Etu\Core\CoreBundle\Framework\Definition\Module;
+use Etu\Core\CoreBundle\Framework\Definition\Permission;
 use Etu\Core\CoreBundle\Framework\Exception\ModuleNotFoundException;
 use Etu\Core\CoreBundle\Framework\Module\ModulesCollection;
+use Etu\Core\CoreBundle\Framework\Module\PermissionsCollection;
 use Symfony\Component\HttpKernel\Kernel;
 
 
@@ -54,5 +56,21 @@ abstract class EtuKernel extends Kernel
 	public function getModulesDefinitions()
 	{
 		return $this->modules;
+	}
+
+	/**
+	 * @return PermissionsCollection
+	 */
+	public function getAvailablePermissions()
+	{
+		$permissions = array(
+			new Permission('pages.admin', Permission::DEFAULT_DISABLED, 'Peut administrer les pages statiques'),
+		);
+
+		foreach ($this->getModulesDefinitions() as $module) {
+			$permissions = array_merge($permissions, $module->getAvailablePermissions());
+		}
+
+		return new PermissionsCollection($permissions);
 	}
 }

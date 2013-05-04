@@ -151,6 +151,8 @@ $(function() {
 				alert('Une erreur s\'est produite. Veuillez réessayer ou signaler le problème.');
 			}
 		});
+
+		return false;
 	});
 
 
@@ -177,6 +179,8 @@ $(function() {
 				alert('Une erreur s\'est produite. Veuillez réessayer ou signaler le problème.');
 			}
 		});
+
+		return false;
 	});
 
 	// Users autocomplete

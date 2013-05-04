@@ -39,10 +39,11 @@ class AppKernel extends EtuKernel
 	        // Sensio extra
 	        new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
-	        // JMS extra
+	        // JMS libraries
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
-            new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
+	        new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
+	        new JMS\SerializerBundle\JMSSerializerBundle(),
 
 	        // Knp libraries
 	        new Knp\Bundle\TimeBundle\KnpTimeBundle(),
@@ -50,6 +51,7 @@ class AppKernel extends EtuKernel
 
 	        // FOS libraries
 	        new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+	        new FOS\RestBundle\FOSRestBundle(),
 
 	        // Tga
 	        new Tga\AudienceBundle\TgaAudienceBundle(),

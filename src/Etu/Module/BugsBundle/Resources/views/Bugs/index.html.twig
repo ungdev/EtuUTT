@@ -23,12 +23,14 @@
 		<li>
 			<a href="{{ path('bugs_closed') }}">{{ 'bugs.index.page.resolved'|trans }}</a>
 		</li>
+		{% if app.user.hasPermission('bugs.add') %}
 		<li class="pull-right">
 			<a href="{{ path('bugs_create') }}">
 				<i class="icon-plus"></i>
 				{{ 'bugs.index.page.create'|trans }}
 			</a>
 		</li>
+		{% endif %}
 	</ul>
 
 	<div class="padding20-sides">

@@ -66,9 +66,11 @@
 				<div class="span6">
 					{% for permission in permissions1 %}
 						<div class="control-group">
-							<label class="control-label" style="width: 60%; padding-right: 2%;" for="permissions[{{ permission.name }}]">{{ permission.desc }}</label>
+							<label class="control-label" style="width: 60%; padding-right: 2%;" for="permissions[{{ permission.definition.name }}]">
+								{{ permission.definition.description }}
+							</label>
 							<div class="controls">
-								<input type="checkbox" class="permission" name="permissions[{{ permission.name }}]"
+								<input type="checkbox" class="permission" name="permissions[{{ permission.definition.name }}]"
 										{% if permission.checked %} checked="checked"{% endif %}
 										{% if user.isAdmin %} disabled="disabled"{% endif %}
 										/>
@@ -79,9 +81,11 @@
 				<div class="span6">
 					{% for permission in permissions2 %}
 						<div class="control-group">
-							<label class="control-label" style="width: 60%; padding-right: 2%;" for="permissions[{{ permission.name }}]">{{ permission.desc }}</label>
+							<label class="control-label" style="width: 60%; padding-right: 2%;" for="permissions[{{ permission.definition.name }}]">
+								{{ permission.definition.description }}
+							</label>
 							<div class="controls">
-								<input type="checkbox" class="permission" name="permissions[{{ permission.name }}]"
+								<input type="checkbox" class="permission" name="permissions[{{ permission.definition.name }}]"
 										{% if permission.checked %} checked="checked"{% endif %}
 										{% if user.isAdmin %} disabled="disabled"{% endif %}
 										/>

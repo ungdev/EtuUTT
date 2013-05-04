@@ -56,28 +56,26 @@
 			{% endif %}
 		</h3>
 
-
-
-		<hr />
+		<hr class="hidden-for-phones" />
 
 		{% if bug.assignee and bug.isOpen %}
 			<div class="alert alert-info">
 				{{ 'bugs.view.page.assigned_to'|trans({'%name%': bug.assignee.fullName}) }}
 			</div>
 
-			<hr />
+			<hr class="hidden-for-phones" />
 		{% elseif bug.assignee and not bug.isOpen %}
 			<div class="alert alert-success">
 				{{ 'bugs.view.page.resolved_by'|trans({'%name%': bug.assignee.fullName}) }}
 			</div>
 
-			<hr />
+			<hr class="hidden-for-phones" />
 		{% elseif not bug.isOpen %}
 			<div class="alert alert-success">
 				{{ 'bugs.view.page.resolved'|trans }}
 			</div>
 
-			<hr />
+			<hr class="hidden-for-phones" />
 		{% endif %}
 
 		{% if app.user.hasPermission('bugs.admin') %}
@@ -124,17 +122,22 @@
 				</div>
 			</div>
 
-			<hr />
+			<hr class="hidden-for-phones" />
 		{% endif %}
 
 		<div class="etu-comment" id="1">
 			<div class="etu-comment-avatar">
-				<img src="{{ asset('photos/'~bug.user.avatar) }}" />
+				<a href="{{ path('user_view', {'login': bug.user.login}) }}">
+					<img src="{{ asset('photos/'~bug.user.avatar) }}" />
+				</a>
 			</div>
 			<div class="etu-comment-infos">
 				<div class="etu-comment-date">
 					<small>
-						<a href="#1">#1</a> - {{ bug.user.fullName }}
+						<a href="#1">#1</a> -
+						<a href="{{ path('user_view', {'login': bug.user.login}) }}">
+							{{ bug.user.fullName }}
+						</a>
 					</small>
 					<small class="pull-right">
 						{{ time_diff(bug.createdAt)|ucfirst }}
@@ -184,12 +187,17 @@
 			{% else %}
 				<div class="etu-comment" id="{{ count }}">
 					<div class="etu-comment-avatar">
-						<img src="{{ asset('photos/'~comment.user.avatar) }}" />
+						<a href="{{ path('user_view', {'login': comment.user.login}) }}">
+							<img src="{{ asset('photos/'~comment.user.avatar) }}" />
+						</a>
 					</div>
 					<div class="etu-comment-infos">
 						<div class="etu-comment-date">
 							<small>
-								<a href="#{{ count }}">#{{ count }}</a> - {{ comment.user.fullName }}
+								<a href="#{{ count }}">#{{ count }}</a> -
+								<a href="{{ path('user_view', {'login': comment.user.login}) }}">
+									{{ comment.user.fullName }}
+								</a>
 							</small>
 							<small class="pull-right">
 								{{ time_diff(comment.createdAt)|ucfirst }}
@@ -217,19 +225,22 @@
 			{% set count = count + 1 %}
 		{% endfor %}
 
-		<div class="bugs-view-comment">
-			<h4>{{ 'bugs.view.comment.comment'|trans }}</h4>
 
-			<form method="post">
-				<div class="control-group">
-					<div class="hidden">{{ form_label(form.body, 'bugs.view.comment.body'|trans) }}</div>
-					<div>{{ form_widget(form.body, {'attr': {'class': 'bugs-view-comment-textarea redactor'}}) }}</div>
-				</div>
-				<div class="control-group">
-					{{ form_rest(form) }}
-					<input type="submit" class="btn pull-right" value="{{ 'bugs.view.comment.comment'|trans }}" />
-				</div>
-			</form>
-		</div>
+		{% if app.user.hasPermission('bugs.add') %}
+			<div class="bugs-view-comment">
+				<h4>{{ 'bugs.view.comment.comment'|trans }}</h4>
+
+				<form method="post">
+					<div class="control-group">
+						<div class="hidden">{{ form_label(form.body, 'bugs.view.comment.body'|trans) }}</div>
+						<div>{{ form_widget(form.body, {'attr': {'class': 'bugs-view-comment-textarea redactor'}}) }}</div>
+					</div>
+					<div class="control-group">
+						{{ form_rest(form) }}
+						<input type="submit" class="btn pull-right" value="{{ 'bugs.view.comment.comment'|trans }}" />
+					</div>
+				</form>
+			</div>
+		{% endif %}
 	</div>
 {% endblock %}

@@ -19,7 +19,7 @@ class EtuModuleForumBundle extends Module
 	 */
 	public function isReadyToUse()
 	{
-		return false;
+		return true;
 	}
 
 	/**

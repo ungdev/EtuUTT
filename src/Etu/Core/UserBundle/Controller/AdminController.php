@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 
+use Etu\Core\CoreBundle\Framework\Definition\Permission;
 use Etu\Core\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -233,33 +234,27 @@ class AdminController extends Controller
 			throw $this->createNotFoundException('Login "'.$login.'" not found');
 		}
 
-		$permissions = array(
-			'pages.admin' => 'Peut modifier les pages statiques',
-		);
+		/** @var Permission[] $availablePermissions */
+		$availablePermissions = $this->getKernel()->getAvailablePermissions()->toArray();
 
 		$permissions1 = array();
 		$permissions2 = array();
 
-		foreach ($this->getKernel()->getModulesDefinitions() as $module) {
-			$permissions = array_merge($permissions, $module->getAvailablePermissions());
-		}
+		$i = floor(count($availablePermissions) / 2);
 
-		$i = 0;
-
-		foreach ($permissions as $name => $desc) {
-			if ($user->hasPermission($name)) {
-				$permission = array('name' => $name, 'desc' => $desc, 'checked' => true);
+		foreach ($availablePermissions as $permission) {
+			if ($user->hasPermission($permission->getName(), $permission->getDefaultEnabled())) {
+				$permission = array('definition' => $permission, 'checked' => true);
 			} else {
-				$permission = array('name' => $name, 'desc' => $desc, 'checked' => false);
+				$permission = array('definition' => $permission, 'checked' => false);
 			}
 
-			if ($i % 2 == 0) {
+			if ($i == 0) {
 				$permissions1[] = $permission;
 			} else {
 				$permissions2[] = $permission;
+				$i--;
 			}
-
-			$i++;
 		}
 
 		$request = $this->getRequest();
@@ -267,24 +262,65 @@ class AdminController extends Controller
 		if ($request->getMethod() == 'POST' && $request->get('sent')) {
 			if ($request->get('isAdmin')) {
 				$user->setIsAdmin(true);
-
-				$userPermissions = array();
-
-				foreach ($permissions as $permission => $value) {
-					$userPermissions[] = $permission;
-				}
-
-				$user->setPermissions($userPermissions);
 			} elseif ($permissions = $request->get('permissions')) {
 				$user->setIsAdmin(false);
 
-				$userPermissions = array();
+				$userClassicPermissions = array();
+				$userRemovedPermissions = array();
 
-				foreach ($permissions as $permission => $value) {
-					$userPermissions[] = $permission;
+				foreach ($availablePermissions as $permission) {
+					if ($permission->getDefaultEnabled()) {
+						$userRemovedPermissions[$permission->getName()] = $permission;
+					}
 				}
 
-				$user->setPermissions($userPermissions);
+				foreach ($permissions as $permission => $value) {
+					if (isset($availablePermissions[$permission])) {
+						/** @var Permission $permission */
+						$permission = $availablePermissions[$permission];
+
+						if ($permission->getDefaultEnabled()) {
+							unset($userRemovedPermissions[$permission->getName()]);
+						} else {
+							$userClassicPermissions[$permission->getName()] = $permission;
+						}
+					}
+				}
+
+				foreach ($userClassicPermissions as $key => $permission) {
+					unset($userClassicPermissions[$key]);
+					$userClassicPermissions[] = $permission->getName();
+				}
+
+				foreach ($userRemovedPermissions as $key => $permission) {
+					unset($userRemovedPermissions[$key]);
+					$userRemovedPermissions[] = $permission->getName();
+				}
+
+				$user->setPermissions($userClassicPermissions);
+				$user->setRemovedPermissions($userRemovedPermissions);
+			} else {
+				$userClassicPermissions = array();
+				$userRemovedPermissions = array();
+
+				foreach ($availablePermissions as $permission) {
+					if ($permission->getDefaultEnabled()) {
+						$userRemovedPermissions[$permission->getName()] = $permission;
+					}
+				}
+
+				foreach ($userClassicPermissions as $key => $permission) {
+					unset($userClassicPermissions[$key]);
+					$userClassicPermissions[] = $permission->getName();
+				}
+
+				foreach ($userRemovedPermissions as $key => $permission) {
+					unset($userRemovedPermissions[$key]);
+					$userRemovedPermissions[] = $permission->getName();
+				}
+
+				$user->setPermissions($userClassicPermissions);
+				$user->setRemovedPermissions($userRemovedPermissions);
 			}
 
 			$em->persist($user);
@@ -295,7 +331,7 @@ class AdminController extends Controller
 				'message' => 'admin.user.permissions.confirm'
 			));
 
-			return $this->redirect($this->generateUrl('user_view', array('login' => $user->getLogin())));
+			return $this->redirect($this->generateUrl('admin_user_permissions', array('login' => $user->getLogin())));
 		}
 
 		return array(

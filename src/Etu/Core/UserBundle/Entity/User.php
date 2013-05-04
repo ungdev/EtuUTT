@@ -373,13 +373,24 @@ class User implements UserInterface, \Serializable
 	protected $keepActive;
 
 	/**
-	 * Permissions on EtuUTT
+	 * Added permissions
+	 *      => used for administration permissions
 	 *
 	 * @var array
 	 *
 	 * @ORM\Column(name="permissions", type="array")
 	 */
 	protected $permissions = array();
+
+	/**
+	 * Removed permissions
+	 *      => used for classic permissions that everyone but this specific user have
+	 *
+	 * @var array
+	 *
+	 * @ORM\Column(name="removedPermissions", type="array")
+	 */
+	protected $removedPermissions = array();
 
 	/**
 	 * If the user is admin, he has all permissions, even from the new modules
@@ -1316,12 +1327,21 @@ class User implements UserInterface, \Serializable
 	}
 
 	/**
-	 * @param string $permission
+	 * @param string $permissionName
+	 * @param bool $defaultEnabled
 	 * @return bool
 	 */
-	public function hasPermission($permission)
+	public function hasPermission($permissionName, $defaultEnabled = false)
 	{
-		return $this->isAdmin || in_array($permission, $this->permissions);
+		if ($this->isAdmin) {
+			return true;
+		}
+
+		if (! $defaultEnabled) {
+			return in_array($permissionName, $this->permissions);
+		}
+
+		return ! in_array($permissionName, $this->removedPermissions);
 	}
 
 	/**
@@ -1345,6 +1365,60 @@ class User implements UserInterface, \Serializable
 	{
 		if (($key = array_search($permission, $this->permissions)) !== false) {
 			unset($this->permissions[$key]);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @param array $removedPermissions
+	 * @return User
+	 */
+	public function setRemovedPermissions(array $removedPermissions)
+	{
+		$this->removedPermissions = $removedPermissions;
+
+		return $this;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getRemovedPermissions()
+	{
+		return $this->removedPermissions;
+	}
+
+	/**
+	 * @param string $permission
+	 * @return bool
+	 */
+	public function hasRemovedPermission($permission)
+	{
+		return $this->isAdmin || in_array($permission, $this->removedPermissions);
+	}
+
+	/**
+	 * @param string $permission
+	 * @return User
+	 */
+	public function addRemovedPermission($permission)
+	{
+		if (! in_array($permission, $this->removedPermissions)) {
+			$this->removedPermissions[] = $permission;
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @param string $permission
+	 * @return User
+	 */
+	public function removeRemovedPermission($permission)
+	{
+		if (($key = array_search($permission, $this->removedPermissions)) !== false) {
+			unset($this->removedPermissions[$key]);
 		}
 
 		return $this;
