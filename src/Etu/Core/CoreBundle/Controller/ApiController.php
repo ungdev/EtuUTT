@@ -40,7 +40,7 @@ class ApiController extends Controller
 
 		return new Response(json_encode(array(
 			'status' => 200,
-			'message' => $this->get('translator')->trans('notifs.subscribe.confirm')
+			'message' => $this->get('translator')->trans('core.subscriptions.api.confirm_follow')
 		)));
 	}
 
@@ -68,7 +68,7 @@ class ApiController extends Controller
 
 		return new Response(json_encode(array(
 			'status' => 200,
-			'message' => $this->get('translator')->trans('notifs.unsubscribe.confirm')
+			'message' => $this->get('translator')->trans('core.subscriptions.api.confirm_unfollow')
 		)));
 	}
 

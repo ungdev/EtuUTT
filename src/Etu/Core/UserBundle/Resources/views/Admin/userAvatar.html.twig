@@ -1,6 +1,6 @@
 {% extends 'EtuCoreBundle:Admin:layout.html.twig' %}
 
-{% block title %}{{ 'admin.user.edit.title'|trans }}{% endblock %}
+{% block title %}{{ 'user.admin.userAvatar.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
 	<img src="{{ asset('img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -11,7 +11,7 @@
 		<li>
 			<a href="{{ path('admin_user_edit', {'login': user.login}) }}">
 				<i class="icon-chevron-left"></i>
-				{{ 'admin.user.avatar.back'|trans }}
+				{{ 'user.admin.userAvatar.back'|trans }}
 			</a>
 		</li>
 	</ul>
@@ -24,7 +24,7 @@
 
 			<p>
 				<br />
-				<label>{{ form_label(form.file, 'user.avatarUpload.file'|trans) }}</label>
+				<label>{{ form_label(form.file, 'user.admin.userAvatar.file'|trans) }}</label>
 				{{ form_widget(form.file) }}
 				<br />
 				<span class="help-block">{{ form_errors(form.file) }}</span>
@@ -33,7 +33,7 @@
 			<div class="controls">
 				{{ form_rest(form) }}
 
-				<button type="submit" class="btn">{{ 'user.profile.edit'|trans }}</button>
+				<button type="submit" class="btn">{{ 'user.admin.userAvatar.submit'|trans }}</button>
 			</div>
 		</form>
 	</div>

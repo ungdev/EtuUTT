@@ -1,6 +1,6 @@
 {% extends 'EtuCoreBundle:Admin:layout.html.twig' %}
 
-{% block title %}{{ 'admin.modules.title'|trans }}{% endblock %}
+{% block title %}{{ 'core.admin.modules.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
 	<img src="{{ asset('img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -13,9 +13,9 @@
 				<thead>
 				<tr>
 					<th style="width: 50px;">#</th>
-					<th>Nom</th>
-					<th class="hidden-phone">Auteur</th>
-					<th class="hidden-phone">Description</th>
+					<th>{{ 'core.admin.modules.name'|trans }}</th>
+					<th class="hidden-phone">{{ 'core.admin.modules.author'|trans }}</th>
+					<th class="hidden-phone">{{ 'core.admin.modules.description'|trans }}</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -33,7 +33,7 @@
 						<td class="hidden-phone">
 							{{ module.description }}
 							{% if not module.isReadyToUse %}
-								<br /><span class="text-warning">Ce module n'est pas prêt à être utilisé.</span>
+								<br /><span class="text-warning">{{ 'core.admin.modules.is_not_ready'|trans }}</span>
 							{% endif %}
 						</td>
 					</tr>
@@ -41,7 +41,7 @@
 				</tbody>
 			</table>
 
-			<button type="sumbit" class="btn">Activer/désactiver</button>
+			<button type="sumbit" class="btn">{{ 'core.admin.modules.enable_disable'|trans }}</button>
 		</form>
 	</div>
 {% endblock %}

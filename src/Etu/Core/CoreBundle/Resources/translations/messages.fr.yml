@@ -1,175 +1,92 @@
 
-# Global strings: title, logo, footer, etc.
-# Used in base.html.twig
-base:
-    title: Site étudiant de l'UTT
-    date: %d/%m/%y à %hh%i
-    by: par
-    no_info: Pas d'information
-
-    # Logo
-    logo:
-        alt: Logo du site
-        title: Site étudiant de l'UTT
-
-    # Logo
-    page_icon:
-        alt: Icône de la page
-        title: Icône de la page
-
-    # Header menu
-    menu:
-        home: Accueil
-        events: Evènements
-        forums: Forums
-        associations: Associations
-        search: Recherche
-        more: Plus
-        connexion: Connexion
-
-    # User account box
-    user:
-        # Users types
-        types:
-            student: Etudiant
-            orga: Association
-            external: Exterieur
-
-        # User menu
-        menu:
-            flux: Mon flux
-            account: Mon compte
-            buckutt: Mon compte BuckUTT
-            dailymail: Mon dailymail
-            emails: Mes e-mails
-            table: Mon emploi du temps
-            logout: Déconnexion
-            help: Aide
-            admin: Administration
-            stats: Statistiques
-            members: Membres
-
-        # Sex
-        sex:
-            male: Homme
-            female: Femme
-
-    # Sidebar
-    sidebar:
-        services:
-            title: Services
-            items:
-                uvs: Les UV
-                trombi: Le trombinoscope
-                table: Cumul d'emplois du temps
-                wiki: Wiki des associations
-        etu:
-            title: EtuUTT
-            items:
-                team: L'équipe
-
-    # Admin
-    admin_menu:
-        title: Administration générale
-        items:
-            dashboard: Tableau de bord
-            stats: Statistiques
-
-    # Footer
-    footer:
-        # Links
-        legalities: Mentions légales
-        help_us: Nous aider
-        developers: Développeurs
-        change_locale: Changer de langue
-
-        # Authors and version
-        text: "Réalisé par l’UNG<br />Propulsé par Symfony 2<br /><br />Version 10-alpha"
-        1col_text: "Réalisé par l’UNG - Propulsé par Symfony 2 - Version 10-alpha"
-        mobile_text: "Réalisé par l’UNG<br />Version 10-alpha"
-
-    # Errors pages:
-    error:
-        404:
-            title: Hum ... 404 !
-            subtitle: D'oh !
-            content: Désolé, la page que vous avez demandée semble introuvable !
-        other:
-            title: Hum ... Erreur !
-            subtitle: Hum ...
-            content: Une erreur s'est produite sur le serveur ...
-
-
-
-
-
-# Homepage
-# Used in Main/index.html.twig
-main:
-    index:
-        title: Mon flux
-        no_notif:
-            message: Vous n'avez pas de notification !
-            suscribe: Abonnez-vous à des éléments d'EtuUTT pour suivre ce qui vous intéresse à l'UTT !
-            learn_more: En savoir plus
-        new_notifs: nouvelle(s) notification(s)
-    indexAnonymous:
-        title: Accueil
-    indexOrga:
-        title: Administration
-
-
-
-
-
-# Flux translations
-# Used in Main/index.html.twig
-flux:
-
-    # Sidebar
-    sidebar:
-        parameters:
-            title: Paramètres de mon flux
-            items:
-                suscribtions: Gérer mes abonnements
-                notifications: Gérer mes notifications
-                parameters: Paramètres
-
-
-notifs:
-    subscribe:
-        confirm: Vous êtes désormais abonné à cet élément
-        follower: Vous êtes abonné à cette page
-        unfollow: Se désabonner
-        follow: S'abonner
-    unsubscribe:
-        confirm: Vous êtes bien désabonné à cet élément
-
-
-
-# Administration
-admin:
-    index:
-        title: Administration générale
-    modules:
-        title: Modules
-        confirm: Vous avez bien modifié les modules
-    stats:
-        title: Statistiques
-    page:
-        title: Pages statiques
-        create:
+core:
+    admin:
+        index:
+            title: Tableau de bord
+            server_load: Charge serveur
+        modules:
+            title: Modules
+            name: Nom
+            author: Auteur
+            description: Description
+            is_not_ready: Ce module n'est pas prêt à être utilisé
+            enable_disable: Activer/Désactiver
+            confirm: Vous avez bien modifié les modules
+        pageCreate:
             title: Créer une page
             name: Titre
             content: Contenu
             submit: Créer
-            confirm: Vous avez bien créé une page
-        edit:
+            confirm: Vous avez bien créé la page
+        pageDelete:
+            title: Supprimer une page
+            question: Etes-vous sur de vouloir supprimer la page "%title%" ?
+            yes: Oui, supprimer
+            no: Non, annuler
+            confirm: Vous avez bien supprimé la page
+        pageEdit:
             title: Modifier une page
             name: Titre
             content: Contenu
             submit: Modifier
             confirm: Vous avez bien modifié la page
-        delete:
-            title: Supprimer une page
-            confirm: Vous avez bien supprimé la page
+        pages:
+            title: Pages statiques
+            name: Nom
+            actions: Actions
+            create: Créer une page
+            edit: Modifier
+            delete: Supprimer
+            no_page: Aucune page pour le moment
+        stats:
+            title: Statistiques
+            mobile: Seules les statistiques générales sont accessibles sur mobile.
+            general: Statistiques générales
+            current_month: Statistiques pour le mois actuel
+            unique_visitors_count: Nombre de visiteurs uniques
+            pages_calls_count: Nombre de chargements de page
+            average_visited_pages: Nombre moyen de pages visitées après la première
+            average_duration: Durée moyenne d'une visite
+            average_time_to_load: Durée moyenne de génération d'une page
+            unique_visitors: Nombre de visiteurs uniques ce mois-ci
+            pages_calls: Nombre de chargements de pages ce mois-ci
+            browsers: Navigateurs
+            plaftorms: Systèmes d'exploitation
+            most_used_browsers_versions: Versions de navigateurs les plus utilisées
+            browser_name: Nom
+            browser_count: Nombre de chargements
+            browser_percentage: Pourcentage
+            most_used_routes: Routes les plus utilisées
+            route_name: Nom
+            route_count: Nombre de chargements
+            route_percentage: Pourcentage
+            no_info: Pas d'information disponible
+            traffic_sources: Sources de traffic
+            visitors_sources: Sources de visiteurs
+            source_domain: Nom de domaine
+            source_count: Nombre de chargements
+            source_percentage: Pourcentage
+            most_common_sources: Sources les plus importantes de visiteurs
+
+    main:
+        index:
+            title: Mon flux
+            new_notifs: nouvelle(s) notification(s)
+            no_notif_message: Vous n'avez pas de notification !
+            no_notif_description: Abonnez-vous à des éléments d'EtuUTT pour suivre ce qui vous intéresse à l'UTT !
+            learn_more: En savoir plus
+        indexAnonymous:
+            title: Accueil
+            welcome: Bienvenue sur le site étudiant de l'Université de Technologie de Troyes
+        changeLocale:
+            confirm: Vous avez bien changé de langue
+
+
+    subscriptions:
+        button:
+            follower: Vous êtes abonné à cette page
+            unfollow: Se désabonner
+            follow: S'abonner
+        api:
+            confirm_follow: Vous êtes désormais abonné à cet élément
+            confirm_unfollow: Vous êtes bien désabonné à cet élément

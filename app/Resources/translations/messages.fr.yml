@@ -1,0 +1,97 @@
+
+# Global strings: title, logo, footer, etc.
+# Used in base.html.twig
+base:
+    title: Site étudiant de l'UTT
+    description: Site créé et géré par les étudiants de l'Université de Technologie de Troyes
+
+    # Logo
+    logo:
+        alt: Logo du site
+        title: Site étudiant de l'UTT
+
+    # Header menu
+    menu:
+        home: Accueil
+        events: Evènements
+        forums: Forums
+        associations: Associations
+        search: Recherche
+        more: Plus
+        connexion: Connexion
+
+    # User account box
+    user:
+        # Users types
+        types:
+            student: Etudiant
+            orga: Association
+            external: Exterieur
+
+        # User menu
+        menu:
+            flux: Mon flux
+            account: Mon compte
+            buckutt: Mon compte BuckUTT
+            dailymail: Mon dailymail
+            emails: Mes e-mails
+            table: Mon emploi du temps
+            logout: Déconnexion
+            help: Aide
+            admin: Administration
+            pages: Pages statiques
+
+        # Sex
+        sex:
+            male: Homme
+            female: Femme
+
+    # Sidebar
+    sidebar:
+        services:
+            title: Services
+            items:
+                uvs: Les UV
+                trombi: Le trombinoscope
+                table: Cumul d'emplois du temps
+                wiki: Wiki des associations
+        etu:
+            title: EtuUTT
+            items:
+                team: L'équipe
+
+    # Admin
+    admin_menu:
+        title: Administration générale
+        items:
+            dashboard: Tableau de bord
+            stats: Statistiques
+
+    # Logo
+    page_icon:
+        alt: Icône de la page
+        title: Icône de la page
+
+    # Footer
+    footer:
+        # Links
+        legalities: Mentions légales
+        help_us: Nous aider
+        developers: Développeurs
+        change_locale: Changer de langue
+
+        # Authors and version
+        text: "Réalisé par l’UNG<br />Propulsé par Symfony 2<br /><br />Version 10-alpha"
+        1col_text: "Réalisé par l’UNG - Propulsé par Symfony 2 - Version 10-alpha"
+        mobile_text: "Réalisé par l’UNG<br />Version 10-alpha"
+
+# Errors pages:
+error:
+    404:
+        title: Hum ... 404 !
+        subtitle: D'oh !
+        content: Désolé, la page que vous avez demandée semble introuvable !
+    other:
+        title: Hum ... Erreur !
+        subtitle: Hum ...
+        content: Une erreur s'est produite sur le serveur ...

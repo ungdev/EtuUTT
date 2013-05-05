@@ -1,6 +1,6 @@
 {% extends '::page-1col.html.twig' %}
 
-{% block title %}{{ 'main.indexAnonymous.title'|trans }}{% endblock %}
+{% block title %}{{ 'core.main.indexAnonymous.title'|trans }}{% endblock %}
 
 {% block main_menu_link_homepage %} active{% endblock %}
 
@@ -21,7 +21,7 @@
 
 {% block content %}
 	<div class="padding20-all">
-		<h3>Bienvenue sur le site étudiant de l'Université de Technologie de Troyes</h3>
+		<h3>{{ 'core.main.indexAnonymous.welcome'|trans }}</h3>
 
 		<p>
 			Le site étudiant est le site est le site qui connecte la communauté des UTTiens.

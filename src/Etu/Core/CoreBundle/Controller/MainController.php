@@ -43,6 +43,11 @@ class MainController extends Controller
 	{
 		$url = urldecode($url);
 
+		$this->get('session')->getFlashBag()->set('message', array(
+			'type' => 'success',
+			'message' => 'core.main.changeLocale.confirm'
+		));
+
 		// Redirect wisely
 		if ($this->container->getParameter('etu.domain') == parse_url($url, PHP_URL_HOST)) {
 			return $this->redirect($url);

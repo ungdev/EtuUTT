@@ -7,7 +7,6 @@ use Etu\Core\CoreBundle\Entity\Page;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 
 use Etu\Core\CoreBundle\Framework\Module\ModulesManager;
-use Etu\Core\CoreBundle\Stats\TopParser;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -92,7 +91,7 @@ class AdminController extends Controller
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'admin.modules.confirm'
+				'message' => 'core.admin.modules.confirm'
 			));
 
 			return $this->redirect($this->generateUrl('admin_modules'));
@@ -199,7 +198,7 @@ class AdminController extends Controller
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'admin.page.create.confirm'
+				'message' => 'core.admin.pageCreate.confirm'
 			));
 
 			return $this->redirect($this->generateUrl('admin_index'));
@@ -238,7 +237,7 @@ class AdminController extends Controller
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'admin.page.edit.confirm'
+				'message' => 'core.admin.pageEdit.confirm'
 			));
 
 			return $this->redirect($this->generateUrl('admin_index'));
@@ -288,7 +287,7 @@ class AdminController extends Controller
 
 		$this->get('session')->getFlashBag()->set('message', array(
 			'type' => 'success',
-			'message' => 'admin.page.delete.confirm'
+			'message' => 'core.admin.pageDelete.confirm'
 		));
 
 		return $this->redirect($this->generateUrl('admin_index'));

@@ -1,6 +1,6 @@
 {% extends 'EtuCoreBundle:Admin:layout.html.twig' %}
 
-{% block title %}{{ 'admin.stats.title'|trans }}{% endblock %}
+{% block title %}{{ 'core.admin.stats.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
 	<img src="{{ asset('img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -33,29 +33,27 @@
 
 {% block content %}
 	<div class="padding20-all">
-		<p class="alert visible-phone">
-			Seules les statistiques générales sont accessibles sur mobile.
-		</p>
+		<p class="alert visible-phone">{{ 'core.admin.stats.mobile'|trans }}</p>
 
-		<h3>Statistiques générales</h3>
+		<h3>{{ 'core.admin.stats.general'|trans }}</h3>
 
 		<div class="block">
-			<div class="block-title">Statistiques pour le mois actuel</div>
+			<div class="block-title">{{ 'core.admin.stats.current_month'|trans }}</div>
 
 			<div class="row-fluid">
 				<div class="span6">
 					<table class="table table-hover">
 						<tbody>
 							<tr>
-								<td style="width: 80%; border-top: 0;">Nombre de visiteurs uniques</td>
+								<td style="width: 80%; border-top: 0;">{{ 'core.admin.stats.unique_visitors_count'|trans }}</td>
 								<td style="border-top: 0;"><strong>{{ uniqueVisitorsCount }}</strong></td>
 							</tr>
 							<tr>
-								<td>Nombre de chargements de page</td>
+								<td>{{ 'core.admin.stats.pages_calls_count'|trans }}</td>
 								<td><strong>{{ pagesCallsCount }}</strong></td>
 							</tr>
 							<tr>
-								<td>Nombre moyen de pages visitées après la première</td>
+								<td>{{ 'core.admin.stats.average_visited_pages'|trans }}</td>
 								<td><strong>{{ averageVisitedPages }}</strong></td>
 							</tr>
 						</tbody>
@@ -65,11 +63,11 @@
 					<table class="table table-hover">
 						<tbody>
 						<tr>
-							<td style="width: 70%; border-top: 0;">Durée moyenne d'une visite</td>
+							<td style="width: 70%; border-top: 0;">{{ 'core.admin.stats.average_duration'|trans }}</td>
 							<td style="border-top: 0;"><strong>{{ averageDuration }} sec</strong></td>
 						</tr>
 						<tr>
-							<td>Durée moyenne de génération d'une page</td>
+							<td>{{ 'core.admin.stats.average_time_to_load'|trans }}</td>
 							<td><strong>{{ averageTimeToLoad }} ms</strong></td>
 						</tr>
 						</tbody>
@@ -82,14 +80,14 @@
 			<div class="row-fluid">
 				<div class="span6">
 					<div class="block">
-						<div class="block-title">Nombre de visiteurs uniques le mois dernier</div>
+						<div class="block-title">{{ 'core.admin.stats.unique_visitors'|trans }}</div>
 
 						<div id="unique_visitors" style="width: 100%; height: 200px;"></div>
 					</div>
 				</div>
 				<div class="span6">
 					<div class="block">
-						<div class="block-title">Nombre de chargements de pages le mois dernier</div>
+						<div class="block-title">{{ 'core.admin.stats.pages_calls'|trans }}</div>
 
 						<div id="pages_calls" style="width: 100%; height: 200px;"></div>
 					</div>
@@ -101,14 +99,14 @@
 			<div class="row-fluid">
 				<div class="span6">
 					<div class="block">
-						<div class="block-title">Navigateurs</div>
+						<div class="block-title">{{ 'core.admin.stats.browsers'|trans }}</div>
 
 						<div id="browsers" style="width: 100%; height: 200px;"></div>
 					</div>
 				</div>
 				<div class="span6">
 					<div class="block">
-						<div class="block-title">Platformes</div>
+						<div class="block-title">{{ 'core.admin.stats.plaftorms'|trans }}</div>
 
 						<div id="platforms" style="width: 100%; height: 200px;"></div>
 					</div>
@@ -118,15 +116,15 @@
 			<div class="row-fluid">
 				<div class="span6">
 					<div class="block">
-						<div class="block-title">Versions des navigateurs les plus utilisées</div>
+						<div class="block-title">{{ 'core.admin.stats.most_used_browsers_versions'|trans }}</div>
 
 						<table class="table table-hover">
 							<thead>
 							<tr>
 								<th style="width: 25px;">#</th>
-								<th>Nom</th>
-								<th style="width: 100px;">Visiteurs</th>
-								<th style="width: 100px;">Pourcentage</th>
+								<th>{{ 'core.admin.stats.browser_name'|trans }}</th>
+								<th style="width: 100px;">{{ 'core.admin.stats.browser_count'|trans }}</th>
+								<th style="width: 100px;">{{ 'core.admin.stats.browser_percentage'|trans }}</th>
 							</tr>
 							</thead>
 							<tbody>
@@ -139,7 +137,7 @@
 								</tr>
 							{% else %}
 								<tr>
-									<td colspan="4">Pas d'information disponible</td>
+									<td colspan="4">{{ 'core.admin.stats.no_info'|trans }}</td>
 								</tr>
 							{% endfor %}
 							</tbody>
@@ -149,15 +147,15 @@
 
 				<div class="span6">
 					<div class="block">
-						<div class="block-title">Routes les plus utilisées</div>
+						<div class="block-title">{{ 'core.admin.stats.most_used_routes'|trans }}</div>
 
 						<table class="table table-hover">
 							<thead>
 							<tr>
 								<th style="width: 25px;">#</th>
-								<th>Route</th>
-								<th style="width: 100px;">Chargements</th>
-								<th style="width: 100px;">Pourcentage</th>
+								<th>{{ 'core.admin.stats.route_name'|trans }}</th>
+								<th style="width: 100px;">{{ 'core.admin.stats.route_count'|trans }}</th>
+								<th style="width: 100px;">{{ 'core.admin.stats.route_percentage'|trans }}</th>
 							</tr>
 							</thead>
 							<tbody>
@@ -170,7 +168,7 @@
 								</tr>
 							{% else %}
 								<tr>
-									<td colspan="4">Pas d'information disponible</td>
+									<td colspan="4">{{ 'core.admin.stats.no_info'|trans }}</td>
 								</tr>
 							{% endfor %}
 							</tbody>
@@ -179,20 +177,20 @@
 				</div>
 			</div>
 
-			<h3>Sources de traffic</h3>
+			<h3>{{ 'core.admin.stats.traffic_sources'|trans }}</h3>
 
 			<div class="row-fluid">
 				<div class="span6">
 					<div class="block">
-						<div class="block-title">Sources de visiteurs</div>
+						<div class="block-title">{{ 'core.admin.stats.visitors_sources'|trans }}</div>
 
 						<table class="table table-hover">
 							<thead>
 							<tr>
 								<th style="width: 25px;">#</th>
-								<th style="width: 40%;">Domaine</th>
-								<th>Chargements</th>
-								<th>Pourcentage</th>
+								<th style="width: 40%;">{{ 'core.admin.stats.source_domain'|trans }}</th>
+								<th>{{ 'core.admin.stats.source_count'|trans }}</th>
+								<th>{{ 'core.admin.stats.source_percentage'|trans }}</th>
 							</tr>
 							</thead>
 							<tbody>
@@ -205,7 +203,7 @@
 								</tr>
 							{% else %}
 								<tr>
-									<td colspan="4">No external source available.</td>
+									<td colspan="4">{{ 'core.admin.stats.no_info'|trans }}</td>
 								</tr>
 							{% endfor %}
 							</tbody>
@@ -214,7 +212,7 @@
 				</div>
 				<div class="span6">
 					<div class="block">
-						<div class="block-title">Sources les plus importantes de visiteurs</div>
+						<div class="block-title">{{ 'core.admin.stats.most_common_sources'|trans }}</div>
 
 						<div id="externalSources" style="width: 100%; height: 250px;"></div>
 					</div>

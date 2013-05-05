@@ -1,6 +1,6 @@
 {% extends 'EtuCoreBundle:Admin:layout.html.twig' %}
 
-{% block title %}Pages statiques{% endblock %}
+{% block title %}{{ 'core.admin.pages.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
 	<img src="{{ asset('img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -12,8 +12,8 @@
 			<thead>
 			<tr>
 				<th style="width: 50px;" class="hidden-phone">#</th>
-				<th style="width: 50%;">Nom</th>
-				<th>Actions</th>
+				<th style="width: 50%;">{{ 'core.admin.pages.name'|trans }}</th>
+				<th>{{ 'core.admin.pages.actions'|trans }}</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -26,10 +26,10 @@
 					<td>
 						<div class="hidden-phone">
 							<a href="{{ path('admin_page_edit', {'id': page.id}) }}" class="btn">
-								<i class="icon-edit"></i> Modifier
+								<i class="icon-edit"></i> {{ 'core.admin.pages.edit'|trans }}
 							</a>
 							<a href="{{ path('admin_page_delete', {'id': page.id}) }}" class="btn">
-								<i class="icon-remove"></i> Supprimer
+								<i class="icon-remove"></i> {{ 'core.admin.pages.delete'|trans }}
 							</a>
 						</div>
 						<div class="visible-phone">
@@ -44,14 +44,14 @@
 				</tr>
 			{% else %}
 				<tr>
-					<td colspan="3">Aucune page pour le moment.</td>
+					<td colspan="3">{{ 'core.admin.pages.no_page'|trans }}</td>
 				</tr>
 			{% endfor %}
 			</tbody>
 		</table>
 
 		<a href="{{ path('admin_page_create') }}" class="btn">
-			<i class="icon-plus"></i> Créer une page
+			<i class="icon-plus"></i> {{ 'core.admin.pages.create'|trans }}
 		</a>
 	</div>
 {% endblock %}

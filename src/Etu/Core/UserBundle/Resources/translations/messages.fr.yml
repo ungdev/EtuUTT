@@ -1,5 +1,60 @@
 
 user:
+    admin:
+        userAvatar:
+            title: Modifier la photo
+            back: Retour sur le profil
+            file: Image
+            submit: Modifier
+        userCreate:
+            title: Créer un utilisateur
+            confirm: Vous avez bien créé un utilisateur
+            birthday_only_age_label: Afficher l'âge
+            birthday_only_age_desc: Afficher seulement l'âge sur le profil (si la date de naissance est privée)
+            back: Retour
+            submit: Créer
+        userDelete:
+            title: Supprimer un utilisateur
+            question: Voulez-vous vraiment supprimer l'utilisateur %username% ?
+            yes: Oui, supprimer
+            no: Non, annuler
+            confirm: L'utilisateur a bien été supprimé
+            back: Retour sur le profil
+        userEdit:
+            title: Modifier
+            avatar: Modifier la photo
+            birthday: Date de naissance
+            birthday_only_age_label: Afficher l'âge
+            birthday_only_age_desc: Afficher seulement l'âge sur le profil (si la date de naissance est privée)
+            confirm: Vous avez bien modifié le profil de cet utilisateur
+            back: Retour sur le profil
+        userPermissions:
+            title: Modifier les permissions
+            back: Retour sur le profil
+            confirm: Vous avez bien modifié les permissions de cet utilisateur
+            submit: Modifier
+        userIndex:
+            title: Utilisateurs
+        userReadOnly:
+            confirm_set: L'utilisateur possède maintenant un accès en lecture seule.
+            confirm_unset: L'utilisateur possède maintenant un accès complet.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+user:
 
     # Global informations privacy
     privacy:
@@ -171,43 +226,4 @@ schedule:
             print: Imprimer
         edit:
             title: Modifier
-            back: Retour
-
-admin:
-    user:
-        index:
-            title: Utilisateurs
-        view:
-            admin: Administrer
-            edit: Modifier
-        create:
-            title: Créer un utilisateur
-            confirm: Vous avez bien créé un utilisateur
-            back: Retour
-            submit: Créer
-        edit:
-            title: Modifier
-            avatar: Modifier la photo
-            birthday: Date de naissance
-            birthdayOnlyAge:
-                label: Afficher l'âge
-                desc: Afficher seulement l'âge sur le profil (si la date de naissance est privée)
-            confirm: Vous avez bien modifié le profil de cet utilisateur
-            back: Retour sur le profil
-        permissions:
-            title: Modifier les permissions
-            back: Retour sur le profil
-            confirm: Vous avez bien modifié les permissions de cet utilisateur
-            submit: Modifier
-        delete:
-            title: Supprimer un utilisateur
-            sure: Voulez-vous vraiment supprimer l'utilisateur %username% ?
-            yes: Oui, supprimer
-            no: Non, annuler
-            confirm: L'utilisateur a bien été supprimé
-            back: Retour sur le profil
-        readonly:
-            confirm_set: L'utilisateur possède maintenant un accès en lecture seule.
-            confirm_unset: L'utilisateur possède maintenant un accès complet.
-        avatar:
             back: Retour

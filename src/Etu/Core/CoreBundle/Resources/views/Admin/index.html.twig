@@ -1,6 +1,6 @@
 {% extends 'EtuCoreBundle:Admin:layout.html.twig' %}
 
-{% block title %}{{ 'base.admin_menu.items.dashboard'|trans }}{% endblock %}
+{% block title %}{{ 'core.admin.index.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
 	<img src="{{ asset('img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -8,7 +8,7 @@
 
 {% block content %}
 	<div class="padding20-all">
-		<h3>Charge serveur</h3>
+		<h3>{{ 'core.admin.index.server_load'|trans }}</h3>
 
 		<pre>{{ top }}</pre>
 	</div>
