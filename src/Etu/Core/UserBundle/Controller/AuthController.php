@@ -29,72 +29,74 @@ class AuthController extends Controller
 			return $this->redirect($this->generateUrl('homepage'));
 		}
 
-		$this->initializeCAS();
-		\phpCAS::setNoCasServerValidation();
+		if ($this->getKernel()->getEnvironment() != 'test') {
+			$this->initializeCAS();
+			\phpCAS::setNoCasServerValidation();
 
-		if (\phpCAS::isAuthenticated()) {
-			// Try to connect user automatically
-			$login = \phpCAS::getUser();
+			if (\phpCAS::isAuthenticated()) {
+				// Try to connect user automatically
+				$login = \phpCAS::getUser();
 
-			$em = $this->getDoctrine()->getManager();
+				$em = $this->getDoctrine()->getManager();
 
-			$user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
+				$user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
 
-			// If the user can't be loaded from database, we try for an organization
-			if (! $user) {
-				$orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(array('login' => $login));
+				// If the user can't be loaded from database, we try for an organization
+				if (! $user) {
+					$orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(array('login' => $login));
 
-				if ($orga) {
-					$user = $orga;
-				}
-			}
-
-			// If the user can't be loaded even as organization, we try using LDAP
-			if (! $user) {
-				/** @var $ldap LdapManager */
-				$ldap = $this->get('etu.user.ldap');
-
-				$ldapUser = $ldap->getUser($login);
-
-				// If we can't use a classic user, try with an organization
-				if (! $ldapUser) {
-					$ldapUser = $ldap->getOrga($login);
+					if ($orga) {
+						$user = $orga;
+					}
 				}
 
-				// We caught a user that is not in the database : we import it !
-				if ($ldapUser instanceof User) {
-					$import = new ElementToImport($this->getDoctrine(), $ldapUser);
-					$user = $import->import(true);
-				} elseif ($ldapUser instanceof Organization) {
+				// If the user can't be loaded even as organization, we try using LDAP
+				if (! $user) {
+					/** @var $ldap LdapManager */
+					$ldap = $this->get('etu.user.ldap');
+
+					$ldapUser = $ldap->getUser($login);
+
+					// If we can't use a classic user, try with an organization
+					if (! $ldapUser) {
+						$ldapUser = $ldap->getOrga($login);
+					}
+
+					// We caught a user that is not in the database : we import it !
+					if ($ldapUser instanceof User) {
+						$import = new ElementToImport($this->getDoctrine(), $ldapUser);
+						$user = $import->import(true);
+					} elseif ($ldapUser instanceof Organization) {
+						$this->get('session')->getFlashBag()->set('message', array(
+							'type' => 'success',
+							'message' => 'user.auth.connectOrga.errorExistsLdap'
+						));
+
+						return $this->redirect($this->generateUrl('homepage'));
+					}
+				}
+
+				if ($user instanceof \Etu\Core\UserBundle\Entity\User && ! $user->getIsDeleted()) {
+					$this->get('session')->set('user', $user->getId());
 					$this->get('session')->getFlashBag()->set('message', array(
 						'type' => 'success',
-						'message' => 'user.auth.connectOrga.errorExistsLdap'
+						'message' => 'user.auth.confirm'
+					));
+
+					if (in_array($user->getLanguage(), $this->container->getParameter('etu.translation.languages'))) {
+						$this->get('session')->set('_locale', $user->getLanguage());
+					}
+
+					return $this->redirect($this->generateUrl('homepage'));
+				} elseif ($user instanceof Organization) {
+					$this->get('session')->set('orga', $user->getId());
+					$this->get('session')->getFlashBag()->set('message', array(
+						'type' => 'success',
+						'message' => 'user.auth.confirm'
 					));
 
 					return $this->redirect($this->generateUrl('homepage'));
 				}
-			}
-
-			if ($user instanceof \Etu\Core\UserBundle\Entity\User && ! $user->getIsDeleted()) {
-				$this->get('session')->set('user', $user->getId());
-				$this->get('session')->getFlashBag()->set('message', array(
-					'type' => 'success',
-					'message' => 'user.auth.confirm'
-				));
-
-				if (in_array($user->getLanguage(), $this->container->getParameter('etu.translation.languages'))) {
-					$this->get('session')->set('_locale', $user->getLanguage());
-				}
-
-				return $this->redirect($this->generateUrl('homepage'));
-			} elseif ($user instanceof Organization) {
-				$this->get('session')->set('orga', $user->getId());
-				$this->get('session')->getFlashBag()->set('message', array(
-					'type' => 'success',
-					'message' => 'user.auth.confirm'
-				));
-
-				return $this->redirect($this->generateUrl('homepage'));
 			}
 		}
 
