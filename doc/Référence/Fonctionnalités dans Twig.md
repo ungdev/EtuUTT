@@ -2,8 +2,8 @@
 Référence des fonctionnalités dans Twig
 =======================================
 
-Le EtuCoreBundle et le EtuUserBundle proposent beaucoup de fonctionnalités
-à utiliser dans Twig quant à EtuUTT.
+Le EtuCoreBundle et le EtuUserBundle proposent beaucoup de fonctionnalités utilisables
+depuis Twig.
 
 Les templates
 -------------
@@ -23,17 +23,6 @@ lorsque par exemple vous voulez mettre en place une organisation spécifique à 
 actuelle (comme la page de connexion, par exemple, qui utilise seulement la moitié de la
 page : `src/Etu/UserBundle/Resources/views/Auth/connect.html.twig`.
 
-Les macros
-----------
-
-Les macros sont des morceaux de HTML réutilisables partout dans Twig. EtuUTT en définit
-pour le moment un seul : celui pour s'abonner à un élément.
-
-Pour l'utiliser, vous devez faire appel à lui comme à une méthode de l'objet `etu_subscribe`.
-Par exemple, dans `src/Etu/Module/BugsBundle/Resources/views/Bugs/view.html.twig` :
-
-	{{ etu_subscribe.block('issue', bug.id) }}
-
 Les fonctions
 -------------
 
@@ -49,35 +38,35 @@ Fonctionnalités importantes (utiles pour le développement).
 
 Vérifie si l'utilisateur donné est abonné à l'entité donnée.
 
-### ucfirst($string)
+### string|ucfirst
 
 Met la première lettre de la chaine donnée en majuscule.
 
-### urlencode($string)
+### string|urlencode
 
 Encode la chaine donnée pour les URL.
 
-### limit($string, $length)
+### string|limit(length)
 
 Limite la taille de la chainne donnée à la limite donnée (affiche "..." si elle dépasse).
 
-### camelize($word)
+### word|camelize
 
 Convertit un mot en camelCase ('camel_case' => 'CamelCase')
 
-### uncamelize($word)
+### word|uncamelize
 
 Convertit un mot depuis camelCase ('CamelCase' => 'camel_case')
 
-### seems_utf8($string)
+### string|seems_utf8
 
 Vérifie si la chaine donnée semble être en UTF-8 ou non.
 
-### unaccent($string)
+### string|unaccent
 
 Enlève tous les accents des lettres accentuées de la chaine ('é' => 'e').
 
-### slugify($string)
+### string|slugify
 
 Transforme la chaine donnée en un slug, une chaine de caractère sans caractères
 spéciaux, en minuscule, et avec des tirets à la place des espaces.
@@ -93,7 +82,7 @@ Vérifie que la valeur donnée correspond à quelque chose de public.
 
 ## Informatives
 
-Fonctionnalités informatives (inutiles pour le développement mais importantes pour comprendre).
+Fonctionnalités informatives (inutiles pour le développement mais intéressantes pour comprendre).
 
 ### render_notif(Notification $notification)
 
@@ -115,21 +104,40 @@ Affiche la sidebar.
 Les variables globales
 ----------------------
 
-### etu_new_notifs
-
-Contient les nouvelles notifications.
-
-### etu_count_new_notifs
-
-Contient le nombre de nouvelles notifications.
-
 ### etu
 
-Contient une instance de `Etu\Core\CoreBundle\Framework\Twig\GlobalAccessorObject` qui
-permet de :
+La variable `etu` correspond en quelque sorte à `app` pour EtuUTT. Elle donne accès
+à de nombreuses fonctionnalités quant aux spécificités d'EtuUTT en plus de celles
+de Symfony.
 
-	- vérifier l'existence d'un module (même désactivé) :
-			etu.hasModule($identifier)
-	- vérifier l'état d'activation d'un module :
-			etu.moduleEnabled($identifier)
+#### Vérifier l'existence d'un module (même désactivé)
+
+	``` twig
+	etu.hasModule($identifier)
+	```
+
+#### Vérifier l'état d'activation d'un module
+
+	``` twig
+	etu.moduleEnabled($identifier)
+	```
+
+#### Récupération des abonnements de l'utilisateur courant
+
+	``` twig
+	etu.notifs.subscriptions
+	```
+
+#### Récupération des nouvelles notifications de l'utilisateur courant
+
+	``` twig
+	etu.notifs.new
+	```
+
+#### Récupération du nombre de nouvelles notifications de l'utilisateur courant
+
+	``` twig
+	etu.notifs.new_count
+	```
+
 

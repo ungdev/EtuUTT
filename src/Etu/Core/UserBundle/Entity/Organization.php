@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * Organization
  *
- * @ORM\Table(name="etu_organizations", indexes={ @ORM\Index(name="search", columns={"login", "name"}) })
+ * @ORM\Table(name="etu_organizations") })
  * @ORM\Entity
  */
 class Organization implements UserInterface, \Serializable
@@ -106,6 +106,13 @@ class Organization implements UserInterface, \Serializable
 	 */
 	public $file;
 
+	/**
+	 * Is testing context ?
+	 *
+	 * @var boolean
+	 */
+	public $testingContext;
+
 
 
 	/*
@@ -116,6 +123,7 @@ class Organization implements UserInterface, \Serializable
 	{
 		$this->logo = 'default-logo.png';
 		$this->countMembers = 1;
+		$this->testingContext = false;
 	}
 
 	public function __toString()

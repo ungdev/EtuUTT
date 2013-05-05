@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Etu\Core\UserBundle\Entity\User;
 
 /**
- * @ORM\Table(name="etu_subscriptions", indexes={ @ORM\Index(name="search", columns={"user_id", "entityType", "entityId"}) })
+ * @ORM\Table(name="etu_subscriptions") })
  * @ORM\Entity
  */
 class Subscription

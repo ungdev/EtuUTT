@@ -53,6 +53,11 @@ class KernelListener
 	 */
 	public function onKernelRequest()
 	{
+		// User already found ? (Used by tests)
+		if ($this->securityContext->getToken() !== null) {
+			return;
+		}
+
 		if (is_int($this->session->get('orga')) && $this->session->get('orga') > 0) {
 			$this->session->set('user', null);
 

@@ -111,7 +111,7 @@ Objet pour gérer les abonnements des utilisateurs (ajouter et supprimer des mod
 **etu.notifs.subscriber.twig**
 *Etu\Core\CoreBundle\Twig\Extension\SubscriptionsManagerExtension*
 
-Fournit des méthodes d'accès aux abonnements utilisateur.
+Fournit des méthodes d'accès aux abonnements utilisateur depuis Twig.
 
 ### Notifications helper extension
 
@@ -126,7 +126,7 @@ son helper.
 **etu.twig.string_manipulation**
 *Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension*
 
-Fournit des méthodes de manipuation de chaines de caractères pour Twig et PHP.
+Fournit des filtres de chaines de caractères pour Twig et PHP.
 
 ### Authentication listener
 

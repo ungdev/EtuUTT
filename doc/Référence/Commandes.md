@@ -27,14 +27,23 @@ Créer une organisation.
 
 ### Synchronisation avec le LDAP
 
-**etu:users:sync**
+**etu:db:sync**
 *Etu\Core\UserBundle\Command\SyncProcessCommand*
 
 Synchronise le LDAP et la base de données.
 
+### Synchronisation des emplois du temps (API hébergée par le CRI)
+
+**etu:db:sync-schedule**
+*Etu\Core\UserBundle\Command\SyncScheduleCommand*
+
+Télécharge (si l'option --force est utilisée) ou charge depuis le cache
+les emplois du temps, supprime les emplois du temps des utilisateurs et
+remet en place les officiels.
+
 ### Etat de synchrnosation avec le LDAP
 
-**etu:users:sync-status**
+**etu:db:sync-status**
 *Etu\Core\UserBundle\Command\SyncStatusCommand*
 
 Compare la base de données et le LDAP pour déterminer les différences.
@@ -51,4 +60,4 @@ Créer une utilisateur.
 **etu:stats:clear**
 *Etu\Core\CoreBundle\Command\ClearStatsCommand*
 
-Vide la base de données des statistiques utilisateur (Analytics).
+Vide la base de données des statistiques utilisateur (TgaAudienceBundle).

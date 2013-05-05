@@ -182,7 +182,10 @@ class MainController extends Controller
 		$user->setLastVisitHome(new \DateTime());
 
 		$em->persist($user);
-		$em->flush();
+
+		if (! $user->testingContext) {
+			$em->flush();
+		}
 
 		return $view;
 	}

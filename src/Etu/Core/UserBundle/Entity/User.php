@@ -462,6 +462,13 @@ class User implements UserInterface, \Serializable
 	 */
 	public $file;
 
+	/**
+	 * Is testing context ?
+	 *
+	 * @var boolean
+	 */
+	public $testingContext;
+
 
 
 	/*
@@ -470,6 +477,7 @@ class User implements UserInterface, \Serializable
 
 	public function __construct()
 	{
+		$this->testingContext = false;
 		$this->keepActive = false;
 		$this->isStudent = true;
 		$this->isReadOnly = false;
@@ -868,6 +876,15 @@ class User implements UserInterface, \Serializable
 	public function setFullName($fullName)
 	{
 		$this->fullName = $fullName;
+
+		$parts = explode(' ', $fullName);
+
+		$this->firstName = $parts[0];
+		unset($parts[0]);
+
+		if (! empty($parts)) {
+			$this->lastName = implode(' ', $parts);
+		}
 
 		return $this;
 	}

@@ -30,11 +30,13 @@ class ApiController extends Controller
 		if (! $this->getUserLayer()->isUser()) {
 			return new Response(json_encode(array(
 				'status' => 403,
-				'message' => 'You are not allowed to access this URL as anonymous.'
-			)));
+				'message' => 'You are not allowed to access this URL as anonymous or organization.'
+			)), 403);
 		}
 
-		$this->getSubscriptionsManager()->subscribe($this->getUser(), $entityType, $entityId);
+		if (! $this->getUser()->testingContext) {
+			$this->getSubscriptionsManager()->subscribe($this->getUser(), $entityType, $entityId);
+		}
 
 		return new Response(json_encode(array(
 			'status' => 200,
@@ -56,11 +58,13 @@ class ApiController extends Controller
 		if (! $this->getUserLayer()->isUser()) {
 			return new Response(json_encode(array(
 				'status' => 403,
-				'message' => 'You are not allowed to access this URL as anonymous.'
-			)));
+				'message' => 'You are not allowed to access this URL as anonymous or organization.'
+			)), 403);
 		}
 
-		$this->getSubscriptionsManager()->unsubscribe($this->getUser(), $entityType, $entityId);
+		if (! $this->getUser()->testingContext) {
+			$this->getSubscriptionsManager()->unsubscribe($this->getUser(), $entityType, $entityId);
+		}
 
 		return new Response(json_encode(array(
 			'status' => 200,
@@ -80,8 +84,8 @@ class ApiController extends Controller
 		if (! $this->getUserLayer()->isUser()) {
 			return new Response(json_encode(array(
 				'status' => 403,
-				'message' => 'You are not allowed to access this URL as anonymous.'
-			)));
+				'message' => 'You are not allowed to access this URL as anonymous or organization.'
+			)), 403);
 		}
 
 		return new Response(json_encode(array(

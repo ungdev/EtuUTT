@@ -35,6 +35,7 @@ class AppKernel extends EtuKernel
 
 	        // Doctrine
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+	        new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
 
 	        // Sensio extra
 	        new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
@@ -80,12 +81,14 @@ class AppKernel extends EtuKernel
 		    foreach ($modules['modules'] as $module) {
 			    $bundleFile = 'src/'.str_replace('\\', '/', $module).'.php';
 
-			    if (file_exists($this->getRootDir().'/../'.$bundleFile)) {
-				    require $this->getRootDir().'/../'.$bundleFile;
-			    } else {
-				    throw new \RuntimeException(sprintf(
-					    'Module "%s" can not be loaded (file "%s" not found)', $module, $bundleFile
-				    ));
+			    if (! class_exists($module, false)) {
+				    if (file_exists($this->getRootDir().'/../'.$bundleFile)) {
+					    require $this->getRootDir().'/../'.$bundleFile;
+				    } else {
+					    throw new \RuntimeException(sprintf(
+						    'Module "%s" can not be loaded (file "%s" not found)', $module, $bundleFile
+					    ));
+				    }
 			    }
 
 			    if (class_exists($module, false)) {
