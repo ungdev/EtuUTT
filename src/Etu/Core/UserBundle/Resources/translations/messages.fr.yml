@@ -13,6 +13,26 @@ user:
         userCreate:
             title: Créer un utilisateur
             confirm: Vous avez bien créé un utilisateur
+            login: Identifiant
+            password: Mot de passe
+            website: Site web (public)
+            facebook: Facebook (public)
+            twitter: Twitter (public)
+            linkedin: LinkedIn (public)
+            viadeo: Viadeo (public)
+            name: Nom
+            studentId: Numéro étudiant
+            mail: E-mail
+            personnalMail: E-mail perso.
+            formation: Formation
+            phoneNumber: Numéro de tél.
+            sex: Sexe
+            nationality: Nationalité
+            adress: Adresse
+            postalCode: Code postal
+            city: Ville
+            country: Pays
+            birthday: Date de naissance
             birthday_only_age_label: Afficher l'âge
             birthday_only_age_desc: Afficher seulement l'âge sur le profil (si la date de naissance est privée)
             back: Retour
@@ -25,7 +45,7 @@ user:
             confirm: L'utilisateur a bien été supprimé
             back: Retour sur le profil
         userEdit:
-            title: Modifier
+            title: Modifier un utilisateur
             avatar: Modifier la photo
             birthday: Date de naissance
             birthday_only_age_label: Afficher l'âge

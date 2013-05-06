@@ -49,7 +49,6 @@ class AuthControllerTest extends WebTestCase
 		$client = static::createClient();
 
 		$crawler = $client->request('GET', '/user');
-
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Connexion")')->count());
 	}
 
@@ -58,7 +57,6 @@ class AuthControllerTest extends WebTestCase
 		$client = static::createClient();
 
 		$crawler = $client->request('GET', '/user/external');
-
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Connexion d\'un exterieur")')->count());
 	}
 }

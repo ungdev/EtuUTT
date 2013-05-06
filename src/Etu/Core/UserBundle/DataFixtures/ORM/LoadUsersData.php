@@ -22,6 +22,9 @@ class LoadUsersData implements FixtureInterface
 		$admin->setMail('admin@utt.fr');
 		$admin->setIsAdmin(true);
 		$admin->setAvatar('admin.png');
+		$admin->setBirthday(new \DateTime());
+		$admin->setLastVisitHome(new \DateTime());
+		$admin->setReadOnlyExpirationDate(new \DateTime());
 
 		$user = new User();
 
@@ -30,6 +33,9 @@ class LoadUsersData implements FixtureInterface
 		$user->setMail('user@utt.fr');
 		$user->setIsAdmin(false);
 		$user->setAvatar('user.png');
+		$user->setBirthday(new \DateTime());
+		$user->setLastVisitHome(new \DateTime());
+		$user->setReadOnlyExpirationDate(new \DateTime());
 
 		$orga = new Organization();
 

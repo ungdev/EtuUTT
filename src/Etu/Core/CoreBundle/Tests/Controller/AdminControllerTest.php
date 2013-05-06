@@ -98,4 +98,31 @@ class AdminControllerTest extends WebTestCase
 		$crawler = $client->request('GET', '/admin/pages');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Pages statiques")')->count());
 	}
+
+	public function testPageEdit()
+	{
+		$client = static::createClient();
+		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createAdminUser()));
+
+		$crawler = $client->request('GET', '/admin/page/edit/1');
+		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier une page")')->count());
+	}
+
+	public function testPageDelete()
+	{
+		$client = static::createClient();
+		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createAdminUser()));
+
+		$crawler = $client->request('GET', '/admin/page/delete/1');
+		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Supprimer une page")')->count());
+	}
+
+	public function testPageCreate()
+	{
+		$client = static::createClient();
+		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createAdminUser()));
+
+		$crawler = $client->request('GET', '/admin/page/create');
+		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Créer une page")')->count());
+	}
 }
