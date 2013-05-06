@@ -1,5 +1,9 @@
 
 user:
+    privacy:
+        public: Public
+        private: Privé
+
     admin:
         userAvatar:
             title: Modifier la photo
@@ -35,195 +39,190 @@ user:
             submit: Modifier
         userIndex:
             title: Utilisateurs
+            search_title: Rechercher un étudiant
+            search: Rechercher
+            create: Créer un utilisateur
+            more: Plus de critères
+            name: Nom
+            studentId: Numéro d'étudiant
+            uv: UVs (séparées par des virgules)
+            phone: Numéro de téléphone
+            personnalMail: E-mail personnel
+            branche: Branche
+            explainations: Effectuez votre recherche en utilisant le formulaire ci-dessus
+            no_results: Aucun résultat
+            count: %count% résultat|%count% résultats
         userReadOnly:
             confirm_set: L'utilisateur possède maintenant un accès en lecture seule.
             confirm_unset: L'utilisateur possède maintenant un accès complet.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-user:
-
-    # Global informations privacy
-    privacy:
-        public: Public
-        private: Privé
-
-    # Authentication
     auth:
         connect:
+            title: Connexion
             desc: "Veuillez choisir une méthode d'authentification pour EtuUTT :"
-            cas: En utilisant le CAS
+            cas: En utilisant un compte UTT
             external: En utilisant un compte exterieur
+            confirm: Vous êtes bien connecté
+            error: La connexion a échoué, vos identifiants semblent incorrects
+            orga_exists_ldap: Cette association existe bien mais doit être autorisée à se connecter par l'UNG
         connectExternal:
             title: Connexion d'un exterieur
-            desc: Connectez-vous en utilisant l'identifiant et le mot de passe qui vous ont été fournis par l'UNG.
+            desc: Connectez-vous en utilisant l'identifiant et le mot de passe qui vous ont été fournis par l'UNG :
             identifier: Identifiant
             password: Mot de passe
             submit: Connexion
-        connectOrga:
-            title: Connexion d'une asso.
-            desc: Connectez-vous en utilisant l'identifiant et le mot de passe qui vous ont été fournis par l'UNG.
-            identifier: Identifiant
-            password: Mot de passe
-            submit: Connexion
-            errorExistsLdap: Cette association existe bien mais doit être autorisée à se connecter par l'UNG
-        logout:
+            change: Changer de méthode de connexion
+        disconnect:
             confirm: Vous êtes bien déconnecté
-        confirm: Vous êtes bien connecté
-        error: La connexion a échoué, vos identifiants semblent incorrects
-        denied: Vous n'avez pas le droit d'accéder à cette page
-        change: Changer de méthode de connexion
 
-    # Profile
+    orga:
+        avatar:
+            title: Modifier votre logo
+            file: Image
+            confirm: Vous avez bien modifié votre logo
+            back: Retour
+            submit: Envoyer
+        index:
+            title: Association
+            submit: Modifier
+            confirm: Vous avez bien modifié votre compte
+            president_not_found: Le président n'a pas été trouvé
+            name:
+                label: Nom
+                desc: Nom officiel de l'association
+            president:
+                label: Président
+                desc: Membre président de l'association
+            contactMail:
+                label: E-mail de contact
+                desc: E-mail de contact de l'association
+            contactPhone:
+                label: Téléphone de contact
+                desc: Numéro de téléphone de contact de l'association
+            description:
+                label: Description
+                desc: Description de l'association
+            descriptionShort:
+                label: Courte description
+                desc: Version courte de la description (rôle au sein de l'UTT)
+            website:
+                label: Site internet
+                desc: Site internet officiel de l'association
+            logo:
+                edit: Modifier le logo
+                desc: Logo de l'association
+
     profile:
-        completion: Votre profil est complété à %completion% %. Complètez-le entièrement pour obtenir un badge !
-        completed: Votre profil est complet. Merci de votre participation !
-        title: Mon profil
-        viewPublic: Voir mon profil public
-        edit: Modifier
-        edit_avatar: Modifier ma photo
-        surnom: Surnom
-        jadis: Jadis
-        passions: Passions
-        age: %age% ans
-        titles:
+        profile:
+            title: Mon profil
+            edit: Modifier
+            completed: Votre profil est complet. Merci de votre participation !
+            completion: Votre profil est complété à %completion% %. Complètez-le entièrement pour obtenir un badge !
+            viewPublic: Voir mon profil public
             informations: Mes informations
+            name: Nom
+            mail: E-mail
+            sex: Sexe
+            personnalMail: E-mail perso.
+            phoneNumber: Numéro de tél.
+            adress: Adresse
+            birthday: Date de naissance
+            age: %age% ans
             trombi: Trombinoscope
+            surname: Surnom
+            jadis: Jadis
+            passions: Passions
+            trombi_not_customized: Vous n'avez pas encore personnalisé votre fiche trominoscope. N'hésitez pas à le faire dès que possible !
             badges: Badges
-
-    # Profile edition
-    profileEdit:
-        back: Retour sur mon compte
-        confirm: Vous avez bien modifié votre compte
-        name: Nom
-        login: Identifiant
-        password: Mot de passe
-        mail: E-mail
-        studentId: Numéro étudiant
-        formation: Formation
-        phoneNumber: Numéro de tél.
-        sex: Sexe
-        nationality: Nationalité
-        adress: Adresse
-        postalCode: Code postal
-        city: Ville
-        country: Pays
-        birthday: Date de naissance
-        birthdayOnlyAge:
-            label: Afficher mon âge
-            desc: Afficher seulement l'âge sur le profil (si la date de naissance est privée)
-        personnalMail: E-mail perso.
-        language: Langue d'affichage
-        website: Site web (public)
-        facebook: Facebook (public)
-        twitter: Twitter (public)
-        linkedin: LinkedIn (public)
-        viadeo: Viadeo (public)
-
-    # Avatar upload
-    avatarUpload:
-        file: Image
-        confirm: Vous avez bien modifié votre photo
-        back: Retour sur mon compte
-
-    # Trombi edition
-    trombiEdit:
-        surnom: Surnom (public)
-        jadis: Jadis (public)
-        passions: Passions (public)
-
-    # View a profile
-    view:
-        back:
-            search: Retour à la recherche
-            profile: Mon compte
-            trombi: Trombinoscope
-        title: Détail d'un profil
-        name: Nom
-        mail: E-mail
-        uvs: UVs actuelles
-        studentId: Numéro étudiant
-        formation: Formation
-        website: Site web
-        facebook: Facebook
-        twitter: Twitter
-        linkedin: LinkedIn
-        viadeo: Viadeo
-        phoneNumber: Numéro de tél.
-        sex: Sexe
-        nationality: Nationalité
-        adress: Adresse
-        birthday: Date de naissance
-        age: Age
-        surnom: Surnom
-        jadis: Jadis
-        passions: Passions
-
-
-orga:
-    edit:
-        submit: Modifier
-        confirm: Vous avez bien modifié votre compte
-        president_not_found: Le président n'a pas été trouvé
-        name:
-            label: Nom
-            desc: Nom officiel de l'association
-        president:
-            label: Président
-            desc: Membre président de l'association
-        contactMail:
-            label: E-mail de contact
-            desc: E-mail de contact de l'association
-        contactPhone:
-            label: Téléphone de contact
-            desc: Numéro de téléphone de contact de l'association
-        description:
-            label: Description
-            desc: Description de l'association
-        descriptionShort:
-            label: Courte description
-            desc: Version courte de la description (rôle au sein de l'UTT)
-        website:
-            label: Site internet
-            desc: Site internet officiel de l'association
-        logo:
-            edit: Modifier le logo
-            desc: Logo de l'association
-
-    # Avatar upload
-    logoUpload:
-        title: Modifier votre logo
-        file: Image
-        confirm: Vous avez bien modifié votre logo
-        back: Retour
-
-schedule:
-    days:
-        monday: Lundi
-        tuesday: Mardi
-        wenesday: Mercredi
-        thursday: Jeudi
-        friday: Vendredi
-        sathurday: Samedi
-    my:
+            no_badge: Aucun badge pour le moment. Participez pour en gagner !
+        profileAvatar:
+            title: Ma photo
+            file: Image
+            confirm: Vous avez bien modifié votre photo
+            back: Retour sur mon compte
+            edit: Modifier
+        profileEdit:
+            title: Modifier mes informations
+            confirm: Vous avez bien modifié vos informations
+            back: Retour sur mon compte
+            avatar: Modifier ma photo
+            edit: Modifier
+            website: Site web (public)
+            facebook: Facebook (public)
+            twitter: Twitter (public)
+            linkedin: LinkedIn (public)
+            viadeo: Viadeo (public)
+            name: Nom
+            studentId: Numéro étudiant
+            mail: E-mail
+            personnalMail: E-mail perso.
+            formation: Formation
+            phoneNumber: Numéro de tél.
+            sex: Sexe
+            nationality: Nationalité
+            adress: Adresse
+            postalCode: Code postal
+            city: Ville
+            country: Pays
+            birthday: Date de naissance
+            birthdayOnlyAge:
+                label: Afficher mon âge
+                desc: Afficher seulement l'âge sur le profil (si la date de naissance est privée)
+        trombiEdit:
+            title: Mon trombinoscope
+            confirm: Vous avez bien modifié votre fiche trombi
+            back: Retour sur mon compte
+            surname: Surnom
+            jadis: Jadis
+            passions: Passions
+            edit: Modifier
         view:
+            title: Détail d'un profil
+            back_search: Retour à la recherche
+            back_profile: Mon compte
+            back_trombi: Trombinoscope
+            back_admin: Administration
+            admin: Administrer
+            admin_edit: Modifier
+            admin_delete: Supprimer
+            admin_permissions: Modifier ses permissions
+            admin_disable_readonly: Désactiver la lecture seule
+            admin_enable_readonly: Activer la lecture seule
+            website: Site web
+            facebook: Facebook
+            twitter: Twitter
+            linkedin: LinkedIn
+            viadeo: Viadeo
+            name: Nom
+            studentId: Numéro étudiant
+            mail: E-mail
+            uvs: UVs actuelles
+            phoneNumber: Numéro de tél.
+            personnalMail: E-mail perso.
+            formation: Formation
+            sex: Sexe
+            nationality: Nationalité
+            adress: Adresse
+            birthday: Date de naissance
+            age: Age
+            surname: Surnom
+            jadis: Jadis
+            passions: Passions
+
+    schedule:
+        days:
+            monday: Lundi
+            tuesday: Mardi
+            wenesday: Mercredi
+            thursday: Jeudi
+            friday: Vendredi
+            sathurday: Samedi
+        schedule:
             title: Mon emploi du temps
-            changeDay: Changer de jour
             edit: Modifier
             print: Imprimer
-        edit:
+        scheduleEdit:
             title: Modifier
             back: Retour
+        schedulePrint:
+            title: Imprimer mon emploi du temps

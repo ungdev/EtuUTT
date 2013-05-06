@@ -102,7 +102,7 @@ class ProfileController extends Controller
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'user.profileEdit.confirm'
+				'message' => 'user.profile.profileEdit.confirm'
 			));
 
 			return $this->redirect($this->generateUrl('user_profile'));
@@ -148,7 +148,7 @@ class ProfileController extends Controller
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'user.avatarUpload.confirm'
+				'message' => 'user.profile.profileAvatar.confirm'
 			));
 
 			return $this->redirect($this->generateUrl('user_profile_edit'));
@@ -196,7 +196,7 @@ class ProfileController extends Controller
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'user.profileEdit.confirm'
+				'message' => 'user.profile.trombiEdit.confirm'
 			));
 
 			return $this->redirect($this->generateUrl('user_profile'));

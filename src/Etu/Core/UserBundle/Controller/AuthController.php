@@ -69,7 +69,7 @@ class AuthController extends Controller
 					} elseif ($ldapUser instanceof Organization) {
 						$this->get('session')->getFlashBag()->set('message', array(
 							'type' => 'success',
-							'message' => 'user.auth.connectOrga.errorExistsLdap'
+							'message' => 'user.auth.connect.orga_exists_ldap'
 						));
 
 						return $this->redirect($this->generateUrl('homepage'));
@@ -80,7 +80,7 @@ class AuthController extends Controller
 					$this->get('session')->set('user', $user->getId());
 					$this->get('session')->getFlashBag()->set('message', array(
 						'type' => 'success',
-						'message' => 'user.auth.confirm'
+						'message' => 'user.auth.connect.confirm'
 					));
 
 					if (in_array($user->getLanguage(), $this->container->getParameter('etu.translation.languages'))) {
@@ -92,7 +92,7 @@ class AuthController extends Controller
 					$this->get('session')->set('orga', $user->getId());
 					$this->get('session')->getFlashBag()->set('message', array(
 						'type' => 'success',
-						'message' => 'user.auth.confirm'
+						'message' => 'user.auth.connect.confirm'
 					));
 
 					return $this->redirect($this->generateUrl('homepage'));
@@ -160,14 +160,14 @@ class AuthController extends Controller
 			} elseif ($ldapUser instanceof Organization) {
 				$this->get('session')->getFlashBag()->set('message', array(
 					'type' => 'success',
-					'message' => 'user.auth.connectOrga.errorExistsLdap'
+					'message' => 'user.auth.connect.orga_exists_ldap'
 				));
 
 				return $this->redirect($this->generateUrl('homepage'));
 			} else {
 				$this->get('session')->getFlashBag()->set('message', array(
 					'type' => 'error',
-					'message' => 'user.auth.error'
+					'message' => 'user.auth.connect.error'
 				));
 
 				return $this->redirect($this->generateUrl('user_connect'));
@@ -178,7 +178,7 @@ class AuthController extends Controller
 			$this->get('session')->set('user', $user->getId());
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'user.auth.confirm'
+				'message' => 'user.auth.connect.confirm'
 			));
 
 			if (in_array($user->getLanguage(), $this->container->getParameter('etu.translation.languages'))) {
@@ -188,12 +188,12 @@ class AuthController extends Controller
 			$this->get('session')->set('orga', $user->getId());
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'user.auth.confirm'
+				'message' => 'user.auth.connect.confirm'
 			));
 		} else {
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'user.auth.error'
+				'message' => 'user.auth.connect.error'
 			));
 
 			return $this->redirect($this->generateUrl('user_connect'));
@@ -234,7 +234,7 @@ class AuthController extends Controller
 				$this->get('session')->set('user', $result->getId());
 				$this->get('session')->getFlashBag()->set('message', array(
 					'type' => 'success',
-					'message' => 'user.auth.confirm'
+					'message' => 'user.auth.connect.confirm'
 				));
 
 				if (in_array($user->getLanguage(), $this->container->getParameter('etu.translation.languages'))) {
@@ -245,7 +245,7 @@ class AuthController extends Controller
 			} else {
 				$this->get('session')->getFlashBag()->set('message', array(
 					'type' => 'error',
-					'message' => 'user.auth.error'
+					'message' => 'user.auth.connect.error'
 				));
 
 				return $this->redirect($this->generateUrl('user_connect_external'));
@@ -271,7 +271,7 @@ class AuthController extends Controller
 		$this->get('session')->clear();
 		$this->get('session')->getFlashBag()->set('message', array(
 			'type' => 'success',
-			'message' => 'user.auth.logout.confirm'
+			'message' => 'user.auth.disconnect.confirm'
 		));
 
 		$this->initializeCAS();

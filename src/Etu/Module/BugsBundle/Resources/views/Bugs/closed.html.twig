@@ -4,7 +4,7 @@
 	<link rel="stylesheet" href="{{ asset('css/bundles/bugs.css') }}" type="text/css" />
 {% endblock %}
 
-{% block title %}{{ 'bugs.bugs.index.title'|trans }}{% endblock %}
+{% block title %}{{ 'bugs.bugs.closed.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
 	<img src="{{ asset('img/titles/bugs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -17,10 +17,10 @@
 
 {% block content %}
 	<ul class="nav nav-tabs page-tabs">
-		<li class="active page-tabs-resolved-active">
+		<li>
 			<a href="{{ path('bugs_index') }}">{{ 'bugs.bugs.state.opened'|trans }}</a>
 		</li>
-		<li>
+		<li class="active page-tabs-resolved-active">
 			<a href="{{ path('bugs_closed') }}">{{ 'bugs.bugs.state.resolved'|trans }}</a>
 		</li>
 		{% if app.user.hasPermission('bugs.add') %}
@@ -64,11 +64,11 @@
 				</h5>
 
 				<small class="muted bug-meta hidden-phone">
-					{{ 'bugs.bugs.index.by'|trans({'%name%': bug.user.fullName}) }}
+					{{ 'bugs.bugs.closed.by'|trans({'%name%': bug.user.fullName}) }}
 
 					{% if bug.assignee %}
 						<span class="text-success">
-							({{ 'bugs.bugs.index.assigned_to'|trans({'%name%': bug.assignee.fullName}) }})
+							({{ 'bugs.bugs.closed.assigned_to'|trans({'%name%': bug.assignee.fullName}) }})
 						</span>
 					{% endif %}
 				</small>
@@ -101,7 +101,7 @@
 			</a>
 		{% else %}
 			<p>
-				{{ 'bugs.bugs.index.no_bug'|trans }}
+				{{ 'bugs.bugs.closed.no_bug'|trans }}
 			</p>
 		{% endfor %}
 

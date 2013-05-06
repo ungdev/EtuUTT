@@ -4,7 +4,7 @@
 	<link rel="stylesheet" href="{{ asset('css/bundles/bugs.css') }}" type="text/css" />
 {% endblock %}
 
-{% block title %}{{ 'bugs.editComment.name'|trans }}{% endblock %}
+{% block title %}{{ 'bugs.bugs.editComment.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
 	<img src="{{ asset('img/titles/bugs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -13,17 +13,19 @@
 {% block content %}
 	<ul class="nav nav-tabs page-tabs">
 		<li>
-			<a href="{{ path('bugs_index') }}">{{ 'bugs.index.page.opened'|trans }}</a>
+			<a href="{{ path('bugs_index') }}">{{ 'bugs.bugs.state.opened'|trans }}</a>
 		</li>
 		<li>
-			<a href="{{ path('bugs_closed') }}">{{ 'bugs.index.page.resolved'|trans }}</a>
+			<a href="{{ path('bugs_closed') }}">{{ 'bugs.bugs.state.resolved'|trans }}</a>
 		</li>
-		<li class="pull-right">
-			<a href="{{ path('bugs_create') }}">
-				<i class="icon-plus"></i>
-				{{ 'bugs.index.page.create'|trans }}
-			</a>
-		</li>
+		{% if app.user.hasPermission('bugs.add') %}
+			<li class="pull-right">
+				<a href="{{ path('bugs_create') }}">
+					<i class="icon-plus"></i>
+					{{ 'bugs.bugs.create.title'|trans }}
+				</a>
+			</li>
+		{% endif %}
 	</ul>
 
 	<div class="padding20-sides">

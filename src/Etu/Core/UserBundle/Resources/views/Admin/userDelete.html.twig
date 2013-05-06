@@ -1,6 +1,6 @@
 {% extends 'EtuCoreBundle:Admin:layout.html.twig' %}
 
-{% block title %}{{ 'admin.user.delete.title'|trans }}{% endblock %}
+{% block title %}{{ 'user.admin.userDelete.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
 	<img src="{{ asset('img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -19,21 +19,21 @@
 		<li>
 			<a href="{{ path('user_view', {'login': user.login}) }}?from=admin">
 				<i class="icon-chevron-left"></i>
-				{{ 'admin.user.delete.back'|trans }}
+				{{ 'user.admin.userDelete.back'|trans }}
 			</a>
 		</li>
 	</ul>
 
 	<div class="padding20-sides">
 		<p>
-			{{ 'admin.user.delete.sure'|trans({'%username%': user.fullName}) }}
+			{{ 'user.admin.userDelete.sure'|trans({'%username%': user.fullName}) }}
 		</p>
 		<p>
 			<a href="{{ path('admin_user_delete', {'login': user.login, 'confirm': 'confirm'}) }}" class="btn btn-primary">
-				{{ 'admin.user.delete.yes'|trans }}
+				{{ 'user.admin.userDelete.yes'|trans }}
 			</a>
 			<a href="{{ path('user_view', {'login': user.login}) }}?from=admin" class="btn">
-				{{ 'admin.user.delete.no'|trans }}
+				{{ 'user.admin.userDelete.no'|trans }}
 			</a>
 		</p>
 	</div>

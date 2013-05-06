@@ -59,7 +59,7 @@ class OrgaController extends Controller
 			if (! $president) {
 				$this->get('session')->getFlashBag()->set('message', array(
 					'type' => 'error',
-					'message' => 'orga.edit.president_not_found'
+					'message' => 'user.orga.index.president_not_found'
 				));
 			} else {
 				$orga->setPresident($president);
@@ -69,7 +69,7 @@ class OrgaController extends Controller
 
 				$this->get('session')->getFlashBag()->set('message', array(
 					'type' => 'success',
-					'message' => 'orga.edit.confirm'
+					'message' => 'user.orga.index.confirm'
 				));
 			}
 
@@ -90,8 +90,6 @@ class OrgaController extends Controller
 	/**
 	 * @Route("/orga/avatar", name="orga_admin_avatar")
 	 * @Template()
-	 *
-	 * @todo
 	 */
 	public function avatarAction()
 	{
@@ -118,7 +116,7 @@ class OrgaController extends Controller
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'orga.logoUpload.confirm'
+				'message' => 'user.orga.avatar.confirm'
 			));
 
 			return $this->redirect($this->generateUrl('orga_admin'));

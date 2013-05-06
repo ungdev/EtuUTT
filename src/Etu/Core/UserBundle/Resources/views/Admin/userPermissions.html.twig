@@ -1,6 +1,6 @@
 {% extends 'EtuCoreBundle:Admin:layout.html.twig' %}
 
-{% block title %}{{ 'admin.user.permissions.title'|trans }}{% endblock %}
+{% block title %}{{ 'user.admin.userPermissions.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
 	<img src="{{ asset('img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -29,7 +29,7 @@
 		<li>
 			<a href="{{ path('user_view', {'login': user.login}) }}?from=admin">
 				<i class="icon-chevron-left"></i>
-				{{ 'admin.user.permissions.back'|trans }}
+				{{ 'user.admin.userPermissions.back'|trans }}
 			</a>
 		</li>
 	</ul>
@@ -55,7 +55,7 @@
 					</div>
 
 					<p class="pull-right">
-						<button type="submit" class="btn btn-primary">{{ 'admin.user.permissions.submit'|trans }}</button>
+						<button type="submit" class="btn btn-primary">{{ 'user.admin.userPermissions.submit'|trans }}</button>
 					</p>
 				</div>
 			</div>
@@ -100,7 +100,7 @@
 			<p class="pull-right">
 				<input type="hidden" name="sent" value="true" />
 
-				<button type="submit" class="btn btn-primary">{{ 'admin.user.permissions.submit'|trans }}</button>
+				<button type="submit" class="btn btn-primary">{{ 'user.admin.userPermissions.submit'|trans }}</button>
 			</p>
 		</form>
 	</div>

@@ -4,7 +4,7 @@
 	<link rel="stylesheet" href="{{ asset('css/bundles/bugs.css') }}" type="text/css" />
 {% endblock %}
 
-{% block title %}{{ 'bugs.edit.name'|trans }}{% endblock %}
+{% block title %}{{ 'bugs.bugs.edit.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
 	<img src="{{ asset('img/titles/bugs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -13,37 +13,39 @@
 {% block content %}
 	<ul class="nav nav-tabs page-tabs">
 		<li>
-			<a href="{{ path('bugs_index') }}">{{ 'bugs.index.page.opened'|trans }}</a>
+			<a href="{{ path('bugs_index') }}">{{ 'bugs.bugs.state.opened'|trans }}</a>
 		</li>
 		<li>
-			<a href="{{ path('bugs_closed') }}">{{ 'bugs.index.page.resolved'|trans }}</a>
+			<a href="{{ path('bugs_closed') }}">{{ 'bugs.bugs.state.resolved'|trans }}</a>
 		</li>
-		<li class="pull-right">
-			<a href="{{ path('bugs_create') }}">
-				<i class="icon-plus"></i>
-				{{ 'bugs.index.page.create'|trans }}
-			</a>
-		</li>
+		{% if app.user.hasPermission('bugs.add') %}
+			<li class="pull-right">
+				<a href="{{ path('bugs_create') }}">
+					<i class="icon-plus"></i>
+					{{ 'bugs.bugs.create.title'|trans }}
+				</a>
+			</li>
+		{% endif %}
 	</ul>
 
 	<div class="padding20-sides">
 		<form method="post" action="" class="form-horizontal">
 			<div class="control-group">
-				<label class="control-label">{{ form_label(form.title, 'bugs.edit.title'|trans) }}</label>
+				<label class="control-label">{{ form_label(form.title, 'bugs.bugs.edit.title'|trans) }}</label>
 				<div class="controls">
 					{{ form_widget(form.title) }}
 					<span class="help-block">{{ form_errors(form.title) }}</span>
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label">{{ form_label(form.criticality, 'bugs.edit.criticality'|trans) }}</label>
+				<label class="control-label">{{ form_label(form.criticality, 'bugs.bugs.edit.criticality'|trans) }}</label>
 				<div class="controls">
 					{{ form_widget(form.criticality) }}
 					<span class="help-block">{{ form_errors(form.criticality) }}</span>
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label">{{ form_label(form.body, 'bugs.edit.body'|trans) }}</label>
+				<label class="control-label">{{ form_label(form.body, 'bugs.bugs.edit.body'|trans) }}</label>
 				<div class="controls">
 					{{ form_widget(form.body, {'attr': {'class': 'bugs-view-comment-textarea redactor'}}) }}
 					<span class="help-block">{{ form_errors(form.body) }}</span>
@@ -53,7 +55,7 @@
 				<div class="controls">
 					{{ form_rest(form) }}
 
-					<button type="submit" class="btn">{{ 'bugs.edit.submit'|trans }}</button>
+					<button type="submit" class="btn">{{ 'bugs.bugs.edit.submit'|trans }}</button>
 				</div>
 			</div>
 		</form>

@@ -1,22 +1,8 @@
 
 bugs:
-    notifs:
-        newComment:
-            your:
-                one: %userName% a commenté votre bug %bugName%
-                two: %first% et %second% ont commenté votre bug %bugName%
-                more_single: %first%, %second% et 1 autre personne ont commenté votre bug %bugName%
-                more_many: %first%, %second% et %count% autres personnes ont commenté votre bug %bugName%
-            other:
-                one: %userName% a commenté le bug %bugName%
-                two: %first% et %second% ont commenté le bug %bugName%
-                more_single: %first%, %second% et 1 autre personne ont commenté le bug %bugName%
-                more_many: %first%, %second% et %count% autres personnes ont commenté le bug %bugName%
-        newOpened:
-            one: %userName% a signalé un nouveau bug (%bugName%)
-            two: %first% et %second% ont signalé de nouveaux bugs
-            more_single: %first%, %second% et 1 autre personne ont signalé de nouveaux bugs
-            more_many: %first%, %second% et %count% autres personnes ont signalé de nouveaux bugs
+    menu:
+        sidebar:
+            bugs: Signaler un bug
 
     criticality:
         critical: Problème critique
@@ -26,75 +12,58 @@ bugs:
         visual: Problème visuel
         typo: Coquille
 
-    sidebar:
-        items:
-            suggest: Suggestions
-            bugs: Signaler un bug
-
-    index:
-        page:
-            title: Bugs et erreurs
+    bugs:
+        state:
             opened: Ouverts
             resolved: Résolus
-            create: Signaler un bug
-        table:
-            number: "#"
-            title: Titre
-            author: Auteur
-            created_at: Date de création
-            no_bug_opened: Aucun bug ouvert signalé pour le moment
+        closed:
+            title: Bugs résolus
+            by: Par %name%
             assigned_to: assigné à %name%
-
-    closed:
-        no_bug_closed: Aucun bug résolu pour le moment
-        closed_at_by: Résolu par %username%, %date%
-        closed_at: Résolu %date%
-
-    view:
-        edit: Modifier
-        delete: Supprimer
-        page:
-            back: Retour à la liste
-            title: Détails du bug
+            no_bug: Aucun bug résolu pour le moment
+        create:
+            title: Signaler un bug
+            confirm: Votre problème a été signalé. Merci de votre participation !
+            criticality: Criticité
+            body: Explications
+            submit: Signaler
+        edit:
+            title: Modifier un bug
+            confirm: Votre problème a bien été modifié
+            criticality: Criticité
+            body: Explications
+            submit: Modifier
+        editComment:
+            title: Modifier un commentaire
+        index:
+            title: Bugs ouverts
+            by: Par %name%
+            assigned_to: assigné à %name%
+            no_bug: Aucun bug ouvert pour le moment
+        view:
+            title: Détails d'un bug
+            assigned_to: assigné à %name%
             posted_at: Posté le
             assigned_to: Ce bug est assigné à %name%
             resolved: Ce bug a été résolu
             resolved_by: Ce bug a été résolu par %name%
-        comment:
-            body: Commentaire
-            comment: Commenter
-        message:
-            creation: Votre commentaire a été ajouté
-        admin:
-            title: Administrer
-            assigne: Assigner
-            assigne_placeholder: Assigner à ...
-            unassign: Supprimer l'assignation de %name%
-            edit_criticality: Modifier la criticité
+            admin_title: Administrer
+            admin_assigne: Assigner
+            admin_assigne_placeholder: Assigner à ...
+            admin_unassign: Supprimer l'assignation de %name%
+            admin_edit_criticality: Modifier la criticité
+            admin_edit: Modifier
+            admin_state: Etat
+            admin_fix: Résoudre
+            admin_unfix: Réouvrir
             edit: Modifier
-            state: Etat
-            fix: Résoudre
-            unfix: Réouvrir
+            delete: Supprimer
+            comment_title: Commenter
+            comment_body: Commentaire
+            comment_submit: Commenter
+            comment_confirm: Votre commentaire a été ajouté
 
-    create:
-        title: Titre
-        criticality: Criticité
-        body: Explications
-        submit: Signaler
-        confirm: Votre problème a été signalé. Merci de votre participation !
-
-    edit:
-        name: Modifier un bug
-        title: Titre
-        criticality: Criticité
-        body: Explications
-        submit: Modifier
-        confirm: Votre problème a bien été modifié.
-
-    editComment:
-        name: Modifier un commentaire
-
-    admin:
+    bugs_admin:
         assign:
             assignee_not_found: L'utilisateur n'a pas été trouvé
             success: L'utilisateur a bien été assigné au bug
@@ -117,3 +86,21 @@ bugs:
             yes: Oui, supprimer
             no: Non, annuler
             success: Le bug a bien été supprimé
+
+    notifs:
+        newComment:
+            your:
+                one: %userName% a commenté votre bug %bugName%
+                two: %first% et %second% ont commenté votre bug %bugName%
+                more_single: %first%, %second% et 1 autre personne ont commenté votre bug %bugName%
+                more_many: %first%, %second% et %count% autres personnes ont commenté votre bug %bugName%
+            other:
+                one: %userName% a commenté le bug %bugName%
+                two: %first% et %second% ont commenté le bug %bugName%
+                more_single: %first%, %second% et 1 autre personne ont commenté le bug %bugName%
+                more_many: %first%, %second% et %count% autres personnes ont commenté le bug %bugName%
+        newOpened:
+            one: %userName% a signalé un nouveau bug (%bugName%)
+            two: %first% et %second% ont signalé de nouveaux bugs
+            more_single: %first%, %second% et 1 autre personne ont signalé de nouveaux bugs
+            more_many: %first%, %second% et %count% autres personnes ont signalé de nouveaux bugs

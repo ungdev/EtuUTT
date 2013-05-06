@@ -1,6 +1,6 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block title %}{{ 'base.user.menu.account'|trans }}{% endblock %}
+{% block title %}{{ 'user.profile.profileAvatar.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
 	<img src="{{ asset('img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -11,7 +11,7 @@
 		<li>
 			<a href="{{ path('user_profile') }}">
 				<i class="icon-chevron-left"></i>
-				{{ 'user.avatarUpload.back'|trans }}
+				{{ 'user.profile.profileAvatar.back'|trans }}
 			</a>
 		</li>
 	</ul>
@@ -24,7 +24,7 @@
 
 			<p>
 				<br />
-				<label>{{ form_label(form.file, 'user.avatarUpload.file'|trans) }}</label>
+				<label>{{ form_label(form.file, 'user.profile.profileAvatar.file'|trans) }}</label>
 				{{ form_widget(form.file) }}
 				<br />
 				<span class="help-block">{{ form_errors(form.file) }}</span>
@@ -33,7 +33,7 @@
 			<div class="controls">
 				{{ form_rest(form) }}
 
-				<button type="submit" class="btn">{{ 'user.profile.edit'|trans }}</button>
+				<button type="submit" class="btn">{{ 'user.profile.profileAvatar.edit'|trans }}</button>
 			</div>
 		</form>
 	</div>

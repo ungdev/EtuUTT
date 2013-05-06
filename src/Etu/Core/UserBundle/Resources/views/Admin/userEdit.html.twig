@@ -1,6 +1,6 @@
 {% extends 'EtuCoreBundle:Admin:layout.html.twig' %}
 
-{% block title %}{{ 'admin.user.edit.title'|trans }}{% endblock %}
+{% block title %}{{ 'user.admin.userEdit.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
 	<img src="{{ asset('img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -19,7 +19,7 @@
 		<li>
 			<a href="{{ path('user_view', {'login': user.login}) }}?from=admin">
 				<i class="icon-chevron-left"></i>
-				{{ 'admin.user.edit.back'|trans }}
+				{{ 'user.admin.userEdit.back'|trans }}
 			</a>
 		</li>
 	</ul>
@@ -28,7 +28,7 @@
 		<div class="hidden" id="avatarUploadBox">
 			<div class="avatarUploadBox-form">
 				<form method="post" action="{{ path('admin_user_edit_avatar',{'login': user.login}) }}" {{ form_enctype(avatarForm) }}>
-					<h4>{{ 'admin.user.edit.avatar'|trans }}</h4>
+					<h4>{{ 'user.admin.userEdit.avatar'|trans }}</h4>
 
 					<img src="{{ asset('photos/'~user.avatar) }}" style="max-width: 100px;" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
 
@@ -57,7 +57,7 @@
 						<p>
 							<br />
 							<a href="{{ path('user_profile_avatar') }}" id="avatarUploadLink" rel="facebox" class="btn">
-								{{ 'admin.user.edit.avatar'|trans }}
+								{{ 'user.admin.userEdit.avatar'|trans }}
 							</a>
 						</p>
 

@@ -24,7 +24,7 @@ class EtuModuleBugsBundle extends Module
 	{
 		$this->getSidebarBuilder()
 			->getBlock('base.sidebar.etu.title')
-				->add('bugs.sidebar.items.bugs')
+				->add('bugs.menu.sidebar.bugs')
 					->setIcon('exclamation-red.png')
 					->setUrl($this->getRouter()->generate('bugs_index'))
 				->end();

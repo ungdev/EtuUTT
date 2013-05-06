@@ -65,6 +65,9 @@ base:
         title: Administration générale
         items:
             dashboard: Tableau de bord
+            modules: Modules
+            pages: Pages statiques
+            users: Utilisateurs
             stats: Statistiques
 
     # Logo

@@ -1,6 +1,6 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block title %}{{ 'main.indexOrga.title'|trans }}{% endblock %}
+{% block title %}{{ 'user.orga.index.title'|trans }}{% endblock %}
 
 {% block main_menu_link_homepage %} active{% endblock %}
 
@@ -32,7 +32,7 @@
 		<div class="hidden" id="avatarUploadBox">
 			<div class="avatarUploadBox-form">
 				<form method="post" action="{{ path('orga_admin_avatar') }}" {{ form_enctype(avatarForm) }}>
-					<h4>{{ 'orga.logoUpload.title'|trans }}</h4>
+					<h4>{{ 'user.orga.avatar.title'|trans }}</h4>
 
 					<img src="{{ asset('logos/'~app.user.logo) }}" style="max-width: 100px;" alt="{{ app.user.fullName }}" title="{{ app.user.fullName }}" />
 
@@ -44,7 +44,7 @@
 					<div class="controls">
 						{{ form_rest(avatarForm) }}
 
-						<button type="submit" class="btn">{{ 'orga.edit.submit'|trans }}</button>
+						<button type="submit" class="btn">{{ 'user.orga.avatar.submit'|trans }}</button>
 					</div>
 				</form>
 			</div>
@@ -61,58 +61,58 @@
 						<p>
 							<br />
 							<a href="{{ path('orga_admin_avatar') }}" id="avatarUploadLink" rel="facebox" class="btn">
-								{{ 'orga.edit.logo.edit'|trans }}
+								{{ 'user.orga.avatar.title'|trans }}
 							</a>
 						</p>
 					</div>
 				</div>
 				<div class="span9 form-horizontal">
 					<div class="control-group">
-						<label class="control-label">{{ 'orga.edit.name.label'|trans }}</label>
+						<label class="control-label">{{ 'user.orga.index.name.label'|trans }}</label>
 						<div class="controls">
 							{{ form_widget(form.name) }}
 						</div>
 						<span class="help-block">{{ form_errors(form.name) }}</span>
 					</div>
 					<div class="control-group">
-						<label class="control-label">{{ 'orga.edit.president.label'|trans }}</label>
+						<label class="control-label">{{ 'user.orga.index.president.label'|trans }}</label>
 						<div class="controls">
 							{{ form_widget(form.president) }}
 						</div>
 						<span class="help-block">{{ form_errors(form.president) }}</span>
 					</div>
 					<div class="control-group">
-						<label class="control-label">{{ 'orga.edit.contactMail.label'|trans }}</label>
+						<label class="control-label">{{ 'user.orga.index.contactMail.label'|trans }}</label>
 						<div class="controls">
 							{{ form_widget(form.contactMail) }}
 						</div>
 						<span class="help-block">{{ form_errors(form.contactMail) }}</span>
 					</div>
 					<div class="control-group">
-						<label class="control-label">{{ 'orga.edit.contactPhone.label'|trans }}</label>
+						<label class="control-label">{{ 'user.orga.index.contactPhone.label'|trans }}</label>
 						<div class="controls">
 							{{ form_widget(form.contactPhone) }}
 						</div>
 						<span class="help-block">{{ form_errors(form.contactPhone) }}</span>
 					</div>
 					<div class="control-group">
-						<label class="control-label">{{ 'orga.edit.descriptionShort.label'|trans }}</label>
+						<label class="control-label">{{ 'user.orga.index.descriptionShort.label'|trans }}</label>
 						<div class="controls">
 							{{ form_widget(form.descriptionShort) }}
-							<span class="help-block">{{ 'orga.edit.descriptionShort.desc'|trans }}</span>
+							<span class="help-block">{{ 'user.orga.index.descriptionShort.desc'|trans }}</span>
 						</div>
 						<span class="help-block">{{ form_errors(form.descriptionShort) }}</span>
 					</div>
 					<div class="control-group">
-						<label class="control-label">{{ 'orga.edit.description.label'|trans }}</label>
+						<label class="control-label">{{ 'user.orga.index.description.label'|trans }}</label>
 						<div class="controls">
 							{{ form_widget(form.description) }}
-							<span class="help-block">{{ 'orga.edit.description.desc'|trans }}</span>
+							<span class="help-block">{{ 'user.orga.index.description.desc'|trans }}</span>
 						</div>
 						<span class="help-block">{{ form_errors(form.description) }}</span>
 					</div>
 					<div class="control-group">
-						<label class="control-label">{{ 'orga.edit.website.label'|trans }}</label>
+						<label class="control-label">{{ 'user.orga.index.website.label'|trans }}</label>
 						<div class="controls">
 							{{ form_widget(form.website) }}
 						</div>
@@ -122,7 +122,7 @@
 						<div class="controls">
 							{{ form_rest(form) }}
 
-							<button type="submit" class="btn">{{ 'orga.edit.submit'|trans }}</button>
+							<button type="submit" class="btn">{{ 'user.orga.index.submit'|trans }}</button>
 						</div>
 					</div>
 				</div>

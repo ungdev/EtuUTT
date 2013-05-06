@@ -196,7 +196,7 @@ class AdminController extends Controller
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'admin.user.edit.confirm'
+				'message' => 'user.admin.userEdit.confirm'
 			));
 
 			return $this->redirect($this->generateUrl('user_view', array('login' => $user->getLogin())));
@@ -328,7 +328,7 @@ class AdminController extends Controller
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'admin.user.permissions.confirm'
+				'message' => 'user.admin.userPermissions.confirm'
 			));
 
 			return $this->redirect($this->generateUrl('admin_user_permissions', array('login' => $user->getLogin())));
@@ -378,7 +378,7 @@ class AdminController extends Controller
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'admin.user.edit.confirm'
+				'message' => 'user.admin.userEdit.confirm'
 			));
 
 			return $this->redirect($this->generateUrl('user_view', array('login' => $user->getLogin())));
@@ -416,14 +416,14 @@ class AdminController extends Controller
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'admin.user.readonly.confirm_set'
+				'message' => 'user.admin.userReadOnly.confirm_set'
 			));
 		} else {
 			$user->setIsReadOnly(false);
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'admin.user.readonly.confirm_unset'
+				'message' => 'user.admin.userReadOnly.confirm_unset'
 			));
 		}
 
@@ -521,7 +521,7 @@ class AdminController extends Controller
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'admin.user.create.confirm'
+				'message' => 'user.admin.userCreate.confirm'
 			));
 
 			return $this->redirect($this->generateUrl('user_view', array('login' => $user->getLogin())));
@@ -562,7 +562,7 @@ class AdminController extends Controller
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'admin.user.delete.confirm'
+				'message' => 'user.admin.userDelete.confirm'
 			));
 
 			return $this->redirect($this->generateUrl('admin_users_index'));

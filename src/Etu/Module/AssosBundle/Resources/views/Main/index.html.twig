@@ -4,7 +4,7 @@
 	<link rel="stylesheet" href="{{ asset('css/bundles/assos.css') }}" type="text/css" />
 {% endblock %}
 
-{% block title %}{{ 'assos.index.title'|trans }}{% endblock %}
+{% block title %}{{ 'assos.main.index.title'|trans }}{% endblock %}
 
 {% block main_menu_link_assos %} active{% endblock %}
 
@@ -28,7 +28,7 @@
 				</h5>
 
 				{% if orga.president %}
-					<p class="muted asso-info">{{ 'assos.index.president'|trans }}: {{ orga.president.fullName }}</p>
+					<p class="muted asso-info">{{ 'assos.main.index.president'|trans }}: {{ orga.president.fullName }}</p>
 				{% endif %}
 
 				<p class="muted asso-info hidden-phone">{{ orga.descriptionShort }}</p>

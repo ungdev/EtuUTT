@@ -1,6 +1,6 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block title %}{{ 'base.user.menu.account'|trans }}{% endblock %}
+{% block title %}{{ 'user.profile.profile.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
 	<img src="{{ asset('img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -11,14 +11,14 @@
 
 		<p>
 			{% if app.user.profileCompletion == 100 %}
-				{{ 'user.profile.completed'|trans }}
+				{{ 'user.profile.profile.completed'|trans }}
 			{% else %}
-				{{ 'user.profile.completion'|trans({'%completion%': app.user.profileCompletion}) }}
+				{{ 'user.profile.profile.completion'|trans({'%completion%': app.user.profileCompletion}) }}
 			{% endif %}
 
 			<span class="pull-right hidden-for-phones">
 				<a href="{{ path('user_view', {'login': app.user.login}) }}?from=profile">
-					{{ 'user.profile.viewPublic'|trans }}
+					{{ 'user.profile.profile.viewPublic'|trans }}
 				</a>
 			</span>
 		</p>
@@ -35,24 +35,24 @@
 
 		<div class="display-for-phones">
 			<a href="{{ path('user_view', {'login': app.user.login}) }}?from=profile">
-				{{ 'user.profile.viewPublic'|trans }}
+				{{ 'user.profile.profile.viewPublic'|trans }}
 			</a>
 		</div>
 
 		<div class="row-fluid">
 			<div class="span6 block">
-				<div class="block-title">{{ 'user.profile.titles.informations'|trans }}</div>
+				<div class="block-title">{{ 'user.profile.profile.informations'|trans }}</div>
 
 				<div class="subblock subblock-first">
 					<div class="profile-infos-label hidden-for-phones">
-						{{ 'user.profileEdit.name'|trans }}
+						{{ 'user.profile.profile.name'|trans }}
 					</div>
 					<div class="profile-infos-value">{{ app.user.fullName }}</div>
 				</div>
 
 				<div class="subblock">
 					<div class="profile-infos-label hidden-for-phones">
-						{{ 'user.profileEdit.mail'|trans }}
+						{{ 'user.profile.profile.mail'|trans }}
 					</div>
 					<div class="profile-infos-value">{{ app.user.mail }}</div>
 				</div>
@@ -60,7 +60,7 @@
 				{% if app.user.sex %}
 					<div class="subblock">
 						<div class="profile-infos-label hidden-for-phones">
-							{{ 'user.profileEdit.sex'|trans }}
+							{{ 'user.profile.profile.sex'|trans }}
 						</div>
 						<div class="profile-infos-value">
 							{{ ('base.user.sex.'~app.user.sex)|trans }}
@@ -78,7 +78,7 @@
 				{% if app.user.personnalMail %}
 					<div class="subblock">
 						<div class="profile-infos-label hidden-for-phones">
-							{{ 'user.profileEdit.personnalMail'|trans }}
+							{{ 'user.profile.profile.personnalMail'|trans }}
 						</div>
 						<div class="profile-infos-value">
 							{{ app.user.personnalMail }}
@@ -95,7 +95,7 @@
 				{% if app.user.phoneNumber %}
 					<div class="subblock">
 						<div class="profile-infos-label hidden-for-phones">
-							{{ 'user.profileEdit.phoneNumber'|trans }}
+							{{ 'user.profile.profile.phoneNumber'|trans }}
 						</div>
 						<div class="profile-infos-value">
 							{{ app.user.phoneNumber }}
@@ -113,7 +113,7 @@
 				{% if app.user.adress %}
 					<div class="subblock">
 						<div class="profile-infos-label hidden-for-phones">
-							{{ 'user.profileEdit.adress'|trans }}
+							{{ 'user.profile.profile.adress'|trans }}
 						</div>
 						<div class="profile-infos-value">
 							{{ app.user.adress }}
@@ -154,7 +154,7 @@
 				{% if app.user.birthday %}
 					<div class="subblock">
 						<div class="profile-infos-label hidden-for-phones">
-							{{ 'user.profileEdit.birthday'|trans }}
+							{{ 'user.profile.profile.birthday'|trans }}
 						</div>
 						<div class="profile-infos-value">
 							{{ app.user.birthday|date('d/m/Y') }}
@@ -165,7 +165,7 @@
 								<i class="icon-globe" title="{{ 'user.privacy.public'|trans }}"></i>
 							{% endif %}
 
-							({{ 'user.profile.age'|trans({'%age%': app.user.age}) }}
+							({{ 'user.profile.profile.age'|trans({'%age%': app.user.age}) }}
 
 							{% if is_private(app.user.birthdayPrivacy) and not app.user.birthdayDisplayOnlyAge %}
 								<i class="icon-lock" title="{{ 'user.privacy.private'|trans }}"></i>
@@ -179,13 +179,13 @@
 
 				<p class="profile-block-action">
 					<a href="{{ path('user_profile_edit') }}" class="btn">
-						{{ 'user.profile.edit'|trans }}
+						{{ 'user.profile.profile.edit'|trans }}
 					</a>
 				</p>
 			</div>
 
 			<div class="span6 block">
-				<div class="block-title">{{ 'user.profile.titles.trombi'|trans }}</div>
+				<div class="block-title">{{ 'user.profile.profile.trombi'|trans }}</div>
 
 				{% set first = true %}
 
@@ -194,7 +194,7 @@
 
 					<div class="subblock subblock-first">
 						<div class="profile-infos-label hidden-for-phones">
-							{{ 'user.profile.surnom'|trans }}
+							{{ 'user.profile.profile.surname'|trans }}
 						</div>
 						<div class="profile-infos-value">
 							{{ app.user.surnom }}
@@ -213,7 +213,7 @@
 					{% endif %}
 
 						<div class="profile-infos-label hidden-for-phones">
-							{{ 'user.profile.jadis'|trans }}
+							{{ 'user.profile.profile.jadis'|trans }}
 						</div>
 						<div class="profile-infos-value">
 							{{ app.user.jadis|limit(100) }}
@@ -232,7 +232,7 @@
 					{% endif %}
 
 						<div class="profile-infos-label hidden-for-phones">
-							{{ 'user.profile.passions'|trans }}
+							{{ 'user.profile.profile.passions'|trans }}
 						</div>
 						<div class="profile-infos-value">
 							{{ app.user.passions|limit(100) }}
@@ -244,27 +244,26 @@
 
 				{% if not app.user.surnom and not app.user.jadis and not app.user.passions %}
 					<div class="subblock subblock-first">
-						Vous n'avez pas encore personnalisé votre fiche trominoscope.
-						N'hésitez pas à le faire dès que possible !
+						{{ 'user.profile.profile.trombi_not_customized'|trans }}
 					</div>
 				{% endif %}
 
 				<p class="profile-block-action">
 					<a href="{{ path('user_trombi_edit') }}" class="btn">
-						{{ 'user.profile.edit'|trans }}
+						{{ 'user.profile.profile.edit'|trans }}
 					</a>
 				</p>
 			</div>
 		</div>
 
 		<div class="block">
-			<div class="block-title">{{ 'user.profile.titles.badges'|trans }}</div>
+			<div class="block-title">{{ 'user.profile.profile.badges'|trans }}</div>
 
 			<ul>
 			{% for badge in app.user.badges %}
 				<li>{{ badge }}</li>
 			{% else %}
-				<li>Aucun badge pour le moment. Participez pour en gagner !</li>
+				<li>{{ 'user.profile.profile.no_badge'|trans }}</li>
 			{% endfor %}
 			</ul>
 		</div>

@@ -1,6 +1,6 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block title %}{{ 'orga.logoUpload.title'|trans }}{% endblock %}
+{% block title %}{{ 'user.orga.avatar.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
 	<img src="{{ asset('img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -11,7 +11,7 @@
 		<li>
 			<a href="{{ path('orga_admin') }}">
 				<i class="icon-chevron-left"></i>
-				{{ 'orga.logoUpload.back'|trans }}
+				{{ 'user.orga.avatar.back'|trans }}
 			</a>
 		</li>
 	</ul>
@@ -24,7 +24,7 @@
 
 			<p>
 				<br />
-				<label>{{ form_label(form.file, 'orga.logoUpload.file'|trans) }}</label>
+				<label>{{ form_label(form.file, 'user.orga.avatar.file'|trans) }}</label>
 				{{ form_widget(form.file) }}
 				<br />
 				<span class="help-block">{{ form_errors(form.file) }}</span>
@@ -33,7 +33,7 @@
 			<div class="controls">
 				{{ form_rest(form) }}
 
-				<button type="submit" class="btn">{{ 'orga.edit.submit'|trans }}</button>
+				<button type="submit" class="btn">{{ 'user.orga.avatar.submit'|trans }}</button>
 			</div>
 		</form>
 	</div>

@@ -1,6 +1,6 @@
 {% extends 'EtuCoreBundle:Admin:layout.html.twig' %}
 
-{% block title %}{{ 'admin.user.index.title'|trans }}{% endblock %}
+{% block title %}{{ 'user.admin.userIndex.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
 	<img src="{{ asset('img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -15,13 +15,13 @@
 	<div class="trombi-search-box">
 		<form method="get" action="{{ path('admin_users_index') }}">
 			<h4 class="pull-left">
-				{{ 'trombi.main.index.search_title'|trans }}
+				{{ 'user.admin.userIndex.search_title'|trans }}
 			</h4>
 
 			<p class="pull-right padding10-all">
 				<a href="{{ path('admin_user_create') }}" class="btn btn-primary">
 					<i class="icon-plus icon-white"></i>
-					Créer un utilisateur
+					{{ 'user.admin.userIndex.create'|trans }}
 				</a>
 			</p>
 
@@ -31,14 +31,14 @@
 				<div class="span4">
 					<div class="form-vertical">
 						<div class="control-group">
-							{{ form_label(form.fullName, 'trombi.main.index.name'|trans) }}
+							{{ form_label(form.fullName, 'user.admin.userIndex.name'|trans) }}
 							<div class="controls">
 								{{ form_widget(form.fullName) }}
 							</div>
 							<span class="help-block">{{ form_errors(form.fullName) }}</span>
 						</div>
 						<div class="control-group">
-							{{ form_label(form.uvs, 'trombi.main.index.uv'|trans) }}
+							{{ form_label(form.uvs, 'user.admin.userIndex.uv'|trans) }}
 							<div class="controls">
 								{{ form_widget(form.uvs) }}
 							</div>
@@ -49,14 +49,14 @@
 				<div class="span4 hidden-phone">
 					<div class="form-vertical">
 						<div class="control-group">
-							{{ form_label(form.studentId, 'trombi.main.index.studentId'|trans) }}
+							{{ form_label(form.studentId, 'user.admin.userIndex.studentId'|trans) }}
 							<div class="controls">
 								{{ form_widget(form.studentId) }}
 							</div>
 							<span class="help-block">{{ form_errors(form.studentId) }}</span>
 						</div>
 						<div class="control-group">
-							{{ form_label(form.filiere, 'trombi.main.index.branche'|trans) }}
+							{{ form_label(form.filiere, 'user.admin.userIndex.branche'|trans) }}
 							<div class="controls">
 								{{ form_widget(form.filiere, {'attr': {'class': 'span4'} }) }}
 								{{ form_widget(form.niveau, {'attr': {'class': 'span4'} }) }}
@@ -71,14 +71,14 @@
 				<div class="span4 hidden-phone">
 					<div class="form-vertical">
 						<div class="control-group">
-							{{ form_label(form.phoneNumber, 'trombi.main.index.phone'|trans) }}
+							{{ form_label(form.phoneNumber, 'user.admin.userIndex.phone'|trans) }}
 							<div class="controls">
 								{{ form_widget(form.phoneNumber) }}
 							</div>
 							<span class="help-block">{{ form_errors(form.phoneNumber) }}</span>
 						</div>
 						<div class="control-group">
-							{{ form_label(form.personnalMail, 'trombi.main.index.personnalMail'|trans) }}
+							{{ form_label(form.personnalMail, 'user.admin.userIndex.personnalMail'|trans) }}
 							<div class="controls">
 								{{ form_widget(form.personnalMail) }}
 							</div>
@@ -90,7 +90,7 @@
 
 			<div class="trombi-search-submit">
 				{{ form_rest(form) }}
-				<button type="submit" class="btn">{{ 'trombi.main.index.search'|trans }}</button>
+				<button type="submit" class="btn">{{ 'user.admin.userIndex.search'|trans }}</button>
 			</div>
 		</form>
 	</div>
@@ -98,18 +98,18 @@
 	<div class="trombi-search-results">
 		{% if not search %}
 			<p id="explainations" class="muted trombi-search-explainations">
-				{{ 'trombi.main.index.explainations'|trans }}
+				{{ 'user.admin.userIndex.explainations'|trans }}
 			</p>
 		{% elseif pagination.count == 0 %}
 			<p class="muted trombi-search-explainations">
-				{{ 'trombi.main.index.no_results'|trans }}
+				{{ 'user.admin.userIndex.no_results'|trans }}
 			</p>
 		{% else %}
 			{# display navigation #}
 			<div class="navigation">
 				<br />
 				<p>
-					{{ 'trombi.main.index.count'|transchoice(pagination.totalItemCount, {'%count%': pagination.totalItemCount}) }}
+					{{ 'user.admin.userIndex.count'|transchoice(pagination.totalItemCount, {'%count%': pagination.totalItemCount}) }}
 				</p>
 				{{ knp_pagination_render(pagination) }}
 			</div>

@@ -1,6 +1,6 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block title %}{{ 'user.profile.titles.trombi'|trans }}{% endblock %}
+{% block title %}{{ 'user.profile.trombiEdit.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
 	<img src="{{ asset('img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -30,7 +30,7 @@
 		<li>
 			<a href="{{ path('user_profile') }}">
 				<i class="icon-chevron-left"></i>
-				Retour sur mon compte
+				{{ 'user.profile.trombiEdit.back'|trans }}
 			</a>
 		</li>
 	</ul>
@@ -41,21 +41,21 @@
 
 			<div class="form-horizontal">
 				<div class="control-group">
-					<label class="control-label">{{ form_label(form.surnom, 'user.trombiEdit.surnom'|trans) }}</label>
+					<label class="control-label">{{ form_label(form.surnom, 'user.profile.trombiEdit.surnom'|trans) }}</label>
 					<div class="controls">
 						{{ form_widget(form.surnom) }}
 						<span class="help-block">{{ form_errors(form.surnom) }}</span>
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label">{{ form_label(form.jadis, 'user.trombiEdit.jadis'|trans) }}</label>
+					<label class="control-label">{{ form_label(form.jadis, 'user.profile.trombiEdit.jadis'|trans) }}</label>
 					<div class="controls">
 						{{ form_widget(form.jadis) }}
 						<span class="help-block">{{ form_errors(form.jadis) }}</span>
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label">{{ form_label(form.passions, 'user.trombiEdit.passions'|trans) }}</label>
+					<label class="control-label">{{ form_label(form.passions, 'user.profile.trombiEdit.passions'|trans) }}</label>
 					<div class="controls">
 						{{ form_widget(form.passions) }}
 						<span class="help-block">{{ form_errors(form.passions) }}</span>
@@ -65,7 +65,7 @@
 					<div class="controls">
 						{{ form_rest(form) }}
 
-						<button type="submit" class="btn">{{ 'user.profile.edit'|trans }}</button>
+						<button type="submit" class="btn">{{ 'user.profile.trombiEdit.edit'|trans }}</button>
 					</div>
 				</div>
 			</div>

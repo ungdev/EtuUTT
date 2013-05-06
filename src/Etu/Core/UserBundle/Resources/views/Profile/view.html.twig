@@ -1,6 +1,6 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block title %}{{ 'user.view.title'|trans }}{% endblock %}
+{% block title %}{{ 'user.profile.view.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
 	<img src="{{ asset('img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -12,7 +12,7 @@
 			<li>
 				<a href="">
 					<i class="icon-chevron-left"></i>
-					{{ 'user.view.back.search'|trans }}
+					{{ 'user.profile.view.back_search'|trans }}
 				</a>
 			</li>
 		</ul>
@@ -21,7 +21,7 @@
 			<li>
 				<a href="{{ path('user_profile') }}">
 					<i class="icon-chevron-left"></i>
-					{{ 'user.view.back.profile'|trans }}
+					{{ 'user.profile.view.back_profile'|trans }}
 				</a>
 			</li>
 		</ul>
@@ -30,7 +30,7 @@
 			<li>
 				<a href="{{ path('trombi_index') }}">
 					<i class="icon-chevron-left"></i>
-					{{ 'user.view.back.trombi'|trans }}
+					{{ 'user.profile.view.back_trombi'|trans }}
 				</a>
 			</li>
 		</ul>
@@ -39,7 +39,7 @@
 			<li>
 				<a href="{{ path('admin_users_index') }}">
 					<i class="icon-chevron-left"></i>
-					Administration
+					{{ 'user.profile.view.back_admin'|trans }}
 				</a>
 			</li>
 		</ul>
@@ -57,27 +57,27 @@
 				<div class="hidden-for-phones">
 					{% if app.user.isAdmin %}
 						<p>
-							<strong>{{ 'admin.user.view.admin'|trans }}</strong>
+							<strong>{{ 'user.profile.view.admin'|trans }}</strong>
 						</p>
 						<p>
 							<a href="{{ path('admin_user_edit', {'login': user.login}) }}" class="btn btn-small">
-								Modifier
+								{{ 'user.profile.view.admin_edit'|trans }}
 							</a>
 							<a href="{{ path('admin_user_delete', {'login': user.login}) }}" class="btn btn-small">
-								Supprimer
+								{{ 'user.profile.view.admin_delete'|trans }}
 							</a>
 						</p>
 						<p>
 							<a href="{{ path('admin_user_permissions', {'login': user.login}) }}" class="btn btn-small">
-								Modifier ses permissions
+								{{ 'user.profile.view.admin_permissions'|trans }}
 							</a>
 						</p>
 						<p>
 							<a href="{{ path('admin_user_toggle_readonly', {'login': user.login}) }}" class="btn btn-small">
 								{% if user.isReadOnly %}
-									Désactiver la lecture seule
+									{{ 'user.profile.view.admin_disable_readonly'|trans }}
 								{% else %}
-									Activer la lecture seule
+									{{ 'user.profile.view.admin_enable_readonly'|trans }}
 								{% endif %}
 							</a>
 						</p>
@@ -85,35 +85,35 @@
 
 					{% if user.website %}
 						<p>
-							<strong>{{ 'user.view.website'|trans }}</strong><br />
+							<strong>{{ 'user.profile.view.website'|trans }}</strong><br />
 							{{ user.website }}
 						</p>
 					{% endif %}
 
 					{% if user.facebook %}
 						<p>
-							<strong>{{ 'user.view.facebook'|trans }}</strong><br />
+							<strong>{{ 'user.profile.view.facebook'|trans }}</strong><br />
 							{{ user.facebook }}
 						</p>
 					{% endif %}
 
 					{% if user.twitter %}
 						<p>
-							<strong>{{ 'user.view.twitter'|trans }}</strong><br />
+							<strong>{{ 'user.profile.view.twitter'|trans }}</strong><br />
 							{{ user.twitter }}
 						</p>
 					{% endif %}
 
 					{% if user.linkedin %}
 						<p>
-							<strong>{{ 'user.view.linkedin'|trans }}</strong><br />
+							<strong>{{ 'user.profile.view.linkedin'|trans }}</strong><br />
 							{{ user.linkedin }}
 						</p>
 					{% endif %}
 
 					{% if user.viadeo %}
 						<p>
-							<strong>{{ 'user.view.viadeo'|trans }}</strong><br />
+							<strong>{{ 'user.profile.view.viadeo'|trans }}</strong><br />
 							{{ user.viadeo }}
 						</p>
 					{% endif %}
@@ -123,7 +123,7 @@
 			<div class="span9">
 				<div class="view-group view-group-first">
 					<div class="view-icon"><i class="icon-user"></i></div>
-					<div class="view-label">{{ 'user.view.name'|trans }}</div>
+					<div class="view-label">{{ 'user.profile.view.name'|trans }}</div>
 					<div class="view-value">
 						{{ user.fullName }}
 					</div>
@@ -132,7 +132,7 @@
 				{% if user.studentId %}
 				<div class="view-group">
 					<div class="view-icon"><i class="icon-barcode"></i></div>
-					<div class="view-label">{{ 'user.view.studentId'|trans }}</div>
+					<div class="view-label">{{ 'user.profile.view.studentId'|trans }}</div>
 					<div class="view-value">
 						{{ user.studentId  }}
 					</div>
@@ -142,7 +142,7 @@
 				{% if user.mail %}
 					<div class="view-group">
 						<div class="view-icon"><i class="icon-envelope"></i></div>
-						<div class="view-label">{{ 'user.view.mail'|trans }}</div>
+						<div class="view-label">{{ 'user.profile.view.mail'|trans }}</div>
 						<div class="view-value">
 							{{ user.mail }}
 						</div>
@@ -151,7 +151,7 @@
 
 				{% if user.uvs %}
 					<div class="view-group">
-						<div class="view-label">{{ 'user.view.uvs'|trans }}</div>
+						<div class="view-label">{{ 'user.profile.view.uvs'|trans }}</div>
 						<div class="view-value">
 							{% if etu.modules.isEnabled('uv') %}
 								{% for uv in user.uvsList %}{% if loop.index > 1 %}, {% endif %}<a href="">{{ uv }}</a>{% endfor %}
@@ -164,7 +164,7 @@
 
 				{% if is_public(user.phoneNumberPrivacy) and user.phoneNumber %}
 					<div class="view-group">
-						<div class="view-label">{{ 'user.view.phoneNumber'|trans }}</div>
+						<div class="view-label">{{ 'user.profile.view.phoneNumber'|trans }}</div>
 						<div class="view-value">
 							{{ user.phoneNumber }}
 						</div>
@@ -174,7 +174,7 @@
 				{% if is_public(user.personnalMailPrivacy) and user.personnalMail %}
 					<div class="view-group">
 						<div class="view-icon"><i class="icon-envelope"></i></div>
-						<div class="view-label">{{ 'user.view.personnalMail'|trans }}</div>
+						<div class="view-label">{{ 'user.profile.view.personnalMail'|trans }}</div>
 						<div class="view-value">
 							{{ user.personnalMail }}
 						</div>
@@ -184,7 +184,7 @@
 				{% if user.niveau or user.filiere or user.formation %}
 				<div class="view-group">
 					<div class="view-icon"><i class="icon-book"></i></div>
-					<div class="view-label">{{ 'user.view.formation'|trans }}</div>
+					<div class="view-label">{{ 'user.profile.view.formation'|trans }}</div>
 					<div class="view-value">
 						{{ user.niveau }} {{ user.filiere }} ({{ user.formation }})
 					</div>
@@ -193,7 +193,7 @@
 
 				{% if is_public(user.sexPrivacy) and user.sex %}
 					<div class="view-group">
-						<div class="view-label">{{ 'user.view.sex'|trans }}</div>
+						<div class="view-label">{{ 'user.profile.view.sex'|trans }}</div>
 						<div class="view-value">
 							{{ ('base.user.sex.'~user.sex)|trans }}
 						</div>
@@ -202,7 +202,7 @@
 
 				{% if is_public(user.nationalityPrivacy) and user.nationality %}
 					<div class="view-group">
-						<div class="view-label">{{ 'user.view.nationality'|trans }}</div>
+						<div class="view-label">{{ 'user.profile.view.nationality'|trans }}</div>
 						<div class="view-value">
 							{{ user.nationality }}
 						</div>
@@ -222,7 +222,7 @@
 				%}
 					<div class="view-group">
 						<div class="view-icon"><i class="icon-map-marker"></i></div>
-						<div class="view-label">{{ 'user.view.adress'|trans }}</div>
+						<div class="view-label">{{ 'user.profile.view.adress'|trans }}</div>
 						<div class="view-value">
 
 							{% if is_public(app.user.adressPrivacy) and user.adress %}
@@ -251,7 +251,7 @@
 				{% if is_public(user.birthdayPrivacy) and user.birthday %}
 					<div class="view-group">
 						<div class="view-icon"><i class="icon-map-marker"></i></div>
-						<div class="view-label">{{ 'user.view.birthday'|trans }}</div>
+						<div class="view-label">{{ 'user.profile.view.birthday'|trans }}</div>
 						<div class="view-value">
 							{{ user.birthday|date('d/m/Y') }}
 						</div>
@@ -259,7 +259,7 @@
 				{% elseif user.birthdayDisplayOnlyAge and user.birthday %}
 					<div class="view-group">
 						<div class="view-icon"><i class="icon-calendar"></i></div>
-						<div class="view-label">{{ 'user.view.age'|trans }}</div>
+						<div class="view-label">{{ 'user.profile.view.age'|trans }}</div>
 						<div class="view-value">
 							{{ 'user.profile.age'|trans({'%age%': user.age}) }}
 						</div>
@@ -268,7 +268,7 @@
 
 				{% if user.surnom %}
 					<div class="view-group">
-						<div class="view-label">{{ 'user.view.surnom'|trans }}</div>
+						<div class="view-label">{{ 'user.profile.view.surnom'|trans }}</div>
 						<div class="view-value">
 							{{ user.surnom }}
 						</div>
@@ -278,7 +278,7 @@
 				{% if user.jadis %}
 					<div class="view-group">
 						<div class="view-icon"><i class="icon-edit"></i></div>
-						<div class="view-label">{{ 'user.view.jadis'|trans }}</div>
+						<div class="view-label">{{ 'user.profile.view.jadis'|trans }}</div>
 						<div class="view-value">
 							{{ user.jadis|e|nl2br }}
 						</div>
@@ -288,7 +288,7 @@
 				{% if user.passions %}
 					<div class="view-group">
 						<div class="view-icon"><i class="icon-headphones"></i></div>
-						<div class="view-label">{{ 'user.view.passions'|trans }}</div>
+						<div class="view-label">{{ 'user.profile.view.passions'|trans }}</div>
 						<div class="view-value">
 							{{ user.passions|e|nl2br }}
 						</div>

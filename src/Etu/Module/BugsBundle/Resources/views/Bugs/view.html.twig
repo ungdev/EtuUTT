@@ -4,7 +4,7 @@
 	<link rel="stylesheet" href="{{ asset('css/bundles/bugs.css') }}" type="text/css" />
 {% endblock %}
 
-{% block title %}{{ 'bugs.view.page.title'|trans }}{% endblock %}
+{% block title %}{{ 'bugs.bugs.view.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
 	<img src="{{ asset('img/titles/bugs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -19,17 +19,19 @@
 {% block content %}
 	<ul class="nav nav-tabs page-tabs">
 		<li>
-			<a href="{{ path('bugs_index') }}">{{ 'bugs.index.page.opened'|trans }}</a>
+			<a href="{{ path('bugs_index') }}">{{ 'bugs.bugs.state.opened'|trans }}</a>
 		</li>
 		<li>
-			<a href="{{ path('bugs_closed') }}">{{ 'bugs.index.page.resolved'|trans }}</a>
+			<a href="{{ path('bugs_closed') }}">{{ 'bugs.bugs.state.resolved'|trans }}</a>
 		</li>
-		<li class="pull-right">
-			<a href="{{ path('bugs_create') }}">
-				<i class="icon-plus"></i>
-				{{ 'bugs.index.page.create'|trans }}
-			</a>
-		</li>
+		{% if app.user.hasPermission('bugs.add') %}
+			<li class="pull-right">
+				<a href="{{ path('bugs_create') }}">
+					<i class="icon-plus"></i>
+					{{ 'bugs.bugs.create.title'|trans }}
+				</a>
+			</li>
+		{% endif %}
 	</ul>
 
 	<div class="padding20-sides">
@@ -39,19 +41,19 @@
 
 			{% if bug.criticality == 'security' %}
 				<span class="label label-important">
-					{{ ('bugs.criticality.'~bug.criticality)|trans }}
+					{{ ('bugs.bugs.criticality.'~bug.criticality)|trans }}
 				</span>
 			{% elseif bug.criticality == 'critical' or bug.criticality == 'major' %}
 				<span class="label label-warning">
-					{{ ('bugs.criticality.'~bug.criticality)|trans }}
+					{{ ('bugs.bugs.criticality.'~bug.criticality)|trans }}
 				</span>
 			{% elseif bug.criticality == 'minor' %}
 				<span class="label label-info">
-					{{ ('bugs.criticality.'~bug.criticality)|trans }}
+					{{ ('bugs.bugs.criticality.'~bug.criticality)|trans }}
 				</span>
 			{% else %}
 				<span class="label">
-					{{ ('bugs.criticality.'~bug.criticality)|trans }}
+					{{ ('bugs.bugs.criticality.'~bug.criticality)|trans }}
 				</span>
 			{% endif %}
 		</h3>
@@ -60,19 +62,19 @@
 
 		{% if bug.assignee and bug.isOpen %}
 			<div class="alert alert-info">
-				{{ 'bugs.view.page.assigned_to'|trans({'%name%': bug.assignee.fullName}) }}
+				{{ 'bugs.bugs.view.assigned_to'|trans({'%name%': bug.assignee.fullName}) }}
 			</div>
 
 			<hr class="hidden-for-phones" />
 		{% elseif bug.assignee and not bug.isOpen %}
 			<div class="alert alert-success">
-				{{ 'bugs.view.page.resolved_by'|trans({'%name%': bug.assignee.fullName}) }}
+				{{ 'bugs.bugs.view.resolved_by'|trans({'%name%': bug.assignee.fullName}) }}
 			</div>
 
 			<hr class="hidden-for-phones" />
 		{% elseif not bug.isOpen %}
 			<div class="alert alert-success">
-				{{ 'bugs.view.page.resolved'|trans }}
+				{{ 'bugs.bugs.view.resolved'|trans }}
 			</div>
 
 			<hr class="hidden-for-phones" />
@@ -82,40 +84,40 @@
 			<div class="bugs-view-admin hidden-for-phones">
 				<div class="row-fluid">
 					<div class="span5">
-						<h5>{{ 'bugs.view.admin.assigne'|trans }}</h5>
+						<h5>{{ 'bugs.bugs.view.admin_assigne'|trans }}</h5>
 
 						{% if bug.assignee %}
 							<a href="{{ path('bugs_admin_unassign', {'id': bug.id, 'slug': bug.title|slugify}) }}">
-								{{ 'bugs.view.admin.unassign'|trans({'%name%': bug.assignee.fullName}) }}
+								{{ 'bugs.bugs.view.admin_unassign'|trans({'%name%': bug.assignee.fullName}) }}
 							</a>
 						{% else %}
 							<form method="post" action="{{ path('bugs_admin_assign', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="form-inline">
 								<input name="assignee" class="user-autocomplete" type="text" placeholder="{{ 'bugs.view.admin.assigne_placeholder'|trans }}" />
-								<button type="submit" class="btn">{{ 'bugs.view.admin.assigne'|trans }}</button>
+								<button type="submit" class="btn">{{ 'bugs.bugs.view.admin_assign'|trans }}</button>
 							</form>
 						{% endif %}
 					</div>
 
 					<div class="span5">
-						<h5>{{ 'bugs.view.admin.edit_criticality'|trans }}</h5>
+						<h5>{{ 'bugs.bugs.view.admin_edit_criticality'|trans }}</h5>
 
 						<form method="post" action="{{ path('bugs_admin_criticality', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="form-inline">
 							{{ form_widget(updateForm.criticality) }}
 							{{ form_rest(updateForm) }}
-							<button type="submit" class="btn">{{ 'bugs.view.admin.edit'|trans }}</button>
+							<button type="submit" class="btn">{{ 'bugs.bugs.view.admin_edit'|trans }}</button>
 						</form>
 					</div>
 
 					<div class="span2">
-						<h5>{{ 'bugs.view.admin.state'|trans }}</h5>
+						<h5>{{ 'bugs.bugs.view.admin_state'|trans }}</h5>
 
 						{% if bug.isOpen %}
 							<a href="{{ path('bugs_admin_close', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="btn">
-								{{ 'bugs.view.admin.fix'|trans }}
+								{{ 'bugs.bugs.view.admin_fix'|trans }}
 							</a>
 						{% else %}
 							<a href="{{ path('bugs_admin_open', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="btn">
-								{{ 'bugs.view.admin.unfix'|trans }}
+								{{ 'bugs.bugs.view.admin_unfix'|trans }}
 							</a>
 						{% endif %}
 					</div>
@@ -151,14 +153,14 @@
 							<a href="{{ path('bugs_edit', {'slug': bug.title|slugify, 'id': bug.id}) }}"
 							   class="btn btn-small">
 								<i class="icon-edit"></i>
-								{{ 'bugs.view.edit'|trans }}
+								{{ 'bugs.bugs.view.edit'|trans }}
 							</a>
 
 							{% if app.user.isAdmin %}
 								<a href="{{ path('bugs_admin_delete', {'slug': bug.title|slugify, 'id': bug.id}) }}"
 								   class="btn btn-small">
 									<i class="icon-remove"></i>
-									{{ 'bugs.view.delete'|trans }}
+									{{ 'bugs.bugs.view.delete'|trans }}
 								</a>
 							{% endif %}
 						</p>
@@ -211,7 +213,7 @@
 									<a href="{{ path('bugs_edit_comment', {'issueId': bug.id, 'slug': bug.title|slugify, 'id': comment.id}) }}"
 									   class="btn btn-small">
 										<i class="icon-edit"></i>
-										{{ 'bugs.view.edit'|trans }}
+										{{ 'bugs.bugs.view.edit'|trans }}
 									</a>
 								</p>
 							{% endif %}
@@ -228,16 +230,16 @@
 
 		{% if app.user.hasPermission('bugs.add') %}
 			<div class="bugs-view-comment">
-				<h4>{{ 'bugs.view.comment.comment'|trans }}</h4>
+				<h4>{{ 'bugs.bugs.view.comment_title'|trans }}</h4>
 
 				<form method="post">
 					<div class="control-group">
-						<div class="hidden">{{ form_label(form.body, 'bugs.view.comment.body'|trans) }}</div>
+						<div class="hidden">{{ form_label(form.body, 'bugs.bugs.view.comment_body'|trans) }}</div>
 						<div>{{ form_widget(form.body, {'attr': {'class': 'bugs-view-comment-textarea redactor'}}) }}</div>
 					</div>
 					<div class="control-group">
 						{{ form_rest(form) }}
-						<input type="submit" class="btn pull-right" value="{{ 'bugs.view.comment.comment'|trans }}" />
+						<input type="submit" class="btn pull-right" value="{{ 'bugs.bugs.view.comment_submit'|trans }}" />
 					</div>
 				</form>
 			</div>

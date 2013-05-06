@@ -12,10 +12,11 @@ use Etu\Module\BugsBundle\Entity\Issue;
 
 use Doctrine\ORM\EntityManager;
 
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * @Route("/bugs")
@@ -154,7 +155,7 @@ class BugsController extends Controller
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'bugs.view.message.creation'
+				'message' => 'bugs.bugs.view.comment_confirm'
 			));
 
 			return $this->redirect($this->generateUrl('bugs_view', array(
@@ -240,7 +241,7 @@ class BugsController extends Controller
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'bugs.create.confirm'
+				'message' => 'bugs.bugs.create.confirm'
 			));
 
 			return $this->redirect($this->generateUrl('bugs_view', array(
@@ -326,7 +327,7 @@ class BugsController extends Controller
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'bugs.create.confirm'
+				'message' => 'bugs.bugs.edit.confirm'
 			));
 
 			return $this->redirect($this->generateUrl('bugs_view', array(

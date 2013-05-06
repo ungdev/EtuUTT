@@ -65,7 +65,7 @@ class BugsAdminController extends Controller
 		if (! $assignee) {
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'error',
-				'message' => 'bugs.admin.assign.assignee_not_found'
+				'message' => 'bugs.bugs_admin.assign.assignee_not_found'
 			));
 		} else {
 			$bug->setAssignee($assignee);
@@ -78,7 +78,7 @@ class BugsAdminController extends Controller
 			$comment->setIssue($bug);
 			$comment->setUser($this->getUser());
 			$comment->setBody(
-				$this->get('translator')->trans('bugs.admin.assign.message', array(
+				$this->get('translator')->trans('bugs.bugs_admin.assign.message', array(
 					'%adminName%' => $this->getUser()->getFullName(),
 					'%userName%' => $assignee->getFullName()
 				))
@@ -89,7 +89,7 @@ class BugsAdminController extends Controller
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'bugs.admin.assign.success'
+				'message' => 'bugs.bugs_admin.assign.success'
 			));
 		}
 
@@ -144,7 +144,7 @@ class BugsAdminController extends Controller
 		$comment->setIssue($bug);
 		$comment->setUser($this->getUser());
 		$comment->setBody(
-			$this->get('translator')->trans('bugs.admin.unassign.message', array(
+			$this->get('translator')->trans('bugs.bugs_admin.unassign.message', array(
 				'%adminName%' => $this->getUser()->getFullName(),
 				'%userName%' => $assignee->getFullName()
 			))
@@ -156,7 +156,7 @@ class BugsAdminController extends Controller
 
 		$this->get('session')->getFlashBag()->set('message', array(
 			'type' => 'success',
-			'message' => 'bugs.admin.unassign.success'
+			'message' => 'bugs.bugs_admin.unassign.success'
 		));
 
 		return $this->redirect($this->generateUrl('bugs_view', array(
@@ -255,7 +255,7 @@ class BugsAdminController extends Controller
 			$comment->setIssue($bug);
 			$comment->setUser($this->getUser());
 			$comment->setBody(
-				$this->get('translator')->trans('bugs.admin.criticality.message', array(
+				$this->get('translator')->trans('bugs.bugs_admin.criticality.message', array(
 					'%adminName%' => $this->getUser()->getFullName(),
 					'%before%' => $before,
 					'%after%' => $after
@@ -268,7 +268,7 @@ class BugsAdminController extends Controller
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'bugs.admin.criticality.success'
+				'message' => 'bugs.bugs_admin.criticality.success'
 			));
 		}
 
@@ -319,7 +319,7 @@ class BugsAdminController extends Controller
 		$comment->setIssue($bug);
 		$comment->setUser($this->getUser());
 		$comment->setBody(
-			$this->get('translator')->trans('bugs.admin.close.message', array(
+			$this->get('translator')->trans('bugs.bugs_admin.close.message', array(
 				'%adminName%' => $this->getUser()->getFullName()
 			))
 		);
@@ -330,7 +330,7 @@ class BugsAdminController extends Controller
 
 		$this->get('session')->getFlashBag()->set('message', array(
 			'type' => 'success',
-			'message' => 'bugs.admin.close.success'
+			'message' => 'bugs.bugs_admin.close.success'
 		));
 
 		return $this->redirect($this->generateUrl('bugs_view', array(
@@ -380,7 +380,7 @@ class BugsAdminController extends Controller
 		$comment->setIssue($bug);
 		$comment->setUser($this->getUser());
 		$comment->setBody(
-			$this->get('translator')->trans('bugs.admin.open.message', array(
+			$this->get('translator')->trans('bugs.bugs_admin.open.message', array(
 				'%adminName%' => $this->getUser()->getFullName()
 			))
 		);
@@ -391,7 +391,7 @@ class BugsAdminController extends Controller
 
 		$this->get('session')->getFlashBag()->set('message', array(
 			'type' => 'success',
-			'message' => 'bugs.admin.open.success'
+			'message' => 'bugs.bugs_admin.open.success'
 		));
 
 		return $this->redirect($this->generateUrl('bugs_view', array(

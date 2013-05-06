@@ -132,10 +132,10 @@
 						<div class="userbox-display-for-1024 display-for-1024">
 							{{ app.user.fullName }}<br />
 							<span class="color-soft">
-								{% if app.user.keepActive %}
-									{{ 'base.user.types.external'|trans }}
-								{% elseif app.user.isOrga %}
+								{% if app.user.isOrga %}
 									{{ 'base.user.types.orga'|trans }}
+								{% elseif app.user.keepActive %}
+									{{ 'base.user.types.external'|trans }}
 								{% elseif app.user.isStudent %}
 									{{ 'base.user.types.student'|trans }}
 								{% else %}
