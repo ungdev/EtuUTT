@@ -2,9 +2,9 @@ parameters:
     database_driver:   pdo_mysql
     database_host:     127.0.0.1
     database_port:     ~
-    database_name:     name
-    database_user:     user
-    database_password: password
+    database_name:     etuutt
+    database_user:     root
+    database_password: aqwxszedc
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
