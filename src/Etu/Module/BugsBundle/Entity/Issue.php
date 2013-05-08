@@ -97,13 +97,6 @@ class Issue
 	 */
 	protected $body;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="commit", type="string", length=255, nullable=true)
-	 */
-	protected $commit;
-
 
 	public function __construct()
 	{
@@ -204,17 +197,6 @@ class Issue
 	public function getCreatedAt()
 	{
 		return $this->createdAt;
-	}
-
-	/**
-	 * @param int $id
-	 * @return Issue
-	 */
-	public function setId($id)
-	{
-		$this->id = $id;
-
-		return $this;
 	}
 
 	/**
@@ -337,25 +319,6 @@ class Issue
 	public function getUser()
 	{
 		return $this->user;
-	}
-
-	/**
-	 * @param string $commit
-	 * @return Issue
-	 */
-	public function setCommit($commit)
-	{
-		$this->commit = $commit;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getCommit()
-	{
-		return $this->commit;
 	}
 
 	/**

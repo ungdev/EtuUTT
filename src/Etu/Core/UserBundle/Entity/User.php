@@ -3,6 +3,9 @@
 namespace Etu\Core\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Etu\Core\CoreBundle\Framework\Definition\Permission;
+use Etu\Core\CoreBundle\Framework\EtuKernel;
+use Etu\Core\CoreBundle\Framework\Module\PermissionsCollection;
 use Etu\Core\UserBundle\Collection\UserOptionsCollection;
 use Etu\Core\UserBundle\Ldap\Model\User as LdapUser;
 use Imagine\Gd\Image;
@@ -1352,6 +1355,14 @@ class User implements UserInterface, \Serializable
 	{
 		if ($this->isAdmin) {
 			return true;
+		}
+
+		if (EtuKernel::getFrozenPermissions() instanceof PermissionsCollection) {
+			$permission = EtuKernel::getFrozenPermissions()->get($permissionName);
+
+			if ($permission instanceof Permission) {
+				$defaultEnabled = $permission->getDefaultEnabled();
+			}
 		}
 
 		if (! $defaultEnabled) {

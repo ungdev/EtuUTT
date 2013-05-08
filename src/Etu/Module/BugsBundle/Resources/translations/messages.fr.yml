@@ -24,6 +24,7 @@ bugs:
         create:
             title: Signaler un bug
             confirm: Votre problème a été signalé. Merci de votre participation !
+            name: Titre
             criticality: Criticité
             body: Explications
             submit: Signaler
@@ -48,8 +49,8 @@ bugs:
             resolved: Ce bug a été résolu
             resolved_by: Ce bug a été résolu par %name%
             admin_title: Administrer
-            admin_assigne: Assigner
-            admin_assigne_placeholder: Assigner à ...
+            admin_assign: Assigner
+            admin_assign_placeholder: Assigner à ...
             admin_unassign: Supprimer l'assignation de %name%
             admin_edit_criticality: Modifier la criticité
             admin_edit: Modifier

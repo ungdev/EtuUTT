@@ -34,7 +34,7 @@
 		</p>
 		<p>
 			<a href="{{ path('bugs_admin_delete_confirm', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="btn btn-primary">
-				{{ 'bugs.bugs_adminn.delete.yes'|trans }}
+				{{ 'bugs.bugs_admin.delete.yes'|trans }}
 			</a>
 			<a href="{{ path('bugs_view', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="btn">
 				{{ 'bugs.bugs_admin.delete.no'|trans }}

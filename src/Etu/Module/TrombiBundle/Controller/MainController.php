@@ -172,7 +172,7 @@ class MainController extends Controller
 				->setParameter('isStudent', $search);
 		}
 
-		$users = $users->setMaxResults(1)->getQuery()->getArrayResult();
+		$users = $users->setMaxResults(20)->getQuery()->getArrayResult();
 
 		// Privacy
 		foreach ($users as &$user) {

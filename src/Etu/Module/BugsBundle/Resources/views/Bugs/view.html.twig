@@ -41,19 +41,19 @@
 
 			{% if bug.criticality == 'security' %}
 				<span class="label label-important">
-					{{ ('bugs.bugs.criticality.'~bug.criticality)|trans }}
+					{{ ('bugs.criticality.'~bug.criticality)|trans }}
 				</span>
 			{% elseif bug.criticality == 'critical' or bug.criticality == 'major' %}
 				<span class="label label-warning">
-					{{ ('bugs.bugs.criticality.'~bug.criticality)|trans }}
+					{{ ('bugs.criticality.'~bug.criticality)|trans }}
 				</span>
 			{% elseif bug.criticality == 'minor' %}
 				<span class="label label-info">
-					{{ ('bugs.bugs.criticality.'~bug.criticality)|trans }}
+					{{ ('bugs.criticality.'~bug.criticality)|trans }}
 				</span>
 			{% else %}
 				<span class="label">
-					{{ ('bugs.bugs.criticality.'~bug.criticality)|trans }}
+					{{ ('bugs.criticality.'~bug.criticality)|trans }}
 				</span>
 			{% endif %}
 		</h3>
@@ -84,7 +84,7 @@
 			<div class="bugs-view-admin hidden-for-phones">
 				<div class="row-fluid">
 					<div class="span5">
-						<h5>{{ 'bugs.bugs.view.admin_assigne'|trans }}</h5>
+						<h5>{{ 'bugs.bugs.view.admin_assign'|trans }}</h5>
 
 						{% if bug.assignee %}
 							<a href="{{ path('bugs_admin_unassign', {'id': bug.id, 'slug': bug.title|slugify}) }}">
@@ -92,7 +92,7 @@
 							</a>
 						{% else %}
 							<form method="post" action="{{ path('bugs_admin_assign', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="form-inline">
-								<input name="assignee" class="user-autocomplete" type="text" placeholder="{{ 'bugs.view.admin.assigne_placeholder'|trans }}" />
+								<input name="assignee" class="user-autocomplete" type="text" placeholder="{{ 'bugs.bugs.view.admin_assign_placeholder'|trans }}" />
 								<button type="submit" class="btn">{{ 'bugs.bugs.view.admin_assign'|trans }}</button>
 							</form>
 						{% endif %}

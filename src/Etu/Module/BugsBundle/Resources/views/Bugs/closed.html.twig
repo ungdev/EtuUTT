@@ -46,19 +46,19 @@
 
 					{% if bug.criticality == 'security' %}
 						<span class="label label-important pull-right hidden-phone">
-							{{ ('bugs.bugs.criticality.'~bug.criticality)|trans }}
+							{{ ('bugs.criticality.'~bug.criticality)|trans }}
 						</span>
 					{% elseif bug.criticality == 'critical' or bug.criticality == 'major' %}
 						<span class="label label-warning pull-right hidden-phone">
-							{{ ('bugs.bugs.criticality.'~bug.criticality)|trans }}
+							{{ ('bugs.criticality.'~bug.criticality)|trans }}
 						</span>
 					{% elseif bug.criticality == 'minor' %}
 						<span class="label label-info pull-right hidden-phone">
-							{{ ('bugs.bugs.criticality.'~bug.criticality)|trans }}
+							{{ ('bugs.criticality.'~bug.criticality)|trans }}
 						</span>
 					{% else %}
 						<span class="label pull-right hidden-phone">
-							{{ ('bugs.bugs.criticality.'~bug.criticality)|trans }}
+							{{ ('bugs.criticality.'~bug.criticality)|trans }}
 						</span>
 					{% endif %}
 				</h5>
@@ -76,19 +76,19 @@
 				<span class="pull-left visible-phone">
 					{% if bug.criticality == 'security' %}
 						<span class="label label-important pull-right">
-							{{ ('bugs.bugs.criticality.'~bug.criticality)|trans }}
+							{{ ('bugs.criticality.'~bug.criticality)|trans }}
 						</span>
 					{% elseif bug.criticality == 'critical' or bug.criticality == 'major' %}
 						<span class="label label-warning pull-right">
-							{{ ('bugs.bugs.criticality.'~bug.criticality)|trans }}
+							{{ ('bugs.criticality.'~bug.criticality)|trans }}
 						</span>
 					{% elseif bug.criticality == 'minor' %}
 						<span class="label label-info pull-right">
-							{{ ('bugs.bugs.criticality.'~bug.criticality)|trans }}
+							{{ ('bugs.criticality.'~bug.criticality)|trans }}
 						</span>
 					{% else %}
 						<span class="label pull-right">
-							{{ ('bugs.bugs.criticality.'~bug.criticality)|trans }}
+							{{ ('bugs.criticality.'~bug.criticality)|trans }}
 						</span>
 					{% endif %}
 				</span>

@@ -43,6 +43,8 @@ class ModulesBootListener
 		$this->router = $router;
 		$this->globalAccessorObject = $globalAccessorObject;
 		$this->container = $container;
+
+		$this->container->get('kernel')->freezePermissions();
 	}
 
 	/**

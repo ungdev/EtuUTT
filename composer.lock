@@ -857,12 +857,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "11726bd8753de1a402f80bfb671cd4437e2fcbbb"
+                "reference": "dc664b56423e9c14e3b4c9139b866f93669ed34a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/11726bd8753de1a402f80bfb671cd4437e2fcbbb",
-                "reference": "11726bd8753de1a402f80bfb671cd4437e2fcbbb",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/dc664b56423e9c14e3b4c9139b866f93669ed34a",
+                "reference": "dc664b56423e9c14e3b4c9139b866f93669ed34a",
                 "shasum": ""
             },
             "require": {
@@ -870,9 +870,6 @@
                 "friendsofsymfony/rest": ">=0.7.0,<0.9.0-dev",
                 "php": ">=5.3.2",
                 "symfony/framework-bundle": ">=2.1,<3.0"
-            },
-            "conflict": {
-                "jms/serializer-bundle": "<0.12-dev"
             },
             "require-dev": {
                 "jms/serializer-bundle": "0.12.*",
@@ -882,14 +879,14 @@
                 "symfony/yaml": ">=2.1,<3.0"
             },
             "suggest": {
-                "jms/serializer-bundle": "Add support for advanced serialization capabilities, recommended, requires 0.11.*",
+                "jms/serializer-bundle": "Add support for advanced serialization capabilities, recommended, requires 0.12.*",
                 "sensio/framework-extra-bundle": "Add support for route annotations and the view response listener",
                 "symfony/serializer": "Add support for basic serialization capabilities, requires >=2.0,<2.3-dev"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.12.x-dev"
+                    "dev-master": "0.13.x-dev"
                 }
             },
             "autoload": {
@@ -921,7 +918,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2013-05-03 10:43:04"
+            "time": "2013-05-06 10:36:01"
         },
         {
             "name": "imagine/imagine",

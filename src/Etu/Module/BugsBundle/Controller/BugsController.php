@@ -12,7 +12,7 @@ use Etu\Module\BugsBundle\Entity\Issue;
 
 use Doctrine\ORM\EntityManager;
 
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -191,8 +191,12 @@ class BugsController extends Controller
 	 */
 	public function createAction()
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('bugs.add')) {
+		if (! $this->getUserLayer()->isUser()) {
 			return $this->createAccessDeniedResponse();
+		}
+
+		if (! $this->getUser()->hasPermission('bugs.add')) {
+			throw new AccessDeniedHttpException('Vous n\'avez pas la permission nécessaire pour signaler un problème.');
 		}
 
 		$bug = new Issue();
@@ -289,7 +293,7 @@ class BugsController extends Controller
 		}
 
 		if ($bug->getUser()->getId() != $this->getUser()->getId() && ! $this->getUser()->getIsAdmin()) {
-			throw new AccessDeniedException('You are not allowed to edit this bug.');
+			throw new AccessDeniedHttpException('Vous n\'avez pas le droit de modifier ce signalement.');
 		}
 
 		$form = $this->createFormBuilder($bug)
@@ -349,7 +353,7 @@ class BugsController extends Controller
 	 * )
 	 * @Template()
 	 */
-	public function editCommentAction($id)
+	public function editCommentAction($slug, $id)
 	{
 		if (! $this->getUserLayer()->isUser()) {
 			return $this->createAccessDeniedResponse();
@@ -374,8 +378,12 @@ class BugsController extends Controller
 			throw $this->createNotFoundException('Comment #'.$id.' not found');
 		}
 
+		if (StringManipulationExtension::slugify($comment->getIssue()->getTitle()) != $slug) {
+			throw $this->createNotFoundException('Invalid slug');
+		}
+
 		if ($comment->getUser()->getId() != $this->getUser()->getId() && ! $this->getUser()->getIsAdmin()) {
-			throw new AccessDeniedException('You are not allowed to edit this comment.');
+			throw new AccessDeniedHttpException('Vous n\'avez pas le droit de modifier ce commentaire.');
 		}
 
 		$form = $this->createFormBuilder($comment)

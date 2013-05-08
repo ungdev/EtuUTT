@@ -21,6 +21,11 @@ abstract class EtuKernel extends Kernel
 	protected $modules = array();
 
 	/**
+	 * @var PermissionsCollection
+	 */
+	protected static $_availablePermissions;
+
+	/**
 	 * Check the modules set integrity using the requirements of each module.
 	 */
 	public function checkModulesIntegrity()
@@ -72,5 +77,21 @@ abstract class EtuKernel extends Kernel
 		}
 
 		return new PermissionsCollection($permissions);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function freezePermissions()
+	{
+		self::$_availablePermissions = $this->getAvailablePermissions();
+	}
+
+	/**
+	 * @return PermissionsCollection
+	 */
+	public static function getFrozenPermissions()
+	{
+		return self::$_availablePermissions;
 	}
 }

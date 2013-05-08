@@ -2,14 +2,23 @@
 
 namespace Etu\Core\UserBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Core\UserBundle\Entity\User;
 
-class LoadUsersData implements FixtureInterface
+class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
 {
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getOrder()
+	{
+		return 1;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -49,8 +58,8 @@ class LoadUsersData implements FixtureInterface
 
 		$manager->flush();
 
-		$GLOBALS['etu.test.admin'] = $admin;
-		$GLOBALS['etu.test.user'] = $user;
-		$GLOBALS['etu.test.orga'] = $orga;
+		$this->addReference('user_admin', $admin);
+		$this->addReference('user_user', $user);
+		$this->addReference('user_orga', $orga);
 	}
 }
