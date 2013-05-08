@@ -857,12 +857,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "dc664b56423e9c14e3b4c9139b866f93669ed34a"
+                "reference": "06f1a901dd6d4e674d818312687d81dbf466b9ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/dc664b56423e9c14e3b4c9139b866f93669ed34a",
-                "reference": "dc664b56423e9c14e3b4c9139b866f93669ed34a",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/06f1a901dd6d4e674d818312687d81dbf466b9ba",
+                "reference": "06f1a901dd6d4e674d818312687d81dbf466b9ba",
                 "shasum": ""
             },
             "require": {
@@ -918,7 +918,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2013-05-06 10:36:01"
+            "time": "2013-05-08 11:55:30"
         },
         {
             "name": "imagine/imagine",
