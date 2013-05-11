@@ -137,7 +137,7 @@ user:
             title: Mon profil
             edit: Modifier
             completed: Votre profil est complet. Merci de votre participation !
-            completion: Votre profil est complété à %completion% %. Complètez-le entièrement pour obtenir un badge !
+            completion: Votre profil est incomplet. Complètez-le entièrement pour obtenir un badge !
             viewPublic: Voir mon profil public
             informations: Mes informations
             name: Nom

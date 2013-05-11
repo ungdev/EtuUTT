@@ -74,7 +74,7 @@ class MainControllerTest extends WebTestCase
 		$link = $crawler->selectLink('English')->link();
 		$crawler = $client->click($link);
 
-		$this->assertGreaterThan(0, $crawler->filter('title:contains("Student website of UTT")')->count());
+		$this->assertGreaterThan(0, $crawler->filter('title:contains("student website")')->count());
 	}
 
 	public function testChangeLocaleFromEnglish()
@@ -87,7 +87,7 @@ class MainControllerTest extends WebTestCase
 
 		$crawler = $client->request('GET', '/');
 
-		$this->assertGreaterThan(0, $crawler->filter('title:contains("Student website of UTT")')->count());
+		$this->assertGreaterThan(0, $crawler->filter('title:contains("student website")')->count());
 
 		$link = $crawler->selectLink('Français')->link();
 		$crawler = $client->click($link);

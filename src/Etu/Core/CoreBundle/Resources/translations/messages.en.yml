@@ -1,3 +1,92 @@
 
-base:
-    title: Student website of UTT
+core:
+    admin:
+        index:
+            title: Dashboard
+            server_load: Load server
+        modules:
+            title: Modules
+            name: Name
+            author: Author
+            description: Description
+            is_not_ready: This module is not ready to be used
+            enable_disable: Enable/disable
+            confirm: You have successfully changed the modules
+        pageCreate:
+            title: Create a page
+            name: Title
+            content: Content
+            submit: Create
+            confirm: You have successfully created the page
+        pageDelete:
+            title: Delete a page
+            question: Are you sure you want to delete the page "%title%" ?
+            yes: Yes, delete
+            no: No, cancel
+            confirm: You have successfully deleted the page
+        pageEdit:
+            title: Edit a page
+            name: Title
+            content: Content
+            submit: Edit
+            confirm: You have successfully edited the page
+        pages:
+            title: Static page
+            name: Name
+            actions: Actions
+            create: Create a page
+            edit: Edit
+            delete: Delete
+            no_page: No page at the moment
+        stats:
+            title: Statistics
+            mobile: The general statistics are the only ones available on smartphone.
+            general: General statistics
+            current_month: Statistics for this month
+            unique_visitors_count: Number of unique visitors
+            pages_calls_count: Number of pages called
+            average_visited_pages: Average number of pages visited after the first one
+            average_duration: Average time spent on the website
+            average_time_to_load: Average load time of a page
+            unique_visitors: Number of visitors for this month
+            pages_calls: Number of pages called for this month
+            browsers: Brower
+            plaftorms: Operating system
+            most_used_browsers_versions: Most used browser version
+            browser_name: Name
+            browser_count: Number of pages called
+            browser_percentage: Percentage
+            most_used_routes: Most used road
+            route_name: Name
+            route_count: Number of pages called
+            route_percentage: Percentage
+            no_info: No information available
+            traffic_sources: Traffic sources
+            visitors_sources: Visitors sources
+            source_domain: Domaine name
+            source_count: Number of pages called
+            source_percentage: Percentage
+            most_common_sources: Most common sources for the visitors
+
+    main:
+        index:
+            title: My news feed
+            new_notifs: new notification(s)
+            no_notif_message: You have no notifications !
+            no_notif_description: Subscribe to parts of EtuUTT to follow what you like in UTT !
+            learn_more: Learn more
+        indexAnonymous:
+            title: Home
+            welcome: Welcome to the student website of the University of Technology of Troyes
+        changeLocale:
+            confirm: You have successfully changed the language
+
+
+    subscriptions:
+        button:
+            follower: You are subscribed to this page
+            unfollow: Unsubscribe
+            follow: Subscribe
+        api:
+            confirm_follow: You are now subscribed to this page
+            confirm_unfollow: You have successfully unsubscried to this page

@@ -11,14 +11,17 @@
 
 	<script type="text/javascript">
 		$(function() {
-			$('#schedule').sortable({
-				items: ".item"
-			});
+			$('.schedule-col').sortable({ items: ".item" });
 		});
 	</script>
 {% endblock %}
 
 {% block content %}
+	<style>
+		.ui-selecting { background: #FECA40; }
+		.ui-selected { background: #F39814; color: white; }
+	</style>
+
 	<ul class="nav nav-tabs page-tabs">
 		<li>
 			<a href="{{ path('user_schedule') }}">
@@ -32,22 +35,22 @@
 
 		<div class="row-fluid schedule schedule-days">
 			<div class="span2 day hidden-phone">
-				{{ 'schedule.days.monday'|trans }}
+				{{ 'user.schedule.days.monday'|trans }}
 			</div>
 			<div class="span2 day hidden-phone">
-				{{ 'schedule.days.tuesday'|trans }}
+				{{ 'user.schedule.days.tuesday'|trans }}
 			</div>
 			<div class="span2 day hidden-phone">
-				{{ 'schedule.days.wenesday'|trans }}
+				{{ 'user.schedule.days.wenesday'|trans }}
 			</div>
 			<div class="span2 day hidden-phone">
-				{{ 'schedule.days.thursday'|trans }}
+				{{ 'user.schedule.days.thursday'|trans }}
 			</div>
 			<div class="span2 day hidden-phone">
-				{{ 'schedule.days.friday'|trans }}
+				{{ 'user.schedule.days.friday'|trans }}
 			</div>
 			<div class="span2 day hidden-phone">
-				{{ 'schedule.days.sathurday'|trans }}
+				{{ 'user.schedule.days.sathurday'|trans }}
 			</div>
 		</div>
 

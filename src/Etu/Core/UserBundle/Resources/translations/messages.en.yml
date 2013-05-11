@@ -1,0 +1,248 @@
+
+user:
+    privacy:
+        public: Public
+        private: Private
+
+    admin:
+        userAvatar:
+            title: Edit profile picture
+            back: Back to profile
+            file: Image
+            submit: Edit
+        userCreate:
+            title: Create a user
+            confirm: You have successfully created a user
+            login: Login
+            password: Password
+            website: Website (public)
+            facebook: Facebook (public)
+            twitter: Twitter (public)
+            linkedin: LinkedIn (public)
+            viadeo: Viadeo (public)
+            name: Name
+            studentId: Student ID
+            mail: E-mail
+            personnalMail: Personnal e-mail.
+            formation: Studies
+            phoneNumber: Phone number.
+            sex: Sex
+            nationality: Nationality
+            adress: Adress
+            postalCode: Postal code
+            city: City
+            country: Country
+            birthday: Date of birth
+            birthday_only_age_label: Show age only
+            birthday_only_age_desc: Only shows your age on the profile (if date of birth is private)
+            back: Back
+            submit: Create
+        userDelete:
+            title: Delete a user
+            question: Do you really want to delete %username% ?
+            yes: Yes, delete
+            no: No, cancel
+            confirm: The user has been deleted
+            back: Back to the profile
+        userEdit:
+            title: Edit a user
+            avatar: Edit the profile picture
+            birthday: Date of birth
+            birthday_only_age_label: Show age only
+            birthday_only_age_desc: Only shows your age on the profile (if date of birth is private)
+            confirm: You have successfully edited this user's profile
+            back: Back to the profile
+        userPermissions:
+            title: Edit authorizations
+            back: Back to the profile
+            confirm: You have successfully edited the authorizations of this user
+            submit: Edit
+        userIndex:
+            title: Users
+            search_title: Search for a student
+            search: Search
+            create: Create a user
+            more: More criterias
+            name: Name
+            studentId: Student ID
+            uv: Courses (seperated with commas)
+            phone: Phone number
+            personnalMail: Personnal e-mail
+            branche: Branche
+            explainations: Use the form below to search
+            no_results: No results
+            count: %count% results|%count% results
+        userReadOnly:
+            confirm_set: The user now has access to read only.
+            confirm_unset: The user now has complete access.
+
+    auth:
+        connect:
+            title: Log in
+            desc: "Please choose an authentification method for EtuUTT"
+            cas: With a UTT accountEn utilisant un compte UTT
+            external: With a guest account
+            confirm: You are logged in
+            error: Authentification failed, your login / password is incorrect
+            orga_exists_ldap: This association exist but must be authorized to log in by the UNG
+        connectExternal:
+            title: Log in as a guest
+            desc: Use the login and the password given to you by the UNG to log in :
+            identifier: Login
+            password: Password
+            submit: Log in
+            change: Change authentification method
+        disconnect:
+            confirm: You have logged out
+
+    orga:
+        avatar:
+            title: Edit logo
+            file: Image
+            confirm: You successfully edited your logo
+            back: Back
+            submit: Submit
+        index:
+            title: Association
+            submit: Edit
+            confirm: You have successfully edited your account
+            president_not_found: The president has not been found
+            name:
+                label: Name
+                desc: Officiel name of the association
+            president:
+                label: President
+                desc: President of the association
+            contactMail:
+                label: E-mail contact
+                desc: Association's e-mail contact
+            contactPhone:
+                label: Phone contact
+                desc: Association's phone contact
+            description:
+                label: Description
+                desc: Description of the association
+            descriptionShort:
+                label: Short description
+                desc: Short version of the description (role within UTT)
+            website:
+                label: Website
+                desc: Official website of the association
+            logo:
+                edit: Edit logo
+                desc: Logo de l'association
+
+    profile:
+        profile:
+            title: My profile
+            edit: Edit
+            completed: Your profile is complete. Thank you for participating !
+            completion: Your profile has been completed up to %completion% %. Complete your prorfile to get a badge !
+            viewPublic: Show my public profile
+            informations: About me
+            name: Name
+            mail: E-mail
+            sex: Sex
+            personnalMail: Personnal e-mail
+            phoneNumber: Phone number
+            adress: Adress
+            birthday: Date of birth
+            age: %age% years old
+            trombi:
+            surname: Nickname
+            jadis: Formerly
+            passions: Passions
+            trombi_not_customized: You haven't edited your XXX yet. You should do it soon !
+            badges: Badges
+            no_badge: No badges at the moment. Visit the website to get some !
+        profileAvatar:
+            title: My profile picture
+            file: Image
+            confirm: You have successfully edited your profile picture
+            back: Back to my account
+            edit: Edit
+        profileEdit:
+            title: Edit About Me
+            confirm: You have successfully edited About Me
+            back: Back to my account
+            avatar: Edit my profile picture
+            edit: Edit
+            website: Website (public)
+            facebook: Facebook (public)
+            twitter: Twitter (public)
+            linkedin: LinkedIn (public)
+            viadeo: Viadeo (public)
+            name: Name
+            studentId: Student ID
+            mail: E-mail
+            personnalMail: Personnal e-mail
+            formation: Studies
+            phoneNumber: Phone number
+            sex: Sex
+            nationality: Nationality
+            adress: Adress
+            postalCode: Postal code
+            city: City
+            country: Country
+            birthday: Date of birth
+            birthdayOnlyAge:
+                label: Show age only
+                desc: Only shows your age on the profile (if date of birth is private)
+        trombiEdit:
+            title:
+            confirm: You have successfully edited XXX
+            back: Back to my account
+            surname: Nickname
+            jadis: Formerly
+            passions: Passions
+            edit: Edit
+        view:
+            title: Profile details
+            back_search: Back to search
+            back_profile: My account
+            back_trombi:
+            back_admin: Administration
+            admin: Administrate
+            admin_edit: Edit
+            admin_delete: Delete
+            admin_permissions: Edit authorizations
+            admin_disable_readonly: Disable read only
+            admin_enable_readonly: Enable read only
+            website: Website
+            facebook: Facebook
+            twitter: Twitter
+            linkedin: LinkedIn
+            viadeo: Viadeo
+            name: Name
+            studentId: Student ID
+            mail: E-mail
+            uvs: Courses followed
+            phoneNumber: Phone number
+            personnalMail: Personnal e-mail
+            formation: Studies
+            sex: Sex
+            nationality: Nationality
+            adress: Adress
+            birthday: Date of birth
+            age: Age
+            surname: Nickname
+            jadis: Formerly
+            passions: Passions
+
+    schedule:
+        days:
+            monday: Mondy
+            tuesday: Tuesday
+            wenesday: Wednesday
+            thursday: Thursday
+            friday: Friday
+            sathurday: Saturday
+        schedule:
+            title: My timetable
+            edit: Edit
+            print: Print
+        scheduleEdit:
+            title: Edit
+            back: Back
+        schedulePrint:
+            title: Print my timetable

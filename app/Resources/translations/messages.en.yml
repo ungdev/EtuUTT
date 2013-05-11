@@ -1,3 +1,100 @@
 
+# Global strings: title, logo, footer, etc.
+# Used in base.html.twig
 base:
-    title: Student website of UTT
+    title: UTT's student website
+    description: Website created and designed by the students of the University of Technology of Troyes
+
+    # Logo
+    logo:
+        alt: Website logo
+        title: UTT's student website
+
+    # Header menu
+    menu:
+        home: Home
+        events: Events
+        forums: Forums
+        associations: Associations
+        search: Search
+        more: More
+        connexion: Log in
+
+    # User account box
+    user:
+        # Users types
+        types:
+            student: Student
+            orga: Association
+            external: Guest
+
+        # User menu
+        menu:
+            flux: My news feed
+            account: My account
+            buckutt: My BuckUTT account
+            dailymail: My dailymail
+            emails: My e-mails
+            table: My time table
+            logout: Log out
+            help: Help
+            admin: Administration
+            pages: Static pages
+
+        # Sex
+        sex:
+            male: Male
+            female: Female
+
+    # Sidebar
+    sidebar:
+        services:
+            title: Services
+            items:
+                uvs: Courses
+                trombi: The group photo
+                table: Overlapping timetables
+                wiki: Association's wiki
+        etu:
+            title: EtuUTT
+            items:
+                team: Team
+
+    # Admin
+    admin_menu:
+        title: Admin panel
+        items:
+            dashboard: Dashboard
+            modules: Modules
+            pages: Static pages
+            users: Users
+            stats: Statistics
+
+    # Logo
+    page_icon:
+        alt: Page icon
+        title: Page icon
+
+    # Footer
+    footer:
+        # Links
+        legalities: Terms
+        help_us: Help us
+        developers: Developers
+        change_locale: Language
+
+        # Authors and version
+        text: "Designed by the UNG<br />Launched with Symfony 2<br /><br />10-alpha version"
+        1col_text: "Designed by the UNG - Launched with Symfony 2 - 10-alpha version"
+        mobile_text: "Designed by the UNG<br />10-alpha version"
+
+# Errors pages:
+error:
+    404:
+        title: Oups ... 404 !
+        subtitle: D'oh !
+        content: Sorry, the page you are looking for doesn't exist !
+    other:
+        title: Oups ... Error !
+        subtitle: Hum ...
+        content: The server has ran into an error ...

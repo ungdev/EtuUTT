@@ -6516,3 +6516,50 @@ AFB6 .|    |    <= true
 AFB6 .|    |    no need to authenticate [Client.php:1085]
 AFB6 .|    <= true
 AFB6 .<= ''
+5829 .START phpCAS-1.3.2 ****************** [CAS.php:458]
+5829 .=> phpCAS::setNoCasServerValidation() [AuthController.php:34]
+5829 .|    You have configured no validation of the legitimacy of the cas server. This is not recommended for production use. [CAS.php:1677]
+5829 .<= ''
+5829 .=> phpCAS::isAuthenticated() [AuthController.php:36]
+5829 .|    => CAS_Client::isAuthenticated() [CAS.php:1159]
+5829 .|    |    => CAS_Client::_wasPreviouslyAuthenticated() [Client.php:1189]
+5829 .|    |    |    no user found [Client.php:1375]
+5829 .|    |    <= false
+5829 .|    |    no ticket found [Client.php:1258]
+5829 .|    <= false
+5829 .<= false
+65B3 .START phpCAS-1.3.2 ****************** [CAS.php:458]
+65B3 .=> phpCAS::setNoCasServerValidation() [AuthController.php:125]
+65B3 .|    You have configured no validation of the legitimacy of the cas server. This is not recommended for production use. [CAS.php:1677]
+65B3 .<= ''
+65B3 .=> phpCAS::forceAuthentication() [AuthController.php:126]
+65B3 .|    => CAS_Client::forceAuthentication() [CAS.php:1109]
+65B3 .|    |    => CAS_Client::isAuthenticated() [Client.php:1083]
+65B3 .|    |    |    => CAS_Client::_wasPreviouslyAuthenticated() [Client.php:1189]
+65B3 .|    |    |    |    no user found [Client.php:1375]
+65B3 .|    |    |    <= false
+65B3 .|    |    |    no ticket found [Client.php:1258]
+65B3 .|    |    <= false
+65B3 .|    |    => CAS_Client::redirectToCas(false) [Client.php:1092]
+65B3 .|    |    |    => CAS_Client::getServerLoginURL(false, false) [Client.php:1396]
+65B3 .|    |    |    |    => CAS_Client::getURL() [Client.php:328]
+65B3 .|    |    |    |    |    Final URI: http://etu.utt.local/user/cas [Client.php:3069]
+65B3 .|    |    |    |    <= 'http://etu.utt.local/user/cas'
+65B3 .|    |    |    <= 'https://cas.utt.fr/cas/login?service=http%3A%2F%2Fetu.utt.local%2Fuser%2Fcas'
+65B3 .|    |    |    Redirect to : https://cas.utt.fr/cas/login?service=http%3A%2F%2Fetu.utt.local%2Fuser%2Fcas [Client.php:1402]
+65B3 .|    |    |    exit()
+65B3 .|    |    |    -
+65B3 .|    |    -
+65B3 .|    -
+B087 .START phpCAS-1.3.2 ****************** [CAS.php:458]
+B087 .=> phpCAS::setNoCasServerValidation() [AuthController.php:34]
+B087 .|    You have configured no validation of the legitimacy of the cas server. This is not recommended for production use. [CAS.php:1677]
+B087 .<= ''
+B087 .=> phpCAS::isAuthenticated() [AuthController.php:36]
+B087 .|    => CAS_Client::isAuthenticated() [CAS.php:1159]
+B087 .|    |    => CAS_Client::_wasPreviouslyAuthenticated() [Client.php:1189]
+B087 .|    |    |    no user found [Client.php:1375]
+B087 .|    |    <= false
+B087 .|    |    no ticket found [Client.php:1258]
+B087 .|    <= false
+B087 .<= false

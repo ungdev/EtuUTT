@@ -157,9 +157,6 @@
 .schedule {
 	margin-top: 10px;
 }
-.schedule-day-passed, .schedule-hour-passed {
-	background: #dddddd;
-}
 .schedule-col {
 	margin: 0 !important;
 }

@@ -1,0 +1,21 @@
+
+trombi:
+    main:
+        index:
+            title:
+            uncomplete_profile:
+                title: Your profile is incomplete
+                desc: Your profile must be complete (private or public) in order to use the XXX
+                link: My account
+            search_title: Search for a student
+            search: Search
+            more: More criteriasPlus de critères
+            name: Name
+            studentId: Student ID
+            uv: Courses (seperated with commas)
+            phone: Phone number
+            personnalMail: Personnal e-mail
+            branche: Branche
+            explainations: Use the form below to search
+            no_results: No results
+            count: %count% results|%count% results
