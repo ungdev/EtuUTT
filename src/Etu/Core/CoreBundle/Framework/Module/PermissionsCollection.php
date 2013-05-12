@@ -3,6 +3,7 @@
 namespace Etu\Core\CoreBundle\Framework\Module;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Etu\Core\CoreBundle\Framework\Definition\Permission;
 
 /**
  * EtuUTT permissions collection.
@@ -11,12 +12,19 @@ class PermissionsCollection extends ArrayCollection
 {
 	/**
 	 * @param array $permissions
+	 * @throws \RuntimeException
 	 */
 	public function __construct(array $permissions = array())
 	{
 		$constructed = array();
 
 		foreach ($permissions as $permission) {
+			if (! $permission instanceof Permission) {
+				throw new \RuntimeException(sprintf(
+					'PermissionsCollection must contains only Permission objects (%s given)', gettype($permission)
+				));
+			}
+
 			$constructed[$permission->getName()] = $permission;
 		}
 

@@ -14,16 +14,6 @@ use Etu\Core\UserBundle\Entity\User;
 class Page
 {
 	/**
-	 * Issues criticalities
-	 */
-	const CRITICALITY_TYPO = 'typo';
-	const CRITICALITY_VISUAL = 'visual';
-	const CRITICALITY_MINOR = 'minor';
-	const CRITICALITY_MAJOR = 'major';
-	const CRITICALITY_CRITICAL = 'critical';
-	const CRITICALITY_SECURITY = 'security';
-
-	/**
 	 * @var integer
 	 *
 	 * @ORM\Column(name="id", type="integer")

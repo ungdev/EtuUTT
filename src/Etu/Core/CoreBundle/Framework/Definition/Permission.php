@@ -3,10 +3,7 @@
 namespace Etu\Core\CoreBundle\Framework\Definition;
 
 /**
- * Class Permission
- * @package Etu\Core\CoreBundle\Framework\Definition
- *
- * Permission class: definition for a module permission.
+ * Definition for a module permission
  */
 class Permission
 {

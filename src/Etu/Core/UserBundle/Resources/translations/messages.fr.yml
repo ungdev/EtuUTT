@@ -4,6 +4,8 @@ user:
         public: Public
         private: Privé
 
+    denied: Vous n'avez pas le droit de voir cette page
+
     admin:
         userAvatar:
             title: Modifier la photo
@@ -96,6 +98,14 @@ user:
             confirm: Vous êtes bien déconnecté
 
     orga:
+        role:
+            president: Président
+            treasurer: Trésorier
+            secretary: Secrétaire
+            vice_president: Vice-président
+            vice_treasurer: Vice-trésorier
+            vice_secretary: Vice-secrétaire
+            member: Membre
         avatar:
             title: Modifier votre logo
             file: Image
@@ -131,6 +141,22 @@ user:
             logo:
                 edit: Modifier le logo
                 desc: Logo de l'association
+        members:
+            title: Membres
+            count: %count% membre dans l'association|%count% membres dans l'association
+            add_member_btn: Ajouter un membre
+            add_member_user: Utilisateur
+            add_member_role: Rôle
+            error_user_not_fount: L'utilisateur n'a pas été trouvé
+            confirm_add: Le membre a bien été ajouté
+            error_exists: Ce membre fait déjà partie de l'association
+        memberEdit:
+            title: Modifier un membre
+            back: Retour à la liste
+            role: Rôle
+            submit: Modifier
+            delete: Supprimer le membre
+            confirm: Vous avez bien modifié ce membre
 
     profile:
         profile:

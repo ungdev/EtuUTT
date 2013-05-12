@@ -3,6 +3,7 @@
 namespace Etu\Core\CoreBundle\Framework;
 
 use Etu\Core\CoreBundle\Framework\Definition\Module;
+use Etu\Core\CoreBundle\Framework\Definition\OrgaPermission;
 use Etu\Core\CoreBundle\Framework\Definition\Permission;
 use Etu\Core\CoreBundle\Framework\Exception\ModuleNotFoundException;
 use Etu\Core\CoreBundle\Framework\Module\ModulesCollection;
@@ -72,8 +73,35 @@ abstract class EtuKernel extends Kernel
 			new Permission('pages.admin', Permission::DEFAULT_DISABLED, 'Peut administrer les pages statiques'),
 		);
 
+		/** @var Module $module */
 		foreach ($this->getModulesDefinitions() as $module) {
-			$permissions = array_merge($permissions, $module->getAvailablePermissions());
+			foreach ($module->getAvailablePermissions() as $permission) {
+				if ($permission instanceof Permission) {
+					$permissions[] = $permission;
+				}
+			}
+		}
+
+		return new PermissionsCollection($permissions);
+	}
+
+	/**
+	 * @return PermissionsCollection
+	 */
+	public function getAvailableOrganizationsPermissions()
+	{
+		$permissions = array(
+			new OrgaPermission('notify', 'Peut envoyer des notifications au nom de l\'asso'),
+			new OrgaPermission('deleguate', 'Peut donner/retirer ses droits aux membres de l\'asso'),
+		);
+
+		/** @var Module $module */
+		foreach ($this->getModulesDefinitions() as $module) {
+			foreach ($module->getAvailablePermissions() as $permission) {
+				if ($permission instanceof OrgaPermission) {
+					$permissions[] = $permission;
+				}
+			}
 		}
 
 		return new PermissionsCollection($permissions);

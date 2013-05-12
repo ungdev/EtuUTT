@@ -65,7 +65,7 @@ class Controller extends BaseController
 	{
 		$this->get('session')->getFlashBag()->set('message', array(
 			'type' => 'error',
-			'message' => 'user.auth.denied'
+			'message' => 'user.denied'
 		));
 
 		return $this->redirect($this->generateUrl('user_connect'));

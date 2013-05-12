@@ -75,13 +75,6 @@
 						<span class="help-block">{{ form_errors(form.name) }}</span>
 					</div>
 					<div class="control-group">
-						<label class="control-label">{{ 'user.orga.index.president.label'|trans }}</label>
-						<div class="controls">
-							{{ form_widget(form.president) }}
-						</div>
-						<span class="help-block">{{ form_errors(form.president) }}</span>
-					</div>
-					<div class="control-group">
 						<label class="control-label">{{ 'user.orga.index.contactMail.label'|trans }}</label>
 						<div class="controls">
 							{{ form_widget(form.contactMail) }}
@@ -94,6 +87,13 @@
 							{{ form_widget(form.contactPhone) }}
 						</div>
 						<span class="help-block">{{ form_errors(form.contactPhone) }}</span>
+					</div>
+					<div class="control-group">
+						<label class="control-label">{{ 'user.orga.index.website.label'|trans }}</label>
+						<div class="controls">
+							{{ form_widget(form.website) }}
+						</div>
+						<span class="help-block">{{ form_errors(form.website) }}</span>
 					</div>
 					<div class="control-group">
 						<label class="control-label">{{ 'user.orga.index.descriptionShort.label'|trans }}</label>
@@ -110,13 +110,6 @@
 							<span class="help-block">{{ 'user.orga.index.description.desc'|trans }}</span>
 						</div>
 						<span class="help-block">{{ form_errors(form.description) }}</span>
-					</div>
-					<div class="control-group">
-						<label class="control-label">{{ 'user.orga.index.website.label'|trans }}</label>
-						<div class="controls">
-							{{ form_widget(form.website) }}
-						</div>
-						<span class="help-block">{{ form_errors(form.website) }}</span>
 					</div>
 					<div class="control-group">
 						<div class="controls">

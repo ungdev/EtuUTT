@@ -11,6 +11,8 @@ use Etu\Core\UserBundle\Ldap\Model\User as LdapUser;
 use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
+use Imagine\Image\Color;
+use Imagine\Image\Point;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -539,16 +541,31 @@ class User implements UserInterface, \Serializable
 			return false;
 		}
 
-		// Upload and resize
+		/*
+		 * Upload and resize
+		 */
 		$imagine = new Imagine();
 
-		$image = $imagine->open($this->file->getPathname());
+		// Create a transparent image
+		$image = $imagine->create(new Box(200, 200), new Color('000', 100));
 
-		$image->thumbnail(new Box(200, 200), Image::THUMBNAIL_OUTBOUND)->save(
-			__DIR__ . '/../../../../../web/photos/'.$this->getLogin().'.jpg'
+		// Create the logo thumbnail in a 200x200 box
+		$thumbnail = $imagine->open($this->file->getPathname())
+			->thumbnail(new Box(200, 200), Image::THUMBNAIL_INSET);
+
+		// Paste point
+		$pastePoint = new Point(
+			(200 - $thumbnail->getSize()->getWidth()) / 2,
+			(200 - $thumbnail->getSize()->getHeight()) / 2
 		);
 
-		$this->avatar = $this->getLogin().'.jpg';
+		// Paste the thumbnail in the transparent image
+		$image->paste($thumbnail, $pastePoint);
+
+		// Save the result
+		$image->save(__DIR__ . '/../../../../../web/photos/'.$this->getLogin().'.png');
+
+		$this->avatar = $this->getLogin().'.png';
 
 		return true;
 	}

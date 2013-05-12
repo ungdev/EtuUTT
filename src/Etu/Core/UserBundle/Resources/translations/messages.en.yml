@@ -4,6 +4,8 @@ user:
         public: Public
         private: Private
 
+    denied: You are not allowed to see this page
+
     admin:
         userAvatar:
             title: Edit profile picture

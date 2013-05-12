@@ -39,6 +39,7 @@ base:
             logout: Log out
             help: Help
             admin: Administration
+            members: Members
             pages: Static pages
 
         # Sex

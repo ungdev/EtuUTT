@@ -3,10 +3,12 @@
 namespace Etu\Core\UserBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Etu\Core\CoreBundle\Framework\Definition\Controller;
 
+use Etu\Core\CoreBundle\Framework\Definition\Controller;
+use Etu\Core\CoreBundle\Framework\Module\PermissionsCollection;
+use Etu\Core\UserBundle\Entity\Member;
 use Etu\Core\UserBundle\Entity\User;
-use Etu\Core\UserBundle\Form\UserAutocompleteType;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -24,14 +26,33 @@ class OrgaController extends Controller
 
 		$orga = $this->getUser();
 
-		if ($orga->getPresident()) {
-			$orga->setPresident($orga->getPresident()->getFullName());
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		// Try to find a president
+		if (! $orga->getPresident()) {
+			/** @var $members Member[] */
+			$members = $em->createQueryBuilder()
+				->select('m, u')
+				->from('EtuUserBundle:Member', 'm')
+				->leftJoin('m.user', 'u')
+				->where('m.organization = :orga')
+				->setParameter('orga', $this->getUser()->getId())
+				->getQuery();
+
+			foreach ($members as $member) {
+				if ($member->getRole() == Member::ROLE_PRESIDENT) {
+					$orga->setPresident($member->getUser());
+					$em->persist($orga);
+					$em->flush();
+					break;
+				}
+			}
 		}
 
 		// Classic form
 		$form = $this->createFormBuilder($orga)
 			->add('name')
-			->add('president', 'user')
 			->add('contactMail', 'email')
 			->add('contactPhone', null, array('required' => false))
 			->add('description', 'redactor')
@@ -42,36 +63,13 @@ class OrgaController extends Controller
 		$request = $this->getRequest();
 
 		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
-			/** @var $em EntityManager */
-			$em = $this->getDoctrine()->getManager();
+			$em->persist($orga);
+			$em->flush();
 
-			// Search for the president
-			/** @var $assignee User */
-			$president = $em->createQueryBuilder()
-				->select('u')
-				->from('EtuUserBundle:User', 'u')
-				->where('u.fullName = :fullName')
-				->setParameter('fullName', $orga->getPresident())
-				->setMaxResults(1)
-				->getQuery()
-				->getOneOrNullResult();
-
-			if (! $president) {
-				$this->get('session')->getFlashBag()->set('message', array(
-					'type' => 'error',
-					'message' => 'user.orga.index.president_not_found'
-				));
-			} else {
-				$orga->setPresident($president);
-
-				$em->persist($orga);
-				$em->flush();
-
-				$this->get('session')->getFlashBag()->set('message', array(
-					'type' => 'success',
-					'message' => 'user.orga.index.confirm'
-				));
-			}
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'user.orga.index.confirm'
+			));
 
 			return $this->redirect($this->generateUrl('orga_admin'));
 		}
@@ -107,6 +105,7 @@ class OrgaController extends Controller
 		$request = $this->getRequest();
 
 		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+			/** @var $em EntityManager */
 			$em = $this->getDoctrine()->getManager();
 
 			$orga->upload();
@@ -128,15 +127,204 @@ class OrgaController extends Controller
 	}
 
 	/**
-	 * @Route("/orga/members", name="orga_admin_members")
+	 * @Route("/orga/members/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="orga_admin_members")
 	 * @Template()
 	 */
-	public function membersAction()
+	public function membersAction($page)
 	{
 		if (! $this->getUserLayer()->isOrga()) {
 			return $this->createAccessDeniedResponse();
 		}
 
-		return array();
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		$members = $em->createQueryBuilder()
+			->select('m, u')
+			->from('EtuUserBundle:Member', 'm')
+			->leftJoin('m.user', 'u')
+			->where('m.organization = :orga')
+			->setParameter('orga', $this->getUser()->getId())
+			->orderBy('u.lastName')
+			->getQuery();
+
+		$members = $this->get('knp_paginator')->paginate($members, $page, 10);
+
+		$member = new Member();
+		$member->setOrganization($this->getUser());
+
+		$roles = Member::getAvailableRoles();
+
+		foreach ($roles as $key => $role) {
+			$roles[$key] = 'user.orga.role.'.$role;
+		}
+
+		$form = $this->createFormBuilder($member)
+			->add('user', 'user')
+			->add('role', 'choice', array('choices' => $roles))
+			->getForm();
+
+		$request = $this->getRequest();
+
+		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+			$user = $em->createQueryBuilder()
+				->select('u')
+				->from('EtuUserBundle:User', 'u')
+				->where('u.login = :login')
+				->orWhere('u.fullName = :fullName')
+				->setParameter('login', $member->getUser())
+				->setParameter('fullName', $member->getUser())
+				->setMaxResults(1)
+				->getQuery()
+				->getOneOrNullResult();
+
+			if (! $user) {
+				$this->get('session')->getFlashBag()->set('message', array(
+					'type' => 'error',
+					'message' => 'user.orga.members.error_user_not_fount'
+				));
+			} else {
+				$member->setUser($user);
+
+				// Keep the membership as unique
+				$membership = $em->getRepository('EtuUserBundle:Member')->findOneBy(array(
+					'user' => $member->getUser(),
+					'organization' => $member->getOrganization()
+				));
+
+				if (! $membership) {
+					if ($member->getRole() == Member::ROLE_PRESIDENT) {
+						$this->getUser()->setPresident($member->getUser());
+						$em->persist($this->getUser());
+					}
+
+					$em->persist($member);
+					$em->flush();
+
+					$this->get('session')->getFlashBag()->set('message', array(
+						'type' => 'success',
+						'message' => 'user.orga.members.confirm_add'
+					));
+				} else {
+					$this->get('session')->getFlashBag()->set('message', array(
+						'type' => 'error',
+						'message' => 'user.orga.members.error_exists'
+					));
+				}
+			}
+
+			return $this->redirect($this->generateUrl(
+				'orga_admin_members_edit', array('login' => $member->getUser()->getLogin())
+			));
+		}
+
+		return array(
+			'pagination' => $members,
+			'form' => $form->createView()
+		);
+	}
+
+	/**
+	 * @Route("/orga/members/{login}/edit", name="orga_admin_members_edit")
+	 * @Template()
+	 */
+	public function memberEditAction($login)
+	{
+		if (! $this->getUserLayer()->isOrga()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $member Member */
+		$member = $em->createQueryBuilder()
+			->select('m, u')
+			->from('EtuUserBundle:Member', 'm')
+			->leftJoin('m.user', 'u')
+			->where('m.organization = :orga')
+			->andWhere('u.login = :login')
+			->setParameter('orga', $this->getUser()->getId())
+			->setParameter('login', $login)
+			->setMaxResults(1)
+			->getQuery()
+			->getOneOrNullResult();
+
+		if (! $member) {
+			throw $this->createNotFoundException(sprintf('Login %s or membership not found', $login));
+		}
+
+		$roles = Member::getAvailableRoles();
+
+		foreach ($roles as $key => $role) {
+			$roles[$key] = 'user.orga.role.'.$role;
+		}
+
+		$roleForm = $this->createFormBuilder($member)
+			->add('role', 'choice', array('choices' => $roles))
+			->getForm();
+
+		$availablePermissions = $this->getKernel()->getAvailableOrganizationsPermissions()->toArray();
+
+		$permissions1 = array();
+		$permissions2 = array();
+
+		$i = floor(count($availablePermissions) / 2);
+
+		foreach ($availablePermissions as $permission) {
+			if ($member->hasPermission($permission->getName())) {
+				$permission = array('definition' => $permission, 'checked' => true);
+			} else {
+				$permission = array('definition' => $permission, 'checked' => false);
+			}
+
+			if ($i == 0) {
+				$permissions1[] = $permission;
+			} else {
+				$permissions2[] = $permission;
+				$i--;
+			}
+		}
+
+		$request = $this->getRequest();
+
+		if ($request->getMethod() == 'POST') {
+			$roleForm->bind($request);
+
+			if ($member->getRole() == Member::ROLE_PRESIDENT) {
+				$this->getUser()->setPresident($member->getUser());
+				$em->persist($this->getUser());
+			}
+
+			if (is_array($request->get('permissions'))) {
+				$userPermissions = array();
+
+				foreach ($request->get('permissions') as $permission => $value) {
+					$userPermissions[] = $permission;
+				}
+
+				$member->setPermissions($userPermissions);
+			}
+
+			$em->persist($member);
+			$em->flush();
+
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'user.orga.memberEdit.confirm'
+			));
+
+			return $this->redirect($this->generateUrl(
+				'orga_admin_members_edit', array('login' => $member->getUser()->getLogin())
+			));
+		}
+
+		return array(
+			'member' => $member,
+			'user' => $member->getUser(),
+			'roleForm' => $roleForm->createView(),
+			'permissions1' => $permissions1,
+			'permissions2' => $permissions2
+		);
 	}
 }

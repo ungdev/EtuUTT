@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * Organization
  *
- * @ORM\Table(name="etu_organizations") })
+ * @ORM\Table(name="etu_organizations")
  * @ORM\Entity
  */
 class Organization implements UserInterface, \Serializable
@@ -141,24 +141,31 @@ class Organization implements UserInterface, \Serializable
 			return false;
 		}
 
-		// Upload and resize
+		/*
+		 * Upload and resize
+		 */
 		$imagine = new Imagine();
 
-		$logo = $imagine->create(new Box(200, 200), new Color('FFF'));
-		$image = $imagine->open($this->file->getPathname())->thumbnail(new Box(200, 200), Image::THUMBNAIL_INSET);
+		// Create a transparent image
+		$image = $imagine->create(new Box(200, 200), new Color('000', 100));
 
-		if ($image->getSize()->getWidth() < 200) {
-			$point = new Point((200 - $image->getSize()->getWidth()) / 2, 0);
-		} elseif ($image->getSize()->getHeight() < 200) {
-			$point = new Point(0, (200 - $image->getSize()->getHeight()) / 2);
-		} else {
-			$point = new Point(0, 0);
-		}
+		// Create the logo thumbnail in a 200x200 box
+		$thumbnail = $imagine->open($this->file->getPathname())
+			->thumbnail(new Box(200, 200), Image::THUMBNAIL_INSET);
 
-		$logo->paste($image, $point);
-		$logo->save(__DIR__ . '/../../../../../web/logos/'.$this->login.'.jpg');
+		// Paste point
+		$pastePoint = new Point(
+			(200 - $thumbnail->getSize()->getWidth()) / 2,
+			(200 - $thumbnail->getSize()->getHeight()) / 2
+		);
 
-		$this->logo = $this->login.'.jpg';
+		// Paste the thumbnail in the transparent image
+		$image->paste($thumbnail, $pastePoint);
+
+		// Save the result
+		$image->save(__DIR__ . '/../../../../../web/logos/'.$this->getLogin().'.png');
+
+		$this->logo = $this->getLogin().'.png';
 
 		return true;
 	}

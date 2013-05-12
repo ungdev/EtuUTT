@@ -1,0 +1,96 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'user.orga.memberEdit.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<ul class="nav nav-tabs page-tabs">
+		<li>
+			<a href="{{ path('orga_admin_members') }}">
+				<i class="icon-chevron-left"></i>
+				{{ 'user.orga.memberEdit.back'|trans }}
+			</a>
+		</li>
+	</ul>
+
+
+	<div class="padding20-sides">
+		<div class="row-fluid">
+			<form method="post" class="form-horizontal">
+				<div class="span4">
+					<div class="profileEdit-avatar">
+						<img src="{{ asset('photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
+					</div>
+				</div>
+				<div class="span8">
+					<p>
+						<strong>{{ user.fullName }} ({{ user.login }})</strong>
+					</p>
+					<br />
+					<div class="control-group">
+						<label class="control-label" for="isAdmin">{{ 'user.orga.memberEdit.role'|trans }}</label>
+						<div class="controls">
+							{{ form_widget(roleForm.role) }}
+						</div>
+					</div>
+
+					<p class="pull-right">
+						{{ form_rest(roleForm) }}
+						<a href="{{ path('') }}" class="btn">
+							{{ 'user.orga.memberEdit.delete'|trans }}
+						</a>
+						<button type="submit" class="btn btn-primary">
+							{{ 'user.orga.memberEdit.submit'|trans }}
+						</button>
+					</p>
+				</div>
+			</form>
+		</div>
+
+		<hr />
+
+		<div class="row-fluid">
+			<form method="post" class="form-horizontal">
+				<div class="span6">
+					{% for permission in permissions1 %}
+						<div class="control-group">
+							<label class="control-label" style="width: 60%; padding-right: 2%;" for="permissions[{{ permission.definition.name }}]">
+								{{ permission.definition.description }}
+							</label>
+							<div class="controls">
+								<input type="checkbox" class="permission" name="permissions[{{ permission.definition.name }}]"
+										{% if permission.checked %} checked="checked"{% endif %}
+										/>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+				<div class="span6">
+					{% for permission in permissions2 %}
+						<div class="control-group">
+							<label class="control-label" style="width: 60%; padding-right: 2%;" for="permissions[{{ permission.definition.name }}]">
+								{{ permission.definition.description }}
+							</label>
+							<div class="controls">
+								<input type="checkbox" class="permission" name="permissions[{{ permission.definition.name }}]"
+										{% if permission.checked %} checked="checked"{% endif %}
+										/>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+
+			<hr />
+
+			<p class="pull-right">
+				<input type="hidden" name="sent" value="true" />
+
+				<button type="submit" class="btn btn-primary">{{ 'user.orga.memberEdit.submit'|trans }}</button>
+			</p>
+		</form>
+	</div>
+{% endblock %}
