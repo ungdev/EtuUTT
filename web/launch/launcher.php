@@ -2,9 +2,6 @@
 
 include 'config.php';
 
-// Launch date
-$now = new DateTime();
-
 if ($now < $launch) {
 	header('Location: launch');
 	exit;
@@ -24,6 +21,7 @@ if ($now < $launch) {
 
 		<link rel="stylesheet" type="text/css" href="/launch/bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/launch/bootstrap/css/bootstrap-responsive.min.css">
+		<link rel="stylesheet" type="text/css" href="/launch/etuutt/css/global.css">
 		<link rel="stylesheet" type="text/css" href="/launch/etuutt/css/launcher.css">
 
 		<script src="/launch/etuutt/js/modernizr.custom.js"></script>

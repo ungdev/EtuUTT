@@ -2,15 +2,12 @@
 
 include 'config.php';
 
-$now = new DateTime();
-
 if ($now >= $launch) {
 	header('Location: launcher');
 	exit;
 }
 
 $interval = $launch->diff($now);
-$acceptTesters = $launch->diff($now)->days > 50;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -26,7 +23,9 @@ $acceptTesters = $launch->diff($now)->days > 50;
 
 		<link rel="stylesheet" type="text/css" href="/launch/bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/launch/bootstrap/css/bootstrap-responsive.min.css">
+		<link rel="stylesheet" type="text/css" href="/launch/etuutt/css/global.css">
 		<link rel="stylesheet" type="text/css" href="/launch/etuutt/css/launch.css">
+		<link rel="stylesheet" type="text/css" href="/launch/facebox/src/facebox.css">
 
 		<script src="/launch/etuutt/js/modernizr.custom.js"></script>
 	</head>
@@ -45,19 +44,19 @@ $acceptTesters = $launch->diff($now)->days > 50;
 			</div>
 
 			<div class="row-fluid">
-				<div class="span3 days">
+				<div class="span3 days date-element">
 					<h2 id="days"><?php echo $interval->days; ?></h2>
 					<span class="infos">jour<span id="s_days">s</span></span>
 				</div>
-				<div class="span3 hours">
+				<div class="span3 hours date-element">
 					<h2 id="hours"><?php echo $interval->h; ?></h2>
 					<span class="infos">heure<span id="s_hours">s</span></span>
 				</div>
-				<div class="span3 minutes">
+				<div class="span3 minutes date-element">
 					<h2 id="minutes"><?php echo $interval->i; ?></h2>
 					<span class="infos">minute<span id="s_minutes">s</span></span>
 				</div>
-				<div class="span3 seconds">
+				<div class="span3 seconds date-element">
 					<h2 id="seconds"><?php echo $interval->s; ?></h2>
 					<span class="infos">seconde<span id="s_seconds">s</span></span>
 				</div>
@@ -72,99 +71,99 @@ $acceptTesters = $launch->diff($now)->days > 50;
 			</div>
 
 			<?php if ($acceptTesters) : ?>
-			<div class="row-fluid hidden-phone">
-				<div class="span3"></div>
-				<div class="span6 testing">
-					<p>
-						Vous voulez aider ? Faites parti des bêta-testeurs :
-					</p>
-
-					<form>
-						<div class="input-append">
-							<input class="span5" placeholder="Email" type="text">
-							<button class="btn" type="button">S'inscrire</button>
-						</div>
-					</form>
-				</div>
-				<div class="span3"></div>
+			<div id="learn-more" style="display:none;">
+				<p>
+					La phase de bêta-test sera réservé à un nombre limité de participants,
+					choisis pour constituer un échantillon représentatif des étudiants.
+				</p>
+				<p>
+					Ces participants recevront des accès au site avant sa sortie officielle
+					afin d'aider l'équipe à trouver le plus d'erreurs et de problèmes possibles.
+				</p>
+				<p>
+					Ils recevront un badge sur la nouvelle version du site étudiant pour leur
+					investissement dans le projet, uniquement délivré à cette occasion.
+				</p>
+				<p>
+					Ils recevront de plus plusieurs badges, correspondant à leur niveau
+					d'investissement dans la recherche de bug (nombre de bugs trouvés).
+				</p>
+				<p>
+					Une fois inscrit, vous recevrez un premier e-mail si vous avez été
+					choisi pour la bêta, puis un second lors du démarrage de la phase de
+					tests.
+				</p>
 			</div>
 
-			<div class="row-fluid visible-phone">
+			<div class="row-fluid">
 				<div class="span12 testing">
 					<p>
-						Vous voulez aider ? Faites parti des bêta-testeurs :
+						Vous voulez aider ? Faites parti des bêta-testeurs
+						<span class="hidden-phone">(<a href="#learn-more" rel="facebox">en savoir plus</a>)</span> :
 					</p>
 
-					<form>
-						<div class="input-append">
-							<input class="span5" placeholder="Email" type="text">
-							<button class="btn" type="button">S'inscrire</button>
-						</div>
-					</form>
+					<div class="input-append">
+						<input class="span4" placeholder="Email" type="text" id="subscribe-testing-email">
+						<button class="btn" type="submit" id="subscribe-testing-btn">S'inscrire</button>
+					</div>
+
+					<p id="subscribe-testing-message" class="text-error" style="display: none;"></p>
 				</div>
 			</div>
 			<?php endif; ?>
+
+			<div class="row-fluid">
+				<div class="span12">
+					<p><a href="http://www-etu.utt.fr">Visiter l'ancien site étu</a></p>
+				</div>
+			</div>
 		</div>
 
 		<script type="text/javascript" src="/launch/etuutt/js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="/launch/etuutt/js/launch.js"></script>
+		<script type="text/javascript" src="/launch/facebox/src/facebox.js"></script>
+
 		<script type="text/javascript">
 			var interval = <?php echo json_encode($interval); ?>;
+			refreshDisplay(interval);
+			setInterval(function() { refreshDisplay(interval); }, 1000);
 
-			function refreshDisplay() {
-				interval.s = interval.s - 1;
+			var subscribeTestingBtn = $('#subscribe-testing-btn'),
+				subscribeTestingEmail = $('#subscribe-testing-email'),
+				subscribeTestingMessage = $('#subscribe-testing-message'),
+				email;
 
-				if (interval.s == -1) {
-					interval.s = 59;
-					interval.i = interval.i - 1;
-				}
+			var sendAjax = function() {
+				email = subscribeTestingEmail.val();
+				subscribeTestingMessage.hide();
 
-				if (interval.i == -1) {
-					interval.i = 59;
-					interval.h = interval.h - 1;
-				}
+				subscribeTestingEmail.addClass('testing-loading').attr('disabled', 'disabled');
+				subscribeTestingBtn.attr('disabled', 'disabled');
 
-				if (interval.h == -1) {
-					interval.h = 23;
-					interval.days = interval.days - 1;
-				}
+				$.getJSON('/launch/subscribe.php', { email: email }, function(data) {
+					subscribeTestingEmail.removeClass('testing-loading').removeAttr('disabled');
+					subscribeTestingBtn.removeAttr('disabled');
 
-				if (interval.days == -1) {
-					location.assign(location.href);
-				} else {
-					$('#days').text(interval.days);
-					$('#hours').text(interval.h);
-					$('#minutes').text(interval.i);
-					$('#seconds').text(interval.s);
-
-					if (interval.days <= 1) {
-						$('#s_days').hide();
+					if (data.status == 'success') {
+						subscribeTestingMessage.removeClass('text-error').addClass('text-success');
 					} else {
-						$('#s_days').show();
+						subscribeTestingMessage.removeClass('text-success').addClass('text-error');
 					}
 
-					if (interval.h <= 1) {
-						$('#s_hours').hide();
-					} else {
-						$('#s_hours').show();
-					}
+					subscribeTestingMessage.text(data.content).show();
+				});
+			};
 
-					if (interval.i <= 1) {
-						$('#s_minutes').hide();
-					} else {
-						$('#s_minutes').show();
-					}
-
-					if (interval.s <= 1) {
-						$('#s_seconds').hide();
-					} else {
-						$('#s_seconds').show();
-					}
+			subscribeTestingEmail.keypress(function(event) {
+				if (event.which == 13) {
+					event.preventDefault();
+					sendAjax();
 				}
-			}
+			});
 
-			refreshDisplay();
+			subscribeTestingBtn.click(sendAjax);
 
-			setInterval(refreshDisplay, 1000);
+			$('a[rel*=facebox]').facebox();
 		</script>
 	</body>
 </html>
