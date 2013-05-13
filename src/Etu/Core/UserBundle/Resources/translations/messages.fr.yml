@@ -157,6 +157,13 @@ user:
             submit: Modifier
             delete: Supprimer le membre
             confirm: Vous avez bien modifié ce membre
+        memberDelete:
+            title: Supprimer un membre
+            back: Retour
+            question: Voulez-vous vraiment supprimer le membre %username% de votre association ?
+            yes: Oui, supprimer
+            no: Non, annuler
+            confirm: Le membre a bien été supprimé de votre association
 
     profile:
         profile:

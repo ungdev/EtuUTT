@@ -39,7 +39,7 @@
 
 					<p class="pull-right">
 						{{ form_rest(roleForm) }}
-						<a href="{{ path('') }}" class="btn">
+						<a href="{{ path('orga_admin_members_delete', {'login': user.login}) }}" class="btn">
 							{{ 'user.orga.memberEdit.delete'|trans }}
 						</a>
 						<button type="submit" class="btn btn-primary">

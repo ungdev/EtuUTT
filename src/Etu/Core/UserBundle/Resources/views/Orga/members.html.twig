@@ -47,9 +47,7 @@
 						<img src="{{ asset('photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
 						<h5>{{ member.user.fullName }}</h5>
 						<p>
-							{{ member.user.niveau }} {{ member.user.filiere }} ({{ member.user.formation }})<br />
-							{{ ('user.orga.role.'~member.role)|trans }}<br />
-							{{ member.user.mail }}
+							{{ ('user.orga.role.'~member.role)|trans }}
 						</p>
 
 						<div class="clear"></div>

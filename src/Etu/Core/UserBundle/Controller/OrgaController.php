@@ -225,7 +225,7 @@ class OrgaController extends Controller
 	}
 
 	/**
-	 * @Route("/orga/members/{login}/edit", name="orga_admin_members_edit")
+	 * @Route("/orga/members/{login}", name="orga_admin_members_edit")
 	 * @Template()
 	 */
 	public function memberEditAction($login)
@@ -325,6 +325,54 @@ class OrgaController extends Controller
 			'roleForm' => $roleForm->createView(),
 			'permissions1' => $permissions1,
 			'permissions2' => $permissions2
+		);
+	}
+
+	/**
+	 * @Route("/orga/members/{login}/delete/{confirm}", defaults={"confirm" = ""}, name="orga_admin_members_delete")
+	 * @Template()
+	 */
+	public function memberDeleteAction($login, $confirm = '')
+	{
+		if (! $this->getUserLayer()->isOrga()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $member Member */
+		$member = $em->createQueryBuilder()
+			->select('m, u')
+			->from('EtuUserBundle:Member', 'm')
+			->leftJoin('m.user', 'u')
+			->where('m.organization = :orga')
+			->andWhere('u.login = :login')
+			->setParameter('orga', $this->getUser()->getId())
+			->setParameter('login', $login)
+			->setMaxResults(1)
+			->getQuery()
+			->getOneOrNullResult();
+
+		if (! $member) {
+			throw $this->createNotFoundException(sprintf('Login %s or membership not found', $login));
+		}
+
+		if ($confirm == 'confirm') {
+			$em->remove($member);
+			$em->flush();
+
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'user.orga.memberDelete.confirm'
+			));
+
+			return $this->redirect($this->generateUrl('orga_admin_members'));
+		}
+
+		return array(
+			'member' => $member,
+			'user' => $member->getUser()
 		);
 	}
 }
