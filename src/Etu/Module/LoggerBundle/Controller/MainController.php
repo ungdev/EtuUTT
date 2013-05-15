@@ -8,7 +8,7 @@ use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class DefaultController extends Controller
+class MainController extends Controller
 {
     /**
      * @Route("/hello/{name}")

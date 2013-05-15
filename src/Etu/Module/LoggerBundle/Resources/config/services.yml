@@ -1,4 +1,9 @@
 
-parameters: ~
+parameters:
+    logger.exceptions_listener.class: Etu\Module\LoggerBundle\Logger\Listener
 
-services: ~
+services:
+    logger.exceptions_listener:
+        class: %logger.exceptions_listener.class%
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }

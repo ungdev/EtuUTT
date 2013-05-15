@@ -21,7 +21,7 @@ class EtuModuleLoggerBundle extends Module
 	 */
 	public function isReadyToUse()
 	{
-		return false;
+		return true;
 	}
 
 	/**
