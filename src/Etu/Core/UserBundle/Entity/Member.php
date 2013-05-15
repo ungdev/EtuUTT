@@ -4,8 +4,6 @@ namespace Etu\Core\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use Etu\Core\CoreBundle\Framework\Module\PermissionsCollection;
-
 /**
  * Organization
  *

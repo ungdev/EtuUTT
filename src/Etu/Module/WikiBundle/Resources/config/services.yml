@@ -1,4 +1,11 @@
 
-parameters: ~
+parameters:
+    etu.wiki.twig.permissions.class: Etu\Module\WikiBundle\Twig\Extension\PermissionsExtension
 
-services: ~
+services:
+
+    # Twig permissions checker extensio
+    etu.wiki.twig.permissions:
+        class: %etu.wiki.twig.permissions.class%
+        tags:
+            - { name: twig.extension }

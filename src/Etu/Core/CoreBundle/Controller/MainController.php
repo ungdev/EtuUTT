@@ -97,7 +97,7 @@ class MainController extends Controller
 		$page = $em->getRepository('EtuCoreBundle:Page')->findOneBySlug($slug);
 
 		if (! $page) {
-			$this->createNotFoundException('Invalid slug');
+			throw $this->createNotFoundException('Invalid slug');
 		}
 
 		return array('page' => $page);

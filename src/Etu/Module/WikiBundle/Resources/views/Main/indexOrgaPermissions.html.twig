@@ -1,0 +1,37 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'wiki.main.indexOrgaEdit.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/wiki.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	{% if wiki_can_edit(app.user, page) %}
+		<ul class="nav nav-tabs page-tabs">
+			<li>
+				<a href="{{ path('wiki_index') }}">{{ 'wiki.main.menu.index'|trans }}</a>
+			</li>
+			<li class="pull-right active page-tabs-resolved-active">
+				<a href="{{ path('wiki_index_orga_edit', {'login': orga.login}) }}">{{ 'wiki.main.menu.edit'|trans }}</a>
+			</li>
+			<li class="pull-right">
+				<a href="{{ path('wiki_index_orga', {'login': orga.login}) }}">{{ 'wiki.main.menu.read'|trans }}</a>
+			</li>
+		</ul>
+
+		<div class="padding20-sides">
+	{% else %}
+		<div class="padding20-all">
+	{% endif %}
+
+		<form method="post" action="">
+			{{ form_widget(form.body) }}
+			<span class="help-block">{{ form_errors(form.body) }}</span>
+
+			{{ form_rest(form) }}
+
+			<button type="submit" class="btn">{{ 'wiki.main.indexOrgaEdit.submit'|trans }}</button>
+		</form>
+	</div>
+{% endblock %}

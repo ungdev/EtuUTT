@@ -1,0 +1,42 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'wiki.main.index.title'|trans }}{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/bundles/wiki.css') }}" type="text/css" />
+{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/wiki.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	{% if wiki_can_edit(app.user, page) %}
+		<ul class="nav nav-tabs page-tabs">
+			<li class="pull-right">
+				<a href="{{ path('wiki_index_edit') }}">{{ 'wiki.main.menu.edit'|trans }}</a>
+			</li>
+			<li class="pull-right active page-tabs-resolved-active">
+				<a href="{{ path('wiki_index') }}">{{ 'wiki.main.menu.read'|trans }}</a>
+			</li>
+		</ul>
+
+		<div class="padding20-sides">
+	{% else %}
+		<div class="padding20-all">
+	{% endif %}
+
+		{{ page.revision.body|raw }}
+
+		<div class="wiki-orgas">
+			<h4>Wikis des associations</h4>
+			<ul class="wiki-orgas-links">
+			{% for orga in orgas %}
+				<li>
+					<a href="{{ path('wiki_index_orga', {'login': orga.login}) }}">{{ orga.name }}</a>
+				</li>
+			{% endfor %}
+			</ul>
+		</div>
+	</div>
+{% endblock %}

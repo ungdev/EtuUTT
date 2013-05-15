@@ -3,15 +3,32 @@
 namespace Etu\Module\WikiBundle;
 
 use Etu\Core\CoreBundle\Framework\Definition\Module;
+use Etu\Core\CoreBundle\Framework\Definition\OrgaPermission;
+use Etu\Core\CoreBundle\Framework\Definition\Permission;
 
 class EtuModuleWikiBundle extends Module
 {
 	/**
-	 * @return bool
+	 * Must boot only for connected users
+	 *
+	 * @return bool|void
 	 */
 	public function mustBoot()
 	{
-		return true;
+		return $this->getSessionLayer()->isConnected();
+	}
+
+	/**
+	 * At module boot, update the sidebar
+	 */
+	public function onModuleBoot()
+	{
+		$this->getSidebarBuilder()
+			->getBlock('base.sidebar.services.title')
+			->add('base.sidebar.services.items.wiki')
+				->setIcon('information.png')
+				->setUrl($this->getRouter()->generate('wiki_index'))
+			->end();
 	}
 
 	/**
@@ -19,7 +36,7 @@ class EtuModuleWikiBundle extends Module
 	 */
 	public function isReadyToUse()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -49,7 +66,7 @@ class EtuModuleWikiBundle extends Module
 	 */
 	public function getAuthor()
 	{
-		return 'anonymous';
+		return 'Titouan Galopin';
 	}
 
 	/**
@@ -59,7 +76,19 @@ class EtuModuleWikiBundle extends Module
 	 */
 	public function getDescription()
 	{
-		return 'Default module description';
+		return 'Wiki des associations';
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getAvailablePermissions()
+	{
+		return array(
+			new OrgaPermission('wiki.edit', 'Peut modifier le wiki de l\'asscoation'),
+			new OrgaPermission('wiki.create', 'Peut créer des pages dans le wiki de l\'asscoation'),
+			new OrgaPermission('wiki.delete', 'Peut supprimer des pages dans le wiki de l\'asscoation'),
+		);
 	}
 
 	/**

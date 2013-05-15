@@ -291,6 +291,14 @@ class Organization implements UserInterface, \Serializable
 	}
 
 	/**
+	 * @return bool
+	 */
+	public function getIsAdmin()
+	{
+		return false;
+	}
+
+	/**
 	 * @param string $contactMail
 	 * @return Organization
 	 */

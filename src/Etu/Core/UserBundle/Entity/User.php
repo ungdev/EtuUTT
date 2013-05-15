@@ -461,6 +461,14 @@ class User implements UserInterface, \Serializable
 	protected $lastVisitHome;
 
 	/**
+	 * @var Member[] $memberships
+	 *
+	 * @ORM\OneToMany(targetEntity="\Etu\Core\UserBundle\Entity\Member", mappedBy="user")
+	 * @ORM\JoinColumn()
+	 */
+	protected $memberships;
+
+	/**
 	 * Temporary variable to store uploaded file during photo update
 	 *
 	 * @var UploadedFile
@@ -1984,6 +1992,25 @@ class User implements UserInterface, \Serializable
 	public function displayUvs()
 	{
 		return implode(', ', $this->getUvsList());
+	}
+
+	/**
+	 * @param $memberships
+	 * @return $this
+	 */
+	public function setMemberships(array $memberships)
+	{
+		$this->memberships = $memberships;
+
+		return $this;
+	}
+
+	/**
+	 * @return Member[]
+	 */
+	public function getMemberships()
+	{
+		return $this->memberships;
 	}
 
 	/**

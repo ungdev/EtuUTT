@@ -1,11 +1,13 @@
 <?php
 
+/*
 include __DIR__.'/launch/config.php';
 
 if (new DateTime() < $launch) {
-	header('Location: launch');
+	header('Location: /launch');
 	exit;
 }
+*/
 
 use Symfony\Component\ClassLoader\ApcClassLoader;
 use Symfony\Component\HttpFoundation\Request;

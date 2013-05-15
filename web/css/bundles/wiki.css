@@ -1,0 +1,21 @@
+
+/*
+ * Wiki
+ */
+.wiki-orgas {
+	margin-top: 50px;
+}
+.wiki-orgas-links, .wiki-orgas-links li {
+	margin: 0;
+	padding: 0;
+}
+.wiki-orgas-links li {
+	list-style-type: none;
+	display: block;
+	width: 40%;
+	float: left;
+}
+.wiki-orgas-links li a {
+	display: block;
+	padding: 5px;
+}

@@ -121,10 +121,19 @@ $(function() {
 	$('.redactor').redactor({
 		fixed: true,
 		lang: 'fr',
-		buttons: ['formatting', '|', 'bold', 'italic', 'deleted', '|',
-			'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
-			'image', 'video', 'file', 'table', 'link', '|',
-			'fontcolor', 'backcolor', '|', 'alignment']
+		buttons: [
+			'formatting', '|', 'bold', 'italic', 'deleted', 'underline', '|',
+			'fontcolor', 'backcolor', '|', 'alignment', '|',
+			'unorderedlist', 'orderedlist', '|', 'image', 'video', 'file', 'table', 'link', '|',
+			'horizontalrule', '|', 'html'
+		]
+
+		/*
+		 'html', '|', 'formatting', '|', 'bold', 'italic', 'deleted', '|',
+		 'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
+		 'image', 'video', 'file', 'table', 'link', '|',
+		 'fontcolor', 'backcolor', '|', 'alignment'
+		 */
 	});
 
 

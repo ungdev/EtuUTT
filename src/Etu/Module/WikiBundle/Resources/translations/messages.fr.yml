@@ -1,1 +1,25 @@
 
+wiki:
+    levels:
+        connected: Tous les étudiants
+        asso: Les membres de l'association
+        admin: Les administrateurs
+    main:
+        menu:
+            index: Tous les wikis
+            read: Lire
+            edit: Modifier
+            permissions: Permissions
+        index:
+            title: Wiki des associations
+        indexEdit:
+            title: Modifier l'accueil
+            submit: Modifier
+            confirm: Vous avez bien modifié l'accueil du wiki
+        indexOrga:
+            title: Wiki de %name%
+            confirm: Vous avez bien modifié cette page
+        indexOrgaEdit:
+            title: Modifier la page
+            submit: Modifier
+            confirm: Vous avez bien modifié l'accueil du wiki

@@ -76,7 +76,7 @@ abstract class EtuKernel extends Kernel
 		/** @var Module $module */
 		foreach ($this->getModulesDefinitions() as $module) {
 			foreach ($module->getAvailablePermissions() as $permission) {
-				if ($permission instanceof Permission) {
+				if (! $permission instanceof OrgaPermission) {
 					$permissions[] = $permission;
 				}
 			}
