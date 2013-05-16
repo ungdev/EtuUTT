@@ -29,14 +29,6 @@ class Page
 	protected $id;
 
 	/**
-	 * @var Page $parent
-	 *
-	 * @ORM\ManyToOne(targetEntity="Page")
-	 * @ORM\JoinColumn()
-	 */
-	protected $parent;
-
-	/**
 	 * @var PageRevision $revision
 	 *
 	 * @ORM\OneToOne(targetEntity="PageRevision")
@@ -75,6 +67,20 @@ class Page
 	protected $date;
 
 	/**
+	 * @var integer $left
+	 *
+	 * @ORM\Column(name="left", type="integer")
+	 */
+	protected $left;
+
+	/**
+	 * @var integer $right
+	 *
+	 * @ORM\Column(name="right", type="integer")
+	 */
+	protected $right;
+
+	/**
 	 * Required level to view this page
 	 *
 	 * @var integer
@@ -91,6 +97,15 @@ class Page
 	 * @ORM\Column(name="levelToEdit", type="integer")
 	 */
 	protected $levelToEdit;
+
+	/**
+	 * Required level to edit permissions of this page
+	 *
+	 * @var integer
+	 *
+	 * @ORM\Column(name="levelToEditPermissions", type="integer")
+	 */
+	protected $levelToEditPermissions;
 
 	/**
 	 * Required level to create children for this page
@@ -129,6 +144,7 @@ class Page
 		$this->levelToCreate = self::LEVEL_ASSO;
 		$this->levelToDelete = self::LEVEL_ASSO;
 		$this->levelToEdit = self::LEVEL_ASSO;
+		$this->levelToEditPermissions = self::LEVEL_ASSO;
 		$this->levelToView = self::LEVEL_CONNECTED;
 		$this->isHome = false;
 	}
@@ -139,7 +155,7 @@ class Page
 	public function createRevision()
 	{
 		$revision = new PageRevision();
-		$revision->setPage($this);
+		$revision->setPageId($this->getId());
 		$revision->setPrevious($this->getRevision());
 
 		return $revision;
@@ -170,6 +186,44 @@ class Page
 	public function getDate()
 	{
 		return $this->date;
+	}
+
+	/**
+	 * @param int $left
+	 * @return Page
+	 */
+	public function setLeft($left)
+	{
+		$this->left = (integer) $left;
+
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getLeft()
+	{
+		return $this->left;
+	}
+
+	/**
+	 * @param int $right
+	 * @return Page
+	 */
+	public function setRight($right)
+	{
+		$this->right = (integer) $right;
+
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getRight()
+	{
+		return $this->right;
 	}
 
 	/**
@@ -248,6 +302,31 @@ class Page
 	}
 
 	/**
+	 * @param int $levelToEditPermissions
+	 * @return Page
+	 */
+	public function setLevelToEditPermissions($levelToEditPermissions)
+	{
+		if (! in_array($levelToEditPermissions, array(
+			self::LEVEL_ADMIN, self::LEVEL_ASSO, self::LEVEL_CONNECTED
+		))) {
+			$levelToEditPermissions = self::LEVEL_CONNECTED;
+		}
+
+		$this->levelToEditPermissions = $levelToEditPermissions;
+
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getLevelToEditPermissions()
+	{
+		return $this->levelToEditPermissions;
+	}
+
+	/**
 	 * @param int $levelToView
 	 * @return Page
 	 */
@@ -289,25 +368,6 @@ class Page
 	public function getOrga()
 	{
 		return $this->orga;
-	}
-
-	/**
-	 * @param Page $parent
-	 * @return Page
-	 */
-	public function setParent(Page $parent)
-	{
-		$this->parent = $parent;
-
-		return $this;
-	}
-
-	/**
-	 * @return Page
-	 */
-	public function getParent()
-	{
-		return $this->parent;
 	}
 
 	/**
