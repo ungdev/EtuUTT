@@ -32,7 +32,9 @@
 					<li class="nav-header">Wikis des associations</li>
 					{% for orga in orgas %}
 						<li>
-							<a href="{{ path('wiki_index_orga', {'login': orga.login}) }}">{{ orga.name }}</a>
+							<a href="{{ path('wiki_index_orga', {'login': orga.login}) }}">
+								{{ orga.name }}
+							</a>
 						</li>
 					{% endfor %}
 				</ul>

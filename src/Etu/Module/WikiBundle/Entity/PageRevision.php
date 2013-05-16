@@ -24,11 +24,11 @@ class PageRevision
 	protected $id;
 
 	/**
-	 * @var integer $pageId
+	 * @var integer $page
 	 *
-	 * @ORM\Column(name="page_id", type="integer")
+	 * @ORM\Column(name="page", type="integer")
 	 */
-	protected $pageId;
+	protected $page;
 
 	/**
 	 * @var User $user
@@ -37,14 +37,6 @@ class PageRevision
 	 * @ORM\JoinColumn()
 	 */
 	protected $user;
-
-	/**
-	 * @var PageRevision $previous
-	 *
-	 * @ORM\OneToOne(targetEntity="PageRevision")
-	 * @ORM\JoinColumn()
-	 */
-	protected $previous;
 
 	/**
 	 * @var string
@@ -67,6 +59,12 @@ class PageRevision
 	 */
 	protected $date;
 
+	/**
+	 * Temporary variable top store page title during edition.
+	 *
+	 * @var string
+	 */
+	public $title;
 
 	/**
 	 * Constructor
@@ -142,27 +140,8 @@ class PageRevision
 	}
 
 	/**
-	 * @param PageRevision $previous
-	 * @return PageRevision
-	 */
-	public function setPrevious($previous)
-	{
-		$this->previous = $previous;
-
-		return $this;
-	}
-
-	/**
-	 * @return PageRevision
-	 */
-	public function getPrevious()
-	{
-		return $this->previous;
-	}
-
-	/**
 	 * @param \Etu\Core\UserBundle\Entity\User $user
-	 * @return Page
+	 * @return PageRevision
 	 */
 	public function setUser(User $user)
 	{
@@ -185,7 +164,7 @@ class PageRevision
 	 */
 	public function setPageId($pageId)
 	{
-		$this->pageId = $pageId;
+		$this->page = $pageId;
 
 		return $this;
 	}
@@ -195,6 +174,6 @@ class PageRevision
 	 */
 	public function getPageId()
 	{
-		return $this->pageId;
+		return $this->page;
 	}
 }

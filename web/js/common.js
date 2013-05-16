@@ -24,7 +24,7 @@ $(function() {
 	$('a[rel*=facebox]').facebox();
 
 	$('.tip').tipsy({
-		gravity: 'n'
+		gravity: 's'
 	});
 
 	$('.userbox-link').click(function() {

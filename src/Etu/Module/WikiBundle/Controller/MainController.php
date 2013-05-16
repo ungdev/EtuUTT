@@ -84,7 +84,9 @@ class MainController extends Controller
 			);
 		}
 
-		$revision = $home->getRevision();
+		$revision = $home->createRevision();
+		$revision->setBody($home->getRevision()->getBody())
+			->setUser($this->getUser());
 
 		$form = $this->createFormBuilder($revision)
 			->add('body', 'redactor')
@@ -93,10 +95,14 @@ class MainController extends Controller
 		$request = $this->getRequest();
 
 		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
-			$revision->setBody(RedactorJsEscaper::escape($revision->getBody()));
+			if (RedactorJsEscaper::escape($revision->getBody()) != $home->getRevision()->getBody()) {
+				$home->setRevision($revision);
+				$revision->setBody(RedactorJsEscaper::escape($revision->getBody()));
 
-			$em->persist($revision);
-			$em->flush();
+				$em->persist($revision);
+				$em->persist($home);
+				$em->flush();
+			}
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
@@ -137,6 +143,17 @@ class MainController extends Controller
 			->getQuery()
 			->getOneOrNullResult();
 
+		/** @var $pages Page[] */
+		$pages = $em->createQueryBuilder()
+			->select('p, o')
+			->from('EtuModuleWikiBundle:Page', 'p')
+			->leftJoin('p.orga', 'o')
+			->andWhere('o.login = :login')
+			->setParameter('login', $login)
+			->orderBy('p.left', 'ASC')
+			->getQuery()
+			->getResult();
+
 		if (! $home) {
 			/** @var $orga Organization */
 			$orga = $em->getRepository('EtuUserBundle:Organization')->findOneByLogin($login);
@@ -153,9 +170,10 @@ class MainController extends Controller
 				->setOrga($orga)
 				->setLeft(1)
 				->setRight(2)
+				->setDepth(0)
 				->setLevelToDelete(Page::LEVEL_UNREACHABLE)
-				->setLevelToCreate(Page::LEVEL_ASSO)
-				->setLevelToEdit(Page::LEVEL_ASSO)
+				->setLevelToCreate(Page::LEVEL_ASSO_ADMIN)
+				->setLevelToEdit(Page::LEVEL_ASSO_MEMBER)
 				->setLevelToView(Page::LEVEL_CONNECTED);
 
 			$em->persist($home);
@@ -163,7 +181,8 @@ class MainController extends Controller
 
 			$revision = new PageRevision();
 			$revision->setPageId($home->getId())
-				->setBody('Cette page n\'a pas été modifiée par son association.');
+				->setBody('Cette page n\'a pas été modifiée par son association.')
+				->setComment('Création automatique');
 
 			$home->setRevision($revision);
 
@@ -174,7 +193,8 @@ class MainController extends Controller
 
 		return array(
 			'page' => $home,
-			'orga' => $home->getOrga()
+			'orga' => $home->getOrga(),
+			'tree' => $pages
 		);
 	}
 
@@ -203,23 +223,54 @@ class MainController extends Controller
 			->getQuery()
 			->getOneOrNullResult();
 
+		$categories = $em->createQueryBuilder()
+			->select('p, r, o')
+			->from('EtuModuleWikiBundle:Page', 'p')
+			->leftJoin('p.revision', 'r')
+			->leftJoin('p.orga', 'o')
+			->where('p.isHome = 1')
+			->andWhere('o.login = :login')
+			->setParameter('login', $login)
+			->getQuery()
+			->getOneOrNullResult();
+
+		$revisions = $em->createQueryBuilder()
+			->select('r, u')
+			->from('EtuModuleWikiBundle:PageRevision', 'r')
+			->leftJoin('r.user', 'u')
+			->where('r.page = :page')
+			->setParameter('page', $home->getId())
+			->orderBy('r.date', 'DESC')
+			->setMaxResults(30)
+			->getQuery()
+			->getResult();
+
 		if (! $home) {
 			throw $this->createNotFoundException(sprintf('Home page for organization %s not found', $login));
 		}
 
-		$revision = $home->getRevision();
+		$revision = $home->createRevision();
+		$revision->setBody($home->getRevision()->getBody())
+			->setUser($this->getUser())
+			->title = $home->getTitle();
 
 		$form = $this->createFormBuilder($revision)
+			->add('title', 'text')
 			->add('body', 'redactor')
+			->add('comment')
 			->getForm();
 
 		$request = $this->getRequest();
 
 		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
-			$revision->setBody(RedactorJsEscaper::escape($revision->getBody()));
+			if (RedactorJsEscaper::escape($revision->getBody()) != $home->getRevision()->getBody()) {
+				$home->setRevision($revision);
+				$revision->setBody(RedactorJsEscaper::escape($revision->getBody()));
 
-			$em->persist($revision);
-			$em->flush();
+				$em->persist($revision);
+				$em->persist($home);
+				$em->flush();
+			}
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
@@ -232,7 +283,8 @@ class MainController extends Controller
 		return array(
 			'page' => $home,
 			'orga' => $home->getOrga(),
-			'form' => $form->createView()
+			'form' => $form->createView(),
+			'revisions' => $revisions
 		);
 	}
 
@@ -262,59 +314,32 @@ class MainController extends Controller
 			->getOneOrNullResult();
 
 		if (! $home) {
-			/** @var $orga Organization */
-			$orga = $em->getRepository('EtuUserBundle:Organization')->findOneByLogin($login);
-
-			if (! $orga) {
-				throw $this->createNotFoundException(sprintf('Orga %s not found', $orga));
-			}
-
-			$home = new Page();
-
-			$home
-				->setTitle('Wiki de '.$orga->getName())
-				->setOrga($orga)
-				->setLevelToDelete(Page::LEVEL_ADMIN)
-				->setLevelToCreate(Page::LEVEL_ASSO)
-				->setLevelToEdit(Page::LEVEL_ASSO)
-				->setLevelToView(Page::LEVEL_CONNECTED);
-
-			$em->persist($home);
-			$em->flush();
-
-			$revision = new PageRevision();
-			$revision->setPageId($home->getId())
-				->setBody('Cette page n\'a pas été modifiée par son association.');
-
-			$home->setRevision($revision);
-
-			$em->persist($revision);
-			$em->persist($home);
-			$em->flush();
+			throw $this->createNotFoundException(sprintf('Home page for organization %s not found', $login));
 		}
 
 		$levels = array(
-			Page::LEVEL_CONNECTED => 'connected',
-			Page::LEVEL_ASSO => 'asso',
-			Page::LEVEL_ADMIN => 'admin'
+			Page::LEVEL_CONNECTED => 'wiki.levels.connected',
+			Page::LEVEL_ASSO_MEMBER => 'wiki.levels.asso_member',
+			Page::LEVEL_ASSO_ADMIN => 'wiki.levels.asso_admin',
+			Page::LEVEL_ADMIN => 'wiki.levels.admin'
 		);
 
 		$form = $this->createFormBuilder($home)
 			->add('levelToCreate', 'choice', array('choices' => $levels))
+			->add('levelToDelete', 'choice', array('choices' => $levels))
 			->add('levelToEdit', 'choice', array('choices' => $levels))
+			->add('levelToEditPermissions', 'choice', array('choices' => $levels))
 			->getForm();
 
 		$request = $this->getRequest();
 
 		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
-			$revision->setBody(RedactorJsEscaper::escape($revision->getBody()));
-
-			$em->persist($revision);
+			$em->persist($home);
 			$em->flush();
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'wiki.main.indexOrga.confirm'
+				'message' => 'wiki.main.indexOrgaPermissions.confirm'
 			));
 
 			return $this->redirect($this->generateUrl('wiki_index_orga', array('login' => $login)));

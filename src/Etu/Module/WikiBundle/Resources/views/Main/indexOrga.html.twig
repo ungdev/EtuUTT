@@ -11,48 +11,59 @@
 {% endblock %}
 
 {% block content %}
-	{% if wiki_can_edit(app.user, page) %}
-		<ul class="nav nav-tabs page-tabs">
-			<li>
-				<a href="{{ path('wiki_index') }}">
-					<i class="icon-th-list"></i> {{ 'wiki.main.menu.index'|trans }}
-				</a>
+	<ul class="nav nav-tabs page-tabs">
+		<li>
+			<a href="{{ path('wiki_index') }}">{{ 'wiki.main.menu.index'|trans }}</a>
+		</li>
+		{% if wiki_can_edit_permissions(app.user, page) %}
+			<li class="pull-right">
+				<a href="{{ path('wiki_index_orga_permissions', {'login': orga.login}) }}">{{ 'wiki.main.menu.permissions'|trans }}</a>
 			</li>
-			{% if wiki_can_edit_permissions(app.user, page) %}
-				<li class="pull-right">
-					<a href="{{ path('wiki_index_orga_permissions', {'login': orga.login}) }}">{{ 'wiki.main.menu.permissions'|trans }}</a>
-				</li>
-			{% endif %}
-			{% if wiki_can_edit(app.user, page) %}
-				<li class="pull-right">
-					<a href="{{ path('wiki_index_orga_edit', {'login': orga.login}) }}">{{ 'wiki.main.menu.edit'|trans }}</a>
-				</li>
-			{% endif %}
-			<li class="pull-right active page-tabs-resolved-active">
-				<a href="{{ path('wiki_index_orga', {'login': orga.login}) }}">{{ 'wiki.main.menu.read'|trans }}</a>
+		{% endif %}
+		{% if wiki_can_edit(app.user, page) %}
+			<li class="pull-right">
+				<a href="{{ path('wiki_index_orga_edit', {'login': orga.login}) }}">{{ 'wiki.main.menu.edit'|trans }}</a>
 			</li>
-		</ul>
+		{% endif %}
+		<li class="pull-right active page-tabs-resolved-active">
+			<a href="{{ path('wiki_index_orga', {'login': orga.login}) }}">{{ 'wiki.main.menu.read'|trans }}</a>
+		</li>
+	</ul>
 
-		<div class="padding20-sides">
-	{% else %}
-		<div class="padding20-all">
-	{% endif %}
-
+	<div class="padding20-sides">
 		<div class="row-fluid">
 			<div class="span3 wiki-categories">
 				<ul class="nav nav-list">
-					<li class="nav-header">Catégories</li>
-					<li class="active">
-						<a href="#">
-							Présentation de l'UNG
-						</a>
-					</li>
-					<li>
+					<li class="nav-header">Pages</li>
+					{% for node in tree %}
+						{% if page.id == node.id %}
+						<li class="active">
+						{% else %}
+						<li>
+						{% endif %}
+							<a href="#">
+								{{ node.title }}
+							</a>
+						</li>
+					{% endfor %}
+
+					<!--<li>
 						<a href="#">
 							▸ ▾ Documentation
 						</a>
-					</li>
+					</li>-->
 				</ul>
+
+				{% if wiki_can_create(app.user, page) %}
+					<br />
+					<a href="" class="btn wiki-btn-create">
+						<i class="icon-plus"></i> Créer une catégorie
+					</a>
+					<br />
+					<a href="" class="btn wiki-btn-create">
+						<i class="icon-plus"></i> Créer une page
+					</a>
+				{% endif %}
 			</div>
 
 			<div class="span9">

@@ -15,7 +15,8 @@ use Etu\Core\UserBundle\Entity\User;
 class Page
 {
 	const LEVEL_CONNECTED = 0;
-	const LEVEL_ASSO = 10;
+	const LEVEL_ASSO_MEMBER = 10;
+	const LEVEL_ASSO_ADMIN = 15;
 	const LEVEL_ADMIN = 20;
 	const LEVEL_UNREACHABLE = 30;
 
@@ -69,16 +70,23 @@ class Page
 	/**
 	 * @var integer $left
 	 *
-	 * @ORM\Column(name="left", type="integer")
+	 * @ORM\Column(name="treeLeft", type="integer")
 	 */
 	protected $left;
 
 	/**
 	 * @var integer $right
 	 *
-	 * @ORM\Column(name="right", type="integer")
+	 * @ORM\Column(name="treeRight", type="integer")
 	 */
 	protected $right;
+
+	/**
+	 * @var integer $depth
+	 *
+	 * @ORM\Column(name="treeDepth", type="integer")
+	 */
+	protected $depth;
 
 	/**
 	 * Required level to view this page
@@ -130,9 +138,18 @@ class Page
 	 *
 	 * @var integer
 	 *
-	 * @ORM\Column(name="home", type="integer")
+	 * @ORM\Column(name="isHome", type="boolean")
 	 */
 	protected $isHome;
+
+	/**
+	 * Is a category ?
+	 *
+	 * @var integer
+	 *
+	 * @ORM\Column(name="isCategory", type="boolean")
+	 */
+	protected $isCategory;
 
 
 	/**
@@ -141,12 +158,13 @@ class Page
 	public function __construct()
 	{
 		$this->date = new \DateTime();
-		$this->levelToCreate = self::LEVEL_ASSO;
-		$this->levelToDelete = self::LEVEL_ASSO;
-		$this->levelToEdit = self::LEVEL_ASSO;
-		$this->levelToEditPermissions = self::LEVEL_ASSO;
+		$this->levelToCreate = self::LEVEL_ASSO_MEMBER;
+		$this->levelToDelete = self::LEVEL_ASSO_MEMBER;
+		$this->levelToEdit = self::LEVEL_ASSO_MEMBER;
+		$this->levelToEditPermissions = self::LEVEL_ASSO_ADMIN;
 		$this->levelToView = self::LEVEL_CONNECTED;
 		$this->isHome = false;
+		$this->isCategory = false;
 	}
 
 	/**
@@ -156,7 +174,6 @@ class Page
 	{
 		$revision = new PageRevision();
 		$revision->setPageId($this->getId());
-		$revision->setPrevious($this->getRevision());
 
 		return $revision;
 	}
@@ -227,15 +244,34 @@ class Page
 	}
 
 	/**
+	 * @param int $depth
+	 * @return Page
+	 */
+	public function setDepth($depth)
+	{
+		$this->depth = (integer) $depth;
+
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getDepth()
+	{
+		return $this->depth;
+	}
+
+	/**
 	 * @param int $levelToCreate
 	 * @return Page
 	 */
 	public function setLevelToCreate($levelToCreate)
 	{
 		if (! in_array($levelToCreate, array(
-			self::LEVEL_ADMIN, self::LEVEL_ASSO, self::LEVEL_CONNECTED
+			self::LEVEL_ADMIN, self::LEVEL_ASSO_MEMBER, self::LEVEL_ASSO_ADMIN, self::LEVEL_CONNECTED
 		))) {
-			$levelToCreate = self::LEVEL_ASSO;
+			$levelToCreate = self::LEVEL_ASSO_MEMBER;
 		}
 
 		$this->levelToCreate = $levelToCreate;
@@ -258,9 +294,9 @@ class Page
 	public function setLevelToDelete($levelToDelete)
 	{
 		if (! in_array($levelToDelete, array(
-			self::LEVEL_ADMIN, self::LEVEL_ASSO, self::LEVEL_CONNECTED
+			self::LEVEL_ADMIN, self::LEVEL_ASSO_MEMBER, self::LEVEL_ASSO_ADMIN, self::LEVEL_CONNECTED
 		))) {
-			$levelToDelete = self::LEVEL_ASSO;
+			$levelToDelete = self::LEVEL_ASSO_MEMBER;
 		}
 
 		$this->levelToDelete = $levelToDelete;
@@ -283,9 +319,9 @@ class Page
 	public function setLevelToEdit($levelToEdit)
 	{
 		if (! in_array($levelToEdit, array(
-			self::LEVEL_ADMIN, self::LEVEL_ASSO, self::LEVEL_CONNECTED
+			self::LEVEL_ADMIN, self::LEVEL_ASSO_MEMBER, self::LEVEL_ASSO_ADMIN, self::LEVEL_CONNECTED
 		))) {
-			$levelToEdit = self::LEVEL_ASSO;
+			$levelToEdit = self::LEVEL_ASSO_MEMBER;
 		}
 
 		$this->levelToEdit = $levelToEdit;
@@ -308,9 +344,9 @@ class Page
 	public function setLevelToEditPermissions($levelToEditPermissions)
 	{
 		if (! in_array($levelToEditPermissions, array(
-			self::LEVEL_ADMIN, self::LEVEL_ASSO, self::LEVEL_CONNECTED
+			self::LEVEL_ADMIN, self::LEVEL_ASSO_MEMBER, self::LEVEL_ASSO_ADMIN, self::LEVEL_CONNECTED
 		))) {
-			$levelToEditPermissions = self::LEVEL_CONNECTED;
+			$levelToEditPermissions = self::LEVEL_ASSO_ADMIN;
 		}
 
 		$this->levelToEditPermissions = $levelToEditPermissions;
@@ -333,7 +369,7 @@ class Page
 	public function setLevelToView($levelToView)
 	{
 		if (! in_array($levelToView, array(
-			self::LEVEL_ADMIN, self::LEVEL_ASSO, self::LEVEL_CONNECTED
+			self::LEVEL_ADMIN, self::LEVEL_ASSO_MEMBER, self::LEVEL_ASSO_ADMIN, self::LEVEL_CONNECTED
 		))) {
 			$levelToView = self::LEVEL_CONNECTED;
 		}
@@ -444,5 +480,24 @@ class Page
 	public function getIsHome()
 	{
 		return $this->isHome;
+	}
+
+	/**
+	 * @param int $isCategory
+	 * @return Page
+	 */
+	public function setIsCategory($isCategory)
+	{
+		$this->isCategory = (boolean) $isCategory;
+
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getIsCategory()
+	{
+		return $this->isCategory;
 	}
 }

@@ -2,8 +2,9 @@
 wiki:
     levels:
         connected: Tous les étudiants
-        asso: Les membres de l'association
-        admin: Les administrateurs
+        asso_member: Tous les membres de l'association
+        asso_admin: Les membres du bureau de l'association
+        admin: Les administrateurs de EtuUTT (vous n'aurez plus ce droit)
     main:
         menu:
             index: Tous les wikis
@@ -23,3 +24,7 @@ wiki:
             title: Modifier la page
             submit: Modifier
             confirm: Vous avez bien modifié l'accueil du wiki
+        indexOrgaPermissions:
+            title: Modifier les permissions
+            submit: Modifier
+            confirm: Vous avez bien modifié les permissions de cette page
