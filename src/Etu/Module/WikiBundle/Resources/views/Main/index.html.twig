@@ -26,17 +26,21 @@
 		<div class="padding20-all">
 	{% endif %}
 
-		{{ page.revision.body|raw }}
+		<div class="row-fluid">
+			<div class="span3 wiki-categories">
+				<ul class="nav nav-list">
+					<li class="nav-header">Wikis des associations</li>
+					{% for orga in orgas %}
+						<li>
+							<a href="{{ path('wiki_index_orga', {'login': orga.login}) }}">{{ orga.name }}</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
 
-		<div class="wiki-orgas">
-			<h4>Wikis des associations</h4>
-			<ul class="wiki-orgas-links">
-			{% for orga in orgas %}
-				<li>
-					<a href="{{ path('wiki_index_orga', {'login': orga.login}) }}">{{ orga.name }}</a>
-				</li>
-			{% endfor %}
-			</ul>
+			<div class="span9">
+				{{ page.revision.body|raw }}
+			</div>
 		</div>
 	</div>
 {% endblock %}

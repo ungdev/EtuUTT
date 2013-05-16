@@ -142,15 +142,17 @@ class MainController extends Controller
 			$orga = $em->getRepository('EtuUserBundle:Organization')->findOneByLogin($login);
 
 			if (! $orga) {
-				throw $this->createNotFoundException(sprintf('Orga %s not found', $orga));
+				throw $this->createNotFoundException(sprintf('Orga %s not found', $login));
 			}
 
 			$home = new Page();
 
 			$home
-				->setTitle('Wiki de '.$orga->getName())
+				->setTitle('Accueil')
 				->setIsHome(true)
 				->setOrga($orga)
+				->setLeft(1)
+				->setRight(2)
 				->setLevelToDelete(Page::LEVEL_UNREACHABLE)
 				->setLevelToCreate(Page::LEVEL_ASSO)
 				->setLevelToEdit(Page::LEVEL_ASSO)
@@ -202,35 +204,7 @@ class MainController extends Controller
 			->getOneOrNullResult();
 
 		if (! $home) {
-			/** @var $orga Organization */
-			$orga = $em->getRepository('EtuUserBundle:Organization')->findOneByLogin($login);
-
-			if (! $orga) {
-				throw $this->createNotFoundException(sprintf('Orga %s not found', $orga));
-			}
-
-			$home = new Page();
-
-			$home
-				->setTitle('Wiki de '.$orga->getName())
-				->setOrga($orga)
-				->setLevelToDelete(Page::LEVEL_ADMIN)
-				->setLevelToCreate(Page::LEVEL_ASSO)
-				->setLevelToEdit(Page::LEVEL_ASSO)
-				->setLevelToView(Page::LEVEL_CONNECTED);
-
-			$em->persist($home);
-			$em->flush();
-
-			$revision = new PageRevision();
-			$revision->setPageId($home->getId())
-				->setBody('Cette page n\'a pas été modifiée par son association.');
-
-			$home->setRevision($revision);
-
-			$em->persist($revision);
-			$em->persist($home);
-			$em->flush();
+			throw $this->createNotFoundException(sprintf('Home page for organization %s not found', $login));
 		}
 
 		$revision = $home->getRevision();

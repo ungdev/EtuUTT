@@ -19,6 +19,7 @@ class PermissionsExtension extends \Twig_Extension
 		return array(
 			'wiki_can_view' => new \Twig_Function_Method($this, 'canView'),
 			'wiki_can_edit' => new \Twig_Function_Method($this, 'canEdit'),
+			'wiki_can_edit_permissions' => new \Twig_Function_Method($this, 'canEditPermissions'),
 			'wiki_can_delete' => new \Twig_Function_Method($this, 'canDelete'),
 			'wiki_can_create' => new \Twig_Function_Method($this, 'canCreate'),
 		);
@@ -46,6 +47,18 @@ class PermissionsExtension extends \Twig_Extension
 		$checker = new PermissionsChecker($user);
 
 		return $checker->canEdit($page);
+	}
+
+	/**
+	 * @param UserInterface $user
+	 * @param Page          $page
+	 * @return bool
+	 */
+	public function canEditPermissions(UserInterface $user, Page $page)
+	{
+		$checker = new PermissionsChecker($user);
+
+		return $checker->canEditPermissions($page);
 	}
 
 	/**

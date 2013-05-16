@@ -102,6 +102,39 @@ class PermissionsChecker
 	 * @param Page $page
 	 * @return bool
 	 */
+	public function canEditPermissions(Page $page)
+	{
+		// Organization ? Can not edit any page
+		if ($this->user instanceof Organization) {
+			return false;
+		}
+
+		if ($this->user->getIsAdmin()) {
+			return true;
+		}
+
+		// Admin permission required
+		if ($page->getLevelToEditPermissions() == Page::LEVEL_ADMIN) {
+			return $this->user->getIsAdmin();
+		}
+
+		// Asso membership required
+		if ($page->getLevelToEditPermissions() == Page::LEVEL_ASSO) {
+			if ($membership = $this->findMembership($page->getOrga())) {
+				return $membership->hasPermission('wiki.edit');
+			} else {
+				return false;
+			}
+		}
+
+		// Connected user required
+		return $this->user instanceof UserInterface;
+	}
+
+	/**
+	 * @param Page $page
+	 * @return bool
+	 */
 	public function canCreate(Page $page)
 	{
 		// Organization ? Can not edit any page
