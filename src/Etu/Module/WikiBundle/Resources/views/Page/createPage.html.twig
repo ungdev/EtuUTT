@@ -1,0 +1,88 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'wiki.page.createPage.title'|trans }}{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/bundles/wiki.css') }}" type="text/css" />
+{% endblock %}
+
+{% block javascripts %}
+	<script type="text/javascript" src="{{ asset('js/bundles/wiki.js') }}"></script>
+{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/wiki.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<ul class="nav nav-tabs page-tabs">
+		<li>
+			<a href="{{ path('wiki_index') }}">{{ 'wiki.main.menu.index'|trans }}</a>
+		</li>
+		<li>
+			<a href="{{ path('wiki_index_orga', {'login': orga.login}) }}">
+				{{ 'wiki.main.indexOrga.title'|trans({'%name%': orga.name}) }}
+			</a>
+		</li>
+	</ul>
+
+	<div class="padding20-sides">
+		<div class="row-fluid">
+			<div class="span3 wiki-categories">
+				<ul class="nav nav-list">
+					<li class="nav-header">{{ 'wiki.main.indexOrga.title'|trans({'%name%': orga.name}) }}</li>
+					<li>
+						{% include 'EtuModuleWikiBundle:Tree:children.html.twig' with {
+							'tree': tree,
+							'orga': orga,
+							'depth': 0
+						} %}
+					</li>
+				</ul>
+			</div>
+
+			<div class="span9">
+				<form method="post" action="">
+					<div class="control-group">
+						{{ form_label(form.category,  'wiki.page.createPage.name'|trans) }}
+						{{ form_widget(form.title, {'attr': {'class': 'span12 wiki-edit-title' } }) }}
+						<span class="help-block">{{ form_errors(form.title) }}</span>
+					</div>
+
+					<div class="control-group">
+						{{ form_widget(form.body) }}
+						<span class="help-block">{{ form_errors(form.body) }}</span>
+					</div>
+
+					<div class="control-group">
+						{{ form_label(form.category, 'wiki.page.createPage.where'|trans) }}
+						{{ form_widget(form.category, {'attr': {'class': 'span6' } }) }}
+						<span class="help-block">{{ form_errors(form.category) }}</span>
+					</div>
+
+					<div class="control-group">
+						{{ form_label(form.levelToView, 'Qui peut voir cette page ?') }}
+						{{ form_widget(form.levelToView, {'attr': {'class': 'span6'} }) }}
+						<span class="help-block">{{ form_errors(form.levelToView) }}</span>
+					</div>
+
+					<div class="control-group">
+						{{ form_label(form.levelToEdit, 'Qui peut modifier cette page ?') }}
+						{{ form_widget(form.levelToEdit, {'attr': {'class': 'span6'} }) }}
+						<span class="help-block">{{ form_errors(form.levelToEdit) }}</span>
+					</div>
+
+					<div class="control-group">
+						{{ form_label(form.levelToEditPermissions, 'Qui peut modifier les permissions de cette page ?') }}
+						{{ form_widget(form.levelToEditPermissions, {'attr': {'class': 'span6'} }) }}
+						<span class="help-block">{{ form_errors(form.levelToEditPermissions) }}</span>
+					</div>
+
+					{{ form_rest(form) }}
+
+					<button type="submit" class="btn">{{ 'wiki.page.createCategory.submit'|trans }}</button>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

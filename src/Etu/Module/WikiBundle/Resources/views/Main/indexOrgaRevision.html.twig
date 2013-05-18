@@ -37,45 +37,42 @@
 				<ul class="nav nav-list">
 					<li class="nav-header">Révisions</li>
 					{% for revision in revisions %}
-						{% if page.revision.id == revision.id %}
+						{% if currentRevision.id == revision.id %}
 							<li class="active">
-						{% else %}
-							<li>
-						{% endif %}
-								<a href="{{ path('wiki_index_orga_revision', {'login': orga.login, 'id': revision.id}) }}" class="tip"
-									{% if revision.comment and revision.user %}
-										title="{{ revision.comment }}, par {{ revision.user.fullName }}"
-									{% elseif revision.comment and not revision.user %}
-										title="{{ revision.comment }}"
-									{% elseif not revision.comment and revision.user %}
-										title="Par {{ revision.user.fullName }}"
-									{% endif %}
+								<a href="#" class="tip"
+										{% if revision.comment and revision.user %}
+											title="{{ revision.comment }}, par {{ revision.user.fullName }}"
+										{% elseif revision.comment and not revision.user %}
+											title="{{ revision.comment }}"
+										{% elseif not revision.comment and revision.user %}
+											title="Par {{ revision.user.fullName }}"
+										{% endif %}
 										>
 									{{ time_diff(revision.date)|ucfirst }}
 								</a>
 							</li>
+						{% else %}
+							<li>
+								<a href="{{ path('wiki_index_orga_revision', {'login': orga.login, 'id': revision.id}) }}" class="tip"
+										{% if revision.comment and revision.user %}
+											title="{{ revision.comment }}, par {{ revision.user.fullName }}"
+										{% elseif revision.comment and not revision.user %}
+											title="{{ revision.comment }}"
+										{% elseif not revision.comment and revision.user %}
+											title="Par {{ revision.user.fullName }}"
+										{% endif %}
+										>
+									{{ time_diff(revision.date)|ucfirst }}
+								</a>
+							</li>
+						{% endif %}
 					{% endfor %}
 				</ul>
 			</div>
 
 			<div class="span9">
-				<form method="post" action="">
-					{{ form_widget(form.title, {'attr': {'class': 'span12 wiki-edit-title'} }) }}
-					<span class="help-block">{{ form_errors(form.body) }}</span>
-
-					{{ form_widget(form.body) }}
-					<span class="help-block">{{ form_errors(form.body) }}</span>
-
-					<div class="control-group">
-						{{ form_label(form.comment, 'Commentaire décrivant vos modifications') }}
-						{{ form_widget(form.comment, {'attr': {'class': 'span12'} }) }}
-						<span class="help-block">{{ form_errors(form.body) }}</span>
-					</div>
-
-					{{ form_rest(form) }}
-
-					<button type="submit" class="btn btn-primary">{{ 'wiki.main.indexOrgaEdit.submit'|trans }}</button>
-				</form>
+				<h4>{{ page.title }}</h4>
+				{{ currentRevision.body|raw }}
 			</div>
 		</div>
 	</div>

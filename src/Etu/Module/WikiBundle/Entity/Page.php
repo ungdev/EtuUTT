@@ -151,6 +151,11 @@ class Page
 	 */
 	protected $isCategory;
 
+	/**
+	 * Temporary variable to store page children
+	 */
+	public $children = array();
+
 
 	/**
 	 * Constructor

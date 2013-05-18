@@ -28,10 +28,28 @@
 	height: 40px !important;
 	font-weight: bold;
 }
-.wiki-btn-create {
-	float: right;
-	margin: 5px;
+
+/*
+ * List
+ */
+.wiki-nested-list, .wiki-nested-list li {
+	margin: 0;
+	padding: 0;
 }
+.wiki-nested-list li > ul {
+	margin-left: 20px;
+	display: none;
+}
+.wiki-nested-item {
+	list-style: none;
+}
+.wiki-nested-item-category-up {
+	list-style-image: url('../../img/icons/arrow-up.png');
+}
+.wiki-nested-item-category-down {
+	list-style-image: url('../../img/icons/arrow-down.png');
+}
+
 
 @media screen and (max-width: 775px) {
 	.wiki-categories {

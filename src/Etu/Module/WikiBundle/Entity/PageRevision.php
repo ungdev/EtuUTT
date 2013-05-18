@@ -26,7 +26,7 @@ class PageRevision
 	/**
 	 * @var integer $page
 	 *
-	 * @ORM\Column(name="page", type="integer")
+	 * @ORM\Column(name="page", type="integer", nullable=true)
 	 */
 	protected $page;
 

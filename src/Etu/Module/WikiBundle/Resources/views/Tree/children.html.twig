@@ -1,0 +1,39 @@
+
+<ul class="wiki-nested-list wiki-nested-list-depth-{{ depth }}">
+	{% for node in tree %}
+		{% if currentPage is defined and node.id == currentPage.id %}
+		<li class="wiki-nested-item wiki-nested-item-active">
+		{% else %}
+		<li class="wiki-nested-item {% if node.isCategory %}wiki-nested-item-category-up{% else %}wiki-nested-item-page{% endif %}">
+		{% endif %}
+			{% if node.isCategory %}
+				<a href="#" data-state="up" data-depth="{{ node.depth + 1 }}" class="wiki-nested-link-category">
+					{{ node.title }}
+				</a>
+
+				{% if currentPage is defined %}
+					{% include 'EtuModuleWikiBundle:Tree:children.html.twig' with {
+						'tree': node.children,
+						'currentPage': page,
+						'depth': node.depth + 1
+					} %}
+				{% else %}
+					{% include 'EtuModuleWikiBundle:Tree:children.html.twig' with {
+						'tree': node.children,
+						'depth': node.depth + 1
+					} %}
+				{% endif %}
+			{% else %}
+				{% if node.isHome %}
+					<a href="{{ path('wiki_index_orga', {'login': orga.login}) }}" class="wiki-nested-link-page">
+						{{ node.title }}
+					</a>
+				{% else %}
+					<a href="{{ path('wiki_page', {'login': orga.login, 'id': node.id, 'slug': node.title|slugify}) }}" class="wiki-nested-link-page">
+						{{ node.title }}
+					</a>
+				{% endif %}
+			{% endif %}
+		</li>
+	{% endfor %}
+</ul>

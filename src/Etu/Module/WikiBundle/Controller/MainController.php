@@ -8,9 +8,10 @@ use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Util\RedactorJsEscaper;
 use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Module\WikiBundle\Entity\Page;
+use Etu\Module\WikiBundle\Entity\PageRevision;
+use Etu\Module\WikiBundle\Model\NestedPagesTree;
 
 // Import annotations
-use Etu\Module\WikiBundle\Entity\PageRevision;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -154,6 +155,8 @@ class MainController extends Controller
 			->getQuery()
 			->getResult();
 
+		$tree = new NestedPagesTree($pages);
+
 		if (! $home) {
 			/** @var $orga Organization */
 			$orga = $em->getRepository('EtuUserBundle:Organization')->findOneByLogin($login);
@@ -194,7 +197,7 @@ class MainController extends Controller
 		return array(
 			'page' => $home,
 			'orga' => $home->getOrga(),
-			'tree' => $pages
+			'tree' => $tree->getNestedTree()
 		);
 	}
 
@@ -223,16 +226,18 @@ class MainController extends Controller
 			->getQuery()
 			->getOneOrNullResult();
 
-		$categories = $em->createQueryBuilder()
-			->select('p, r, o')
+		/** @var $pages Page[] */
+		$pages = $em->createQueryBuilder()
+			->select('p, o')
 			->from('EtuModuleWikiBundle:Page', 'p')
-			->leftJoin('p.revision', 'r')
 			->leftJoin('p.orga', 'o')
-			->where('p.isHome = 1')
 			->andWhere('o.login = :login')
 			->setParameter('login', $login)
+			->orderBy('p.left', 'ASC')
 			->getQuery()
-			->getOneOrNullResult();
+			->getResult();
+
+		$tree = new NestedPagesTree($pages);
 
 		$revisions = $em->createQueryBuilder()
 			->select('r, u')
@@ -284,7 +289,83 @@ class MainController extends Controller
 			'page' => $home,
 			'orga' => $home->getOrga(),
 			'form' => $form->createView(),
-			'revisions' => $revisions
+			'revisions' => $revisions,
+			'tree' => $tree->getNestedTree()
+		);
+	}
+
+	/**
+	 * @Route("/wiki/orga/{login}/revision/{id}/{ready}", defaults={"ready"=false}, name="wiki_index_orga_revision")
+	 * @Template()
+	 */
+	public function indexOrgaRevisionAction($login, $id, $ready)
+	{
+		if (! $this->getUserLayer()->isConnected()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $revision PageRevision */
+		$revision = $em->createQueryBuilder()
+			->select('r')
+			->from('EtuModuleWikiBundle:PageRevision', 'r')
+			->where('r.id = :id')
+			->setParameter('id', $id)
+			->getQuery()
+			->getOneOrNullResult();
+
+		if (! $revision) {
+			throw $this->createNotFoundException(sprintf('Revision not found'));
+		}
+
+		/** @var $page Page */
+		$page = $em->createQueryBuilder()
+			->select('p, o')
+			->from('EtuModuleWikiBundle:Page', 'p')
+			->leftJoin('p.orga', 'o')
+			->where('p.id = :id')
+			->andWhere('o.login = :login')
+			->setParameter('id', $revision->getPageId())
+			->setParameter('login', $login)
+			->getQuery()
+			->getOneOrNullResult();
+
+		if (! $page) {
+			throw $this->createNotFoundException(sprintf('Page not found'));
+		}
+
+		$revisions = $em->createQueryBuilder()
+			->select('r, u')
+			->from('EtuModuleWikiBundle:PageRevision', 'r')
+			->leftJoin('r.user', 'u')
+			->where('r.page = :page')
+			->setParameter('page', $page->getId())
+			->orderBy('r.date', 'DESC')
+			->setMaxResults(30)
+			->getQuery()
+			->getResult();
+
+		/** @var $pages Page[] */
+		$pages = $em->createQueryBuilder()
+			->select('p, o')
+			->from('EtuModuleWikiBundle:Page', 'p')
+			->leftJoin('p.orga', 'o')
+			->andWhere('o.login = :login')
+			->setParameter('login', $login)
+			->orderBy('p.left', 'ASC')
+			->getQuery()
+			->getResult();
+
+		$tree = new NestedPagesTree($pages);
+
+		return array(
+			'page' => $page,
+			'currentRevision' => $revision,
+			'revisions' => $revisions,
+			'orga' => $page->getOrga(),
+			'tree' => $tree->getNestedTree(),
 		);
 	}
 
@@ -312,6 +393,19 @@ class MainController extends Controller
 			->setParameter('login', $login)
 			->getQuery()
 			->getOneOrNullResult();
+
+		/** @var $pages Page[] */
+		$pages = $em->createQueryBuilder()
+			->select('p, o')
+			->from('EtuModuleWikiBundle:Page', 'p')
+			->leftJoin('p.orga', 'o')
+			->andWhere('o.login = :login')
+			->setParameter('login', $login)
+			->orderBy('p.left', 'ASC')
+			->getQuery()
+			->getResult();
+
+		$tree = new NestedPagesTree($pages);
 
 		if (! $home) {
 			throw $this->createNotFoundException(sprintf('Home page for organization %s not found', $login));
@@ -348,7 +442,8 @@ class MainController extends Controller
 		return array(
 			'page' => $home,
 			'orga' => $home->getOrga(),
-			'form' => $form->createView()
+			'form' => $form->createView(),
+			'tree' => $tree->getNestedTree()
 		);
 	}
 }
