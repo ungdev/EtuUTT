@@ -10,6 +10,7 @@ wiki:
             index: Tous les wikis
             read: Lire
             edit: Modifier
+            delete: Supprimer
             permissions: Permissions
         index:
             title: Wiki des associations
@@ -43,3 +44,22 @@ wiki:
             confirm: Vous avez bien créé une page
         page:
             title: Lire une page
+        edit:
+            title: Modifier une page
+            submit: Modifier
+            name: Nom de la page
+            where: Où créer cette page ?
+            confirm: Vous avez bien modifié la page
+        revision:
+            title: Voir une révision
+            confirm: Vous avez bien rétabli la révision
+        permissions:
+            title: Modifier les permissions
+            submit: Modifier
+            confirm: Vous avez bien modifié les permissions de cette page
+        delete:
+            title: Supprimer une page
+            question: Etes vous sur de vouloir supprimer "%pageName%" ?
+            yes: Oui, supprimer
+            no: Non, annuler
+            confirm: Vous avez bien supprimé la page

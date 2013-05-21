@@ -1,6 +1,6 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block title %}{{ 'wiki.main.indexOrgaPermissions.title'|trans }}{% endblock %}
+{% block title %}{{ 'wiki.page.permissions.title'|trans }}{% endblock %}
 
 {% block stylesheets %}
 	<link rel="stylesheet" href="{{ asset('css/bundles/wiki.css') }}" type="text/css" />
@@ -19,18 +19,31 @@
 		<li>
 			<a href="{{ path('wiki_index') }}">{{ 'wiki.main.menu.index'|trans }}</a>
 		</li>
+		{% if wiki_can_delete(app.user, home) %}
+			<li class="pull-right">
+				<a href="{{ path('wiki_page_delete', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}">
+					{{ 'wiki.main.menu.delete'|trans }}
+				</a>
+			</li>
+		{% endif %}
 		{% if wiki_can_edit_permissions(app.user, page) %}
-		<li class="pull-right active page-tabs-resolved-active">
-			<a href="{{ path('wiki_index_orga_permissions', {'login': orga.login}) }}">{{ 'wiki.main.menu.permissions'|trans }}</a>
-		</li>
+			<li class="pull-right active page-tabs-resolved-active">
+				<a href="{{ path('wiki_page_permissions', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}">
+					{{ 'wiki.main.menu.permissions'|trans }}
+				</a>
+			</li>
 		{% endif %}
 		{% if wiki_can_edit(app.user, page) %}
-		<li class="pull-right">
-			<a href="{{ path('wiki_index_orga_edit', {'login': orga.login}) }}">{{ 'wiki.main.menu.edit'|trans }}</a>
-		</li>
+			<li class="pull-right">
+				<a href="{{ path('wiki_page_edit', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}">
+					{{ 'wiki.main.menu.edit'|trans }}
+				</a>
+			</li>
 		{% endif %}
 		<li class="pull-right">
-			<a href="{{ path('wiki_index_orga', {'login': orga.login}) }}">{{ 'wiki.main.menu.read'|trans }}</a>
+			<a href="{{ path('wiki_page', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}">
+				{{ 'wiki.main.menu.read'|trans }}
+			</a>
 		</li>
 	</ul>
 
@@ -41,10 +54,10 @@
 					<li class="nav-header">{{ 'wiki.main.indexOrga.title'|trans({'%name%': orga.name}) }}</li>
 					<li>
 						{% include 'EtuModuleWikiBundle:Tree:children.html.twig' with {
-						'tree': tree,
-						'currentPage': page,
-						'orga': orga,
-						'depth': 0
+							'tree': tree,
+							'currentPage': page,
+							'orga': orga,
+							'depth': 0
 						} %}
 					</li>
 				</ul>
@@ -63,11 +76,12 @@
 			</div>
 
 			<div class="span9">
-				<p class="alert alert-info">
-					Cette page est publique et ne peut pas être cachée.
-				</p>
-
 				<form method="post" action="">
+					<div class="control-group">
+						{{ form_label(form.levelToView, 'Qui peut voir cette page ?') }}
+						{{ form_widget(form.levelToView, {'attr': {'class': 'span7'} }) }}
+						<span class="help-block">{{ form_errors(form.levelToView) }}</span>
+					</div>
 					<div class="control-group">
 						{{ form_label(form.levelToEdit, 'Qui peut modifier cette page ?') }}
 						{{ form_widget(form.levelToEdit, {'attr': {'class': 'span7'} }) }}
@@ -78,20 +92,10 @@
 						{{ form_widget(form.levelToEditPermissions, {'attr': {'class': 'span7'} }) }}
 						<span class="help-block">{{ form_errors(form.levelToEditPermissions) }}</span>
 					</div>
-					<div class="control-group">
-						{{ form_label(form.levelToCreate, 'Qui peut créer des pages et des catégories dans le wiki ?') }}
-						{{ form_widget(form.levelToCreate, {'attr': {'class': 'span7'} }) }}
-						<span class="help-block">{{ form_errors(form.levelToCreate) }}</span>
-					</div>
-					<div class="control-group">
-						{{ form_label(form.levelToDelete, 'Qui peut supprimer des pages et des catégories dans le wiki ?') }}
-						{{ form_widget(form.levelToDelete, {'attr': {'class': 'span7'} }) }}
-						<span class="help-block">{{ form_errors(form.levelToDelete) }}</span>
-					</div>
 
 					{{ form_rest(form) }}
 
-					<button type="submit" class="btn btn-primary">{{ 'wiki.main.indexOrgaPermissions.submit'|trans }}</button>
+					<button type="submit" class="btn btn-primary">{{ 'wiki.page.permissions.submit'|trans }}</button>
 				</form>
 			</div>
 		</div>

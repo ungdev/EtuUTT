@@ -125,7 +125,7 @@ class MainController extends Controller
 	 */
 	public function indexOrgaAction($login)
 	{
-		if (! $this->getUserLayer()->isConnected() || ! $this->getUser()->getIsAdmin()) {
+		if (! $this->getUserLayer()->isConnected()) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -155,8 +155,6 @@ class MainController extends Controller
 			->getQuery()
 			->getResult();
 
-		$tree = new NestedPagesTree($pages);
-
 		if (! $home) {
 			/** @var $orga Organization */
 			$orga = $em->getRepository('EtuUserBundle:Organization')->findOneByLogin($login);
@@ -174,7 +172,7 @@ class MainController extends Controller
 				->setLeft(1)
 				->setRight(2)
 				->setDepth(0)
-				->setLevelToDelete(Page::LEVEL_UNREACHABLE)
+				->setLevelToDelete(Page::LEVEL_ASSO_ADMIN)
 				->setLevelToCreate(Page::LEVEL_ASSO_ADMIN)
 				->setLevelToEdit(Page::LEVEL_ASSO_MEMBER)
 				->setLevelToView(Page::LEVEL_CONNECTED);
@@ -192,7 +190,11 @@ class MainController extends Controller
 			$em->persist($revision);
 			$em->persist($home);
 			$em->flush();
+
+			$pages[] = $home;
 		}
+
+		$tree = new NestedPagesTree($pages);
 
 		return array(
 			'page' => $home,
@@ -207,7 +209,7 @@ class MainController extends Controller
 	 */
 	public function indexOrgaEditAction($login)
 	{
-		if (! $this->getUserLayer()->isConnected() || ! $this->getUser()->getIsAdmin()) {
+		if (! $this->getUserLayer()->isConnected()) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -375,7 +377,7 @@ class MainController extends Controller
 	 */
 	public function indexOrgaPermissionsAction($login)
 	{
-		if (! $this->getUserLayer()->isConnected() || ! $this->getUser()->getIsAdmin()) {
+		if (! $this->getUserLayer()->isConnected()) {
 			return $this->createAccessDeniedResponse();
 		}
 

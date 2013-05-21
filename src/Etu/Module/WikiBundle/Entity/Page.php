@@ -156,6 +156,11 @@ class Page
 	 */
 	public $children = array();
 
+	/**
+	 * Temporary variable to store page children
+	 */
+	public $body = '';
+
 
 	/**
 	 * Constructor

@@ -30,7 +30,7 @@ class PermissionsChecker
 	public function __construct($user)
 	{
 		$this->user = $user;
-		$this->memberships = $this->user->getMemberships();
+		$this->memberships = ($this->user instanceof User) ? $this->user->getMemberships() : array();
 	}
 
 	/**
@@ -57,7 +57,13 @@ class PermissionsChecker
 		}
 
 		// Orga membership required
-		if ($page->getLevelToEdit() == Page::LEVEL_ASSO) {
+		if ($page->getLevelToView() == Page::LEVEL_ASSO_ADMIN) {
+			return $this->findMembership($page->getOrga()) instanceof Member &&
+				$this->findMembership($page->getOrga())->isFromBureau();
+		}
+
+		// Orga membership required
+		if ($page->getLevelToView() == Page::LEVEL_ASSO_MEMBER) {
 			return $this->findMembership($page->getOrga()) instanceof Member;
 		}
 
@@ -71,9 +77,12 @@ class PermissionsChecker
 	 */
 	public function canEdit(Page $page)
 	{
-		// Organization ? Can not edit any page
+		// Organization ? Can only view public and owned pages
 		if ($this->user instanceof Organization) {
-			return false;
+			return (
+				$page->getLevelToEdit() == Page::LEVEL_CONNECTED
+					|| ($page->getOrga() instanceof Organization && $page->getOrga()->getId() == $this->user->getId())
+			);
 		}
 
 		if ($this->user->getIsAdmin()) {
@@ -85,13 +94,15 @@ class PermissionsChecker
 			return $this->user->getIsAdmin();
 		}
 
-		// Asso membership required
-		if ($page->getLevelToEdit() == Page::LEVEL_ASSO) {
-			if ($membership = $this->findMembership($page->getOrga())) {
-				return $membership->hasPermission('wiki.edit');
-			} else {
-				return false;
-			}
+		// Orga membership required
+		if ($page->getLevelToEdit() == Page::LEVEL_ASSO_ADMIN) {
+			return $this->findMembership($page->getOrga()) instanceof Member &&
+				$this->findMembership($page->getOrga())->isFromBureau();
+		}
+
+		// Orga membership required
+		if ($page->getLevelToEdit() == Page::LEVEL_ASSO_MEMBER) {
+			return $this->findMembership($page->getOrga()) instanceof Member;
 		}
 
 		// Connected user required
@@ -104,9 +115,12 @@ class PermissionsChecker
 	 */
 	public function canEditPermissions(Page $page)
 	{
-		// Organization ? Can not edit any page
+		// Organization ? Can only view public and owned pages
 		if ($this->user instanceof Organization) {
-			return false;
+			return (
+				$page->getLevelToEditPermissions() == Page::LEVEL_CONNECTED
+					|| $page->getOrga()->getId() == $this->user->getId()
+			);
 		}
 
 		if ($this->user->getIsAdmin()) {
@@ -118,13 +132,15 @@ class PermissionsChecker
 			return $this->user->getIsAdmin();
 		}
 
-		// Asso membership required
-		if ($page->getLevelToEditPermissions() == Page::LEVEL_ASSO) {
-			if ($membership = $this->findMembership($page->getOrga())) {
-				return $membership->hasPermission('wiki.edit');
-			} else {
-				return false;
-			}
+		// Orga membership required
+		if ($page->getLevelToEditPermissions() == Page::LEVEL_ASSO_ADMIN) {
+			return $this->findMembership($page->getOrga()) instanceof Member &&
+				$this->findMembership($page->getOrga())->isFromBureau();
+		}
+
+		// Orga membership required
+		if ($page->getLevelToEditPermissions() == Page::LEVEL_ASSO_MEMBER) {
+			return $this->findMembership($page->getOrga()) instanceof Member;
 		}
 
 		// Connected user required
@@ -137,9 +153,12 @@ class PermissionsChecker
 	 */
 	public function canCreate(Page $page)
 	{
-		// Organization ? Can not edit any page
+		// Organization ? Can only view public and owned pages
 		if ($this->user instanceof Organization) {
-			return false;
+			return (
+				$page->getLevelToCreate() == Page::LEVEL_CONNECTED
+					|| $page->getOrga()->getId() == $this->user->getId()
+			);
 		}
 
 		if ($this->user->getIsAdmin()) {
@@ -151,13 +170,15 @@ class PermissionsChecker
 			return $this->user->getIsAdmin();
 		}
 
-		// Asso membership required
-		if ($page->getLevelToCreate() == Page::LEVEL_ASSO) {
-			if ($membership = $this->findMembership($page->getOrga())) {
-				return $membership->hasPermission('wiki.create');
-			} else {
-				return false;
-			}
+		// Orga membership required
+		if ($page->getLevelToCreate() == Page::LEVEL_ASSO_ADMIN) {
+			return $this->findMembership($page->getOrga()) instanceof Member &&
+				$this->findMembership($page->getOrga())->isFromBureau();
+		}
+
+		// Orga membership required
+		if ($page->getLevelToCreate() == Page::LEVEL_ASSO_MEMBER) {
+			return $this->findMembership($page->getOrga()) instanceof Member;
 		}
 
 		// Connected user required
@@ -170,9 +191,12 @@ class PermissionsChecker
 	 */
 	public function canDelete(Page $page)
 	{
-		// Organization ? Can not edit any page
+		// Organization ? Can only view public and owned pages
 		if ($this->user instanceof Organization) {
-			return false;
+			return (
+				$page->getLevelToDelete() == Page::LEVEL_CONNECTED
+					|| $page->getOrga()->getId() == $this->user->getId()
+			);
 		}
 
 		if ($this->user->getIsAdmin()) {
@@ -184,13 +208,15 @@ class PermissionsChecker
 			return $this->user->getIsAdmin();
 		}
 
-		// Asso membership required
-		if ($page->getLevelToDelete() == Page::LEVEL_ASSO) {
-			if ($membership = $this->findMembership($page->getOrga())) {
-				return $membership->hasPermission('wiki.delete');
-			} else {
-				return false;
-			}
+		// Orga membership required
+		if ($page->getLevelToDelete() == Page::LEVEL_ASSO_ADMIN) {
+			return $this->findMembership($page->getOrga()) instanceof Member &&
+				$this->findMembership($page->getOrga())->isFromBureau();
+		}
+
+		// Orga membership required
+		if ($page->getLevelToDelete() == Page::LEVEL_ASSO_MEMBER) {
+			return $this->findMembership($page->getOrga()) instanceof Member;
 		}
 
 		// Connected user required

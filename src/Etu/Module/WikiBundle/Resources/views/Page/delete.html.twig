@@ -1,6 +1,6 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block title %}{{ 'wiki.page.page.title'|trans }}{% endblock %}
+{% block title %}{{ 'wiki.page.delete.title'|trans }}{% endblock %}
 
 {% block stylesheets %}
 	<link rel="stylesheet" href="{{ asset('css/bundles/wiki.css') }}" type="text/css" />
@@ -20,7 +20,7 @@
 			<a href="{{ path('wiki_index') }}">{{ 'wiki.main.menu.index'|trans }}</a>
 		</li>
 		{% if wiki_can_delete(app.user, home) %}
-			<li class="pull-right">
+			<li class="pull-right active page-tabs-resolved-active">
 				<a href="{{ path('wiki_page_delete', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}">
 					{{ 'wiki.main.menu.delete'|trans }}
 				</a>
@@ -40,8 +40,10 @@
 				</a>
 			</li>
 		{% endif %}
-		<li class="pull-right active page-tabs-resolved-active">
-			<a href="{{ path('wiki_index_orga', {'login': orga.login}) }}">{{ 'wiki.main.menu.read'|trans }}</a>
+		<li class="pull-right">
+			<a href="{{ path('wiki_page', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}">
+				{{ 'wiki.main.menu.read'|trans }}
+			</a>
 		</li>
 	</ul>
 
@@ -74,8 +76,17 @@
 			</div>
 
 			<div class="span9">
-				<h4>{{ page.title }}</h4>
-				{{ page.revision.body|raw }}
+				<p>
+					{{ 'wiki.page.delete.question'|trans({'%pageName%': page.title}) }}
+				</p>
+				<p>
+					<a href="{{ path('wiki_page_delete', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify, 'confirm': 'confirm'}) }}" class="btn btn-primary">
+						{{ 'wiki.page.delete.yes'|trans }}
+					</a>
+					<a href="{{ path('wiki_page', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}" class="btn">
+						{{ 'wiki.page.delete.no'|trans }}
+					</a>
+				</p>
 			</div>
 		</div>
 	</div>

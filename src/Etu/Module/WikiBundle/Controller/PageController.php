@@ -46,6 +46,19 @@ class PageController extends Controller
 			->getQuery()
 			->getOneOrNullResult();
 
+		/** @var $home Page */
+		$home = $em->createQueryBuilder()
+			->select('p, o, r')
+			->from('EtuModuleWikiBundle:Page', 'p')
+			->leftJoin('p.orga', 'o')
+			->leftJoin('p.revision', 'r')
+			->where('o.login = :login')
+			->andWhere('p.isHome = 1')
+			->setParameter('login', $login)
+			->setMaxResults(1)
+			->getQuery()
+			->getOneOrNullResult();
+
 		if (! $page) {
 			throw $this->createNotFoundException(sprintf('Page not found'));
 		}
@@ -69,8 +82,405 @@ class PageController extends Controller
 
 		return array(
 			'page' => $page,
+			'home' => $home,
 			'orga' => $page->getOrga(),
 			'tree' => $tree->getNestedTree(),
+		);
+	}
+
+	/**
+	 * @Route("/wiki/{login}/{id}-{slug}/edit", name="wiki_page_edit")
+	 * @Template()
+	 */
+	public function editAction($login, $id, $slug)
+	{
+		if (! $this->getUserLayer()->isConnected()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $page Page */
+		$page = $em->createQueryBuilder()
+			->select('p, o, r')
+			->from('EtuModuleWikiBundle:Page', 'p')
+			->leftJoin('p.orga', 'o')
+			->leftJoin('p.revision', 'r')
+			->where('o.login = :login')
+			->andWhere('p.id = :id')
+			->setParameter('login', $login)
+			->setParameter('id', $id)
+			->getQuery()
+			->getOneOrNullResult();
+
+		$revisions = $em->createQueryBuilder()
+			->select('r, u')
+			->from('EtuModuleWikiBundle:PageRevision', 'r')
+			->leftJoin('r.user', 'u')
+			->where('r.page = :page')
+			->setParameter('page', $page->getId())
+			->orderBy('r.date', 'DESC')
+			->setMaxResults(30)
+			->getQuery()
+			->getResult();
+
+		/** @var $home Page */
+		$home = $em->createQueryBuilder()
+			->select('p, o, r')
+			->from('EtuModuleWikiBundle:Page', 'p')
+			->leftJoin('p.orga', 'o')
+			->leftJoin('p.revision', 'r')
+			->where('o.login = :login')
+			->andWhere('p.isHome = 1')
+			->setParameter('login', $login)
+			->setMaxResults(1)
+			->getQuery()
+			->getOneOrNullResult();
+
+		if (! $page) {
+			throw $this->createNotFoundException(sprintf('Page not found'));
+		}
+
+		if (StringManipulationExtension::slugify($page->getTitle()) != $slug) {
+			throw $this->createNotFoundException(sprintf('Invalid slug'));
+		}
+
+		$revision = $page->createRevision();
+		$revision->setBody($page->getRevision()->getBody())
+			->setUser($this->getUser())
+			->title = $page->getTitle();
+
+		$form = $this->createFormBuilder($revision)
+			->add('title', 'text')
+			->add('body', 'redactor')
+			->add('comment')
+			->getForm();
+
+		$request = $this->getRequest();
+
+		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+			if (RedactorJsEscaper::escape($revision->getBody()) != $page->getRevision()->getBody()) {
+				$page->setRevision($revision);
+				$revision->setBody(RedactorJsEscaper::escape($revision->getBody()));
+
+				$em->persist($revision);
+				$em->persist($page);
+				$em->flush();
+			}
+
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'wiki.page.edit.confirm'
+			));
+
+			return $this->redirect($this->generateUrl('wiki_page', array(
+				'login' => $login,
+				'id' => $id,
+				'slug' => $slug
+			)));
+		}
+
+		return array(
+			'page' => $page,
+			'home' => $home,
+			'orga' => $page->getOrga(),
+			'form' => $form->createView(),
+			'revisions' => $revisions,
+		);
+	}
+
+	/**
+	 * @Route("/wiki/orga/{login}/revision/{id}/{ready}", defaults={"ready"=false}, name="wiki_page_revision")
+	 * @Template()
+	 */
+	public function revisionAction($login, $id, $ready = false)
+	{
+		if (! $this->getUserLayer()->isConnected()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $revision PageRevision */
+		$revision = $em->createQueryBuilder()
+			->select('r')
+			->from('EtuModuleWikiBundle:PageRevision', 'r')
+			->where('r.id = :id')
+			->setParameter('id', $id)
+			->getQuery()
+			->getOneOrNullResult();
+
+		if (! $revision) {
+			throw $this->createNotFoundException(sprintf('Revision not found'));
+		}
+
+		/** @var $page Page */
+		$page = $em->createQueryBuilder()
+			->select('p, o')
+			->from('EtuModuleWikiBundle:Page', 'p')
+			->leftJoin('p.orga', 'o')
+			->where('p.id = :id')
+			->andWhere('o.login = :login')
+			->setParameter('id', $revision->getPageId())
+			->setParameter('login', $login)
+			->getQuery()
+			->getOneOrNullResult();
+
+		if (! $page) {
+			throw $this->createNotFoundException(sprintf('Page not found'));
+		}
+
+		if ($ready !== false) {
+			$page->setRevision($revision);
+
+			$em->persist($page);
+			$em->flush();
+
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'wiki.page.revision.confirm'
+			));
+
+			return $this->redirect($this->generateUrl('wiki_page', array(
+				'login' => $login,
+				'id' => $page->getId(),
+				'slug' => StringManipulationExtension::slugify($page->getTitle())
+			)));
+		}
+
+		$revisions = $em->createQueryBuilder()
+			->select('r, u')
+			->from('EtuModuleWikiBundle:PageRevision', 'r')
+			->leftJoin('r.user', 'u')
+			->where('r.page = :page')
+			->setParameter('page', $page->getId())
+			->orderBy('r.date', 'DESC')
+			->setMaxResults(30)
+			->getQuery()
+			->getResult();
+
+		/** @var $pages Page[] */
+		$pages = $em->createQueryBuilder()
+			->select('p, o')
+			->from('EtuModuleWikiBundle:Page', 'p')
+			->leftJoin('p.orga', 'o')
+			->andWhere('o.login = :login')
+			->setParameter('login', $login)
+			->orderBy('p.left', 'ASC')
+			->getQuery()
+			->getResult();
+
+		$tree = new NestedPagesTree($pages);
+
+		return array(
+			'page' => $page,
+			'currentRevision' => $revision,
+			'revisions' => $revisions,
+			'orga' => $page->getOrga(),
+			'tree' => $tree->getNestedTree(),
+		);
+	}
+
+	/**
+	 * @Route(
+	 *      "/wiki/{login}/{id}-{slug}/delete/{confirm}",
+	 *      defaults={"confirm"=false},
+	 *      name="wiki_page_delete"
+	 * )
+	 * @Template()
+	 */
+	public function deleteAction($login, $id, $slug, $confirm = false)
+	{
+		if (! $this->getUserLayer()->isConnected()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $page Page */
+		$page = $em->createQueryBuilder()
+			->select('p, o, r')
+			->from('EtuModuleWikiBundle:Page', 'p')
+			->leftJoin('p.orga', 'o')
+			->leftJoin('p.revision', 'r')
+			->where('o.login = :login')
+			->andWhere('p.id = :id')
+			->setParameter('login', $login)
+			->setParameter('id', $id)
+			->getQuery()
+			->getOneOrNullResult();
+
+		/** @var $home Page */
+		$home = $em->createQueryBuilder()
+			->select('p, o, r')
+			->from('EtuModuleWikiBundle:Page', 'p')
+			->leftJoin('p.orga', 'o')
+			->leftJoin('p.revision', 'r')
+			->where('o.login = :login')
+			->andWhere('p.isHome = 1')
+			->setParameter('login', $login)
+			->setMaxResults(1)
+			->getQuery()
+			->getOneOrNullResult();
+
+		if (! $page) {
+			throw $this->createNotFoundException(sprintf('Page not found'));
+		}
+
+		if (StringManipulationExtension::slugify($page->getTitle()) != $slug) {
+			throw $this->createNotFoundException(sprintf('Invalid slug'));
+		}
+
+		if ($confirm !== false) {
+			$em->remove($page);
+
+			$em->createQueryBuilder()
+				->update('EtuModuleWikiBundle:Page', 'p')
+				->set('p.left', 'p.left - 2')
+				->where('p.left > :left')
+				->setParameter('left', $page->getLeft())
+				->getQuery()
+				->execute();
+
+			$em->createQueryBuilder()
+				->update('EtuModuleWikiBundle:Page', 'p')
+				->set('p.right', 'p.right - 2')
+				->where('p.right >= :right')
+				->setParameter('right', $page->getRight())
+				->getQuery()
+				->execute();
+
+			$em->flush();
+
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'wiki.page.delete.confirm'
+			));
+
+			return $this->redirect($this->generateUrl('wiki_index_orga', array('login' => $login)));
+		}
+
+		/** @var $pages Page[] */
+		$pages = $em->createQueryBuilder()
+			->select('p, o')
+			->from('EtuModuleWikiBundle:Page', 'p')
+			->leftJoin('p.orga', 'o')
+			->andWhere('o.login = :login')
+			->setParameter('login', $login)
+			->orderBy('p.left', 'ASC')
+			->getQuery()
+			->getResult();
+
+		$tree = new NestedPagesTree($pages);
+
+		return array(
+			'page' => $page,
+			'home' => $home,
+			'orga' => $page->getOrga(),
+			'tree' => $tree->getNestedTree(),
+		);
+	}
+
+	/**
+	 * @Route("/wiki/{login}/{id}-{slug}/permissions", name="wiki_page_permissions")
+	 * @Template()
+	 */
+	public function permissionsAction($login, $id, $slug)
+	{
+		if (! $this->getUserLayer()->isConnected()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $page Page */
+		$page = $em->createQueryBuilder()
+			->select('p, o, r')
+			->from('EtuModuleWikiBundle:Page', 'p')
+			->leftJoin('p.orga', 'o')
+			->leftJoin('p.revision', 'r')
+			->where('o.login = :login')
+			->andWhere('p.id = :id')
+			->setParameter('login', $login)
+			->setParameter('id', $id)
+			->getQuery()
+			->getOneOrNullResult();
+
+		/** @var $home Page */
+		$home = $em->createQueryBuilder()
+			->select('p, o, r')
+			->from('EtuModuleWikiBundle:Page', 'p')
+			->leftJoin('p.orga', 'o')
+			->leftJoin('p.revision', 'r')
+			->where('o.login = :login')
+			->andWhere('p.isHome = 1')
+			->setParameter('login', $login)
+			->setMaxResults(1)
+			->getQuery()
+			->getOneOrNullResult();
+
+		/** @var $pages Page[] */
+		$pages = $em->createQueryBuilder()
+			->select('p, o')
+			->from('EtuModuleWikiBundle:Page', 'p')
+			->leftJoin('p.orga', 'o')
+			->andWhere('o.login = :login')
+			->setParameter('login', $login)
+			->orderBy('p.left', 'ASC')
+			->getQuery()
+			->getResult();
+
+		$tree = new NestedPagesTree($pages);
+
+		if (! $page) {
+			throw $this->createNotFoundException(sprintf('Page not found'));
+		}
+
+		if (StringManipulationExtension::slugify($page->getTitle()) != $slug) {
+			throw $this->createNotFoundException(sprintf('Invalid slug'));
+		}
+
+		$levels = array(
+			Page::LEVEL_CONNECTED => 'wiki.levels.connected',
+			Page::LEVEL_ASSO_MEMBER => 'wiki.levels.asso_member',
+			Page::LEVEL_ASSO_ADMIN => 'wiki.levels.asso_admin',
+			Page::LEVEL_ADMIN => 'wiki.levels.admin'
+		);
+
+		$form = $this->createFormBuilder($page)
+			->add('levelToView', 'choice', array('choices' => $levels))
+			->add('levelToEdit', 'choice', array('choices' => $levels))
+			->add('levelToEditPermissions', 'choice', array('choices' => $levels))
+			->getForm();
+
+		$request = $this->getRequest();
+
+		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+			$em->persist($page);
+			$em->flush();
+
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'wiki.page.permissions.confirm'
+			));
+
+			return $this->redirect($this->generateUrl('wiki_page', array(
+				'login' => $login,
+				'id' => $id,
+				'slug' => $slug
+			)));
+		}
+
+		return array(
+			'page' => $page,
+			'home' => $home,
+			'orga' => $page->getOrga(),
+			'form' => $form->createView(),
+			'tree' => $tree->getNestedTree()
 		);
 	}
 

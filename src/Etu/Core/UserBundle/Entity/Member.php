@@ -78,6 +78,17 @@ class Member
 	}
 
 	/**
+	 * @return int
+	 */
+	public function isFromBureau()
+	{
+		return in_array($this->role, array(
+			self::ROLE_PRESIDENT, self::ROLE_SECRETARY, self::ROLE_TREASURER,
+			self::ROLE_V_PRESIDENT, self::ROLE_V_SECRETARY, self::ROLE_V_TREASURER
+		));
+	}
+
+	/**
 	 * @return array
 	 */
 	public static function getAvailableRoles()
