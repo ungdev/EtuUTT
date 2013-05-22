@@ -593,7 +593,7 @@ class User implements UserInterface, \Serializable
 	{
 		$infos = array(
 			$this->phoneNumber, $this->sex, $this->nationality, $this->adress, $this->postalCode, $this->city,
-			$this->country, $this->birthday, $this->personnalMail, $this->surnom, $this->jadis, $this->passions
+			$this->country, $this->birthday, $this->personnalMail
 		);
 
 		$completion = 0;

@@ -1,0 +1,67 @@
+{% extends 'EtuCoreBundle:Admin:layout.html.twig' %}
+
+{% block title %}{{ 'logger.main.index.title'|trans }}{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/bundles/logs.css') }}" type="text/css" />
+{% endblock %}
+
+{% block javascripts %}
+	<script type="text/javascript">
+		$('.more').click(function() {
+			$(this).parent().parent().find('.where, .trace').show();
+			$(this).parent().hide();
+			return false;
+		});
+	</script>
+{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<div class="padding20-all">
+		<p class="alert alert-info">
+			{{ 'logger.main.index.desc'|trans|raw }}
+		</p>
+
+		{% for log in pagination %}
+			<div class="exception">
+				{% if log.exception.hasMessage %}
+					<h4>{{ log.exception.message }}</h4>
+				{% else %}
+					<h4>{{ log.exception.class }}</h4>
+				{% endif %}
+
+				<p>
+					On <strong>{{ log.date|date('d/m/Y H:i:s') }}</strong>
+					from <strong>{{ log.client }}</strong>
+				</p>
+
+				<p>
+					<a href="#" class="more btn"><i class="icon-plus"></i> More</a>
+				</p>
+
+				<p class="where">
+					In <strong>{{ log.exception.file }}</strong>
+					on line <strong>{{ log.exception.line }}</strong>
+				</p>
+
+				<div class="trace">
+					<h5>Trace</h5>
+
+					<ol>
+						{% for line in log.exception.stringTraceLines %}
+							<li>{{ line }}</li>
+						{% endfor %}
+					</ol>
+				</div>
+			</div>
+		{% endfor %}
+
+		<div class="navigation">
+			{{ knp_pagination_render(pagination) }}
+		</div>
+	</div>
+{% endblock %}

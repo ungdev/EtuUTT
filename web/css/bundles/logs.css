@@ -1,0 +1,19 @@
+
+.exception {
+	padding: 7px 20px;
+	background: #f5f5f5;
+	border: 1px solid #DFDFDF;
+	border-radius: 16px 16px 16px 16px;
+	margin-bottom: 20px;
+	font-size: 12px;
+}
+.exception h4 {
+	font-size: 14px;
+}
+.exception h5 {
+	font-size: 13px;
+}
+
+.exception .where, .exception .trace {
+	display: none;
+}

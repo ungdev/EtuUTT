@@ -1,1 +1,9 @@
 
+logger:
+    main:
+        index:
+            title: Logs
+            desc: |
+                Cette page rescence les logs effectués par le module Logger.<br />
+                Ce module n'étant capable d'intercepter que les exceptions, les erreurs de
+                syntaxes et autres erreurs liées à PHP ne seront pas listées.

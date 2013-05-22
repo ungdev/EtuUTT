@@ -70,6 +70,7 @@ base:
             pages: Pages statiques
             users: Utilisateurs
             stats: Statistiques
+            logger: Logs
 
     # Logo
     page_icon:

@@ -87,6 +87,58 @@ class ExceptionParsed
 	}
 
 	/**
+	 * @param $key
+	 * @param $value
+	 */
+	public function set($key, $value)
+	{
+		$this->$key = $value;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function export()
+	{
+		$exception = get_object_vars($this);
+		unset($exception['trace']);
+		unset($exception['previous']);
+		unset($exception['exception']);
+
+		foreach ((array) $exception['stack'] as $key => $e) {
+			$exception['stack'][$key] = $e->export();
+		}
+
+		return $exception;
+	}
+
+	/**
+	 * @param array $exceptionArray
+	 * @return ExceptionParsed
+	 */
+	public static function import(array $exceptionArray)
+	{
+		$exception = new self(new Exception);
+		$exception->set('message', $exceptionArray['message']);
+		$exception->set('class', $exceptionArray['class']);
+		$exception->set('code', $exceptionArray['code']);
+		$exception->set('file', $exceptionArray['file']);
+		$exception->set('line', $exceptionArray['line']);
+		$exception->set('linesAround', $exceptionArray['linesAround']);
+		$exception->set('stringTrace', $exceptionArray['stringTrace']);
+
+		$stack = array();
+
+		foreach ((array) $exceptionArray['stack'] as $childArray) {
+			$stack[] = self::import($childArray);
+		}
+
+		$exception->set('stack', $stack);
+
+		return $exception;
+	}
+
+	/**
 	 * Find lines around the exception call
 	 */
 	protected function generateLinesAround()

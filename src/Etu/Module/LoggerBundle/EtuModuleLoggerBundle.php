@@ -15,6 +15,19 @@ class EtuModuleLoggerBundle extends Module
 	}
 
 	/**
+	 * At module boot, update the sidebar
+	 */
+	public function onModuleBoot()
+	{
+		$this->getAdminMenuBuilder()
+			->getBlock('base.admin_menu.title')
+			->add('base.admin_menu.items.logger')
+				->setIcon('reports.png')
+				->setUrl($this->router->generate('logger_index'))
+			->end();
+	}
+
+	/**
 	 * Module is ready to use ?
 	 *
 	 * @return string

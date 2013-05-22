@@ -34,37 +34,28 @@ class Listener
 	{
 		$exception = new ExceptionParsed($exception);
 
-		if (file_exists(__DIR__.'/../Resources/objects/errors')) {
+		if (! file_exists(__DIR__.'/../Resources/objects/errors')) {
 			file_put_contents(__DIR__.'/../Resources/objects/errors', serialize(array()));
 		}
 
 		$logs = unserialize(file_get_contents(__DIR__.'/../Resources/objects/errors'));
 
 		$exceptionArray = array(
-			'exception' => array(
-				'message' => $exception->getMessage(),
-				'class' => $exception->getClass(),
-				'file' => $exception->getFile(),
-				'line' => $exception->getLine(),
-				'lineAround' => $exception->getLinesAround(),
-				'trace' => $exception->getStringTrace(),
-			),
+			'exception' => $exception->export(),
 			'children' => array(),
 			'client' => $ip,
+			'date' => new \DateTime()
 		);
 
 		foreach ((array) $exception->getStack() as $child) {
-			$exceptionArray['children'][] = array(
-				'message' => $child->getMessage(),
-				'class' => $child->getClass(),
-				'file' => $child->getFile(),
-				'line' => $child->getLine(),
-				'lineAround' => $child->getLinesAround(),
-				'trace' => $child->getStringTrace(),
-			);
+			$exceptionArray['children'][] = $child->export();
 		}
 
 		$logs[] = $exceptionArray;
+
+		if (count($logs) > 200) {
+			array_shift($logs);
+		}
 
 		file_put_contents(__DIR__.'/../Resources/objects/errors', serialize($logs));
 	}
