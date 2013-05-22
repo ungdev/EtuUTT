@@ -7,11 +7,26 @@ use Etu\Core\CoreBundle\Framework\Definition\Module;
 class EtuModuleCumulBundle extends Module
 {
 	/**
-	 * @return bool
+	 * Must boot only for connected users
+	 *
+	 * @return bool|void
 	 */
 	public function mustBoot()
 	{
-		return true;
+		return $this->getSessionLayer()->isUser();
+	}
+
+	/**
+	 * At module boot, update the sidebar
+	 */
+	public function onModuleBoot()
+	{
+		$this->getSidebarBuilder()
+			->getBlock('base.sidebar.services.title')
+			->add('base.sidebar.services.items.table')
+				->setIcon('table.png')
+				->setUrl($this->router->generate('cumul_index'))
+			->end();
 	}
 
 	/**
@@ -19,7 +34,7 @@ class EtuModuleCumulBundle extends Module
 	 */
 	public function isReadyToUse()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -49,7 +64,7 @@ class EtuModuleCumulBundle extends Module
 	 */
 	public function getAuthor()
 	{
-		return 'anonymous';
+		return 'Titouan Galopin';
 	}
 
 	/**
@@ -59,7 +74,7 @@ class EtuModuleCumulBundle extends Module
 	 */
 	public function getDescription()
 	{
-		return 'Default module description';
+		return 'Cumul d\'emplois du temps';
 	}
 
 	/**

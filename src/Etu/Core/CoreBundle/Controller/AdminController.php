@@ -74,20 +74,34 @@ class AdminController extends Controller
 
 			file_put_contents($configFile, $yaml);
 
-			// Clear routes cache
-			$iterator = new \RecursiveIteratorIterator(
-				new \RecursiveDirectoryIterator($this->getKernel()->getRootDir().'/cache'),
-				\RecursiveIteratorIterator::CHILD_FIRST
-			);
+			// Clear routes cache (production)
+			if (file_exists($this->getKernel()->getRootDir().'/cache/prod')) {
+				$iterator = new \DirectoryIterator($this->getKernel()->getRootDir().'/cache/prod');
 
-			foreach ($iterator as $file) {
-				if ($file->isFile() &&
-					(strpos($file->getBasename(), 'UrlGenerator') !== false)
-					|| (strpos($file->getBasename(), 'UrlMatcher') !== false)
-				) {
-					unlink($file->getPathname());
+				foreach ($iterator as $file) {
+					if ($file->isFile() &&
+						(strpos($file->getBasename(), 'UrlGenerator') !== false)
+						|| (strpos($file->getBasename(), 'UrlMatcher') !== false)
+					) {
+						unlink($file->getPathname());
+					}
 				}
 			}
+
+			// Clear routes cache (development)
+			if (file_exists($this->getKernel()->getRootDir().'/cache/dev')) {
+				$iterator = new \DirectoryIterator($this->getKernel()->getRootDir().'/cache/dev');
+
+				foreach ($iterator as $file) {
+					if ($file->isFile() &&
+						(strpos($file->getBasename(), 'UrlGenerator') !== false)
+						|| (strpos($file->getBasename(), 'UrlMatcher') !== false)
+					) {
+						unlink($file->getPathname());
+					}
+				}
+			}
+
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',

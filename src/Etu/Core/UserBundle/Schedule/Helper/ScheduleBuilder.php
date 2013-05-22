@@ -10,6 +10,8 @@ use Etu\Core\UserBundle\Schedule\Model\CourseHalf;
  */
 class ScheduleBuilder
 {
+	const DO_NOT_USE_HALF = false;
+
 	static $colors = array();
 
 	/**
@@ -18,10 +20,19 @@ class ScheduleBuilder
 	protected $courses;
 
 	/**
+	 * Use half courses ?
+	 *
+	 * @var boolean
+	 */
+	protected $useHalf;
+
+	/**
 	 * Constructor
 	 */
-	public function __construct()
+	public function __construct($useHalf = true)
 	{
+		$this->useHalf = (boolean) $useHalf;
+
 		$days = array(
 			Course::DAY_MONDAY, Course::DAY_TUESDAY, Course::DAY_WENESDAY,
 			Course::DAY_THURSDAY, Course::DAY_FRIDAY, Course::DAY_SATHURDAY
@@ -41,26 +52,37 @@ class ScheduleBuilder
 
 	/**
 	 * @param Course $course
+	 * @return $this
 	 */
 	public function addCourse(Course $course)
 	{
-		if ($course->getWeek() == 'T') {
+		if ($this->useHalf) {
+			if ($course->getWeek() == 'T') {
+				$this->courses[$course->getDay()][$course->getStart()] = array(
+					'type' => 'course',
+					'size' => $this->getBlockSize($course),
+					'course' => $course,
+				);
+			} else {
+				if (! isset($this->courses[$course->getDay()][$course->getStart()]['courses'])) {
+					$this->courses[$course->getDay()][$course->getStart()] = array(
+						'type' => 'course_half',
+						'size' => $this->getBlockSize($course),
+						'courses' => new CourseHalf(),
+					);
+				}
+
+				$this->courses[$course->getDay()][$course->getStart()]['courses']->addCourse($course);
+			}
+		} else {
 			$this->courses[$course->getDay()][$course->getStart()] = array(
 				'type' => 'course',
 				'size' => $this->getBlockSize($course),
 				'course' => $course,
 			);
-		} else {
-			if (! isset($this->courses[$course->getDay()][$course->getStart()]['courses'])) {
-				$this->courses[$course->getDay()][$course->getStart()] = array(
-					'type' => 'course_half',
-					'size' => $this->getBlockSize($course),
-					'courses' => new CourseHalf(),
-				);
-			}
-
-			$this->courses[$course->getDay()][$course->getStart()]['courses']->addCourse($course);
 		}
+
+		return $this;
 	}
 
 	/**

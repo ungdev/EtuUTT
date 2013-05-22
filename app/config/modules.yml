@@ -1,5 +1,8 @@
 modules:
     - Etu\Module\AssosBundle\EtuModuleAssosBundle
     - Etu\Module\BugsBundle\EtuModuleBugsBundle
+    - Etu\Module\ForumBundle\EtuModuleForumBundle
+    - Etu\Module\LoggerBundle\EtuModuleLoggerBundle
     - Etu\Module\TrombiBundle\EtuModuleTrombiBundle
     - Etu\Module\UVBundle\EtuModuleUVBundle
+    - Etu\Module\WikiBundle\EtuModuleWikiBundle
