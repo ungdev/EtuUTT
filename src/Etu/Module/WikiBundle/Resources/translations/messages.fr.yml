@@ -48,7 +48,7 @@ wiki:
             title: Modifier une page
             submit: Modifier
             name: Nom de la page
-            where: Où créer cette page ?
+            where: Où placer cette page ?
             confirm: Vous avez bien modifié la page
         revision:
             title: Voir une révision

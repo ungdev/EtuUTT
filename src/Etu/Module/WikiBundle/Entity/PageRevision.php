@@ -60,11 +60,18 @@ class PageRevision
 	protected $date;
 
 	/**
-	 * Temporary variable top store page title during edition.
+	 * Temporary variable to store page title during edition
 	 *
 	 * @var string
 	 */
 	public $title;
+
+	/**
+	 * Temporary variable to store page category
+	 *
+	 * @var string
+	 */
+	public $category;
 
 	/**
 	 * Constructor

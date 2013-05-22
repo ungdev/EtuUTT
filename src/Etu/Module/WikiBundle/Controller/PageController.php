@@ -114,6 +114,14 @@ class PageController extends Controller
 			->getQuery()
 			->getOneOrNullResult();
 
+		if (! $page) {
+			throw $this->createNotFoundException(sprintf('Page not found'));
+		}
+
+		if (StringManipulationExtension::slugify($page->getTitle()) != $slug) {
+			throw $this->createNotFoundException(sprintf('Invalid slug'));
+		}
+
 		$revisions = $em->createQueryBuilder()
 			->select('r, u')
 			->from('EtuModuleWikiBundle:PageRevision', 'r')
@@ -138,36 +146,105 @@ class PageController extends Controller
 			->getQuery()
 			->getOneOrNullResult();
 
-		if (! $page) {
-			throw $this->createNotFoundException(sprintf('Page not found'));
-		}
+		/** @var $pages Page[] */
+		$pages = $em->createQueryBuilder()
+			->select('p, o')
+			->from('EtuModuleWikiBundle:Page', 'p')
+			->leftJoin('p.orga', 'o')
+			->andWhere('o.login = :login')
+			->setParameter('login', $login)
+			->orderBy('p.left', 'ASC')
+			->getQuery()
+			->getResult();
 
-		if (StringManipulationExtension::slugify($page->getTitle()) != $slug) {
-			throw $this->createNotFoundException(sprintf('Invalid slug'));
+		$categories = array(0 => 'A la racine');
+		$parents = array();
+		$maxRight = 0;
+
+		foreach ($pages as $p) {
+			if ($p->getIsCategory()) {
+				$categories[$p->getId()] = $p->getTitle();
+				$parents[$p->getId()] = $p;
+			}
+
+			if ($p->getRight() > $maxRight) {
+				$maxRight = $p->getRight();
+			}
 		}
 
 		$revision = $page->createRevision();
 		$revision->setBody($page->getRevision()->getBody())
 			->setUser($this->getUser())
 			->title = $page->getTitle();
+		$revision->category = null;
 
 		$form = $this->createFormBuilder($revision)
 			->add('title', 'text')
 			->add('body', 'redactor')
 			->add('comment')
+			->add('category', 'choice', array('choices' => $categories))
 			->getForm();
 
 		$request = $this->getRequest();
 
 		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+
+			$parent = $revision->category;
+
+			$em->createQueryBuilder()
+				->update('EtuModuleWikiBundle:Page', 'p')
+				->set('p.left', 'p.left - 2')
+				->where('p.left > :left')
+				->setParameter('left', $page->getLeft())
+				->getQuery()
+				->execute();
+
+			$em->createQueryBuilder()
+				->update('EtuModuleWikiBundle:Page', 'p')
+				->set('p.right', 'p.right - 2')
+				->where('p.right > :right')
+				->setParameter('right', $page->getRight())
+				->getQuery()
+				->execute();
+
+			if ($parent == 0) {
+				$page->setDepth(0)
+					->setLeft($maxRight - 1)
+					->setRight($maxRight);
+			} else {
+				/** @var $parent Page */
+				$parent = $em->getRepository('EtuModuleWikiBundle:Page')->find($parents[$parent]->getId());
+
+				$em->createQueryBuilder()
+					->update('EtuModuleWikiBundle:Page', 'p')
+					->set('p.right', 'p.right + 2')
+					->where('p.right > :right')
+					->setParameter('right', $parent->getLeft())
+					->getQuery()
+					->execute();
+
+				$em->createQueryBuilder()
+					->update('EtuModuleWikiBundle:Page', 'p')
+					->set('p.left', 'p.left + 2')
+					->where('p.left > :left')
+					->setParameter('left', $parent->getLeft())
+					->getQuery()
+					->execute();
+
+				$page->setDepth($parent->getDepth() + 1)
+					->setLeft($parent->getLeft() + 1)
+					->setRight($parent->getLeft() + 2);
+			}
+
 			if (RedactorJsEscaper::escape($revision->getBody()) != $page->getRevision()->getBody()) {
 				$page->setRevision($revision);
 				$revision->setBody(RedactorJsEscaper::escape($revision->getBody()));
 
 				$em->persist($revision);
-				$em->persist($page);
-				$em->flush();
 			}
+
+			$em->persist($page);
+			$em->flush();
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
@@ -490,7 +567,7 @@ class PageController extends Controller
 	 */
 	public function createCategoryAction($login)
 	{
-		if (! $this->getUserLayer()->isConnected() || ! $this->getUser()->getIsAdmin()) {
+		if (! $this->getUserLayer()->isConnected()) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -601,7 +678,7 @@ class PageController extends Controller
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'wiki.main.createCategory.confirm'
+				'message' => 'wiki.page.createCategory.confirm'
 			));
 
 			return $this->redirect($this->generateUrl('wiki_index_orga', array('login' => $login)));
@@ -620,7 +697,7 @@ class PageController extends Controller
 	 */
 	public function createPageAction($login)
 	{
-		if (! $this->getUserLayer()->isConnected() || ! $this->getUser()->getIsAdmin()) {
+		if (! $this->getUserLayer()->isConnected()) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -751,7 +828,7 @@ class PageController extends Controller
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'wiki.main.createPage.confirm'
+				'message' => 'wiki.page.createPage.confirm'
 			));
 
 			return $this->redirect($this->generateUrl('wiki_index_orga', array('login' => $login)));

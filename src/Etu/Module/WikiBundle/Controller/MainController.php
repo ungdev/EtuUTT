@@ -120,7 +120,7 @@ class MainController extends Controller
 	}
 
 	/**
-	 * @Route("/wiki/orga/{login}", name="wiki_index_orga")
+	 * @Route("/wiki/{login}", name="wiki_index_orga")
 	 * @Template()
 	 */
 	public function indexOrgaAction($login)
@@ -204,7 +204,7 @@ class MainController extends Controller
 	}
 
 	/**
-	 * @Route("/wiki/orga/{login}/edit", name="wiki_index_orga_edit")
+	 * @Route("/wiki/{login}/edit", name="wiki_index_orga_edit")
 	 * @Template()
 	 */
 	public function indexOrgaEditAction($login)
@@ -297,7 +297,7 @@ class MainController extends Controller
 	}
 
 	/**
-	 * @Route("/wiki/orga/{login}/revision/{id}/{ready}", defaults={"ready"=false}, name="wiki_index_orga_revision")
+	 * @Route("/wiki/{login}/revision/{id}/{ready}", defaults={"ready"=false}, name="wiki_index_orga_revision")
 	 * @Template()
 	 */
 	public function indexOrgaRevisionAction($login, $id, $ready)
@@ -372,7 +372,7 @@ class MainController extends Controller
 	}
 
 	/**
-	 * @Route("/wiki/orga/{login}/permissions", name="wiki_index_orga_permissions")
+	 * @Route("/wiki/{login}/permissions", name="wiki_index_orga_permissions")
 	 * @Template()
 	 */
 	public function indexOrgaPermissionsAction($login)

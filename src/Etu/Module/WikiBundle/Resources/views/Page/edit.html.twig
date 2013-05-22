@@ -88,6 +88,12 @@
 					<span class="help-block">{{ form_errors(form.body) }}</span>
 
 					<div class="control-group">
+						{{ form_label(form.category, 'wiki.page.edit.where'|trans) }}
+						{{ form_widget(form.category, {'attr': {'class': 'span7' } }) }}
+						<span class="help-block">{{ form_errors(form.category) }}</span>
+					</div>
+
+					<div class="control-group">
 						{{ form_label(form.comment, 'Commentaire décrivant vos modifications') }}
 						{{ form_widget(form.comment, {'attr': {'class': 'span12'} }) }}
 						<span class="help-block">{{ form_errors(form.body) }}</span>
