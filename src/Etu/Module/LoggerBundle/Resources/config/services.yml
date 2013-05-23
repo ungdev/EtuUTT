@@ -8,8 +8,3 @@ services:
         class: %logger.exception_listener.class%
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
-
-    logger.request_listener:
-        class: %logger.request_listener.class%
-        tags:
-            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }

@@ -167,6 +167,7 @@ class OrgaController extends Controller
 		$request = $this->getRequest();
 
 		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+			/** @var $user User */
 			$user = $em->createQueryBuilder()
 				->select('u')
 				->from('EtuUserBundle:User', 'u')
@@ -198,6 +199,21 @@ class OrgaController extends Controller
 						$em->persist($this->getUser());
 					}
 
+					$user->addBadge('orga_member');
+
+					if ($member->isFromBureau()) {
+						$user->addBadge('orga_admin');
+					}
+
+					if ($member->getRole() == Member::ROLE_PRESIDENT) {
+						$user->addBadge('orga_president');
+
+						if ($member->getOrganization()->getLogin() == 'bde') {
+							$user->addBadge('orga_bde_president');
+						}
+					}
+
+					$em->persist($user);
 					$em->persist($member);
 					$em->flush();
 
@@ -359,6 +375,15 @@ class OrgaController extends Controller
 		}
 
 		if ($confirm == 'confirm') {
+
+			$user = $member->getUser();
+
+			$user->removeBadge('orga_member');
+			$user->removeBadge('orga_admin');
+			$user->removeBadge('orga_president');
+			$user->removeBadge('orga_bde_president');
+
+			$em->persist($user);
 			$em->remove($member);
 			$em->flush();
 

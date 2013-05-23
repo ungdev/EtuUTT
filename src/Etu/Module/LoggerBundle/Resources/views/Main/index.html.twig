@@ -26,16 +26,7 @@
 {% endblock %}
 
 {% block content %}
-	<ul class="nav nav-tabs page-tabs">
-		<li class="active page-tabs-resolved-active">
-			<a href="{{ path('logger_index') }}">{{ 'logger.main.menu.errors'|trans }}</a>
-		</li>
-		<li>
-			<a href="{{ path('logger_requests') }}">{{ 'logger.main.menu.requests'|trans }}</a>
-		</li>
-	</ul>
-
-	<div class="padding20-sides">
+	<div class="padding20-all">
 		<p class="alert alert-info">
 			{{ 'logger.main.index.desc'|trans|raw }}
 		</p>

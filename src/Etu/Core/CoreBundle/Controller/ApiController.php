@@ -2,6 +2,7 @@
 
 namespace Etu\Core\CoreBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\User;
 
@@ -34,8 +35,45 @@ class ApiController extends Controller
 			)), 403);
 		}
 
-		if (! $this->getUser()->testingContext) {
-			$this->getSubscriptionsManager()->subscribe($this->getUser(), $entityType, $entityId);
+		$user = $this->getUser();
+
+		if (! $user->testingContext) {
+			$this->getSubscriptionsManager()->subscribe($user, $entityType, $entityId);
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		$count = $em->createQueryBuilder()
+			->select('COUNT(s) as nb')
+			->from('EtuCoreBundle:Subscription', 's')
+			->where('s.user = :user')
+			->setParameter('user', $user->getId())
+			->getQuery()
+			->getSingleScalarResult();
+
+		$count = (int) $count;
+
+		$user->removeBadge('subscriptions_more_10');
+		$user->removeBadge('subscriptions_more_20');
+		$user->removeBadge('subscriptions_more_30');
+		$user->removeBadge('subscriptions_more_50');
+		$user->removeBadge('subscriptions_more_100');
+
+		if ($count >= 10) {
+			$user->addBadge('subscriptions_more_10');
+		}
+		if ($count >= 20) {
+			$user->addBadge('subscriptions_more_20');
+		}
+		if ($count >= 30) {
+			$user->addBadge('subscriptions_more_30');
+		}
+		if ($count >= 50) {
+			$user->addBadge('subscriptions_more_50');
+		}
+		if ($count >= 100) {
+			$user->addBadge('subscriptions_more_100');
 		}
 
 		return new Response(json_encode(array(
@@ -62,8 +100,45 @@ class ApiController extends Controller
 			)), 403);
 		}
 
-		if (! $this->getUser()->testingContext) {
-			$this->getSubscriptionsManager()->unsubscribe($this->getUser(), $entityType, $entityId);
+		$user = $this->getUser();
+
+		if (! $user->testingContext) {
+			$this->getSubscriptionsManager()->unsubscribe($user, $entityType, $entityId);
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		$count = $em->createQueryBuilder()
+			->select('COUNT(s) as nb')
+			->from('EtuCoreBundle:Subscription', 's')
+			->where('s.user = :user')
+			->setParameter('user', $user->getId())
+			->getQuery()
+			->getSingleScalarResult();
+
+		$count = (int) $count;
+
+		$user->removeBadge('subscriptions_more_10');
+		$user->removeBadge('subscriptions_more_20');
+		$user->removeBadge('subscriptions_more_30');
+		$user->removeBadge('subscriptions_more_50');
+		$user->removeBadge('subscriptions_more_100');
+
+		if ($count >= 10) {
+			$user->addBadge('subscriptions_more_10');
+		}
+		if ($count >= 20) {
+			$user->addBadge('subscriptions_more_20');
+		}
+		if ($count >= 30) {
+			$user->addBadge('subscriptions_more_30');
+		}
+		if ($count >= 50) {
+			$user->addBadge('subscriptions_more_50');
+		}
+		if ($count >= 100) {
+			$user->addBadge('subscriptions_more_100');
 		}
 
 		return new Response(json_encode(array(
