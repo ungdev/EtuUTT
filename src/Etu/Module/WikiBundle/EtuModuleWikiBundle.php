@@ -3,8 +3,6 @@
 namespace Etu\Module\WikiBundle;
 
 use Etu\Core\CoreBundle\Framework\Definition\Module;
-use Etu\Core\CoreBundle\Framework\Definition\OrgaPermission;
-use Etu\Core\CoreBundle\Framework\Definition\Permission;
 
 class EtuModuleWikiBundle extends Module
 {
@@ -77,18 +75,6 @@ class EtuModuleWikiBundle extends Module
 	public function getDescription()
 	{
 		return 'Wiki des associations';
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getAvailablePermissions()
-	{
-		return array(
-			new OrgaPermission('wiki.edit', 'Peut modifier le wiki de l\'asscoation'),
-			new OrgaPermission('wiki.create', 'Peut créer des pages dans le wiki de l\'asscoation'),
-			new OrgaPermission('wiki.delete', 'Peut supprimer des pages dans le wiki de l\'asscoation'),
-		);
 	}
 
 	/**

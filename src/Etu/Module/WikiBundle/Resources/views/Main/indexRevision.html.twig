@@ -1,0 +1,101 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'wiki.main.indexOrgaEdit.title'|trans }}{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/bundles/wiki.css') }}" type="text/css" />
+{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/wiki.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<ul class="nav nav-tabs page-tabs">
+		<li>
+			<a href="{{ path('wiki_index') }}">{{ 'wiki.main.menu.index'|trans }}</a>
+		</li>
+		{% if wiki_can_edit_permissions(app.user, page) %}
+			<li class="pull-right">
+				<a href="{{ path('wiki_index_orga_permissions', {'login': orga.login}) }}">{{ 'wiki.main.menu.permissions'|trans }}</a>
+			</li>
+		{% endif %}
+		{% if wiki_can_edit(app.user, page) %}
+			<li class="pull-right active page-tabs-resolved-active">
+				<a href="{{ path('wiki_index_orga_edit', {'login': orga.login}) }}">{{ 'wiki.main.menu.edit'|trans }}</a>
+			</li>
+		{% endif %}
+		<li class="pull-right">
+			<a href="{{ path('wiki_index_orga', {'login': orga.login}) }}">{{ 'wiki.main.menu.read'|trans }}</a>
+		</li>
+	</ul>
+
+	<div class="padding20-sides">
+
+		<div class="row-fluid">
+			<div class="span3 wiki-categories">
+				<ul class="nav nav-list">
+					<li class="nav-header">Révisions</li>
+					{% for revision in revisions %}
+						{% if page.revision.id == revision.id %}
+							<li>
+								<a href="{{ path('wiki_page_edit', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}" class="tip"
+										{% if revision.comment and revision.user %}
+											title="{{ revision.comment }}, par {{ revision.user.fullName }}"
+										{% elseif revision.comment and not revision.user %}
+											title="{{ revision.comment }}"
+										{% elseif not revision.comment and revision.user %}
+											title="Par {{ revision.user.fullName }}"
+										{% endif %}
+										>
+									{{ time_diff(revision.date)|ucfirst }}
+								</a>
+							</li>
+						{% elseif currentRevision.id == revision.id %}
+							<li class="active">
+								<a href="#" class="tip"
+										{% if revision.comment and revision.user %}
+											title="{{ revision.comment }}, par {{ revision.user.fullName }}"
+										{% elseif revision.comment and not revision.user %}
+											title="{{ revision.comment }}"
+										{% elseif not revision.comment and revision.user %}
+											title="Par {{ revision.user.fullName }}"
+										{% endif %}
+										>
+									{{ time_diff(revision.date)|ucfirst }}
+								</a>
+							</li>
+						{% else %}
+							<li>
+								<a href="{{ path('wiki_page_revision', {'login': orga.login, 'id': revision.id}) }}" class="tip"
+										{% if revision.comment and revision.user %}
+											title="{{ revision.comment }}, par {{ revision.user.fullName }}"
+										{% elseif revision.comment and not revision.user %}
+											title="{{ revision.comment }}"
+										{% elseif not revision.comment and revision.user %}
+											title="Par {{ revision.user.fullName }}"
+										{% endif %}
+										>
+									{{ time_diff(revision.date)|ucfirst }}
+								</a>
+							</li>
+						{% endif %}
+					{% endfor %}
+				</ul>
+			</div>
+
+			<div class="span9">
+				<h4>{{ page.title }}</h4>
+				{{ currentRevision.body|raw }}
+
+				<hr />
+
+				<p>
+					<a href="{{ path('wiki_page_revision', {'login': orga.login, 'id': currentRevision.id, 'ready': 'ready'}) }}" class="btn btn-primary">
+						Rétablir la révision
+					</a>
+				</p>
+			</div>
+		</div>
+	</div>
+{% endblock %}

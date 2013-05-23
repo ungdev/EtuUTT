@@ -60,11 +60,11 @@ class PageController extends Controller
 			->getOneOrNullResult();
 
 		if (! $page) {
-			throw $this->createNotFoundException(sprintf('Page not found'));
+			throw $this->createNotFoundException('Page not found');
 		}
 
 		if (StringManipulationExtension::slugify($page->getTitle()) != $slug) {
-			throw $this->createNotFoundException(sprintf('Invalid slug'));
+			throw $this->createNotFoundException('Invalid slug');
 		}
 
 		/** @var $pages Page[] */

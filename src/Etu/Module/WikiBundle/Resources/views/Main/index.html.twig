@@ -30,9 +30,41 @@
 			<div class="span3 wiki-categories">
 				<ul class="nav nav-list">
 					<li class="nav-header">Wikis des associations</li>
+				</ul>
+
+				<div class="wiki-actions">
+					<div class="wiki-action btn-group">
+						<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+							Créer
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="">Catégorie</a></li>
+							<li><a href="">Page</a></li>
+						</ul>
+					</div>
+
+					<div class="wiki-action">
+						<a class="btn" href="#">
+							Modifier
+						</a>
+					</div>
+
+					<div class="clear"></div>
+				</div>
+
+				<ul class="nav nav-list">
+					{% for orga in userOrgas %}
+						<li>
+							<a href="">
+								{{ orga.name }}
+							</a>
+						</li>
+					{% endfor %}
+					<li class="divider"></li>
 					{% for orga in orgas %}
 						<li>
-							<a href="{{ path('wiki_index_orga', {'login': orga.login}) }}">
+							<a href="">
 								{{ orga.name }}
 							</a>
 						</li>

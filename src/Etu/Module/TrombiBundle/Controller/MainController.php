@@ -177,8 +177,8 @@ class MainController extends Controller
 		// Privacy
 		foreach ($users as &$user) {
 			unset(
-			$user['id'], $user['password'], $user['language'], $user['ldapInformations'],
-			$user['keepActive'], $user['permissions'], $user['options']
+				$user['id'], $user['password'], $user['language'], $user['ldapInformations'],
+				$user['keepActive'], $user['permissions'], $user['options']
 			);
 
 			if ($user['phoneNumberPrivacy'] != User::PRIVACY_PUBLIC) {

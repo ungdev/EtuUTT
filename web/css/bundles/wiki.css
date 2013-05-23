@@ -2,6 +2,17 @@
 /*
  * Wiki
  */
+.wiki-actions {
+	padding-top: 7px;
+	padding-bottom: 13px;
+	text-align: center;
+}
+.wiki-action {
+	display: inline-block;
+}
+.wiki-actions .dropdown-menu {
+	text-align: left;
+}
 .wiki-orgas {
 	margin-top: 50px;
 }
