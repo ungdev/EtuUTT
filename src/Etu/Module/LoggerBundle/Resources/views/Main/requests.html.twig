@@ -1,0 +1,59 @@
+{% extends 'EtuCoreBundle:Admin:layout.html.twig' %}
+
+{% block title %}{{ 'logger.main.requests.title'|trans }}{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/bundles/logs.css') }}" type="text/css" />
+{% endblock %}
+
+{% block javascripts %}
+	<script type="text/javascript">
+		$('.more').click(function() {
+			$('#more-content-' + $(this).attr('id')).toggle();
+			return false;
+		});
+	</script>
+{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<ul class="nav nav-tabs page-tabs">
+		<li>
+			<a href="{{ path('logger_index') }}">{{ 'logger.main.menu.errors'|trans }}</a>
+		</li>
+		<li class="active page-tabs-resolved-active">
+			<a href="{{ path('logger_requests') }}">{{ 'logger.main.menu.requests'|trans }}</a>
+		</li>
+	</ul>
+
+	<div class="padding20-sides">
+		<table class="table table-hover">
+		{% for log in pagination %}
+			<tr>
+				<td>{{ log.method }} <code>{{ log.url }}</code></td>
+				<td>
+					From <strong>{{ log.ip }}</strong>
+					at <strong>{{ log.date|date('d/m/Y H:i:s') }}</strong>
+				</td>
+				<td>
+					<a href="#" class="more" id="{{ loop.index }}">More</a>
+				</td>
+			</tr>
+			<tr class="more-content" id="more-content-{{ loop.index }}">
+				<td colspan="3">
+					Route: <strong>{{ log.route }}</strong><br />
+					Controller: <strong>{{ log.controller }}</strong><br />
+					Template: <strong>{{ log.template }}</strong><br />
+				</td>
+			</tr>
+		{% endfor %}
+		</table>
+
+		<div class="navigation">
+			{{ knp_pagination_render(pagination) }}
+		</div>
+	</div>
+{% endblock %}

@@ -7,7 +7,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
-class Listener
+class ExceptionListener
 {
 	/**
 	 * @param GetResponseForExceptionEvent $event
@@ -19,18 +19,19 @@ class Listener
 
 		if ($exception instanceof HttpExceptionInterface) {
 			if ($exception->getStatusCode() != 404) {
-				$this->log($exception, $event->getRequest()->getClientIp());
+				$this->log($exception, $event->getRequest()->getClientIp(), $event->getRequest()->getRequestUri());
 			}
 		} else {
-			$this->log($exception, $event->getRequest()->getClientIp());
+			$this->log($exception, $event->getRequest()->getClientIp(), $event->getRequest()->getRequestUri());
 		}
 	}
 
 	/**
 	 * @param \Exception $exception
 	 * @param string $ip
+	 * @param string $url
 	 */
-	protected function log(\Exception $exception, $ip)
+	protected function log(\Exception $exception, $ip, $url)
 	{
 		$exception = new ExceptionParsed($exception);
 
@@ -44,6 +45,7 @@ class Listener
 			'exception' => $exception->export(),
 			'children' => array(),
 			'client' => $ip,
+			'url' => $url,
 			'date' => new \DateTime()
 		);
 

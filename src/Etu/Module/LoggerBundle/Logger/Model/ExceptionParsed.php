@@ -286,7 +286,38 @@ class ExceptionParsed
 	 */
 	public function getStringTraceLines()
 	{
-		return explode("\n", $this->getStringTrace());
+		$lines = explode("\n", preg_replace('/#([0-9]+) /', '', $this->getStringTrace()));
+
+		foreach ($lines as $key => $line) {
+			if ($line == '{main}') {
+				$item = array(
+					'type' => 'main',
+					'string' => $line
+				);
+			} elseif (preg_match('/([^:]+)\(([0-9]+)\): (.+)/', $line, $match)) {
+				$item = array(
+					'type' => 'external',
+					'file' => $match[1],
+					'line' => (int) $match[2],
+					'string' => $match[3],
+				);
+			} elseif (preg_match('/([^:]+): (.+)/', $line, $match)) {
+				$item = array(
+					'type' => 'internal',
+					'file' => $match[1],
+					'string' => $match[2],
+				);
+			} else {
+				$item = array(
+					'type' => 'other',
+					'string' => $line
+				);
+			}
+
+			$lines[$key] = $item;
+		}
+
+		return $lines;
 	}
 
 	/**

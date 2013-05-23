@@ -9,8 +9,13 @@
 {% block javascripts %}
 	<script type="text/javascript">
 		$('.more').click(function() {
-			$(this).parent().parent().find('.where, .trace').show();
+			$(this).parent().parent().find('.where, .trace, .less').show();
 			$(this).parent().hide();
+			return false;
+		});
+		$('.less').click(function() {
+			$(this).parent().parent().parent().find('.where, .trace, .less').hide();
+			$(this).parent().parent().parent().find('.more').parent().show();
 			return false;
 		});
 	</script>
@@ -21,7 +26,16 @@
 {% endblock %}
 
 {% block content %}
-	<div class="padding20-all">
+	<ul class="nav nav-tabs page-tabs">
+		<li class="active page-tabs-resolved-active">
+			<a href="{{ path('logger_index') }}">{{ 'logger.main.menu.errors'|trans }}</a>
+		</li>
+		<li>
+			<a href="{{ path('logger_requests') }}">{{ 'logger.main.menu.requests'|trans }}</a>
+		</li>
+	</ul>
+
+	<div class="padding20-sides">
 		<p class="alert alert-info">
 			{{ 'logger.main.index.desc'|trans|raw }}
 		</p>
@@ -35,13 +49,16 @@
 				{% endif %}
 
 				<p>
-					On <strong>{{ log.date|date('d/m/Y H:i:s') }}</strong>
+					On <strong>{{ log.url }}</strong>
 					from <strong>{{ log.client }}</strong>
+					at <strong>{{ log.date|date('d/m/Y H:i:s') }}</strong>
 				</p>
 
-				<p>
-					<a href="#" class="more btn"><i class="icon-plus"></i> More</a>
+				<p class="pull-right">
+					<a href="#" class="more">More</a>
 				</p>
+
+				<div class="clear"></div>
 
 				<p class="where">
 					In <strong>{{ log.exception.file }}</strong>
@@ -53,10 +70,28 @@
 
 					<ol>
 						{% for line in log.exception.stringTraceLines %}
-							<li>{{ line }}</li>
+							<li>
+								{% if line.type == 'external' %}
+									<strong>{{ line.string }}</strong><br />
+									<em>in {{ line.file }} on line {{ line.line }}</em>
+								{% elseif line.type == 'internal' %}
+									<strong>{{ line.string }}</strong><br />
+									<em>(internal function)</em>
+								{% else %}
+									{{ line.string }}
+								{% endif %}
+							</li>
 						{% endfor %}
 					</ol>
 				</div>
+
+				<div class="less">
+					<p class="pull-right">
+						<a href="#">Less</a>
+					</p>
+				</div>
+
+				<div class="clear"></div>
 			</div>
 		{% endfor %}
 

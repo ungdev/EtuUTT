@@ -868,12 +868,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "9cf3ab07360f12547928148006a76aa6b9a18520"
+                "reference": "7e7aeef3e13f98b7a6aaab1e9c829de774c08afa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/9cf3ab07360f12547928148006a76aa6b9a18520",
-                "reference": "9cf3ab07360f12547928148006a76aa6b9a18520",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/7e7aeef3e13f98b7a6aaab1e9c829de774c08afa",
+                "reference": "7e7aeef3e13f98b7a6aaab1e9c829de774c08afa",
                 "shasum": ""
             },
             "require": {
@@ -929,7 +929,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2013-05-15 17:36:22"
+            "time": "2013-05-22 08:47:12"
         },
         {
             "name": "imagine/imagine",
@@ -1540,12 +1540,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpMenu.git",
-                "reference": "5cf5ab4948d8c573f260e2b612bfc9721da1c892"
+                "reference": "6e3d276aef1d621249c23e0321f9737b45dc5084"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/5cf5ab4948d8c573f260e2b612bfc9721da1c892",
-                "reference": "5cf5ab4948d8c573f260e2b612bfc9721da1c892",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/6e3d276aef1d621249c23e0321f9737b45dc5084",
+                "reference": "6e3d276aef1d621249c23e0321f9737b45dc5084",
                 "shasum": ""
             },
             "require": {
@@ -1582,7 +1582,7 @@
                     "email": "stof@notk.org"
                 },
                 {
-                    "name": "Knplabs",
+                    "name": "KnpLabs",
                     "homepage": "http://knplabs.com"
                 },
                 {
@@ -1596,7 +1596,7 @@
                 "menu",
                 "tree"
             ],
-            "time": "2013-04-15 14:10:52"
+            "time": "2013-05-20 16:52:41"
         },
         {
             "name": "knplabs/knp-paginator-bundle",
@@ -1718,16 +1718,16 @@
         },
         {
             "name": "kriswallsmith/assetic",
-            "version": "v1.1.0-beta1",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kriswallsmith/assetic.git",
-                "reference": "v1.1.0-beta1"
+                "reference": "v1.1.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/v1.1.0-beta1",
-                "reference": "v1.1.0-beta1",
+                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/v1.1.0",
+                "reference": "v1.1.0",
                 "shasum": ""
             },
             "require": {
@@ -1785,7 +1785,7 @@
                 "compression",
                 "minification"
             ],
-            "time": "2013-05-13 06:03:18"
+            "time": "2013-05-16 05:28:39"
         },
         {
             "name": "monolog/monolog",

@@ -1,9 +1,14 @@
 
 logger:
     main:
+        menu:
+            errors: Erreurs PHP
+            requests: Requêtes
         index:
-            title: Logs
+            title: Logs des erreurs
             desc: |
                 Cette page rescence les logs effectués par le module Logger.<br />
                 Ce module n'étant capable d'intercepter que les exceptions, les erreurs de
                 syntaxes et autres erreurs liées à PHP ne seront pas listées.
+        requests:
+            title: Logs des requêtes

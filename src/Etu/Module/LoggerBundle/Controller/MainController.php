@@ -21,13 +21,32 @@ class MainController extends Controller
 			return $this->createAccessDeniedResponse();
 		}
 
-		$logs = unserialize(file_get_contents(__DIR__.'/../Resources/objects/errors'));
+		$logs = array_reverse(unserialize(file_get_contents(__DIR__.'/../Resources/objects/errors')));
 
 		foreach ($logs as $key => $log) {
 			$logs[$key]['exception'] = ExceptionParsed::import($log['exception']);
 		}
 
 		$pagination = $this->get('knp_paginator')->paginate($logs, $page, 50);
+
+		return array(
+			'pagination' => $pagination
+		);
+	}
+
+	/**
+	 * @Route("/admin/logger/requests/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="logger_requests")
+	 * @Template()
+	 */
+	public function requestsAction($page = 1)
+	{
+		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$logs = array_reverse(unserialize(file_get_contents(__DIR__.'/../Resources/objects/requests')));
+
+		$pagination = $this->get('knp_paginator')->paginate($logs, $page, 100);
 
 		return array(
 			'pagination' => $pagination

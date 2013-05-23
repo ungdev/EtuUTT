@@ -3,9 +3,11 @@
 	padding: 7px 20px;
 	background: #f5f5f5;
 	border: 1px solid #DFDFDF;
-	border-radius: 16px 16px 16px 16px;
 	margin-bottom: 20px;
 	font-size: 12px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
 }
 .exception h4 {
 	font-size: 14px;
@@ -13,7 +15,13 @@
 .exception h5 {
 	font-size: 13px;
 }
+.exception .where, .exception .trace, .exception .less {
+	display: none;
+}
+.trace ol {
+	font-family: "Courier New", Courier, Consolas, serif, sans-serif;
+}
 
-.exception .where, .exception .trace {
+.more-content {
 	display: none;
 }
