@@ -30,11 +30,7 @@ class DefaultController extends Controller
 
     public function indexAction()
     {
-        $uv = new UV('nf05', 'initiation au C', '51', '42', '69', '0', true, false, 6, 'UV SUBLIME', 'Honnêtement, rien.' );
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($uv);
-        $em->flush();
 
         echo 'salut rien';
         /*if($codeUV == 'NF05' || $codeUV == 'nf05') {
@@ -47,32 +43,52 @@ class DefaultController extends Controller
 
     /**
      * @Route ("/{codeUV}")
-     * @Template()
+     *
      *
      */
-
-    public function createAction($codeUV)
+    public function showAction($codeUV)
     {
 
-        echo 'salut' . $codeUV;
-        /*
-        $product = new UV();
-        $product->setCm($cm) ;
-        $product->setTd($td) ;
-        $product->setTp($tp) ;
-        $product->setThe($the) ;
-        $product->setAutomne($automne) ;
-        $product->setPrintemps($printemps) ;
-        $product->setCredits($credits) ;
-        $product->setObjectifs($objectifs) ;
-        $product->setProgramme($programme) ;
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($product);
-        $em->flush();
-*/
+
+        $uv2 = $this->getDoctrine()
+            ->getRepository('EtuModuleUVBundle:UV')
+            ->find($codeUV);
+        if (!$uv2) {
+            $this->createAction($codeUV);
+        }
+
+        $code= $uv2->getCode();
+        $nom = $uv2->getNom();
+        echo $code;
+        echo $nom;
+        echo $uv2->getTd();
+
         return new Response('');
     }
 
 
+    public function createAction($codeUV)
+    {
 
+        $uv = new UV($codeUV);
+        $uv->setNom($nom);
+        $uv->setCm($cm) ;
+        $uv->setTd($td) ;
+        $uv->setTp($tp) ;
+        $uv->setThe($the) ;
+        $uv->setAutomne($automne) ;
+        $uv->setPrintemps($printemps) ;
+        $uv->setCredits($credits) ;
+        $uv->setObjectifs($objectifs) ;
+        $uv->setProgramme($programme) ;
+
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($uv);
+        $em->flush();
+
+        echo $codeUV . ' has been created';
+
+        return new Response('');
+    }
 }
