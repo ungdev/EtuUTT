@@ -1,0 +1,77 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'wiki.main.edit.title'|trans }}{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/bundles/wiki.css') }}" type="text/css" />
+{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/wiki.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	{% if wiki_can_edit(app.user, page) %}
+		<ul class="nav nav-tabs page-tabs">
+			<li class="pull-right active page-tabs-resolved-active">
+				<a href="{{ path('wiki_index_edit') }}">{{ 'wiki.menu.edit'|trans }}</a>
+			</li>
+			<li class="pull-right">
+				<a href="{{ path('wiki_index') }}">{{ 'wiki.menu.read'|trans }}</a>
+			</li>
+		</ul>
+
+		<div class="padding20-sides">
+	{% else %}
+		<div class="padding20-all">
+	{% endif %}
+
+		<div class="row-fluid">
+			<div class="span3 wiki-categories">
+				<ul class="nav nav-list">
+					<li class="nav-header">{{ 'wiki.main.edit.revisions'|trans }}</li>
+					{% for revision in revisions %}
+						{% if page.revision.id == revision.id %}
+							<li class="active">
+						{% else %}
+							<li>
+						{% endif %}
+						{% if revision.id == page.revision.id %}
+							<a href="" class="tip"
+						{% else %}
+							<a href="{{ path('wiki_index_revision', {'id': revision.id}) }}" class="tip"
+						{% endif %}
+						{% if revision.comment and revision.user %}
+							title="{{ revision.comment }}, {{ 'wiki.main.edit.by'|trans~' '~revision.user.fullName }}"
+						{% elseif revision.comment and not revision.user %}
+							title="{{ revision.comment }}"
+						{% elseif not revision.comment and revision.user %}
+							title="{{ 'wiki.main.edit.by'|trans|ucfirst~' '~revision.user.fullName }}"
+						{% endif %}
+						>
+						{{ time_diff(revision.date)|ucfirst }}
+						</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+
+			<div class="span9">
+				<form method="post" action="">
+					{{ form_widget(form.body) }}
+					<span class="help-block">{{ form_errors(form.body) }}</span>
+
+					<div class="control-group">
+						{{ form_label(form.comment, 'wiki.main.edit.comment'|trans) }}
+						{{ form_widget(form.comment, {'attr': {'class': 'span12'} }) }}
+						<span class="help-block">{{ form_errors(form.body) }}</span>
+					</div>
+
+					{{ form_rest(form) }}
+
+					<button type="submit" class="btn btn-primary">{{ 'wiki.main.edit.submit'|trans }}</button>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

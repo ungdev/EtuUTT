@@ -32,7 +32,7 @@ class Category
 	/**
 	 * @var Category $parent
 	 *
-	 * @ORM\OneToOne(targetEntity="Category")
+	 * @ORM\ManyToOne(targetEntity="Category")
 	 * @ORM\JoinColumn()
 	 */
 	protected $parent;
@@ -78,4 +78,169 @@ class Category
 	 * @ORM\Column(name="levelToEditPermissions", type="integer")
 	 */
 	protected $levelToEditPermissions;
+
+	/**
+	 * Category depth
+	 *
+	 * @var integer
+	 *
+	 * @ORM\Column(name="depth", type="integer")
+	 */
+	protected $depth;
+
+	public $children = array();
+	public $hasChildren = false;
+	public $pages = array();
+
+
+	/**
+	 * Constructor
+	 */
+	public function __construct()
+	{
+		$this->levelToView = self::LEVEL_CONNECTED;
+		$this->levelToEdit = self::LEVEL_ASSO_ADMIN;
+		$this->levelToEditPermissions = self::LEVEL_ASSO_ADMIN;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
+
+	/**
+	 * @param int $depth
+	 * @return Category
+	 */
+	public function setDepth($depth)
+	{
+		$this->depth = $depth;
+
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getDepth()
+	{
+		return $this->depth;
+	}
+
+	/**
+	 * @param int $levelToEdit
+	 * @return Category
+	 */
+	public function setLevelToEdit($levelToEdit)
+	{
+		$this->levelToEdit = $levelToEdit;
+
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getLevelToEdit()
+	{
+		return $this->levelToEdit;
+	}
+
+	/**
+	 * @param int $levelToEditPermissions
+	 * @return Category
+	 */
+	public function setLevelToEditPermissions($levelToEditPermissions)
+	{
+		$this->levelToEditPermissions = $levelToEditPermissions;
+
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getLevelToEditPermissions()
+	{
+		return $this->levelToEditPermissions;
+	}
+
+	/**
+	 * @param int $levelToView
+	 * @return Category
+	 */
+	public function setLevelToView($levelToView)
+	{
+		$this->levelToView = $levelToView;
+
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getLevelToView()
+	{
+		return $this->levelToView;
+	}
+
+	/**
+	 * @param \Etu\Core\UserBundle\Entity\Organization $orga
+	 * @return Category
+	 */
+	public function setOrga($orga)
+	{
+		$this->orga = $orga;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Etu\Core\UserBundle\Entity\Organization
+	 */
+	public function getOrga()
+	{
+		return $this->orga;
+	}
+
+	/**
+	 * @param \Etu\Module\WikiBundle\Entity\Category $parent
+	 * @return Category
+	 */
+	public function setParent($parent)
+	{
+		$this->parent = $parent;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Etu\Module\WikiBundle\Entity\Category
+	 */
+	public function getParent()
+	{
+		return $this->parent;
+	}
+
+	/**
+	 * @param string $title
+	 * @return Category
+	 */
+	public function setTitle($title)
+	{
+		$this->title = $title;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTitle()
+	{
+		return $this->title;
+	}
 }

@@ -5,30 +5,59 @@ wiki:
         asso_member: Tous les membres de l'association
         asso_admin: Les membres du bureau de l'association
         admin: Les administrateurs de EtuUTT (vous n'aurez plus ce droit)
+
+    menu:
+        index: Accueil
+        read: Lire
+        edit: Modifier
+        delete: Supprimer
+        permissions: Permissions
+
     main:
-        menu:
-            index: Tous les wikis
-            read: Lire
-            edit: Modifier
-            delete: Supprimer
-            permissions: Permissions
         index:
             title: Wiki des associations
-        indexEdit:
+        edit:
             title: Modifier l'accueil
             submit: Modifier
+            revisions: Révisions
+            by: par
+            comment: Commentaire décrivant vos modifications
             confirm: Vous avez bien modifié l'accueil du wiki
-        indexOrga:
+        revision:
+            title: Voir une révision
+            revisions: Révisions
+            by: par
+            submit: Rétablir la révision
+            confirm: Vous avez bien rétabli la révision
+
+    orga:
+        index:
             title: Wiki de %name%
             confirm: Vous avez bien modifié cette page
-        indexOrgaEdit:
-            title: Modifier la page
+            create: Créer
+            create_page: Page
+            create_category: Catégorie
+            edit: Modifier
+        edit:
+            title: Modifier l'accueil
             submit: Modifier
-            confirm: Vous avez bien modifié l'accueil du wiki
-        indexOrgaPermissions:
+            revisions: Révisions
+            by: par
+            comment: Commentaire décrivant vos modifications
+            confirm: Vous avez bien modifié l'accueil de ce wiki
+        revision:
+            title: Voir une révision
+            revisions: Révisions
+            by: par
+            submit: Rétablir la révision
+            confirm: Vous avez bien rétabli la révision
+        permissions:
+            toEdit: Qui peut modifier cette page ?
+            toEditPermissions: Qui peut modifier les permissions de cette page ?
             title: Modifier les permissions
             submit: Modifier
             confirm: Vous avez bien modifié les permissions de cette page
+
     page:
         createCategory:
             title: Créer une catégorie

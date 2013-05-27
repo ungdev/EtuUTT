@@ -143,7 +143,7 @@ class ExceptionParsed
 	 */
 	protected function generateLinesAround()
 	{
-		$handler = fopen($this->file, 'r');
+		$handler = @fopen($this->file, 'r');
 
 		if ($handler) {
 			for ($i = 1; ($buffer = fgets($handler, 4096)) !== false; $i++) {

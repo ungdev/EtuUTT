@@ -2,6 +2,7 @@
 
 namespace Etu\Module\WikiBundle\Model;
 
+use Etu\Module\WikiBundle\Entity\Category;
 use Etu\Module\WikiBundle\Entity\Page;
 
 /**
@@ -11,16 +12,28 @@ use Etu\Module\WikiBundle\Entity\Page;
 class NestedPagesTree
 {
 	/**
-	 * @var Page[]
+	 * @var Category[]
 	 */
-	protected $tree;
+	protected $categories;
 
 	/**
-	 * @param Page[] $tree
+	 * @var Page[]
 	 */
-	public function __construct(array $tree)
+	protected $pages;
+
+	/**
+	 * @param Category[] $categories
+	 * @param Page[] $pages
+	 */
+	public function __construct(array $pages, array $categories)
 	{
-		$this->tree = $tree;
+		foreach ($pages as $page) {
+			$this->pages[$page->getId()] = $page;
+		}
+
+		foreach ($categories as $category) {
+			$this->categories[$category->getId()] = $category;
+		}
 	}
 
 	/**
@@ -28,42 +41,38 @@ class NestedPagesTree
 	 */
 	public function getNestedTree()
 	{
-		/** @var $tree Page[] */
-		$tree = array();
-
-		foreach ($this->tree as $node) {
-			$node->children = $this->getChildren($node);
-			$tree[] = $node;
-		}
-
-		foreach ($tree as $key => $node) {
-			if ($node->getDepth() != 0) {
-				unset($tree[$key]);
+		foreach ($this->pages as $key => $page) {
+			if ($page->getCategory()) {
+				$this->categories[$page->getCategory()->getId()]->pages[] = $page;
+				unset($this->pages[$key]);
 			}
 		}
 
-		return $tree;
+		foreach ($this->categories as &$category) {
+			$category->children = $this->getChildren($category);
+
+			if (! empty($category->children)) {
+				$category->hasChildren = true;
+			}
+		}
+
+		return array('pages' => $this->pages, 'categories' => $this->categories);
 	}
 
 	/**
-	 * @param Page $page
-	 * @return \Etu\Module\WikiBundle\Entity\Page[]
+	 * @param Category $category
+	 * @return Category[]
 	 */
-	public function getChildren(Page $page)
+	public function getChildren(Category $category)
 	{
-		/** @var $children Page[] */
+		/** @var $children Category[] */
 		$children = array();
 
-		foreach ($this->tree as $node) {
-			if ($node->getLeft() > $page->getLeft() && $node->getRight() < $page->getRight()) {
-				$node->children = $this->getChildren($node);
-				$children[] = $node;
-			}
-		}
-
-		foreach ($children as $key => $node) {
-			if ($node->getDepth() != $page->getDepth() + 1) {
-				unset($children[$key]);
+		foreach ($this->categories as $c) {
+			if ($c->getParent() && $c->getParent()->getId() == $category->getId()) {
+				$c->children = $this->getChildren($c);
+				$children[] = $c;
+				unset($this->categories[$c->getId()]);
 			}
 		}
 

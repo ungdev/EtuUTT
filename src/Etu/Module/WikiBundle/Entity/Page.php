@@ -32,7 +32,7 @@ class Page
 	/**
 	 * @var Category $category
 	 *
-	 * @ORM\OneToOne(targetEntity="Category")
+	 * @ORM\ManyToOne(targetEntity="Category")
 	 * @ORM\JoinColumn()
 	 */
 	protected $category;
@@ -103,6 +103,9 @@ class Page
 	public function __construct()
 	{
 		$this->isHome = false;
+		$this->levelToView = self::LEVEL_ASSO_MEMBER;
+		$this->levelToEdit = self::LEVEL_ASSO_ADMIN;
+		$this->levelToEditPermissions = self::LEVEL_ASSO_ADMIN;
 	}
 
 	/**

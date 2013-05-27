@@ -1,5 +1,33 @@
 
 <ul class="wiki-nested-list wiki-nested-list-depth-{{ depth }}">
+	{% for category in tree %}
+		<li class="wiki-nested-item wiki-nested-item-category-up {% if not category.hasChildren %}wiki-nested-item-category-no-child{% endif %}">
+			<a href="#" data-state="up" data-depth="{{ category.depth + 1 }}" class="wiki-nested-link-category">
+				{{ category.title }}
+			</a>
+
+			{% if category.hasChildren %}
+				{% include 'EtuModuleWikiBundle:Tree:children.html.twig' with {
+					'tree': category.children,
+					'depth': category.depth + 1
+				} %}
+			{% endif %}
+
+			<ul class="wiki-nested-list wiki-nested-list-depth-{{ depth + 1 }}">
+				{% for page in category.pages %}
+					<li class="wiki-nested-item">
+						<a href="" class="wiki-nested-link-page">
+							{{ page.title }}
+						</a>
+					</li>
+				{% endfor %}
+			</ul>
+		</li>
+	{% endfor %}
+</ul>
+
+{#
+<ul class="wiki-nested-list wiki-nested-list-depth-{{ depth }}">
 	{% for node in tree %}
 		{% if currentPage is defined and node.id == currentPage.id %}
 		<li class="wiki-nested-item wiki-nested-item-active">
@@ -37,3 +65,4 @@
 		</li>
 	{% endfor %}
 </ul>
+#}
