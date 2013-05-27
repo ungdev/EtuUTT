@@ -3,9 +3,12 @@
 namespace Etu\Module\UVBundle;
 
 use Etu\Core\CoreBundle\Framework\Definition\Module;
+use Etu\Core\CoreBundle\Menu\Sidebar\SidebarBuilder;
 
 class EtuModuleUVBundle extends Module
 {
+
+
 	/**
 	 * Module identifier (to be required by other modules)
 	 *
@@ -33,7 +36,7 @@ class EtuModuleUVBundle extends Module
 	 */
 	public function getAuthor()
 	{
-		return 'anonymous';
+		return 'Titotix';
 	}
 
 	/**

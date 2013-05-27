@@ -21,6 +21,6 @@ Met en place un champ de texte avec autocomplétion sur le nom de l'utilisateur.
 RedactorJs est un éditeur de contenu WYSIWYG. Ce type de champ met en place Redactor
 au dessus d'un textarea.
 
-En accompagnement de ce type de champs, utilitsez
+En accompagnement de ce type de champs, utilisez
 `Etu\Core\CoreBundle\Util\RedactorJsEscaper::escape($string)`
 pour sécuriser la donnée utilisateur.
