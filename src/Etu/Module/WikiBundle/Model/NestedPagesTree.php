@@ -56,10 +56,10 @@ class NestedPagesTree
 		foreach ($this->categories as $key => $category) {
 			if (! empty($this->categories[$key])) {
 				$this->categories[$key]->children = $this->getChildren($category);
-			}
 
-			if (! empty($category->children)) {
-				$this->categories[$key]->hasChildren = true;
+				if (! empty($category->children)) {
+					$this->categories[$key]->hasChildren = true;
+				}
 			}
 		}
 
