@@ -21,10 +21,11 @@ Cette documentation est écrite en français, contrairement aux commmentaires
 dans le code, par soucis de simplicité et de diffusion.
 
 L'ordre conseillé pour débuter la lecture est :
-	1. Les tutoriels, qui posent les bases du fonctionnement des modules ;
-	2. La référence, pour connaitre et comprendre les fonctionnalités offertes
+
+1. Les tutoriels, qui posent les bases du fonctionnement des modules ;
+2. La référence, pour connaitre et comprendre les fonctionnalités offertes
 	par les bundles de base ;
-	3. Le fonctionnement interne, qui n'est pas obligatoire mais qui permet de
+3. Le fonctionnement interne, qui n'est pas obligatoire mais qui permet de
 	comprendre comment fonctionne EtuUTT et qui permet donc de modifier son
 	coeur si nécessaire ;
 

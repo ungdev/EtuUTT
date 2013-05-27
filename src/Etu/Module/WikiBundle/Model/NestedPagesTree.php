@@ -27,6 +27,9 @@ class NestedPagesTree
 	 */
 	public function __construct(array $pages, array $categories)
 	{
+		$this->pages = array();
+		$this->categories = array();
+
 		foreach ($pages as $page) {
 			$this->pages[$page->getId()] = $page;
 		}
@@ -41,18 +44,22 @@ class NestedPagesTree
 	 */
 	public function getNestedTree()
 	{
-		foreach ($this->pages as $key => $page) {
-			if ($page->getCategory()) {
-				$this->categories[$page->getCategory()->getId()]->pages[] = $page;
-				unset($this->pages[$key]);
+		if (! empty($this->pages)) {
+			foreach ($this->pages as $key => $page) {
+				if ($page->getCategory()) {
+					$this->categories[$page->getCategory()->getId()]->pages[] = $page;
+					unset($this->pages[$key]);
+				}
 			}
 		}
 
-		foreach ($this->categories as &$category) {
-			$category->children = $this->getChildren($category);
+		foreach ($this->categories as $key => $category) {
+			if (! empty($this->categories[$key])) {
+				$this->categories[$key]->children = $this->getChildren($category);
+			}
 
 			if (! empty($category->children)) {
-				$category->hasChildren = true;
+				$this->categories[$key]->hasChildren = true;
 			}
 		}
 

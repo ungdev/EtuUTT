@@ -42,35 +42,16 @@
 				</ul>
 
 				<div class="wiki-actions">
-					<div class="wiki-action btn-group">
-						<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-							{{ 'wiki.orga.index.create'|trans }}
-							<span class="caret"></span>
-						</a>
-						<ul class="dropdown-menu">
-							<li><a href="">{{ 'wiki.orga.index.create_category'|trans }}</a></li>
-							<li><a href="">{{ 'wiki.orga.index.create_page'|trans }}</a></li>
-						</ul>
-					</div>
-
-					<div class="wiki-action">
-						<a class="btn" href="#">
-							{{ 'wiki.orga.index.edit'|trans }}
-						</a>
-					</div>
-
-					<div class="clear"></div>
+					{% include 'EtuModuleWikiBundle::actions.html.twig' with {'user': app.user, 'orga': orga, 'page': page} %}
 				</div>
 
 				<div class="wiki-tree">
 					<ul class="wiki-nested-list wiki-nested-list-depth-0">
-						{% for page in tree.pages %}
-							<li class="wiki-nested-item">
-								<a href="" class="wiki-nested-link-page">
-									{{ page.title }}
-								</a>
-							</li>
-						{% endfor %}
+						<li class="wiki-nested-item">
+							<a href="{{ path('wiki_orga_index', {'login': orga.login}) }}" class="wiki-nested-link-page">
+								Accueil
+							</a>
+						</li>
 					</ul>
 
 					{% include 'EtuModuleWikiBundle:Tree:children.html.twig' with {
@@ -79,10 +60,22 @@
 						'orga': orga,
 						'depth': 0
 					} %}
+
+					<ul class="wiki-nested-list wiki-nested-list-depth-0">
+						{% for page in tree.pages %}
+							<li class="wiki-nested-item">
+								<a href="{{ path('wiki_page_view', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}" class="wiki-nested-link-page">
+									{{ page.title }}
+								</a>
+							</li>
+						{% endfor %}
+					</ul>
 				</div>
 			</div>
 
 			<div class="span9">
+				<h4>{{ page.title }}</h4>
+
 				<p class="alert alert-info">
 					Cette page est publique et ne peut pas être cachée.
 				</p>

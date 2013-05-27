@@ -57,35 +57,46 @@ wiki:
             title: Modifier les permissions
             submit: Modifier
             confirm: Vous avez bien modifié les permissions de cette page
+        tree:
+            title: Modifier l'arborescence
+            remove: Supprimer
 
     page:
-        createCategory:
-            title: Créer une catégorie
-            submit: Créer
-            name: Nom de la catégorie
-            where: Où créer cette catégorie ?
-            confirm: Vous avez bien créé une catégorie
-        createPage:
+        view:
+            title: Lire une page
+        create:
             title: Créer une page
             submit: Créer
             name: Nom de la page
             where: Où créer cette page ?
             confirm: Vous avez bien créé une page
-        page:
-            title: Lire une page
+        create_category:
+            title: Créer une catégorie
+            submit: Créer
+            name: Nom de la catégorie
+            where: Où créer cette catégorie ?
+            confirm: Vous avez bien créé une catégorie
         edit:
             title: Modifier une page
+            revisions: Révisions
             submit: Modifier
             name: Nom de la page
             where: Où placer cette page ?
+            comment: Commentaire décrivant vos modifications
             confirm: Vous avez bien modifié la page
         revision:
             title: Voir une révision
+            revisions: Révisions
+            by: par
+            submit: Rétablir la révision
             confirm: Vous avez bien rétabli la révision
         permissions:
             title: Modifier les permissions
             submit: Modifier
             confirm: Vous avez bien modifié les permissions de cette page
+            toView: Qui peut voir cette page ?
+            toEdit: Qui peut modifier cette page ?
+            toEditPermissions: Qui peut modifier les permissions de cette page ?
         delete:
             title: Supprimer une page
             question: Etes vous sur de vouloir supprimer "%pageName%" ?

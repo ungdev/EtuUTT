@@ -90,11 +90,22 @@ class Page
 	/**
 	 * Is home of the organization ?
 	 *
-	 * @var integer
+	 * @var boolean
 	 *
 	 * @ORM\Column(name="isHome", type="boolean")
 	 */
 	protected $isHome;
+
+	/**
+	 * @var boolean
+	 *
+	 * @ORM\Column(name="isDeleted", type="boolean")
+	 */
+	protected $isDeleted;
+
+	public $body;
+	public $comment;
+	public $parent;
 
 
 	/**
@@ -103,6 +114,7 @@ class Page
 	public function __construct()
 	{
 		$this->isHome = false;
+		$this->isDeleted = false;
 		$this->levelToView = self::LEVEL_ASSO_MEMBER;
 		$this->levelToEdit = self::LEVEL_ASSO_ADMIN;
 		$this->levelToEditPermissions = self::LEVEL_ASSO_ADMIN;
@@ -117,6 +129,16 @@ class Page
 		$revision->setPageId($this->getId());
 
 		return $revision;
+	}
+
+	/**
+	 * @return $this
+	 */
+	public function putToRoot()
+	{
+		$this->category = null;
+
+		return $this;
 	}
 
 	/**

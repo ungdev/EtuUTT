@@ -1,0 +1,30 @@
+
+<ul>
+	{% for category in tree %}
+		<li>
+			{{ category.title }}
+
+			<a href="{{ path('wiki_orga_remove_category', {'login': orga.login, 'id': category.id}) }}"
+			   class="tip" title="{{ 'wiki.orga.tree.remove'|trans }}">
+				<i class="icon-remove"></i>
+			</a>
+
+			{% if category.hasChildren %}
+				{% include 'EtuModuleWikiBundle:Tree:raw_children.html.twig' with {
+					'tree': category.children,
+					'depth': category.depth + 1
+				} %}
+			{% endif %}
+
+			<ul>
+				{% for page in category.pages %}
+					<li>
+						<a href="{{ path('wiki_page_view', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}">
+							{{ page.title }}
+						</a>
+					</li>
+				{% endfor %}
+			</ul>
+		</li>
+	{% endfor %}
+</ul>

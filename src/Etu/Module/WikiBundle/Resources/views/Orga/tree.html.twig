@@ -1,6 +1,6 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block title %}{{ 'wiki.orga.index.title'|trans({'%name%': orga.name}) }}{% endblock %}
+{% block title %}{{ 'wiki.orga.tree.title'|trans }}{% endblock %}
 
 {% block stylesheets %}
 	<link rel="stylesheet" href="{{ asset('css/bundles/wiki.css') }}" type="text/css" />
@@ -19,18 +19,10 @@
 		<li>
 			<a href="{{ path('wiki_index') }}">{{ 'wiki.menu.index'|trans }}</a>
 		</li>
-		{% if wiki_can_edit_permissions(app.user, page) %}
-			<li class="pull-right">
-				<a href="{{ path('wiki_orga_permissions', {'login': orga.login}) }}">{{ 'wiki.menu.permissions'|trans }}</a>
-			</li>
-		{% endif %}
-		{% if wiki_can_edit(app.user, page) %}
-			<li class="pull-right">
-				<a href="{{ path('wiki_orga_edit', {'login': orga.login}) }}">{{ 'wiki.menu.edit'|trans }}</a>
-			</li>
-		{% endif %}
-		<li class="pull-right active page-tabs-resolved-active">
-			<a href="{{ path('wiki_orga_index', {'login': orga.login}) }}">{{ 'wiki.menu.read'|trans }}</a>
+		<li>
+			<a href="{{ path('wiki_orga_index', {'login': orga.login}) }}">
+				{{ 'wiki.orga.index.title'|trans({'%name%': orga.name}) }}
+			</a>
 		</li>
 	</ul>
 
@@ -74,7 +66,22 @@
 			</div>
 
 			<div class="span9">
-				{{ page.revision.body|raw }}
+				{% include 'EtuModuleWikiBundle:Tree:raw_children.html.twig' with {
+					'tree': tree.categories,
+					'currentPage': page,
+					'orga': orga,
+					'depth': 0
+				} %}
+
+				<ul>
+					{% for page in tree.pages %}
+						<li>
+							<a href="{{ path('wiki_page_view', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}" class="wiki-nested-link-page">
+								{{ page.title }}
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
 			</div>
 		</div>
 	</div>

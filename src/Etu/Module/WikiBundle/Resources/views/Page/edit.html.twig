@@ -17,42 +17,41 @@
 {% block content %}
 	<ul class="nav nav-tabs page-tabs">
 		<li>
-			<a href="{{ path('wiki_index') }}">{{ 'wiki.main.menu.index'|trans }}</a>
+			<a href="{{ path('wiki_index') }}">{{ 'wiki.menu.index'|trans }}</a>
 		</li>
-		{% if wiki_can_delete(app.user, home) %}
+		{% if wiki_can_delete(app.user, page) %}
 			<li class="pull-right">
 				<a href="{{ path('wiki_page_delete', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}">
-					{{ 'wiki.main.menu.delete'|trans }}
+					{{ 'wiki.menu.delete'|trans }}
 				</a>
 			</li>
 		{% endif %}
 		{% if wiki_can_edit_permissions(app.user, page) %}
 			<li class="pull-right">
 				<a href="{{ path('wiki_page_permissions', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}">
-					{{ 'wiki.main.menu.permissions'|trans }}
+					{{ 'wiki.menu.permissions'|trans }}
 				</a>
 			</li>
 		{% endif %}
 		{% if wiki_can_edit(app.user, page) %}
 			<li class="pull-right active page-tabs-resolved-active">
-				<a href="{{ path('wiki_page_edit', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}">
-					{{ 'wiki.main.menu.edit'|trans }}
+				<a href="{{ path('wiki_page_view', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}">
+					{{ 'wiki.menu.edit'|trans }}
 				</a>
 			</li>
 		{% endif %}
 		<li class="pull-right">
-			<a href="{{ path('wiki_page', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}">
-				{{ 'wiki.main.menu.read'|trans }}
+			<a href="{{ path('wiki_page_view', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}">
+				{{ 'wiki.menu.read'|trans }}
 			</a>
 		</li>
 	</ul>
 
 	<div class="padding20-sides">
-
 		<div class="row-fluid">
 			<div class="span3 wiki-categories">
 				<ul class="nav nav-list">
-					<li class="nav-header">Révisions</li>
+					<li class="nav-header">{{ 'wiki.page.edit.revisions'|trans }}</li>
 					{% for revision in revisions %}
 						{% if page.revision.id == revision.id %}
 							<li class="active">
@@ -60,19 +59,19 @@
 							<li>
 						{% endif %}
 						{% if revision.id == page.revision.id %}
-							<a href="" class="tip"
+						<a href="" class="tip"
 						{% else %}
-							<a href="{{ path('wiki_page_revision', {'login': orga.login, 'id': revision.id}) }}" class="tip"
+						<a href="{{ path('wiki_page_revision', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify, 'revisionId': revision.id}) }}" class="tip"
 						{% endif %}
-								{% if revision.comment and revision.user %}
-									title="{{ revision.comment }}, par {{ revision.user.fullName }}"
-								{% elseif revision.comment and not revision.user %}
-									title="{{ revision.comment }}"
-								{% elseif not revision.comment and revision.user %}
-									title="Par {{ revision.user.fullName }}"
-								{% endif %}
-								>
-							{{ time_diff(revision.date)|ucfirst }}
+						{% if revision.comment and revision.user %}
+							title="{{ revision.comment }}, {{ 'wiki.orga.edit.by'|trans~' '~revision.user.fullName }}"
+						{% elseif revision.comment and not revision.user %}
+							title="{{ revision.comment }}"
+						{% elseif not revision.comment and revision.user %}
+							title="{{ 'wiki.orga.edit.by'|trans|ucfirst~' '~revision.user.fullName }}"
+						{% endif %}
+						>
+						{{ time_diff(revision.date)|ucfirst }}
 						</a>
 						</li>
 					{% endfor %}
@@ -81,27 +80,32 @@
 
 			<div class="span9">
 				<form method="post" action="">
-					{{ form_widget(form.title, {'attr': {'class': 'span12 wiki-edit-title'} }) }}
-					<span class="help-block">{{ form_errors(form.body) }}</span>
-
-					{{ form_widget(form.body) }}
-					<span class="help-block">{{ form_errors(form.body) }}</span>
-
 					<div class="control-group">
-						{{ form_label(form.category, 'wiki.page.edit.where'|trans) }}
-						{{ form_widget(form.category, {'attr': {'class': 'span7' } }) }}
-						<span class="help-block">{{ form_errors(form.category) }}</span>
+						{{ form_label(form.title,  'wiki.page.edit.name'|trans) }}
+						{{ form_widget(form.title, {'attr': {'class': 'span12 wiki-edit-title' } }) }}
+						<span class="help-block">{{ form_errors(form.title) }}</span>
 					</div>
 
 					<div class="control-group">
-						{{ form_label(form.comment, 'Commentaire décrivant vos modifications') }}
-						{{ form_widget(form.comment, {'attr': {'class': 'span12'} }) }}
+						{{ form_widget(form.body) }}
 						<span class="help-block">{{ form_errors(form.body) }}</span>
+					</div>
+
+					<div class="control-group">
+						{{ form_label(form.comment, 'wiki.page.edit.comment'|trans) }}
+						{{ form_widget(form.comment, {'attr': {'class': 'span12'} }) }}
+						<span class="help-block">{{ form_errors(form.comment) }}</span>
+					</div>
+
+					<div class="control-group">
+						{{ form_label(form.parent, 'wiki.page.edit.where'|trans) }}
+						{{ form_widget(form.parent, {'attr': {'class': 'span6' } }) }}
+						<span class="help-block">{{ form_errors(form.parent) }}</span>
 					</div>
 
 					{{ form_rest(form) }}
 
-					<button type="submit" class="btn btn-primary">{{ 'wiki.main.indexOrgaEdit.submit'|trans }}</button>
+					<button type="submit" class="btn">{{ 'wiki.page.edit.submit'|trans }}</button>
 				</form>
 			</div>
 		</div>

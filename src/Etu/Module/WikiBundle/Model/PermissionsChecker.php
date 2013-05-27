@@ -148,6 +148,32 @@ class PermissionsChecker
 	}
 
 	/**
+	 * @param Page $page
+	 * @return bool
+	 */
+	public function canCreate(Page $page)
+	{
+		if ($this->user->getIsAdmin()) {
+			return true;
+		}
+
+		return $this->findMembership($page->getOrga()) instanceof Member;
+	}
+
+	/**
+	 * @param Page $page
+	 * @return bool
+	 */
+	public function canDelete(Page $page)
+	{
+		if ($this->user->getIsAdmin()) {
+			return true;
+		}
+
+		return $this->findMembership($page->getOrga()) instanceof Member;
+	}
+
+	/**
 	 * @param Organization $orga
 	 * @return bool|Member
 	 */

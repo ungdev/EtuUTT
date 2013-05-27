@@ -330,6 +330,98 @@ class OrgaController extends Controller
 	}
 
 	/**
+	 * @Route("/wiki/{login}/tree", name="wiki_orga_tree")
+	 * @Template()
+	 */
+	public function treeAction($login)
+	{
+		if (! $this->getUserLayer()->isConnected()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $home Page */
+		$home = $em->createQueryBuilder()
+			->select('p, r, o')
+			->from('EtuModuleWikiBundle:Page', 'p')
+			->leftJoin('p.revision', 'r')
+			->leftJoin('p.orga', 'o')
+			->where('p.isHome = 1')
+			->andWhere('o.login = :login')
+			->setParameter('login', $login)
+			->setMaxResults(1)
+			->getQuery()
+			->getOneOrNullResult();
+
+		if (! $home) {
+			throw $this->createNotFoundException('Page not found');
+		}
+
+		$checker = new PermissionsChecker($this->getUser());
+
+		if (! $checker->canDelete($home)) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$tree = $this->createNestedTreeFor($home->getOrga());
+
+		return array(
+			'page' => $home,
+			'orga' => $home->getOrga(),
+			'tree' => $tree->getNestedTree()
+		);
+	}
+
+	/**
+	 * @Route("/wiki/{login}/category/{id}/remove", name="wiki_orga_remove_category")
+	 * @Template()
+	 *
+	 * @todo
+	 */
+	public function removeCategoryAction($login, $id)
+	{
+		if (! $this->getUserLayer()->isConnected()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $category Page */
+		$home = $em->createQueryBuilder()
+			->select('p, r, o')
+			->from('EtuModuleWikiBundle:Page', 'p')
+			->leftJoin('p.revision', 'r')
+			->leftJoin('p.orga', 'o')
+			->where('p.isHome = 1')
+			->andWhere('o.login = :login')
+			->setParameter('login', $login)
+			->setMaxResults(1)
+			->getQuery()
+			->getOneOrNullResult();
+
+		if (! $home) {
+			throw $this->createNotFoundException('Page not found');
+		}
+
+		$checker = new PermissionsChecker($this->getUser());
+
+		if (! $checker->canDelete($home)) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$tree = $this->createNestedTreeFor($home->getOrga());
+
+		return array(
+			'page' => $home,
+			'orga' => $home->getOrga(),
+			'tree' => $tree->getNestedTree()
+		);
+	}
+
+	/**
 	 * Create the pages and categories tree for a given organization
 	 *
 	 * @param Organization $orga
@@ -347,6 +439,8 @@ class OrgaController extends Controller
 			->leftJoin('p.category', 'c')
 			->leftJoin('c.parent', 'cp')
 			->where('p.orga = :orga')
+			->andWhere('p.isHome = 0')
+			->andWhere('p.isDeleted = 0')
 			->setParameter('orga', $orga->getId())
 			->orderBy('c.depth', 'ASC')
 			->addOrderBy('c.title', 'ASC')

@@ -1,6 +1,6 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block title %}{{ 'wiki.page.createCategory.title'|trans }}{% endblock %}
+{% block title %}{{ 'wiki.page.create_category.title'|trans }}{% endblock %}
 
 {% block stylesheets %}
 	<link rel="stylesheet" href="{{ asset('css/bundles/wiki.css') }}" type="text/css" />
@@ -17,11 +17,11 @@
 {% block content %}
 	<ul class="nav nav-tabs page-tabs">
 		<li>
-			<a href="{{ path('wiki_index') }}">{{ 'wiki.main.menu.index'|trans }}</a>
+			<a href="{{ path('wiki_index') }}">{{ 'wiki.menu.index'|trans }}</a>
 		</li>
 		<li>
-			<a href="{{ path('wiki_index_orga', {'login': orga.login}) }}">
-				{{ 'wiki.main.indexOrga.title'|trans({'%name%': orga.name}) }}
+			<a href="{{ path('wiki_orga_index', {'login': orga.login}) }}">
+				{{ 'wiki.orga.index.title'|trans({'%name%': orga.name}) }}
 			</a>
 		</li>
 	</ul>
@@ -30,29 +30,53 @@
 		<div class="row-fluid">
 			<div class="span3 wiki-categories">
 				<ul class="nav nav-list">
-					<li class="nav-header">{{ 'wiki.main.indexOrga.title'|trans({'%name%': orga.name}) }}</li>
-					<li>
-						{% include 'EtuModuleWikiBundle:Tree:children.html.twig' with {
-							'tree': tree,
-							'orga': orga,
-							'depth': 0
-						} %}
-					</li>
+					<li class="nav-header">{{ 'wiki.orga.index.title'|trans({'%name%': orga.name}) }}</li>
 				</ul>
+
+				<div class="wiki-actions">
+					{% include 'EtuModuleWikiBundle::actions.html.twig' with {'user': app.user, 'orga': orga, 'page': page} %}
+				</div>
+
+				<div class="wiki-tree">
+					<ul class="wiki-nested-list wiki-nested-list-depth-0">
+						<li class="wiki-nested-item">
+							<a href="{{ path('wiki_orga_index', {'login': orga.login}) }}" class="wiki-nested-link-page">
+								Accueil
+							</a>
+						</li>
+					</ul>
+
+					{% include 'EtuModuleWikiBundle:Tree:children.html.twig' with {
+						'tree': tree.categories,
+						'currentPage': page,
+						'orga': orga,
+						'depth': 0
+					} %}
+
+					<ul class="wiki-nested-list wiki-nested-list-depth-0">
+						{% for page in tree.pages %}
+							<li class="wiki-nested-item">
+								<a href="{{ path('wiki_page_view', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}" class="wiki-nested-link-page">
+									{{ page.title }}
+								</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
 			</div>
 
 			<div class="span9">
 				<form method="post" action="">
 					<div class="control-group">
-						{{ form_label(form.category,  'wiki.page.createCategory.name'|trans) }}
+						{{ form_label(form.title,  'wiki.page.create_category.name'|trans) }}
 						{{ form_widget(form.title, {'attr': {'class': 'span12 wiki-edit-title' } }) }}
 						<span class="help-block">{{ form_errors(form.title) }}</span>
 					</div>
 
 					<div class="control-group">
-						{{ form_label(form.category, 'wiki.page.createCategory.where'|trans) }}
-						{{ form_widget(form.category, {'attr': {'class': 'span6' } }) }}
-						<span class="help-block">{{ form_errors(form.category) }}</span>
+						{{ form_label(form.parentId, 'wiki.page.create_category.where'|trans) }}
+						{{ form_widget(form.parentId, {'attr': {'class': 'span6' } }) }}
+						<span class="help-block">{{ form_errors(form.parentId) }}</span>
 					</div>
 
 					<div class="control-group">
@@ -61,9 +85,21 @@
 						<span class="help-block">{{ form_errors(form.levelToView) }}</span>
 					</div>
 
+					<div class="control-group">
+						{{ form_label(form.levelToEdit, 'Qui peut modifier cette catégorie ?') }}
+						{{ form_widget(form.levelToEdit, {'attr': {'class': 'span6'} }) }}
+						<span class="help-block">{{ form_errors(form.levelToEdit) }}</span>
+					</div>
+
+					<div class="control-group">
+						{{ form_label(form.levelToEditPermissions, 'Qui peut modifier les permissions de cette catégorie ?') }}
+						{{ form_widget(form.levelToEditPermissions, {'attr': {'class': 'span6'} }) }}
+						<span class="help-block">{{ form_errors(form.levelToEditPermissions) }}</span>
+					</div>
+
 					{{ form_rest(form) }}
 
-					<button type="submit" class="btn">{{ 'wiki.page.createCategory.submit'|trans }}</button>
+					<button type="submit" class="btn">{{ 'wiki.page.create_category.submit'|trans }}</button>
 				</form>
 			</div>
 		</div>

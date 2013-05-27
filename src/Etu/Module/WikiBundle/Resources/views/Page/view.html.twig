@@ -1,6 +1,6 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block title %}{{ 'wiki.page.permissions.title'|trans }}{% endblock %}
+{% block title %}{{ 'wiki.page.view.title'|trans }}{% endblock %}
 
 {% block stylesheets %}
 	<link rel="stylesheet" href="{{ asset('css/bundles/wiki.css') }}" type="text/css" />
@@ -27,7 +27,7 @@
 			</li>
 		{% endif %}
 		{% if wiki_can_edit_permissions(app.user, page) %}
-			<li class="pull-right active page-tabs-resolved-active">
+			<li class="pull-right">
 				<a href="{{ path('wiki_page_permissions', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}">
 					{{ 'wiki.menu.permissions'|trans }}
 				</a>
@@ -40,7 +40,7 @@
 				</a>
 			</li>
 		{% endif %}
-		<li class="pull-right">
+		<li class="pull-right active page-tabs-resolved-active">
 			<a href="{{ path('wiki_page_view', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}">
 				{{ 'wiki.menu.read'|trans }}
 			</a>
@@ -87,31 +87,8 @@
 			</div>
 
 			<div class="span9">
-				<form method="post" action="">
-					<h4>{{ page.title }}</h4>
-
-					<div class="control-group">
-						{{ form_label(form.levelToView, 'wiki.page.permissions.toView'|trans) }}
-						{{ form_widget(form.levelToView, {'attr': {'class': 'span6'} }) }}
-						<span class="help-block">{{ form_errors(form.levelToView) }}</span>
-					</div>
-
-					<div class="control-group">
-						{{ form_label(form.levelToEdit, 'wiki.page.permissions.toEdit'|trans) }}
-						{{ form_widget(form.levelToEdit, {'attr': {'class': 'span6'} }) }}
-						<span class="help-block">{{ form_errors(form.levelToEdit) }}</span>
-					</div>
-
-					<div class="control-group">
-						{{ form_label(form.levelToEditPermissions, 'wiki.page.permissions.toEditPermissions'|trans) }}
-						{{ form_widget(form.levelToEditPermissions, {'attr': {'class': 'span6'} }) }}
-						<span class="help-block">{{ form_errors(form.levelToEditPermissions) }}</span>
-					</div>
-
-					{{ form_rest(form) }}
-
-					<button type="submit" class="btn">{{ 'wiki.page.edit.submit'|trans }}</button>
-				</form>
+				<h4>{{ page.title }}</h4>
+				{{ page.revision.body|raw }}
 			</div>
 		</div>
 	</div>

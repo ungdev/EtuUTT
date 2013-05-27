@@ -1,0 +1,31 @@
+
+{% if wiki_can_create(user, page) %}
+<div class="wiki-action btn-group">
+	<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+		{{ 'wiki.orga.index.create'|trans }}
+		<span class="caret"></span>
+	</a>
+	<ul class="dropdown-menu">
+		<li>
+			<a href="{{ path('wiki_page_create_category', {'login': orga.login}) }}">
+				{{ 'wiki.orga.index.create_category'|trans }}
+			</a>
+		</li>
+		<li>
+			<a href="{{ path('wiki_page_create', {'login': orga.login}) }}">
+				{{ 'wiki.orga.index.create_page'|trans }}
+			</a>
+		</li>
+	</ul>
+</div>
+{% endif %}
+
+{% if wiki_can_delete(user, page) %}
+<div class="wiki-action">
+	<a class="btn" href="{{ path('wiki_orga_tree', {'login': orga.login}) }}">
+		{{ 'wiki.orga.index.edit'|trans }}
+	</a>
+</div>
+{% endif %}
+
+<div class="clear"></div>
