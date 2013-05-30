@@ -281,12 +281,6 @@
 	margin-left: 200px;
 }
 
-@media screen and (max-width: 1300px) {
-	.schedule-print .item-half {
-		width: 49%;
-	}
-}
-
 @media screen and (max-width: 1230px) {
 	.schedule-hours {
 		width: 60px;
@@ -307,9 +301,6 @@
     .phoneDay .item {
 	    border-right: 0;
     }
-	.schedule .item-half {
-		width: 50%;
-	}
 	.schedule-course-type {
 		display: inline;
 	}

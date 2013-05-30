@@ -66,22 +66,17 @@
 			</div>
 
 			<div class="span9">
-				{% include 'EtuModuleWikiBundle:Tree:raw_children.html.twig' with {
-					'tree': tree.categories,
-					'currentPage': page,
-					'orga': orga,
-					'depth': 0
-				} %}
+				<p class="alert alert-info">
+					{{ 'wiki.orga.tree.desc'|trans }}
+				</p>
 
-				<ul>
-					{% for page in tree.pages %}
-						<li>
-							<a href="{{ path('wiki_page_view', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}" class="wiki-nested-link-page">
-								{{ page.title }}
-							</a>
-						</li>
-					{% endfor %}
-				</ul>
+				<div class="span6">
+					{% include 'EtuModuleWikiBundle:Tree:raw_categories.html.twig' with {
+						'tree': tree.categories,
+						'orga': orga,
+						'depth': 0
+					} %}
+				</div>
 			</div>
 		</div>
 	</div>

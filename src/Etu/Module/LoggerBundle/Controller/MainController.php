@@ -27,7 +27,7 @@ class MainController extends Controller
 			$logs[$key]['exception'] = ExceptionParsed::import($log['exception']);
 		}
 
-		$pagination = $this->get('knp_paginator')->paginate($logs, $page, 50);
+		$pagination = $this->get('knp_paginator')->paginate($logs, $page, 20);
 
 		return array(
 			'pagination' => $pagination

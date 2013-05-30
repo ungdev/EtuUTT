@@ -1,0 +1,31 @@
+
+<ul>
+	{% for category in tree %}
+		<li>
+			{{ category.title }}
+			({% if category.pages|count <= 1 %}
+				{{ 'wiki.orga.tree.count_pages.one'|trans({'%count%': category.pages|count}) }}
+			{% else %}
+				{{ 'wiki.orga.tree.count_pages.many'|trans({'%count%': category.pages|count}) }}
+			{% endif %}
+			)
+
+			<a href="{{ path('wiki_orga_remove_category', {'login': orga.login, 'id': category.id}) }}"
+			   class="tip pull-right" title="{{ 'wiki.orga.tree.remove'|trans({'%category%': category.title}) }}">
+				<i class="icon-remove"></i>
+			</a>
+
+			<a href="{{ path('wiki_orga_edit_category', {'login': orga.login, 'id': category.id}) }}"
+			   class="tip pull-right" title="{{ 'wiki.orga.tree.edit'|trans({'%category%': category.title}) }}">
+				<i class="icon-pencil"></i>
+			</a>
+
+			{% if category.hasChildren %}
+				{% include 'EtuModuleWikiBundle:Tree:raw_categories.html.twig' with {
+					'tree': category.children,
+					'depth': category.depth + 1
+				} %}
+			{% endif %}
+		</li>
+	{% endfor %}
+</ul>

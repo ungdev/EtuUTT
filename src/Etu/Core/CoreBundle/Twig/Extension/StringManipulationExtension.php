@@ -23,6 +23,7 @@ class StringManipulationExtension extends \Twig_Extension
 	public function getFilters()
 	{
 		return array(
+			'count' => new \Twig_Filter_Function('count'),
 			'ucfirst' => new \Twig_Filter_Function('ucfirst'),
 			'urlencode' => new \Twig_Filter_Function('urlencode'),
 			'limit' => new \Twig_Filter_Method($this, 'limit'),

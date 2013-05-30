@@ -15,7 +15,11 @@
 
 			<ul class="wiki-nested-list wiki-nested-list-depth-{{ depth + 1 }}">
 				{% for page in category.pages %}
+					{% if currentPage is defined and currentPage.id == page.id %}
+					<li class="wiki-nested-item wiki-nested-item-current" data-depth="{{ depth + 1 }}">
+					{% else %}
 					<li class="wiki-nested-item">
+					{% endif %}
 						<a href="{{ path('wiki_page_view', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}" class="wiki-nested-link-page">
 							{{ page.title }}
 						</a>
