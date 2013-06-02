@@ -1,4 +1,12 @@
 
-parameters: ~
+parameters:
+    etu.notifs.orga_message.class: Etu\Module\AssosBundle\Notification\Helper\OrgaMessageHelper
 
-services: ~
+services:
+
+    # Notifications helper
+    etu.notifs.orga_message:
+        class: %etu.notifs.orga_message.class%
+        arguments: [@twig]
+        tags:
+            - { name: etu.notifs_helper }
