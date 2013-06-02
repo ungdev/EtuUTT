@@ -1,6 +1,6 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block title %}{{ 'wiki.orga.tree.title'|trans }}{% endblock %}
+{% block title %}{{ 'wiki.orga.delete_category.title'|trans }}{% endblock %}
 
 {% block stylesheets %}
 	<link rel="stylesheet" href="{{ asset('css/bundles/wiki.css') }}" type="text/css" />
@@ -66,13 +66,18 @@
 			</div>
 
 			<div class="span9">
-				<div class="span7">
-					{% include 'EtuModuleWikiBundle:Tree:raw_categories.html.twig' with {
-						'tree': tree.categories,
-						'orga': orga,
-						'depth': 0
-					} %}
-				</div>
+				<h3>{{ category.title }}</h3>
+				<p>
+					{{ 'wiki.orga.delete_category.question'|trans({'%categoryName%': category.title}) }}
+				</p>
+				<p>
+					<a href="{{ path('wiki_orga_remove_category', {'login': orga.login, 'id': category.id, 'confirm': 'confirm'}) }}" class="btn btn-primary">
+						{{ 'wiki.orga.delete_category.yes'|trans }}
+					</a>
+					<a href="{{ path('wiki_orga_tree', {'login': orga.login}) }}" class="btn">
+						{{ 'wiki.orga.delete_category.no'|trans }}
+					</a>
+				</p>
 			</div>
 		</div>
 	</div>

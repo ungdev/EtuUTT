@@ -23,6 +23,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 class OrgaController extends Controller
 {
+	protected $removedCategories = array();
+
 	/**
 	 * @Route("/wiki/{login}", name="wiki_orga_index")
 	 * @Template()
@@ -377,8 +379,6 @@ class OrgaController extends Controller
 	/**
 	 * @Route("/wiki/{login}/category/{id}/edit", name="wiki_orga_edit_category")
 	 * @Template()
-	 *
-	 * @todo
 	 */
 	public function editCategoryAction($login, $id)
 	{
@@ -389,7 +389,7 @@ class OrgaController extends Controller
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
 
-		/** @var $category Page */
+		/** @var $home Page */
 		$home = $em->createQueryBuilder()
 			->select('p, r, o')
 			->from('EtuModuleWikiBundle:Page', 'p')
@@ -403,13 +403,78 @@ class OrgaController extends Controller
 			->getOneOrNullResult();
 
 		if (! $home) {
-			throw $this->createNotFoundException('Page not found');
+			throw $this->createNotFoundException('Home not found');
 		}
 
 		$checker = new PermissionsChecker($this->getUser());
 
-		if (! $checker->canDelete($home)) {
+		if (! $checker->canCreate($home)) {
 			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $categories Category[] */
+		$categories = $em->createQueryBuilder()
+			->select('c, cp')
+			->from('EtuModuleWikiBundle:Category', 'c')
+			->leftJoin('c.parent', 'cp')
+			->where('c.orga = :orga')
+			->andWhere('c.depth <= 3')
+			->setParameter('orga', $home->getOrga()->getId())
+			->orderBy('c.depth', 'ASC')
+			->addOrderBy('c.title', 'ASC')
+			->getQuery()
+			->getResult();
+
+		$choices = array(0 => 'A la racine');
+
+		foreach ($categories as $key => $category) {
+			$choices[$category->getId()] = $category->getTitle();
+			unset($categories[$key]);
+			$categories[$category->getId()] = $category;
+		}
+
+		if (! isset($categories[$id])) {
+			throw $this->createNotFoundException('Category not found');
+		}
+
+		$levels = array(
+			Page::LEVEL_CONNECTED => 'wiki.levels.connected',
+			Page::LEVEL_ASSO_MEMBER => 'wiki.levels.asso_member',
+			Page::LEVEL_ASSO_ADMIN => 'wiki.levels.asso_admin',
+			Page::LEVEL_ADMIN => 'wiki.levels.admin'
+		);
+
+		$category = $categories[$id];
+		$category->parentId = $category->getParent()->getId();
+
+		$form = $this->createFormBuilder($category)
+			->add('title')
+			->add('parentId', 'choice', array('choices' => $choices))
+			->add('levelToView', 'choice', array('choices' => $levels))
+			->add('levelToEdit', 'choice', array('choices' => $levels))
+			->add('levelToEditPermissions', 'choice', array('choices' => $levels))
+			->getForm();
+
+		$request = $this->getRequest();
+
+		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+			if ($category->parentId > 0 && isset($categories[$category->parentId])) {
+				$category->setParent($categories[$category->parentId]);
+				$category->setDepth($categories[$category->parentId]->getDepth() + 1);
+			} elseif ($category->parentId == 0) {
+				$category->removeParent();
+				$category->setDepth(0);
+			}
+
+			$em->persist($category);
+			$em->flush();
+
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'wiki.orga.edit_category.confirm'
+			));
+
+			return $this->redirect($this->generateUrl('wiki_orga_tree', array('login' => $login)));
 		}
 
 		$tree = $this->createNestedTreeFor($home->getOrga());
@@ -417,17 +482,16 @@ class OrgaController extends Controller
 		return array(
 			'page' => $home,
 			'orga' => $home->getOrga(),
+			'form' => $form->createView(),
 			'tree' => $tree->getNestedTree()
 		);
 	}
 
 	/**
-	 * @Route("/wiki/{login}/category/{id}/remove", name="wiki_orga_remove_category")
+	 * @Route("/wiki/{login}/category/{id}/remove/{confirm}", name="wiki_orga_remove_category")
 	 * @Template()
-	 *
-	 * @todo
 	 */
-	public function removeCategoryAction($login, $id)
+	public function removeCategoryAction($login, $id, $confirm = false)
 	{
 		if (! $this->getUserLayer()->isConnected()) {
 			return $this->createAccessDeniedResponse();
@@ -436,7 +500,7 @@ class OrgaController extends Controller
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
 
-		/** @var $category Page */
+		/** @var $home Page */
 		$home = $em->createQueryBuilder()
 			->select('p, r, o')
 			->from('EtuModuleWikiBundle:Page', 'p')
@@ -450,19 +514,83 @@ class OrgaController extends Controller
 			->getOneOrNullResult();
 
 		if (! $home) {
-			throw $this->createNotFoundException('Page not found');
+			throw $this->createNotFoundException('Home not found');
 		}
 
 		$checker = new PermissionsChecker($this->getUser());
 
-		if (! $checker->canDelete($home)) {
+		if (! $checker->canCreate($home)) {
 			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $categories Category[] */
+		$category = $em->createQueryBuilder()
+			->select('c, cp')
+			->from('EtuModuleWikiBundle:Category', 'c')
+			->leftJoin('c.parent', 'cp')
+			->where('c.id = :id')
+			->setParameter('id', $id)
+			->setMaxResults(1)
+			->getQuery()
+			->getOneOrNullResult();
+
+		if (! $category) {
+			throw $this->createNotFoundException('Category not found');
+		}
+
+		if ($confirm !== false) {
+			/** @var $categories Category[] */
+			$categories = $em->createQueryBuilder()
+				->select('c, cp')
+				->from('EtuModuleWikiBundle:Category', 'c')
+				->leftJoin('c.parent', 'cp')
+				->where('c.orga = :orga')
+				->andWhere('c.depth > :depth')
+				->setParameter('orga', $home->getOrga()->getId())
+				->setParameter('depth', $category->getDepth())
+				->orderBy('c.depth', 'DESC')
+				->getQuery()
+				->getResult();
+
+			$this->removeTreePart($category->getId(), $categories);
+			$this->removedCategories[] = $category->getId();
+
+			// Delete pages first
+			$query = $em->createQueryBuilder()
+				->delete()
+				->from('EtuModuleWikiBundle:Page', 'p');
+
+			foreach ($this->removedCategories as $key => $categoryId) {
+				$query->orWhere('p.category = :categoryId'.$key)
+					->setParameter(':categoryId'.$key, $categoryId);
+			}
+
+			$query->getQuery()->execute();
+
+			// Delete categories then
+			foreach ($this->removedCategories as $categoryId) {
+				$em->createQueryBuilder()
+					->delete()
+					->from('EtuModuleWikiBundle:Category', 'c')
+					->where('c.id = :id')
+					->setParameter(':id', $categoryId)
+					->getQuery()
+					->execute();
+			}
+
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'wiki.orga.delete_category.confirm'
+			));
+
+			return $this->redirect($this->generateUrl('wiki_orga_tree', array('login' => $login)));
 		}
 
 		$tree = $this->createNestedTreeFor($home->getOrga());
 
 		return array(
 			'page' => $home,
+			'category' => $category,
 			'orga' => $home->getOrga(),
 			'tree' => $tree->getNestedTree()
 		);
@@ -508,5 +636,19 @@ class OrgaController extends Controller
 			->getResult();
 
 		return new NestedPagesTree($pages, $categories);
+	}
+
+	/**
+	 * @param integer $parentId
+	 * @param Category[] $categories
+	 */
+	protected function removeTreePart($parentId, $categories)
+	{
+		foreach ($categories as $category) {
+			if ($category->getParent()->getId() == $parentId) {
+				$this->removeTreePart($category->getId(), $categories);
+				array_unshift($this->removedCategories, $category->getId());
+			}
+		}
 	}
 }

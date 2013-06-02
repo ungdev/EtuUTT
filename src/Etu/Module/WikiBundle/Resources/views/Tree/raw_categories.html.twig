@@ -3,12 +3,14 @@
 	{% for category in tree %}
 		<li>
 			{{ category.title }}
-			({% if category.pages|count <= 1 %}
-				{{ 'wiki.orga.tree.count_pages.one'|trans({'%count%': category.pages|count}) }}
-			{% else %}
-				{{ 'wiki.orga.tree.count_pages.many'|trans({'%count%': category.pages|count}) }}
-			{% endif %}
-			)
+			<span class="muted">
+				-
+				{% if category.pages|count <= 1 %}
+					{{ 'wiki.orga.tree.count_pages.one'|trans({'%count%': category.pages|count}) }}
+				{% else %}
+					{{ 'wiki.orga.tree.count_pages.many'|trans({'%count%': category.pages|count}) }}
+				{% endif %}
+			</span>
 
 			<a href="{{ path('wiki_orga_remove_category', {'login': orga.login, 'id': category.id}) }}"
 			   class="tip pull-right" title="{{ 'wiki.orga.tree.remove'|trans({'%category%': category.title}) }}">

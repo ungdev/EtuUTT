@@ -59,14 +59,26 @@ wiki:
             confirm: Vous avez bien modifié les permissions de cette page
         tree:
             title: Modifier l'arborescence
-            desc: |
-                Vous trouverez ci-dessous la liste des catégories de votre wiki.
-                Vous pouvez les modifier ou les supprimer.
             edit: Modifier %category%
             remove: Supprimer %category%
             count_pages:
                 one: %count% page
                 many: %count% pages
+        edit_category:
+            title: Modifier une catégorie
+            submit: Modifier
+            name: Nom de la catégorie
+            where: Où créer cette catégorie ?
+            confirm: Vous avez bien modifier cette catégorie
+        delete_category:
+            title: Supprimer une catégorie
+            question: |
+                Etes vous sur de vouloir supprimer "%categoryName%",
+                toutes les catégories et toutes les pages qu'elle contient ?
+            yes: Oui, supprimer
+            no: Non, annuler
+            confirm: Vous avez bien supprimé la catégorie
+
 
     page:
         view:

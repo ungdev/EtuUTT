@@ -216,6 +216,16 @@ class Category
 	}
 
 	/**
+	 * @return Category
+	 */
+	public function removeParent()
+	{
+		$this->parent = null;
+
+		return $this;
+	}
+
+	/**
 	 * @param \Etu\Module\WikiBundle\Entity\Category $parent
 	 * @return Category
 	 */

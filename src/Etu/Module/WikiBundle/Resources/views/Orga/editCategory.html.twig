@@ -1,6 +1,6 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block title %}{{ 'wiki.orga.tree.title'|trans }}{% endblock %}
+{% block title %}{{ 'wiki.orga.edit_category.title'|trans }}{% endblock %}
 
 {% block stylesheets %}
 	<link rel="stylesheet" href="{{ asset('css/bundles/wiki.css') }}" type="text/css" />
@@ -66,13 +66,41 @@
 			</div>
 
 			<div class="span9">
-				<div class="span7">
-					{% include 'EtuModuleWikiBundle:Tree:raw_categories.html.twig' with {
-						'tree': tree.categories,
-						'orga': orga,
-						'depth': 0
-					} %}
-				</div>
+				<form method="post" action="">
+					<div class="control-group">
+						{{ form_label(form.title,  'wiki.orga.edit_category.name'|trans) }}
+						{{ form_widget(form.title, {'attr': {'class': 'span12 wiki-edit-title' } }) }}
+						<span class="help-block">{{ form_errors(form.title) }}</span>
+					</div>
+
+					<div class="control-group">
+						{{ form_label(form.parentId, 'wiki.orga.edit_category.where'|trans) }}
+						{{ form_widget(form.parentId, {'attr': {'class': 'span6' } }) }}
+						<span class="help-block">{{ form_errors(form.parentId) }}</span>
+					</div>
+
+					<div class="control-group">
+						{{ form_label(form.levelToView, 'Qui peut voir cette catégorie ?') }}
+						{{ form_widget(form.levelToView, {'attr': {'class': 'span6'} }) }}
+						<span class="help-block">{{ form_errors(form.levelToView) }}</span>
+					</div>
+
+					<div class="control-group">
+						{{ form_label(form.levelToEdit, 'Qui peut modifier cette catégorie ?') }}
+						{{ form_widget(form.levelToEdit, {'attr': {'class': 'span6'} }) }}
+						<span class="help-block">{{ form_errors(form.levelToEdit) }}</span>
+					</div>
+
+					<div class="control-group">
+						{{ form_label(form.levelToEditPermissions, 'Qui peut modifier les permissions de cette catégorie ?') }}
+						{{ form_widget(form.levelToEditPermissions, {'attr': {'class': 'span6'} }) }}
+						<span class="help-block">{{ form_errors(form.levelToEditPermissions) }}</span>
+					</div>
+
+					{{ form_rest(form) }}
+
+					<button type="submit" class="btn">{{ 'wiki.orga.edit_category.submit'|trans }}</button>
+				</form>
 			</div>
 		</div>
 	</div>
