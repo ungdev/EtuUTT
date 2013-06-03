@@ -4,20 +4,15 @@ namespace Etu\Core\UserBundle\Command;
 
 use Etu\Core\UserBundle\Command\Util\ProgressBar;
 use Etu\Core\UserBundle\Entity\User;
-use Etu\Core\UserBundle\Ldap\LdapManager;
 use Etu\Core\UserBundle\Sync\Iterator\ImportIterator;
 use Etu\Core\UserBundle\Sync\Iterator\RemoveIterator;
 use Etu\Core\UserBundle\Sync\Synchronizer;
-use Imagine\Exception\InvalidArgumentException;
 use Imagine\Gd\Image;
-use Imagine\Gd\Imagine;
-use Imagine\Image\Box;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Doctrine\ORM\EntityManager;
 
 class SyncProcessCommand extends ContainerAwareCommand
 {

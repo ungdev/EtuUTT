@@ -21,7 +21,9 @@
 				<tr>
 					<td class="hidden-phone">{{ key + 1 }}</td>
 					<td>
-						{{ page.title }}
+						<a href="{{ path('page_view', {'slug': page.slug}) }}">
+							{{ page.title }}
+						</a>
 					</td>
 					<td>
 						<div class="hidden-phone">

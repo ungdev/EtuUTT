@@ -36,7 +36,7 @@ class MailController extends Controller
 		\phpCAS::setNoCasServerValidation();
 		\phpCAS::forceAuthentication();
 
-		\phpCAS::retrievePT('http://openutt.utt.fr', $errorCode, $errorMessage);
+		\phpCAS::retrievePT('http://openutt.utt.fr/user/mail', $errorCode, $errorMessage);
 
 		var_dump($errorCode, $errorMessage);
 		exit;

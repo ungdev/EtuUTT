@@ -16,6 +16,8 @@ class DefaultController extends Controller
      */
     public function indexAction($name)
     {
+	    $this->container->getParameter('etu.buckutt.host_adress');
+
         return array('name' => $name);
     }
 }

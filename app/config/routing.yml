@@ -11,6 +11,10 @@ etu_user:
     type:     annotation
     prefix:   /
 
+# Roundcube index
+roundcube_index:
+    pattern:  /mail
+
 # Load FOS Routing
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

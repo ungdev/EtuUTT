@@ -3,7 +3,8 @@
 ##########
 
 /web/bundles/
-/web/wiki/LocalSettings.php
+/web/mail/config/db.inc.php
+/web/mail/config/main.inc.php
 /app/bootstrap.php.cache
 /app/config/parameters.yml
 /app/cache/*

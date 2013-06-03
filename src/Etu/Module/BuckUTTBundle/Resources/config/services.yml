@@ -1,4 +1,5 @@
 
-parameters: ~
+parameters:
+    etu.buckutt.host_adress: buckutt.utt.fr
 
 services: ~
