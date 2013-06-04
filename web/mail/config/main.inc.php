@@ -287,7 +287,7 @@ $rcmail_config['des_key'] = 'Q&9*?+SPtPIti3clOa45Xq8J';
 // %d - domain (http hostname $_SERVER['HTTP_HOST'] without the first part)
 // %z - IMAP domain (IMAP hostname without the first part)
 // For example %n = mail.domain.tld, %t = domain.tld
-$rcmail_config['username_domain'] = 'utt.fr';
+$rcmail_config['username_domain'] = '';
 
 // This domain will be used to form e-mail addresses of new users
 // Specify an array with 'host' => 'domain' values to support multiple hosts
@@ -405,7 +405,7 @@ $rcmail_config['no_save_sent_messages'] = false;
 // ----------------------------------
 
 // List of active plugins (in plugins/ directory)
-$rcmail_config['plugins'] = array();
+$rcmail_config['plugins'] = array('cas_authn');
 
 // ----------------------------------
 // USER INTERFACE

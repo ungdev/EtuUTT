@@ -13,7 +13,7 @@ etu_user:
 
 # Roundcube index
 roundcube_index:
-    pattern:  /mail
+    pattern:  /mail/
 
 # Load FOS Routing
 fos_js_routing:
