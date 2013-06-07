@@ -215,7 +215,7 @@ class AdminController extends Controller
 				'message' => 'core.admin.pageCreate.confirm'
 			));
 
-			return $this->redirect($this->generateUrl('admin_index'));
+			return $this->redirect($this->generateUrl('admin_pages'));
 		}
 
 		return array(

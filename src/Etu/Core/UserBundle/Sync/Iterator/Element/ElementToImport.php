@@ -4,6 +4,8 @@ namespace Etu\Core\UserBundle\Sync\Iterator\Element;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 
+use Etu\Core\CoreBundle\Entity\Subscription;
+use Etu\Core\UserBundle\Entity\Organization;
 use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
@@ -60,8 +62,12 @@ class ElementToImport
 
 	/**
 	 * Import a user in the database
+	 *
+	 * @param Organization $bdeOrga
+	 * @param bool $flush
+	 * @return \Etu\Core\UserBundle\Entity\User
 	 */
-	protected function importUser($flush = false)
+	protected function importUser($bdeOrga = null, $flush = false)
 	{
 		$imagine = new Imagine();
 		$webDirectory = __DIR__.'/../../../../../../../web';
@@ -102,6 +108,33 @@ class ElementToImport
 
 		$this->doctrine->getManager()->persist($user);
 
+		// Subscribe to BDE
+		if ($bdeOrga) {
+			$subscription = new Subscription();
+			$subscription->setEntityType('orga')
+				->setEntityId($bdeOrga->getId())
+				->setUser($user);
+
+			$this->doctrine->getManager()->persist($subscription);
+		}
+
+		// Subscribe to all events
+		$subscription = new Subscription();
+		$subscription->setEntityType('event')
+			->setEntityId(0)
+			->setUser($user);
+
+		$this->doctrine->getManager()->persist($subscription);
+
+		// Subscribe to NUTT
+		$subscription = new Subscription();
+		$subscription->setEntityType('nutt')
+			->setEntityId(0)
+			->setUser($user);
+
+		$this->doctrine->getManager()->persist($subscription);
+
+		// Flush if needed
 		if ($flush) {
 			$this->doctrine->getManager()->flush();
 		}
