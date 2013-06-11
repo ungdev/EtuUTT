@@ -50,13 +50,14 @@ core:
             average_time_to_load: Average load time of a page
             unique_visitors: Number of visitors for this month
             pages_calls: Number of pages called for this month
-            browsers: Brower
+            browsers: Browser
+            visitors: Visitors
             plaftorms: Operating system
             most_used_browsers_versions: Most used browser version
             browser_name: Name
             browser_count: Number of pages called
             browser_percentage: Percentage
-            most_used_routes: Most used road
+            most_used_routes: Most used routes
             route_name: Name
             route_count: Number of pages called
             route_percentage: Percentage

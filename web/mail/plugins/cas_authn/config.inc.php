@@ -14,7 +14,7 @@ $rcmail_config['cas_force'] = true;
 //     the IMAP server. This is the preferred method of authenticating
 //     to the IMAP backend.
 //     If set to false, the IMAP password specified below will be used.
-$rcmail_config['cas_proxy'] = true;
+$rcmail_config['cas_proxy'] = false;
 
 // phpCAS debug file
 $rcmail_config['cas_debug_file'] = __DIR__.'/tmp/phpcas/cas_debug.log';
@@ -38,7 +38,7 @@ $rcmail_config['cas_smtp_name'] = 'uran01.utt.fr';
 //    set to false, a new proxy ticket will be retrieved before each IMAP
 //    request. Setting this to true and enabling caching on the IMAP server
 //    significantly reduces the number of requests made to the CAS server.
-$rcmail_config['cas_imap_caching'] = true;
+$rcmail_config['cas_imap_caching'] = false;
 
 // password for logging into the IMAP server. Will only be used if cas_proxy
 //     is set to false. The IMAP backend must accept this password for all

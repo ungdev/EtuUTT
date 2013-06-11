@@ -51,6 +51,7 @@ core:
             unique_visitors: Nombre de visiteurs uniques ce mois-ci
             pages_calls: Nombre de chargements de pages ce mois-ci
             browsers: Navigateurs
+            visitors: Visiteurs
             plaftorms: Systèmes d'exploitation
             most_used_browsers_versions: Versions de navigateurs les plus utilisées
             browser_name: Nom

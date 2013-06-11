@@ -2,7 +2,7 @@
 trombi:
     main:
         index:
-            title:
+            title: Group photo
             uncomplete_profile:
                 title: Your profile is incomplete
                 desc: Your profile must be complete (private or public) in order to use the XXX
@@ -14,8 +14,8 @@ trombi:
             studentId: Student ID
             uv: Courses (seperated with commas)
             phone: Phone number
-            personnalMail: Personnal e-mail
+            personnalMail: Personal e-mail
             branche: Branche
-            explainations: Use the form below to search
+            explainations: Use the above form to search
             no_results: No results
-            count: %count% results|%count% results
+            count: %count% result|%count% results

@@ -25,7 +25,7 @@ user:
             name: Name
             studentId: Student ID
             mail: E-mail
-            personnalMail: Personnal e-mail.
+            personnalMail: Personal e-mail.
             formation: Studies
             phoneNumber: Phone number.
             sex: Sex
@@ -71,7 +71,7 @@ user:
             phone: Phone number
             personnalMail: Personnal e-mail
             branche: Branche
-            explainations: Use the form below to search
+            explainations: Use the above form to search
             no_results: No results
             count: %count% results|%count% results
         userReadOnly:
@@ -145,12 +145,12 @@ user:
             name: Name
             mail: E-mail
             sex: Sex
-            personnalMail: Personnal e-mail
+            personnalMail: Personal e-mail
             phoneNumber: Phone number
             adress: Adress
             birthday: Date of birth
             age: %age% years old
-            trombi:
+            trombi: Group photo
             surname: Nickname
             jadis: Formerly
             passions: Passions
@@ -202,7 +202,7 @@ user:
             title: Profile details
             back_search: Back to search
             back_profile: My account
-            back_trombi:
+            back_trombi: Group photo
             back_admin: Administration
             admin: Administrate
             admin_edit: Edit
