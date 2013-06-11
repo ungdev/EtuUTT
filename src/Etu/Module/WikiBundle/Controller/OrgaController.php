@@ -379,8 +379,6 @@ class OrgaController extends Controller
 	/**
 	 * @Route("/wiki/{login}/category/{id}/edit", name="wiki_orga_edit_category")
 	 * @Template()
-	 *
-	 * @todo Test
 	 */
 	public function editCategoryAction($login, $id)
 	{
@@ -447,7 +445,11 @@ class OrgaController extends Controller
 		);
 
 		$category = $categories[$id];
-		$category->parentId = $category->getParent()->getId();
+		$category->parentId = 0;
+
+		if ($category->parentId) {
+			$category->parentId = $category->getParent()->getId();
+		}
 
 		$form = $this->createFormBuilder($category)
 			->add('title')
@@ -492,8 +494,6 @@ class OrgaController extends Controller
 	/**
 	 * @Route("/wiki/{login}/category/{id}/remove/{confirm}", name="wiki_orga_remove_category")
 	 * @Template()
-	 *
-	 * @todo Test
 	 */
 	public function removeCategoryAction($login, $id, $confirm = false)
 	{

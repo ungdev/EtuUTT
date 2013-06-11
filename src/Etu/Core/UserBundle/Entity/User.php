@@ -2010,7 +2010,7 @@ class User implements UserInterface, \Serializable
 	 */
 	public function getMemberships()
 	{
-		return $this->memberships;
+		return (! empty($this->memberships)) ? $this->memberships : array();
 	}
 
 	/**

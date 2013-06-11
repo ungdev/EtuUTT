@@ -6,13 +6,39 @@ use Etu\Core\CoreBundle\Framework\Tests\MockUser;
 use Etu\Core\UserBundle\Security\Authentication\UserToken;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class OrgaControllerTest extends WebTestCase
+class PageControllerTest extends WebTestCase
 {
-	public function testRestrictionIndex()
+	public function testRestrictionCreateAnonymous()
 	{
 		$client = static::createClient();
 
-		$client->request('GET', '/wiki/orga');
+		$client->request('GET', '/wiki/orga/create');
+		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
+	}
+
+	public function testRestrictionCreateUser()
+	{
+		$client = static::createClient();
+		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+
+		$client->request('GET', '/wiki/orga/create');
+		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
+	}
+
+	public function testRestrictionCreateCategoryAnonymous()
+	{
+		$client = static::createClient();
+
+		$client->request('GET', '/wiki/orga/create-category');
+		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
+	}
+
+	public function testRestrictionCreateCategoryUser()
+	{
+		$client = static::createClient();
+		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+
+		$client->request('GET', '/wiki/orga/create-category');
 		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
 	}
 
@@ -20,7 +46,7 @@ class OrgaControllerTest extends WebTestCase
 	{
 		$client = static::createClient();
 
-		$client->request('GET', '/wiki/orga/edit');
+		$client->request('GET', '/wiki/orga/2-page/edit');
 		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
 	}
 
@@ -29,7 +55,7 @@ class OrgaControllerTest extends WebTestCase
 		$client = static::createClient();
 		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
 
-		$client->request('GET', '/wiki/orga/edit');
+		$client->request('GET', '/wiki/orga/2-page/edit');
 		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
 	}
 
@@ -37,7 +63,7 @@ class OrgaControllerTest extends WebTestCase
 	{
 		$client = static::createClient();
 
-		$client->request('GET', '/wiki/orga/revision/4');
+		$client->request('GET', '/wiki/orga/2-page/revision/3');
 		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
 	}
 
@@ -46,15 +72,16 @@ class OrgaControllerTest extends WebTestCase
 		$client = static::createClient();
 		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
 
-		$client->request('GET', '/wiki/orga/revision/3');
+		$client->request('GET', '/wiki/orga/2-page/revision/3');
 		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
 	}
 
 	public function testRestrictionPermissionsAnonymous()
 	{
 		$client = static::createClient();
+		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
 
-		$client->request('GET', '/wiki/orga/permissions');
+		$client->request('GET', '/wiki/orga/2-page/permissions');
 		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
 	}
 
@@ -63,70 +90,62 @@ class OrgaControllerTest extends WebTestCase
 		$client = static::createClient();
 		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
 
-		$client->request('GET', '/wiki/orga/permissions');
+		$client->request('GET', '/wiki/orga/2-page/permissions');
 		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
 	}
 
-	public function testRestrictionTreeAnonymous()
-	{
-		$client = static::createClient();
-
-		$client->request('GET', '/wiki/orga/tree');
-		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
-	}
-
-	public function testRestrictionTreeUser()
+	public function testRestrictionRemoveAnonymous()
 	{
 		$client = static::createClient();
 		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
 
-		$client->request('GET', '/wiki/orga/tree');
+		$client->request('GET', '/wiki/orga/2-page/delete');
 		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
 	}
 
-	public function testRestrictionEditCategoryAnonymous()
+	public function testRestrictionRemoveUser()
 	{
 		$client = static::createClient();
 		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
 
-		$client->request('GET', '/wiki/orga/category/1/edit');
+		$client->request('GET', '/wiki/orga/2-page/delete');
 		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
 	}
 
-	public function testRestrictionEditCategoryUser()
+	public function testRestrictionViewAnonymous()
 	{
 		$client = static::createClient();
 		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
 
-		$client->request('GET', '/wiki/orga/category/1/edit');
+		$client->request('GET', '/wiki/orga/2-page');
 		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
 	}
 
-	public function testRestrictionRemoveCategoryAnonymous()
+	public function testRestrictionViewUser()
 	{
 		$client = static::createClient();
 		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
 
-		$client->request('GET', '/wiki/orga/category/1/remove');
+		$client->request('GET', '/wiki/orga/2-page');
 		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
 	}
 
-	public function testRestrictionRemoveCategoryUser()
+	public function testCreate()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createAdminUser()));
 
-		$client->request('GET', '/wiki/orga/category/1/remove');
-		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
+		$crawler = $client->request('GET', '/wiki/orga/create');
+		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Créer une page")')->count());
 	}
 
-	public function testIndex()
+	public function testCreateCategory()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createAdminUser()));
 
-		$crawler = $client->request('GET', '/wiki/orga');
-		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Wiki de Orga ORGA")')->count());
+		$crawler = $client->request('GET', '/wiki/orga/create-category');
+		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Créer une catégorie")')->count());
 	}
 
 	public function testEdit()
@@ -134,8 +153,8 @@ class OrgaControllerTest extends WebTestCase
 		$client = static::createClient();
 		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createAdminUser()));
 
-		$crawler = $client->request('GET', '/wiki/orga/edit');
-		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier l\'accueil")')->count());
+		$crawler = $client->request('GET', '/wiki/orga/2-page/edit');
+		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier une page")')->count());
 	}
 
 	public function testRevision()
@@ -143,7 +162,7 @@ class OrgaControllerTest extends WebTestCase
 		$client = static::createClient();
 		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createAdminUser()));
 
-		$crawler = $client->request('GET', '/wiki/orga/revision/4');
+		$crawler = $client->request('GET', '/wiki/orga/2-page/revision/4');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Voir une révision")')->count());
 	}
 
@@ -152,34 +171,25 @@ class OrgaControllerTest extends WebTestCase
 		$client = static::createClient();
 		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createAdminUser()));
 
-		$crawler = $client->request('GET', '/wiki/orga/permissions');
+		$crawler = $client->request('GET', '/wiki/orga/2-page/permissions');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier les permissions")')->count());
 	}
 
-	public function testTree()
+	public function testRemove()
 	{
 		$client = static::createClient();
 		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createAdminUser()));
 
-		$crawler = $client->request('GET', '/wiki/orga/tree');
-		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier l\'arborescence")')->count());
+		$crawler = $client->request('GET', '/wiki/orga/2-page/delete');
+		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Supprimer une page")')->count());
 	}
 
-	public function testEditCategory()
+	public function testView()
 	{
 		$client = static::createClient();
 		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createAdminUser()));
 
-		$crawler = $client->request('GET', '/wiki/orga/category/2/edit');
-		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier une catégorie")')->count());
-	}
-
-	public function testRemoveCategory()
-	{
-		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createAdminUser()));
-
-		$crawler = $client->request('GET', '/wiki/orga/category/2/remove');
-		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Supprimer une catégorie")')->count());
+		$crawler = $client->request('GET', '/wiki/orga/2-page');
+		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Lire une page")')->count());
 	}
 }

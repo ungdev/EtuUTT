@@ -20,7 +20,7 @@
 			<a href="{{ path('wiki_index') }}">{{ 'wiki.menu.index'|trans }}</a>
 		</li>
 		{% if wiki_can_delete(app.user, page) %}
-			<li class="pull-right">
+			<li class="pull-right active page-tabs-resolved-active">
 				<a href="{{ path('wiki_page_delete', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}">
 					{{ 'wiki.menu.delete'|trans }}
 				</a>
@@ -40,7 +40,7 @@
 				</a>
 			</li>
 		{% endif %}
-		<li class="pull-right active page-tabs-resolved-active">
+		<li class="pull-right">
 			<a href="{{ path('wiki_page_view', {'login': orga.login, 'id': page.id, 'slug': page.title|slugify}) }}">
 				{{ 'wiki.menu.read'|trans }}
 			</a>
