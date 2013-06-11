@@ -36,27 +36,6 @@ class MainController extends Controller
 	}
 
 	/**
-	 * @Route("/change-locale/redirect/{url}", name="change_locale_redirect")
-	 * @Template()
-	 */
-	public function changeLocaleRedirectAction($url)
-	{
-		$url = urldecode($url);
-
-		$this->get('session')->getFlashBag()->set('message', array(
-			'type' => 'success',
-			'message' => 'core.main.changeLocale.confirm'
-		));
-
-		// Redirect wisely
-		if ($this->container->getParameter('etu.domain') == parse_url($url, PHP_URL_HOST)) {
-			return $this->redirect($url);
-		}
-
-		return $this->redirect($this->generateUrl('homepage'));
-	}
-
-	/**
 	 * @Route("/change-locale/{lang}", name="change_locale")
 	 * @Template()
 	 */
@@ -79,9 +58,19 @@ class MainController extends Controller
 			}
 		}
 
-		return $this->redirect($this->generateUrl('change_locale_redirect', array(
-			'url' => urlencode($this->getRequest()->server->get('HTTP_REFERER'))
-		)));
+		$url = $this->getRequest()->server->get('HTTP_REFERER');
+
+		$this->get('session')->getFlashBag()->set('message', array(
+			'type' => 'success',
+			'message' => 'core.main.changeLocale.confirm'
+		));
+
+		// Redirect wisely
+		if ($this->container->getParameter('etu.domain') == parse_url($url, PHP_URL_HOST)) {
+			return $this->redirect($url);
+		}
+
+		return $this->redirect($this->generateUrl('homepage'));
 	}
 
 	/**

@@ -70,7 +70,7 @@ class MainController extends Controller
 		$userOrgas = array();
 
 		foreach ($orgas as $key => $orga) {
-			foreach ($this->getUser()->getMemberships() as $membership) {
+			foreach ((array) $this->getUser()->getMemberships() as $membership) {
 				if ($membership->getOrganization()->getId() == $orga->getId()) {
 					unset($orgas[$key]);
 					$userOrgas[] = $orga;

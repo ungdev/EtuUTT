@@ -27,6 +27,8 @@ class PageController extends Controller
 	/**
 	 * @Route("/wiki/{login}/create", name="wiki_page_create")
 	 * @Template()
+	 *
+	 * @todo Test
 	 */
 	public function createAction($login)
 	{
@@ -253,6 +255,8 @@ class PageController extends Controller
 	/**
 	 * @Route("/wiki/{login}/{id}-{slug}/edit", name="wiki_page_edit")
 	 * @Template()
+	 *
+	 * @todo Test
 	 */
 	public function editAction($login, $id, $slug)
 	{
@@ -388,6 +392,8 @@ class PageController extends Controller
 	 *      name="wiki_page_revision"
 	 * )
 	 * @Template()
+	 *
+	 * @todo Test
 	 */
 	public function revisionAction($login, $id, $slug, $revisionId, $confirm = false)
 	{
@@ -482,6 +488,8 @@ class PageController extends Controller
 	/**
 	 * @Route("/wiki/{login}/{id}-{slug}/permissions", name="wiki_page_permissions")
 	 * @Template()
+	 *
+	 * @todo Test
 	 */
 	public function permissionsAction($login, $id, $slug)
 	{
@@ -573,6 +581,8 @@ class PageController extends Controller
 	 *      name="wiki_page_delete"
 	 * )
 	 * @Template()
+	 *
+	 * @todo Test
 	 */
 	public function deleteAction($login, $id, $slug, $confirm = false)
 	{
@@ -648,6 +658,8 @@ class PageController extends Controller
 	/**
 	 * @Route("/wiki/{login}/{id}-{slug}", name="wiki_page_view")
 	 * @Template()
+	 *
+	 * @todo Test
 	 */
 	public function viewAction($login, $id, $slug)
 	{
