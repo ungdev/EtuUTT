@@ -99,13 +99,13 @@ user:
 
     orga:
         role:
-            president: Président
-            treasurer: Trésorier
-            secretary: Secrétaire
-            vice_president: Vice-président
-            vice_treasurer: Vice-trésorier
-            vice_secretary: Vice-secrétaire
-            member: Membre
+            40: Président
+            39: Vice-président
+            30: Trésorier
+            29: Vice-trésorier
+            20: Secrétaire
+            19: Vice-secrétaire
+            10: Membre
         avatar:
             title: Modifier votre logo
             file: Image

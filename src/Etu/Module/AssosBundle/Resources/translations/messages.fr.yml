@@ -1,6 +1,9 @@
 
 assos:
     main:
+        menu:
+            description: Description
+            members: Membres
         index:
             title: Les associations
             president: Président
@@ -13,3 +16,14 @@ assos:
             contactPhone: Téléphone de contact
             description: Description
             website: Site internet
+        members:
+            title: Membres d'une assocation
+            back: Retour à la liste
+            name: Nom
+            president: Président
+            contactMail: E-mail de contact
+            contactPhone: Téléphone de contact
+            description: Description
+            website: Site internet
+            office: Bureau
+            members: Membres

@@ -11,15 +11,36 @@
 	border-bottom: 1px solid #ddd;
 }
 .connect-choices {
-	margin: 0 auto;
 	margin-top: 20px;
-	margin-left: 80px;
+	margin-left: 50px;
 }
 .connect-choices li {
+	display: block;
+	float: left;
 	text-align: center;
+	width: 40%;
+	margin: 0 2.5%;
 }
 .connect-choices li a {
-	padding: 10px 0;
+	display: block;
+	padding: 10px;
+	border: 1px solid #ddd;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+}
+.connect-choices li a:hover {
+	border-color: #0088cc;
+	-webkit-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+	-moz-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+	box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
 }
 .connect-choices li a img {
 	padding-bottom: 10px;
@@ -38,16 +59,11 @@
 
 @media screen and (max-width: 1000px) {
 	.content-connect {
-		text-align: left;
-		width: 96%;
-		margin-left: 0;
-		margin-bottom: 0;
-		min-height: 400px;
-		border-bottom: 0;
-	}
-	.connect-choices {
-		margin: 0 auto;
-		margin-top: 20px;
+		text-align: center;
+		width: 98%;
+		margin-left: 1%;
+		min-height: 0;
+		border-bottom: 1px solid #ddd;
 	}
 }
 

@@ -31,7 +31,7 @@ var facebox = $('a[rel*=facebox]'),
 	};
 
 
-/**
+/*
  * Script
  */
 
@@ -202,7 +202,7 @@ $(function() {
 	});
 
 
-	// Unsuscribe
+	// Unsubscribe
 	subscriptions.unfollow.click(function() {
 		var url = Routing.generate('notifs_unsubscribe', {
 			'entityType': $(this).attr('data-entityType'),

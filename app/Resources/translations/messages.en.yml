@@ -85,9 +85,10 @@ base:
         change_locale: Language
 
         # Authors and version
-        text: "Designed by the UNG<br />Launched with Symfony 2<br /><br />10-alpha version"
-        1col_text: "Designed by the UNG - Launched with Symfony 2 - 10-alpha version"
-        mobile_text: "Designed by the UNG<br />10-alpha version"
+        text: "Designed by the UNG<br />Launched with Symfony 2"
+        1col_text: "Designed by the UNG - Launched with Symfony 2"
+        mobile_text: "Designed by the UNG"
+        version: Version
 
 # Errors pages:
 error:

@@ -12,13 +12,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Member
 {
-	const ROLE_PRESIDENT = 'president';
-	const ROLE_TREASURER = 'treasurer';
-	const ROLE_SECRETARY = 'secretary';
-	const ROLE_V_PRESIDENT = 'vice_president';
-	const ROLE_V_TREASURER = 'vice_treasurer';
-	const ROLE_V_SECRETARY = 'vice_secretary';
-	const ROLE_MEMBER = 'member';
+	const ROLE_PRESIDENT = 40;
+	const ROLE_V_PRESIDENT = 39;
+
+	const ROLE_TREASURER = 30;
+	const ROLE_V_TREASURER = 29;
+
+	const ROLE_SECRETARY = 20;
+	const ROLE_V_SECRETARY = 19;
+
+	const ROLE_MEMBER = 10;
 
     /**
      * @var integer

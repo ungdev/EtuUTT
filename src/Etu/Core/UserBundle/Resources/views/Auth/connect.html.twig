@@ -23,21 +23,23 @@
 					<p>
 						{{ 'user.auth.connect.desc'|trans }}
 					</p>
-					<ul class="thumbnails connect-choices">
-						<li class="span3">
-							<a href="{{ path('user_connect_cas') }}" class="thumbnail">
-								<img src="{{ asset('img/connect/cas.png') }}" />
+					<ul class="connect-choices">
+						<li>
+							<a href="{{ path('user_connect_cas') }}">
+								<img src="{{ asset('img/connect/cas.png') }}" /><br />
 								{{ 'user.auth.connect.cas'|trans }}
 							</a>
 						</li>
-						<li class="span3">
-							<a href="{{ path('user_connect_external') }}" class="thumbnail">
-								<img src="{{ asset('img/connect/external.png') }}" />
+						<li>
+							<a href="{{ path('user_connect_external') }}">
+								<img src="{{ asset('img/connect/external.png') }}" /><br />
 								{{ 'user.auth.connect.external'|trans }}
 							</a>
 						</li>
 					</ul>
 				</div>
+
+				<div class="clear"></div>
 			</div>
 
 		</div>
@@ -58,7 +60,7 @@
 				{{ 'base.footer.developers'|trans }}
 			</a>
 			<span class="pull-right">
-				{{ 'base.footer.1col_text'|trans|raw }}
+				{{ 'base.footer.1col_text'|trans|raw }} - {% include '::version.html.twig' %}
 			</span>
 		</p>
 	</footer>

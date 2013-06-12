@@ -11,7 +11,9 @@
 {% endblock %}
 
 {% block sidebar %}
-	{{ render_subscribe_button('orga', orga.id) }}
+	{% if app.user %}
+		{{ render_subscribe_button('orga', orga.id) }}
+	{% endif %}
 
 	{{ parent() }}
 {% endblock %}
@@ -22,6 +24,18 @@
 			<a href="{{ path('orgas_index') }}">
 				<i class="icon-chevron-left"></i>
 				{{ 'assos.main.view.back'|trans }}
+			</a>
+		</li>
+		{% if app.user %}
+		<li class="pull-right">
+			<a href="{{ path('orgas_members', {'login': orga.login}) }}">
+				{{ 'assos.main.menu.members'|trans }}
+			</a>
+		</li>
+		{% endif %}
+		<li class="pull-right active page-tabs-resolved-active">
+			<a href="{{ path('orgas_view', {'login': orga.login}) }}">
+				{{ 'assos.main.menu.description'|trans }}
 			</a>
 		</li>
 	</ul>
