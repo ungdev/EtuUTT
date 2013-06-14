@@ -868,12 +868,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "64a0eb9ed6ab86c604c2eef074ddad692d3ee743"
+                "reference": "23b557eeb5db23c60aadb2c626e1ea17c17bb702"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/64a0eb9ed6ab86c604c2eef074ddad692d3ee743",
-                "reference": "64a0eb9ed6ab86c604c2eef074ddad692d3ee743",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/23b557eeb5db23c60aadb2c626e1ea17c17bb702",
+                "reference": "23b557eeb5db23c60aadb2c626e1ea17c17bb702",
                 "shasum": ""
             },
             "require": {
@@ -933,7 +933,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2013-06-04 06:11:08"
+            "time": "2013-06-13 05:53:30"
         },
         {
             "name": "imagine/imagine",
@@ -2462,12 +2462,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/tgalopin/AudienceBundle.git",
-                "reference": "686177962a52f3fa31a1f7c3a4d86907f932a8d0"
+                "reference": "e7b77b7c126728a5591f0663668cc4a9ee6a4488"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tgalopin/AudienceBundle/zipball/686177962a52f3fa31a1f7c3a4d86907f932a8d0",
-                "reference": "686177962a52f3fa31a1f7c3a4d86907f932a8d0",
+                "url": "https://api.github.com/repos/tgalopin/AudienceBundle/zipball/e7b77b7c126728a5591f0663668cc4a9ee6a4488",
+                "reference": "e7b77b7c126728a5591f0663668cc4a9ee6a4488",
                 "shasum": ""
             },
             "require": {
@@ -2479,7 +2479,7 @@
                     "Tga\\AudienceBundle": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache"
             ],
@@ -2497,7 +2497,7 @@
                 "stats",
                 "visitors"
             ],
-            "time": "2013-04-24 21:33:58"
+            "time": "2013-06-14 13:06:41"
         },
         {
             "name": "twig/extensions",

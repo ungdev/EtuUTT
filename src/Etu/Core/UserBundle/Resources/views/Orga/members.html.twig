@@ -8,6 +8,7 @@
 
 {% block stylesheets %}
 	<link rel="stylesheet" href="{{ asset('css/bundles/trombi.css') }}" type="text/css" />
+	<link rel="stylesheet" href="{{ asset('css/bundles/assos.css') }}" type="text/css" />
 {% endblock %}
 
 {% block content %}
@@ -40,9 +41,9 @@
 			{{ knp_pagination_render(pagination) }}
 		</div>
 
-		<ul id="search-results" class="trombi-search-results">
+		<ul id="search-results" class="asso-members">
 			{% for member in pagination %}
-				<li class="trombi-search-results-item">
+				<li class="asso-members-item">
 					<a href="{{ path('orga_admin_members_edit', {'login': member.user.login}) }}">
 						<img src="{{ asset('photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
 						<h5>{{ member.user.fullName }}</h5>

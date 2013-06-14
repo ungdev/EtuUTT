@@ -148,7 +148,7 @@ class OrgaController extends Controller
 			->orderBy('u.lastName')
 			->getQuery();
 
-		$members = $this->get('knp_paginator')->paginate($members, $page, 10);
+		$members = $this->get('knp_paginator')->paginate($members, $page, 20);
 
 		$member = new Member();
 		$member->setOrganization($this->getUser());
