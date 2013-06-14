@@ -77,6 +77,24 @@ user:
         userReadOnly:
             confirm_set: L'utilisateur possède maintenant un accès en lecture seule.
             confirm_unset: L'utilisateur possède maintenant un accès complet.
+        oragsIndex:
+            title: Associations
+            create: Créer un accès
+            no_results: Aucune association n'a d'accès au site étudiant pour le moment
+            count: %count% résultat|%count% résultats
+            question: Voulez-vous vraiment supprimer l'accès de l'association "%orga%" au site étudiant ?
+            yes: Oui, supprimer
+            no: Non, annuler
+        orgasCreate:
+            title: Créer un accès associatif
+            back: Retour
+            login: Identifiant CAS
+            name: Nom
+            descriptionShort: Courte description
+            submit: Créer
+            confirm: L'accès a bien été créé
+        orgasDelete:
+            confirm: L'accès a bien été supprimé
 
     auth:
         connect:

@@ -196,8 +196,10 @@ class OrgaController extends Controller
 				if (! $membership) {
 					if ($member->getRole() == Member::ROLE_PRESIDENT) {
 						$this->getUser()->setPresident($member->getUser());
-						$em->persist($this->getUser());
 					}
+
+					$this->getUser()->addCountMembers();
+					$em->persist($this->getUser());
 
 					$user->addBadge('orga_member');
 

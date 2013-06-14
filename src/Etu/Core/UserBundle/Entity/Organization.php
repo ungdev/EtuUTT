@@ -100,6 +100,13 @@ class Organization implements UserInterface, \Serializable
 	protected $countMembers;
 
 	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="deleted", type="boolean")
+	 */
+	protected $deleted;
+
+	/**
 	 * Temporary variable to store uploaded file during photo update
 	 *
 	 * @var UploadedFile
@@ -122,8 +129,9 @@ class Organization implements UserInterface, \Serializable
 	public function __construct()
 	{
 		$this->logo = 'default-logo.png';
-		$this->countMembers = 1;
+		$this->countMembers = 0;
 		$this->testingContext = false;
+		$this->deleted = false;
 	}
 
 	public function __toString()
@@ -375,6 +383,16 @@ class Organization implements UserInterface, \Serializable
 	}
 
 	/**
+	 * @return Organization
+	 */
+	public function addCountMembers()
+	{
+		$this->countMembers++;
+
+		return $this;
+	}
+
+	/**
 	 * @param int $countMembers
 	 * @return Organization
 	 */
@@ -494,5 +512,24 @@ class Organization implements UserInterface, \Serializable
 	public function getWebsite()
 	{
 		return $this->website;
+	}
+
+	/**
+	 * @param int $deleted
+	 * @return Organization
+	 */
+	public function setDeleted($deleted)
+	{
+		$this->deleted = $deleted;
+
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getDeleted()
+	{
+		return $this->deleted;
 	}
 }

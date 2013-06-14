@@ -1,0 +1,85 @@
+{% extends 'EtuCoreBundle:Admin:layout.html.twig' %}
+
+{% block title %}{{ 'user.admin.oragsIndex.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/bundles/trombi.css') }}" type="text/css" />
+{% endblock %}
+
+{% block content %}
+
+	<div class="trombi-search-box">
+		<p class="pull-right padding10-all">
+			<a href="{{ path('admin_orgas_create') }}" class="btn btn-primary">
+				<i class="icon-plus icon-white"></i>
+				{{ 'user.admin.oragsIndex.create'|trans }}
+			</a>
+		</p>
+
+		<div class="clear"></div>
+	</div>
+
+	<div class="trombi-search-results">
+		{% if pagination.count == 0 %}
+			<p class="muted trombi-search-explainations">
+				{{ 'user.admin.oragsIndex.no_results'|trans }}
+			</p>
+		{% else %}
+			{# display navigation #}
+			<div class="navigation">
+				<br />
+				<p>
+					{{ 'user.admin.oragsIndex.count'|transchoice(pagination.totalItemCount, {'%count%': pagination.totalItemCount}) }}
+				</p>
+				{{ knp_pagination_render(pagination) }}
+			</div>
+
+			<ul id="search-results" class="trombi-search-results">
+				{% for orga in pagination %}
+					<li class="trombi-search-results-item">
+						<a href="#orga-{{ orga.id }}" rel="facebox">
+							<img src="{{ asset('logos/'~orga.logo) }}" alt="{{ orga.name }}" title="{{ orga.name }}" />
+							<h5>
+								{{ orga.name }}
+								<i class="icon-remove pull-right"></i>
+							</h5>
+
+							{% if orga.president %}
+								<p class="muted"><em>{{ orga.president.fullName }}</em></p>
+							{% endif %}
+
+							<p class="muted asso-info">{{ orga.descriptionShort|limit(70) }}</p>
+
+							<div class="clear"></div>
+						</a>
+
+						<div id="orga-{{ orga.id }}" style="display: none;">
+							<p>
+								{{ 'user.admin.oragsIndex.question'|trans({'%orga%': orga.name}) }}
+							</p>
+							<p>
+								<a href="{{ path('admin_orgas_delete', {'login': orga.login}) }}" class="btn btn-primary">
+									{{ 'user.admin.oragsIndex.yes'|trans }}
+								</a>
+								<a href="#" class="btn" onclick="jQuery(document).trigger('close.facebox');">
+									{{ 'user.admin.oragsIndex.no'|trans }}
+								</a>
+							</p>
+						</div>
+					</li>
+				{% endfor %}
+			</ul>
+
+			<div class="clear"></div>
+
+			{# display navigation #}
+			<div class="navigation">
+				{{ knp_pagination_render(pagination) }}
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

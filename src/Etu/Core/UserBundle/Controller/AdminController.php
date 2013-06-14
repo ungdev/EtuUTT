@@ -7,6 +7,7 @@ use Doctrine\ORM\QueryBuilder;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 
 use Etu\Core\CoreBundle\Framework\Definition\Permission;
+use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Core\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -102,7 +103,7 @@ class AdminController extends Controller
 					->setParameter('personnalMail', $user->getPersonnalMail());
 			}
 
-			$users = $this->get('knp_paginator')->paginate($users->getQuery(), $page, 10);
+			$users = $this->get('knp_paginator')->paginate($users->getQuery(), $page, 20);
 		}
 
 		return array(
@@ -444,9 +445,6 @@ class AdminController extends Controller
 			return $this->createAccessDeniedResponse();
 		}
 
-		/** @var $em EntityManager */
-		$em = $this->getDoctrine()->getManager();
-
 		/** @var $user User */
 		$user = new User();
 
@@ -571,5 +569,107 @@ class AdminController extends Controller
 		return array(
 			'user' => $user,
 		);
+	}
+
+	/**
+	 * @Route("/orgas/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="admin_orgas_index")
+	 * @Template()
+	 */
+	public function orgasIndexAction($page = 1)
+	{
+		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		$orgas = $em->createQueryBuilder()
+			->select('o, p')
+			->from('EtuUserBundle:Organization', 'o')
+			->leftJoin('o.president', 'p')
+			->where('o.deleted = 0')
+			->orderBy('o.name')
+			->getQuery();
+
+		$orgas = $this->get('knp_paginator')->paginate($orgas, $page, 20);
+
+		return array(
+			'pagination' => $orgas
+		);
+	}
+
+	/**
+	 * @Route("/orgas/create", name="admin_orgas_create")
+	 * @Template()
+	 */
+	public function orgasCreateAction()
+	{
+		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $orga Organization */
+		$orga = new Organization();
+
+		$form = $this->createFormBuilder($orga)
+			->add('login', null, array('required' => true))
+			->add('name', null, array('required' => true))
+			->add('descriptionShort', 'textarea', array('required' => true))
+			->getForm();
+
+		$request = $this->getRequest();
+
+		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+			$em = $this->getDoctrine()->getManager();
+
+			$em->persist($orga);
+			$em->flush();
+
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'user.admin.orgasCreate.confirm'
+			));
+
+			return $this->redirect($this->generateUrl('admin_orgas_index'));
+		}
+
+		return array(
+			'orga' => $orga,
+			'form' => $form->createView()
+		);
+	}
+
+	/**
+	 * @Route("/orgas/{login}/delete", name="admin_orgas_delete")
+	 * @Template()
+	 */
+	public function orgasDeleteAction($login)
+	{
+		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $orga Organization */
+		$orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(array('login' => $login));
+
+		if (! $orga) {
+			throw $this->createNotFoundException(sprintf('Login %s not found', $login));
+		}
+
+		$orga->setDeleted(true);
+
+		$em->persist($orga);
+		$em->flush();
+
+		$this->get('session')->getFlashBag()->set('message', array(
+			'type' => 'success',
+			'message' => 'user.admin.orgasDelete.confirm'
+		));
+
+		return $this->redirect($this->generateUrl('admin_orgas_index'));
 	}
 }

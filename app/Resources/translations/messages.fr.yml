@@ -69,6 +69,7 @@ base:
             modules: Modules
             pages: Pages statiques
             users: Utilisateurs
+            orgas: Associations
             stats: Statistiques
             logger: Logs
 

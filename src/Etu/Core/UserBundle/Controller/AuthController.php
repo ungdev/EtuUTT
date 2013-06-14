@@ -43,7 +43,7 @@ class AuthController extends Controller
 
 				// If the user can't be loaded from database, we try for an organization
 				if (! $user) {
-					$orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(array('login' => $login));
+					$orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(array('login' => $login, 'deleted' => false));
 
 					if ($orga) {
 						$user = $orga;
@@ -68,7 +68,7 @@ class AuthController extends Controller
 						$user = $import->import(true);
 					} elseif ($ldapUser instanceof Organization) {
 						$this->get('session')->getFlashBag()->set('message', array(
-							'type' => 'success',
+							'type' => 'error',
 							'message' => 'user.auth.connect.orga_exists_ldap'
 						));
 
@@ -134,7 +134,7 @@ class AuthController extends Controller
 
 		// If the user can't be loaded from database, we try for an organization
 		if (! $user) {
-			$orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(array('login' => $login));
+			$orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(array('login' => $login, 'deleted' => false));
 
 			if ($orga) {
 				$user = $orga;
