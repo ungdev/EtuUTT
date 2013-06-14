@@ -405,7 +405,7 @@ $rcmail_config['no_save_sent_messages'] = false;
 // ----------------------------------
 
 // List of active plugins (in plugins/ directory)
-$rcmail_config['plugins'] = array('cas_authn');
+$rcmail_config['plugins'] = array(/* 'cas_authn' */);
 
 // ----------------------------------
 // USER INTERFACE

@@ -56,6 +56,7 @@ class UserMenuBuilder
 			->add('base.user.menu.emails')
 				->setIcon('mails.png')
 				->setUrl($router->generate('roundcube_index'))
+				->setLinkAttribute('target', '_blank')
 			->end()
 			->add('base.user.menu.table')
 				->setIcon('table.png')

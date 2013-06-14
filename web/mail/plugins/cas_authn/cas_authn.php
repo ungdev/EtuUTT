@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__.'/../../../../src/Etu/Core/UserBundle/Resources/lib/phpCAS/CAS.php';
+require __DIR__ . '/../../../../src/Etu/Core/UserBundle/Resources/lib/phpCAS/CAS.php';
 
 /**
  * CAS Authentication
