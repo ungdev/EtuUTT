@@ -5,9 +5,11 @@ namespace Etu\Core\UserBundle\Controller;
 use Doctrine\ORM\EntityManager;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
+use Etu\Core\UserBundle\Entity\Course;
+use Etu\Core\UserBundle\Entity\Member;
 use Etu\Core\UserBundle\Entity\User;
+use Etu\Core\UserBundle\Schedule\Helper\ScheduleBuilder;
 
-use Etu\Core\UserBundle\Schedule\ScheduleApi;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -208,7 +210,7 @@ class ProfileController extends Controller
 	}
 
 	/**
-	 * @Route("/user/{login}", name="user_view", options={"expose"=true})
+	 * @Route("/user/{login}", name="user_view")
 	 * @Template()
 	 */
 	public function viewAction($login)
@@ -238,6 +240,98 @@ class ProfileController extends Controller
 		}
 
 		return array(
+			'user' => $user,
+			'from' => $from
+		);
+	}
+
+	/**
+	 * @Route("/user/{login}/organizations", name="user_organizations")
+	 * @Template()
+	 */
+	public function organizationsAction($login)
+	{
+		if (! $this->getUserLayer()->isUser()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $user User */
+		$user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
+
+		if (! $user) {
+			throw $this->createNotFoundException('Login "'.$login.'" not found');
+		}
+
+		/** @var $memberships Member[] */
+		$memberships = $em->createQueryBuilder()
+			->select('m, u, o')
+			->from('EtuUserBundle:Member', 'm')
+			->leftJoin('m.user', 'u')
+			->leftJoin('m.organization', 'o')
+			->where('u.login = :login')
+			->setParameter('login', $user->getLogin())
+			->getQuery()
+			->getResult();
+
+		$from = null;
+
+		if (in_array($this->getRequest()->get('from'), array('search', 'profile', 'trombi', 'admin'))) {
+			$from = $this->getRequest()->get('from');
+		}
+
+		return array(
+			'user' => $user,
+			'memberships' => $memberships,
+			'from' => $from
+		);
+	}
+
+	/**
+	 * @Route("/user/{login}/schedule", name="user_view_schedule")
+	 * @Template()
+	 */
+	public function scheduleAction($login)
+	{
+		if (! $this->getUserLayer()->isConnected()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		if ($login != $this->getUser()->getLogin()) {
+
+			/** @var $user User */
+			$user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
+
+			if (! $user) {
+				throw $this->createNotFoundException('Login "'.$login.'" not found');
+			}
+		} else {
+			$user = $this->getUser();
+		}
+
+		$from = null;
+
+		if (in_array($this->getRequest()->get('from'), array('search', 'profile', 'trombi', 'admin'))) {
+			$from = $this->getRequest()->get('from');
+		}
+
+		/** @var $courses Course[] */
+		$courses = $em->getRepository('EtuUserBundle:Course')->findByUser($user);
+
+		// Builder to create the schedule
+		$builder = new ScheduleBuilder();
+
+		foreach ($courses as $course) {
+			$builder->addCourse($course);
+		}
+
+		return array(
+			'courses' => $builder->build(),
 			'user' => $user,
 			'from' => $from
 		);

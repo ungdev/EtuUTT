@@ -3,7 +3,10 @@ core:
     admin:
         index:
             title: Tableau de bord
-            server_load: Charge serveur
+            server_status: Etat du serveur
+            load: Charge
+            disk: Disque
+            processes: Processus
         modules:
             title: Modules
             name: Nom

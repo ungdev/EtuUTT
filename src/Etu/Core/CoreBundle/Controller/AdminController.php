@@ -8,6 +8,7 @@ use Etu\Core\CoreBundle\Framework\Definition\Controller;
 
 use Etu\Core\CoreBundle\Framework\Module\ModulesManager;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
+use Etu\Core\CoreBundle\Util\Server;
 use Symfony\Component\HttpFoundation\Response;
 
 // Import @Route() and @Template() annotations
@@ -30,11 +31,8 @@ class AdminController extends Controller
 			return $this->createAccessDeniedResponse();
 		}
 
-		$top = explode('cached', shell_exec('top -b -n 1'));
-		$top = $top[0].'cached';
-
 		return array(
-			'top' => $top
+			'status' => new Server\Status()
 		);
 	}
 

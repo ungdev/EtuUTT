@@ -7,49 +7,63 @@
 {% endblock %}
 
 {% block content %}
-	{% if from == 'search' %}
-		<ul class="nav nav-tabs page-tabs">
+	<ul class="nav nav-tabs page-tabs">
+		{% if from == 'search' %}
 			<li>
 				<a href="">
 					<i class="icon-chevron-left"></i>
 					{{ 'user.profile.view.back_search'|trans }}
 				</a>
 			</li>
-		</ul>
-	{% elseif from == 'profile' %}
-		<ul class="nav nav-tabs page-tabs">
+		{% elseif from == 'profile' %}
 			<li>
 				<a href="{{ path('user_profile') }}">
 					<i class="icon-chevron-left"></i>
 					{{ 'user.profile.view.back_profile'|trans }}
 				</a>
 			</li>
-		</ul>
-	{% elseif from == 'trombi' and etu.modules.isEnabled('trombi') %}
-		<ul class="nav nav-tabs page-tabs">
+		{% elseif from == 'trombi' and etu.modules.isEnabled('trombi') %}
 			<li>
 				<a href="{{ path('trombi_index') }}">
 					<i class="icon-chevron-left"></i>
 					{{ 'user.profile.view.back_trombi'|trans }}
 				</a>
 			</li>
-		</ul>
-	{% elseif from == 'admin' and app.user.isAdmin %}
-		<ul class="nav nav-tabs page-tabs">
+		{% elseif from == 'admin' and app.user.isAdmin %}
 			<li>
 				<a href="{{ path('admin_users_index') }}">
 					<i class="icon-chevron-left"></i>
 					{{ 'user.profile.view.back_admin'|trans }}
 				</a>
 			</li>
-		</ul>
-	{% endif %}
+		{% endif %}
+		<li class="pull-right">
+			<a href="{{ path('user_view_schedule', {'login': user.login}) }}?from={{ from }}">
+				{{ 'user.profile.menu.schedule'|trans }}
+			</a>
+		</li>
+		<li class="pull-right">
+			<a href="{{ path('user_organizations', {'login': user.login}) }}?from={{ from }}">
+				{{ 'user.profile.menu.organizations'|trans }}
+			</a>
+		</li>
+		<li class="pull-right active page-tabs-resolved-active">
+			<a href="{{ path('user_view', {'login': user.login}) }}?from={{ from }}">
+				{{ 'user.profile.menu.profile'|trans }}
+			</a>
+		</li>
+	</ul>
 
 	<div class="padding20-all">
 		<div class="row-fluid">
 			<div class="span3">
 				<div class="profileEdit-avatar">
 					<img src="{{ asset('photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
+
+					<hr />
+
+					<strong>{{ user.fullName }}</strong><br />
+					<em>{{ user.niveau }} {{ user.filiere }} ({{ user.formation }})</em>
 				</div>
 
 				<hr />

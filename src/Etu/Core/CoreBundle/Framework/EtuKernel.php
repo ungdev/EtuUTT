@@ -91,8 +91,8 @@ abstract class EtuKernel extends Kernel
 	public function getAvailableOrganizationsPermissions()
 	{
 		$permissions = array(
-			new OrgaPermission('notify', 'Peut envoyer des notifications au nom de l\'asso'),
-			new OrgaPermission('deleguate', 'Peut donner/retirer ses droits aux membres de l\'asso'),
+			new OrgaPermission('notify', 'Peut envoyer des notifications au nom de l\'association'),
+			new OrgaPermission('deleguate', 'Peut distribuer les droits qu\'il possède aux membres de l\'association'),
 		);
 
 		/** @var Module $module */

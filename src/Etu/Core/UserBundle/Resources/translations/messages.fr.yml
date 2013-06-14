@@ -166,6 +166,10 @@ user:
             confirm: Le membre a bien été supprimé de votre association
 
     profile:
+        menu:
+            profile: Profil
+            organizations: Associatif
+            schedule: Emploi du temps
         profile:
             title: Mon profil
             edit: Modifier
@@ -261,6 +265,9 @@ user:
             surname: Surnom
             jadis: Jadis
             passions: Passions
+        organizations:
+            is_in: "%name% fait parti de %count% association(s) :"
+            not_asso: %name% ne fait partie d'aucune association
 
     schedule:
         days:
