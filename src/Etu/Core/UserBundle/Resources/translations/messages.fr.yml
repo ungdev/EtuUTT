@@ -141,6 +141,20 @@ user:
         desc:
             title: Association
             confirm: Vous avez bien modifié le compte associatif
+        permissionsEdit:
+            confirm: Vous avez bien modifié ce membre
+        notification:
+            desc: |
+                Grâce à cette page, vous pouvez envoyer une notification à tous les abonnés de l'association.
+                Le message envoyé ne peut pas dépasser 80 caractères. Vous pouvez indiquer un lien vers lequel
+                pointer lors du clic sur la notification.
+            link:
+                label: Lien
+            content:
+                label: Message
+                desc: Message de la notification (80 caractères maximum)
+            submit: Envoyer la notification en tant que %orga%
+            confirm: La notification a bien été envoyé aux abonnés
 
     orga:
         role:

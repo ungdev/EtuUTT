@@ -144,11 +144,6 @@ class MainController extends Controller
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
 
-		// $imap = new ImapManager($this->get('session')->get('ticket'));
-
-		/** @var $em EntityManager */
-		$em = $this->getDoctrine()->getManager();
-
 		// Load only notifications we should display, ie. notifications sent from
 		// currently enabled modules
 
@@ -158,6 +153,7 @@ class MainController extends Controller
 			->from('EtuCoreBundle:Notification', 'n')
 			->where('n.authorId != :userId')
 			->setParameter('userId', $this->getUser()->getId())
+			->orderBy('n.date', 'DESC')
 			->setMaxResults(50);
 
 		/*

@@ -27,14 +27,15 @@ class NotificationSender
 	 * Send a notification
 	 *
 	 * @param Notification $notif
+	 * @param bool         $tryCompile
 	 * @return bool
 	 */
-	public function send(Notification $notif)
+	public function send(Notification $notif, $tryCompile = true)
 	{
 		/** @var $em EntityManager */
 		$em = $this->doctrine->getManager();
 
-		if (! $notif->getIsSuper()) {
+		if (! $notif->getIsSuper() && $tryCompile) {
 			$oldDate = new \DateTime();
 			$oldDate->setTime(date('h') - 1, date('i'), date('s'));
 

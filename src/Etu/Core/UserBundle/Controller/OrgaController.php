@@ -5,7 +5,6 @@ namespace Etu\Core\UserBundle\Controller;
 use Doctrine\ORM\EntityManager;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
-use Etu\Core\CoreBundle\Framework\Module\PermissionsCollection;
 use Etu\Core\UserBundle\Entity\Member;
 use Etu\Core\UserBundle\Entity\User;
 

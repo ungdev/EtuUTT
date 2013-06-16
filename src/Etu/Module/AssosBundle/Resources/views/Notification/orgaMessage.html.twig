@@ -1,35 +1,12 @@
 
-<a class="notif{% if notif.isSuper %} super-notif{% elseif notif.isNew(app.user.lastVisitHome) %} notif-new{% endif %}"
-	{% if notif.countEntities == 1 %}
-   href="{{ path('bugs_view', {'id': notif.firstEntity.id, 'slug': notif.firstEntity.title|slugify}) }}"
-   {% else %}
-   href="{{ path('bugs_index') }}"
+<a class="notif{% if notif.isNew(app.user.lastVisitHome) %} notif-new{% endif %}"
+	{% if notif.firstEntity.link %}
+   href="{{ notif.firstEntity.link }}"
    {% endif %}>
-	<img src="{{ asset('img/icons-big/bug.png') }}" />
+	<img src="{{ asset('img/icons-big/orga_message.png') }}" />
 
 	<h4 class="notif-title">
-		{% if notif.countEntities == 1 %}
-			{{ 'bugs.notifs.newOpened.one'|trans({
-				'%userName%': highlight_notif_data(notif.firstEntity.user.fullName),
-				'%bugName%': highlight_notif_data(notif.firstEntity.title)
-			})|raw }}
-		{% elseif notif.countEntities == 2 %}
-			{{ 'bugs.notifs.newOpened.two'|trans({
-				'%first%': highlight_notif_data(notif.getEntity(1).user.fullName),
-				'%second%': highlight_notif_data(notif.getEntity(2).user.fullName)
-			})|raw }}
-		{% elseif notif.countEntities == 3 %}
-			{{ 'bugs.notifs.newOpened.more_single'|trans({
-				'%first%': highlight_notif_data(notif.getEntity(1).user.fullName),
-				'%second%': highlight_notif_data(notif.getEntity(2).user.fullName)
-			})|raw }}
-		{% else %}
-			{{ 'bugs.notifs.newOpened.more_many'|trans({
-				'%first%': highlight_notif_data(notif.getEntity(1).user.fullName),
-				'%second%': highlight_notif_data(notif.getEntity(2).user.fullName),
-				'%count%': notif.countEntities
-			})|raw }}
-		{% endif %}
+		{{ highlight_notif_data(notif.firstEntity.orga_name) }} : {{ notif.firstEntity.content }}
 	</h4>
 
 	<div class="notif-date">

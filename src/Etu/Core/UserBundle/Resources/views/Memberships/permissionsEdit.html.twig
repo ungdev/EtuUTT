@@ -74,31 +74,44 @@
 					{% endif %}
 				</ul>
 
-				<div class="navigation">
-					{{ knp_pagination_render(pagination) }}
+				<div class="row-fluid">
+					<div class="span2">
+						<img src="{{ asset('photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
+					</div>
+					<div class="span10">
+						<p>
+							<strong>{{ member.user.fullName }}</strong>
+						</p>
+						<p>
+							<em><span class="muted">{{ ('user.orga.role.'~member.role)|trans }}</span></em>
+						</p>
+					</div>
 				</div>
 
-				<ul id="search-results" class="asso-members">
-					{% for member in pagination %}
-						<li class="asso-members-item asso-members-item-member">
-							<a href="{{ path('memberships_orga_permissions_edit', {'login': membership.organization.login'user': member.user.login}) }}">
-								<img src="{{ asset('photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
-								<h5>{{ member.user.fullName }}</h5>
-								<p>
-									{{ ('user.orga.role.'~member.role)|trans }}
-								</p>
+				<hr />
 
-								<div class="clear"></div>
-							</a>
-						</li>
+				<form method="post" class="form-horizontal">
+					{% for permission in permissions %}
+						<div class="control-group">
+							<label class="control-label" style="width: 80%; padding-right: 2%;" for="permissions[{{ permission.definition.name }}]">
+								{{ permission.definition.description }}
+							</label>
+							<div class="controls">
+								<input type="checkbox" class="permission" name="permissions[{{ permission.definition.name }}]"
+										{% if permission.checked %} checked="checked"{% endif %}
+										/>
+							</div>
+						</div>
 					{% endfor %}
-				</ul>
 
-				<div class="clear"></div>
+					<hr />
 
-				<div class="navigation">
-					{{ knp_pagination_render(pagination) }}
-				</div>
+					<p class="pull-right">
+						<input type="hidden" name="sent" value="true" />
+
+						<button type="submit" class="btn btn-primary">{{ 'user.orga.memberEdit.submit'|trans }}</button>
+					</p>
+				</form>
 			</div>
 		</div>
 	</div>

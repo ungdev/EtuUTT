@@ -51,7 +51,7 @@ class Notification
 	protected $helper;
 
 	/**
-	 * List of entities in the notification (given to the
+	 * List of entities in the notification (given to the helper)
 	 *
 	 * @var array
 	 *

@@ -4,6 +4,7 @@ namespace Etu\Core\UserBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 
+use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Framework\Definition\OrgaPermission;
 use Etu\Core\UserBundle\Entity\Member;
@@ -226,8 +227,10 @@ class MembershipsController extends Controller
 			->from('EtuUserBundle:Member', 'm')
 			->leftJoin('m.user', 'u')
 			->where('m.organization = :orga')
-			->setParameter('orga', $this->getUser()->getId())
-			->orderBy('u.lastName')
+			->setParameter('orga', $orga->getId())
+			->andWhere('m.role < :role')
+			->setParameter('role', ($membership->getRole() == Member::ROLE_MEMBER) ? Member::ROLE_MEMBER + 1 : $membership->getRole())
+			->orderBy('m.role DESC, u.lastName')
 			->getQuery();
 
 		$members = $this->get('knp_paginator')->paginate($members, $page, 20);
@@ -235,22 +238,211 @@ class MembershipsController extends Controller
 		return array(
 			'memberships' => $memberships,
 			'membership' => $membership,
-			'members' => $members,
+			'pagination' => $members,
 			'orga' => $orga,
 		);
 	}
 
 	/**
-	 * @Route("/user/membership/{login}/notifications", name="memberships_orga_notifications")
+	 * @Route("/user/membership/{login}/permissions/{user}/edit", name="memberships_orga_permissions_edit")
 	 * @Template()
 	 */
-	public function notificationsAction($login)
+	public function permissionsEditAction($login, $user)
 	{
 		if (! $this->getUserLayer()->isUser()) {
 			return $this->createAccessDeniedResponse();
 		}
 
-		return array();
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $memberships Member[] */
+		$memberships = $em->createQueryBuilder()
+			->select('m, o')
+			->from('EtuUserBundle:Member', 'm')
+			->leftJoin('m.organization', 'o')
+			->where('o.deleted = 0')
+			->andWhere('m.user = :user')
+			->setParameter('user', $this->getUser()->getId())
+			->orderBy('m.role', 'DESC')
+			->addOrderBy('o.name', 'ASC')
+			->getQuery()
+			->getResult();
+
+		$membership = null;
+
+		foreach ($memberships as $m) {
+			if ($m->getOrganization()->getLogin() == $login) {
+				$membership = $m;
+				break;
+			}
+		}
+
+		if (! $membership) {
+			throw $this->createNotFoundException('Membership or organization not found for login '.$login);
+		}
+
+		if (! $membership->hasPermission('deleguate')) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$orga = $membership->getOrganization();
+
+		$member = $em->createQueryBuilder()
+			->select('m, u')
+			->from('EtuUserBundle:Member', 'm')
+			->leftJoin('m.user', 'u')
+			->where('m.organization = :orga')
+			->setParameter('orga', $orga->getId())
+			->andWhere('u.login = :login')
+			->setParameter('login', $user)
+			->setMaxResults(1)
+			->getQuery()
+			->getOneOrNullResult();
+
+		if (! $member) {
+			throw $this->createNotFoundException('Membership not found for login '.$user);
+		}
+
+		// Current user can add/remove only permissions he/she own himself/herself
+
+		/** @var $availablePermissions OrgaPermission[] */
+		$availablePermissions = $this->getKernel()->getAvailableOrganizationsPermissions()->toArray();
+
+		foreach ($availablePermissions as $key => $permission) {
+			if (! $membership->hasPermission($permission->getName())) {
+				unset($availablePermissions[$key]);
+			}
+		}
+
+		$permissions = array();
+
+		foreach ($availablePermissions as $permission) {
+			if ($member->hasPermission($permission->getName())) {
+				$permissions[] = array('definition' => $permission, 'checked' => true);
+			} else {
+				$permissions[] = array('definition' => $permission, 'checked' => false);
+			}
+		}
+
+		$request = $this->getRequest();
+
+		if ($request->getMethod() == 'POST') {
+			if (is_array($request->get('permissions'))) {
+				$userPermissions = array();
+
+				foreach ($request->get('permissions') as $permission => $value) {
+					$userPermissions[] = $permission;
+				}
+
+				$member->setPermissions($userPermissions);
+			} else {
+				$member->setPermissions(array());
+			}
+
+			$em->persist($member);
+			$em->flush();
+
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'user.memberships.permissionsEdit.confirm'
+			));
+
+			return $this->redirect($this->generateUrl(
+				'memberships_orga_permissions_edit', array('login' => $login, 'user' => $user)
+			));
+		}
+
+		return array(
+			'memberships' => $memberships,
+			'membership' => $membership,
+			'member' => $member,
+			'permissions' => $permissions,
+			'orga' => $orga,
+		);
+	}
+
+	/**
+	 * @Route("/user/membership/{login}/notification", name="memberships_orga_notifications")
+	 * @Template()
+	 */
+	public function notificationAction($login)
+	{
+		if (! $this->getUserLayer()->isUser()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $memberships Member[] */
+		$memberships = $em->createQueryBuilder()
+			->select('m, o')
+			->from('EtuUserBundle:Member', 'm')
+			->leftJoin('m.organization', 'o')
+			->where('o.deleted = 0')
+			->andWhere('m.user = :user')
+			->setParameter('user', $this->getUser()->getId())
+			->orderBy('m.role', 'DESC')
+			->addOrderBy('o.name', 'ASC')
+			->getQuery()
+			->getResult();
+
+		$membership = null;
+
+		foreach ($memberships as $m) {
+			if ($m->getOrganization()->getLogin() == $login) {
+				$membership = $m;
+				break;
+			}
+		}
+
+		if (! $membership) {
+			throw $this->createNotFoundException('Membership or organization not found for login '.$login);
+		}
+
+		if (! $membership->hasPermission('notify')) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$orga = $membership->getOrganization();
+
+		$notif = new \stdClass();
+		$notif->link = null;
+		$notif->content = '';
+		$notif->orga_name = $orga->getName();
+
+		$form = $this->createFormBuilder($notif)
+			->add('link', 'url', array('required' => false))
+			->add('content', 'textarea', array('required' => true, 'max_length' => 80))
+			->getForm();
+
+		$request = $this->getRequest();
+
+		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+			$notification = new Notification();
+			$notification->setEntityType('orga')
+				->setEntityId($orga->getId())
+				->setModule('assos')
+				->setAuthorId($this->getUser()->getId())
+				->setHelper('orga_message')
+				->addEntity($notif);
+
+			$this->getNotificationsSender()->send($notification, false);
+
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'user.memberships.notification.confirm'
+			));
+
+			return $this->redirect($this->generateUrl('memberships_orga_notifications', array('login' => $login)));
+		}
+
+		return array(
+			'memberships' => $memberships,
+			'membership' => $membership,
+			'form' => $form->createView(),
+		);
 	}
 
 	/**
