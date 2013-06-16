@@ -6,24 +6,20 @@
 		<title>{% block title %}{{ 'home.index.page.title' }}{% endblock %} - {{ 'base.title'|trans }}</title>
 
 		<meta name="description" content="{{ 'base.title'|trans }}" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
 		<link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}" type="text/css" />
 		<link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" />
-		<link rel="stylesheet" href="{{ asset('css/global.css') }}" type="text/css" />
-		<link rel="stylesheet" href="{{ asset('css/icons.css') }}" type="text/css" />
-		<link rel="stylesheet" href="{{ asset('css/head.css') }}" type="text/css" />
-		<link rel="stylesheet" href="{{ asset('css/page.css') }}" type="text/css" />
-		<link rel="stylesheet" href="{{ asset('css/menu.css') }}" type="text/css" />
-		<link rel="stylesheet" href="{{ asset('css/responsive.css') }}" type="text/css" />
-		<link rel="stylesheet" href="{{ asset('css/content.css') }}" type="text/css" />
-		<link rel="stylesheet" href="{{ asset('css/bundles/core.css') }}" type="text/css" />
-		<link rel="stylesheet" href="{{ asset('css/bundles/user.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('css/boot.css') }}" type="text/css" />
 
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" type="text/css" />
 		<link rel="stylesheet" href="{{ asset('redactor-js/redactor/redactor.css') }}" />
 		<link rel="stylesheet" href="{{ asset('tipsy/src/tipsy.css') }}" type="text/css" />
 		<link rel="stylesheet" href="{{ asset('facebox/src/facebox.css') }}" type="text/css" />
+
+		{% if not app.request.cookies.has('disable_responsive') %}
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" href="{{ asset('css/responsive.css') }}" type="text/css" />
+		{% endif %}
 
 		{% block stylesheets %}{% endblock %}
 	</head>
@@ -79,7 +75,7 @@
 						</li>
 						{% endif %}
 						<li class="display-for-phones last" id="more">
-							<a href="">
+							<a href="#">
 								<i class="icon icon-head icon-head-plus"></i>
 								<span class="menu-link-text">{{ 'base.menu.more'|trans }}</span>
 								<div class="clear"></div>
@@ -193,9 +189,14 @@
 			{% endblock %}
 
 			<ul class="list-vertical list-vertical-linked overlay-menu">
-				<li class="first active">
+				<li class="first">
 					<a href="#" class="change-locale">
 						{{ 'base.footer.change_locale'|trans }}
+					</a>
+				</li>
+				<li>
+					<a href="{{ path('desktop_version') }}">
+						{{ 'base.footer.desktop_version'|trans }}
 					</a>
 				</li>
 			</ul>

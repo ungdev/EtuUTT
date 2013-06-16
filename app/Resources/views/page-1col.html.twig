@@ -39,6 +39,11 @@
 			<a href="{{ path('page_view', {'slug': 'developpeurs'}) }}" class="footer-link">
 				{{ 'base.footer.developers'|trans }}
 			</a>
+			{% if app.request.cookies.has('disable_responsive') %}
+			<a href="{{ path('mobile_version') }}" class="footer-link">
+				{{ 'base.footer.mobile_version'|trans }}
+			</a>
+			{% endif %}
 			<span class="pull-right">
 				{{ 'base.footer.1col_text'|trans|raw }} - {% include '::version.html.twig' %}
 			</span>

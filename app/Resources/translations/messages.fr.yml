@@ -41,6 +41,7 @@ base:
             admin: Administration
             members: Membres
             pages: Pages statiques
+            orgas: Associatif
 
         # Sex
         sex:
@@ -85,6 +86,8 @@ base:
         help_us: Nous aider
         developers: Développeurs
         change_locale: Changer de langue
+        desktop_version: Version ordinateur
+        mobile_version: Version mobile
 
         # Authors and version
         text: "Réalisé par l’UNG<br />Propulsé par Symfony 2"

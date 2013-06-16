@@ -1,73 +1,65 @@
-
 /*
  * Wiki
  */
 .wiki-actions {
-	padding-top: 7px;
-	padding-bottom: 13px;
-	text-align: center;
+  padding-top: 7px;
+  padding-bottom: 13px;
+  text-align: center;
 }
 .wiki-action {
-	display: inline-block;
+  display: inline-block;
 }
 .wiki-actions .dropdown-menu {
-	text-align: left;
+  text-align: left;
 }
 .wiki-orgas {
-	margin-top: 50px;
+  margin-top: 50px;
 }
-.wiki-orgas-links, .wiki-orgas-links li {
-	margin: 0;
-	padding: 0;
+.wiki-orgas-links,
+.wiki-orgas-links li {
+  margin: 0;
+  padding: 0;
 }
 .wiki-orgas-links li {
-	list-style-type: none;
-	display: block;
-	width: 40%;
-	float: left;
+  list-style-type: none;
+  display: block;
+  width: 40%;
+  float: left;
 }
 .wiki-orgas-links li a {
-	display: block;
-	padding: 5px;
+  display: block;
+  padding: 5px;
 }
 .wiki-categories {
-	padding: 8px 0;
-	border-right: 1px solid #e5e5e5;
+  padding: 8px 0;
+  border-right: 1px solid #e5e5e5;
 }
 .wiki-edit-title {
-	font-size: 20px !important;
-	height: 40px !important;
-	font-weight: bold;
+  font-size: 20px !important;
+  height: 40px !important;
+  font-weight: bold;
 }
 .wiki-tree {
-	margin-left: 15px;
+  margin-left: 15px;
 }
-
 /*
  * List
  */
-.wiki-nested-list, .wiki-nested-list li {
-	margin: 0;
-	padding: 0;
+.wiki-nested-list,
+.wiki-nested-list li {
+  margin: 0;
+  padding: 0;
 }
 .wiki-nested-list li > ul {
-	margin-left: 20px;
-	display: none;
+  margin-left: 20px;
+  display: none;
 }
 .wiki-nested-item {
-	list-style: none;
+  list-style: none;
 }
 .wiki-nested-item-category-up {
-	list-style-image: url('../../img/icons/arrow-up.png');
+  list-style-image: url('../../img/icons/arrow-up.png');
 }
 .wiki-nested-item-category-down {
-	list-style-image: url('../../img/icons/arrow-down.png');
-}
-
-
-@media screen and (max-width: 775px) {
-	.wiki-categories {
-		border-right: 0;
-		border-bottom: 1px solid #e5e5e5;
-	}
+  list-style-image: url('../../img/icons/arrow-down.png');
 }
