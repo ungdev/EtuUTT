@@ -114,7 +114,11 @@ $interval = $launch->diff($now);
 
 			<div class="row-fluid">
 				<div class="span12">
-					<p><a href="http://www-etu.utt.fr">Visiter l'ancien site étu</a></p>
+					<p>
+						<a href="http://www-etu.utt.fr" class="btn btn-primary">
+							Aller sur l'ancien site étu
+						</a>
+					</p>
 				</div>
 			</div>
 		</div>
