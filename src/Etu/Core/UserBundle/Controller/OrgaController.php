@@ -322,6 +322,8 @@ class OrgaController extends Controller
 				}
 
 				$member->setPermissions($userPermissions);
+			} else {
+				$member->setPermissions(array());
 			}
 
 			$em->persist($member);

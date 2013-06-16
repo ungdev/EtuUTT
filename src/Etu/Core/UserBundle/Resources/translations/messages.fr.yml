@@ -115,6 +115,33 @@ user:
         disconnect:
             confirm: Vous êtes bien déconnecté
 
+    memberships:
+        menu:
+            position: Ma position
+            orga: Association
+            permissions: Droits
+            notifications: Notifications
+            event: Evènements
+            daymail: Daymail
+        index:
+            title: Associatif
+            desc_1: Vous faites parti d'une seule association|Vous faites parti de %count% associations
+            desc_2: |
+                Cette page vous permet d'effectuer des actions d'administration sur ces associations,
+                selon vos droits. Vous pourrez par exemple envoyer un daymail au nom de l'association,
+                modifier sa description ou encore envoyer des notifications à ses abonnés.
+            desc_3: |
+                Afin d'effectuer ces opérations, choisissez tout d'abord l'association que vous voulez administrer
+                sur la gauche.
+        orga:
+            position: Au sein de %orga%, vous êtes
+            since: Vous faites parti de cette association depuis le %date%.
+            permissions: Vous avez les droits suivants :
+            no_permission: Vous n'avez pas de permission quant à cette association
+        desc:
+            title: Association
+            confirm: Vous avez bien modifié le compte associatif
+
     orga:
         role:
             40: Président
@@ -133,7 +160,7 @@ user:
         index:
             title: Association
             submit: Modifier
-            confirm: Vous avez bien modifié votre compte
+            confirm: Vous avez bien modifié votre compte associatif
             president_not_found: Le président n'a pas été trouvé
             name:
                 label: Nom

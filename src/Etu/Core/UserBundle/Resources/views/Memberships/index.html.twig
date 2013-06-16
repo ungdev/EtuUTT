@@ -1,0 +1,39 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'user.memberships.index.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<div class="padding20-all">
+		<div class="row-fluid">
+			<div class="span3 memberships">
+				<ul class="nav nav-list">
+					{% for membership in memberships %}
+						<li>
+							<a href="{{ path('memberships_orga', {'login': membership.organization.login}) }}">
+								{{ membership.organization.name }}<br />
+								<span class="muted">{{ ('user.orga.role.'~membership.role)|trans }}</span>
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+
+			<div class="span9">
+				<h4>{{ 'user.memberships.index.desc_1'|transchoice(memberships|length, {'%count%': memberships|length}) }}</h4>
+
+				<hr />
+
+				<p>
+					{{ 'user.memberships.index.desc_2'|trans }}
+				</p>
+				<p>
+					{{ 'user.memberships.index.desc_3'|trans }}
+				</p>
+			</div>
+		</div>
+	</div>
+{% endblock %}

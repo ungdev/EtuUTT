@@ -74,6 +74,42 @@ class MainController extends Controller
 	}
 
 	/**
+	 * @Route("/desktop-version", name="desktop_version")
+	 * @Template()
+	 */
+	public function desktopAction()
+	{
+		setcookie('disable_responsive', true, time() + 3600 * 24 * 365);
+
+		$url = $this->getRequest()->server->get('HTTP_REFERER');
+
+		// Redirect wisely
+		if ($this->container->getParameter('etu.domain') == parse_url($url, PHP_URL_HOST)) {
+			return $this->redirect($url);
+		}
+
+		return $this->redirect($this->generateUrl('homepage'));
+	}
+
+	/**
+	 * @Route("/mobile-version", name="mobile_version")
+	 * @Template()
+	 */
+	public function mobileAction()
+	{
+		setcookie('disable_responsive', false, time() - 10);
+
+		$url = $this->getRequest()->server->get('HTTP_REFERER');
+
+		// Redirect wisely
+		if ($this->container->getParameter('etu.domain') == parse_url($url, PHP_URL_HOST)) {
+			return $this->redirect($url);
+		}
+
+		return $this->redirect($this->generateUrl('homepage'));
+	}
+
+	/**
 	 * @Route("/page/{slug}", name="page_view")
 	 * @Template()
 	 */

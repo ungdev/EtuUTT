@@ -1,0 +1,95 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ membership.organization.name }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<div class="padding20-all">
+		<div class="row-fluid">
+			<div class="span3 memberships">
+				<ul class="nav nav-list">
+					{% for m in memberships %}
+						<li{% if membership.id == m.id %} class="active"{% endif %}>
+							<a href="{{ path('memberships_orga', {'login': m.organization.login}) }}">
+								{{ m.organization.name }}<br />
+								{% if membership.id == m.id %}
+									{{ ('user.orga.role.'~m.role)|trans }}
+								{% else %}
+									<span class="muted">{{ ('user.orga.role.'~m.role)|trans }}</span>
+								{% endif %}
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+
+			<div class="span9">
+				<ul class="nav nav-tabs">
+					<li>
+						<a href="{{ path('memberships_orga', {'login': membership.organization.login}) }}">
+							{{ 'user.memberships.menu.position'|trans }}
+						</a>
+					</li>
+					{% if membership.hasPermission('edit_desc') %}
+						<li>
+							<a href="{{ path('memberships_orga_desc', {'login': membership.organization.login}) }}">
+								{{ 'user.memberships.menu.orga'|trans }}
+							</a>
+						</li>
+					{% endif %}
+
+					{% if membership.hasPermission('deleguate') %}
+						<li class="active">
+							<a href="{{ path('memberships_orga_permissions', {'login': membership.organization.login}) }}">
+								{{ 'user.memberships.menu.permissions'|trans }}
+							</a>
+						</li>
+					{% endif %}
+
+					{% if membership.hasPermission('notify') %}
+						<li>
+							<a href="{{ path('memberships_orga_notifications', {'login': membership.organization.login}) }}">
+								{{ 'user.memberships.menu.notifications'|trans }}
+							</a>
+						</li>
+					{% endif %}
+
+					{% if membership.hasPermission('edit_desc') %}
+						<li>
+							<a href="{{ path('memberships_orga_events', {'login': membership.organization.login}) }}">
+								{{ 'user.memberships.menu.event'|trans }}
+							</a>
+						</li>
+					{% endif %}
+
+					{% if membership.hasPermission('edit_desc') %}
+						<li>
+							<a href="{{ path('memberships_orga_daymail', {'login': membership.organization.login}) }}">
+								{{ 'user.memberships.menu.daymail'|trans }}
+							</a>
+						</li>
+					{% endif %}
+				</ul>
+
+				<ul id="search-results" class="asso-members">
+					{% for member in pagination %}
+						<li class="asso-members-item">
+							<a href="{{ path('orga_admin_members_edit', {'login': member.user.login}) }}">
+								<img src="{{ asset('photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
+								<h5>{{ member.user.fullName }}</h5>
+								<p>
+									{{ ('user.orga.role.'~member.role)|trans }}
+								</p>
+
+								<div class="clear"></div>
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+{% endblock %}

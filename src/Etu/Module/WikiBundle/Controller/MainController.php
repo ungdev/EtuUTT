@@ -66,7 +66,7 @@ class MainController extends Controller
 			$em->flush();
 		}
 
-		$orgas = $em->getRepository('EtuUserBundle:Organization')->findBy(array(), array('name' => 'ASC'));
+		$orgas = $em->getRepository('EtuUserBundle:Organization')->findBy(array('deleted' => false), array('name' => 'ASC'));
 		$userOrgas = array();
 
 		foreach ($orgas as $key => $orga) {
