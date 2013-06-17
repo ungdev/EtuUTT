@@ -11,7 +11,20 @@ class EtuModuleDailymailBundle extends Module
 	 */
 	public function mustBoot()
 	{
-		return true;
+		return $this->getSessionLayer()->isUser();
+	}
+
+	/**
+	 * At module boot, update the sidebar
+	 */
+	public function onModuleBoot()
+	{
+		$this->getUserMenuBuilder()
+			->add('base.user.menu.dailymail')
+				->setIcon('megaphone.png')
+				->setUrl($this->router->generate('user_daymail'))
+				->setPosition(4)
+			->end();
 	}
 
 	/**
@@ -19,7 +32,7 @@ class EtuModuleDailymailBundle extends Module
 	 */
 	public function isReadyToUse()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -39,7 +52,7 @@ class EtuModuleDailymailBundle extends Module
 	 */
 	public function getTitle()
 	{
-		return 'Dailymail';
+		return 'Daymail';
 	}
 
 	/**
@@ -49,7 +62,7 @@ class EtuModuleDailymailBundle extends Module
 	 */
 	public function getAuthor()
 	{
-		return 'anonymous';
+		return 'Titouan Galopin';
 	}
 
 	/**
@@ -59,7 +72,7 @@ class EtuModuleDailymailBundle extends Module
 	 */
 	public function getDescription()
 	{
-		return 'Default module description';
+		return 'Envoi du daymail et interface de préférences de l\'étudiant';
 	}
 
 	/**

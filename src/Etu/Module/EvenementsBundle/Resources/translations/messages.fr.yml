@@ -1,1 +1,5 @@
 
+events:
+    main:
+        index:
+            title: Evènements

@@ -146,13 +146,13 @@ user:
         notification:
             desc: |
                 Grâce à cette page, vous pouvez envoyer une notification à tous les abonnés de l'association.
-                Le message envoyé ne peut pas dépasser 80 caractères. Vous pouvez indiquer un lien vers lequel
+                Le message envoyé ne peut pas dépasser 140 caractères. Vous pouvez indiquer un lien vers lequel
                 pointer lors du clic sur la notification.
             link:
                 label: Lien
             content:
                 label: Message
-                desc: Message de la notification (80 caractères maximum)
+                desc: Message de la notification (140 caractères maximum)
             submit: Envoyer la notification en tant que %orga%
             confirm: La notification a bien été envoyé aux abonnés
 

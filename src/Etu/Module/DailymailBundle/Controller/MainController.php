@@ -8,14 +8,14 @@ use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class DefaultController extends Controller
+class MainController extends Controller
 {
     /**
-     * @Route("/hello/{name}")
+     * @Route("/daymail", name="user_daymail")
      * @Template()
      */
-    public function indexAction($name)
+    public function indexAction()
     {
-        return array('name' => $name);
+        return array();
     }
 }

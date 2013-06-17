@@ -19,7 +19,7 @@ class EtuModuleEvenementsBundle extends Module
 	 */
 	public function isReadyToUse()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -39,7 +39,7 @@ class EtuModuleEvenementsBundle extends Module
 	 */
 	public function getTitle()
 	{
-		return 'Evenements';
+		return 'Evènements';
 	}
 
 	/**
@@ -49,7 +49,7 @@ class EtuModuleEvenementsBundle extends Module
 	 */
 	public function getAuthor()
 	{
-		return 'anonymous';
+		return 'Titouan Galopin';
 	}
 
 	/**
@@ -59,7 +59,7 @@ class EtuModuleEvenementsBundle extends Module
 	 */
 	public function getDescription()
 	{
-		return 'Default module description';
+		return 'Affichage et gestion des évènements';
 	}
 
 	/**

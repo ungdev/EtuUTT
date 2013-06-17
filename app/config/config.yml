@@ -90,7 +90,7 @@ etu_user:
         port: 389
 
     cas:
-        version: '2.0'
+        version: '1.0'
         host: cas.utt.fr
         port: 443
         path: '/cas/'

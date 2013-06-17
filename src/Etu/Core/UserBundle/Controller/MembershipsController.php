@@ -414,7 +414,7 @@ class MembershipsController extends Controller
 
 		$form = $this->createFormBuilder($notif)
 			->add('link', 'url', array('required' => false))
-			->add('content', 'textarea', array('required' => true, 'max_length' => 80))
+			->add('content', 'textarea', array('required' => true, 'max_length' => 140))
 			->getForm();
 
 		$request = $this->getRequest();
