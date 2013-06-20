@@ -22,7 +22,9 @@
 				{% for module in modules %}
 					<tr {% if not module.isReadyToUse %}class="muted"{% endif %}>
 						<td>
-							{% if module.isReadyToUse %}
+							{% if module.needed %}
+								<input type="checkbox" disabled="disabled" name="modules[{{ module.identifier }}]" checked="checked" />
+							{% elseif module.isReadyToUse %}
 								<input type="checkbox" name="modules[{{ module.identifier }}]" {% if module.enabled %} checked="checked"{% endif %} />
 							{% else %}
 								<input type="checkbox" disabled="disabled" />
@@ -34,6 +36,10 @@
 							{{ module.description }}
 							{% if not module.isReadyToUse %}
 								<br /><span class="text-warning">{{ 'core.admin.modules.is_not_ready'|trans }}</span>
+							{% endif %}
+
+							{% if module.needed %}
+								<br /><span class="text-warning">{{ 'core.admin.modules.needed_by'|trans({'%needed_by%': module.neededBy}) }}</span>
 							{% endif %}
 						</td>
 					</tr>

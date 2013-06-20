@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Entity\Page;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 
+use Etu\Core\CoreBundle\Framework\Definition\Module;
 use Etu\Core\CoreBundle\Framework\Module\ModulesManager;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Core\CoreBundle\Util\Server;
@@ -109,8 +110,30 @@ class AdminController extends Controller
 			return $this->redirect($this->generateUrl('admin_modules'));
 		}
 
+		$modules = $modulesManager->getModules();
+
+		/** @var $module Module */
+		foreach ($modules as $module) {
+			$modules->get($module->getIdentifier())->needed = false;
+			$modules->get($module->getIdentifier())->neededBy = array();
+		}
+
+		/** @var $module Module */
+		foreach ($modules as $module) {
+			foreach ($module->getRequirements() as $requirement) {
+				$modules->get($requirement)->needed = true;
+				$modules->get($requirement)->neededBy[] = $module->getTitle();
+			}
+		}
+
+		/** @var $module Module */
+		foreach ($modules as $module) {
+			$modules->get($module->getIdentifier())->neededBy =
+				implode(', ', $modules->get($module->getIdentifier())->neededBy);
+		}
+
 		return array(
-			'modules' => $modulesManager->getModules(),
+			'modules' => $modules,
 		);
 	}
 

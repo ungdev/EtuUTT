@@ -13,6 +13,7 @@ core:
             author: Auteur
             description: Description
             is_not_ready: Ce module n'est pas prêt à être utilisé
+            needed_by: Requis par %needed_by%
             enable_disable: Activer/Désactiver
             confirm: Vous avez bien modifié les modules
         pageCreate:

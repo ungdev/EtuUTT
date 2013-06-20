@@ -51,7 +51,7 @@ class EtuModuleUploadBundle extends Module
 	 */
 	public function getDescription()
 	{
-		return 'Module permettant aux utilisateurs l\'upload d\'images (utilisé par d\'autres modules !)';
+		return 'Module permettant aux utilisateurs l\'upload d\'images';
 	}
 
 	/**
