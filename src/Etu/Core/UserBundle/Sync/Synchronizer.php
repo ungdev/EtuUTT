@@ -70,6 +70,7 @@ class Synchronizer
 		// Differences
 		$toAddInDb = array_diff($ldapLogins, $dbLogins);
 		$toRemoveFromDb = array_diff($dbLogins, $ldapLogins);
+		$toUpdate = $dbUsers;
 
 		foreach ($toAddInDb as $key => $login) {
 			unset($toAddInDb[$key]);
@@ -83,6 +84,17 @@ class Synchronizer
 			$toRemoveFromDb[$login] = $dbUsers[$login];
 		}
 
-		return new Process($this->doctrine, $toAddInDb, $toRemoveFromDb);
+		foreach ($toUpdate as $login => $dbUser) {
+			if (isset($ldapUsers[$login]) && isset($dbUsers[$login])) {
+				$toUpdate[$login] = array(
+					'database' => $dbUsers[$login],
+					'ldap' => $ldapUsers[$login]
+				);
+			} else {
+				unset($toUpdate[$login]);
+			}
+		}
+
+		return new Process($this->doctrine, $toAddInDb, $toRemoveFromDb, $toUpdate);
 	}
 }

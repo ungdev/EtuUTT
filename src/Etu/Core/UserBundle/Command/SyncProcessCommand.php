@@ -4,8 +4,12 @@ namespace Etu\Core\UserBundle\Command;
 
 use Etu\Core\UserBundle\Command\Util\ProgressBar;
 use Etu\Core\UserBundle\Entity\User;
+use Etu\Core\UserBundle\Sync\Iterator\Element\ElementToImport;
+use Etu\Core\UserBundle\Sync\Iterator\Element\ElementToRemove;
+use Etu\Core\UserBundle\Sync\Iterator\Element\ElementToUpdate;
 use Etu\Core\UserBundle\Sync\Iterator\ImportIterator;
 use Etu\Core\UserBundle\Sync\Iterator\RemoveIterator;
+use Etu\Core\UserBundle\Sync\Iterator\UpdateIterator;
 use Etu\Core\UserBundle\Sync\Synchronizer;
 use Imagine\Gd\Image;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -60,20 +64,17 @@ ask you to keep or delete him/her.
 		/** @var $usersImportIterator ImportIterator */
 		$usersImportIterator = $synchronizer->createUsersSyncProcess()->getImportIterator();
 
-		/** @var $usersImportIterator RemoveIterator */
+		/** @var $usersRemoveIterator RemoveIterator */
 		$usersRemoveIterator = $synchronizer->createUsersSyncProcess()->getRemoveIterator();
+
+		/** @var $usersUpdateIterator UpdateIterator */
+		$usersUpdateIterator = $synchronizer->createUsersSyncProcess()->getUpdateIterator();
 
 		$output->writeln(sprintf('%s user(s) to import from LDAP', $usersImportIterator->count()));
 		$output->writeln(sprintf('%s user(s) to remove/keep in database', $usersRemoveIterator->count()));
+		$output->writeln(sprintf('%s user(s) to update from LDAP', $usersUpdateIterator->count()));
 
 		$output->write("\n");
-
-		$countActions = $usersImportIterator->count() + $usersRemoveIterator->count();
-
-		if ($countActions === 0) {
-			$output->writeln("Database already sync with LDAP.\n");
-			return;
-		}
 
 		$startNow = $dialog->ask($output, 'Start the synchronization now (y/n) [y]? ', 'y') == 'y';
 
@@ -84,27 +85,52 @@ ask you to keep or delete him/her.
 
 
 		// Import users
-		$output->write("\n");
-		$output->writeln('Importing users ...');
+		if ($usersImportIterator->count() > 0) {
+			$output->write("\n");
+			$output->writeln('Importing users ...');
 
-		$bar = new ProgressBar('%fraction% [%bar%] %percent%', '=>', ' ', 80, $usersImportIterator->count());
-		$bar->update(0);
-		$i = 1;
+			$bar = new ProgressBar('%fraction% [%bar%] %percent%', '=>', ' ', 80, $usersImportIterator->count());
+			$bar->update(0);
+			$i = 1;
 
-		foreach($usersImportIterator as $user) {
+			/** @var $user ElementToImport */
+			foreach($usersImportIterator as $user) {
 
-			// Flush each five elements
-			if ($i % 5 == 0) {
-				$user->import(true);
-			} else {
-				$user->import(false);
+				// Flush each five elements
+				if ($i % 5 == 0) {
+					$user->import(true);
+				} else {
+					$user->import(false);
+				}
+
+				$bar->update($i);
+				$i++;
 			}
 
-			$bar->update($i);
-			$i++;
+			$container->get('doctrine')->getManager()->flush();
 		}
 
-		$container->get('doctrine')->getManager()->flush();
+
+		// Updating users
+		if ($usersUpdateIterator->count() > 0) {
+			$output->write("\n");
+			$output->writeln('Updating users ...');
+
+			$bar = new ProgressBar('%fraction% [%bar%] %percent%', '=>', ' ', 80, $usersUpdateIterator->count());
+			$bar->update(0);
+			$i = 1;
+
+			/** @var $user ElementToUpdate */
+			foreach($usersUpdateIterator as $user) {
+
+				$user->update();
+				$bar->update($i);
+				$i++;
+			}
+
+			$container->get('doctrine')->getManager()->flush();
+		}
+
 
 		// Remove users
 		$output->write("\n\n");
@@ -140,8 +166,9 @@ ask you to keep or delete him/her.
 			} else {
 				$logins = array();
 
-				foreach ($usersRemoveIterator as $key => $item) {
-					$logins[] = $user->getElement()->getLogin();
+				/** @var $item ElementToRemove */
+				foreach ($usersRemoveIterator as $item) {
+					$logins[] = $item->getElement()->getLogin();
 				}
 
 				if ($usersRemoveIterator->count() <= 20) {
@@ -158,11 +185,16 @@ ask you to keep or delete him/her.
 
 				$output->writeln("How do you want to deal with them?\n");
 
-				$output->writeln("1 - Delete all of them");
-				$output->writeln("2 - Ask me for some to keep, delete the rest");
-				$output->writeln("3 - Keep all of them\n");
+				$choice = 0;
 
-				$choice = $dialog->ask($output, 'What do you choose [2]? ', '2');
+				while (! in_array($choice, [1, 2, 3])) {
+					$output->writeln("1 - Delete all of them");
+					$output->writeln("2 - Ask me for some to keep, delete the rest");
+					$output->writeln("3 - Keep all of them\n");
+					$output->writeln("4 - Display the list\n");
+
+					$choice = $dialog->ask($output, 'What do you choose [2]? ', '2');
+				}
 
 				$remove = array();
 				$keep = array();

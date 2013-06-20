@@ -276,7 +276,8 @@ class AuthController extends Controller
 
 		$this->initializeCAS();
 		\phpCAS::setNoCasServerValidation();
-		\phpCAS::logoutWithRedirectService('http://'.$this->container->getParameter('etu.domain'));
+		// \phpCAS::logoutWithRedirectService('http://'.$this->container->getParameter('etu.domain'));
+		\phpCAS::logout();
 
 		return $this->redirect($this->generateUrl('homepage'));
 	}
