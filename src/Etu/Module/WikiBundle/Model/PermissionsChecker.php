@@ -180,7 +180,7 @@ class PermissionsChecker
 	protected function findMembership(Organization $orga)
 	{
 		foreach ((array) $this->memberships as $membership) {
-			if ($membership->getOrganization()->getId() == $orga->getId()) {
+			if ($membership instanceof Member && $membership->getOrganization()->getId() == $orga->getId()) {
 				return $membership;
 			}
 		}

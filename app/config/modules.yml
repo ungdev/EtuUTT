@@ -9,4 +9,5 @@ modules:
     - Etu\Module\LoggerBundle\EtuModuleLoggerBundle
     - Etu\Module\TrombiBundle\EtuModuleTrombiBundle
     - Etu\Module\UVBundle\EtuModuleUVBundle
+    - Etu\Module\UploadBundle\EtuModuleUploadBundle
     - Etu\Module\WikiBundle\EtuModuleWikiBundle
