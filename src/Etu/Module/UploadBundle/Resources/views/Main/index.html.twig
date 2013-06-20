@@ -1,0 +1,77 @@
+
+{% extends 'EtuModuleUploadBundle::layout.html.twig' %}
+
+{% block javascripts %}
+<script type="text/javascript">
+	$(function() {
+		var inputs = $('.upload-list-url'),
+			links = $('.upload-list-url-link');
+
+		inputs.hide();
+
+		links.click(function() {
+			inputs.hide();
+			var id = $(this).attr('id');
+			$('#' + id + '-input').toggle().focus();
+			return false;
+		});
+
+		inputs.click(function() {
+			return false;
+		});
+
+		$('body').click(function() {
+			inputs.hide();
+		});
+	});
+</script>
+{% endblock %}
+
+{% block body %}
+	<div class="upload-form">
+		<form class="form-inline">
+			<label for="image">Envoyer un fichier :</label>
+			<input type="file" name="image" placeholder="Fichier" />
+			<button type="submit" class="btn">Envoyer</button>
+		</form>
+	</div>
+
+	<hr />
+
+	<table class="upload-list">
+		{% for line in images %}
+			<tr class="upload-list-images">
+				{% for image in line %}
+					<td>
+						<img src="{{ asset('uploads/'~app.user.login~'/'~image.name) }}" alt="{{ image.name }}" title="{{ image.name }}" />
+					</td>
+				{% endfor %}
+			</tr>
+			<tr class="upload-list-labels">
+				{% for image in line %}
+					<td>
+						<a href="" class="upload-list-url-link" id="{{ image.id }}" title="Récupérer l'adresse">
+							<i class="icon-edit"></i>
+						</a>
+						<a href="" title="Supprimer l'image">
+							<i class="icon-remove"></i>
+						</a>
+						<br />
+						<input type="text" class="upload-list-url{% if loop.index > 3 %} upload-list-url-right{% endif %}" id="{{ image.id }}-input" value="http://{{ etu.domain~asset('uploads/'~app.user.login~'/'~image.name) }}" />
+					</td>
+				{% endfor %}
+			</tr>
+			<tr class="upload-list-padding">
+				{% for image in line %}
+					<td></td>
+				{% endfor %}
+			</tr>
+		{% else %}
+			<tr>
+				<td>
+					{{ 'upload.main.index.no_image_yet'|trans }}
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+{% endblock %}

@@ -1,1 +1,8 @@
 
+upload:
+    upload_link: Envoyer une image
+
+    main:
+        index:
+            title: Envoi d'images
+            no_image_yet: Vous n'avez pas encore envoyé d'image

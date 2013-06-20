@@ -112,7 +112,12 @@
 					</div>
 
 					<div class="control-group">
-						<label class="control-label">{{ 'daymail.memberships.daymail.body.label'|trans }}</label>
+						<label class="control-label">
+							{{ 'daymail.memberships.daymail.body.label'|trans }}
+							<span class="pull-right">
+								{% include 'EtuModuleUploadBundle::upload_link.html.twig' %}
+							</span>
+						</label>
 						<div class="controls">
 							{{ form_widget(form.body) }}
 						</div>

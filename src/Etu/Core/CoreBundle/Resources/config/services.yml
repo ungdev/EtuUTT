@@ -123,6 +123,8 @@ services:
     # Global accessor
     etu.twig.global_accessor:
         class: %etu.twig.global_accessor.class%
+        arguments: [{domain: %etu.domain%}]
+
     etu.twig.global_listener:
         class: %etu.twig.global_listener.class%
         arguments: [@twig, @etu.twig.global_accessor]
