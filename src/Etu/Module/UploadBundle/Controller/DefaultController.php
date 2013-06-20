@@ -1,6 +1,6 @@
 <?php
 
-namespace Etu\Module\DailymailBundle\Controller;
+namespace Etu\Module\UploadBundle\Controller;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 
@@ -8,14 +8,14 @@ use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class MainController extends Controller
+class DefaultController extends Controller
 {
     /**
-     * @Route("/daymail", name="user_daymail")
+     * @Route("/hello/{name}")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($name)
     {
-        return array();
+        return array('name' => $name);
     }
 }

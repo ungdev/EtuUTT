@@ -8,6 +8,7 @@ var facebox = $('a[rel*=facebox]'),
 	more = $('#more'),
 	page = $('body'),
 	redactor = $('.redactor'),
+	redactorLimited = $('.redactor-limited'),
 	usersAutocomplete = $('.user-autocomplete'),
 	changeLocale = {
 		link: $('.change-locale'),
@@ -171,6 +172,16 @@ $(function() {
 		 'image', 'video', 'file', 'table', 'link', '|',
 		 'fontcolor', 'backcolor', '|', 'alignment'
 		 */
+	});
+
+	redactorLimited.redactor({
+		fixed: true,
+		lang: 'fr',
+		buttons: [
+			'bold', 'italic', 'deleted', 'underline', 'fontcolor', '|',
+			'alignleft', 'aligncenter', 'alignright', '|',
+			'unorderedlist', '|', 'image', 'link'
+		]
 	});
 
 

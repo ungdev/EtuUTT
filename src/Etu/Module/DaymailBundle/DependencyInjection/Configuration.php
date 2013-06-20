@@ -1,6 +1,6 @@
 <?php
 
-namespace Etu\Module\DailymailBundle\DependencyInjection;
+namespace Etu\Module\DaymailBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

@@ -35,6 +35,7 @@ parameters:
     etu.notifs.helper_manager.class: Etu\Core\CoreBundle\Notification\Helper\HelperManager
 
     etu.redactor_type.class: Etu\Core\CoreBundle\Form\RedactorType
+    etu.redactor_limited_type.class: Etu\Core\CoreBundle\Form\RedactorLimitedType
 
 services:
 
@@ -164,4 +165,9 @@ services:
         class: %etu.redactor_type.class%
         tags:
             - { name: form.type, alias: redactor }
+
+    etu.redactor_limited_type:
+        class: %etu.redactor_limited_type.class%
+        tags:
+            - { name: form.type, alias: redactor_limited }
 

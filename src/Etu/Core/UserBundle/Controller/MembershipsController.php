@@ -457,17 +457,4 @@ class MembershipsController extends Controller
 
 		return array();
 	}
-
-	/**
-	 * @Route("/user/membership/{login}/daymail", name="memberships_orga_daymail")
-	 * @Template()
-	 */
-	public function daymailAction($login)
-	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
-
-		return array();
-	}
 }

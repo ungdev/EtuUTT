@@ -1,0 +1,32 @@
+
+daymail:
+    memberships:
+        daymail:
+            days:
+                mon: Lundi
+                tue: Mardi
+                wed: Mercredi
+                thu: Jeudi
+                fri: Vendredi
+                sat: Samedi
+                sun: Dimanche
+            months:
+                jan: janvier
+                feb: février
+                mar: mars
+                apr: avril
+                may: mai
+                jun: juin
+                jul: juillet
+                aug: août
+                oct: otctobre
+                nov: novembre
+                dec: décembre
+            title:
+                label: Sujet
+            body:
+                label: Contenu
+            date:
+                label: Date de publication
+            submit: Modifier ce daymail
+            confirm: Vous avez bien modifié ce daymail
