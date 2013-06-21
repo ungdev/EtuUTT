@@ -116,13 +116,24 @@ class AdminController extends Controller
 		foreach ($modules as $module) {
 			$modules->get($module->getIdentifier())->needed = false;
 			$modules->get($module->getIdentifier())->neededBy = array();
+			$modules->get($module->getIdentifier())->canBeEnabled = true;
+			$modules->get($module->getIdentifier())->need = array();
 		}
 
 		/** @var $module Module */
 		foreach ($modules as $module) {
+			if ($module->isEnabled()) {
+				foreach ($module->getRequirements() as $requirement) {
+					$modules->get($requirement)->needed = true;
+					$modules->get($requirement)->neededBy[] = $module->getTitle();
+				}
+			}
+
 			foreach ($module->getRequirements() as $requirement) {
-				$modules->get($requirement)->needed = true;
-				$modules->get($requirement)->neededBy[] = $module->getTitle();
+				if (! $modules->get($requirement)->isEnabled()) {
+					$modules->get($module->getIdentifier())->canBeEnabled = false;
+					$modules->get($module->getIdentifier())->need[] = $modules->get($requirement)->getTitle();
+				}
 			}
 		}
 
@@ -130,6 +141,9 @@ class AdminController extends Controller
 		foreach ($modules as $module) {
 			$modules->get($module->getIdentifier())->neededBy =
 				implode(', ', $modules->get($module->getIdentifier())->neededBy);
+
+			$modules->get($module->getIdentifier())->need =
+				implode(', ', $modules->get($module->getIdentifier())->need);
 		}
 
 		return array(
