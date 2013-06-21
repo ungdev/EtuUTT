@@ -46,3 +46,10 @@ body {
 .upload-list-url-right {
   margin-left: -150px;
 }
+.upload-remove {
+  text-align: center;
+}
+.upload-remove-image {
+  max-height: 300px;
+  max-width: 600px;
+}

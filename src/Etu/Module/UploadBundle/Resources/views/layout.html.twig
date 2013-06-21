@@ -11,6 +11,16 @@
 		<link rel="stylesheet" href="{{ asset('css/bundles/upload.css') }}" type="text/css" />
 	</head>
 	<body>
+		{% set message = false %}
+
+		{% if app.session.flashBag.has('message') %}
+			{% set message = app.session.flashBag.get('message') %}
+
+			<div class="alert alert-{{ message.type }} hidden-for-1024">
+				{{ message.message|trans }}
+			</div>
+		{% endif %}
+
 		{% block body %}{% endblock %}
 
 		<script src="http://code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script>

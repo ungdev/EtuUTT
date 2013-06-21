@@ -5,4 +5,16 @@ upload:
     main:
         index:
             title: Envoi d'images
+            send: Envoyer une image (jpg, png, gif, bmp, 2 MB maximum) :
+            send_submit: Envoyer
+            adress: Récupérer l'adresse
+            remove: Supprimer l'image
             no_image_yet: Vous n'avez pas encore envoyé d'image
+            confirm: Vous avez bien envoyé une image
+            error_type: Le fichier que vous avez fourni ne semble pas être une image (jpg, png, gif, bmp)
+            error_size: Le fichier que vous avez fourni semble être trop volumineux (maximum 2MB)
+        remove:
+            question: Voulez-vous vraiment supprimer <strong>%name%</strong> du serveur ?
+            yes: Oui, supprimer
+            no: Non, annuler
+            confirm: Vous avez bien supprimé cette image

@@ -29,16 +29,28 @@
 
 {% block body %}
 	<div class="upload-form">
-		<form class="form-inline">
-			<label for="image">Envoyer un fichier :</label>
-			<input type="file" name="image" placeholder="Fichier" />
-			<button type="submit" class="btn">Envoyer</button>
+		<form class="form-inline" method="post" action="" {{ form_enctype(form) }}>
+			<label for="image">{{ 'upload.main.index.send'|trans }}</label><br />
+			{{ form_widget(form.file) }}
+
+			{{ form_rest(form) }}
+			<button type="submit" class="btn">{{ 'upload.main.index.send_submit'|trans }}</button>
 		</form>
 	</div>
 
 	<hr />
 
 	<table class="upload-list">
+		{% if images|length > 0 %}
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		{% endif %}
+
 		{% for line in images %}
 			<tr class="upload-list-images">
 				{% for image in line %}
@@ -50,10 +62,10 @@
 			<tr class="upload-list-labels">
 				{% for image in line %}
 					<td>
-						<a href="" class="upload-list-url-link" id="{{ image.id }}" title="Récupérer l'adresse">
+						<a href="#" class="upload-list-url-link" id="{{ image.id }}" title="{{ 'upload.main.index.adress'|trans }}">
 							<i class="icon-edit"></i>
 						</a>
-						<a href="" title="Supprimer l'image">
+						<a href="{{ path('upload_remove', {'id': image.id}) }}" title="{{ 'upload.main.index.remove'|trans }}">
 							<i class="icon-remove"></i>
 						</a>
 						<br />

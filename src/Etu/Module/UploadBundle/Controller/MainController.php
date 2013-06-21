@@ -41,7 +41,7 @@ class MainController extends Controller
 				}
 
 				$images[$j][] = array(
-					'id' => $i.'-'.$j,
+					'id' => substr(md5($file->getBasename()), 0, 10),
 					'name' => $file->getBasename()
 				);
 
@@ -49,8 +49,112 @@ class MainController extends Controller
 			}
 		}
 
+		$form = $this->createFormBuilder()
+			->add('file', 'file', array('required' => true))
+			->getForm();
+
+		$request = $this->getRequest();
+
+		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+
+			/** @var $file \Symfony\Component\HttpFoundation\File\UploadedFile */
+			$file = $form->getData()['file'];
+
+			if (! in_array(
+				pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION),
+				array('png', 'jpg', 'jpeg', 'gif', 'bmp')))
+			{
+				$this->get('session')->getFlashBag()->set('message', array(
+					'type' => 'error',
+					'message' => 'upload.main.index.error_type'
+				));
+
+				return $this->redirect($this->generateUrl('upload_index'));
+			}
+
+			if ($file->getSize() > 2000000) {
+				$this->get('session')->getFlashBag()->set('message', array(
+					'type' => 'error',
+					'message' => 'upload.main.index.error_size'
+				));
+
+				return $this->redirect($this->generateUrl('upload_index'));
+			}
+
+			$name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+			$extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
+
+			if (! file_exists($directory.'/'.$name.'.'.$extension)) {
+				$name .= '-'.substr(md5(uniqid(true)), 0, 4);
+			}
+
+			$name .= '.'.$extension;
+
+			$file->move($directory, $name);
+
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'upload.main.index.confirm'
+			));
+
+			return $this->redirect($this->generateUrl('upload_index'));
+		}
+
 		return array(
-			'images' => $images
+			'images' => $images,
+			'form' => $form->createView()
+		);
+	}
+
+	/**
+	 * @Route("/upload/remove/{id}/{confirm}", defaults={"confirm"=false}, name="upload_remove")
+	 * @Template()
+	 */
+	public function removeAction($id, $confirm = false)
+	{
+		if (! $this->getUserLayer()->isUser()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$directory = $this->getKernel()->getRootDir().'/../web/uploads/'.$this->getUser()->getLogin();
+
+		if (! file_exists($directory)) {
+			mkdir($directory, 0777, true);
+		}
+
+		$iterator = new \DirectoryIterator($directory);
+		$image = false;
+
+		/** @var $file \SplFileInfo */
+		foreach ($iterator as $file) {
+			if ($file->isFile() && in_array($file->getExtension(), array('png', 'jpg', 'jpeg', 'gif', 'bmp'))) {
+				if (substr(md5($file->getBasename()), 0, 10) == $id) {
+					$image = array(
+						'id' => substr(md5($file->getBasename()), 0, 10),
+						'name' => $file->getBasename(),
+						'absolute' => $file->getPathname()
+					);
+				}
+			}
+		}
+
+		if ($image === false) {
+			throw $this->createNotFoundException('Image not found');
+		}
+
+		if ($confirm) {
+			unlink($image['absolute']);
+
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'upload.main.remove.confirm'
+			));
+
+			return $this->redirect($this->generateUrl('upload_index'));
+		}
+
+		return array(
+			'image' => $image
 		);
 	}
 }
