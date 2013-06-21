@@ -77,7 +77,6 @@
 				<form method="post">
 					{{ form_errors(form) }}
 
-
 					<div class="control-group">
 						<label class="control-label">{{ 'daymail.memberships.daymail.date.label'|trans }}</label>
 						<div class="controls">
@@ -90,19 +89,32 @@
 								</a>
 								<ul class="dropdown-menu">
 									{% for code, day in available %}
+										{% if code == 'divider' %}
+											<li class="divider"></li>
+										{% else %}
 										<li>
 											<a href="{{ path('memberships_orga_daymail', {'login': orga.login, 'day': code}) }}">
+												{% if day.old %}
+													<em class="muted">
+												{% endif %}
+
 												{{ ('daymail.memberships.daymail.days.'~day|date('D')|lower)|trans }}
 												{{ day|date('d') }}
 												{{ ('daymail.memberships.daymail.months.'~day|date('M')|lower)|trans }}
+
+												{% if day.old %}
+													</em>
+												{% endif %}
 											</a>
 										</li>
+										{% endif %}
 									{% endfor %}
 								</ul>
 							</div>
 						</div>
 					</div>
 
+					{% if canEdit %}
 					<div class="control-group">
 						<label class="control-label">{{ 'daymail.memberships.daymail.title.label'|trans }}</label>
 						<div class="controls">
@@ -131,8 +143,20 @@
 							<button type="submit" class="btn">
 								{{ 'daymail.memberships.daymail.submit'|trans }}
 							</button>
+
+							<a class="btn" href="#"
+							   onclick="window.open('{{ path('memberships_orga_daymail_preview', {'login': orga.login, 'day': currentDay|date('d-m-Y')}) }}', '', 'width=800, height=500, top=150, left=150, toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, copyhistory=no, resizable=no'); return false;">
+								{{ 'daymail.memberships.daymail.preview'|trans }}
+							</a>
 						</div>
 					</div>
+					{% else %}
+						<hr />
+
+						<h4>{{ daymail.title }}</h4>
+
+						{{ daymail.body|raw }}
+					{% endif %}
 				</form>
 			</div>
 		</div>

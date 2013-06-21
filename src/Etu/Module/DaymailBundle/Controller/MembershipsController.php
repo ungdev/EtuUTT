@@ -3,11 +3,12 @@
 namespace Etu\Module\DaymailBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Etu\Core\CoreBundle\Framework\Definition\Controller;
 
-// Import annotations
+use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\Member;
 use Etu\Module\DaymailBundle\Entity\DaymailPart;
+
+// Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -56,7 +57,7 @@ class MembershipsController extends Controller
 			throw $this->createNotFoundException('Membership or organization not found for login '.$login);
 		}
 
-		if (! $membership->hasPermission('notify')) {
+		if (! $membership->hasPermission('daymail')) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -76,27 +77,44 @@ class MembershipsController extends Controller
 			}
 		}
 
-		/**
-		 * @todo View old daymails using $available and a SQL query (and can not edit them of course)
-		 */
+		// Select old daymails
+		/** @var $daymailsParts DaymailPart[] */
+		$daymailsParts = $em->createQueryBuilder()
+			->select('d')
+			->from('EtuModuleDaymailBundle:DaymailPart', 'd')
+			->leftJoin('d.orga', 'o')
+			->where('o.id = :orga')
+			->setParameter('orga', $orga->getId())
+			->orderBy('d.date', 'DESC')
+			->getQuery()
+			->setMaxResults(10)
+			->getResult();
 
-		$available = DaymailPart::createFutureAvailableDays();
+		$available = array();
+		$available['divider'] = 'divider';
+		$future = DaymailPart::createFutureAvailableDays();
+
+		$daymailPart = false;
+		$canEdit = isset($future[$day->format('d-m-Y')]);
+
+		foreach ($daymailsParts as $part) {
+			if ($part->getDay() == $day->format('d-m-Y')) {
+				$daymailPart = $part;
+			}
+
+			if (isset($future[$part->getDate()->format('d-m-Y')])) {
+				continue;
+			}
+
+			$available[$part->getDate()->format('d-m-Y')] = $part->getDate();
+			$available[$part->getDate()->format('d-m-Y')]->old = true;
+		}
+
+		$available = array_merge(array_reverse($available), DaymailPart::createFutureAvailableDays());
 
 		if (! isset($available[$day->format('d-m-Y')])) {
 			throw $this->createNotFoundException('Day not found in available list');
 		}
-
-		$daymailPart = $em->createQueryBuilder()
-			->select('d')
-			->from('EtuModuleDaymailBundle:DaymailPart', 'd')
-			->leftJoin('d.orga', 'o')
-			->where('d.day = :day')
-			->setParameter('day', $day->format('d-m-Y'))
-			->andWhere('o.id = :orga')
-			->setParameter('orga', $orga->getId())
-			->getQuery()
-			->setMaxResults(1)
-			->getOneOrNullResult();
 
 		if (! $daymailPart) {
 			$daymailPart = new DaymailPart($orga, $day);
@@ -109,7 +127,7 @@ class MembershipsController extends Controller
 
 		$request = $this->getRequest();
 
-		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid() && $canEdit) {
 			$em->persist($daymailPart);
 			$em->flush();
 
@@ -129,8 +147,96 @@ class MembershipsController extends Controller
 			'membership' => $membership,
 			'orga' => $orga,
 			'form' => $form->createView(),
+			'daymail' => $daymailPart,
 			'available' => $available,
-			'currentDay' => $day
+			'currentDay' => $day,
+			'canEdit' => $canEdit,
+		);
+	}
+
+	/**
+	 * @Route(
+	 *      "/user/membership/{login}/daymail/{day}/preview",
+	 *      defaults={"day" = "current"},
+	 *      name="memberships_orga_daymail_preview"
+	 * )
+	 * @Template()
+	 */
+	public function previewAction($login, $day)
+	{
+		if (! $this->getUserLayer()->isUser()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $memberships Member[] */
+		$memberships = $em->createQueryBuilder()
+			->select('m, o')
+			->from('EtuUserBundle:Member', 'm')
+			->leftJoin('m.organization', 'o')
+			->where('o.deleted = 0')
+			->andWhere('m.user = :user')
+			->setParameter('user', $this->getUser()->getId())
+			->orderBy('m.role', 'DESC')
+			->addOrderBy('o.name', 'ASC')
+			->getQuery()
+			->getResult();
+
+		$membership = null;
+
+		foreach ($memberships as $m) {
+			if ($m->getOrganization()->getLogin() == $login) {
+				$membership = $m;
+				break;
+			}
+		}
+
+		if (! $membership) {
+			throw $this->createNotFoundException('Membership or organization not found for login '.$login);
+		}
+
+		if (! $membership->hasPermission('daymail')) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$orga = $membership->getOrganization();
+
+		// Test day validity using DateTime
+		$tomorrow = new \DateTime();
+		$tomorrow->add(new \DateInterval('P1D'));
+
+		if ($day == 'current') {
+			$day = $tomorrow;
+		} else {
+			$day = \DateTime::createFromFormat('d-m-Y', $day);
+
+			if (! $day) {
+				$day = $tomorrow;
+			}
+		}
+
+		// Select old daymails
+		/** @var $daymailPart DaymailPart */
+		$daymailPart = $em->createQueryBuilder()
+			->select('d, o')
+			->from('EtuModuleDaymailBundle:DaymailPart', 'd')
+			->leftJoin('d.orga', 'o')
+			->where('o.id = :orga')
+			->setParameter('orga', $orga->getId())
+			->andWhere('d.day = :day')
+			->setParameter('day', $day->format('d-m-Y'))
+			->getQuery()
+			->setMaxResults(1)
+			->getOneOrNullResult();
+
+		if (! $daymailPart) {
+			throw $this->createNotFoundException('Daymail not found for this day');
+		}
+
+		return array(
+			'daymail' => $daymailPart
 		);
 	}
 }

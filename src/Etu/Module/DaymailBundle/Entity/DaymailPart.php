@@ -72,7 +72,7 @@ class DaymailPart
 	/**
 	 * Create the available list of days which can be used as publish day
 	 *
-	 * @return array
+	 * @return \DateTime[]
 	 */
 	public static function createFutureAvailableDays()
 	{
@@ -83,6 +83,7 @@ class DaymailPart
 			$day->add(new \DateInterval('P'.$i.'D'));
 
 			$available[$day->format('d-m-Y')] = $day;
+			$available[$day->format('d-m-Y')]->old = false;
 		}
 
 		return $available;
@@ -117,6 +118,14 @@ class DaymailPart
 		$this->day = $date->format('d-m-Y');
 
 		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getDay()
+	{
+		return $this->day;
 	}
 
 	/**

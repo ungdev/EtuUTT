@@ -29,4 +29,5 @@ daymail:
             date:
                 label: Date de publication
             submit: Modifier ce daymail
+            preview: Prévisualiser
             confirm: Vous avez bien modifié ce daymail
