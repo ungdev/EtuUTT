@@ -4,7 +4,7 @@ modules:
     - Etu\Module\BugsBundle\EtuModuleBugsBundle
     - Etu\Module\CumulBundle\EtuModuleCumulBundle
     - Etu\Module\DaymailBundle\EtuModuleDaymailBundle
-    - Etu\Module\EvenementsBundle\EtuModuleEvenementsBundle
+    - Etu\Module\EventsBundle\EtuModuleEventsBundle
     - Etu\Module\ForumBundle\EtuModuleForumBundle
     - Etu\Module\LoggerBundle\EtuModuleLoggerBundle
     - Etu\Module\TrombiBundle\EtuModuleTrombiBundle

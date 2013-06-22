@@ -1,10 +1,10 @@
 <?php
 
-namespace Etu\Module\EvenementsBundle;
+namespace Etu\Module\EventsBundle;
 
 use Etu\Core\CoreBundle\Framework\Definition\Module;
 
-class EtuModuleEvenementsBundle extends Module
+class EtuModuleEventsBundle extends Module
 {
 	/**
 	 * @return bool

@@ -1,0 +1,11 @@
+
+parameters: ~
+
+services:
+    events_repository:
+        class:           Doctrine\ORM\EntityRepository
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method:  getRepository
+        arguments:       ['EtuModuleEventsBundle:Event']
+        tags:
+            - { name: calendr.event_provider }

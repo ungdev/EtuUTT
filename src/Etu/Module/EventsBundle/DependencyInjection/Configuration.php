@@ -1,6 +1,6 @@
 <?php
 
-namespace Etu\Module\EvenementsBundle\DependencyInjection;
+namespace Etu\Module\EventsBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

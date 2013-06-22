@@ -1010,6 +1010,65 @@ textarea {
   background: #f5f5f5;
   text-align: center;
 }
+/*
+ * Events
+ */
+.chooser-current {
+  text-align: center;
+}
+.chooser-type {
+  text-align: right;
+}
+.events-table th,
+.events-table td {
+  text-align: center;
+  width: 14.285714285714286%;
+}
+.events-table th {
+  font-weight: lighter !important;
+  color: #999999;
+  font-style: italic;
+}
+.events-table-month td {
+  height: 75px;
+  overflow: hidden;
+}
+.event {
+  display: block;
+  float: left;
+  width: 14px;
+  height: 14px;
+  margin-right: 3px;
+}
+.event-day {
+  padding-bottom: 5px;
+}
+.event-culturel {
+  background: #fcdc0b;
+}
+.event-sportif {
+  background: #f79226;
+}
+.event-formation {
+  background: #6bbd4e;
+}
+.event-soiree {
+  background: #ed0e8f;
+}
+.event-autre {
+  background: #697f9f;
+}
+.event-week {
+  display: block;
+  height: 21px;
+  margin-bottom: 2px;
+  overflow: hidden;
+  font-size: 11px;
+  color: white;
+}
+.event-week:hover {
+  color: white;
+}
 .exception {
   padding: 7px 20px;
   background: #f5f5f5;

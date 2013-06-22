@@ -26,6 +26,7 @@
 		"knplabs/knp-time-bundle": "dev-master",
 		"knplabs/knp-paginator-bundle": "dev-master",
 		"knplabs/knp-menu": "dev-master",
+		"frequence-web/calendr-bundle": "1.*",
 		"tga/audience": "dev-master"
 	},
 	"scripts": {

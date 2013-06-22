@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "5e78da0580c5b89b07183b3b1608396b",
+    "hash": "cacd6346d60ed09dcaab9e0fa69bbc69",
     "packages": [
         {
             "name": "avalanche123/imagine-bundle",
@@ -516,12 +516,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineFixturesBundle.git",
-                "reference": "5696cd636df7cbfaf4d1c45ed2922438968cf890"
+                "reference": "512fc0fa1d0ce7bdcc6a0a91812eb531f20e0828"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineFixturesBundle/zipball/5696cd636df7cbfaf4d1c45ed2922438968cf890",
-                "reference": "5696cd636df7cbfaf4d1c45ed2922438968cf890",
+                "url": "https://api.github.com/repos/doctrine/DoctrineFixturesBundle/zipball/512fc0fa1d0ce7bdcc6a0a91812eb531f20e0828",
+                "reference": "512fc0fa1d0ce7bdcc6a0a91812eb531f20e0828",
                 "shasum": ""
             },
             "require": {
@@ -541,7 +541,7 @@
                     "Doctrine\\Bundle\\FixturesBundle": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -565,7 +565,7 @@
                 "Fixture",
                 "persistence"
             ],
-            "time": "2013-04-27 11:57:35"
+            "time": "2013-06-21 10:31:45"
         },
         {
             "name": "doctrine/inflector",
@@ -757,6 +757,47 @@
             "time": "2013-05-27 19:47:16"
         },
         {
+            "name": "frequence-web/calendr-bundle",
+            "version": "1.0.0",
+            "target-dir": "FrequenceWeb/Bundle/CalendRBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/frequence-web/FrequenceWebCalendRBundle.git",
+                "reference": "1.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/frequence-web/FrequenceWebCalendRBundle/archive/1.0.0.zip",
+                "reference": "1.0.0",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/framework-bundle": "2.*",
+                "yohang/calendr": ">=1.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "FrequenceWeb\\Bundle\\CalendRBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yohan Giarelli",
+                    "homepage": "http://github.com/yohang"
+                }
+            ],
+            "description": "This bundle provides an integration of the CalendR library",
+            "keywords": [
+                "calendar"
+            ],
+            "time": "2013-01-23 12:08:05"
+        },
+        {
             "name": "friendsofsymfony/jsrouting-bundle",
             "version": "dev-master",
             "target-dir": "FOS/JsRoutingBundle",
@@ -868,12 +909,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "b340e62246b49c51db1d8d1b7d567083da44c746"
+                "reference": "78d9719c1d210cf2258b1fde371a7f47be1a0090"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/b340e62246b49c51db1d8d1b7d567083da44c746",
-                "reference": "b340e62246b49c51db1d8d1b7d567083da44c746",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/78d9719c1d210cf2258b1fde371a7f47be1a0090",
+                "reference": "78d9719c1d210cf2258b1fde371a7f47be1a0090",
                 "shasum": ""
             },
             "require": {
@@ -933,7 +974,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2013-06-19 19:36:14"
+            "time": "2013-06-20 18:01:21"
         },
         {
             "name": "imagine/imagine",
@@ -2594,6 +2635,60 @@
                 "templating"
             ],
             "time": "2013-06-06 06:06:01"
+        },
+        {
+            "name": "yohang/calendr",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yohang/CalendR.git",
+                "reference": "1.0.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yohang/CalendR/zipball/1.0.4",
+                "reference": "1.0.4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "doctrine/orm": ">=2.2",
+                "phpunit/phpunit": "3.7.*",
+                "silex/silex": "1.0.*@dev",
+                "twig/twig": "1.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "CalendR": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yohan GIARELLI",
+                    "email": "yohan@giarel.li",
+                    "homepage": "http://yohan.giarel.li"
+                }
+            ],
+            "description": "Object Oriented calendar management",
+            "homepage": "https://github.com/yohang/CalendR",
+            "keywords": [
+                "calendar",
+                "date",
+                "events"
+            ],
+            "time": "2013-06-20 10:53:31"
         }
     ],
     "packages-dev": [

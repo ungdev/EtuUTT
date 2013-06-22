@@ -1,0 +1,32 @@
+
+events:
+    main:
+        days:
+            mon: Lundi
+            tue: Mardi
+            wed: Mercredi
+            thu: Jeudi
+            fri: Vendredi
+            sat: Samedi
+            sun: Dimanche
+        menu:
+            month: Mois
+            week: Semaine
+        months:
+            jan: Janvier
+            feb: Février
+            mar: Mars
+            apr: Avril
+            may: Mai
+            jun: Juin
+            jul: Juillet
+            aug: Août
+            sep: Septembre
+            oct: Octobre
+            nov: Novembre
+            dec: Décembre
+        index:
+            title: Evènements
+            organised_by: Organisé par %orga%
+        week:
+            week: Semaine

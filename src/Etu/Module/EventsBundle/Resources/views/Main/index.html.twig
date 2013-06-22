@@ -1,0 +1,87 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'events.main.index.title'|trans }}{% endblock %}
+
+{% block content %}
+	{% set events = calendr_events(week) %}
+
+	<div class="padding20-all">
+		<div class="chooser row-fluid">
+			<div class="span1">
+				<a href="{{ path('events_index', {'week': previous|date('W-Y')}) }}" class="btn pull-left"> << </a>
+			</div>
+			<div class="span2"></div>
+			<div class="span6 chooser-current">
+				<div class="btn-group">
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+						{{ ('events.main.months.'~week.begin.format('M')|lower)|trans }} {{ week.begin.format('Y') }},
+						{{ 'events.main.week.week'|trans }} {{ week.begin.format('W') }}
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						{% for w in weeksList %}
+							<li>
+								<a href="{{ path('events_index', {'week': w|date('W-Y')}) }}">
+									{{ ('events.main.months.'~w.format('M')|lower)|trans }} {{ w.format('Y') }},
+									{{ 'events.main.week.week'|trans }} {{ w.format('W') }}
+								</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+			<div class="span3 chooser-type">
+				<div class="btn-group">
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+						{{ 'events.main.menu.week'|trans }}
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="{{ path('events_index') }}">{{ 'events.main.menu.week'|trans }}</a></li>
+						<li><a href="{{ path('events_month') }}">{{ 'events.main.menu.month'|trans }}</a></li>
+					</ul>
+				</div>
+				<div class="btn-group">
+					<a href="{{ path('events_index', {'week': next|date('W-Y')}) }}" class="btn"> >> </a>
+				</div>
+			</div>
+		</div>
+
+		<br />
+
+		<table class="table table-bordered table-hover events-table events-table-week">
+			<tr>
+				<th>{{ 'events.main.days.mon'|trans }}</th>
+				<th>{{ 'events.main.days.tue'|trans }}</th>
+				<th>{{ 'events.main.days.wed'|trans }}</th>
+				<th>{{ 'events.main.days.thu'|trans }}</th>
+				<th>{{ 'events.main.days.fri'|trans }}</th>
+				<th>{{ 'events.main.days.sat'|trans }}</th>
+				<th>{{ 'events.main.days.sun'|trans }}</th>
+			</tr>
+
+			<tr>
+				{% for day in week %}
+					<td>
+						{% if week.contains(day.begin) %}
+							<div class="event-day">{{ day.begin.format('d') }}</div>
+
+							<div class="clear"></div>
+
+							{% for event in events.find(day) %}
+								<a href="" class="event-week event-{{ event.category }} tip"
+								   title="<strong>{{ event.title }}</strong><br />
+								   {{ 'events.main.index.organised_by'|trans({'%orga%': event.orga.name}) }}">
+									{{ event.title }}
+							  	</a>
+							{% endfor %}
+						{% else %}
+							&nbsp;
+						{% endif %}
+					</td>
+				{% endfor %}
+			</tr>
+
+		</table>
+	</div>
+{% endblock %}

@@ -27,35 +27,39 @@ class AppKernel extends EtuKernel
         $bundles = array(
 
 	        // Symfony
-            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
-            new Symfony\Bundle\TwigBundle\TwigBundle(),
-            new Symfony\Bundle\MonologBundle\MonologBundle(),
-            new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
+            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(), // Symfony
+            new Symfony\Bundle\SecurityBundle\SecurityBundle(), // Security management (authorization and authentication)
+            new Symfony\Bundle\TwigBundle\TwigBundle(), // Tempalting engine
+            new Symfony\Bundle\MonologBundle\MonologBundle(), // Logger library
+            new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(), // Mailing library
 
 	        // Doctrine
-            new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
-	        new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+            new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(), // Doctrine ORM
+	        new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(), // Fixtures are data which are used during testing
 
 	        // Sensio extra
+	        // Add annotations for controllers (@Template, @Cache, ...) and some useful other features
 	        new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
 	        // JMS libraries
             new JMS\AopBundle\JMSAopBundle(),
-            new JMS\DiExtraBundle\JMSDiExtraBundle($this),
-	        new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
-	        new JMS\SerializerBundle\JMSSerializerBundle(),
+            new JMS\DiExtraBundle\JMSDiExtraBundle($this), // Add features to the default dependency injection system
+	        new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(), // Add security firewalls possibility
+	        new JMS\SerializerBundle\JMSSerializerBundle(), // Serializer for XML, JSON, YAML, ...
 
 	        // Knp libraries
-	        new Knp\Bundle\TimeBundle\KnpTimeBundle(),
-	        new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+	        new Knp\Bundle\TimeBundle\KnpTimeBundle(), // Time library to display pretty dates
+	        new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(), // Useful paginator
 
 	        // FOS libraries
-	        new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
-	        new FOS\RestBundle\FOSRestBundle(),
+	        new FOS\JsRoutingBundle\FOSJsRoutingBundle(), // Generate routes from Javascript
+	        new FOS\RestBundle\FOSRestBundle(), // JSON and XML REST API helper
+
+	        // CalendR
+	        new FrequenceWeb\Bundle\CalendRBundle\FrequenceWebCalendRBundle(), // Calendar and events library
 
 	        // Tga
-	        new Tga\AudienceBundle\TgaAudienceBundle(),
+	        new Tga\AudienceBundle\TgaAudienceBundle(), // Track visitors caracteristics
 
 	        // EtuUTT
             new Etu\Core\CoreBundle\EtuCoreBundle(),
