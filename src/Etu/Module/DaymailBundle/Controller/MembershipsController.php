@@ -5,6 +5,7 @@ namespace Etu\Module\DaymailBundle\Controller;
 use Doctrine\ORM\EntityManager;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
+use Etu\Core\CoreBundle\Util\RedactorJsEscaper;
 use Etu\Core\UserBundle\Entity\Member;
 use Etu\Module\DaymailBundle\Entity\DaymailPart;
 
@@ -85,6 +86,7 @@ class MembershipsController extends Controller
 			->leftJoin('d.orga', 'o')
 			->where('o.id = :orga')
 			->setParameter('orga', $orga->getId())
+			->andWhere('d.deleted = 0')
 			->orderBy('d.date', 'DESC')
 			->getQuery()
 			->setMaxResults(10)
@@ -103,14 +105,20 @@ class MembershipsController extends Controller
 			}
 
 			if (isset($future[$part->getDate()->format('d-m-Y')])) {
+				$future[$part->getDate()->format('d-m-Y')]->name = $part->getTitle();
 				continue;
 			}
 
 			$available[$part->getDate()->format('d-m-Y')] = $part->getDate();
 			$available[$part->getDate()->format('d-m-Y')]->old = true;
+			$available[$part->getDate()->format('d-m-Y')]->name = $part->getTitle();
 		}
 
-		$available = array_merge(array_reverse($available), DaymailPart::createFutureAvailableDays());
+		if (count($available) == 1) {
+			$available = array();
+		}
+
+		$available = array_merge(array_reverse($available), $future);
 
 		if (! isset($available[$day->format('d-m-Y')])) {
 			throw $this->createNotFoundException('Day not found in available list');
@@ -128,6 +136,10 @@ class MembershipsController extends Controller
 		$request = $this->getRequest();
 
 		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid() && $canEdit) {
+			$daymailPart->setBody(RedactorJsEscaper::escape(
+				str_replace('<img ', '<img style="max-width: 600px" ', $daymailPart->getBody())
+			));
+
 			$em->persist($daymailPart);
 			$em->flush();
 
@@ -227,6 +239,7 @@ class MembershipsController extends Controller
 			->setParameter('orga', $orga->getId())
 			->andWhere('d.day = :day')
 			->setParameter('day', $day->format('d-m-Y'))
+			->andWhere('d.deleted = 0')
 			->getQuery()
 			->setMaxResults(1)
 			->getOneOrNullResult();

@@ -58,6 +58,13 @@ class DaymailPart
 	 */
 	protected $day;
 
+	/**
+	 * @var boolean
+	 *
+	 * @ORM\Column(name="deleted", type="boolean")
+	 */
+	protected $deleted;
+
 
 	/**
 	 * @param Organization $orga
@@ -66,6 +73,7 @@ class DaymailPart
 	public function __construct(Organization $orga, \DateTime $date)
 	{
 		$this->orga = $orga;
+		$this->deleted = false;
 		$this->setDate($date);
 	}
 
@@ -191,5 +199,24 @@ class DaymailPart
 	public function getTitle()
 	{
 		return $this->title;
+	}
+
+	/**
+	 * @param boolean $deleted
+	 * @return DaymailPart
+	 */
+	public function setDeleted($deleted)
+	{
+		$this->deleted = $deleted;
+
+		return $this;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getDeleted()
+	{
+		return $this->deleted;
 	}
 }

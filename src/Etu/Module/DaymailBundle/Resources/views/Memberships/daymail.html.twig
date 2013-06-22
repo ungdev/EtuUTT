@@ -95,12 +95,16 @@
 										<li>
 											<a href="{{ path('memberships_orga_daymail', {'login': orga.login, 'day': code}) }}">
 												{% if day.old %}
-													<em class="muted">
+													<em>
 												{% endif %}
 
 												{{ ('daymail.memberships.daymail.days.'~day|date('D')|lower)|trans }}
 												{{ day|date('d') }}
 												{{ ('daymail.memberships.daymail.months.'~day|date('M')|lower)|trans }}
+
+												{% if day.name is defined %}
+													<span class="muted">- {{ day.name }}</span>
+												{% endif %}
 
 												{% if day.old %}
 													</em>
@@ -144,10 +148,12 @@
 								{{ 'daymail.memberships.daymail.submit'|trans }}
 							</button>
 
+							{% if daymail.id > 0 %}
 							<a class="btn" href="#"
 							   onclick="window.open('{{ path('memberships_orga_daymail_preview', {'login': orga.login, 'day': currentDay|date('d-m-Y')}) }}', '', 'width=800, height=500, top=150, left=150, toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, copyhistory=no, resizable=no'); return false;">
 								{{ 'daymail.memberships.daymail.preview'|trans }}
 							</a>
+							{% endif %}
 						</div>
 					</div>
 					{% else %}
