@@ -25,7 +25,7 @@
 	</head>
 	<body class="bg-soft-grey">
 		<header class="bg-dark-blue fixed head">
-			<div class="container">
+			<div class="container" id="top">
 				<div class="pull-left title">
 					<h1 class="seo-title">{{ block('title') }} - {{ 'base.title'|trans }}</h1>
 
@@ -251,7 +251,7 @@
 
 		{% block checkout_notifications %}
 			{% if app.user and not app.user.isOrga %}
-				<script>
+				<script type="text/javascript">
 					window.setInterval(function(){
 						// Find new notifications
 						$.getJSON(Routing.generate('notifs_new'), function(data) {

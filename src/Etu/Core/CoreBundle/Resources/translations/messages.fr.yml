@@ -81,6 +81,9 @@ core:
             no_notif_message: Vous n'avez pas de notification !
             no_notif_description: Abonnez-vous à des éléments d'EtuUTT pour suivre ce qui vous intéresse à l'UTT !
             learn_more: En savoir plus
+            loading: Chargement ...
+            logo: Le flux n'a plus d'éléments à afficher
+            top: Retour en haut
         indexAnonymous:
             title: Accueil
             welcome: Bienvenue sur le site étudiant de l'Université de Technologie de Troyes

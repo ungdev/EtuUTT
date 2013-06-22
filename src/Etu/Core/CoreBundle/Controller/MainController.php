@@ -36,6 +36,88 @@ class MainController extends Controller
 	}
 
 	/**
+	 * @Route("/more/{page}", name="flux_more", options={"expose"=true})
+	 * @Template()
+	 */
+	public function moreAction($page)
+	{
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		// Load only notifications we should display, ie. notifications sent from
+		// currently enabled modules
+
+		$query = $em
+			->createQueryBuilder()
+			->select('n')
+			->from('EtuCoreBundle:Notification', 'n')
+			->where('n.authorId != :userId')
+			->setParameter('userId', $this->getUser()->getId())
+			->orderBy('n.date', 'DESC')
+			->setFirstResult(($page - 1) * 25)
+			->setMaxResults(25);
+
+		/*
+		 * Subscriptions
+		 */
+		/** @var $subscriptions Subscription[] */
+		$subscriptions = $this->get('etu.twig.global_accessor')->get('notifs')->get('subscriptions');
+		$subscriptionsWhere = array();
+		$notifications = array();
+
+		if (! empty($subscriptions)) {
+
+			foreach ($subscriptions as $key => $subscription) {
+				$subscriptionsWhere[] = '(n.entityType = :type_'.$key.' AND n.entityId = :id_'.$key.')';
+
+				$query->setParameter('type_'.$key, $subscription->getEntityType());
+				$query->setParameter('id_'.$key, $subscription->getEntityId());
+			}
+
+			if (! empty($subscriptionsWhere)) {
+				$query = $query->andWhere(implode(' OR ', $subscriptionsWhere));
+			}
+
+			/*
+			 * Modules
+			 */
+			$modulesWhere = array('n.module = \'core\'', 'n.module = \'user\'');
+
+			foreach ($this->getKernel()->getModulesDefinitions() as $module) {
+				$identifier = $module->getIdentifier();
+				$modulesWhere[] = 'n.module = :module_'.$identifier;
+
+				$query->setParameter('module_'.$identifier, $identifier);
+			}
+
+			if (! empty($modulesWhere)) {
+				$query = $query->andWhere(implode(' OR ', $modulesWhere));
+			}
+
+			// Query
+			/** @var $notifications Notification[] */
+			$notifications = $query->getQuery()->getResult();
+		}
+
+		$user = $this->getUser();
+		$user->setLastVisitHome(new \DateTime());
+
+		$em->persist($user);
+
+		if (! $user->testingContext) {
+			$em->flush();
+		}
+
+		if (empty($notifications)) {
+			return new Response('no_more');
+		}
+
+		return $this->render('EtuCoreBundle:Main:more.html.twig', array(
+			'notifs' => $notifications
+		));
+	}
+
+	/**
 	 * @Route("/change-locale/{lang}", name="change_locale")
 	 * @Template()
 	 */
@@ -154,7 +236,7 @@ class MainController extends Controller
 			->where('n.authorId != :userId')
 			->setParameter('userId', $this->getUser()->getId())
 			->orderBy('n.date', 'DESC')
-			->setMaxResults(50);
+			->setMaxResults(25);
 
 		/*
 		 * Subscriptions

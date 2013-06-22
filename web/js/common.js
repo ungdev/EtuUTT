@@ -113,7 +113,7 @@ $(function() {
 		return false;
 	});
 
-	page.bind('click', function(e) {
+	page.on('click', function(e) {
 		userbox.box.removeClass('userbox-clicked');
 		userbox.menu.removeClass('userbox-menu-clicked');
 		userbox.menu.hide();

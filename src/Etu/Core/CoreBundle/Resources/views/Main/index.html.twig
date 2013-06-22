@@ -5,27 +5,61 @@
 {% block main_menu_link_homepage %} active{% endblock %}
 
 {% block checkout_notifications %}
-	{% if app.user and not app.user.isOrga %}
-		<script>
-			window.setInterval(function(){
-				// Find new notifications
-				$.getJSON(Routing.generate('notifs_new'), function(data) {
-					if (typeof data.status != 'undefined' && data.status == 200) {
-						if (data.result.count > 0) {
-							$('#head-menu-home-pins').text(data.result.count);
-							$('#head-menu-home-pins').show();
-							setCountTitle(data.result.count);
-							$('#alert-new-notifs-count').text(data.result.count);
-							$('#alert-new-notifs').show();
+	<script type="text/javascript">
+		window.setInterval(function(){
+			// Find new notifications
+			$.getJSON(Routing.generate('notifs_new'), function(data) {
+				if (typeof data.status != 'undefined' && data.status == 200) {
+					if (data.result.count > 0) {
+						$('#head-menu-home-pins').text(data.result.count);
+						$('#head-menu-home-pins').show();
+						setCountTitle(data.result.count);
+						$('#alert-new-notifs-count').text(data.result.count);
+						$('#alert-new-notifs').show();
+					} else {
+						$('#head-menu-home-pins').hide();
+						removeCountTitle();
+						$('#alert-new-notifs').hide();
+					}
+				}
+			});
+		}, 10 * 1000); // 10 seconds
+	</script>
+{% endblock %}
+
+{% block javascripts %}
+	{% if notifs|length == 25 %}
+	<script type="text/javascript">
+		// Inifinite scroll
+		var page = 1,
+			requesting = false,
+			loader = $('#flux-loader'),
+			end = $('#flux-end'),
+			flux = $('#flux-notifs');
+
+		$(window).scroll(function () {
+			if ($(window).height() + $(window).scrollTop() == $(document).height() && ! requesting) {
+				page++;
+				loader.show();
+				requesting = true;
+
+				$.ajax({
+					type: 'GET',
+					url: Routing.generate('flux_more', {page: page}),
+					success: function(html) {
+						if (html != 'no_more') {
+							loader.hide();
+							requesting = false;
+							flux.append(html);
 						} else {
-							$('#head-menu-home-pins').hide();
-							removeCountTitle();
-							$('#alert-new-notifs').hide();
+							loader.hide();
+							end.show();
 						}
 					}
 				});
-			}, 10 * 1000); // 10 seconds
-		</script>
+			}
+		});
+	</script>
 	{% endif %}
 {% endblock %}
 
@@ -44,160 +78,26 @@
 			<div class="clear"></div>
 		</div>
 	{% else %}
-	<div class="flux">
-		<div id="alert-new-notifs">
-			<a href="{{ path('homepage') }}" class="alert-new-notifs">
-				<span id="alert-new-notifs-count">0</span> {{ 'core.main.index.new_notifs'|trans }}
-			</a>
+		<div class="flux">
+			<div id="alert-new-notifs">
+				<a href="{{ path('homepage') }}" class="alert-new-notifs">
+					<span id="alert-new-notifs-count">0</span> {{ 'core.main.index.new_notifs'|trans }}
+				</a>
+			</div>
+
+			<div class="flux-notifs" id="flux-notifs">
+			{% for notif in notifs %}
+				{{ render_notif(notif) }}
+			{% endfor %}
+			</div>
 		</div>
 
-		{% for notif in notifs %}
-			{{ render_notif(notif) }}
-		{% endfor %}
-
-		<!--
-		<div class="super-notifs">
-			<a href="" class="notif super-notif">
-				<img src="{{ asset('img/notifs/event.png') }}" />
-
-				<h4 class="notif-title">
-					Nouvel évènement de
-					<span class="notif-data">BDE</span> :
-					<span class="notif-data">Soirée des finaux</span>
-					(super-notification)
-				</h4>
-
-				<div class="clear"></div>
-			</a>
+		<div class="flux-loading" id="flux-loader">
+			<img src="{{ asset('img/loader.gif') }}" alt="{{ 'core.main.index.loading'|trans }}" title="{{ 'core.main.index.loading'|trans }}"/>
 		</div>
 
-		<a href="" class="notif notif-new">
-			<img src="{{ asset('img/notifs/mail.png') }}" />
-
-			<h4 class="notif-title">
-				Vous avez <span class="notif-data">3</span> nouveaux e-mails
-			</h4>
-
-			<div class="notif-date hidden">
-				Il y a 4 minutes
-			</div>
-
-			<div class="clear"></div>
-		</a>
-
-		<a href="" class="notif notif-new">
-			<img src="{{ asset('img/notifs/event.png') }}" />
-
-			<h4 class="notif-title">
-				Nouvel évènement de
-				<span class="notif-data">BDE</span> :
-				<span class="notif-data">Remise des diplômes</span>
-			</h4>
-
-			<div class="notif-date">
-				Il y a 1 heure
-			</div>
-
-			<div class="clear"></div>
-		</a>
-
-		<a href="" class="notif">
-			<img src="{{ asset('img/notifs/uv.png') }}" />
-
-			<h4 class="notif-title">
-				Nouveau commentaire de
-				<span class="notif-data">Boris Guifot</span> dans l'UV
-				<span class="notif-data">LO02</span>
-			</h4>
-
-			<div class="notif-date">
-				Il y a 3 heures
-			</div>
-
-			<div class="clear"></div>
-		</a>
-
-		<a href="" class="notif">
-			<img src="{{ asset('img/notifs/forum.png') }}" />
-
-			<h4 class="notif-title">
-				Nouveaux messages de
-				<span class="notif-data">Marie-Laure Vistos</span> et
-				<span class="notif-data">Lucas Soulier</span> dans
-				<span class="notif-data">Ancien Poly</span>
-			</h4>
-
-			<div class="notif-date">
-				Le 30 décembre 2012 à 12h14
-			</div>
-
-			<div class="clear"></div>
-		</a>
-
-		<a href="" class="notif">
-			<img src="{{ asset('img/notifs/mail.png') }}" />
-
-			<h4 class="notif-title">
-				Vous avez <span class="notif-data">3</span> nouveaux e-mails
-			</h4>
-
-			<div class="notif-date">
-				Il y a 4 minutes
-			</div>
-
-			<div class="clear"></div>
-		</a>
-
-		<a href="" class="notif">
-			<img src="{{ asset('img/notifs/event.png') }}" />
-
-			<h4 class="notif-title">
-				Nouvel évènement de
-				<span class="notif-data">BDE</span> :
-				<span class="notif-data">Remise des diplômes</span>
-			</h4>
-
-			<div class="notif-date">
-				Il y a 1 heure
-			</div>
-
-			<div class="clear"></div>
-		</a>
-
-		<a href="" class="notif">
-			<img src="{{ asset('img/notifs/uv.png') }}" />
-
-			<h4 class="notif-title">
-				Nouveau commentaire de
-				<span class="notif-data">Boris Guifot</span> dans l'UV
-				<span class="notif-data">LO02</span>
-			</h4>
-
-			<div class="notif-date">
-				Il y a 3 heures
-			</div>
-
-			<div class="clear"></div>
-		</a>
-
-		<a href="" class="notif">
-			<img src="{{ asset('img/notifs/forum.png') }}" />
-
-			<h4 class="notif-title">
-				Nouveaux messages de
-				<span class="notif-data">Marie-Laure Vistos</span> et
-				<span class="notif-data">Lucas Soulier</span> dans
-				<span class="notif-data">Ancien Poly</span>
-			</h4>
-
-			<div class="notif-date">
-				Le 30 décembre 2012 à 12h14
-			</div>
-
-			<div class="clear"></div>
-		</a>
-		-->
-
-	</div>
+		<div class="flux-end" id="flux-end">
+			<img src="{{ asset('img/logo-shadow.png') }}" alt="{{ 'core.main.index.logo'|trans }}" title="{{ 'core.main.index.logo'|trans }}"/>
+		</div>
 	{% endif %}
 {% endblock %}
