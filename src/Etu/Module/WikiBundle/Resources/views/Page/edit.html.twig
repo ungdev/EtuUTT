@@ -87,7 +87,15 @@
 					</div>
 
 					<div class="control-group">
-						{{ form_widget(form.body) }}
+						<label class="control-label">
+							{{ 'wiki.page.edit.content'|trans }}
+							<span class="pull-right">
+								{% include 'EtuModuleUploadBundle::upload_link.html.twig' %}
+							</span>
+						</label>
+						<div class="controls">
+							{{ form_widget(form.body) }}
+						</div>
 						<span class="help-block">{{ form_errors(form.body) }}</span>
 					</div>
 

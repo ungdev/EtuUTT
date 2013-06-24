@@ -58,8 +58,18 @@
 
 			<div class="span9">
 				<form method="post" action="">
-					{{ form_widget(form.body) }}
-					<span class="help-block">{{ form_errors(form.body) }}</span>
+					<div class="control-group">
+						<label class="control-label">
+							{{ 'wiki.main.edit.content'|trans }}
+							<span class="pull-right">
+								{% include 'EtuModuleUploadBundle::upload_link.html.twig' %}
+							</span>
+						</label>
+						<div class="controls">
+							{{ form_widget(form.body) }}
+						</div>
+						<span class="help-block">{{ form_errors(form.body) }}</span>
+					</div>
 
 					<div class="control-group">
 						{{ form_label(form.comment, 'wiki.main.edit.comment'|trans) }}

@@ -85,7 +85,7 @@ class EtuModuleWikiBundle extends Module
 	public function getRequirements()
 	{
 		return array(
-			// Insert your requirements here
+			'upload'
 		);
 	}
 }

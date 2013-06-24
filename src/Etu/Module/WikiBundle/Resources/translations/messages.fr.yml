@@ -20,6 +20,7 @@ wiki:
             title: Modifier l'accueil
             submit: Modifier
             revisions: Révisions
+            content: Contenu
             by: par
             comment: Commentaire décrivant vos modifications
             confirm: Vous avez bien modifié l'accueil du wiki
@@ -41,6 +42,7 @@ wiki:
         edit:
             title: Modifier l'accueil
             submit: Modifier
+            content: Contenu
             revisions: Révisions
             by: par
             comment: Commentaire décrivant vos modifications
@@ -87,6 +89,7 @@ wiki:
             title: Créer une page
             submit: Créer
             name: Nom de la page
+            content: Contenu
             where: Où créer cette page ?
             confirm: Vous avez bien créé une page
         create_category:
@@ -100,6 +103,7 @@ wiki:
             revisions: Révisions
             submit: Modifier
             name: Nom de la page
+            content: Contenu
             where: Où placer cette page ?
             comment: Commentaire décrivant vos modifications
             confirm: Vous avez bien modifié la page

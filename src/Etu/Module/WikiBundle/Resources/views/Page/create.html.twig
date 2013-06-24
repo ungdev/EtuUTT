@@ -68,36 +68,54 @@
 			<div class="span9">
 				<form method="post" action="">
 					<div class="control-group">
-						{{ form_label(form.title,  'wiki.page.create.name'|trans) }}
+						<label class="control-label">
+							{{ form_label(form.title,  'wiki.page.create.name'|trans) }}
+						</label>
 						{{ form_widget(form.title, {'attr': {'class': 'span12 wiki-edit-title' } }) }}
 						<span class="help-block">{{ form_errors(form.title) }}</span>
 					</div>
 
 					<div class="control-group">
-						{{ form_widget(form.body) }}
+						<label class="control-label">
+							{{ 'wiki.page.create.content'|trans }}
+							<span class="pull-right">
+								{% include 'EtuModuleUploadBundle::upload_link.html.twig' %}
+							</span>
+						</label>
+						<div class="controls">
+							{{ form_widget(form.body) }}
+						</div>
 						<span class="help-block">{{ form_errors(form.body) }}</span>
 					</div>
 
 					<div class="control-group">
-						{{ form_label(form.parent, 'wiki.page.create.where'|trans) }}
+						<label class="control-label">
+							{{ form_label(form.parent, 'wiki.page.create.where'|trans) }}
+						</label>
 						{{ form_widget(form.parent, {'attr': {'class': 'span6' } }) }}
 						<span class="help-block">{{ form_errors(form.parent) }}</span>
 					</div>
 
 					<div class="control-group">
-						{{ form_label(form.levelToView, 'Qui peut voir cette page ?') }}
+						<label class="control-label">
+							{{ form_label(form.levelToView, 'Qui peut voir cette page ?') }}
+						</label>
 						{{ form_widget(form.levelToView, {'attr': {'class': 'span6'} }) }}
 						<span class="help-block">{{ form_errors(form.levelToView) }}</span>
 					</div>
 
 					<div class="control-group">
-						{{ form_label(form.levelToEdit, 'Qui peut modifier cette page ?') }}
+						<label class="control-label">
+							{{ form_label(form.levelToEdit, 'Qui peut modifier cette page ?') }}
+						</label>
 						{{ form_widget(form.levelToEdit, {'attr': {'class': 'span6'} }) }}
 						<span class="help-block">{{ form_errors(form.levelToEdit) }}</span>
 					</div>
 
 					<div class="control-group">
-						{{ form_label(form.levelToEditPermissions, 'Qui peut modifier les permissions de cette page ?') }}
+						<label class="control-label">
+							{{ form_label(form.levelToEditPermissions, 'Qui peut modifier les permissions de cette page ?') }}
+						</label>
 						{{ form_widget(form.levelToEditPermissions, {'attr': {'class': 'span6'} }) }}
 						<span class="help-block">{{ form_errors(form.levelToEditPermissions) }}</span>
 					</div>
