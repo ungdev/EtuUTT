@@ -2,6 +2,11 @@
 
 {% block title %}{{ 'events.main.index.title'|trans }}{% endblock %}
 
+{% block sidebar %}
+	{{ render_subscribe_button('event', 0) }}
+	{{ parent() }}
+{% endblock %}
+
 {% block content %}
 	{% set events = calendr_events(week) %}
 
@@ -69,7 +74,7 @@
 							<div class="clear"></div>
 
 							{% for event in events.find(day) %}
-								<a href="" class="event-week event-{{ event.category }} tip"
+								<a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}" class="event-week event-{{ event.category }} tip"
 								   title="<strong>{{ event.title }}</strong><br />
 								   {{ 'events.main.index.organised_by'|trans({'%orga%': event.orga.name}) }}">
 									{{ event.title }}

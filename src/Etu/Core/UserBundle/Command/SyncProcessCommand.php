@@ -2,6 +2,7 @@
 
 namespace Etu\Core\UserBundle\Command;
 
+use Doctrine\ORM\EntityManager;
 use Etu\Core\UserBundle\Command\Util\ProgressBar;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Sync\Iterator\Element\ElementToImport;
@@ -83,11 +84,22 @@ ask you to keep or delete him/her.
 			return;
 		}
 
-
 		// Import users
 		if ($usersImportIterator->count() > 0) {
 			$output->write("\n");
 			$output->writeln('Importing users ...');
+
+			/** @var $em EntityManager */
+			$em = $container->get('doctrine')->getManager();
+
+			$bde = $em->createQueryBuilder()
+				->select('o')
+				->from('EtuUserBundle:Organization', 'o')
+				->where('o.login = :login')
+				->setParameter('login', 'bde')
+				->setMaxResults(1)
+				->getQuery()
+				->getOneOrNullResult();
 
 			$bar = new ProgressBar('%fraction% [%bar%] %percent%', '=>', ' ', 80, $usersImportIterator->count());
 			$bar->update(0);
@@ -95,14 +107,7 @@ ask you to keep or delete him/her.
 
 			/** @var $user ElementToImport */
 			foreach($usersImportIterator as $user) {
-
-				// Flush each five elements
-				if ($i % 5 == 0) {
-					$user->import(true);
-				} else {
-					$user->import(false);
-				}
-
+				$user->import(false, $bde);
 				$bar->update($i);
 				$i++;
 			}
@@ -122,7 +127,6 @@ ask you to keep or delete him/her.
 
 			/** @var $user ElementToUpdate */
 			foreach($usersUpdateIterator as $user) {
-
 				$user->update();
 				$bar->update($i);
 				$i++;

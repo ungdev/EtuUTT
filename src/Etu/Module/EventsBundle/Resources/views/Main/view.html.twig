@@ -1,0 +1,18 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'events.main.view.title'|trans }}{% endblock %}
+
+{% block content %}
+	<ul class="nav nav-tabs page-tabs">
+		<li>
+			<a href="{{ path('events_index') }}">
+				<i class="icon-chevron-left"></i>
+				{{ 'events.main.view.back'|trans }}
+			</a>
+		</li>
+	</ul>
+
+	<div class="padding20-sides">
+
+	</div>
+{% endblock %}

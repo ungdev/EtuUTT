@@ -6,11 +6,11 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 
 use Etu\Core\CoreBundle\Entity\Subscription;
 use Etu\Core\UserBundle\Entity\Organization;
+use Etu\Core\UserBundle\Ldap\Model\User;
+
 use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
-
-use Etu\Core\UserBundle\Ldap\Model\User;
 
 /**
  * LDAP element to import in database
@@ -53,11 +53,13 @@ class ElementToImport
 	/**
 	 * Import the element in the database
 	 */
-	public function import()
+	public function import($flush = false, $bdeOrga = null)
 	{
 		if ($this->element instanceof User) {
-			return $this->importUser();
+			return $this->importUser($bdeOrga, $flush);
 		}
+
+		return false;
 	}
 
 	/**
@@ -121,14 +123,6 @@ class ElementToImport
 		// Subscribe to all events
 		$subscription = new Subscription();
 		$subscription->setEntityType('event')
-			->setEntityId(0)
-			->setUser($user);
-
-		$this->doctrine->getManager()->persist($subscription);
-
-		// Subscribe to NUTT
-		$subscription = new Subscription();
-		$subscription->setEntityType('nutt')
 			->setEntityId(0)
 			->setUser($user);
 

@@ -30,3 +30,6 @@ events:
             organised_by: Organisé par %orga%
         week:
             week: Semaine
+        view:
+            title: Détail d'un évènement
+            back: Retour au calendrier

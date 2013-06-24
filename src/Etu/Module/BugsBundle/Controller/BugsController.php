@@ -107,7 +107,9 @@ class BugsController extends Controller
 		}
 
 		if (StringManipulationExtension::slugify($bug->getTitle()) != $slug) {
-			throw $this->createNotFoundException('Invalid slug');
+			return $this->redirect($this->generateUrl('bugs_view', array(
+				'id' => $id, 'slug' => StringManipulationExtension::slugify($bug->getTitle())
+			)), 301);
 		}
 
 		/** @var $bug Issue */
@@ -379,7 +381,9 @@ class BugsController extends Controller
 		}
 
 		if (StringManipulationExtension::slugify($comment->getIssue()->getTitle()) != $slug) {
-			throw $this->createNotFoundException('Invalid slug');
+			return $this->redirect($this->generateUrl('bugs_edit_comment', array(
+				'id' => $id, 'slug' => StringManipulationExtension::slugify($comment->getIssue()->getTitle())
+			)), 301);
 		}
 
 		if ($comment->getUser()->getId() != $this->getUser()->getId() && ! $this->getUser()->getIsAdmin()) {
