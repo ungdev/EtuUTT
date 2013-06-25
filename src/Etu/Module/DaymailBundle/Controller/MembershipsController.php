@@ -229,7 +229,6 @@ class MembershipsController extends Controller
 			}
 		}
 
-		// Select old daymails
 		/** @var $daymailPart DaymailPart */
 		$daymailPart = $em->createQueryBuilder()
 			->select('d, o')

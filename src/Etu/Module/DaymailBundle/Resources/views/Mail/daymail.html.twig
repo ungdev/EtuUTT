@@ -3,7 +3,12 @@
 <head>
 	<meta charset="utf-8" />
 
-	<title>Daymail du Mercredi 19 juin 2013</title>
+	<title>
+		Daymail du
+		{{ ('daymail.memberships.daymail.days.'~daymail.date|date('D')|lower)|trans }}
+		{{ daymail.date|date('d') }}
+		{{ ('daymail.memberships.daymail.months.'~daymail.date|date('M')|lower)|trans }}
+	</title>
 </head>
 <body style="padding: 0; margin: 0;">
 	<table style="width: 100%; background: #f5f5f5; border-collapse: collapse;">
@@ -15,135 +20,52 @@
 							<img alt="EtuUTT" title="Logo de EtuUTT" src="http://openutt.utt.fr/img/logo.png" />
 						</td>
 						<td style="text-align: right; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; color: white;">
-							Daymail du Mercredi 19 juin 2013
+							Daymail du
+							{{ ('daymail.memberships.daymail.days.'~daymail.date|date('D')|lower)|trans }}
+							{{ daymail.date|date('d') }}
+							{{ ('daymail.memberships.daymail.months.'~daymail.date|date('M')|lower)|trans }}
 						</td>
 					</tr>
 				</table>
 			</td>
 		</tr>
 
-		<!---------------- Message ---------------->
-		<tr>
-			<td style="vertical-align: top; padding: 50px 0 10px 0; background: #ffffff; color: #333333; border-collapse: collapse; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
-				<table style="width: 600px; margin: 0 auto; border-collapse: collapse;">
-					<tr>
-						<td style="width: 60px;">
-							<img style="max-height: 50px; max-width: 50px;" alt="Logo" title="Logo de Club-bières" src="http://etu.utt.fr/clubs_assos/logos/85.jpg" />
-						</td>
-						<td>
-							<strong style="font-size: 16px;">Club-bières du 18 Juin !</strong>
-							<br />
-							<em style="font-size: 13px;">
-								Par Club-bières
-								(<a href="mailto:c-bieres@utt.fr">c-bieres@utt.fr</a>)
-							</em>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<tr>
-			<td style="vertical-align: top; padding: 20px 0; color: #333333; text-align: justify; border-bottom: 3px solid #e5e5e5; border-collapse: collapse; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px;">
-				<table style="width: 600px; margin: 0 auto; border-collapse: collapse;">
-					<tr>
-						<td>
-							<p>
-								Amis du Club-bières,
-							</p>
-							<p>
-								Un petit message pour vous annoncer que la prochaine dégustation organisée par le Club-Bières se déroulera:<br />
-							</p>
-							<p style="text-align: center">
-								<strong>Le Mardi 18 Juin de 20 à 23 heures au foyer de l'UTT !</strong>
-							</p>
-
-							<p style="text-align: center;">
-								<img style="max-width: 600px;" alt="Image de Club-bières" title="Image de Club-bières" src="http://etu.utt.fr/daymail/img/7762_1.jpg" />
-							</p>
-
-							<p>
-								Le Club-bières vous ouvrira ses portes pour vous accueillir lors de la dernière dégustation de ce semestre ! Nous nous réunirons avec nos jolis petits verres emplis de ce délicieux breuvage de Malt et de Houblon.
-							</p>
-							<p>
-								De nombreuses bières vous seront proposées. Nous vous attendons donc nombreux à cette séance, un peu surprise pour vous, pour découvrir le monde de la bulle au prix extravagant de 2,5 euros la bière!
-							</p>
-							<p>
-								Exceptionnellement pour la dernière du Club-bières vous aurez droit comme accompagnement, à des hot-dogs pour la maudite somme de 1€ et de la salade composé auxquelles vous pourrez ajouter vinaigrette à l'ancienne, classique et même à la Duvel pour 50 cts de plus !! (prévenez nous si vous venez c'est très important cette fois-ci)
-							</p>
-							<p>
-								<strong>
-									N'oubliez pas :<br />
-									- D'amener votre verre à bière,<br />
-									- De recharger votre carte BDE,<br />
-									- D'ENVOYER UN MAIL SI VOUS VENEZ!
-								</strong>
-							</p>
-							<p>
-								Nb: A tous ceux qui n'ont pu avoir le verre de leurs rêves la dernière fois, indiquez le nous avec votre choix!
-							</p>
-							<p>
-								Pour toutes questions n'hésitez pas à nous contacter à l'adresse du club (c-bieres@utt.fr).
-							</p>
-							<p>
-								Amicalement,<br />
-								Vos dévoués responsables du Club-Bières
-							</p>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<!---------------- / Message ---------------->
-
-
-		<!---------------- Message ---------------->
-		<tr>
-			<td style="vertical-align: top; padding: 50px 0 10px 0; background: #ffffff; color: #333333; border-collapse: collapse; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
-				<table style="width: 600px; margin: 0 auto; border-collapse: collapse;">
-					<tr>
-						<td style="width: 60px;">
-							<img style="max-height: 50px; max-width: 50px;" alt="Logo" title="Logo de Team Canard" src="http://etu.utt.fr/clubs_assos/logos/56.jpg" />
-						</td>
-						<td>
-							<strong style="font-size: 16px;">Image du jour</strong>
-							<br />
-							<em style="font-size: 13px;">
-								Par Team Canard
-								(<a href="mailto:c-bieres@utt.fr">anim-bde@utt.fr</a>)
-							</em>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<tr>
-			<td style="vertical-align: top; padding: 20px 0; color: #333333; text-align: justify; border-bottom: 3px solid #e5e5e5; border-collapse: collapse; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px;">
-				<table style="width: 600px; margin: 0 auto; border-collapse: collapse;">
-					<tr>
-						<td>
-							<p>
-								Coin coin!!
-							</p>
-							<p>
-								On se retrouve sur la lune le 26 pour fêter nos résussites haut la main?? :)
-							</p>
-
-							<p style="text-align: center;">
-								<img style="max-width: 600px;" alt="Image de Team Canard" title="Image de Team Canard" src="http://etu.utt.fr/daymail/img/7767_1.jpg" />
-							</p>
-
-							<p>
-								Attendez... j'entend un écho au loin... Une voix qui me parle... un murmure, que c'est doux! Mais qu'est-ce que ça peux bien dire???
-							</p>
-							<p>
-								<strong>Cela me chante... Encore une victoire de Canard!</strong>
-							</p>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<!---------------- / Message ---------------->
+		{% for part in parts %}
+			<!---------------- Message ---------------->
+			<tr>
+				<td style="vertical-align: top; padding: 50px 0 10px 0; background: #ffffff; color: #333333; border-collapse: collapse; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+					<table style="width: 600px; margin: 0 auto; border-collapse: collapse;">
+						<tr>
+							<td style="width: 60px;">
+								<img style="max-height: 50px; max-width: 50px;" alt="Logo" title="Logo de {{ part.orga.name }}" src="http://openutt.utt.fr/logos/{{ part.orga.logo }}" />
+							</td>
+							<td>
+								<strong style="font-size: 16px;">{{ part.title }}</strong>
+								<br />
+								<em style="font-size: 13px;">
+									Par {{ part.orga.name }}
+									{% if part.orga.contactMail %}
+										(<a href="mailto:{{ part.orga.contactMail }}">{{ part.orga.contactMail }}</a>)
+									{% endif %}
+								</em>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td style="vertical-align: top; padding: 20px 0; color: #333333; text-align: justify; border-bottom: 3px solid #e5e5e5; border-collapse: collapse; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px;">
+					<table style="width: 600px; margin: 0 auto; border-collapse: collapse;">
+						<tr>
+							<td>
+								{{ part.body|raw }}
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<!---------------- / Message ---------------->
+		{% endfor %}
 
 		<tr>
 			<td style="vertical-align: top; padding: 20px 0 20px 0; text-align: center; background: #ffffff; color: #999999; border-collapse: collapse; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px;">
