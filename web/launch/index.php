@@ -34,13 +34,13 @@ $interval->s = $diff - $days - $hours - $minutes;
 		<meta name="keywords" content="etuutt, comming, soon, working, loading">
 		<meta name="author" content="Titouan Galopin">
 
-		<link rel="stylesheet" type="text/css" href="/launch/bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="/launch/bootstrap/css/bootstrap-responsive.min.css">
-		<link rel="stylesheet" type="text/css" href="/launch/etuutt/css/global.css">
-		<link rel="stylesheet" type="text/css" href="/launch/etuutt/css/launch.css">
-		<link rel="stylesheet" type="text/css" href="/launch/facebox/src/facebox.css">
+		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-responsive.min.css">
+		<link rel="stylesheet" type="text/css" href="etuutt/css/global.css">
+		<link rel="stylesheet" type="text/css" href="etuutt/css/launch.css">
+		<link rel="stylesheet" type="text/css" href="facebox/src/facebox.css">
 
-		<script src="/launch/etuutt/js/modernizr.custom.js"></script>
+		<script src="etuutt/js/modernizr.custom.js"></script>
 	</head>
 	<body>
 		<div class="container">
@@ -136,9 +136,9 @@ $interval->s = $diff - $days - $hours - $minutes;
 			</div>
 		</div>
 
-		<script type="text/javascript" src="/launch/etuutt/js/jquery-1.8.3.min.js"></script>
-		<script type="text/javascript" src="/launch/etuutt/js/launch.js"></script>
-		<script type="text/javascript" src="/launch/facebox/src/facebox.js"></script>
+		<script type="text/javascript" src="etuutt/js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="etuutt/js/launch.js"></script>
+		<script type="text/javascript" src="facebox/src/facebox.js"></script>
 
 		<script type="text/javascript">
 			var interval = <?php echo json_encode($interval); ?>;

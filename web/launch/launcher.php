@@ -19,12 +19,12 @@ if ($now < $launch) {
 		<meta name="keywords" content="etuutt, arrived, finished">
 		<meta name="author" content="Titouan Galopin">
 
-		<link rel="stylesheet" type="text/css" href="/launch/bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="/launch/bootstrap/css/bootstrap-responsive.min.css">
-		<link rel="stylesheet" type="text/css" href="/launch/etuutt/css/global.css">
-		<link rel="stylesheet" type="text/css" href="/launch/etuutt/css/launcher.css">
+		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-responsive.min.css">
+		<link rel="stylesheet" type="text/css" href="etuutt/css/global.css">
+		<link rel="stylesheet" type="text/css" href="etuutt/css/launcher.css">
 
-		<script src="/launch/etuutt/js/modernizr.custom.js"></script>
+		<script src="etuutt/js/modernizr.custom.js"></script>
 	</head>
 	<body>
 		<div class="text center" id="1">
@@ -53,7 +53,7 @@ if ($now < $launch) {
 			</p>
 		</div>
 
-		<script src="/launch/etuutt/js/jquery-1.8.3.min.js"></script>
-		<script src="/launch/etuutt/js/launcher.js"></script>
+		<script src="etuutt/js/jquery-1.8.3.min.js"></script>
+		<script src="etuutt/js/launcher.js"></script>
 	</body>
 </html>
