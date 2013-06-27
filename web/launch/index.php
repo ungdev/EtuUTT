@@ -7,7 +7,20 @@ if ($now >= $launch) {
 	exit;
 }
 
-$interval = $launch->diff($now);
+$diff = $launch - $now;
+
+$interval = new stdClass();
+
+$interval->days = floor($diff / (24 * 3600));
+$days = $interval->days * 24 * 3600;
+
+$interval->h = floor(($diff - $days) / 3600);
+$hours = $interval->h * 3600;
+
+$interval->i = floor(($diff - $days - $hours) / 60);
+$minutes = $interval->i * 60;
+
+$interval->s = $diff - $days - $hours - $minutes;
 ?>
 <!DOCTYPE html>
 <html lang="fr">

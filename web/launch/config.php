@@ -14,7 +14,7 @@ $mailto = 'mailto:?subject=EtuUTT arrive bientôt ...&body=http://openutt.utt.fr
 
 
 // Launch date
-$launch = DateTime::createFromFormat('d-m-Y H:i:s', '05-09-2012 20:00:00');
-$now = new DateTime();
+$launch = mktime(20, 0, 0, 9, 5, 2013);
+$now = time();
 
-$acceptTesters = $launch->diff($now)->days > 50;
+$acceptTesters = (($now - $launch) / (24 * 3600)) > 31;
