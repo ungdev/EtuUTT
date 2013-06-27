@@ -64,9 +64,9 @@ $interval = $launch->diff($now);
 
 			<div class="row-fluid row-social">
 				<div class="span12 testing">
-					<a href="" target="_blank" class="sharer" id="facebookShare"></a>
-					<a href="" target="_blank" class="sharer" id="twitterShare"></a>
-					<a href="" class="sharer" id="mailShare"></a>
+					<a href="<?php echo $facebookUrl; ?>" target="_blank" class="sharer" id="facebookShare"></a>
+					<a href="<?php echo $twitterUrl; ?>" target="_blank" class="sharer" id="twitterShare"></a>
+					<a href="<?php echo $mailto; ?>" class="sharer" id="mailShare"></a>
 				</div>
 			</div>
 
