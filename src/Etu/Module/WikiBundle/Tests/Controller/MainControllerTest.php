@@ -3,6 +3,7 @@
 namespace Etu\Module\WikiBundle\Test\Controller;
 
 use Etu\Core\CoreBundle\Framework\Tests\MockUser;
+use Etu\Core\UserBundle\Security\Authentication\OrgaToken;
 use Etu\Core\UserBundle\Security\Authentication\UserToken;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -33,6 +34,15 @@ class MainControllerTest extends WebTestCase
 		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
 	}
 
+	public function testRestrictionEditOrga()
+	{
+		$client = static::createClient();
+		$client->getContainer()->get('security.context')->setToken(new OrgaToken(MockUser::createOrga()));
+
+		$client->request('GET', '/wiki/home/edit');
+		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
+	}
+
 	public function testRestrictionRevisionAnonymous()
 	{
 		$client = static::createClient();
@@ -50,10 +60,28 @@ class MainControllerTest extends WebTestCase
 		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
 	}
 
+	public function testRestrictionRevisionOrga()
+	{
+		$client = static::createClient();
+		$client->getContainer()->get('security.context')->setToken(new OrgaToken(MockUser::createOrga()));
+
+		$client->request('GET', '/wiki/home/revision/1');
+		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
+	}
+
 	public function testIndex()
 	{
 		$client = static::createClient();
 		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+
+		$crawler = $client->request('GET', '/wiki');
+		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Wiki des associations")')->count());
+	}
+
+	public function testIndexOrga()
+	{
+		$client = static::createClient();
+		$client->getContainer()->get('security.context')->setToken(new OrgaToken(MockUser::createOrga()));
 
 		$crawler = $client->request('GET', '/wiki');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Wiki des associations")')->count());

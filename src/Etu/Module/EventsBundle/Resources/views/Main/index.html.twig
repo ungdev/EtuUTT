@@ -56,6 +56,7 @@
 
 		<table class="table table-bordered table-hover events-table events-table-week">
 			<tr>
+				<th></th>
 				<th>{{ 'events.main.days.mon'|trans }}</th>
 				<th>{{ 'events.main.days.tue'|trans }}</th>
 				<th>{{ 'events.main.days.wed'|trans }}</th>
@@ -66,15 +67,23 @@
 			</tr>
 
 			<tr>
+				<td>
+					{% for i in 0..24 %}
+						{{ i }}:00<br />
+					{% endfor %}
+				</td>
 				{% for day in week %}
 					<td>
 						{% if week.contains(day.begin) %}
-							<div class="event-day">{{ day.begin.format('d') }}</div>
+							<!--<div class="event-day">{{ day.begin.format('d') }}</div>
 
 							<div class="clear"></div>
 
+							<hr />-->
+
 							{% for event in events.find(day) %}
-								<a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}" class="event-week event-{{ event.category }} tip"
+								<a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}"
+								   class="event-week event-{{ event.category }} event-start-{{ event.begin|date('H') }} tip"
 								   title="<strong>{{ event.title }}</strong><br />
 								   {{ 'events.main.index.organised_by'|trans({'%orga%': event.orga.name}) }}">
 									{{ event.title }}

@@ -12,6 +12,7 @@ use Etu\Module\EventsBundle\Entity\Event;
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class MainController extends Controller
 {
@@ -169,6 +170,21 @@ class MainController extends Controller
 				'id' => $id, 'slug' => StringManipulationExtension::slugify($event->getTitle())
 			)), 301);
 		}
+
+		$new = new Event(
+			null,
+			\DateTime::createFromFormat('d-m-Y H:i', '26-06-2013 19:00'),
+			\DateTime::createFromFormat('d-m-Y H:i', '26-06-2013 22:00')
+		);
+		$new->setTitle('Nocturne de fin d\'année')
+			->setCategory(Event::CATEGORY_NIGHT)
+			->setLocation('UTT')
+			->setIsAllDay(false)
+			->setOrga($event->getOrga())
+			->setDescription('Test d\'évènement : Nocturne de fin d\'année');
+
+		$em->persist($new);
+		$em->flush();
 
 		return array();
 	}

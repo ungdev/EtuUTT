@@ -3,6 +3,7 @@
 namespace Etu\Module\WikiBundle\Test\Controller;
 
 use Etu\Core\CoreBundle\Framework\Tests\MockUser;
+use Etu\Core\UserBundle\Security\Authentication\OrgaToken;
 use Etu\Core\UserBundle\Security\Authentication\UserToken;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -25,6 +26,15 @@ class PageControllerTest extends WebTestCase
 		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
 	}
 
+	public function testRestrictionCreateOrga()
+	{
+		$client = static::createClient();
+		$client->getContainer()->get('security.context')->setToken(new OrgaToken(MockUser::createOrga()));
+
+		$client->request('GET', '/wiki/orga/create');
+		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
+	}
+
 	public function testRestrictionCreateCategoryAnonymous()
 	{
 		$client = static::createClient();
@@ -37,6 +47,15 @@ class PageControllerTest extends WebTestCase
 	{
 		$client = static::createClient();
 		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+
+		$client->request('GET', '/wiki/orga/create-category');
+		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
+	}
+
+	public function testRestrictionCreateCategoryOrga()
+	{
+		$client = static::createClient();
+		$client->getContainer()->get('security.context')->setToken(new OrgaToken(MockUser::createOrga()));
 
 		$client->request('GET', '/wiki/orga/create-category');
 		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
@@ -157,10 +176,28 @@ class PageControllerTest extends WebTestCase
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier une page")')->count());
 	}
 
+	public function testEditOrga()
+	{
+		$client = static::createClient();
+		$client->getContainer()->get('security.context')->setToken(new OrgaToken(MockUser::createOrga()));
+
+		$crawler = $client->request('GET', '/wiki/orga/2-page/edit');
+		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier une page")')->count());
+	}
+
 	public function testRevision()
 	{
 		$client = static::createClient();
 		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createAdminUser()));
+
+		$crawler = $client->request('GET', '/wiki/orga/2-page/revision/4');
+		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Voir une révision")')->count());
+	}
+
+	public function testRevisionOrga()
+	{
+		$client = static::createClient();
+		$client->getContainer()->get('security.context')->setToken(new OrgaToken(MockUser::createOrga()));
 
 		$crawler = $client->request('GET', '/wiki/orga/2-page/revision/4');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Voir une révision")')->count());
@@ -175,6 +212,15 @@ class PageControllerTest extends WebTestCase
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier les permissions")')->count());
 	}
 
+	public function testPermissionsOrga()
+	{
+		$client = static::createClient();
+		$client->getContainer()->get('security.context')->setToken(new OrgaToken(MockUser::createOrga()));
+
+		$crawler = $client->request('GET', '/wiki/orga/2-page/permissions');
+		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier les permissions")')->count());
+	}
+
 	public function testRemove()
 	{
 		$client = static::createClient();
@@ -184,10 +230,28 @@ class PageControllerTest extends WebTestCase
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Supprimer une page")')->count());
 	}
 
+	public function testRemoveOrga()
+	{
+		$client = static::createClient();
+		$client->getContainer()->get('security.context')->setToken(new OrgaToken(MockUser::createOrga()));
+
+		$crawler = $client->request('GET', '/wiki/orga/2-page/delete');
+		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Supprimer une page")')->count());
+	}
+
 	public function testView()
 	{
 		$client = static::createClient();
 		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createAdminUser()));
+
+		$crawler = $client->request('GET', '/wiki/orga/2-page');
+		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Lire une page")')->count());
+	}
+
+	public function testViewOrga()
+	{
+		$client = static::createClient();
+		$client->getContainer()->get('security.context')->setToken(new OrgaToken(MockUser::createOrga()));
 
 		$crawler = $client->request('GET', '/wiki/orga/2-page');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Lire une page")')->count());

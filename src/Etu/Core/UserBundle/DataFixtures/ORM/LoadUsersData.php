@@ -6,6 +6,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
+use Etu\Core\UserBundle\Entity\Member;
 use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Core\UserBundle\Entity\User;
 
@@ -56,10 +57,19 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
 		$manager->persist($user);
 		$manager->persist($orga);
 
+		$membership = new Member();
+
+		$membership->setOrganization($orga);
+		$membership->setUser($user);
+		$membership->addPermission('daymail');
+
+		$manager->persist($membership);
+
 		$manager->flush();
 
 		$this->addReference('user_admin', $admin);
 		$this->addReference('user_user', $user);
 		$this->addReference('user_orga', $orga);
+		$this->addReference('user_membership', $orga);
 	}
 }

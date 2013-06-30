@@ -22,6 +22,8 @@ class EventRepository extends EntityRepository implements ProviderInterface
 			->setParameter('begin', $begin)
 			->andWhere('e.end < :end')
 			->setParameter('end', $end)
+			->orderBy('e.begin', 'ASC')
+			->addOrderBy('e.end', 'ASC')
 			->getQuery()
 			->getResult();
 	}

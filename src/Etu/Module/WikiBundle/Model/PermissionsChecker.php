@@ -170,6 +170,11 @@ class PermissionsChecker
 			return true;
 		}
 
+		// Organization ? Can only view public and owned pages
+		if ($this->user instanceof Organization) {
+			return $page->getOrga()->getId() == $this->user->getId();
+		}
+
 		return $this->findMembership($page->getOrga()) instanceof Member;
 	}
 

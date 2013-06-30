@@ -22,6 +22,7 @@ class MockUser
 		$user->setLogin('user');
 		$user->setMail('user@utt.fr');
 		$user->setIsAdmin(false);
+		$user->setIsStudent(true);
 		$user->setAvatar('user.png');
 		$user->testingContext = true;
 
