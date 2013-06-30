@@ -195,6 +195,14 @@ class Organization implements UserInterface, \Serializable
 	}
 
 	/**
+	 * @return array
+	 */
+	public function getMemberships()
+	{
+		return array();
+	}
+
+	/**
 	 * @return string
 	 */
 	public function getAvatar()
