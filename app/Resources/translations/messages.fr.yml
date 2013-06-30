@@ -41,7 +41,7 @@ base:
             admin: Administration
             members: Membres
             pages: Pages statiques
-            orgas: Associatif
+            orgas: Mes associations
 
         # Sex
         sex:
