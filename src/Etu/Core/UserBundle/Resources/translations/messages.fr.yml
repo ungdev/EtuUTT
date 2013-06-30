@@ -236,6 +236,7 @@ user:
             completion: Votre profil est incomplet. Complètez-le entièrement pour obtenir un badge !
             viewPublic: Voir mon profil public
             informations: Mes informations
+            unknown: Non renseigné
             name: Nom
             mail: E-mail
             sex: Sexe
@@ -248,7 +249,6 @@ user:
             surname: Surnom
             jadis: Jadis
             passions: Passions
-            trombi_not_customized: Vous n'avez pas encore personnalisé votre fiche trominoscope. N'hésitez pas à le faire dès que possible !
             badges: Badges
             no_badge: Aucun badge pour le moment. Participez pour en gagner !
         profileAvatar:

@@ -57,12 +57,12 @@
 					<div class="profile-infos-value">{{ app.user.mail }}</div>
 				</div>
 
-				{% if app.user.sex %}
-					<div class="subblock">
-						<div class="profile-infos-label hidden-for-phones">
-							{{ 'user.profile.profile.sex'|trans }}
-						</div>
-						<div class="profile-infos-value">
+				<div class="subblock">
+					<div class="profile-infos-label hidden-for-phones">
+						{{ 'user.profile.profile.sex'|trans }}
+					</div>
+					<div class="profile-infos-value">
+						{% if app.user.sex %}
 							{{ ('base.user.sex.'~app.user.sex)|trans }}
 
 							{% if is_private(app.user.sexPrivacy) %}
@@ -70,34 +70,38 @@
 							{% else %}
 								<i class="icon-globe" title="{{ 'user.privacy.public'|trans }}"></i>
 							{% endif %}
-						</div>
-						<div class="clear"></div>
+						{% else %}
+							<em class="muted">{{ 'user.profile.profile.unknown'|trans }}</em>
+						{% endif %}
 					</div>
-				{% endif %}
+					<div class="clear"></div>
+				</div>
 
-				{% if app.user.personnalMail %}
-					<div class="subblock">
-						<div class="profile-infos-label hidden-for-phones">
-							{{ 'user.profile.profile.personnalMail'|trans }}
-						</div>
-						<div class="profile-infos-value">
+				<div class="subblock">
+					<div class="profile-infos-label hidden-for-phones">
+						{{ 'user.profile.profile.personnalMail'|trans }}
+					</div>
+					<div class="profile-infos-value">
+						{% if app.user.personnalMail %}
 							{{ app.user.personnalMail }}
 							{% if is_private(app.user.personnalMailPrivacy) %}
 								<i class="icon-lock" title="{{ 'user.privacy.private'|trans }}"></i>
 							{% else %}
 								<i class="icon-globe" title="{{ 'user.privacy.public'|trans }}"></i>
 							{% endif %}
-						</div>
-						<div class="clear"></div>
+						{% else %}
+							<em class="muted">{{ 'user.profile.profile.unknown'|trans }}</em>
+						{% endif %}
 					</div>
-				{% endif %}
+					<div class="clear"></div>
+				</div>
 
-				{% if app.user.phoneNumber %}
-					<div class="subblock">
-						<div class="profile-infos-label hidden-for-phones">
-							{{ 'user.profile.profile.phoneNumber'|trans }}
-						</div>
-						<div class="profile-infos-value">
+				<div class="subblock">
+					<div class="profile-infos-label hidden-for-phones">
+						{{ 'user.profile.profile.phoneNumber'|trans }}
+					</div>
+					<div class="profile-infos-value">
+						{% if app.user.phoneNumber %}
 							{{ app.user.phoneNumber }}
 
 							{% if is_private(app.user.phoneNumberPrivacy) %}
@@ -105,17 +109,19 @@
 							{% else %}
 								<i class="icon-globe" title="{{ 'user.privacy.public'|trans }}"></i>
 							{% endif %}
-						</div>
-						<div class="clear"></div>
+						{% else %}
+							<em class="muted">{{ 'user.profile.profile.unknown'|trans }}</em>
+						{% endif %}
 					</div>
-				{% endif %}
+					<div class="clear"></div>
+				</div>
 
-				{% if app.user.adress %}
-					<div class="subblock">
-						<div class="profile-infos-label hidden-for-phones">
-							{{ 'user.profile.profile.adress'|trans }}
-						</div>
-						<div class="profile-infos-value">
+				<div class="subblock">
+					<div class="profile-infos-label hidden-for-phones">
+						{{ 'user.profile.profile.adress'|trans }}
+					</div>
+					<div class="profile-infos-value">
+						{% if app.user.adress or app.user.postalCode or app.user.city or app.user.country %}
 							{{ app.user.adress }}
 							{% if is_private(app.user.adressPrivacy) %}
 								<i class="icon-lock" title="{{ 'user.privacy.private'|trans }}"></i>
@@ -146,17 +152,19 @@
 							{% else %}
 								<i class="icon-globe" title="{{ 'user.privacy.public'|trans }}"></i>
 							{% endif %}
-						</div>
-						<div class="clear"></div>
+						{% else %}
+							<em class="muted">{{ 'user.profile.profile.unknown'|trans }}</em>
+						{% endif %}
 					</div>
-				{% endif %}
+					<div class="clear"></div>
+				</div>
 
-				{% if app.user.birthday %}
-					<div class="subblock">
-						<div class="profile-infos-label hidden-for-phones">
-							{{ 'user.profile.profile.birthday'|trans }}
-						</div>
-						<div class="profile-infos-value">
+				<div class="subblock">
+					<div class="profile-infos-label hidden-for-phones">
+						{{ 'user.profile.profile.birthday'|trans }}
+					</div>
+					<div class="profile-infos-value">
+						{% if app.user.birthday %}
 							{{ app.user.birthday|date('d/m/Y') }}
 
 							{% if is_private(app.user.birthdayPrivacy) %}
@@ -172,10 +180,12 @@
 							{% else %}
 								<i class="icon-globe" title="{{ 'user.privacy.public'|trans }}"></i>
 							{% endif %})
-						</div>
-						<div class="clear"></div>
+						{% else %}
+							<em class="muted">{{ 'user.profile.profile.unknown'|trans }}</em>
+						{% endif %}
 					</div>
-				{% endif %}
+					<div class="clear"></div>
+				</div>
 
 				<p class="profile-block-action">
 					<a href="{{ path('user_profile_edit') }}" class="btn">
@@ -187,66 +197,50 @@
 			<div class="span6 block">
 				<div class="block-title">{{ 'user.profile.profile.trombi'|trans }}</div>
 
-				{% set first = true %}
-
-				{% if app.user.surnom %}
-					{% set first = false %}
-
-					<div class="subblock subblock-first">
-						<div class="profile-infos-label hidden-for-phones">
-							{{ 'user.profile.profile.surname'|trans }}
-						</div>
-						<div class="profile-infos-value">
+				<div class="subblock subblock-first">
+					<div class="profile-infos-label hidden-for-phones">
+						{{ 'user.profile.profile.surname'|trans }}
+					</div>
+					<div class="profile-infos-value">
+						{% if app.user.surnom %}
 							{{ app.user.surnom }}
 							<i class="icon-globe" title="{{ 'user.privacy.public'|trans }}"></i>
-						</div>
-						<div class="clear"></div>
+						{% else %}
+							<em class="muted">{{ 'user.profile.profile.unknown'|trans }}</em>
+						{% endif %}
 					</div>
-				{% endif %}
+					<div class="clear"></div>
+				</div>
 
-				{% if app.user.jadis %}
-					{% if first %}
-						{% set first = false %}
-						<div class="subblock subblock-first">
-					{% else %}
-						<div class="subblock">
-					{% endif %}
-
-						<div class="profile-infos-label hidden-for-phones">
-							{{ 'user.profile.profile.jadis'|trans }}
-						</div>
-						<div class="profile-infos-value">
+				<div class="subblock">
+					<div class="profile-infos-label hidden-for-phones">
+						{{ 'user.profile.profile.jadis'|trans }}
+					</div>
+					<div class="profile-infos-value">
+						{% if app.user.jadis %}
 							{{ app.user.jadis|limit(100) }}
 							<i class="icon-globe" title="{{ 'user.privacy.public'|trans }}"></i>
-						</div>
-						<div class="clear"></div>
+						{% else %}
+							<em class="muted">{{ 'user.profile.profile.unknown'|trans }}</em>
+						{% endif %}
 					</div>
-				{% endif %}
+					<div class="clear"></div>
+				</div>
 
-				{% if app.user.passions %}
-					{% if first %}
-						{% set first = false %}
-						<div class="subblock subblock-first">
-					{% else %}
-						<div class="subblock">
-					{% endif %}
-
-						<div class="profile-infos-label hidden-for-phones">
-							{{ 'user.profile.profile.passions'|trans }}
-						</div>
-						<div class="profile-infos-value">
+				<div class="subblock">
+					<div class="profile-infos-label hidden-for-phones">
+						{{ 'user.profile.profile.passions'|trans }}
+					</div>
+					<div class="profile-infos-value">
+						{% if app.user.passions %}
 							{{ app.user.passions|limit(100) }}
 							<i class="icon-globe" title="{{ 'user.privacy.public'|trans }}"></i>
-						</div>
-						<div class="clear"></div>
+						{% else %}
+							<em class="muted">{{ 'user.profile.profile.unknown'|trans }}</em>
+						{% endif %}
 					</div>
-				{% endif %}
-
-				{% if not app.user.surnom and not app.user.jadis and not app.user.passions %}
-					<div class="subblock subblock-first">
-						{{ 'user.profile.profile.trombi_not_customized'|trans }}
-					</div>
-				{% endif %}
+					<div class="clear"></div>
+				</div>
 
 				<p class="profile-block-action">
 					<a href="{{ path('user_trombi_edit') }}" class="btn">
