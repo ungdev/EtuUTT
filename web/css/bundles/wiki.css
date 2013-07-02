@@ -63,3 +63,11 @@
 .wiki-nested-item-category-down {
   list-style-image: url('../../img/icons/arrow-down.png');
 }
+.wiki-breacrumb {
+  font-size: 11px;
+  margin: -10px 0 15px 20px;
+  padding: 0;
+}
+.wiki-nested-item-current {
+  font-weight: bold;
+}

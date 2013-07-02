@@ -1,7 +1,17 @@
 
+{% set currentCategory = breadcrumb[depth] %}
+
 <ul class="wiki-nested-list wiki-nested-list-depth-{{ depth }}">
 	{% for category in tree %}
-		<li class="wiki-nested-item wiki-nested-item-category-up {% if not category.hasChildren %}wiki-nested-item-category-no-child{% endif %}">
+		<li class="
+			wiki-nested-item wiki-nested-item-category-up
+			{% if not category.hasChildren %}
+				wiki-nested-item-category-no-child
+			{% endif %}
+			{% if currentCategory.id == category.id %}
+				wiki-nested-item-category-current
+			{% endif %}
+		">
 			<a href="#" data-state="up" data-depth="{{ category.depth + 1 }}" class="wiki-nested-link-category">
 				{{ category.title }}
 			</a>

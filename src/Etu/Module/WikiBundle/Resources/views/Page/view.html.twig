@@ -70,6 +70,7 @@
 					{% include 'EtuModuleWikiBundle:Tree:children.html.twig' with {
 						'tree': tree.categories,
 						'currentPage': page,
+						'breadcrumb': breadcrumb,
 						'orga': orga,
 						'depth': 0
 					} %}
@@ -88,6 +89,11 @@
 
 			<div class="span9">
 				<h3>{{ page.title }}</h3>
+				<p class="wiki-breacrumb muted">
+					{% for category in breadcrumb %}
+						> {{ category.title }}
+					{% endfor %}
+				</p>
 				{{ page.revision.body|raw }}
 			</div>
 		</div>
