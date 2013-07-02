@@ -65,7 +65,7 @@
 						</li>
 					{% endif %}
 
-					{% if membership.hasPermission('edit_desc') %}
+					{% if membership.hasPermission('daymail') and etu.modules.isEnabled('daymail') %}
 						<li>
 							<a href="{{ path('memberships_orga_daymail', {'login': membership.organization.login}) }}">
 								{{ 'user.memberships.menu.daymail'|trans }}
