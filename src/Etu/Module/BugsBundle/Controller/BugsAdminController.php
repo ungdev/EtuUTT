@@ -2,6 +2,7 @@
 
 namespace Etu\Module\BugsBundle\Controller;
 
+use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Core\UserBundle\Entity\User;
@@ -328,8 +329,20 @@ class BugsAdminController extends Controller
 		);
 
 		$em->persist($comment);
-
 		$em->flush();
+
+		// Send notifications to subscribers
+		$notif = new Notification();
+
+		$notif
+			->setModule($this->getCurrentBundle()->getIdentifier())
+			->setHelper('bugs_closed')
+			->setAuthorId($this->getUser()->getId())
+			->setEntityType('issue')
+			->setEntityId($bug->getId())
+			->addEntity($comment);
+
+		$this->getNotificationsSender()->send($notif);
 
 		$this->get('session')->getFlashBag()->set('message', array(
 			'type' => 'success',

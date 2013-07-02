@@ -105,3 +105,6 @@ bugs:
             two: %first% et %second% ont signalé de nouveaux bugs
             more_single: %first%, %second% et 1 autre personne ont signalé de nouveaux bugs
             more_many: %first%, %second% et %count% autres personnes ont signalé de nouveaux bugs
+        closed:
+            by: Le bug %bugName% a été résolu par %userName%
+            anyone: Le bug %bugName% a été résolu
