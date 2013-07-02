@@ -87,6 +87,9 @@ class BugsAdminController extends Controller
 			$em->persist($comment);
 			$em->flush();
 
+			// Subscribe automatically the user at the issue
+			$this->getSubscriptionsManager()->subscribe($assignee, 'issue', $bug->getId());
+
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
 				'message' => 'bugs.bugs_admin.assign.success'

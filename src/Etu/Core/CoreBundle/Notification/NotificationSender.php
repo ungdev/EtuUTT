@@ -30,7 +30,7 @@ class NotificationSender
 	 * @param bool         $tryCompile
 	 * @return bool
 	 */
-	public function send(Notification $notif, $tryCompile = true)
+	public function send(Notification $notif, $tryCompile = false)
 	{
 		/** @var $em EntityManager */
 		$em = $this->doctrine->getManager();
