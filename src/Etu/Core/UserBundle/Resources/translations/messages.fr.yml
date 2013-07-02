@@ -321,6 +321,7 @@ user:
             adress: Adresse
             birthday: Date de naissance
             age: Age
+            age_display: %age% ans
             surname: Surnom
             jadis: Jadis
             passions: Passions

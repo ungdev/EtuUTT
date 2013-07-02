@@ -224,15 +224,13 @@
 				{% endif %}
 
 				{% if
-						(is_public(user.adressPrivacy)
-						or	is_public(user.postalCodePrivacy)
-						or	is_public(user.cityPrivacy)
-						or	is_public(user.countryPrivacy))
-					and
-						user.adress
-						or	user.postalCode
-						or	user.city
-						or	user.country
+					(user.adress and is_public(user.adressPrivacy))
+					or
+					(user.postalCode and is_public(user.postalCodePrivacy))
+					or
+					(user.city and is_public(user.cityPrivacy))
+					or
+					(user.country and is_public(user.countryPrivacy))
 				%}
 					<div class="view-group">
 						<div class="view-icon"><i class="icon-map-marker"></i></div>
@@ -275,7 +273,7 @@
 						<div class="view-icon"><i class="icon-calendar"></i></div>
 						<div class="view-label">{{ 'user.profile.view.age'|trans }}</div>
 						<div class="view-value">
-							{{ 'user.profile.age'|trans({'%age%': user.age}) }}
+							{{ 'user.profile.view.age_display'|trans({'%age%': user.age}) }}
 						</div>
 					</div>
 				{% endif %}
