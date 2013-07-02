@@ -696,7 +696,8 @@ class PageController extends Controller
 		return array(
 			'page' => $page,
 			'orga' => $page->getOrga(),
-			'tree' => $tree->getNestedTree()
+			'tree' => $tree->getNestedTree(),
+			'breadcrumb' => $tree->getBreadcrumbFor($page),
 		);
 	}
 

@@ -25,13 +25,13 @@ class AppKernel extends EtuKernel
 	     * Basic bundles, required to load the website
 	     */
         $bundles = array(
-
 	        // Symfony
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(), // Symfony
             new Symfony\Bundle\SecurityBundle\SecurityBundle(), // Security management (authorization and authentication)
             new Symfony\Bundle\TwigBundle\TwigBundle(), // Tempalting engine
             new Symfony\Bundle\MonologBundle\MonologBundle(), // Logger library
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(), // Mailing library
+	        new Symfony\Bundle\AsseticBundle\AsseticBundle(), // Assets management
 
 	        // Doctrine
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(), // Doctrine ORM
@@ -42,9 +42,6 @@ class AppKernel extends EtuKernel
 	        new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
 	        // JMS libraries
-            new JMS\AopBundle\JMSAopBundle(),
-            new JMS\DiExtraBundle\JMSDiExtraBundle($this), // Add features to the default dependency injection system
-	        new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(), // Add security firewalls possibility
 	        new JMS\SerializerBundle\JMSSerializerBundle(), // Serializer for XML, JSON, YAML, ...
 
 	        // Knp libraries

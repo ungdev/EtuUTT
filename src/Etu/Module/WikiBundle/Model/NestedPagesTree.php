@@ -83,4 +83,21 @@ class NestedPagesTree
 
 		return $children;
 	}
+
+	/**
+	 * @param Page $page
+	 * @return Category[]
+	 */
+	public function getBreadcrumbFor(Page $page)
+	{
+		$category = $page->getCategory();
+		$breadcrumb = array($category);
+
+		while ($category->getParent() instanceof Category) {
+			$category = $category->getParent();
+			$breadcrumb[] = $category;
+		}
+
+		return array_reverse($breadcrumb);
+	}
 }
