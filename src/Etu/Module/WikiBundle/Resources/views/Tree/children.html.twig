@@ -1,5 +1,9 @@
 
-{% set currentCategory = breadcrumb[depth] %}
+{% if breadcrumb is defined %}
+    {% set currentCategory = breadcrumb[depth] %}
+{% else %}
+    {% set currentCategory = false %}
+{% endif %}
 
 <ul class="wiki-nested-list wiki-nested-list-depth-{{ depth }}">
 	{% for category in tree %}
@@ -8,7 +12,8 @@
 			{% if not category.hasChildren %}
 				wiki-nested-item-category-no-child
 			{% endif %}
-			{% if currentCategory.id == category.id %}
+
+			{% if currentCategory and currentCategory.id == category.id %}
 				wiki-nested-item-category-current
 			{% endif %}
 		">
