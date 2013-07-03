@@ -17,11 +17,19 @@ use Symfony\Component\Validator\Constraints\DateTime;
 class MainController extends Controller
 {
 	/**
-	 * @Route("/events/month/{month}", name="events_month")
+	 * @Route("/events/{month}/{category}", defaults={"category" = "all"}, name="events_index")
 	 * @Template()
 	 */
-	public function monthAction($month = 'current')
+	public function indexAction($category = 'all', $month = 'current')
 	{
+		$availableCategories = Event::$categories;
+
+		array_unshift($availableCategories, 'all');
+
+		if (! in_array($category, $availableCategories)) {
+			throw $this->createNotFoundException(sprintf('Invalid category "%s"', $category));
+		}
+
 		$currentMonth = array(
 			'month' => date('m'),
 			'year' => date('Y'),
@@ -70,74 +78,16 @@ class MainController extends Controller
 			$monthsList[] = $m;
 		}
 
+		$keys = array_flip($availableCategories);
+
 		return array(
 			'month' => $month,
 			'monthsList' => $monthsList,
 			'previous' => $previous,
 			'next' => $next,
-		);
-	}
-
-	/**
-	 * @Route("/events/{week}", name="events_index")
-	 * @Template()
-	 */
-	public function indexAction($week = 'current')
-	{
-		$currentWeek = array(
-			'week' => date('W'),
-			'year' => date('Y'),
-		);
-
-		if ($week == 'current' || ! preg_match('/^[0-9]{2}-[0-9]{4}$/', $week)) {
-			$week = $currentWeek;
-		} else {
-			$week = explode('-', $week);
-			$week = \DateTime::createFromFormat('z-Y', intval(($week[0] - 1) * 7.0193).'-'.$week[1]);
-
-			if (! $week) {
-				$week = $currentWeek;
-			} else {
-				$week = array(
-					'week' => $week->format('W'),
-					'year' => $week->format('Y'),
-				);
-			}
-		}
-
-		/** @var $week Week */
-		$week = $this->get('calendr')->getWeek($week['year'], $week['week']);
-
-		$previous = clone $week->getBegin();
-		$previous->sub(new \DateInterval('P1W'));
-
-		$next = clone $week->getBegin();
-		$next->add(new \DateInterval('P1W'));
-
-		$weeksList = array();
-
-		for ($i = 1; $i <= 5; $i++) {
-			$w = clone $week->getBegin();
-			$w->sub(new \DateInterval('P'.$i.'W'));
-
-			$weeksList[] = $w;
-		}
-
-		$weeksList = array_reverse($weeksList);
-		$weeksList[] = $week->getBegin();
-
-		for ($i = 1; $i <= 5; $i++) {
-			$w = clone $week->getBegin();
-			$w->add(new \DateInterval('P'.$i.'W'));
-
-			$weeksList[] = $w;
-		}
-
-		return array(
-			'week' => $week,
-			'weeksList' => $weeksList,
-			'previous' => $previous,
-			'next' => $next,
+			'availableCategories' => $availableCategories,
+			'currentCategory' => $category,
+			'currentCategoryId' => $keys[$category],
 		);
 	}
 
@@ -171,21 +121,8 @@ class MainController extends Controller
 			)), 301);
 		}
 
-		$new = new Event(
-			null,
-			\DateTime::createFromFormat('d-m-Y H:i', '26-06-2013 19:00'),
-			\DateTime::createFromFormat('d-m-Y H:i', '26-06-2013 22:00')
+		return array(
+			'event' => $event
 		);
-		$new->setTitle('Nocturne de fin d\'année')
-			->setCategory(Event::CATEGORY_NIGHT)
-			->setLocation('UTT')
-			->setIsAllDay(false)
-			->setOrga($event->getOrga())
-			->setDescription('Test d\'évènement : Nocturne de fin d\'année');
-
-		$em->persist($new);
-		$em->flush();
-
-		return array();
 	}
 }

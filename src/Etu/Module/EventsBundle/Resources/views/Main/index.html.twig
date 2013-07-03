@@ -3,32 +3,52 @@
 {% block title %}{{ 'events.main.index.title'|trans }}{% endblock %}
 
 {% block sidebar %}
-	{{ render_subscribe_button('event', 0) }}
+	{% if app.user %}
+		{% if currentCategory == 'all' %}
+			{{ render_subscribe_button('event', 0) }}
+		{% else %}
+			{{ render_subscribe_button('event-category', currentCategoryId) }}
+		{% endif %}
+	{% endif %}
+
 	{{ parent() }}
 {% endblock %}
 
 {% block content %}
-	{% set events = calendr_events(week) %}
+	{% set events = calendr_events(month) %}
 
-	<div class="padding20-all">
+	<ul class="nav nav-tabs page-tabs">
+		{% for availableCategory in availableCategories %}
+		<li>
+			<a href="{{ path('events_index', {'category': availableCategory, 'month': month.begin.format('m-Y')}) }}">
+				{% if availableCategory == currentCategory %}
+					<strong>{{ ('events.categories.'~availableCategory)|trans }}</strong>
+				{% else %}
+					{{ ('events.categories.'~availableCategory)|trans }}
+				{% endif %}
+			</a>
+		</li>
+		{% endfor %}
+	</ul>
+
+	<div class="padding20-sides">
 		<div class="chooser row-fluid">
 			<div class="span1">
-				<a href="{{ path('events_index', {'week': previous|date('W-Y')}) }}" class="btn pull-left"> << </a>
+				<a href="{{ path('events_index', {'month': previous|date('m-Y')}) }}" class="btn pull-left"> << </a>
 			</div>
 			<div class="span2"></div>
 			<div class="span6 chooser-current">
 				<div class="btn-group">
 					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-						{{ ('events.main.months.'~week.begin.format('M')|lower)|trans }} {{ week.begin.format('Y') }},
-						{{ 'events.main.week.week'|trans }} {{ week.begin.format('W') }}
+						{{ ('events.main.months.'~month.begin.format('M')|lower)|trans }} {{ month.begin.format('Y') }}
 						<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
-						{% for w in weeksList %}
+						{% for m in monthsList %}
 							<li>
-								<a href="{{ path('events_index', {'week': w|date('W-Y')}) }}">
-									{{ ('events.main.months.'~w.format('M')|lower)|trans }} {{ w.format('Y') }},
-									{{ 'events.main.week.week'|trans }} {{ w.format('W') }}
+								<a href="{{ path('events_index', {'month': m|date('m-Y')}) }}">
+									{{ ('events.main.months.'~m.format('M')|lower)|trans }}
+									{{ m.format('Y') }}
 								</a>
 							</li>
 						{% endfor %}
@@ -37,26 +57,15 @@
 			</div>
 			<div class="span3 chooser-type">
 				<div class="btn-group">
-					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-						{{ 'events.main.menu.week'|trans }}
-						<span class="caret"></span>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a href="{{ path('events_index') }}">{{ 'events.main.menu.week'|trans }}</a></li>
-						<li><a href="{{ path('events_month') }}">{{ 'events.main.menu.month'|trans }}</a></li>
-					</ul>
-				</div>
-				<div class="btn-group">
-					<a href="{{ path('events_index', {'week': next|date('W-Y')}) }}" class="btn"> >> </a>
+					<a href="{{ path('events_index', {'month': next|date('m-Y')}) }}" class="btn"> >> </a>
 				</div>
 			</div>
 		</div>
 
 		<br />
 
-		<table class="table table-bordered table-hover events-table events-table-week">
+		<table class="table table-bordered table-hover events-table events-table-month">
 			<tr>
-				<th></th>
 				<th>{{ 'events.main.days.mon'|trans }}</th>
 				<th>{{ 'events.main.days.tue'|trans }}</th>
 				<th>{{ 'events.main.days.wed'|trans }}</th>
@@ -66,35 +75,30 @@
 				<th>{{ 'events.main.days.sun'|trans }}</th>
 			</tr>
 
-			<tr>
-				<td>
-					{% for i in 0..24 %}
-						{{ i }}:00<br />
+			{% for week in month %}
+				<tr>
+					{% for day in week %}
+						<td>
+							{% if month.contains(day.begin) %}
+								<div class="event-day">{{ day.begin.format('d') }}</div>
+
+								<div class="clear"></div>
+
+								{% for event in events.find(day) %}
+									{% if currentCategory == 'all' or event.category == currentCategory %}
+										<a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}"
+										   class="event event-{{ event.category }} tip"
+										   title="<strong>{{ event.title }}</strong><br />
+										   {{ 'events.main.index.organised_by'|trans({'%orga%': event.orga.name}) }}"></a>
+									{% endif %}
+								{% endfor %}
+							{% else %}
+								&nbsp;
+							{% endif %}
+						</td>
 					{% endfor %}
-				</td>
-				{% for day in week %}
-					<td>
-						{% if week.contains(day.begin) %}
-							<!--<div class="event-day">{{ day.begin.format('d') }}</div>
-
-							<div class="clear"></div>
-
-							<hr />-->
-
-							{% for event in events.find(day) %}
-								<a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}"
-								   class="event-week event-{{ event.category }} event-start-{{ event.begin|date('H') }} tip"
-								   title="<strong>{{ event.title }}</strong><br />
-								   {{ 'events.main.index.organised_by'|trans({'%orga%': event.orga.name}) }}">
-									{{ event.title }}
-							  	</a>
-							{% endfor %}
-						{% else %}
-							&nbsp;
-						{% endif %}
-					</td>
-				{% endfor %}
-			</tr>
+				</tr>
+			{% endfor %}
 
 		</table>
 	</div>

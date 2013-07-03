@@ -1,5 +1,13 @@
 
 events:
+    categories:
+        culture: Culturel
+        sport: Sport
+        formation: Formation
+        soiree: Soirées
+        autre: Autre
+        all: Tous les évènements
+
     main:
         days:
             mon: Lundi

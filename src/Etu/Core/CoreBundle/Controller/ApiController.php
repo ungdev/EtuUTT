@@ -20,7 +20,7 @@ class ApiController extends Controller
 	/**
 	 * @Route(
 	 *      "/follow/{entityType}/{entityId}",
-	 *      requirements={"entityType"="[a-z]+", "entityId" = "\d+"},
+	 *      requirements={"entityType"="[a-z\-_]+", "entityId" = "\d+"},
 	 *      defaults={"_format"="json"},
 	 *      name="notifs_subscribe",
 	 *      options={"expose"=true}
@@ -85,7 +85,7 @@ class ApiController extends Controller
 	/**
 	 * @Route(
 	 *      "/unfollow/{entityType}/{entityId}",
-	 *      requirements={"entityType"="[a-z]+", "entityId" = "\d+"},
+	 *      requirements={"entityType"="[a-z\-_]+", "entityId" = "\d+"},
 	 *      defaults={"_format"="json"},
 	 *      name="notifs_unsubscribe",
 	 *      options={"expose"=true}

@@ -2,6 +2,11 @@
 
 {% block title %}{{ 'events.main.view.title'|trans }}{% endblock %}
 
+{% block sidebar %}
+	{{ render_subscribe_button('event', 0) }}
+	{{ parent() }}
+{% endblock %}
+
 {% block content %}
 	<ul class="nav nav-tabs page-tabs">
 		<li>

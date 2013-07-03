@@ -13,8 +13,8 @@ use Etu\Core\UserBundle\Entity\Organization;
  */
 class Event extends AbstractEvent
 {
-	const CATEGORY_CULTURE = 'culturel';
-	const CATEGORY_SPORT = 'sportif';
+	const CATEGORY_CULTURE = 'culture';
+	const CATEGORY_SPORT = 'sport';
 	const CATEGORY_FORMATION = 'formation';
 	const CATEGORY_NIGHT = 'soiree';
 	const CATEGORY_OTHER = 'autre';
@@ -86,6 +86,20 @@ class Event extends AbstractEvent
 	/**
 	 * @var string
 	 *
+	 * @ORM\Column(name="latitude", type="string")
+	 */
+	protected $latitude;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="longitude", type="string")
+	 */
+	protected $longitude;
+
+	/**
+	 * @var string
+	 *
 	 * @ORM\Column(name="description", type="text")
 	 */
 	protected $description;
@@ -101,7 +115,7 @@ class Event extends AbstractEvent
 	/**
 	 * Constructor
 	 *
-	 * @param integer $uid
+	 * @param $uid
 	 * @param \DateTime $start
 	 * @param \DateTime $end
 	 */
@@ -229,8 +243,8 @@ class Event extends AbstractEvent
 	}
 
 	/**
-	 * @param string $location
-	 * @return Event
+	 * @param $location
+	 * @return $this
 	 */
 	public function setLocation($location)
 	{
@@ -245,6 +259,38 @@ class Event extends AbstractEvent
 	public function getLocation()
 	{
 		return $this->location;
+	}
+
+	/**
+	 * @param string $latitude
+	 */
+	public function setLatitude($latitude)
+	{
+		$this->latitude = $latitude;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLatitude()
+	{
+		return $this->latitude;
+	}
+
+	/**
+	 * @param string $longitude
+	 */
+	public function setLongitude($longitude)
+	{
+		$this->longitude = $longitude;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLongitude()
+	{
+		return $this->longitude;
 	}
 
 	/**
