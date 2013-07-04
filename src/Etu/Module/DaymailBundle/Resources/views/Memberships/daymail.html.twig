@@ -57,7 +57,7 @@
 					</li>
 					{% endif %}
 
-					{% if membership.hasPermission('edit_desc') %}
+					{% if membership.hasPermission('events') %}
 					<li>
 						<a href="{{ path('memberships_orga_events', {'login': membership.organization.login}) }}">
 							{{ 'user.memberships.menu.event'|trans }}
@@ -74,7 +74,7 @@
 					{% endif %}
 				</ul>
 
-				<form method="post">
+				<form method="post" action="">
 					{{ form_errors(form) }}
 
 					<div class="control-group">

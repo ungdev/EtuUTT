@@ -86,20 +86,6 @@ class Event extends AbstractEvent
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="latitude", type="string")
-	 */
-	protected $latitude;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="longitude", type="string")
-	 */
-	protected $longitude;
-
-	/**
-	 * @var string
-	 *
 	 * @ORM\Column(name="description", type="text")
 	 */
 	protected $description;

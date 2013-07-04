@@ -135,7 +135,7 @@ class MembershipsController extends Controller
 
 		$request = $this->getRequest();
 
-		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid() && $canEdit) {
+		if ($request->getMethod() == 'POST' && $form->submit($request)->isValid() && $canEdit) {
 			$daymailPart->setBody(RedactorJsEscaper::escape(
 				str_replace('<img ', '<img style="max-width: 600px" ', $daymailPart->getBody())
 			));

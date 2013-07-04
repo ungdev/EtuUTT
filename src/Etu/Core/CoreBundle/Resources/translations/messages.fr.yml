@@ -87,6 +87,13 @@ core:
         indexAnonymous:
             title: Accueil
             welcome: Bienvenue sur le site étudiant de l'Université de Technologie de Troyes
+            desc: |
+                Le site étudiant est le site qui connecte la communauté des UTTiens.<br />
+                Il offre de nombreux services aux étudiants de l'UTT en complément des services officiels pour faciliter
+                leur intégration et leur vie étudiante.
+            events: Prochainement à l'UTT
+            date: Le %date%
+            allEvents: Tous les évènements
         changeLocale:
             confirm: Vous avez bien changé de langue
 

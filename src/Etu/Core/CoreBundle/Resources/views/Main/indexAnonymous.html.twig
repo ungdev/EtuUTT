@@ -9,29 +9,41 @@
 		<h3>{{ 'core.main.indexAnonymous.welcome'|trans }}</h3>
 
 		<p>
-			Le site étudiant est le site qui connecte la communauté des UTTiens.<br />
-			Il offre de nombreux services aux étudiants de l'UTT en complément des services officiels pour faciliter
-			leur intégration et leur vie étudiante.
+			{{ 'core.main.indexAnonymous.desc'|trans|raw }}
 		</p>
 		<br />
 		<div class="row-fluid">
+			{% if etu.modules.isEnabled('events') %}
 			<div class="span4">
-				<h4>Prochainement à l'UTT</h4>
+				<h4>{{ 'core.main.indexAnonymous.events'|trans }}</h4>
 
-				<div class="well">
-					<h5>
-						Le Gala UTT !
-						<small class="pull-right">Le 18 mai</small>
-					</h5>
+				{% for event in events %}
+					<div class="well">
+						<h5>
+							<a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}">
+								{{ event.title|limit(27) }}
+							</a>
+							<small class="pull-right">
+								{{ 'core.main.indexAnonymous.date'|trans({'%date%': event.begin|date('d/m/Y')}) }}
+							</small>
+						</h5>
 
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, consequuntur culpa delectus
-						eaque esse inventore iure nulla optio quaerat quam, quo, repudiandae ullam. Adipisci dicta
-						dolorem expedita quos reiciendis tenetur.
-					</p>
-				</div>
+						<p>
+							{{ event.description|limit(100)|raw }}
+						</p>
+					</div>
+				{% endfor %}
+
+				<p class="pull-right">
+					<a href="{{ path('events_index') }}">
+						{{ 'core.main.indexAnonymous.allEvents'|trans }}
+					</a>
+				</p>
 			</div>
 			<div class="span8">
+			{% else %}
+			<div class="span12">
+			{% endif %}
 				<h4>Actualités</h4>
 
 				<div class="well">

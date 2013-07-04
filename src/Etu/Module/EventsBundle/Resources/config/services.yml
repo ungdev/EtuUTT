@@ -1,7 +1,11 @@
 
-parameters: ~
+parameters:
+    etu.notifs.event_created_all.class: Etu\Module\EventsBundle\Notification\Helper\EventCreatedAllHelper
+    etu.notifs.event_created_category.class: Etu\Module\EventsBundle\Notification\Helper\EventCreatedCategoryHelper
+    etu.notifs.event_edited.class: Etu\Module\EventsBundle\Notification\Helper\EventEditedHelper
 
 services:
+
     events_repository:
         class:           Doctrine\ORM\EntityRepository
         factory_service: doctrine.orm.default_entity_manager
@@ -9,3 +13,23 @@ services:
         arguments:       ['EtuModuleEventsBundle:Event']
         tags:
             - { name: calendr.event_provider }
+
+
+    # Notifications helper
+    etu.notifs.event_created_all:
+        class: %etu.notifs.event_created_all.class%
+        arguments: [@twig]
+        tags:
+            - { name: etu.notifs_helper }
+
+    etu.notifs.event_created_category:
+        class: %etu.notifs.event_created_category.class%
+        arguments: [@twig]
+        tags:
+            - { name: etu.notifs_helper }
+
+    etu.notifs.event_edited:
+        class: %etu.notifs.event_edited.class%
+        arguments: [@twig]
+        tags:
+            - { name: etu.notifs_helper }

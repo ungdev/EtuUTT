@@ -50,6 +50,32 @@ class AdminController extends Controller
 		// Modules
 		/** @var $modulesManager ModulesManager */
 		$modulesManager = $this->get('etu.core.modules_manager');
+		$modules = $modulesManager->getModules();
+
+		/** @var $module Module */
+		foreach ($modules as $module) {
+			$modules->get($module->getIdentifier())->needed = false;
+			$modules->get($module->getIdentifier())->neededBy = array();
+			$modules->get($module->getIdentifier())->canBeEnabled = true;
+			$modules->get($module->getIdentifier())->need = array();
+		}
+
+		/** @var $module Module */
+		foreach ($modules as $module) {
+			if ($module->isEnabled()) {
+				foreach ($module->getRequirements() as $requirement) {
+					$modules->get($requirement)->needed = true;
+					$modules->get($requirement)->neededBy[] = $module->getTitle();
+				}
+			}
+
+			foreach ($module->getRequirements() as $requirement) {
+				if (! $modules->get($requirement)->isEnabled()) {
+					$modules->get($module->getIdentifier())->canBeEnabled = false;
+					$modules->get($module->getIdentifier())->need[] = $modules->get($requirement)->getTitle();
+				}
+			}
+		}
 
 		$request = $this->getRequest();
 
@@ -65,6 +91,12 @@ class AdminController extends Controller
 					$enabledModules[$key] = get_class($module);
 				} else {
 					unset($enabledModules[$key]);
+				}
+			}
+
+			foreach ($modules as $module) {
+				if ($module->needed) {
+					$enabledModules[] = get_class($module);
 				}
 			}
 
@@ -108,33 +140,6 @@ class AdminController extends Controller
 			));
 
 			return $this->redirect($this->generateUrl('admin_modules'));
-		}
-
-		$modules = $modulesManager->getModules();
-
-		/** @var $module Module */
-		foreach ($modules as $module) {
-			$modules->get($module->getIdentifier())->needed = false;
-			$modules->get($module->getIdentifier())->neededBy = array();
-			$modules->get($module->getIdentifier())->canBeEnabled = true;
-			$modules->get($module->getIdentifier())->need = array();
-		}
-
-		/** @var $module Module */
-		foreach ($modules as $module) {
-			if ($module->isEnabled()) {
-				foreach ($module->getRequirements() as $requirement) {
-					$modules->get($requirement)->needed = true;
-					$modules->get($requirement)->neededBy[] = $module->getTitle();
-				}
-			}
-
-			foreach ($module->getRequirements() as $requirement) {
-				if (! $modules->get($requirement)->isEnabled()) {
-					$modules->get($module->getIdentifier())->canBeEnabled = false;
-					$modules->get($module->getIdentifier())->need[] = $modules->get($requirement)->getTitle();
-				}
-			}
 		}
 
 		/** @var $module Module */

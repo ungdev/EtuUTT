@@ -1,0 +1,153 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ membership.organization.name }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<div class="padding20-all">
+		<div class="row-fluid">
+			<div class="span3 memberships">
+				<ul class="nav nav-list">
+					{% for m in memberships %}
+						<li{% if membership.id == m.id %} class="active"{% endif %}>
+							<a href="{{ path('memberships_orga', {'login': m.organization.login}) }}">
+								{{ m.organization.name }}<br />
+								{% if membership.id == m.id %}
+									{{ ('user.orga.role.'~m.role)|trans }}
+								{% else %}
+									<span class="muted">{{ ('user.orga.role.'~m.role)|trans }}</span>
+								{% endif %}
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+
+			<div class="span9">
+				<ul class="nav nav-tabs">
+					<li>
+						<a href="{{ path('memberships_orga', {'login': membership.organization.login}) }}">
+							{{ 'user.memberships.menu.position'|trans }}
+						</a>
+					</li>
+					{% if membership.hasPermission('edit_desc') %}
+						<li>
+							<a href="{{ path('memberships_orga_desc', {'login': membership.organization.login}) }}">
+								{{ 'user.memberships.menu.orga'|trans }}
+							</a>
+						</li>
+					{% endif %}
+
+					{% if membership.hasPermission('deleguate') %}
+						<li>
+							<a href="{{ path('memberships_orga_permissions', {'login': membership.organization.login}) }}">
+								{{ 'user.memberships.menu.permissions'|trans }}
+							</a>
+						</li>
+					{% endif %}
+
+					{% if membership.hasPermission('notify') %}
+						<li>
+							<a href="{{ path('memberships_orga_notifications', {'login': membership.organization.login}) }}">
+								{{ 'user.memberships.menu.notifications'|trans }}
+							</a>
+						</li>
+					{% endif %}
+
+					{% if membership.hasPermission('events') %}
+						<li class="active">
+							<a href="{{ path('memberships_orga_events', {'login': membership.organization.login}) }}">
+								{{ 'user.memberships.menu.event'|trans }}
+							</a>
+						</li>
+					{% endif %}
+
+					{% if membership.hasPermission('daymail') %}
+						<li>
+							<a href="{{ path('memberships_orga_daymail', {'login': membership.organization.login}) }}">
+								{{ 'user.memberships.menu.daymail'|trans }}
+							</a>
+						</li>
+					{% endif %}
+				</ul>
+
+				<p>
+					<a href="{{ path('memberships_orga_events', {'login': orga.login, 'month': event.begin|date('m-Y')}) }}">
+						<i class="icon-chevron-left"></i>
+						{{ 'events.memberships.edit.back'|trans }}
+					</a>
+				</p>
+
+				<form method="post" action="">
+					{{ form_errors(form) }}
+
+					<div class="control-group">
+						<label class="control-label">{{ 'events.memberships.create.title'|trans }}</label>
+						<div class="controls">
+							{{ form_widget(form.title, {'attr': {'class': 'span8'}}) }}
+						</div>
+						<span class="help-block">{{ form_errors(form.title) }}</span>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label">{{ 'events.memberships.create.category'|trans }}</label>
+						<div class="controls">
+							{{ form_widget(form.category) }}
+						</div>
+						<span class="help-block">{{ form_errors(form.category) }}</span>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label">{{ 'events.memberships.create.begin'|trans }}</label>
+						<div class="controls">
+							{{ form_widget(form.begin) }}
+						</div>
+						<span class="help-block">{{ form_errors(form.begin) }}</span>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label">{{ 'events.memberships.create.end'|trans }}</label>
+						<div class="controls">
+							{{ form_widget(form.end) }}
+						</div>
+						<span class="help-block">{{ form_errors(form.end) }}</span>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label">{{ 'events.memberships.create.location'|trans }}</label>
+						<div class="controls">
+							{{ form_widget(form.location) }}
+						</div>
+						<span class="help-block">{{ form_errors(form.location) }}</span>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label">
+							{{ 'events.memberships.create.description'|trans }}
+							<span class="pull-right">
+								{% include 'EtuModuleUploadBundle::upload_link.html.twig' %}
+							</span>
+						</label>
+						<div class="controls">
+							{{ form_widget(form.description) }}
+						</div>
+						<span class="help-block">{{ form_errors(form.description) }}</span>
+					</div>
+
+					<div class="control-group">
+						<div class="controls">
+							{{ form_rest(form) }}
+
+							<button type="submit" class="btn">
+								{{ 'events.memberships.create.submit'|trans }}
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

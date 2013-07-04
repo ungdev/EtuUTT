@@ -215,7 +215,30 @@ class MainController extends Controller
 	 */
 	protected function indexAnonymousAction()
 	{
-		return $this->render('EtuCoreBundle:Main:indexAnonymous.html.twig');
+		/** @var \Etu\Core\CoreBundle\Framework\Module\ModulesManager $modulesManager */
+		$modulesManager = $this->get('etu.core.modules_manager');
+
+		/** @var EntityManager $em */
+		$em = $this->getDoctrine()->getManager();
+		$events = array();
+
+		if ($modulesManager->getModuleByIdentifier('events')->isEnabled()) {
+			$events = $em->createQueryBuilder()
+				->select('e, o')
+				->from('EtuModuleEventsBundle:Event', 'e')
+				->leftJoin('e.orga', 'o')
+				->where('e.begin >= :begin')
+				->setParameter('begin', new \DateTime())
+				->orderBy('e.begin', 'ASC')
+				->addOrderBy('e.end', 'ASC')
+				->setMaxResults(5)
+				->getQuery()
+				->getResult();
+		}
+
+		return $this->render('EtuCoreBundle:Main:indexAnonymous.html.twig', array(
+			'events' => $events
+		));
 	}
 
 	/**

@@ -3,6 +3,7 @@
 namespace Etu\Module\EventsBundle;
 
 use Etu\Core\CoreBundle\Framework\Definition\Module;
+use Etu\Core\CoreBundle\Framework\Definition\OrgaPermission;
 
 class EtuModuleEventsBundle extends Module
 {
@@ -60,6 +61,16 @@ class EtuModuleEventsBundle extends Module
 	public function getDescription()
 	{
 		return 'Affichage et gestion des évènements';
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getAvailablePermissions()
+	{
+		return array(
+			new OrgaPermission('events', 'Peut gérer les évènements de l\'association'),
+		);
 	}
 
 	/**

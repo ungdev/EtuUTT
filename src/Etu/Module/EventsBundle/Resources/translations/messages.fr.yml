@@ -46,5 +46,34 @@ events:
             start: Début
             end: Fin
             location: Lieu
-            countYes: personne sera présente|seront présentes
-            countProbably: personne sera probablement présente|seront probblement présentes
+            countYes: personne sera présente|personnes seront présentes
+            countProbably: personne sera peut-être présente|personnes seront peut-être présentes
+            menu:
+                description: Description
+                subscribers: Participants
+
+    memberships:
+        events:
+            create: Créer un évènement
+        create:
+            back: Retour au calendrier
+            title: Titre
+            category: Categorie
+            begin: Début
+            end: Fin
+            location: Lieu
+            description: Description
+            submit: Créer l'évènement
+            confirm: L'évènement a bien été créé
+        edit:
+            back: Retour au calendrier
+            publicView: Voir la page de l'évènement
+            title: Titre
+            category: Categorie
+            begin: Début
+            end: Fin
+            location: Lieu
+            description: Description
+            submit: Modifier l'évènement
+            delete: Supprimer l'évènement
+            confirm: L'évènement a bien été modifié
