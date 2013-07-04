@@ -46,5 +46,13 @@ events:
             start: Début
             end: Fin
             location: Lieu
-            countYes: personne sera présente|seront présentes
-            countProbably: personne sera probablement présente|seront probblement présentes
+            countYes: personne sera présente|personnes seront présentes
+            countProbably: personne sera probablement présente|personnes seront probblement présentes
+            menu:
+                description: Description
+                subscribers: Participants
+        subscribers:
+            title: Participants à un évènement
+            yes: Oui, je viendrais
+            probably: Je viendrais probablement
+            no: Non, je ne viendrais pas

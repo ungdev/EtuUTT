@@ -150,4 +150,73 @@ class MainController extends Controller
 			'answersProbablyCount' => count($answersProbably),
 		);
 	}
+
+	/**
+	 * @Route("/event/{id}-{slug}/members", name="events_members")
+	 * @Template()
+	 */
+	public function membersAction($id, $slug)
+	{
+		if (! $this->getUserLayer()->isStudent()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $event Event */
+		$event = $em->createQueryBuilder()
+			->select('e, o')
+			->from('EtuModuleEventsBundle:Event', 'e')
+			->leftJoin('e.orga', 'o')
+			->where('e.uid = :id')
+			->setParameter('id', $id)
+			->setMaxResults(1)
+			->getQuery()
+			->getOneOrNullResult();
+
+		if (! $event) {
+			throw $this->createNotFoundException('Event #'.$id.' not found');
+		}
+
+		if (StringManipulationExtension::slugify($event->getTitle()) != $slug) {
+			return $this->redirect($this->generateUrl('events_view', array(
+				'id' => $id, 'slug' => StringManipulationExtension::slugify($event->getTitle())
+			)), 301);
+		}
+
+		/** @var $answers Answer[] */
+		$answers = $em->createQueryBuilder()
+			->select('a, u')
+			->from('EtuModuleEventsBundle:Answer', 'a')
+			->leftJoin('a.user', 'u')
+			->where('a.event = :id')
+			->setParameter('id', $event->getId())
+			->getQuery()
+			->getResult();
+
+		$answersYes = array();
+		$answersProbably = array();
+		$answersNo = array();
+
+		foreach ($answers as $answer) {
+			if ($answer->getAnswer() == Answer::ANSWER_YES) {
+				$answersYes[] = $answer;
+			} elseif ($answer->getAnswer() == Answer::ANSWER_PROBABLY) {
+				$answersProbably[] = $answer;
+			} else {
+				$answersNo[] = $answer;
+			}
+		}
+
+		return array(
+			'event' => $event,
+			'answersYesCount' => count($answersYes),
+			'answersProbablyCount' => count($answersProbably),
+			'answersNoCount' => count($answersNo),
+			'answersYes' => $answersYes,
+			'answersProbably' => $answersProbably,
+			'answersNo' => $answersNo,
+		);
+	}
 }
