@@ -41,3 +41,10 @@ events:
         view:
             title: Détail d'un évènement
             back: Retour au calendrier
+            in: Dans %category%
+            by: organisé par
+            start: Début
+            end: Fin
+            location: Lieu
+            countYes: personne sera présente|seront présentes
+            countProbably: personne sera probablement présente|seront probblement présentes

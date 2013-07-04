@@ -3,7 +3,10 @@
 {% block title %}{{ 'events.main.view.title'|trans }}{% endblock %}
 
 {% block sidebar %}
-	{{ render_subscribe_button('event', 0) }}
+	{% if app.user %}
+		{{ render_subscribe_button('event', event.id) }}
+	{% endif %}
+
 	{{ parent() }}
 {% endblock %}
 
@@ -19,5 +22,62 @@
 
 	<div class="padding20-sides">
 
+		<h3>{{ event.title }}</h3>
+
+		<div class="event-view-orga-logo">
+			<img src="{{ asset('logos/'~event.orga.logo) }}" alt="{{ event.orga.name }}" title="{{ event.orga.name }}" />
+		</div>
+
+		<div class="event-view-infos">
+			<p class="muted event-view-category">
+				{{ 'events.main.view.in'|trans({'%category%': ('events.categories.'~event.category)|trans}) }},
+				{{ 'events.main.view.by'|trans }}
+				{% if etu.modules.isEnabled('assos') %}
+					<a href="{{ path('orgas_view', {'login': event.orga.login}) }}">
+						{{ event.orga.name }}
+					</a>
+				{% else %}
+					{{ event.orga.name }}
+				{% endif %}
+			</p>
+			<div class="row-fluid">
+				<div class="span1"></div>
+				<div class="span1">
+					<p>
+						<strong>{{ 'events.main.view.start'|trans }}</strong><br />
+						<strong>{{ 'events.main.view.end'|trans }}</strong><br />
+						<strong>{{ 'events.main.view.location'|trans }}</strong>
+					</p>
+				</div>
+				<div class="span3">
+					<p>
+						{{ event.begin|date('d/m/Y H:i') }}<br />
+						{{ event.end|date('d/m/Y H:i') }}<br />
+						{{ event.location }}
+					</p>
+				</div>
+				<div class="span3 event-view-count-members">
+					<h4 class="event-view-count-members-number">{{ answersYesCount }}</h4>
+					<p class="event-view-count-members-sentence">
+						{{ 'events.main.view.countYes'|transchoice(answersYesCount) }}
+					</p>
+				</div>
+				<div class="span3 event-view-count-members">
+					<h4 class="event-view-count-members-number">{{ answersProbablyCount }}</h4>
+					<p class="event-view-count-members-sentence">
+						{{ 'events.main.view.countProbably'|transchoice(answersProbablyCount) }}
+					</p>
+				</div>
+				<div class="span1"></div>
+			</div>
+		</div>
+
+		<div class="clear"></div>
+
+		<hr />
+
+		<div class="description">
+			{{ event.description|raw }}
+		</div>
 	</div>
 {% endblock %}

@@ -7,6 +7,7 @@ use CalendR\Period\Week;
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
+use Etu\Module\EventsBundle\Entity\Answer;
 use Etu\Module\EventsBundle\Entity\Event;
 
 // Import annotations
@@ -23,7 +24,6 @@ class MainController extends Controller
 	public function indexAction($category = 'all', $month = 'current')
 	{
 		$availableCategories = Event::$categories;
-
 		array_unshift($availableCategories, 'all');
 
 		if (! in_array($category, $availableCategories)) {
@@ -121,8 +121,33 @@ class MainController extends Controller
 			)), 301);
 		}
 
+		/** @var $answers Answer[] */
+		$answers = $em->createQueryBuilder()
+			->select('a')
+			->from('EtuModuleEventsBundle:Answer', 'a')
+			->where('a.event = :id')
+			->andWhere('a.answer = :yes OR a.answer = :probably')
+			->setParameter('id', $event->getId())
+			->setParameter('yes', Answer::ANSWER_YES)
+			->setParameter('probably', Answer::ANSWER_PROBABLY)
+			->getQuery()
+			->getResult();
+
+		$answersYes = array();
+		$answersProbably = array();
+
+		foreach ($answers as $answer) {
+			if ($answer->getAnswer() == Answer::ANSWER_YES) {
+				$answersYes[] = $answer;
+			} elseif ($answer->getAnswer() == Answer::ANSWER_PROBABLY) {
+				$answersProbably[] = $answer;
+			}
+		}
+
 		return array(
-			'event' => $event
+			'event' => $event,
+			'answersYesCount' => count($answersYes),
+			'answersProbablyCount' => count($answersProbably),
 		);
 	}
 }
