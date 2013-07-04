@@ -231,13 +231,16 @@
   width: 80px;
 }
 .schedule-print .item-half {
-  width: 49.5%;
+  width: 49%;
 }
 .schedule-hours-print {
   margin-left: 100px;
 }
 .schedule-days-print {
-  margin-left: 200px;
+  margin-left: 190px;
+}
+.schedule-days-print .day {
+  width: 167px;
 }
 .memberships {
   padding: 8px 0;
