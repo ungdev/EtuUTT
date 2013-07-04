@@ -1,6 +1,6 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block title %}{{ 'events.main.view.title'|trans }}{% endblock %}
+{% block title %}{{ 'events.main.subscribers.title'|trans }}{% endblock %}
 
 {% block sidebar %}
 	{% if app.user %}
@@ -19,12 +19,12 @@
 			</a>
 		</li>
 		{% if app.user %}
-			<li class="pull-right">
+			<li class="active page-tabs-resolved-active pull-right">
 				<a href="{{ path('events_members', {'id': event.id, 'slug': event.title|slugify}) }}">
 					{{ 'events.main.view.menu.subscribers'|trans }}
 				</a>
 			</li>
-			<li class="active page-tabs-resolved-active pull-right">
+			<li class="pull-right">
 				<a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}">
 					{{ 'events.main.view.menu.description'|trans }}
 				</a>
@@ -68,18 +68,6 @@
 						{{ event.location }}
 					</p>
 				</div>
-				<div class="span3 event-view-count-members">
-					<h4 class="event-view-count-members-number">{{ answersYesCount }}</h4>
-					<p class="event-view-count-members-sentence">
-						{{ 'events.main.view.countYes'|transchoice(answersYesCount) }}
-					</p>
-				</div>
-				<div class="span3 event-view-count-members">
-					<h4 class="event-view-count-members-number">{{ answersProbablyCount }}</h4>
-					<p class="event-view-count-members-sentence">
-						{{ 'events.main.view.countProbably'|transchoice(answersProbablyCount) }}
-					</p>
-				</div>
 				<div class="span1"></div>
 			</div>
 		</div>
@@ -88,8 +76,55 @@
 
 		<hr />
 
-		<div class="description">
-			{{ event.description|raw }}
+		<div class="row-fluid event-members">
+			<div class="span4">
+				<h4 class="event-members-type">
+					{{ 'events.main.subscribers.yes'|trans }}
+					({{ answersYesCount }})
+				</h4>
+
+				<ul class="nav nav-list">
+					{% for answer in answersYes %}
+						<li>
+							<a href="{{ path('user_view', {'login': answer.user.login}) }}">
+								{{ answer.user.fullName }}
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="span4">
+				<h4 class="event-members-type">
+					{{ 'events.main.subscribers.probably'|trans }}
+					({{ answersProbablyCount }})
+				</h4>
+
+				<ul class="nav nav-list">
+					{% for answer in answersProbably %}
+						<li>
+							<a href="{{ path('user_view', {'login': answer.user.login}) }}">
+								{{ answer.user.fullName }}
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="span4">
+				<h4 class="event-members-type">
+					{{ 'events.main.subscribers.no'|trans }}
+					({{ answersNoCount }})
+				</h4>
+
+				<ul class="nav nav-list">
+					{% for answer in answersNo %}
+						<li>
+							<a href="{{ path('user_view', {'login': answer.user.login}) }}">
+								{{ answer.user.fullName }}
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
 		</div>
 	</div>
 {% endblock %}

@@ -50,11 +50,13 @@ class Answer
 	/**
 	 * @param Event $event
 	 * @param User  $user
+	 * @param string $answer
 	 */
-	public function __construct(Event $event, User $user)
+	public function __construct(Event $event, User $user, $answer)
 	{
 		$this->event = $event;
 		$this->user = $user;
+		$this->answer = $answer;
 	}
 
     /**

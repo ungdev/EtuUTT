@@ -51,6 +51,11 @@ events:
             menu:
                 description: Description
                 subscribers: Participants
+		subscribers:
+			title: Participants à un évènement
+			yes: Oui, je viendrais
+			probably: Je viendrais probablement
+			no: Non, je ne viendrais pas
 
     memberships:
         events:
