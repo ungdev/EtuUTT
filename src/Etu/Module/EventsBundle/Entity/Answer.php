@@ -118,10 +118,10 @@ class Answer
     /**
      * Set user
      *
-     * @param \Etu\Module\EventsBundle\Entity\User $user
+     * @param User $user
      * @return Answer
      */
-    public function setUser(\Etu\Module\EventsBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -131,7 +131,7 @@ class Answer
     /**
      * Get user
      *
-     * @return \Etu\Module\EventsBundle\Entity\User
+     * @return User
      */
     public function getUser()
     {

@@ -13,6 +13,7 @@ use Etu\Module\EventsBundle\Entity\Event;
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 class MainController extends Controller
@@ -123,18 +124,17 @@ class MainController extends Controller
 
 		/** @var $answers Answer[] */
 		$answers = $em->createQueryBuilder()
-			->select('a')
+			->select('a, u')
 			->from('EtuModuleEventsBundle:Answer', 'a')
+			->leftJoin('a.user', 'u')
 			->where('a.event = :id')
-			->andWhere('a.answer = :yes OR a.answer = :probably')
 			->setParameter('id', $event->getId())
-			->setParameter('yes', Answer::ANSWER_YES)
-			->setParameter('probably', Answer::ANSWER_PROBABLY)
 			->getQuery()
 			->getResult();
 
 		$answersYes = array();
 		$answersProbably = array();
+		$userAnswer = false;
 
 		foreach ($answers as $answer) {
 			if ($answer->getAnswer() == Answer::ANSWER_YES) {
@@ -142,10 +142,15 @@ class MainController extends Controller
 			} elseif ($answer->getAnswer() == Answer::ANSWER_PROBABLY) {
 				$answersProbably[] = $answer;
 			}
+
+			if ($answer->getUser()->getId() == $this->getUser()->getId()) {
+				$userAnswer = $answer;
+			}
 		}
 
 		return array(
 			'event' => $event,
+			'userAnswer' => $userAnswer,
 			'answersYesCount' => count($answersYes),
 			'answersProbablyCount' => count($answersProbably),
 		);
@@ -218,5 +223,70 @@ class MainController extends Controller
 			'answersProbably' => $answersProbably,
 			'answersNo' => $answersNo,
 		);
+	}
+
+	/**
+	 * @Route("/event/{id}/answer/{answer}", name="events_answer", options={"expose" = true})
+	 * @Template()
+	 */
+	public function answerAction($id, $answer)
+	{
+		if (! in_array($answer, array(Answer::ANSWER_YES, Answer::ANSWER_NO, Answer::ANSWER_PROBABLY))) {
+			return new Response(json_encode(array(
+				'status' => 'error',
+				'message' => 'Invalid answer'
+			)), 500);
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $event Event */
+		$event = $em->createQueryBuilder()
+			->select('e, o')
+			->from('EtuModuleEventsBundle:Event', 'e')
+			->leftJoin('e.orga', 'o')
+			->where('e.uid = :id')
+			->setParameter('id', $id)
+			->setMaxResults(1)
+			->getQuery()
+			->getOneOrNullResult();
+
+		if (! $event) {
+			return new Response(json_encode(array(
+				'status' => 'error',
+				'message' => 'Event #'.$id.' not found'
+			)), 404);
+		}
+
+		/** @var $userAnswer Answer */
+		$userAnswer = $em->createQueryBuilder()
+			->select('a')
+			->from('EtuModuleEventsBundle:Answer', 'a')
+			->where('a.user = :id')
+			->setParameter('id', $this->getUser()->getId())
+			->setMaxResults(1)
+			->getQuery()
+			->getOneOrNullResult();
+
+		if (! $userAnswer) {
+			$userAnswer = new Answer($event, $this->getUser(), $answer);
+		} else {
+			$userAnswer->setAnswer($answer);
+		}
+
+		$em->persist($userAnswer);
+		$em->flush();
+
+		if ($answer == Answer::ANSWER_YES || $answer == Answer::ANSWER_PROBABLY) {
+			$this->getSubscriptionsManager()->subscribe($this->getUser(), 'event', $event->getId());
+		} else {
+			$this->getSubscriptionsManager()->unsubscribe($this->getUser(), 'event', $event->getId());
+		}
+
+		return new Response(json_encode(array(
+			'status' => 'success',
+			'message' => 'Ok'
+		)), 200);
 	}
 }

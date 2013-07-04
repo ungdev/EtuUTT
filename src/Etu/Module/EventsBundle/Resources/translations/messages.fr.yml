@@ -40,22 +40,21 @@ events:
             week: Semaine
         view:
             title: Détail d'un évènement
+            willYouCome: Viendrez-vous ?
             back: Retour au calendrier
             in: Dans %category%
             by: organisé par
             start: Début
             end: Fin
             location: Lieu
-            countYes: personne sera présente|personnes seront présentes
-            countProbably: personne sera peut-être présente|personnes seront peut-être présentes
             menu:
                 description: Description
                 subscribers: Participants
-		subscribers:
-			title: Participants à un évènement
-			yes: Oui, je viendrais
-			probably: Je viendrais probablement
-			no: Non, je ne viendrais pas
+        subscribers:
+            title: Participants à un évènement
+            yes: Oui, je viendrais
+            probably: Je viendrais peut-être
+            no: Non, je ne viendrais pas
 
     memberships:
         events:
