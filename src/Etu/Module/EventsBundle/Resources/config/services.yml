@@ -3,6 +3,7 @@ parameters:
     etu.notifs.event_created_all.class: Etu\Module\EventsBundle\Notification\Helper\EventCreatedAllHelper
     etu.notifs.event_created_category.class: Etu\Module\EventsBundle\Notification\Helper\EventCreatedCategoryHelper
     etu.notifs.event_edited.class: Etu\Module\EventsBundle\Notification\Helper\EventEditedHelper
+    etu.notifs.event_deleted.class: Etu\Module\EventsBundle\Notification\Helper\EventDeletedHelper
 
 services:
 
@@ -30,6 +31,12 @@ services:
 
     etu.notifs.event_edited:
         class: %etu.notifs.event_edited.class%
+        arguments: [@twig]
+        tags:
+            - { name: etu.notifs_helper }
+
+    etu.notifs.event_deleted:
+        class: %etu.notifs.event_deleted.class%
         arguments: [@twig]
         tags:
             - { name: etu.notifs_helper }

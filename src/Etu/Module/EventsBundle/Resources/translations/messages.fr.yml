@@ -1,5 +1,19 @@
 
 events:
+    notifs:
+        eventCreated: L'évènement %title% a été créé par %orga%
+        eventEdited:
+            location: L'évènement %title% a changé d'emplacement (%newLocation%)
+            beginDate: L'évènement %title% a changé de date de début
+            beginHour: L'évènement %title% a changé d'horaire de début
+            beginBoth: L'évènement %title% a changé de date et d'horaire de début
+            endDate: L'évènement %title% a changé de date de fin
+            endHour: L'évènement %title% a changé d'horaire de fin
+            endBoth: L'évènement %title% a changé de date et d'horaire de fin
+            locationHour:  L'évènement %title% a changé d'emplacement (%newLocation%) et d'horaires
+            other: L'évènement %title% a été modifié
+        eventDeleted: L'évènement %title% a été supprimé
+
     categories:
         culture: Culturel
         sport: Sport
@@ -81,3 +95,8 @@ events:
             submit: Modifier l'évènement
             delete: Supprimer l'évènement
             confirm: L'évènement a bien été modifié
+        delete:
+            question: Voulez-vous vraiment supprimer l'évènement %title% ?
+            yes: Oui, supprimer
+            no: Non, annuler
+            confirm: L'évènement a bien été supprimé

@@ -5,7 +5,7 @@ namespace Etu\Module\EventsBundle\Notification\Helper;
 use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Notification\Helper\HelperInterface;
 
-class EventCreatedAllHelper implements HelperInterface
+class EventDeletedHelper implements HelperInterface
 {
 	/**
 	 * @var \Twig_Environment
@@ -25,7 +25,7 @@ class EventCreatedAllHelper implements HelperInterface
 	 */
 	public function getName()
 	{
-		return 'event_created_all';
+		return 'event_deleted';
 	}
 
 	/**
@@ -34,7 +34,7 @@ class EventCreatedAllHelper implements HelperInterface
 	 */
 	public function render(Notification $notification)
 	{
-		return $this->twig->render('EtuModuleEventsBundle:Notification:eventCreatedAll.html.twig', array(
+		return $this->twig->render('EtuModuleEventsBundle:Notification:eventDeleted.html.twig', array(
 			'notif' => $notification
 		));
 	}

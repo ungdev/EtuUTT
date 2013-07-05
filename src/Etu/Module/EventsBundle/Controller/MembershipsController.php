@@ -375,17 +375,37 @@ class MembershipsController extends Controller
 			// Send smart notification
 			$elementsToChange = array(
 				'begin' => false,
+				'beginDate' => false,
+				'beginHour' => false,
 				'end' => false,
+				'endDate' => false,
+				'endHour' => false,
 				'location' => false,
 				'other' => false,
 			);
 
 			if ($oldEvent->getBegin() != $event->getBegin()) {
 				$elementsToChange['begin'] = true;
+
+				if ($oldEvent->getBegin()->format('d-m-Y') != $event->getBegin()->format('d-m-Y')) {
+					$elementsToChange['beginDate'] = true;
+				}
+
+				if ($oldEvent->getBegin()->format('H') != $event->getBegin()->format('H')) {
+					$elementsToChange['beginHour'] = true;
+				}
 			}
 
 			if ($oldEvent->getEnd() != $event->getEnd()) {
 				$elementsToChange['end'] = true;
+
+				if ($oldEvent->getEnd()->format('d-m-Y') != $event->getEnd()->format('d-m-Y')) {
+					$elementsToChange['endDate'] = true;
+				}
+
+				if ($oldEvent->getEnd()->format('H') != $event->getEnd()->format('H')) {
+					$elementsToChange['endHour'] = true;
+				}
 			}
 
 			if ($oldEvent->getLocation() != $event->getLocation()) {
@@ -404,8 +424,12 @@ class MembershipsController extends Controller
 				'event' => array(
 					'id' => $event->getId(),
 					'title' => $event->getTitle(),
+					'location' => $event->getLocation(),
+					'begin' => $event->getBegin(),
+					'end' => $event->getEnd(),
 					'orga' => array(
-						'name' => $event->getOrga()->getName()
+						'id' => $event->getOrga()->getId(),
+						'name' => $event->getOrga()->getName(),
 					)
 				),
 				'changes' => $elementsToChange
@@ -431,9 +455,10 @@ class MembershipsController extends Controller
 				'message' => 'events.memberships.edit.confirm'
 			));
 
-			return $this->redirect($this->generateUrl('memberships_orga_events', array(
+			return $this->redirect($this->generateUrl('memberships_orga_events_edit', array(
 				'login' => $login,
-				'month' => $event->getBegin()->format('m-Y')
+				'id' => $id,
+				'slug' => $slug
 			)));
 		}
 
@@ -443,6 +468,137 @@ class MembershipsController extends Controller
 			'orga' => $orga,
 			'event' => $event,
 			'form' => $form->createView(),
+		);
+	}
+
+	/**
+	 * @Route(
+	 *      "/user/membership/{login}/event/{id}-{slug}/delete/{confirm}",
+	 *      defaults={"confirm"=false},
+	 *      name="memberships_orga_events_delete"
+	 * )
+	 * @Template()
+	 */
+	public function deleteAction(Request $request, $login, $id, $slug, $confirm = false)
+	{
+		if (! $this->getUserLayer()->isUser()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $memberships Member[] */
+		$memberships = $em->createQueryBuilder()
+			->select('m, o')
+			->from('EtuUserBundle:Member', 'm')
+			->leftJoin('m.organization', 'o')
+			->where('o.deleted = 0')
+			->andWhere('m.user = :user')
+			->setParameter('user', $this->getUser()->getId())
+			->orderBy('m.role', 'DESC')
+			->addOrderBy('o.name', 'ASC')
+			->getQuery()
+			->getResult();
+
+		$membership = null;
+
+		foreach ($memberships as $m) {
+			if ($m->getOrganization()->getLogin() == $login) {
+				$membership = $m;
+				break;
+			}
+		}
+
+		if (! $membership) {
+			throw $this->createNotFoundException('Membership or organization not found for login '.$login);
+		}
+
+		if (! $membership->hasPermission('events')) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$orga = $membership->getOrganization();
+
+		/** @var $event Event */
+		$event = $em->createQueryBuilder()
+			->select('e, o')
+			->from('EtuModuleEventsBundle:Event', 'e')
+			->leftJoin('e.orga', 'o')
+			->where('e.uid = :id')
+			->setParameter('id', $id)
+			->setMaxResults(1)
+			->getQuery()
+			->getOneOrNullResult();
+
+		if (! $event) {
+			throw $this->createNotFoundException('Event #'.$id.' not found');
+		}
+
+		if (StringManipulationExtension::slugify($event->getTitle()) != $slug) {
+			return $this->redirect($this->generateUrl('events_view', array(
+				'id' => $id, 'slug' => StringManipulationExtension::slugify($event->getTitle())
+			)), 301);
+		}
+
+		if ($event->getOrga()->getId() != $orga->getId()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		if ($confirm) {
+
+			$entity = array(
+				'id' => $event->getId(),
+				'title' => $event->getTitle(),
+				'location' => $event->getLocation(),
+				'begin' => $event->getBegin(),
+				'end' => $event->getEnd(),
+				'orga' => array(
+					'id' => $event->getOrga()->getId(),
+					'name' => $event->getOrga()->getName(),
+				)
+			);
+
+			// Send notifications to subscribers
+			$notif = new Notification();
+
+			$notif
+				->setModule($this->getCurrentBundle()->getIdentifier())
+				->setHelper('event_deleted')
+				->setAuthorId($this->getUser()->getId())
+				->setEntityType('event')
+				->setEntityId($event->getId())
+				->addEntity($entity);
+
+			$this->getNotificationsSender()->send($notif);
+
+			$em->createQueryBuilder()
+				->delete()
+				->from('EtuModuleEventsBundle:Answer', 'a')
+				->where('a.event = :id')
+				->setParameter('id', $event->getId())
+				->getQuery()
+				->execute();
+
+			$em->remove($event);
+			$em->flush();
+
+			// Confirmation
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'events.memberships.delete.confirm'
+			));
+
+			return $this->redirect($this->generateUrl('memberships_orga_events', array(
+				'login' => $login
+			)));
+		}
+
+		return array(
+			'memberships' => $memberships,
+			'membership' => $membership,
+			'orga' => $orga,
+			'event' => $event
 		);
 	}
 }

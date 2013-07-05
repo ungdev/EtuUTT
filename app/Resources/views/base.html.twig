@@ -1,3 +1,10 @@
+
+{% set message = false %}
+
+{% if app.session.flashBag.has('message') %}
+	{% set message = app.session.flashBag.get('message') %}
+{% endif %}
+
 <!DOCTYPE html>
 <html lang="fr" class="bg-soft-grey">
 	<head>
@@ -170,16 +177,6 @@
 				</div>
 			</div>
 		</header>
-
-		{% set message = false %}
-
-		{% if app.session.flashBag.has('message') %}
-			{% set message = app.session.flashBag.get('message') %}
-
-			<div class="page-alert alert alert-{{ message.type }} hidden-for-1024">
-				{{ message.message|trans }}
-			</div>
-		{% endif %}
 
 		{# Overlay #}
 		<div id="overlay"></div>

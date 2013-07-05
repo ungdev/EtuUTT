@@ -5,9 +5,6 @@ namespace Etu\Module\EventsBundle\Notification\Helper;
 use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Notification\Helper\HelperInterface;
 
-/**
- * Notification for a new issue in opened issues
- */
 class EventEditedHelper implements HelperInterface
 {
 	/**

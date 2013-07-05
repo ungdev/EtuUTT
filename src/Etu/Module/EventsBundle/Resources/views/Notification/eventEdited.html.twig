@@ -1,34 +1,70 @@
 
 <a class="notif{% if notif.isSuper %} super-notif{% elseif notif.isNew(app.user.lastVisitHome) %} notif-new{% endif %}"
-	{% if notif.countEntities == 1 %}
-   href="{{ path('bugs_view', {'id': notif.firstEntity.id, 'slug': notif.firstEntity.title|slugify}) }}"
-   {% else %}
-   href="{{ path('bugs_index') }}"
-   {% endif %}>
-	<img src="{{ asset('img/icons-big/bug.png') }}" />
+		{% if notif.countEntities == 1 %}
+	href="{{ path('events_view', {'id': notif.firstEntity.event.id, 'slug': notif.firstEntity.event.title|slugify}) }}"
+{% else %}
+	href="{{ path('events_index') }}"
+		{% endif %}>
+	<img src="{{ asset('img/icons-big/event.png') }}" />
 
 	<h4 class="notif-title">
 		{% if notif.countEntities == 1 %}
-			{{ 'bugs.notifs.newOpened.one'|trans({
-				'%userName%': highlight_notif_data(notif.firstEntity.user.fullName),
-				'%bugName%': highlight_notif_data(notif.firstEntity.title)
-			})|raw }}
-		{% elseif notif.countEntities == 2 %}
-			{{ 'bugs.notifs.newOpened.two'|trans({
-				'%first%': highlight_notif_data(notif.getEntity(1).user.fullName),
-				'%second%': highlight_notif_data(notif.getEntity(2).user.fullName)
-			})|raw }}
-		{% elseif notif.countEntities == 3 %}
-			{{ 'bugs.notifs.newOpened.more_single'|trans({
-				'%first%': highlight_notif_data(notif.getEntity(1).user.fullName),
-				'%second%': highlight_notif_data(notif.getEntity(2).user.fullName)
-			})|raw }}
-		{% else %}
-			{{ 'bugs.notifs.newOpened.more_many'|trans({
-				'%first%': highlight_notif_data(notif.getEntity(1).user.fullName),
-				'%second%': highlight_notif_data(notif.getEntity(2).user.fullName),
-				'%count%': notif.countEntities
-			})|raw }}
+			{% set entity = notif.firstEntity %}
+
+			{% if entity.changes.location
+					and not entity.changes.begin
+					and not entity.changes.end
+					and not entity.changes.other %}
+				{{ 'events.notifs.eventEdited.location'|trans({
+					'%title%': highlight_notif_data(entity.event.title),
+					'%newLocation%': highlight_notif_data(entity.event.location)
+				})|raw }}
+			{% elseif entity.changes.begin
+					and not entity.changes.location
+					and not entity.changes.end
+					and not entity.changes.other %}
+				{% if entity.changes.beginDate and not entity.changes.beginHour %}
+					{{ 'events.notifs.eventEdited.beginDate'|trans({
+						'%title%': highlight_notif_data(entity.event.title)
+					})|raw }}
+				{% elseif entity.changes.beginHour and not entity.changes.beginDate %}
+					{{ 'events.notifs.eventEdited.beginHour'|trans({
+						'%title%': highlight_notif_data(entity.event.title)
+					})|raw }}
+				{% else %}
+					{{ 'events.notifs.eventEdited.beginBoth'|trans({
+						'%title%': highlight_notif_data(entity.event.title)
+					})|raw }}
+				{% endif %}
+			{% elseif entity.changes.end
+					and not entity.changes.location
+					and not entity.changes.begin
+					and not entity.changes.other %}
+				{% if entity.changes.beginDate and not entity.changes.beginHour %}
+					{{ 'events.notifs.eventEdited.endDate'|trans({
+						'%title%': highlight_notif_data(entity.event.title)
+					})|raw }}
+				{% elseif entity.changes.beginHour and not entity.changes.beginDate %}
+					{{ 'events.notifs.eventEdited.endHour'|trans({
+						'%title%': highlight_notif_data(entity.event.title)
+					})|raw }}
+				{% else %}
+					{{ 'events.notifs.eventEdited.endBoth'|trans({
+						'%title%': highlight_notif_data(entity.event.title)
+					})|raw }}
+				{% endif %}
+			{% elseif entity.changes.location
+					and (entity.changes.begin or entity.changes.end)
+					and not entity.changes.other %}
+				{{ 'events.notifs.eventEdited.locationHour'|trans({
+					'%title%': highlight_notif_data(entity.event.title),
+					'%newLocation%': highlight_notif_data(entity.event.location)
+				})|raw }}
+			{% else %}
+				{{ 'events.notifs.eventEdited.other'|trans({
+					'%title%': highlight_notif_data(entity.event.title)
+				})|raw }}
+			{% endif %}
 		{% endif %}
 	</h4>
 

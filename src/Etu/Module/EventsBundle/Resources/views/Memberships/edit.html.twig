@@ -149,7 +149,9 @@
 								{{ 'events.memberships.edit.submit'|trans }}
 							</button>
 
-							<a href="" class="btn">
+							<a href="{{ path('memberships_orga_events_delete', {
+								'login': orga.login, 'id': event.id, 'slug': event.title|slugify
+							}) }}" class="btn">
 								{{ 'events.memberships.edit.delete'|trans }}
 							</a>
 						</div>
