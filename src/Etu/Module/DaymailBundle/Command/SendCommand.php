@@ -87,7 +87,7 @@ class SendCommand extends ContainerAwareCommand
 
 			$message = \Swift_Message::newInstance($subject)
 				->setFrom(array('bde@utt.fr' => 'BDE UTT'))
-				->setTo(array('titouan@ademis.com'))
+				->setTo(array('daymail@utt.fr'))
 				->setBody($content, 'text/html');
 
 			$result = $mailer->send($message);

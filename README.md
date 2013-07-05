@@ -6,5 +6,5 @@ EtuUTT est la refonte de 2013 du site internet étudiant de l'UTT
 la qualité du code et l'aspect esthétique. Cette refonte n'utilise pas
 le code de l'ancienne version.
 
-> **Note :** EtuUTT utilise Symfony 2.2.
+> **Note :** EtuUTT utilise Symfony 2.3 (LTS).
 
