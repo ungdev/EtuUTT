@@ -41,37 +41,16 @@
 
 		{% for number, bug in pagination %}
 			<a href="{{ path('bugs_view', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="bug{% if number == 0 %} bug-first{% endif %}">
-				<h5 class="bug-title">
+				<h5 class="bug-title muted">
 					{{ bug.title }}
 
-					{% if bug.criticality == 'security' %}
-						<span class="label label-important pull-right hidden-phone">
-							{{ ('bugs.criticality.'~bug.criticality)|trans }}
-						</span>
-					{% elseif bug.criticality == 'critical' or bug.criticality == 'major' %}
-						<span class="label label-warning pull-right hidden-phone">
-							{{ ('bugs.criticality.'~bug.criticality)|trans }}
-						</span>
-					{% elseif bug.criticality == 'minor' %}
-						<span class="label label-info pull-right hidden-phone">
-							{{ ('bugs.criticality.'~bug.criticality)|trans }}
-						</span>
-					{% else %}
-						<span class="label pull-right hidden-phone">
-							{{ ('bugs.criticality.'~bug.criticality)|trans }}
-						</span>
-					{% endif %}
+					<span class="label pull-right hidden-phone">
+						{{ ('bugs.criticality.'~bug.criticality)|trans }}
+					</span>
+					<span class="pull-right bug-date">
+						{{ time_diff(bug.createdAt)|ucfirst }}
+					</span>
 				</h5>
-
-				<small class="muted bug-meta hidden-phone">
-					{{ 'bugs.bugs.closed.by'|trans({'%name%': bug.user.fullName}) }}
-
-					{% if bug.assignee %}
-						<span class="text-success">
-							({{ 'bugs.bugs.closed.assigned_to'|trans({'%name%': bug.assignee.fullName}) }})
-						</span>
-					{% endif %}
-				</small>
 
 				<span class="pull-left visible-phone">
 					{% if bug.criticality == 'security' %}
@@ -92,10 +71,6 @@
 						</span>
 					{% endif %}
 				</span>
-
-				<small class="muted bug-meta pull-right">
-					{{ time_diff(bug.createdAt)|ucfirst }}
-				</small>
 
 				<div class="clear"></div>
 			</a>

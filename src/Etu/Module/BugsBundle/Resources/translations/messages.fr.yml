@@ -18,8 +18,6 @@ bugs:
             resolved: Résolus
         closed:
             title: Bugs résolus
-            by: Par %name%
-            assigned_to: assigné à %name%
             no_bug: Aucun bug résolu pour le moment
         create:
             title: Signaler un bug
@@ -38,8 +36,7 @@ bugs:
             title: Modifier un commentaire
         index:
             title: Bugs ouverts
-            by: Par %name%
-            assigned_to: assigné à %name%
+            assigned_to: Assigné à %name%
             no_bug: Aucun bug ouvert pour le moment
         view:
             title: Détails d'un bug
