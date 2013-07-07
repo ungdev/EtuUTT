@@ -26,6 +26,7 @@
 		"jms/serializer-bundle": "dev-master",
 		"friendsofsymfony/rest-bundle": "dev-master",
 		"doctrine/doctrine-fixtures-bundle": "dev-master",
+		"stof/doctrine-extensions-bundle": "~1.1@dev",
 		"knplabs/knp-time-bundle": "dev-master",
 		"knplabs/knp-paginator-bundle": "dev-master",
 		"frequence-web/calendr-bundle": "1.*",

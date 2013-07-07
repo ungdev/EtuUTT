@@ -561,7 +561,8 @@ class OrgaController extends Controller
 
 			// Delete pages first
 			$query = $em->createQueryBuilder()
-				->delete()
+				->update()
+				->set('deletedAt', new \DateTime())
 				->from('EtuModuleWikiBundle:Page', 'p');
 
 			foreach ($this->removedCategories as $key => $categoryId) {
@@ -619,7 +620,6 @@ class OrgaController extends Controller
 			->leftJoin('p.revision', 'r')
 			->where('p.orga = :orga')
 			->andWhere('p.isHome = 0')
-			->andWhere('p.isDeleted = 0')
 			->setParameter('orga', $orga->getId())
 			->orderBy('c.depth', 'ASC')
 			->addOrderBy('c.title', 'ASC')
