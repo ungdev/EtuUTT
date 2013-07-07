@@ -49,7 +49,7 @@ events:
             dec: Décembre
         index:
             title: Evènements
-            organised_by: Organisé par %orga%
+            category_orga: Dans %category%, organisé par %orga%
         week:
             week: Semaine
         view:
@@ -76,6 +76,9 @@ events:
         create:
             back: Retour au calendrier
             title: Titre
+            image:
+                label: Image
+                desc: Va être redimensionné en 200x200 pixels
             category: Categorie
             begin: Début
             end: Fin

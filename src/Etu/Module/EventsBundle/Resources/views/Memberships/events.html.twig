@@ -6,6 +6,20 @@
 	<img src="{{ asset('img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
+{% block javascripts %}
+	<script type="text/javascript">
+		var events = $('.event');
+
+		$(function() {
+			events.hover(function() {
+				$(this).parent().find('.event-tooltip').show();
+			}, function() {
+				$(this).parent().find('.event-tooltip').hide();
+			});
+		});
+	</script>
+{% endblock %}
+
 {% block content %}
 	<div class="padding20-all">
 		<div class="row-fluid">
@@ -128,6 +142,11 @@
 					{% for week in month %}
 						<tr>
 							{% for day in week %}
+								{% set tooltipRight =
+									loop.index % 7 == 5
+									or loop.index % 7 == 6
+									or loop.index % 7 == 0
+								%}
 								<td>
 									{% if month.contains(day.begin) %}
 										<div class="event-day">{{ day.begin.format('d') }}</div>
@@ -136,14 +155,24 @@
 
 										{% for event in events.find(day) %}
 											{% if event.orga.id == orga.id %}
-												<a href="{{ path('memberships_orga_events_edit', {
-													'login': orga.login,
-													'id': event.id,
-													'slug': event.title|slugify
-												}) }}"
-												   class="event event-{{ event.category }} tip"
-												   title="<strong>{{ event.title }}</strong><br />
-										   {{ 'events.main.index.organised_by'|trans({'%orga%': event.orga.name}) }}"></a>
+											<a href="{{ path('memberships_orga_events_edit', {
+												'login': orga.login,
+												'id': event.id,
+												'slug': event.title|slugify
+											}) }}"
+											   class="event event-{{ event.category }}"><!--
+											   --><div class="event-tooltip{% if tooltipRight %} event-tooltip-right{% endif %}">
+													<img src="{{ asset('events/'~(event.title|slugify)~'-'~event.id~'.png') }}" class="pull-left event-tooltip-image" />
+
+													<p class="event-tooltip-meta">
+														<strong>{{ event.title }}</strong><br />
+														{{ 'events.main.index.category_orga'|trans({
+														'%orga%': event.orga.name,
+														'%category%': ('events.categories.'~event.category)|trans
+														}) }}
+													</p>
+												</div><!--
+										   --></a>
 											{% endif %}
 										{% endfor %}
 									{% else %}

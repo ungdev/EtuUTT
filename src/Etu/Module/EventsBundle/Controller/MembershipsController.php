@@ -79,6 +79,7 @@ class MembershipsController extends Controller
 		$form = $this->createFormBuilder($event)
 			->add('title')
 			->add('category', 'choice', array('choices' => $categories))
+			->add('file', 'file')
 			->add('begin', null, array(
 				'attr' => array('class' => 'event-select-date'),
                 'widget' => 'choice',
@@ -98,6 +99,8 @@ class MembershipsController extends Controller
 
 			$em->persist($event);
 			$em->flush();
+
+			$event->upload();
 
 			$entity = array(
 				'id' => $event->getId(),

@@ -3,13 +3,32 @@
 namespace Etu\Core\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
+
+use Etu\Core\CoreBundle\Framework\Definition\Permission;
+use Etu\Core\CoreBundle\Framework\EtuKernel;
+use Etu\Core\CoreBundle\Framework\Module\PermissionsCollection;
+use Etu\Core\UserBundle\Collection\UserOptionsCollection;
+use Etu\Core\UserBundle\Ldap\Model\User as LdapUser;
+
+use Imagine\Gd\Image;
+use Imagine\Gd\Imagine;
+use Imagine\Image\Box;
+use Imagine\Image\Color;
+use Imagine\Image\Point;
 
 /**
  * User
  *
- * @ORM\Table(name="etu_users", indexes={ @ORM\Index(name="search", columns={"login", "mail"}) })
+ * @ORM\Table(
+ *      name="etu_users",
+ *      uniqueConstraints={@ORM\UniqueConstraint(name="search", columns={"login", "mail"})}
+ * )
  * @ORM\Entity
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class User implements UserInterface, \Serializable
 {
@@ -18,6 +37,17 @@ class User implements UserInterface, \Serializable
 
 	const PRIVACY_PUBLIC = 100;
 	const PRIVACY_PRIVATE = 200;
+
+	static public $branches = array(
+		'ISI' => 'ISI', 'MTE' => 'MTE', 'SI' => 'SI',
+		'SIT' => 'SIT', 'SM' => 'SM', 'SRT' => 'SRT',
+		'TC' => 'TC'
+	);
+
+	static public $levels = array(
+		'1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5',
+		'6' => '6', '7' => '7', '8' => '8', '9' => '9', '10' => '10'
+	);
 
     /**
      * @var integer
@@ -269,13 +299,6 @@ class User implements UserInterface, \Serializable
 	protected $isStudent;
 
 	/**
-	 * @var boolean
-	 *
-	 * @ORM\Column(name="countNotifications", type="smallint", nullable=true)
-	 */
-	protected $countNotifications;
-
-	/**
 	 * @var string
 	 *     > For trombi
 	 *
@@ -287,7 +310,7 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *     > For trombi
 	 *
-	 * @ORM\Column(name="jadis", type="string", length=100, nullable=true)
+	 * @ORM\Column(name="jadis", type="text", nullable=true)
 	 */
 	protected $jadis;
 
@@ -301,11 +324,45 @@ class User implements UserInterface, \Serializable
 
 	/**
 	 * @var string
-	 *     > For trombi
 	 *
 	 * @ORM\Column(name="website", type="string", length=100, nullable=true)
 	 */
 	protected $website;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="facebook", type="string", length=100, nullable=true)
+	 */
+	protected $facebook;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="twitter", type="string", length=100, nullable=true)
+	 */
+	protected $twitter;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="linkedin", type="string", length=100, nullable=true)
+	 */
+	protected $linkedin;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="viadeo", type="string", length=100, nullable=true)
+	 */
+	protected $viadeo;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="uvs", type="string", length=100, nullable=true)
+	 */
+	protected $uvs;
 
 	/**
 	 * LDAP root informations
@@ -326,13 +383,123 @@ class User implements UserInterface, \Serializable
 	protected $keepActive;
 
 	/**
-	 * Permissions on EtuUTT
+	 * Added permissions
+	 *      => used for administration permissions
 	 *
-	 * @var boolean
+	 * @var array
 	 *
 	 * @ORM\Column(name="permissions", type="array")
 	 */
 	protected $permissions = array();
+
+	/**
+	 * Removed permissions
+	 *      => used for classic permissions that everyone but this specific user have
+	 *
+	 * @var array
+	 *
+	 * @ORM\Column(name="removedPermissions", type="array")
+	 */
+	protected $removedPermissions = array();
+
+	/**
+	 * If the user is admin, he has all permissions, even from the new modules
+	 *
+	 * @var boolean
+	 *
+	 * @ORM\Column(name="isAdmin", type="boolean")
+	 */
+	protected $isAdmin;
+
+	/**
+	 * Read-only mode enabled fo this user?
+	 *
+	 * @var boolean
+	 *
+	 * @ORM\Column(name="isReadOnly", type="boolean")
+	 */
+	protected $isReadOnly;
+
+	/**
+	 * Read-only expiration date
+	 *
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="readOnlyExpirationDate", type="datetime")
+	 */
+	protected $readOnlyExpirationDate;
+
+	/**
+	 * Badges
+	 *
+	 * @var array
+	 *
+	 * @ORM\Column(name="badges", type="array")
+	 */
+	protected $badges = array();
+
+	/**
+	 * Modules options (no format, just an array stored to be sued by modules as they want)
+	 *
+	 * @var UserOptionsCollection
+	 *
+	 * @ORM\Column(name="options", type="object")
+	 */
+	protected $options;
+
+	/**
+	 * Last visit date
+	 *
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="lastVisitHome", type="datetime")
+	 */
+	protected $lastVisitHome;
+
+	/**
+	 * @var \DateTime $created
+	 *
+	 * @Gedmo\Timestampable(on="create")
+	 * @ORM\Column(name="createdAt", type="datetime")
+	 */
+	protected $createdAt;
+
+	/**
+	 * @var \DateTime $updated
+	 *
+	 * @Gedmo\Timestampable(on="update")
+	 * @ORM\Column(name="updatedAt", type="datetime")
+	 */
+	protected $updatedAt;
+
+	/**
+	 * @var \DateTime $deletedAt
+	 *
+	 * @ORM\Column(name="deletedAt", type="datetime")
+	 */
+	protected $deletedAt;
+
+	/**
+	 * @var Member[] $memberships
+	 *
+	 * @ORM\OneToMany(targetEntity="\Etu\Core\UserBundle\Entity\Member", mappedBy="user")
+	 * @ORM\JoinColumn()
+	 */
+	protected $memberships;
+
+	/**
+	 * Temporary variable to store uploaded file during photo update
+	 *
+	 * @var UploadedFile
+	 */
+	public $file;
+
+	/**
+	 * Is testing context ?
+	 *
+	 * @var boolean
+	 */
+	public $testingContext;
 
 
 
@@ -342,7 +509,14 @@ class User implements UserInterface, \Serializable
 
 	public function __construct()
 	{
+		$this->testingContext = false;
 		$this->keepActive = false;
+		$this->isStudent = true;
+		$this->isReadOnly = false;
+		$this->isDeleted = false;
+		$this->readOnlyExpirationDate = new \DateTime();
+		$this->isAdmin = false;
+		$this->avatar = 'default-avatar.png';
 		$this->phoneNumberPrivacy = self::PRIVACY_PUBLIC;
 		$this->sexPrivacy = self::PRIVACY_PUBLIC;
 		$this->nationalityPrivacy = self::PRIVACY_PUBLIC;
@@ -353,6 +527,107 @@ class User implements UserInterface, \Serializable
 		$this->birthdayPrivacy = self::PRIVACY_PUBLIC;
 		$this->birthdayDisplayOnlyAge = false;
 		$this->personnalMailPrivacy = self::PRIVACY_PUBLIC;
+		$this->options = new UserOptionsCollection();
+		$this->badges = array();
+		$this->permissions = array();
+		$this->ldapInformations = new LdapUser();
+		$this->uvs = '';
+		$this->lastVisitHome = new \DateTime('0000-00-00 00:00:00');
+	}
+
+	public function __toString()
+	{
+		return $this->fullName;
+	}
+
+	/**
+	 * Return available branches and levels for forms
+	 *
+	 * @return array
+	 */
+	static public function availableBranches()
+	{
+		$result = array();
+
+		foreach (self::$branches as $branch) {
+			foreach (self::$levels as $level) {
+				$result[] = $branch.$level;
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Upload the photo
+	 *
+	 * @return boolean
+	 */
+	public function upload()
+	{
+		if (null === $this->file) {
+			return false;
+		}
+
+		/*
+		 * Upload and resize
+		 */
+		$imagine = new Imagine();
+
+		// Create a transparent image
+		$image = $imagine->create(new Box(200, 200), new Color('000', 100));
+
+		// Create the logo thumbnail in a 200x200 box
+		$thumbnail = $imagine->open($this->file->getPathname())
+			->thumbnail(new Box(200, 200), Image::THUMBNAIL_INSET);
+
+		// Paste point
+		$pastePoint = new Point(
+			(200 - $thumbnail->getSize()->getWidth()) / 2,
+			(200 - $thumbnail->getSize()->getHeight()) / 2
+		);
+
+		// Paste the thumbnail in the transparent image
+		$image->paste($thumbnail, $pastePoint);
+
+		// Save the result
+		$image->save(__DIR__ . '/../../../../../web/photos/'.$this->getLogin().'.png');
+
+		$this->avatar = $this->getLogin().'.png';
+
+		return true;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getIsOrga()
+	{
+		return false;
+	}
+
+	/**
+	 * @return integer
+	 */
+	public function getProfileCompletion()
+	{
+		$infos = array(
+			$this->phoneNumber, $this->sex, $this->nationality, $this->adress, $this->postalCode, $this->city,
+			$this->country, $this->birthday, $this->personnalMail
+		);
+
+		$completion = 0;
+		$count = 0;
+
+		foreach ($infos as $value) {
+			$count++;
+
+			if (! empty($value)) {
+				$completion++;
+			}
+		}
+
+		return round($completion / $count, 2) * 100;
 	}
 
 	/**
@@ -376,7 +651,7 @@ class User implements UserInterface, \Serializable
 	 */
 	public function getPassword()
 	{
-		return substr(md5($this->login), 0, 8);
+		return $this->password;
 	}
 
 	/**
@@ -412,26 +687,47 @@ class User implements UserInterface, \Serializable
 			$this->niveau,
 			$this->filiere,
 			$this->phoneNumber,
+			$this->phoneNumberPrivacy,
 			$this->title,
 			$this->room,
 			$this->avatar,
 			$this->sex,
+			$this->sexPrivacy,
 			$this->nationality,
+			$this->nationalityPrivacy,
 			$this->adress,
+			$this->adressPrivacy,
 			$this->postalCode,
+			$this->postalCodePrivacy,
 			$this->city,
+			$this->cityPrivacy,
 			$this->country,
+			$this->countryPrivacy,
 			$this->birthday,
-			$this->age,
+			$this->birthdayPrivacy,
+			$this->birthdayDisplayOnlyAge,
 			$this->personnalMail,
+			$this->personnalMailPrivacy,
 			$this->language,
 			$this->isStudent,
 			$this->surnom,
 			$this->jadis,
 			$this->passions,
 			$this->website,
-			$this->ldapInformations,
+			$this->facebook,
+			$this->twitter,
+			$this->linkedin,
+			$this->viadeo,
+			$this->uvs,
 			$this->keepActive,
+			$this->permissions,
+			$this->removedPermissions,
+			$this->badges,
+			$this->options,
+			$this->lastVisitHome,
+			$this->createdAt,
+			$this->updatedAt,
+			$this->deletedAt,
 		));
 	}
 
@@ -453,673 +749,47 @@ class User implements UserInterface, \Serializable
 			$this->niveau,
 			$this->filiere,
 			$this->phoneNumber,
+			$this->phoneNumberPrivacy,
 			$this->title,
 			$this->room,
 			$this->avatar,
 			$this->sex,
+			$this->sexPrivacy,
 			$this->nationality,
+			$this->nationalityPrivacy,
 			$this->adress,
+			$this->adressPrivacy,
 			$this->postalCode,
+			$this->postalCodePrivacy,
 			$this->city,
+			$this->cityPrivacy,
 			$this->country,
+			$this->countryPrivacy,
 			$this->birthday,
-			$this->age,
+			$this->birthdayPrivacy,
+			$this->birthdayDisplayOnlyAge,
 			$this->personnalMail,
+			$this->personnalMailPrivacy,
 			$this->language,
 			$this->isStudent,
 			$this->surnom,
 			$this->jadis,
 			$this->passions,
 			$this->website,
-			$this->ldapInformations,
+			$this->facebook,
+			$this->twitter,
+			$this->linkedin,
+			$this->viadeo,
+			$this->uvs,
 			$this->keepActive,
+			$this->permissions,
+			$this->removedPermissions,
+			$this->badges,
+			$this->options,
+			$this->lastVisitHome,
+			$this->createdAt,
+			$this->updatedAt,
+			$this->deletedAt,
 		) = unserialize($serialized);
-	}
-
-	/**
-	 * @param string $adress
-	 * @return User
-	 */
-	public function setAdress($adress)
-	{
-		$this->adress = $adress;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getAdress()
-	{
-		return $this->adress;
-	}
-
-	/**
-	 * @param int $age
-	 * @return User
-	 */
-	public function setAge($age)
-	{
-		$this->age = $age;
-
-		return $this;
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getAge()
-	{
-		return $this->age;
-	}
-
-	/**
-	 * @param string $avatar
-	 * @return User
-	 */
-	public function setAvatar($avatar)
-	{
-		$this->avatar = $avatar;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getAvatar()
-	{
-		return $this->avatar;
-	}
-
-	/**
-	 * @param \DateTime $birthday
-	 * @return User
-	 */
-	public function setBirthday($birthday)
-	{
-		$this->birthday = $birthday;
-
-		return $this;
-	}
-
-	/**
-	 * @return \DateTime
-	 */
-	public function getBirthday()
-	{
-		return $this->birthday;
-	}
-
-	/**
-	 * @param string $city
-	 * @return User
-	 */
-	public function setCity($city)
-	{
-		$this->city = $city;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getCity()
-	{
-		return $this->city;
-	}
-
-	/**
-	 * @param boolean $countNotifications
-	 * @return User
-	 */
-	public function setCountNotifications($countNotifications)
-	{
-		$this->countNotifications = $countNotifications;
-
-		return $this;
-	}
-
-	/**
-	 * @return boolean
-	 */
-	public function getCountNotifications()
-	{
-		return $this->countNotifications;
-	}
-
-	/**
-	 * @param string $country
-	 * @return User
-	 */
-	public function setCountry($country)
-	{
-		$this->country = $country;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getCountry()
-	{
-		return $this->country;
-	}
-
-	/**
-	 * @param string $filiere
-	 * @return User
-	 */
-	public function setFiliere($filiere)
-	{
-		$this->filiere = $filiere;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getFiliere()
-	{
-		return $this->filiere;
-	}
-
-	/**
-	 * @param string $firstName
-	 * @return User
-	 */
-	public function setFirstName($firstName)
-	{
-		$this->firstName = $firstName;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getFirstName()
-	{
-		return $this->firstName;
-	}
-
-	/**
-	 * @param string $formation
-	 * @return User
-	 */
-	public function setFormation($formation)
-	{
-		$this->formation = $formation;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getFormation()
-	{
-		return $this->formation;
-	}
-
-	/**
-	 * @param string $fullName
-	 * @return User
-	 */
-	public function setFullName($fullName)
-	{
-		$this->fullName = $fullName;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getFullName()
-	{
-		return $this->fullName;
-	}
-
-	/**
-	 * @param int $id
-	 * @return User
-	 */
-	public function setId($id)
-	{
-		$this->id = $id;
-
-		return $this;
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
-
-	/**
-	 * @param boolean $isStudent
-	 * @return User
-	 */
-	public function setIsStudent($isStudent)
-	{
-		$this->isStudent = $isStudent;
-
-		return $this;
-	}
-
-	/**
-	 * @return boolean
-	 */
-	public function getIsStudent()
-	{
-		return $this->isStudent;
-	}
-
-	/**
-	 * @param string $jadis
-	 * @return User
-	 */
-	public function setJadis($jadis)
-	{
-		$this->jadis = $jadis;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getJadis()
-	{
-		return $this->jadis;
-	}
-
-	/**
-	 * @param boolean $keepActive
-	 * @return User
-	 */
-	public function setKeepActive($keepActive)
-	{
-		$this->keepActive = $keepActive;
-
-		return $this;
-	}
-
-	/**
-	 * @return boolean
-	 */
-	public function getKeepActive()
-	{
-		return $this->keepActive;
-	}
-
-	/**
-	 * @param string $language
-	 * @return User
-	 */
-	public function setLanguage($language)
-	{
-		$this->language = $language;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getLanguage()
-	{
-		return $this->language;
-	}
-
-	/**
-	 * @param string $lastName
-	 * @return User
-	 */
-	public function setLastName($lastName)
-	{
-		$this->lastName = $lastName;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getLastName()
-	{
-		return $this->lastName;
-	}
-
-	/**
-	 * @param object $ldapInformations
-	 * @return User
-	 */
-	public function setLdapInformations($ldapInformations)
-	{
-		$this->ldapInformations = $ldapInformations;
-
-		return $this;
-	}
-
-	/**
-	 * @return object
-	 */
-	public function getLdapInformations()
-	{
-		return $this->ldapInformations;
-	}
-
-	/**
-	 * @param string $login
-	 * @return User
-	 */
-	public function setLogin($login)
-	{
-		$this->login = $login;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getLogin()
-	{
-		return $this->login;
-	}
-
-	/**
-	 * @param string $mail
-	 * @return User
-	 */
-	public function setMail($mail)
-	{
-		$this->mail = $mail;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getMail()
-	{
-		return $this->mail;
-	}
-
-	/**
-	 * @param string $nationality
-	 * @return User
-	 */
-	public function setNationality($nationality)
-	{
-		$this->nationality = $nationality;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getNationality()
-	{
-		return $this->nationality;
-	}
-
-	/**
-	 * @param string $niveau
-	 * @return User
-	 */
-	public function setNiveau($niveau)
-	{
-		$this->niveau = $niveau;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getNiveau()
-	{
-		return $this->niveau;
-	}
-
-	/**
-	 * @param string $passions
-	 * @return User
-	 */
-	public function setPassions($passions)
-	{
-		$this->passions = $passions;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getPassions()
-	{
-		return $this->passions;
-	}
-
-	/**
-	 * @param string $personnalMail
-	 * @return User
-	 */
-	public function setPersonnalMail($personnalMail)
-	{
-		$this->personnalMail = $personnalMail;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getPersonnalMail()
-	{
-		return $this->personnalMail;
-	}
-
-	/**
-	 * @param string $phoneNumber
-	 * @return User
-	 */
-	public function setPhoneNumber($phoneNumber)
-	{
-		$this->phoneNumber = $phoneNumber;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getPhoneNumber()
-	{
-		return $this->phoneNumber;
-	}
-
-	/**
-	 * @param string $postalCode
-	 * @return User
-	 */
-	public function setPostalCode($postalCode)
-	{
-		$this->postalCode = $postalCode;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getPostalCode()
-	{
-		return $this->postalCode;
-	}
-
-	/**
-	 * @param string $room
-	 * @return User
-	 */
-	public function setRoom($room)
-	{
-		$this->room = $room;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getRoom()
-	{
-		return $this->room;
-	}
-
-	/**
-	 * @param string $sex
-	 * @return User
-	 */
-	public function setSex($sex)
-	{
-		$this->sex = $sex;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getSex()
-	{
-		return $this->sex;
-	}
-
-	/**
-	 * @param int $studentId
-	 * @return User
-	 */
-	public function setStudentId($studentId)
-	{
-		$this->studentId = $studentId;
-
-		return $this;
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getStudentId()
-	{
-		return $this->studentId;
-	}
-
-	/**
-	 * @param string $surnom
-	 * @return User
-	 */
-	public function setSurnom($surnom)
-	{
-		$this->surnom = $surnom;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getSurnom()
-	{
-		return $this->surnom;
-	}
-
-	/**
-	 * @param string $title
-	 * @return User
-	 */
-	public function setTitle($title)
-	{
-		$this->title = $title;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getTitle()
-	{
-		return $this->title;
-	}
-
-	/**
-	 * @param string $website
-	 * @return User
-	 */
-	public function setWebsite($website)
-	{
-		$this->website = $website;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getWebsite()
-	{
-		return $this->website;
-	}
-
-	/**
-	 * @param boolean $permissions
-	 * @return User
-	 */
-	public function setPermissions($permissions)
-	{
-		$this->permissions = $permissions;
-
-		return $this;
-	}
-
-	/**
-	 * @return boolean
-	 */
-	public function getPermissions()
-	{
-		return $this->permissions;
-	}
-
-	/**
-	 * @param string $permission
-	 * @return bool
-	 */
-	public function hasPermission($permission)
-	{
-		return in_array($permission, $this->permissions);
-	}
-
-	/**
-	 * @param string $permission
-	 * @return User
-	 */
-	public function addPermission($permission)
-	{
-		$this->permissions[] = $permission;
-
-		return $this;
 	}
 }

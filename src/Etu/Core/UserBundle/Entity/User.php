@@ -7,6 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use Etu\Core\CoreBundle\Framework\Definition\Permission;
 use Etu\Core\CoreBundle\Framework\EtuKernel;
@@ -491,6 +492,8 @@ class User implements UserInterface, \Serializable
 	 * Temporary variable to store uploaded file during photo update
 	 *
 	 * @var UploadedFile
+	 *
+	 * @Assert\Image()
 	 */
 	public $file;
 
