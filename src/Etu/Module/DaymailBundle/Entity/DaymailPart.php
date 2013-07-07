@@ -3,13 +3,16 @@
 namespace Etu\Module\DaymailBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 use Etu\Core\UserBundle\Entity\Organization;
 
 /**
  * Daymail part
  *
  * @ORM\Table(name="etu_daymail_parts")
- * @ORM\Entity
+ * @ORM\Entity()
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class DaymailPart
 {
@@ -59,11 +62,19 @@ class DaymailPart
 	protected $day;
 
 	/**
-	 * @var boolean
+	 * @var \DateTime $updated
 	 *
-	 * @ORM\Column(name="deleted", type="boolean")
+	 * @Gedmo\Timestampable(on="update")
+	 * @ORM\Column(name="updatedAt", type="datetime")
 	 */
-	protected $deleted;
+	protected $updatedAt;
+
+	/**
+	 * @var \DateTime $deletedAt
+	 *
+	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 */
+	protected $deletedAt;
 
 
 	/**
@@ -73,7 +84,6 @@ class DaymailPart
 	public function __construct(Organization $orga, \DateTime $date)
 	{
 		$this->orga = $orga;
-		$this->deleted = false;
 		$this->setDate($date);
 	}
 
@@ -201,22 +211,49 @@ class DaymailPart
 		return $this->title;
 	}
 
-	/**
-	 * @param boolean $deleted
-	 * @return DaymailPart
-	 */
-	public function setDeleted($deleted)
-	{
-		$this->deleted = $deleted;
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return DaymailPart
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @return boolean
-	 */
-	public function getDeleted()
-	{
-		return $this->deleted;
-	}
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set deletedAt
+     *
+     * @param \DateTime $deletedAt
+     * @return DaymailPart
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
 }

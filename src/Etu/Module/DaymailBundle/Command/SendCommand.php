@@ -67,7 +67,6 @@ class SendCommand extends ContainerAwareCommand
 			->leftJoin('d.orga', 'o')
 			->where('d.day = :day')
 			->setParameter('day', date('d-m-Y'))
-			->andWhere('d.deleted = 0')
 			->getQuery()
 			->getResult();
 
@@ -87,7 +86,7 @@ class SendCommand extends ContainerAwareCommand
 
 			$message = \Swift_Message::newInstance($subject)
 				->setFrom(array('bde@utt.fr' => 'BDE UTT'))
-				->setTo(array('daymail@utt.fr'))
+				->setTo(array('titouan@ademis.com'))
 				->setBody($content, 'text/html');
 
 			$result = $mailer->send($message);

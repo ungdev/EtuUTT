@@ -37,7 +37,6 @@ class MembershipsController extends Controller
 			->select('m, o')
 			->from('EtuUserBundle:Member', 'm')
 			->leftJoin('m.organization', 'o')
-			->where('o.deleted = 0')
 			->andWhere('m.user = :user')
 			->setParameter('user', $this->getUser()->getId())
 			->orderBy('m.role', 'DESC')
@@ -86,7 +85,6 @@ class MembershipsController extends Controller
 			->leftJoin('d.orga', 'o')
 			->where('o.id = :orga')
 			->setParameter('orga', $orga->getId())
-			->andWhere('d.deleted = 0')
 			->orderBy('d.date', 'DESC')
 			->getQuery()
 			->setMaxResults(10)
@@ -137,7 +135,7 @@ class MembershipsController extends Controller
 
 		if ($request->getMethod() == 'POST' && $form->submit($request)->isValid() && $canEdit) {
 			$daymailPart->setBody(RedactorJsEscaper::escape(
-				str_replace('<img ', '<img style="max-width: 600px" ', $daymailPart->getBody())
+				str_replace('<img ', '<img style="max-width: 600px; max-height: 400px;" ', $daymailPart->getBody())
 			));
 
 			$em->persist($daymailPart);
@@ -148,10 +146,17 @@ class MembershipsController extends Controller
 				'message' => 'daymail.memberships.daymail.confirm'
 			));
 
-			return $this->redirect($this->generateUrl('memberships_orga_daymail', array(
-				'login' => $login,
-				'day' => $day->format('d-m-Y')
-			)));
+			if ($request->request->has('_preview')) {
+				return $this->redirect($this->generateUrl('memberships_orga_daymail', array(
+					'login' => $login,
+					'day' => $day->format('d-m-Y')
+				)).'?preview');
+			} else {
+				return $this->redirect($this->generateUrl('memberships_orga_daymail', array(
+					'login' => $login,
+					'day' => $day->format('d-m-Y')
+				)));
+			}
 		}
 
 		return array(
@@ -163,6 +168,7 @@ class MembershipsController extends Controller
 			'available' => $available,
 			'currentDay' => $day,
 			'canEdit' => $canEdit,
+			'wantPreview' => $request->query->has('preview'),
 		);
 	}
 
@@ -188,7 +194,6 @@ class MembershipsController extends Controller
 			->select('m, o')
 			->from('EtuUserBundle:Member', 'm')
 			->leftJoin('m.organization', 'o')
-			->where('o.deleted = 0')
 			->andWhere('m.user = :user')
 			->setParameter('user', $this->getUser()->getId())
 			->orderBy('m.role', 'DESC')
@@ -238,7 +243,6 @@ class MembershipsController extends Controller
 			->setParameter('orga', $orga->getId())
 			->andWhere('d.day = :day')
 			->setParameter('day', $day->format('d-m-Y'))
-			->andWhere('d.deleted = 0')
 			->getQuery()
 			->setMaxResults(1)
 			->getOneOrNullResult();
