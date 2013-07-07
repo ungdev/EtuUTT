@@ -13,7 +13,8 @@
 /vendor/
 /bin/
 /composer.phar
-/.idea
+.idea/
+*.php~
 
 # Compiled source #
 ###################
