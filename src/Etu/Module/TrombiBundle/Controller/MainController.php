@@ -49,7 +49,6 @@ class MainController extends Controller
 				->select('u')
 				->from('EtuUserBundle:User', 'u')
 				->where('u.isStudent = 1')
-				->andWhere('u.isDeleted = 0')
 				->orderBy('u.lastName');
 
 			if (! $user->getFullName() && ! $user->getStudentId() && ! $user->getPhoneNumber() && ! $user->getUvs() &&

@@ -27,7 +27,6 @@ class MainController extends Controller
 			->select('a, p')
 			->from('EtuUserBundle:Organization', 'a')
 			->leftJoin('a.president', 'p')
-			->where('a.deleted = 0')
 			->orderBy('a.name')
 			->getQuery();
 
@@ -48,7 +47,7 @@ class MainController extends Controller
 		$em = $this->getDoctrine()->getManager();
 
 		/** @var $orga Organization */
-		$orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(array('login' => $login, 'deleted' => false));
+		$orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(array('login' => $login));
 
 		if (! $orga) {
 			throw $this->createNotFoundException('Orga not found');
@@ -69,7 +68,7 @@ class MainController extends Controller
 		$em = $this->getDoctrine()->getManager();
 
 		/** @var $orga Organization */
-		$orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(array('login' => $login, 'deleted' => false));
+		$orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(array('login' => $login));
 
 		if (! $orga) {
 			throw $this->createNotFoundException('Orga not found');

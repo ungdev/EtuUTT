@@ -18,7 +18,7 @@
 				<h4>{{ 'core.main.indexAnonymous.events'|trans }}</h4>
 
 				{% for event in events %}
-					<div class="well">
+					<div class="well well-small">
 						<h5>
 							<a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}">
 								{{ event.title|limit(27) }}

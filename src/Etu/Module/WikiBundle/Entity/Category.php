@@ -88,13 +88,6 @@ class Category
 	 */
 	protected $depth;
 
-	/**
-	 * @var boolean
-	 *
-	 * @ORM\Column(name="isDeleted", type="boolean")
-	 */
-	protected $isDeleted;
-
 	public $parentId = 0;
 	public $children = array();
 	public $hasChildren = false;
@@ -106,7 +99,6 @@ class Category
 	 */
 	public function __construct()
 	{
-		$this->isDeleted = false;
 		$this->levelToView = self::LEVEL_ASSO_MEMBER;
 		$this->levelToEdit = self::LEVEL_ASSO_ADMIN;
 		$this->levelToEditPermissions = self::LEVEL_ASSO_ADMIN;

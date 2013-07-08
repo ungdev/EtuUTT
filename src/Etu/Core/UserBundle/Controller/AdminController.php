@@ -55,7 +55,6 @@ class AdminController extends Controller
 				->select('u')
 				->from('EtuUserBundle:User', 'u')
 				->where('u.isStudent = 1')
-				->andWhere('u.isDeleted = 0')
 				->orderBy('u.lastName');
 
 			if (! $user->getFullName() && ! $user->getStudentId() && ! $user->getPhoneNumber() && ! $user->getUvs() &&
@@ -554,7 +553,7 @@ class AdminController extends Controller
 		}
 
 		if ($confirm == 'confirm') {
-			$user->setIsDeleted(true);
+			$user->setDeletedAt(new \DateTime());
 
 			$em->persist($user);
 			$em->flush();
@@ -589,7 +588,6 @@ class AdminController extends Controller
 			->select('o, p')
 			->from('EtuUserBundle:Organization', 'o')
 			->leftJoin('o.president', 'p')
-			->where('o.deleted = 0')
 			->orderBy('o.name')
 			->getQuery();
 
@@ -661,7 +659,7 @@ class AdminController extends Controller
 			throw $this->createNotFoundException(sprintf('Login %s not found', $login));
 		}
 
-		$orga->setDeleted(true);
+		$orga->setDeletedAt(new \DateTime());
 
 		$em->persist($orga);
 		$em->flush();

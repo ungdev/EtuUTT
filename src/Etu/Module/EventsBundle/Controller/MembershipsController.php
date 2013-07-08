@@ -41,7 +41,6 @@ class MembershipsController extends Controller
 			->select('m, o')
 			->from('EtuUserBundle:Member', 'm')
 			->leftJoin('m.organization', 'o')
-			->where('o.deleted = 0')
 			->andWhere('m.user = :user')
 			->setParameter('user', $this->getUser()->getId())
 			->orderBy('m.role', 'DESC')
@@ -80,6 +79,7 @@ class MembershipsController extends Controller
 		$form = $this->createFormBuilder($event)
 			->add('title')
 			->add('category', 'choice', array('choices' => $categories))
+			->add('file', 'file')
 			->add('begin', null, array(
 				'attr' => array('class' => 'event-select-date'),
                 'widget' => 'choice',
@@ -99,6 +99,8 @@ class MembershipsController extends Controller
 
 			$em->persist($event);
 			$em->flush();
+
+			$event->upload();
 
 			$entity = array(
 				'id' => $event->getId(),
@@ -182,7 +184,6 @@ class MembershipsController extends Controller
 			->select('m, o')
 			->from('EtuUserBundle:Member', 'm')
 			->leftJoin('m.organization', 'o')
-			->where('o.deleted = 0')
 			->andWhere('m.user = :user')
 			->setParameter('user', $this->getUser()->getId())
 			->orderBy('m.role', 'DESC')
@@ -289,7 +290,6 @@ class MembershipsController extends Controller
 			->select('m, o')
 			->from('EtuUserBundle:Member', 'm')
 			->leftJoin('m.organization', 'o')
-			->where('o.deleted = 0')
 			->andWhere('m.user = :user')
 			->setParameter('user', $this->getUser()->getId())
 			->orderBy('m.role', 'DESC')
@@ -493,7 +493,6 @@ class MembershipsController extends Controller
 			->select('m, o')
 			->from('EtuUserBundle:Member', 'm')
 			->leftJoin('m.organization', 'o')
-			->where('o.deleted = 0')
 			->andWhere('m.user = :user')
 			->setParameter('user', $this->getUser()->getId())
 			->orderBy('m.role', 'DESC')

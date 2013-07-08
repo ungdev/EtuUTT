@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Util\RedactorJsEscaper;
+use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Module\WikiBundle\Entity\Page;
 use Etu\Module\WikiBundle\Entity\PageRevision;
 use Etu\Module\WikiBundle\Model\PermissionsChecker;
@@ -66,12 +67,20 @@ class MainController extends Controller
 			$em->flush();
 		}
 
-		$orgas = $em->getRepository('EtuUserBundle:Organization')->findBy(array('deleted' => false), array('name' => 'ASC'));
+		/** @var Organization[] $orgas */
+		$orgas = $em->getRepository('EtuUserBundle:Organization')->findBy(array(), array('name' => 'ASC'));
 		$userOrgas = array();
 
 		foreach ($orgas as $key => $orga) {
-			foreach ($this->getUser()->getMemberships() as $membership) {
-				if ($membership->getOrganization()->getId() == $orga->getId()) {
+			if ($this->getUserLayer()->isUser()) {
+				foreach ($this->getUser()->getMemberships() as $membership) {
+					if ($membership->getOrganization()->getId() == $orga->getId()) {
+						unset($orgas[$key]);
+						$userOrgas[] = $orga;
+					}
+				}
+			} elseif ($this->getUserLayer()->isOrga()) {
+				if ($this->getUser()->getId() == $orga->getId()) {
 					unset($orgas[$key]);
 					$userOrgas[] = $orga;
 				}

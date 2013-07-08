@@ -46,6 +46,11 @@ doctrine:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
 
+        filters:
+            softdeleteable:
+                class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
+                enabled: true
+
 # Swiftmailer Configuration
 swiftmailer:
     transport: %mailer_transport%
@@ -66,6 +71,20 @@ knp_paginator:
         pagination: EtuCoreBundle:Pagination:sliding.html.twig     # sliding pagination controls template
         sortable: EtuCoreBundle:Pagination:sortable_link.html.twig # sort link template
 
+# Doctrine extensions
+stof_doctrine_extensions:
+    default_locale: %locale%
+    orm:
+        default:
+            # Extensions activated
+            tree:           false
+            timestampable:  true
+            blameable:      false
+            sluggable:      false
+            translatable:   false
+            loggable:       false
+            softdeleteable: true
+            uploadable:     false
 
 # TgaAudienceBundle
 tga_audience:

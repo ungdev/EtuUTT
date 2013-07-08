@@ -741,7 +741,7 @@ textarea {
   display: block;
   background: white;
   border-top: 1px solid #e5e5e5;
-  padding: 10px;
+  padding: 15px 10px 8px 10px;
 }
 .bug:hover {
   text-decoration: none;
@@ -756,8 +756,16 @@ textarea {
   margin: 0;
   margin-bottom: 5px;
 }
+.bug-date {
+  display: block;
+  margin-right: 10px;
+  font-size: 12px;
+  color: #999;
+  font-weight: lighter;
+}
 .bug-meta {
-  font-style: italic;
+  display: block;
+  margin-right: 10px;
 }
 .bugs-view-title {
   font-size: 18px;
@@ -1052,10 +1060,32 @@ textarea {
   height: 14px;
   margin-right: 3px;
 }
+.event-tooltip {
+  display: none;
+  position: absolute;
+  margin-left: -10px;
+  margin-top: -120px;
+  width: 300px;
+  height: 90px;
+  padding: 10px;
+  background: white;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
+  text-align: left;
+}
+.event-tooltip-right {
+  margin-left: -275px;
+}
+.event-tooltip-image {
+  max-width: 90px;
+  max-height: 90px;
+}
+.event-tooltip-meta {
+  margin-left: 100px;
+}
 .event-day {
   padding-bottom: 5px;
 }
-.event-culturel {
+.event-culture {
   background: #fcdc0b;
 }
 .event-sportif {
@@ -1083,11 +1113,11 @@ textarea {
 }
 .event-view-orga-logo {
   float: left;
-  width: 100px;
+  width: 150px;
   margin: 0 10px;
 }
 .event-view-orga-logo img {
-  width: 100px;
+  width: 150px;
 }
 .event-view-infos {
   padding: 10px;

@@ -36,6 +36,7 @@ class AppKernel extends EtuKernel
 	        // Doctrine
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(), // Doctrine ORM
 	        new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(), // Fixtures are data which are used during testing
+	        new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(), // Doctrine extensions
 
 	        // Sensio extra
 	        // Add annotations for controllers (@Template, @Cache, ...) and some useful other features

@@ -43,7 +43,7 @@ class AuthController extends Controller
 
 				// If the user can't be loaded from database, we try for an organization
 				if (! $user) {
-					$orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(array('login' => $login, 'deleted' => false));
+					$orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(array('login' => $login));
 
 					if ($orga) {
 						$user = $orga;
@@ -76,7 +76,7 @@ class AuthController extends Controller
 					}
 				}
 
-				if ($user instanceof \Etu\Core\UserBundle\Entity\User && ! $user->getIsDeleted()) {
+				if ($user instanceof \Etu\Core\UserBundle\Entity\User) {
 					$this->get('session')->set('user', $user->getId());
 					$this->get('session')->getFlashBag()->set('message', array(
 						'type' => 'success',
@@ -134,7 +134,7 @@ class AuthController extends Controller
 
 		// If the user can't be loaded from database, we try for an organization
 		if (! $user) {
-			$orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(array('login' => $login, 'deleted' => false));
+			$orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(array('login' => $login));
 
 			if ($orga) {
 				$user = $orga;
@@ -174,7 +174,7 @@ class AuthController extends Controller
 			}
 		}
 
-		if ($user instanceof \Etu\Core\UserBundle\Entity\User && ! $user->getIsDeleted()) {
+		if ($user instanceof \Etu\Core\UserBundle\Entity\User) {
 			$this->get('session')->set('user', $user->getId());
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
@@ -226,8 +226,7 @@ class AuthController extends Controller
 		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
 			$result = $em->getRepository('EtuUserBundle:User')->findOneBy(array(
 				'login' => $user->getLogin(),
-				'password' => $this->get('etu.user.crypting')->encrypt($user->getPassword()),
-				'isDeleted' => false,
+				'password' => $this->get('etu.user.crypting')->encrypt($user->getPassword())
 			));
 
 			if ($result) {

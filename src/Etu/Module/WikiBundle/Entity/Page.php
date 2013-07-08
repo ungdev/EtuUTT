@@ -3,6 +3,8 @@
 namespace Etu\Module\WikiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Core\UserBundle\Entity\User;
 
@@ -10,7 +12,8 @@ use Etu\Core\UserBundle\Entity\User;
  * Page
  *
  * @ORM\Table(name="etu_wiki_pages")
- * @ORM\Entity
+ * @ORM\Entity()
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Page
 {
@@ -97,11 +100,27 @@ class Page
 	protected $isHome;
 
 	/**
-	 * @var boolean
+	 * @var \DateTime $created
 	 *
-	 * @ORM\Column(name="isDeleted", type="boolean")
+	 * @Gedmo\Timestampable(on="create")
+	 * @ORM\Column(name="createdAt", type="datetime")
 	 */
-	protected $isDeleted;
+	protected $createdAt;
+
+	/**
+	 * @var \DateTime $updated
+	 *
+	 * @Gedmo\Timestampable(on="update")
+	 * @ORM\Column(name="updatedAt", type="datetime")
+	 */
+	protected $updatedAt;
+
+	/**
+	 * @var \DateTime $deletedAt
+	 *
+	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 */
+	protected $deletedAt;
 
 	public $body;
 	public $comment;
@@ -118,6 +137,7 @@ class Page
 		$this->levelToView = self::LEVEL_ASSO_MEMBER;
 		$this->levelToEdit = self::LEVEL_ASSO_ADMIN;
 		$this->levelToEditPermissions = self::LEVEL_ASSO_ADMIN;
+		$this->createdAt = new \DateTime();
 	}
 
 	/**

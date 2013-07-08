@@ -6,6 +6,24 @@
 	<img src="{{ asset('img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
+{% block javascripts %}
+	{% if wantPreview %}
+	<script type="text/javascript">
+		$(function() {
+			var url = '{{ path('memberships_orga_daymail_preview', {'login': orga.login, 'day': currentDay|date('d-m-Y')}) }}';
+
+			$.facebox(
+				'<p style="text-align:center;"><br /><img src="{{ asset('img/loader-big.gif') }}" /><br /><br /></p>'
+			);
+
+			$.get(url, function(data) {
+				$.facebox(data);
+			});
+		});
+	</script>
+	{% endif %}
+{% endblock %}
+
 {% block content %}
 	<div class="padding20-all">
 		<div class="row-fluid">
@@ -149,10 +167,9 @@
 							</button>
 
 							{% if daymail.id > 0 %}
-							<a class="btn" href="#"
-							   onclick="window.open('{{ path('memberships_orga_daymail_preview', {'login': orga.login, 'day': currentDay|date('d-m-Y')}) }}', '', 'width=800, height=500, top=150, left=150, toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, copyhistory=no, resizable=no'); return false;">
+							<button type="submit" class="btn" name="_preview">
 								{{ 'daymail.memberships.daymail.preview'|trans }}
-							</a>
+							</button>
 							{% endif %}
 						</div>
 					</div>

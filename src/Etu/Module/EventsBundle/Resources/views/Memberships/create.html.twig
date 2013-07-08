@@ -81,7 +81,7 @@
 					</a>
 				</p>
 
-				<form method="post" action="">
+				<form method="post" action="" {{ form_enctype(form) }}>
 					{{ form_errors(form) }}
 
 					<div class="control-group">
@@ -98,6 +98,14 @@
 							{{ form_widget(form.category) }}
 						</div>
 						<span class="help-block">{{ form_errors(form.category) }}</span>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label">{{ 'events.memberships.create.image.label'|trans }}</label>
+						<div class="controls">
+							{{ form_widget(form.file) }}
+						</div>
+						<span class="help-block">{{ form_errors(form.file) }}</span>
 					</div>
 
 					<div class="control-group">

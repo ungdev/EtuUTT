@@ -14,6 +14,20 @@
 	{{ parent() }}
 {% endblock %}
 
+{% block javascripts %}
+	<script type="text/javascript">
+		var events = $('.event');
+
+		$(function() {
+			events.hover(function() {
+				$(this).find('.event-tooltip').show();
+			}, function() {
+				$(this).find('.event-tooltip').hide();
+			});
+		});
+	</script>
+{% endblock %}
+
 {% block content %}
 	{% set events = calendr_events(month) %}
 
@@ -78,6 +92,11 @@
 			{% for week in month %}
 				<tr>
 					{% for day in week %}
+						{% set tooltipRight =
+								loop.index % 7 == 5
+								or loop.index % 7 == 6
+								or loop.index % 7 == 0
+						%}
 						<td>
 							{% if month.contains(day.begin) %}
 								<div class="event-day">{{ day.begin.format('d') }}</div>
@@ -87,9 +106,19 @@
 								{% for event in events.find(day) %}
 									{% if currentCategory == 'all' or event.category == currentCategory %}
 										<a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}"
-										   class="event event-{{ event.category }} tip"
-										   title="<strong>{{ event.title }}</strong><br />
-										   {{ 'events.main.index.organised_by'|trans({'%orga%': event.orga.name}) }}"></a>
+										   class="event event-{{ event.category }}"><!--
+										   --><div class="event-tooltip{% if tooltipRight %} event-tooltip-right{% endif %}">
+												<img src="{{ asset('events/'~(event.title|slugify)~'-'~event.id~'.png') }}" class="pull-left event-tooltip-image" />
+
+												<p class="event-tooltip-meta">
+													<strong>{{ event.title }}</strong><br />
+													{{ 'events.main.index.category_orga'|trans({
+														'%orga%': event.orga.name,
+														'%category%': ('events.categories.'~event.category)|trans
+													}) }}
+												</p>
+												</div><!--
+										   --></a>
 									{% endif %}
 								{% endfor %}
 							{% else %}

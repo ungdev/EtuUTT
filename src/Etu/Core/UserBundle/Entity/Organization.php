@@ -3,19 +3,23 @@
 namespace Etu\Core\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Imagine\Image\Color;
 use Imagine\Image\Point;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Organization
  *
  * @ORM\Table(name="etu_organizations")
- * @ORM\Entity
+ * @ORM\Entity()
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Organization implements UserInterface, \Serializable
 {
@@ -100,11 +104,27 @@ class Organization implements UserInterface, \Serializable
 	protected $countMembers;
 
 	/**
-	 * @var integer
+	 * @var \DateTime $created
 	 *
-	 * @ORM\Column(name="deleted", type="boolean")
+	 * @Gedmo\Timestampable(on="create")
+	 * @ORM\Column(name="createdAt", type="datetime")
 	 */
-	protected $deleted;
+	protected $createdAt;
+
+	/**
+	 * @var \DateTime $updated
+	 *
+	 * @Gedmo\Timestampable(on="update")
+	 * @ORM\Column(name="updatedAt", type="datetime")
+	 */
+	protected $updatedAt;
+
+	/**
+	 * @var \DateTime $deletedAt
+	 *
+	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 */
+	protected $deletedAt;
 
 	/**
 	 * Temporary variable to store uploaded file during photo update
@@ -131,7 +151,7 @@ class Organization implements UserInterface, \Serializable
 		$this->logo = 'default-logo.png';
 		$this->countMembers = 0;
 		$this->testingContext = false;
-		$this->deleted = false;
+		$this->createdAt = new \DateTime();
 	}
 
 	public function __toString()
@@ -522,22 +542,72 @@ class Organization implements UserInterface, \Serializable
 		return $this->website;
 	}
 
-	/**
-	 * @param int $deleted
-	 * @return Organization
-	 */
-	public function setDeleted($deleted)
-	{
-		$this->deleted = $deleted;
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Organization
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
 
-	/**
-	 * @return int
-	 */
-	public function getDeleted()
-	{
-		return $this->deleted;
-	}
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Organization
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set deletedAt
+     *
+     * @param \DateTime $deletedAt
+     * @return Organization
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime 
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
 }
