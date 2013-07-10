@@ -3,19 +3,21 @@
 namespace Etu\Core\CoreBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+
 use Etu\Core\CoreBundle\Entity\Page;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
-
 use Etu\Core\CoreBundle\Framework\Definition\Module;
 use Etu\Core\CoreBundle\Framework\Module\ModulesManager;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Core\CoreBundle\Util\Server;
+
+use Tga\AudienceBundle\Stats\Processor;
+
 use Symfony\Component\HttpFoundation\Response;
 
 // Import @Route() and @Template() annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Tga\AudienceBundle\Stats\Processor;
 
 /**
  * @Route("/admin")
