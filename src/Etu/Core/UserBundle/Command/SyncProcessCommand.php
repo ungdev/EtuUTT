@@ -112,6 +112,7 @@ ask you to keep or delete him/her.
 				$i++;
 			}
 
+			$output->writeln('Saving in database ...');
 			$container->get('doctrine')->getManager()->flush();
 		}
 
@@ -132,6 +133,7 @@ ask you to keep or delete him/her.
 				$i++;
 			}
 
+			$output->writeln('Saving in database ...');
 			$container->get('doctrine')->getManager()->flush();
 		}
 
