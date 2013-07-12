@@ -29,10 +29,6 @@ class SidebarBuilder
 
 		$this
 			->addBlock('base.sidebar.services.title')
-				->add('base.sidebar.services.items.uvs')
-					->setIcon('briefcase.png')
-					->setUrl('')
-				->end()
 			->end()
 			->addBlock('base.sidebar.etu.title')
 				->add('base.sidebar.etu.items.team')

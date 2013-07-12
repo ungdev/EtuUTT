@@ -1,88 +1,105 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: Titotix
- * Date: 16/04/13
- * Time: 01:16
- * To change this template use File | Settings | File Templates.
- */
 
 namespace Etu\Module\UVBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class UV
- * @package Etu\Module\UVBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="etu_uvs")
  */
-
-class UV {
-
+class UV
+{
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\Column(type="string")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $code;
+    protected $id;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string", length=10)
+	 */
+	protected $code;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string", length=100)
+	 */
+	protected $name;
 
     /**
-     * @ORM\Column(type="string")
-     */
-    protected $nom;
-
-    /**
+     * @var integer
+     *
      * @ORM\Column(type="integer")
      */
     protected $cm;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(type="integer")
+	 */
     protected $td;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(type="integer")
+	 */
     protected $tp;
 
-
-    /**
-     * @ORM\Column(type="integer")
-     */
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(type="integer")
+	 */
     protected $the;
 
-
     /**
+     * @var boolean
+     *
      * @ORM\Column(type="boolean")
      */
     protected $automne;
 
     /**
+     * @var boolean
+     *
      * @ORM\Column(type="boolean")
      */
     protected $printemps;
 
     /**
+     * @var integer
+     *
      * @ORM\Column(type="smallint")
      */
     protected $credits;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="array")
      */
     protected $objectifs;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="array")
      */
     protected $programme;
 
-
-    public function __construct($code) {
-
-        $this->setCode($code);
-
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -94,14 +111,14 @@ class UV {
     public function setCode($code)
     {
         $this->code = $code;
-    
+
         return $this;
     }
 
     /**
      * Get code
      *
-     * @return string 
+     * @return string
      */
     public function getCode()
     {
@@ -109,26 +126,26 @@ class UV {
     }
 
     /**
-     * Set nom
+     * Set name
      *
-     * @param string $nom
+     * @param string $name
      * @return UV
      */
-    public function setNom($nom)
+    public function setName($name)
     {
-        $this->nom = $nom;
-    
+        $this->name = $name;
+
         return $this;
     }
 
     /**
-     * Get nom
+     * Get name
      *
-     * @return string 
+     * @return string
      */
-    public function getNom()
+    public function getName()
     {
-        return $this->nom;
+        return $this->name;
     }
 
     /**
@@ -140,14 +157,14 @@ class UV {
     public function setCm($cm)
     {
         $this->cm = $cm;
-    
+
         return $this;
     }
 
     /**
      * Get cm
      *
-     * @return integer 
+     * @return integer
      */
     public function getCm()
     {
@@ -163,14 +180,14 @@ class UV {
     public function setTd($td)
     {
         $this->td = $td;
-    
+
         return $this;
     }
 
     /**
      * Get td
      *
-     * @return integer 
+     * @return integer
      */
     public function getTd()
     {
@@ -186,14 +203,14 @@ class UV {
     public function setTp($tp)
     {
         $this->tp = $tp;
-    
+
         return $this;
     }
 
     /**
      * Get tp
      *
-     * @return integer 
+     * @return integer
      */
     public function getTp()
     {
@@ -209,14 +226,14 @@ class UV {
     public function setThe($the)
     {
         $this->the = $the;
-    
+
         return $this;
     }
 
     /**
      * Get the
      *
-     * @return integer 
+     * @return integer
      */
     public function getThe()
     {
@@ -232,14 +249,14 @@ class UV {
     public function setAutomne($automne)
     {
         $this->automne = $automne;
-    
+
         return $this;
     }
 
     /**
      * Get automne
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getAutomne()
     {
@@ -255,14 +272,14 @@ class UV {
     public function setPrintemps($printemps)
     {
         $this->printemps = $printemps;
-    
+
         return $this;
     }
 
     /**
      * Get printemps
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getPrintemps()
     {
@@ -278,60 +295,86 @@ class UV {
     public function setCredits($credits)
     {
         $this->credits = $credits;
-    
+
         return $this;
     }
 
     /**
      * Get credits
      *
-     * @return integer 
+     * @return integer
      */
     public function getCredits()
     {
         return $this->credits;
     }
 
-    /**
-     * Set objectif
-     *
-     * @param string $objectif
-     * @return UV
-     */
-    public function setObjectifs($objectifs)
-    {
-        $this->objectifs = $objectifs;
-    
-        return $this;
-    }
+	/**
+	 * Set objectifs
+	 *
+	 * @param array $objectifs
+	 * @return UV
+	 */
+	public function setObjectifs($objectifs)
+	{
+		$this->objectifs = $objectifs;
+
+		return $this;
+	}
+
+	/**
+	 * Add objectif
+	 *
+	 * @param string $objectif
+	 * @return UV
+	 */
+	public function addObjectif($objectif)
+	{
+		$this->objectifs[] = $objectif;
+
+		return $this;
+	}
 
     /**
-     * Get objectif
+     * Get objectifs
      *
-     * @return string 
+     * @return array
      */
     public function getObjectifs()
     {
         return $this->objectifs;
     }
 
-    /**
-     * Set programme
-     *
-     * @param string $programme
-     * @return UV
-     */
-    public function setProgramme($programme)
-    {
-        $this->programme = $programme;
-    
-        return $this;
-    }
+	/**
+	 * Set programme
+	 *
+	 * @param array $programme
+	 * @return UV
+	 */
+	public function setProgramme($programme)
+	{
+		$this->programme = $programme;
+
+		return $this;
+	}
+
+	/**
+	 * Add programme line
+	 *
+	 * @param string $programme
+	 * @return UV
+	 */
+	public function addProgrammeLine($programme)
+	{
+		$this->programme[] = $programme;
+
+		return $this;
+	}
 
     /**
      * Get programme
      *
-     * @return string 
+     * @return array
      */
     public function getProgramme()
     {
