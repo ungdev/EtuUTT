@@ -31,4 +31,4 @@ L'ordre conseillé pour débuter la lecture est :
 
 Elle a été écrite par Titouan Galopin.
 
-> **Note :** EtuUTT utilise Symfony 2.2.
+> **Note :** EtuUTT utilise Symfony 2.3 (LTS)
