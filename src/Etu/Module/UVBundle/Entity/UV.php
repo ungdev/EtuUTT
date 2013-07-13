@@ -59,7 +59,7 @@ class UV
 	 *
 	 * @ORM\Column(type="integer")
 	 */
-    protected $the;
+	protected $the;
 
     /**
      * @var boolean
