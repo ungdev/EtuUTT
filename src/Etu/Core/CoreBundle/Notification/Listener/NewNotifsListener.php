@@ -70,7 +70,7 @@ class NewNotifsListener
 				->createQueryBuilder()
 				->select('n')
 				->from('EtuCoreBundle:Notification', 'n')
-				->where('n.date > :lastVisitHome')
+				->where('n.createdAt > :lastVisitHome')
 				->andWhere('n.authorId != :userId')
 				->setParameter('userId', $layer->getUser()->getId())
 				->setParameter('lastVisitHome', $layer->getUser()->getLastVisitHome());

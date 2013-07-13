@@ -3,11 +3,13 @@
 namespace Etu\Core\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Etu\Core\UserBundle\Entity\User;
 
 /**
  * @ORM\Table(name="etu_notifications")
- * @ORM\Entity
+ * @ORM\Entity()
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Notification
 {
@@ -69,15 +71,6 @@ class Notification
 	protected $module;
 
 	/**
-	 * Create or last update date
-	 *
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="date", type="datetime")
-	 */
-	protected $date;
-
-	/**
 	 * Is a super-notification ?
 	 *
 	 * @var boolean
@@ -93,13 +86,27 @@ class Notification
 	 */
 	protected $expiration;
 
+	/**
+	 * @var \DateTime $created
+	 *
+	 * @Gedmo\Timestampable(on="create")
+	 * @ORM\Column(name="createdAt", type="datetime")
+	 */
+	protected $createdAt;
+
+	/**
+	 * @var \DateTime $deletedAt
+	 *
+	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 */
+	protected $deletedAt;
+
 
 	/**
 	 * Constructor
 	 */
 	public function __construct()
 	{
-		$this->date = new \DateTime();
 		$this->expiration = new \DateTime();
 		$this->isSuper = false;
 		$this->authorId = 0;
@@ -122,34 +129,6 @@ class Notification
 	public function getAuthorId()
 	{
 		return $this->authorId;
-	}
-
-	/**
-	 * @param \DateTime $date
-	 * @return Notification
-	 */
-	public function setDate($date)
-	{
-		$this->date = $date;
-
-		return $this;
-	}
-
-	/**
-	 * @return \DateTime
-	 */
-	public function getDate()
-	{
-		return $this->date;
-	}
-
-	/**
-	 * @param \DateTime $lastVisitHome
-	 * @return bool
-	 */
-	public function isNew(\DateTime $lastVisitHome)
-	{
-		return $lastVisitHome < $this->date;
 	}
 
 	/**
@@ -341,5 +320,69 @@ class Notification
 	{
 		return $this->module;
 	}
-}
 
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Notification
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+	/**
+	 * Get createdAt
+	 *
+	 * @return \DateTime
+	 */
+	public function getCreatedAt()
+	{
+		return $this->createdAt;
+	}
+
+	/**
+	 * Get createdAt
+	 *
+	 * @return \DateTime
+	 */
+	public function getDate()
+	{
+		return $this->createdAt;
+	}
+
+	/**
+	 * @param \DateTime $lastVisitHome
+	 * @return bool
+	 */
+	public function isNew(\DateTime $lastVisitHome)
+	{
+		return $lastVisitHome < $this->createdAt;
+	}
+
+    /**
+     * Set deletedAt
+     *
+     * @param \DateTime $deletedAt
+     * @return Notification
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+}
