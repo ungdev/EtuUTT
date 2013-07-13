@@ -129,7 +129,7 @@ class OrgaController extends Controller
 			->leftJoin('r.user', 'u')
 			->where('r.page = :page')
 			->setParameter('page', $home->getId())
-			->orderBy('r.date', 'DESC')
+			->orderBy('r.createdAt', 'DESC')
 			->setMaxResults(30)
 			->getQuery()
 			->getResult();
@@ -221,7 +221,7 @@ class OrgaController extends Controller
 			->leftJoin('r.user', 'u')
 			->where('r.page = :page')
 			->setParameter('page', $home->getId())
-			->orderBy('r.date', 'DESC')
+			->orderBy('r.createdAt', 'DESC')
 			->setMaxResults(30)
 			->getQuery()
 			->getResult();

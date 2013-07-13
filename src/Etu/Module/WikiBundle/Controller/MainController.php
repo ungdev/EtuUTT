@@ -68,12 +68,12 @@ class MainController extends Controller
 		}
 
 		/** @var Organization[] $orgas */
-		$orgas = $em->getRepository('EtuUserBundle:Organization')->findBy(array(), array('name' => 'ASC'));
+		$orgas = (array) $em->getRepository('EtuUserBundle:Organization')->findBy(array(), array('name' => 'ASC'));
 		$userOrgas = array();
 
 		foreach ($orgas as $key => $orga) {
 			if ($this->getUserLayer()->isUser()) {
-				foreach ($this->getUser()->getMemberships() as $membership) {
+				foreach ((array) $this->getUser()->getMemberships() as $membership) {
 					if ($membership->getOrganization()->getId() == $orga->getId()) {
 						unset($orgas[$key]);
 						$userOrgas[] = $orga;
@@ -133,7 +133,7 @@ class MainController extends Controller
 			->leftJoin('r.user', 'u')
 			->where('r.page = :page')
 			->setParameter('page', $home->getId())
-			->orderBy('r.date', 'DESC')
+			->orderBy('r.createdAt', 'DESC')
 			->setMaxResults(30)
 			->getQuery()
 			->getResult();
@@ -222,7 +222,7 @@ class MainController extends Controller
 			->leftJoin('r.user', 'u')
 			->where('r.page = :page')
 			->setParameter('page', $home->getId())
-			->orderBy('r.date', 'DESC')
+			->orderBy('r.createdAt', 'DESC')
 			->setMaxResults(30)
 			->getQuery()
 			->getResult();

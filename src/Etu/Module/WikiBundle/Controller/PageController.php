@@ -367,7 +367,7 @@ class PageController extends Controller
 			->leftJoin('r.user', 'u')
 			->where('r.page = :page')
 			->setParameter('page', $page->getId())
-			->orderBy('r.date', 'DESC')
+			->orderBy('r.createdAt', 'DESC')
 			->setMaxResults(30)
 			->getQuery()
 			->getResult();
@@ -432,7 +432,7 @@ class PageController extends Controller
 			->leftJoin('r.user', 'u')
 			->where('r.page = :page')
 			->setParameter('page', $page->getId())
-			->orderBy('r.date', 'DESC')
+			->orderBy('r.createdAt', 'DESC')
 			->setMaxResults(30)
 			->getQuery()
 			->getResult();

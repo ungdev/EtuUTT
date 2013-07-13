@@ -187,42 +187,65 @@ class PageRevision
     public function setPage($page)
     {
         $this->page = $page;
-    
+
         return $this;
     }
 
     /**
      * Get page
      *
-     * @return integer 
+     * @return integer
      */
     public function getPage()
     {
         return $this->page;
     }
 
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     * @return PageRevision
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-    
-        return $this;
-    }
+	/**
+	 * Set createdAt
+	 *
+	 * @param \DateTime $createdAt
+	 * @return PageRevision
+	 */
+	public function setDate($createdAt)
+	{
+		$this->createdAt = $createdAt;
 
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime 
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
+		return $this;
+	}
+
+	/**
+	 * Get createdAt
+	 *
+	 * @return \DateTime
+	 */
+	public function getDate()
+	{
+		return $this->createdAt;
+	}
+
+	/**
+	 * Set createdAt
+	 *
+	 * @param \DateTime $createdAt
+	 * @return PageRevision
+	 */
+	public function setCreatedAt($createdAt)
+	{
+		$this->createdAt = $createdAt;
+
+		return $this;
+	}
+
+	/**
+	 * Get createdAt
+	 *
+	 * @return \DateTime
+	 */
+	public function getCreatedAt()
+	{
+		return $this->createdAt;
+	}
 
     /**
      * Set updatedAt
@@ -233,14 +256,14 @@ class PageRevision
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -256,14 +279,14 @@ class PageRevision
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
-    
+
         return $this;
     }
 
     /**
      * Get deletedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDeletedAt()
     {
