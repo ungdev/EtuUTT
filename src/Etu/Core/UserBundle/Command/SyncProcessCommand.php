@@ -193,7 +193,7 @@ ask you to keep or delete him/her.
 
 				$choice = 0;
 
-				while (! in_array($choice, [1, 2, 3])) {
+				while (! in_array($choice, array(1, 2, 3))) {
 					$output->writeln("1 - Delete all of them");
 					$output->writeln("2 - Ask me for some to keep, delete the rest");
 					$output->writeln("3 - Keep all of them\n");
