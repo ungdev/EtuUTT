@@ -3,7 +3,7 @@
 use Etu\Core\CoreBundle\Framework\Definition\Module;
 use Etu\Core\CoreBundle\Framework\EtuKernel;
 
-use Symfony\Component\HttpKernel\Exception\FatalErrorException;
+use Symfony\Component\Debug\Exception\FatalErrorException;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
 
@@ -17,7 +17,7 @@ class AppKernel extends EtuKernel
 	 *
 	 * @return array|\Symfony\Component\HttpKernel\Bundle\BundleInterface[]
 	 * @throws RuntimeException
-	 * @throws Symfony\Component\HttpKernel\Exception\FatalErrorException
+	 * @throws Symfony\Component\Debug\Exception\FatalErrorException
 	 */
 	public function registerBundles()
     {
