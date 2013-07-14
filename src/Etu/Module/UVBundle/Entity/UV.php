@@ -23,6 +23,16 @@ class UV
 	const CATEGORY_ST = 'st';
 	const CATEGORY_OTHER = 'other';
 
+	public static $categories = array(
+		self::CATEGORY_CS,
+		self::CATEGORY_TM,
+		self::CATEGORY_CT,
+		self::CATEGORY_ME,
+		self::CATEGORY_EC,
+		self::CATEGORY_ST,
+		self::CATEGORY_OTHER,
+	);
+
     /**
      * @var integer
      *
@@ -254,7 +264,7 @@ class UV
      */
     public function getName()
     {
-        return $this->name;
+        return html_entity_decode($this->name);
     }
 
     /**

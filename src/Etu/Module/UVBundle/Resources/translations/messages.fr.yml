@@ -12,7 +12,14 @@ uvs:
     main:
         index:
             title: Les UV
-            all: Toutes les UV
             my: Mes UV
+            noResult: Vous semblez ne suivre aucune UV !
+        category:
+            title: Les UV %category%
+            noResult : Aucune UV dans cette catégorie
+        search:
+            title: Rechercher une UV
+            noResult: Aucun résultat
         view:
             title: Détail d'une UV - %code%
+

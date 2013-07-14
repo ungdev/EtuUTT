@@ -1,0 +1,64 @@
+
+<a href="{{ path('uvs_category', {'category': 'cs'}) }}" class="uvs-category">
+	<img src="{{ asset('img/uvs/cs.png') }}" />
+	<p>
+		{{ 'uvs.categories.cs'|trans }}
+	</p>
+</a>
+
+<a href="{{ path('uvs_category', {'category': 'tm'}) }}" class="uvs-category">
+	<img src="{{ asset('img/uvs/tm.png') }}" />
+	<p>
+		{{ 'uvs.categories.tm'|trans }}
+	</p>
+</a>
+
+<a href="{{ path('uvs_category', {'category': 'ct'}) }}" class="uvs-category">
+	<img src="{{ asset('img/uvs/ct.png') }}" />
+	<p>
+		{{ 'uvs.categories.ct'|trans }}
+	</p>
+</a>
+
+<a href="{{ path('uvs_category', {'category': 'me'}) }}" class="uvs-category">
+	<img src="{{ asset('img/uvs/me.png') }}" />
+	<p>
+		{{ 'uvs.categories.me'|trans }}
+	</p>
+</a>
+
+<a href="{{ path('uvs_category', {'category': 'ec'}) }}" class="uvs-category">
+	<img src="{{ asset('img/uvs/ec.png') }}" />
+	<p>
+		{{ 'uvs.categories.ec'|trans }}
+	</p>
+</a>
+
+<a href="{{ path('uvs_category', {'category': 'st'}) }}" class="uvs-category">
+	<img src="{{ asset('img/uvs/st.png') }}" />
+	<p>
+		{{ 'uvs.categories.st'|trans }}
+	</p>
+</a>
+
+<a href="{{ path('uvs_category', {'category': 'other'}) }}" class="uvs-category">
+	<img src="{{ asset('img/uvs/other.png') }}" />
+	<p>
+		{{ 'uvs.categories.other'|trans }}
+	</p>
+</a>
+
+<div class="clear"></div>
+
+<div class="align-right form-inline">
+	{#<a href="" class="btn btn-link">Recherche avancée</a>#}
+
+	<form method="get" action="{{ path('uvs_search') }}">
+		<div class="input-append">
+			<input class="span3" type="text" name="q">
+			<button class="btn" type="submit">Rechercher</button>
+		</div>
+	</form>
+</div>
+
+<hr />
