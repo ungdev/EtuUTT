@@ -42,7 +42,7 @@ class NotificationSender
 			$oldNotif = $em->createQueryBuilder()
 				->select('n')
 				->from('EtuCoreBundle:Notification', 'n')
-				->where('n.date > :oldDate')
+				->where('n.createdAt > :oldDate')
 				->andWhere('n.isSuper = 0')
 				->andWhere('n.helper = :helper')
 				->andWhere('n.entityType = :entityType')
@@ -57,7 +57,7 @@ class NotificationSender
 
 			if ($oldNotif instanceof Notification) {
 				$oldNotif->setEntities(array_merge($oldNotif->getEntities(), $notif->getEntities()));
-				$oldNotif->setDate($notif->getDate());
+				$oldNotif->setCreatedAt($notif->getDate());
 
 				$em->persist($oldNotif);
 			} else {
