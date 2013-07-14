@@ -10,6 +10,18 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class UV
 {
+	const TARGET_ING = 'ing';
+	const TARGET_MASTER = 'mast';
+	const TARGET_BOTH = 'both';
+
+	const CATEGORY_CS = 'cs';
+	const CATEGORY_TM = 'tm';
+	const CATEGORY_CT = 'ct';
+	const CATEGORY_ME = 'me';
+	const CATEGORY_EC = 'ec';
+	const CATEGORY_ST = 'st';
+	const CATEGORY_OTHER = 'other';
+
     /**
      * @var integer
      *
@@ -18,6 +30,20 @@ class UV
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string", length=20, nullable = true)
+	 */
+	protected $category = self::CATEGORY_OTHER;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string", length=20)
+	 */
+	protected $target = self::TARGET_ING;
 
 	/**
 	 * @var string
@@ -87,10 +113,15 @@ class UV
      */
     protected $objectifs;
 
-    /**
-     * @ORM\Column(type="array")
-     */
-    protected $programme;
+	/**
+	 * @ORM\Column(type="array")
+	 */
+	protected $programme;
+
+	/**
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $isOld = false;
 
     /**
      * Get id
@@ -100,6 +131,52 @@ class UV
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set category
+     *
+     * @param string $category
+     * @return UV
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return string
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set target
+     *
+     * @param string $target
+     * @return UV
+     */
+    public function setTarget($target)
+    {
+        $this->target = $target;
+
+        return $this;
+    }
+
+    /**
+     * Get target
+     *
+     * @return string
+     */
+    public function getTarget()
+    {
+        return $this->target;
     }
 
     /**
@@ -309,31 +386,18 @@ class UV
         return $this->credits;
     }
 
-	/**
-	 * Set objectifs
-	 *
-	 * @param array $objectifs
-	 * @return UV
-	 */
-	public function setObjectifs($objectifs)
-	{
-		$this->objectifs = $objectifs;
+    /**
+     * Set objectifs
+     *
+     * @param array $objectifs
+     * @return UV
+     */
+    public function setObjectifs($objectifs)
+    {
+        $this->objectifs = $objectifs;
 
-		return $this;
-	}
-
-	/**
-	 * Add objectif
-	 *
-	 * @param string $objectif
-	 * @return UV
-	 */
-	public function addObjectif($objectif)
-	{
-		$this->objectifs[] = $objectif;
-
-		return $this;
-	}
+        return $this;
+    }
 
     /**
      * Get objectifs
@@ -345,31 +409,18 @@ class UV
         return $this->objectifs;
     }
 
-	/**
-	 * Set programme
-	 *
-	 * @param array $programme
-	 * @return UV
-	 */
-	public function setProgramme($programme)
-	{
-		$this->programme = $programme;
+    /**
+     * Set programme
+     *
+     * @param array $programme
+     * @return UV
+     */
+    public function setProgramme($programme)
+    {
+        $this->programme = $programme;
 
-		return $this;
-	}
-
-	/**
-	 * Add programme line
-	 *
-	 * @param string $programme
-	 * @return UV
-	 */
-	public function addProgrammeLine($programme)
-	{
-		$this->programme[] = $programme;
-
-		return $this;
-	}
+        return $this;
+    }
 
     /**
      * Get programme
@@ -379,5 +430,28 @@ class UV
     public function getProgramme()
     {
         return $this->programme;
+    }
+
+    /**
+     * Set isOld
+     *
+     * @param boolean $isOld
+     * @return UV
+     */
+    public function setIdOld($isOld)
+    {
+        $this->isOld = $isOld;
+
+        return $this;
+    }
+
+    /**
+     * Get isOld
+     *
+     * @return boolean
+     */
+    public function getIsOld()
+    {
+        return $this->isOld;
     }
 }

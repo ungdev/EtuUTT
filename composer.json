@@ -1,13 +1,12 @@
 {
-	"name": "symfony/framework-standard-edition",
+	"name": "etuutt/etuutt",
 	"license": "MIT",
 	"type": "project",
-	"description": "The \"Symfony Standard Edition\" distribution",
+	"description": "EtuUTT",
 	"autoload": {
 		"psr-0": { "": "src/" }
 	},
 	"require": {
-
 		"php": ">=5.3.3",
 		"symfony/symfony": "2.3.*",
 		"doctrine/orm": ">=2.2.3,<2.4-dev",
@@ -31,6 +30,7 @@
 		"knplabs/knp-time-bundle": "dev-master",
 		"knplabs/knp-paginator-bundle": "dev-master",
 		"frequence-web/calendr-bundle": "1.*",
+		"guzzle/guzzle": "~3.7",
 		"tga/audience": "dev-master"
 	},
 	"scripts": {

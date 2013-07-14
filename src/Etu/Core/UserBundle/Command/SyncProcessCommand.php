@@ -200,6 +200,16 @@ ask you to keep or delete him/her.
 					$output->writeln("4 - Display the list\n");
 
 					$choice = $dialog->ask($output, 'What do you choose [2]? ', '2');
+
+					if ($choice == 4) {
+						$names = array();
+
+						foreach ($usersRemoveIterator as $user) {
+							$names[] = $user->getDatabaseUser()->getFullName().' ('.$user->getDatabaseUser()->getLogin().')';
+						}
+
+						$output->writeln(implode("\n", $names)."\n");
+					}
 				}
 
 				$remove = array();
