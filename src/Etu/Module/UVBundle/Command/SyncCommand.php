@@ -200,11 +200,16 @@ databsse, it will only update them.
 					->setProgramme($regEntity->getProgramme());
 
 				$em->persist($entity);
-				$em->flush();
+
+				if ($i % 10 == 0) {
+					$em->flush();
+				}
 
 				$bar->update($i);
 				$i++;
 			}
+
+			$em->flush();
 
 			$output->writeln("\n");
 		}
@@ -222,11 +227,16 @@ databsse, it will only update them.
 				$entity->setIdOld(true);
 
 				$em->persist($entity);
-				$em->flush();
+
+				if ($i % 10 == 0) {
+					$em->flush();
+				}
 
 				$bar->update($i);
 				$i++;
 			}
+
+			$em->flush();
 
 			$output->writeln("\n");
 		}

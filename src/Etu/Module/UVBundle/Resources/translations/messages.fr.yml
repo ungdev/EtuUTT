@@ -1,1 +1,18 @@
 
+uvs:
+    categories:
+        cs: Connaissances scientifiques
+        tm: Techniques et méthodes
+        ct: Culture et technologie
+        me: Management de l'entreprise
+        ec: Expression et communication
+        st: Stages
+        other: Autre
+
+    main:
+        index:
+            title: Les UV
+            all: Toutes les UV
+            my: Mes UV
+        view:
+            title: Détail d'une UV - %code%

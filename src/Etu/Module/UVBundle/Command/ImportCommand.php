@@ -118,7 +118,7 @@ Scientifiques<br/>', $html);
 
 			$uvs[] = array(
 				'code' => str_replace('&#160;', '', $name),
-				'name' => $this->ufirst($match[2][$key]),
+				'name' => $match[2][$key],
 				'category' => 'other',
 				'data' => $this->analyseHtml($desc[1])
 			);
@@ -190,8 +190,8 @@ Scientifiques<br/>', $html);
 		$uv = array(
 			'automne' => false,
 			'printemps' => false,
-			'objectifs' => array(),
-			'programme' => array(),
+			'objectifs' => '',
+			'programme' => '',
 			'credits' => 0,
 			'target' => 'ing',
 			'hours' => array(
@@ -237,12 +237,12 @@ Scientifiques<br/>', $html);
 				continue;
 			}
 
-			if (strpos($line, '<b>Automne</b>') !== false) {
+			if (strpos($line, 'Automne') !== false) {
 				$uv['automne'] = true;
 				continue;
 			}
 
-			if (strpos($line, '<b>Printemps</b>') !== false) {
+			if (strpos($line, 'Printemps') !== false) {
 				$uv['printemps'] = true;
 				continue;
 			}
@@ -272,20 +272,56 @@ Scientifiques<br/>', $html);
 				continue;
 			}
 
-			$line = html_entity_decode(strip_tags($line));
+			$line = strip_tags(str_replace('<br/>', '|', $line));
 
-			if (! empty($line)) {
-				$uv[$currentList][] = $this->ufirst($line);
+			if (! empty($line) && ! empty($currentList)) {
+				$uv[$currentList] .= '|'.$line;
+			}
+		}
+
+		$uv['objectifs'] = explode('|', trim($uv['objectifs'], '|'));
+		$uv['programme'] = explode('|', trim($uv['programme'], '|'));
+
+		if (! empty($uv['objectifs'])) {
+			foreach ($uv['objectifs'] as $key => $value) {
+				if (is_numeric($value) || strlen($value) <= 4) {
+					unset($uv['objectifs'][$key]);
+					continue;
+				}
+
+				if (! empty($value)) {
+					$uv['objectifs'][$key] = $this->ucfirst($value);
+				} else {
+					unset($uv['objectifs'][$key]);
+				}
+			}
+		}
+
+		if (! empty($uv['programme'])) {
+			foreach ($uv['programme'] as $key => $value) {
+				if (is_numeric($value) || strlen($value) <= 4) {
+					unset($uv['programme'][$key]);
+					continue;
+				}
+
+				if (! empty($value)) {
+					$uv['programme'][$key] = $this->ucfirst($value);
+				} else {
+					unset($uv['programme'][$key]);
+				}
 			}
 		}
 
 		return $uv;
 	}
 
-	protected function ufirst($string)
+	protected function ucfirst($string)
 	{
-		$string = utf8_decode($string);
+		$string = html_entity_decode($string);
 		$string[0] = StringManipulationExtension::unaccent($string[0]);
-		return utf8_encode(ucfirst($string));
+		$string = ucfirst($string);
+		$string = htmlspecialchars($string);
+
+		return $string;
 	}
 }

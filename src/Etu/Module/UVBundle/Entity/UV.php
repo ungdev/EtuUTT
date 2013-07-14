@@ -3,6 +3,7 @@
 namespace Etu\Module\UVBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 
 /**
  * @ORM\Entity
@@ -51,6 +52,13 @@ class UV
 	 * @ORM\Column(type="string", length=10)
 	 */
 	protected $code;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string", length=10)
+	 */
+	protected $slug;
 
 	/**
 	 * @var string
@@ -188,6 +196,7 @@ class UV
     public function setCode($code)
     {
         $this->code = $code;
+	    $this->slug = StringManipulationExtension::slugify($this->code);
 
         return $this;
     }
@@ -200,6 +209,29 @@ class UV
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return UV
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**
@@ -438,7 +470,7 @@ class UV
      * @param boolean $isOld
      * @return UV
      */
-    public function setIdOld($isOld)
+    public function setIsOld($isOld)
     {
         $this->isOld = $isOld;
 

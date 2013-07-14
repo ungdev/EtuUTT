@@ -1,0 +1,88 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'uvs.main.index.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/uvs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<div class="padding20-all">
+		<h4>{{ 'uvs.main.index.all'|trans }}</h4>
+
+		<br />
+
+		<a href="" class="uvs-category">
+			<img src="{{ asset('img/uvs/cs.png') }}" />
+			<p>
+				{{ 'uvs.categories.cs'|trans }}
+			</p>
+		</a>
+
+		<a href="" class="uvs-category">
+			<img src="{{ asset('img/uvs/tm.png') }}" />
+			<p>
+				{{ 'uvs.categories.tm'|trans }}
+			</p>
+		</a>
+
+		<a href="" class="uvs-category">
+			<img src="{{ asset('img/uvs/ct.png') }}" />
+			<p>
+				{{ 'uvs.categories.ct'|trans }}
+			</p>
+		</a>
+
+		<a href="" class="uvs-category">
+			<img src="{{ asset('img/uvs/me.png') }}" />
+			<p>
+				{{ 'uvs.categories.me'|trans }}
+			</p>
+		</a>
+
+		<a href="" class="uvs-category">
+			<img src="{{ asset('img/uvs/ec.png') }}" />
+			<p>
+				{{ 'uvs.categories.ec'|trans }}
+			</p>
+		</a>
+
+		<a href="" class="uvs-category">
+			<img src="{{ asset('img/uvs/st.png') }}" />
+			<p>
+				{{ 'uvs.categories.st'|trans }}
+			</p>
+		</a>
+
+		<a href="" class="uvs-category">
+			<img src="{{ asset('img/uvs/other.png') }}" />
+			<p>
+				{{ 'uvs.categories.other'|trans }}
+			</p>
+		</a>
+
+		<div class="clear"></div>
+
+		<hr />
+
+		<h4>{{ 'uvs.main.index.my'|trans }}</h4>
+
+		<br />
+
+		<ul class="uvs-list">
+			{% for uv in my %}
+				<li>
+					<a href="{{ path('uvs_view', {'slug': uv.slug, 'name': uv.name|slugify}) }}">
+						<img src="{{ asset('img/uvs/'~uv.category~'.png') }}"
+							 class="uvs-list-icon"
+							 alt="({{ uv.category|upper }})"
+							 title="{{ uv.category|upper }}" />
+						{{ uv.code }} - {{ uv.name }}
+					</a>
+				</li>
+			{% else %}
+				<li>Vous semblez ne suivre aucune UV !</li>
+			{% endfor %}
+		</ul>
+	</div>
+{% endblock %}
