@@ -1,0 +1,25 @@
+
+uvs:
+    categories:
+        cs: Connaissances scientifiques
+        tm: Techniques et méthodes
+        ct: Culture et technologie
+        me: Management de l'entreprise
+        ec: Expression et communication
+        st: Stages
+        other: Autre
+
+    main:
+        index:
+            title: Les UV
+            my: Mes UV
+            noResult: Vous semblez ne suivre aucune UV !
+        category:
+            title: Les UV %category%
+            noResult : Aucune UV dans cette catégorie
+        search:
+            title: Rechercher une UV
+            noResult: Aucun résultat
+        view:
+            title: Détail d'une UV - %code%
+

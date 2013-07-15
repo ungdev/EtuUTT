@@ -7,6 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
@@ -36,6 +37,7 @@ class Organization implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(name="login", type="string", length=50)
+	 * @Assert\NotBlank()
 	 */
 	protected $login;
 
@@ -50,7 +52,9 @@ class Organization implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="name", type="string", length=100)
+	 * @ORM\Column(name="name", type="string", length=50)
+	 * @Assert\NotBlank()
+	 * @Assert\Length(min = "2", max = "50")
 	 */
 	protected $name;
 
@@ -58,6 +62,7 @@ class Organization implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(name="contactMail", type="string", length=100, nullable=true)
+	 * @Assert\Email()
 	 */
 	protected $contactMail;
 
@@ -65,6 +70,7 @@ class Organization implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(name="contactPhone", type="string", length=100, nullable=true)
+	 * @Assert\Regex("/^0[1-68]([-. ]?[0-9]{2}){4}$/")
 	 */
 	protected $contactPhone;
 
@@ -72,6 +78,7 @@ class Organization implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(name="description", type="text", nullable=true)
+	 * @Assert\Length(min = "15")
 	 */
 	protected $description;
 
@@ -79,6 +86,7 @@ class Organization implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(name="descriptionShort", type="string", length=200, nullable=true)
+	 * @Assert\Length(min = "2", max = "200")
 	 */
 	protected $descriptionShort;
 
@@ -86,6 +94,7 @@ class Organization implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(name="website", type="string", length=100, nullable=true)
+	 * @Assert\Url()
 	 */
 	protected $website;
 
@@ -130,6 +139,8 @@ class Organization implements UserInterface, \Serializable
 	 * Temporary variable to store uploaded file during photo update
 	 *
 	 * @var UploadedFile
+	 *
+	 * @Assert\Image(maxSize = "4M", minWidth = 100, minHeight = 100)
 	 */
 	public $file;
 
@@ -551,14 +562,14 @@ class Organization implements UserInterface, \Serializable
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -574,14 +585,14 @@ class Organization implements UserInterface, \Serializable
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -597,14 +608,14 @@ class Organization implements UserInterface, \Serializable
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
-    
+
         return $this;
     }
 
     /**
      * Get deletedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDeletedAt()
     {

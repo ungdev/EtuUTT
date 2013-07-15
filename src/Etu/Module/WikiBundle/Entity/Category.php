@@ -3,14 +3,15 @@
 namespace Etu\Module\WikiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Core\UserBundle\Entity\User;
 
 /**
- * Category
- *
  * @ORM\Table(name="etu_wiki_categories")
- * @ORM\Entity
+ * @ORM\Entity()
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Category
 {
@@ -48,7 +49,9 @@ class Category
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="title", type="string", length=100)
+	 * @ORM\Column(name="title", type="string", length=50)
+	 * @Assert\NotBlank()
+	 * @Assert\Length(min = "10", max = "50")
 	 */
 	protected $title;
 
@@ -78,6 +81,21 @@ class Category
 	 * @ORM\Column(name="levelToEditPermissions", type="integer")
 	 */
 	protected $levelToEditPermissions;
+
+	/**
+	 * @var \DateTime $created
+	 *
+	 * @Gedmo\Timestampable(on="create")
+	 * @ORM\Column(name="createdAt", type="datetime")
+	 */
+	protected $createdAt;
+
+	/**
+	 * @var \DateTime $deletedAt
+	 *
+	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 */
+	protected $deletedAt;
 
 	/**
 	 * Category depth
@@ -253,5 +271,51 @@ class Category
 	public function getTitle()
 	{
 		return $this->title;
+	}
+
+	/**
+	 * Set createdAt
+	 *
+	 * @param \DateTime $createdAt
+	 * @return $this
+	 */
+	public function setCreatedAt($createdAt)
+	{
+		$this->createdAt = $createdAt;
+
+		return $this;
+	}
+
+	/**
+	 * Get createdAt
+	 *
+	 * @return \DateTime
+	 */
+	public function getCreatedAt()
+	{
+		return $this->createdAt;
+	}
+
+	/**
+	 * Set deletedAt
+	 *
+	 * @param \DateTime $deletedAt
+	 * @return $this
+	 */
+	public function setDeletedAt($deletedAt)
+	{
+		$this->deletedAt = $deletedAt;
+
+		return $this;
+	}
+
+	/**
+	 * Get deletedAt
+	 *
+	 * @return \DateTime
+	 */
+	public function getDeletedAt()
+	{
+		return $this->deletedAt;
 	}
 }

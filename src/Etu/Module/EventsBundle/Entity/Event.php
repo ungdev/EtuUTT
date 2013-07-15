@@ -3,6 +3,7 @@
 namespace Etu\Module\EventsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use CalendR\Event\AbstractEvent;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -20,6 +21,7 @@ use Imagine\Image\Point;
 /**
  * @ORM\Table(name="etu_events")
  * @ORM\Entity(repositoryClass="EventRepository")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Event extends AbstractEvent
 {
@@ -54,7 +56,9 @@ class Event extends AbstractEvent
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="title", type="string", length=100)
+	 * @ORM\Column(name="title", type="string", length=50)
+	 * @Assert\NotBlank()
+	 * @Assert\Length(min = "10", max = "50")
 	 */
 	protected $title;
 
@@ -69,6 +73,7 @@ class Event extends AbstractEvent
 	 * @var \DateTime
 	 *
 	 * @ORM\Column(name="begin", type="datetime")
+	 * @Assert\Date()
 	 */
 	protected $begin;
 
@@ -76,6 +81,7 @@ class Event extends AbstractEvent
 	 * @var \DateTime
 	 *
 	 * @ORM\Column(name="end", type="datetime")
+	 * @Assert\Date()
 	 */
 	protected $end;
 
@@ -97,6 +103,8 @@ class Event extends AbstractEvent
 	 * @var string
 	 *
 	 * @ORM\Column(name="description", type="text")
+	 * @Assert\NotBlank()
+	 * @Assert\Length(min = "15")
 	 */
 	protected $description;
 
@@ -108,11 +116,26 @@ class Event extends AbstractEvent
 	protected $countMembers;
 
 	/**
+	 * @var \DateTime $created
+	 *
+	 * @Gedmo\Timestampable(on="create")
+	 * @ORM\Column(name="createdAt", type="datetime")
+	 */
+	protected $createdAt;
+
+	/**
+	 * @var \DateTime $deletedAt
+	 *
+	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 */
+	protected $deletedAt;
+
+	/**
 	 * Temporary variable to store uploaded file during photo update
 	 *
 	 * @var UploadedFile
 	 *
-	 * @Assert\Image()
+	 * @Assert\Image(maxSize = "4M", minWidth = 100, minHeight = 100)
 	 */
 	public $file;
 
@@ -406,5 +429,51 @@ class Event extends AbstractEvent
 	public function getUid()
 	{
 		return $this->uid;
+	}
+
+	/**
+	 * Set createdAt
+	 *
+	 * @param \DateTime $createdAt
+	 * @return $this
+	 */
+	public function setCreatedAt($createdAt)
+	{
+		$this->createdAt = $createdAt;
+
+		return $this;
+	}
+
+	/**
+	 * Get createdAt
+	 *
+	 * @return \DateTime
+	 */
+	public function getCreatedAt()
+	{
+		return $this->createdAt;
+	}
+
+	/**
+	 * Set deletedAt
+	 *
+	 * @param \DateTime $deletedAt
+	 * @return $this
+	 */
+	public function setDeletedAt($deletedAt)
+	{
+		$this->deletedAt = $deletedAt;
+
+		return $this;
+	}
+
+	/**
+	 * Get deletedAt
+	 *
+	 * @return \DateTime
+	 */
+	public function getDeletedAt()
+	{
+		return $this->deletedAt;
 	}
 }

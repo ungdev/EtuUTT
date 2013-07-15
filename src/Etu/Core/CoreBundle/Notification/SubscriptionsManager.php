@@ -41,7 +41,7 @@ class SubscriptionsManager
 			$subscription->setUser($user);
 
 			if ($date instanceof \DateTime) {
-				$subscription->setDate($date);
+				$subscription->setCreatedAt($date);
 			}
 
 			$em->persist($subscription);

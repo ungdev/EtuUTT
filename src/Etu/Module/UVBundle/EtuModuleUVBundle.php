@@ -3,11 +3,32 @@
 namespace Etu\Module\UVBundle;
 
 use Etu\Core\CoreBundle\Framework\Definition\Module;
-use Etu\Core\CoreBundle\Menu\Sidebar\SidebarBuilder;
 
 class EtuModuleUVBundle extends Module
 {
+	/**
+	 * Must boot only for connected users
+	 *
+	 * @return bool|void
+	 */
+	public function mustBoot()
+	{
+		return $this->getSessionLayer()->isUser();
+	}
 
+	/**
+	 * At module boot, update the sidebar
+	 */
+	public function onModuleBoot()
+	{
+		$this->getSidebarBuilder()
+			->getBlock('base.sidebar.services.title')
+				->add('base.sidebar.services.items.uvs')
+					->setIcon('briefcase.png')
+					->setUrl($this->getRouter()->generate('uvs_index'))
+					->setPosition(0)
+				->end();
+	}
 
 	/**
 	 * Module identifier (to be required by other modules)
@@ -36,7 +57,7 @@ class EtuModuleUVBundle extends Module
 	 */
 	public function getAuthor()
 	{
-		return 'Titotix';
+		return 'Titouan Galopin';
 	}
 
 	/**
@@ -46,7 +67,7 @@ class EtuModuleUVBundle extends Module
 	 */
 	public function getDescription()
 	{
-		return 'Default module description';
+		return 'Module de gestion des UV';
 	}
 
 	/**

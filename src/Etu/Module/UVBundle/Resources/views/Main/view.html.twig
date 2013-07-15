@@ -1,0 +1,26 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'uvs.main.view.title'|trans({'%code%': uv.code}) }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/uvs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block sidebar %}
+	{{ render_subscribe_button('uv', uv.id) }}
+	{{ parent() }}
+{% endblock %}
+
+{% block content %}
+<div class="padding20-all">
+	<h4>{{ uv.code }} - {{ uv.name }}</h4>
+
+	{% for line in uv.objectifs %}
+		{{ line }}<br />
+	{% endfor %}
+
+	{% for line in uv.programme %}
+		{{ line }}<br />
+	{% endfor %}
+</div>
+{% endblock %}

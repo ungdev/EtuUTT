@@ -1,0 +1,41 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'uvs.main.category.title'|trans({'%category%': category|upper}) }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/uvs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<div class="padding20-all">
+		{% include 'EtuModuleUVBundle:Main:chooser.html.twig' %}
+
+		<h4>{{ ('uvs.categories.'~category)|trans }}</h4>
+
+		<div class="navigation">
+			{{ knp_pagination_render(pagination) }}
+		</div>
+
+		<hr />
+
+		<ul class="uvs-list-half">
+			{% for uv in pagination %}
+				<li>
+					<a href="{{ path('uvs_view', {'slug': uv.slug, 'name': uv.name|slugify}) }}">
+						{{ uv.code }} - {{ uv.name }}
+					</a>
+				</li>
+			{% else %}
+				<li>{{ 'uvs.main.category.noResult'|trans }}</li>
+			{% endfor %}
+		</ul>
+
+		<div class="clear"></div>
+
+		<hr />
+
+		<div class="navigation">
+			{{ knp_pagination_render(pagination) }}
+		</div>
+	</div>
+{% endblock %}

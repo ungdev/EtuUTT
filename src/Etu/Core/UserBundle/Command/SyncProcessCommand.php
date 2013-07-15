@@ -112,6 +112,7 @@ ask you to keep or delete him/her.
 				$i++;
 			}
 
+			$output->writeln('Saving in database ...');
 			$container->get('doctrine')->getManager()->flush();
 		}
 
@@ -132,6 +133,7 @@ ask you to keep or delete him/her.
 				$i++;
 			}
 
+			$output->writeln('Saving in database ...');
 			$container->get('doctrine')->getManager()->flush();
 		}
 
@@ -191,13 +193,23 @@ ask you to keep or delete him/her.
 
 				$choice = 0;
 
-				while (! in_array($choice, [1, 2, 3])) {
+				while (! in_array($choice, array(1, 2, 3))) {
 					$output->writeln("1 - Delete all of them");
 					$output->writeln("2 - Ask me for some to keep, delete the rest");
 					$output->writeln("3 - Keep all of them\n");
 					$output->writeln("4 - Display the list\n");
 
 					$choice = $dialog->ask($output, 'What do you choose [2]? ', '2');
+
+					if ($choice == 4) {
+						$names = array();
+
+						foreach ($usersRemoveIterator as $user) {
+							$names[] = $user->getDatabaseUser()->getFullName().' ('.$user->getDatabaseUser()->getLogin().')';
+						}
+
+						$output->writeln(implode("\n", $names)."\n");
+					}
 				}
 
 				$remove = array();

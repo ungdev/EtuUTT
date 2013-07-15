@@ -3,13 +3,16 @@
 namespace Etu\Module\BugsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 use Etu\Core\UserBundle\Entity\User;
 
 /**
  * Comment
  *
  * @ORM\Table(name="etu_issues_comments")
- * @ORM\Entity
+ * @ORM\Entity()
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Comment
 {
@@ -42,12 +45,15 @@ class Comment
      * @var string
      *
      * @ORM\Column(name="body", type="text")
+     * @Assert\NotBlank()
+     * @Assert\Length(min = "15")
      */
     protected $body;
 
     /**
      * @var \DateTime
      *
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="createdAt", type="datetime")
      */
     protected $createdAt;
@@ -55,9 +61,17 @@ class Comment
 	/**
 	 * @var \DateTime
 	 *
+	 * @Gedmo\Timestampable(on="update")
 	 * @ORM\Column(name="updatedAt", type="datetime")
 	 */
 	protected $updatedAt;
+
+	/**
+	 * @var \DateTime $deletedAt
+	 *
+	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 */
+	protected $deletedAt;
 
 	/**
 	 * Is this comment and update of the issue or a real user comment?
@@ -67,13 +81,6 @@ class Comment
 	 * @ORM\Column(name="isStateUpdate", type="boolean")
 	 */
 	protected $isStateUpdate = false;
-
-
-	public function __construct()
-	{
-		$this->createdAt = new \DateTime();
-		$this->updatedAt = new \DateTime();
-	}
 
     /**
      * Get id
@@ -213,5 +220,28 @@ class Comment
 	public function getIsStateUpdate()
 	{
 		return $this->isStateUpdate;
+	}
+
+	/**
+	 * Set deletedAt
+	 *
+	 * @param \DateTime $deletedAt
+	 * @return $this
+	 */
+	public function setDeletedAt($deletedAt)
+	{
+		$this->deletedAt = $deletedAt;
+
+		return $this;
+	}
+
+	/**
+	 * Get deletedAt
+	 *
+	 * @return \DateTime
+	 */
+	public function getDeletedAt()
+	{
+		return $this->deletedAt;
 	}
 }

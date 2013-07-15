@@ -1466,6 +1466,78 @@ textarea {
 .membership-avatar {
   width: 80px;
 }
+.uvs-category {
+  display: block;
+  float: left;
+  width: 90px;
+  height: 60px;
+  padding: 15px 10px 25px 10px;
+  text-align: center;
+  background: #f5f5f5;
+  margin-left: 15px;
+  margin-bottom: 15px;
+}
+.uvs-category:hover {
+  background: #e5e5e5;
+  text-decoration: none;
+}
+.uvs-category p {
+  font-size: 12px;
+  margin: 10px 0 0 0;
+  padding: 0;
+}
+.uvs-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.uvs-list li {
+  list-style-type: none;
+  margin: 0 0 10px 0;
+  padding: 0;
+}
+.uvs-list a {
+  display: block;
+  background: #f5f5f5;
+  padding: 10px 5px;
+}
+.uvs-list a:hover {
+  background: #e5e5e5;
+  text-decoration: none;
+}
+.uvs-list-half {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.uvs-list-half li {
+  list-style-type: none;
+  margin: 0 10px 10px 0;
+  padding: 0;
+  display: block;
+  float: left;
+  width: 48%;
+}
+.uvs-list-half a {
+  display: block;
+  background: #f5f5f5;
+  padding: 5px 10px 10px 10px;
+  overflow: hidden;
+  height: 18px;
+  line-height: 25px;
+}
+.uvs-list-half a:hover {
+  background: #e5e5e5;
+  text-decoration: none;
+}
+.uvs-list-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin: -1px 10px 0 5px !important;
+  line-height: 16px;
+  vertical-align: text-top;
+}
 /*
  * Wiki
  */

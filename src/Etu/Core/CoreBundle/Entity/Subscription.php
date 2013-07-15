@@ -3,11 +3,13 @@
 namespace Etu\Core\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Etu\Core\UserBundle\Entity\User;
 
 /**
- * @ORM\Table(name="etu_subscriptions") })
- * @ORM\Entity
+ * @ORM\Table(name="etu_subscriptions")
+ * @ORM\Entity()
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Subscription
 {
@@ -43,39 +45,19 @@ class Subscription
 	protected $entityId;
 
 	/**
-	 * @var \DateTime
+	 * @var \DateTime $created
 	 *
-	 * @ORM\Column(name="date", type="datetime")
+	 * @Gedmo\Timestampable(on="create")
+	 * @ORM\Column(name="createdAt", type="datetime")
 	 */
-	protected $date;
-
+	protected $createdAt;
 
 	/**
-	 * Constructor
+	 * @var \DateTime $deletedAt
+	 *
+	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
 	 */
-	public function __construct()
-	{
-		$this->date = new \DateTime();
-	}
-
-	/**
-	 * @param \DateTime $date
-	 * @return Subscription
-	 */
-	public function setDate(\DateTime $date)
-	{
-		$this->date = $date;
-
-		return $this;
-	}
-
-	/**
-	 * @return \DateTime
-	 */
-	public function getDate()
-	{
-		return $this->date;
-	}
+	protected $deletedAt;
 
 	/**
 	 * @param int $entityId
@@ -141,4 +123,50 @@ class Subscription
 	{
 		return $this->user;
 	}
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Subscription
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set deletedAt
+     *
+     * @param \DateTime $deletedAt
+     * @return Subscription
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
 }

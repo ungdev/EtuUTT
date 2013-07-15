@@ -1,0 +1,106 @@
+
+bugs:
+    menu:
+        sidebar:
+            bugs: Report a bug
+
+    criticality:
+        critical: Critical problem
+        security: Security problem
+        major: Major problem
+        minor: Minor problem
+        visual: Visual problem
+        typo: Typo
+
+    bugs:
+        state:
+            opened: Opened
+            resolved: Resolved
+        closed:
+            title: Bugs resolved
+            by: By %name%
+            assigned_to: Assigned to %name%
+            no_bug: No bugs resolved at the moment
+        create:
+            title: Report a bug
+            confirm: Your problem has been reported. Thank you for participating !
+            criticality: Criticality
+            body: Description
+            submit: Report
+        edit:
+            title: Edit a bug
+            confirm: You have successfully edited your problem
+            criticality: Criticality
+            body: Descriptions
+            submit: Edit
+        editComment:
+            title: Edit a comment
+        index:
+            title: Opened bugs
+            by: By %name%
+            assigned_to: Assigned to %name%
+            no_bug: No bugs resolved at the moment
+        view:
+            title: Details of a bug
+            assigned_to: assigned to %name%
+            posted_at: Posted the
+            assigned_to: This bug is assigned to %name%
+            resolved: This bug has been resolved
+            resolved_by: This bug has been resolved by %name%
+            admin_title: Administrate
+            admin_assigne: Assigne
+            admin_assigne_placeholder: Assigne to ...
+            admin_unassign: Unassign %name%
+            admin_edit_criticality: Edit criticality
+            admin_edit: Edit
+            admin_state: State
+            admin_fix: Solve
+            admin_unfix: Re-open
+            edit: Edit
+            delete: Delete
+            comment_title: Comment
+            comment_body: Detail
+            comment_submit: Comment
+            comment_confirm: Your comment has been added
+
+    bugs_admin:
+        assign:
+            assignee_not_found: The user has not been found
+            success: The user has been assigned to the bug
+            message: %adminName% has assigned %userName% to the bug
+        unassign:
+            success: The user has been unassigned from the bug
+            message: %adminName% has unassigned %userName% from the bug
+        criticality:
+            success: The criticality of the bug has successfully been updated
+            message: %adminName% has changed the criticality of the bug from %before% to %after%
+        open:
+            success: The bug has been re-opened
+            message: Re-opened by %adminName%
+        close:
+            success: The bug has been marked as resolved
+            message: Closed by %adminName%
+        delete:
+            title: Delete a bug
+            sure: Do you really want to delete the bug %bugName% ?
+            yes: Delete, delete
+            no: No, cancel
+            success: The bug has been deleted
+
+    notifs:
+        newComment:
+            your:
+                one: %userName% has commented your bug %bugName%
+                two: %first% and %second% have commented your bug %bugName%
+                more_single: %first%, %second% and 1 other person have commented your bug %bugName%
+                more_many: %first%, %second% and %count% other people have commented your bug %bugName%
+            other:
+                one: %userName% has commented the bug %bugName%
+                two: %first% and %second% have commented the bug %bugName%
+                more_single: %first%, %second% and 1 other person have commented the bug %bugName%
+                more_many: %first%, %second% and %count% other people have commented the bug %bugName%
+        newOpened:
+            one: %userName% has reported a new bug (%bugName%)
+            two: %first% and %second% have reported new bugs
+            more_single: %first%, %second% and 1 other person have reported new bugs
+            more_many: %first%, %second% and %count% other people have reported new bugs

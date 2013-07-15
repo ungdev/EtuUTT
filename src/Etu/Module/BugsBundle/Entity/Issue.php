@@ -3,13 +3,16 @@
 namespace Etu\Module\BugsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 use Etu\Core\UserBundle\Entity\User;
 
 /**
  * Issue
  *
  * @ORM\Table(name="etu_issues")
- * @ORM\Entity
+ * @ORM\Entity()
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Issue
 {
@@ -33,19 +36,21 @@ class Issue
 	protected $id;
 
 	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="title", type="string", length=100)
-	 */
-	protected $title;
-
-	/**
 	 * @var User $user
 	 *
 	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
 	 * @ORM\JoinColumn()
 	 */
 	protected $user;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="title", type="string", length=500)
+	 * @Assert\NotBlank()
+	 * @Assert\Length(min = "10", max = "50")
+	 */
+	protected $title;
 
 	/**
 	 * @var string
@@ -72,6 +77,7 @@ class Issue
 	/**
 	 * @var \DateTime
 	 *
+	 * @Gedmo\Timestampable(on="create")
 	 * @ORM\Column(name="createdAt", type="datetime")
 	 */
 	protected $createdAt;
@@ -79,7 +85,8 @@ class Issue
 	/**
 	 * @var \DateTime
 	 *
-	 * @ORM\Column(name="updatedAt", type="datetime", nullable=true)
+	 * @Gedmo\Timestampable(on="update")
+	 * @ORM\Column(name="updatedAt", type="datetime")
 	 */
 	protected $updatedAt;
 
@@ -91,16 +98,24 @@ class Issue
 	protected $closedAt;
 
 	/**
+	 * @var \DateTime $deletedAt
+	 *
+	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 */
+	protected $deletedAt;
+
+	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="body", type="text", nullable=true)
+	 * @ORM\Column(name="body", type="text")
+	 * @Assert\NotBlank()
+	 * @Assert\Length(min = "15")
 	 */
 	protected $body;
 
 
 	public function __construct()
 	{
-		$this->createdAt = new \DateTime();
 		$this->isOpened = true;
 	}
 
@@ -347,5 +362,28 @@ class Issue
 	public function getCriticality()
 	{
 		return $this->criticality;
+	}
+
+	/**
+	 * Set deletedAt
+	 *
+	 * @param \DateTime $deletedAt
+	 * @return $this
+	 */
+	public function setDeletedAt($deletedAt)
+	{
+		$this->deletedAt = $deletedAt;
+
+		return $this;
+	}
+
+	/**
+	 * Get deletedAt
+	 *
+	 * @return \DateTime
+	 */
+	public function getDeletedAt()
+	{
+		return $this->deletedAt;
 	}
 }

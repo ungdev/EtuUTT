@@ -3,12 +3,15 @@
 namespace Etu\Core\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Organization
  *
  * @ORM\Table(name="etu_organizations_members")
- * @ORM\Entity
+ * @ORM\Entity()
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Member
 {
@@ -49,18 +52,26 @@ class Member
 	protected $organization;
 
 	/**
-	 * @var string
+	 * @var integer
 	 *
-	 * @ORM\Column(name="role", type="string", length=100)
+	 * @ORM\Column(name="role", type="smallint")
 	 */
 	protected $role;
 
 	/**
-	 * @var \DateTime
+	 * @var \DateTime $created
 	 *
-	 * @ORM\Column(name="date", type="datetime")
+	 * @Gedmo\Timestampable(on="create")
+	 * @ORM\Column(name="createdAt", type="datetime")
 	 */
-	protected $date;
+	protected $createdAt;
+
+	/**
+	 * @var \DateTime $deletedAt
+	 *
+	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 */
+	protected $deletedAt;
 
 	/**
 	 * @var array
@@ -75,7 +86,6 @@ class Member
 	 */
 	public function __construct()
 	{
-		$this->date = new \DateTime();
 		$this->role = self::ROLE_MEMBER;
 		$this->permissions = array();
 	}
@@ -121,7 +131,7 @@ class Member
 	 */
 	public function setDate(\DateTime $date)
 	{
-		$this->date = $date;
+		$this->createdAt = $date;
 
 		return $this;
 	}
@@ -131,7 +141,7 @@ class Member
 	 */
 	public function getDate()
 	{
-		return $this->date;
+		return $this->createdAt;
 	}
 
 	/**
@@ -245,5 +255,51 @@ class Member
 	public function getUser()
 	{
 		return $this->user;
+	}
+
+	/**
+	 * Set createdAt
+	 *
+	 * @param \DateTime $createdAt
+	 * @return $this
+	 */
+	public function setCreatedAt($createdAt)
+	{
+		$this->createdAt = $createdAt;
+
+		return $this;
+	}
+
+	/**
+	 * Get createdAt
+	 *
+	 * @return \DateTime
+	 */
+	public function getCreatedAt()
+	{
+		return $this->createdAt;
+	}
+
+	/**
+	 * Set deletedAt
+	 *
+	 * @param \DateTime $deletedAt
+	 * @return $this
+	 */
+	public function setDeletedAt($deletedAt)
+	{
+		$this->deletedAt = $deletedAt;
+
+		return $this;
+	}
+
+	/**
+	 * Get deletedAt
+	 *
+	 * @return \DateTime
+	 */
+	public function getDeletedAt()
+	{
+		return $this->deletedAt;
 	}
 }

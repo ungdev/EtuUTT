@@ -3,14 +3,16 @@
 namespace Etu\Module\WikiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 use Etu\Core\UserBundle\Entity\User;
 
 /**
  * Page
  *
  * @ORM\Table(name="etu_wiki_pages_revisions")
- * @ORM\Entity
+ * @ORM\Entity()
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class PageRevision
 {
@@ -42,22 +44,41 @@ class PageRevision
 	 * @var string
 	 *
 	 * @ORM\Column(name="text", type="text")
+	 * @Assert\NotBlank()
+	 * @Assert\Length(min = "15")
 	 */
 	protected $body;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="comment", type="string", length=200, nullable=true)
+	 * @ORM\Column(name="comment", type="string", length=140, nullable=true)
+	 * @Assert\Length(max = "140")
 	 */
 	protected $comment;
 
 	/**
-	 * @var \DateTime
+	 * @var \DateTime $created
 	 *
-	 * @ORM\Column(name="date", type="datetime")
+	 * @Gedmo\Timestampable(on="create")
+	 * @ORM\Column(name="createdAt", type="datetime")
 	 */
-	protected $date;
+	protected $createdAt;
+
+	/**
+	 * @var \DateTime $updated
+	 *
+	 * @Gedmo\Timestampable(on="update")
+	 * @ORM\Column(name="updatedAt", type="datetime")
+	 */
+	protected $updatedAt;
+
+	/**
+	 * @var \DateTime $deletedAt
+	 *
+	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 */
+	protected $deletedAt;
 
 	/**
 	 * Temporary variable to store page title during edition
@@ -72,14 +93,6 @@ class PageRevision
 	 * @var string
 	 */
 	public $category;
-
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		$this->date = new \DateTime();
-	}
 
 	/**
 	 * @param string $body
@@ -117,25 +130,6 @@ class PageRevision
 	public function getComment()
 	{
 		return $this->comment;
-	}
-
-	/**
-	 * @param \DateTime $date
-	 * @return PageRevision
-	 */
-	public function setDate($date)
-	{
-		$this->date = $date;
-
-		return $this;
-	}
-
-	/**
-	 * @return \DateTime
-	 */
-	public function getDate()
-	{
-		return $this->date;
 	}
 
 	/**
@@ -183,4 +177,119 @@ class PageRevision
 	{
 		return $this->page;
 	}
+
+    /**
+     * Set page
+     *
+     * @param integer $page
+     * @return PageRevision
+     */
+    public function setPage($page)
+    {
+        $this->page = $page;
+
+        return $this;
+    }
+
+    /**
+     * Get page
+     *
+     * @return integer
+     */
+    public function getPage()
+    {
+        return $this->page;
+    }
+
+	/**
+	 * Set createdAt
+	 *
+	 * @param \DateTime $createdAt
+	 * @return PageRevision
+	 */
+	public function setDate($createdAt)
+	{
+		$this->createdAt = $createdAt;
+
+		return $this;
+	}
+
+	/**
+	 * Get createdAt
+	 *
+	 * @return \DateTime
+	 */
+	public function getDate()
+	{
+		return $this->createdAt;
+	}
+
+	/**
+	 * Set createdAt
+	 *
+	 * @param \DateTime $createdAt
+	 * @return PageRevision
+	 */
+	public function setCreatedAt($createdAt)
+	{
+		$this->createdAt = $createdAt;
+
+		return $this;
+	}
+
+	/**
+	 * Get createdAt
+	 *
+	 * @return \DateTime
+	 */
+	public function getCreatedAt()
+	{
+		return $this->createdAt;
+	}
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return PageRevision
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set deletedAt
+     *
+     * @param \DateTime $deletedAt
+     * @return PageRevision
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
 }
