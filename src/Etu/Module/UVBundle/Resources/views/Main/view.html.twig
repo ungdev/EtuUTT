@@ -15,12 +15,90 @@
 <div class="padding20-all">
 	<h4>{{ uv.code }} - {{ uv.name }}</h4>
 
-	{% for line in uv.objectifs %}
-		{{ line }}<br />
-	{% endfor %}
+	<div class="uv-view">
+		<div class="uv-view-infos">
+			{% if uv.isOld %}
+				<div class="uv-view-infos-category">
+					Cette UV n'existe plus
+				</div>
+			{% endif %}
+			<div class="uv-view-infos-category">
+				<div class="uv-view-infos-row">
+					<div class="uv-view-infos-label">
+						{% if uv.target == 'ing' %}
+							Ingénieur
+						{% elseif uv.target == 'mast' %}
+							Master
+						{% else %}
+							Ingénieur et Master
+						{% endif %}
+					</div>
+					<div class="uv-view-infos-value"></div>
+				</div>
+			</div>
+			<div class="uv-view-infos-category">
+				<div class="uv-view-infos-row">
+					<div class="uv-view-infos-label">
+						{{ ('uvs.categories.'~uv.category)|trans }}
+					</div>
+					<div class="uv-view-infos-value"></div>
+				</div>
+			</div>
+			<div class="uv-view-infos-category">
+				<div class="uv-view-infos-row">
+					<div class="uv-view-infos-label">
+						Crédits
+					</div>
+					<div class="uv-view-infos-value">
+						{{ uv.credits }}
+					</div>
+				</div>
+			</div>
+			<div class="uv-view-infos-category">
+				<div class="uv-view-infos-row">
+					<div class="uv-view-infos-label">
+						Cours magistral<br />
+						Travaux dirigés<br />
+						Travaux pratiques<br />
+						Travail personnel
+					</div>
+					<div class="uv-view-infos-value">
+						{{ uv.cm }}h<br />
+						{{ uv.td }}h<br />
+						{{ uv.tp }}h<br />
+						{{ uv.the }}h
+					</div>
+				</div>
+			</div>
+			<div class="uv-view-infos-category">
+				<div class="uv-view-infos-row">
+					<div class="uv-view-infos-label">
+						Disponible
+					</div>
+					<div class="uv-view-infos-value">
+						{% if uv.automne and not uv.printemps %}
+							Automne
+						{% elseif uv.printemps and not uv.automne %}
+							Printemps
+						{% else %}
+							Automne et au printemps
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
 
-	{% for line in uv.programme %}
-		{{ line }}<br />
-	{% endfor %}
+		<div class="uv-view-content">
+			{% for line in uv.objectifs %}
+				{{ line }}<br />
+			{% endfor %}
+
+			{% for line in uv.programme %}
+				{{ line }}<br />
+			{% endfor %}
+		</div>
+	</div>
+
+	<div class="clear"></div>
 </div>
 {% endblock %}
