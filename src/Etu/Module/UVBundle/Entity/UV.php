@@ -3,18 +3,16 @@
 namespace Etu\Module\UVBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="etu_uvs")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class UV
 {
-	const TARGET_ING = 'ing';
-	const TARGET_MASTER = 'mast';
-	const TARGET_BOTH = 'both';
-
 	const CATEGORY_CS = 'cs';
 	const CATEGORY_TM = 'tm';
 	const CATEGORY_CT = 'ct';
@@ -48,13 +46,6 @@ class UV
 	 * @ORM\Column(type="string", length=20, nullable = true)
 	 */
 	protected $category = self::CATEGORY_OTHER;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(type="string", length=20)
-	 */
-	protected $target = self::TARGET_ING;
 
 	/**
 	 * @var string
@@ -127,12 +118,12 @@ class UV
     protected $credits;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="text")
      */
     protected $objectifs;
 
 	/**
-	 * @ORM\Column(type="array")
+	 * @ORM\Column(type="text")
 	 */
 	protected $programme;
 
@@ -140,6 +131,29 @@ class UV
 	 * @ORM\Column(type="boolean")
 	 */
 	protected $isOld = false;
+
+	/**
+	 * @var \DateTime
+	 *
+	 * @Gedmo\Timestampable(on="create")
+	 * @ORM\Column(name="createdAt", type="datetime")
+	 */
+	protected $createdAt;
+
+	/**
+	 * @var \DateTime
+	 *
+	 * @Gedmo\Timestampable(on="update")
+	 * @ORM\Column(name="updatedAt", type="datetime")
+	 */
+	protected $updatedAt;
+
+	/**
+	 * @var \DateTime $deletedAt
+	 *
+	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 */
+	protected $deletedAt;
 
     /**
      * Get id
@@ -172,29 +186,6 @@ class UV
     public function getCategory()
     {
         return $this->category;
-    }
-
-    /**
-     * Set target
-     *
-     * @param string $target
-     * @return UV
-     */
-    public function setTarget($target)
-    {
-        $this->target = $target;
-
-        return $this;
-    }
-
-    /**
-     * Get target
-     *
-     * @return string
-     */
-    public function getTarget()
-    {
-        return $this->target;
     }
 
     /**
@@ -431,7 +422,7 @@ class UV
     /**
      * Set objectifs
      *
-     * @param array $objectifs
+     * @param string $objectifs
      * @return UV
      */
     public function setObjectifs($objectifs)
@@ -444,7 +435,7 @@ class UV
     /**
      * Get objectifs
      *
-     * @return array
+     * @return string
      */
     public function getObjectifs()
     {
@@ -454,7 +445,7 @@ class UV
     /**
      * Set programme
      *
-     * @param array $programme
+     * @param string $programme
      * @return UV
      */
     public function setProgramme($programme)
@@ -467,7 +458,7 @@ class UV
     /**
      * Get programme
      *
-     * @return array
+     * @return string
      */
     public function getProgramme()
     {

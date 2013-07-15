@@ -93,7 +93,8 @@ Connaissances<br/>
 Scientifiques<br/>', $html);
 
 		$list = explode('<b>B/ TECHNOLOGIE&#160;<br/>&amp; SCIENCES DE L’HOMME&#160;</b><br/>', $parts[0]);
-		$list = $list[1];
+		$list = explode('<b>F/ MASTER</b><br/>', $list[1]);
+		$list = $list[0];
 
 		$details = explode('Index alphabétique des UV', $parts[1]);
 		$details = $details[0];
@@ -124,24 +125,38 @@ Scientifiques<br/>', $html);
 			);
 		}
 
+		$bar = new ProgressBar('%fraction% [%bar%] %percent%', '=>', ' ', 80, count($uvs));
+		$bar->update(0);
+		$i = 1;
+
 		// Then find category
 		foreach ($uvs as $key => $uv) {
-			$pos = strpos($list, $uv['code']);
+			$category = 'other';
 
-			if ($pos !== false) {
-				$pos -= 2;
-				$string = substr($list, $pos, 2);
+			preg_match('/(CS|TM|CT|ME|EC|ST)<br\/>
+'.preg_quote($uv['code']).'/iU', $list, $match);
 
-				while (! in_array($string, array('CS', 'TM', 'CT', 'ME', 'EC', 'ST'))) {
-					$pos--;
-					$string = substr($list, $pos, 2);
+			if (! isset($match[1])) {
+				preg_match('/(CS|TM|CT|ME|EC|ST)&#160;'.preg_quote($uv['code']).'/iU', $list, $match);
+
+				if (! isset($match[1])) {
+					if (substr($uv['code'], 0, 2) == 'TN') {
+						$category = 'ST';
+					}
+				} else {
+					$category = $match[1];
 				}
-
-				$uvs[$key]['category'] = strtolower($string);
+			} else {
+				$category = $match[1];
 			}
+
+			$uvs[$key]['category'] = strtolower($category);
+
+			$bar->update($i);
+			$i++;
 		}
 
-		$output->writeln("Importing ...");
+		$output->writeln("\nImporting ...");
 
 		$bar = new ProgressBar('%fraction% [%bar%] %percent%', '=>', ' ', 80, count($uvs));
 		$bar->update(0);
@@ -164,8 +179,7 @@ Scientifiques<br/>', $html);
 				->setTd($uv['data']['hours']['td'])
 				->setTp($uv['data']['hours']['tp'])
 				->setThe($uv['data']['hours']['the'])
-				->setCm($uv['data']['hours']['cm'])
-				->setTarget($uv['data']['target']);
+				->setCm($uv['data']['hours']['cm']);
 
 			$entities[] = $entity;
 
@@ -272,56 +286,42 @@ Scientifiques<br/>', $html);
 				continue;
 			}
 
-			$line = strip_tags(str_replace('<br/>', '|', $line));
+			$line = strip_tags(str_replace('<br/>', ' ', $line));
 
-			if (! empty($line) && ! empty($currentList)) {
-				$uv[$currentList] .= '|'.$line;
+			if (! empty($line) && ! empty($currentList) && preg_match('/[a-z]/i', $line)) {
+				$uv[$currentList] .= $line.', ';
 			}
 		}
 
-		$uv['objectifs'] = explode('|', trim($uv['objectifs'], '|'));
-		$uv['programme'] = explode('|', trim($uv['programme'], '|'));
+		$sanitizer = function($string) {
+			$string = str_replace(' ,', ',', $string);
+			return trim($string, ' ,');
+		};
 
-		if (! empty($uv['objectifs'])) {
-			foreach ($uv['objectifs'] as $key => $value) {
-				if (is_numeric($value) || strlen($value) <= 4) {
-					unset($uv['objectifs'][$key]);
-					continue;
-				}
-
-				if (! empty($value)) {
-					$uv['objectifs'][$key] = $this->ucfirst($value);
-				} else {
-					unset($uv['objectifs'][$key]);
-				}
-			}
-		}
-
-		if (! empty($uv['programme'])) {
-			foreach ($uv['programme'] as $key => $value) {
-				if (is_numeric($value) || strlen($value) <= 4) {
-					unset($uv['programme'][$key]);
-					continue;
-				}
-
-				if (! empty($value)) {
-					$uv['programme'][$key] = $this->ucfirst($value);
-				} else {
-					unset($uv['programme'][$key]);
-				}
-			}
-		}
+		$uv['programme'] = $sanitizer($this->ucfirst($uv['programme']));
+		$uv['objectifs'] = $sanitizer($this->ucfirst($uv['objectifs']));
 
 		return $uv;
 	}
 
+	/**
+	 * Smart ucfirst that understand multibits letters
+	 *
+	 * @param $string
+	 * @return mixed
+	 */
 	protected function ucfirst($string)
 	{
-		$string = html_entity_decode($string);
-		$string[0] = StringManipulationExtension::unaccent($string[0]);
-		$string = ucfirst($string);
-		$string = htmlspecialchars($string);
+		if (! preg_match('/^[a-z0-9]$/i', substr($string, 0, 1))) {
+			$i = 2;
+		} else {
+			$i = 1;
+		}
 
-		return $string;
+		$firstLetter = substr($string, 0, $i);
+		$wordRest = substr($string, $i);
+		$word = strtoupper(StringManipulationExtension::unaccent($firstLetter)).$wordRest;
+
+		return htmlspecialchars(trim(html_entity_decode($word)));
 	}
 }

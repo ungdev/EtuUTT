@@ -15,7 +15,7 @@ uvs:
             my: Mes UV
             noResult: Vous semblez ne suivre aucune UV !
         category:
-            title: Les UV %category%
+            title: Catégorie d'UV
             noResult : Aucune UV dans cette catégorie
         search:
             title: Rechercher une UV
