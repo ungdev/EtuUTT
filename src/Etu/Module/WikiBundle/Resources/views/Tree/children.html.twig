@@ -1,5 +1,5 @@
 
-{% if breadcrumb is defined %}
+{% if breadcrumb is defined and breadcrumb[depth] is defined %}
     {% set currentCategory = breadcrumb[depth] %}
 {% else %}
     {% set currentCategory = false %}
