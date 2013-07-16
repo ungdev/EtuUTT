@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "6e4d96196cc7d90e78ddbdd65f150a2c",
+    "hash": "d0c76b76b4db069af86150b291a5453b",
     "packages": [
         {
             "name": "avalanche123/imagine-bundle",
@@ -785,24 +785,24 @@
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",
-            "version": "1.1.5",
+            "version": "1.2.0",
             "target-dir": "FOS/JsRoutingBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSJsRoutingBundle.git",
-                "reference": "1.1.5"
+                "reference": "1.2.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSJsRoutingBundle/zipball/1.1.5",
-                "reference": "1.1.5",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSJsRoutingBundle/zipball/1.2.0",
+                "reference": "1.2.0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
-                "symfony/console": ">=2.0,<3.0",
-                "symfony/framework-bundle": ">=2.0,<3.0",
-                "symfony/serializer": ">=2.0,<3.0"
+                "symfony/console": "~2.0",
+                "symfony/framework-bundle": "~2.0",
+                "symfony/serializer": "~2.0"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -835,7 +835,7 @@
             "keywords": [
                 "Js Routing"
             ],
-            "time": "2013-04-05 20:13:12"
+            "time": "2013-07-15 09:21:37"
         },
         {
             "name": "friendsofsymfony/rest",
@@ -1904,6 +1904,47 @@
                 "minification"
             ],
             "time": "2013-06-01 22:13:43"
+        },
+        {
+            "name": "leafo/lessphp",
+            "version": "v0.3.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/leafo/lessphp.git",
+                "reference": "v0.3.9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/leafo/lessphp/zipball/v0.3.9",
+                "reference": "v0.3.9",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.3-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "lessc.inc.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Leaf Corcoran",
+                    "email": "leafot@gmail.com",
+                    "homepage": "http://leafo.net"
+                }
+            ],
+            "description": "lessphp is a compiler for LESS written in PHP.",
+            "homepage": "http://leafo.net/lessphp/",
+            "time": "2013-03-02 16:13:31"
         },
         {
             "name": "monolog/monolog",

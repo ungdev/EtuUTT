@@ -67,5 +67,8 @@ class ModulesBootListener
 
 		// Give an access from Twig
 		$this->globalAccessorObject->set('modules', $this->modulesManager->getModules());
+
+		// Access to env from Twig
+		$this->globalAccessorObject->set('environment', $this->container->get('kernel')->getEnvironment());
 	}
 }
