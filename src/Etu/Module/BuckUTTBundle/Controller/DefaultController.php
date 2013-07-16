@@ -72,7 +72,7 @@ class DefaultController extends Controller
 				'object' => $a[1], // obj_name
 				'point' => $a[4], // poi_name
 				'fundation' => $a[5], // fun_name
-				'amount' => substr($a[6], 0, -2).','.substr($a[6], -2) // pur_price
+				'amount' => number_format($a[6]/100, 2) // pur_price
 			);
 			$history_dates[] = $a[0];
 		}
@@ -87,32 +87,36 @@ class DefaultController extends Controller
                 'object' => $r[1], // obj_name
                 'point' => $r[4], // poi_name
                 'fundation' => null,
-                'amount' => substr($r[5], 0, -2).','.substr($r[5], -2) // pur_price
+                'amount' => number_format($r[5]/100, 2) // pur_price
             );
 			$history_dates[] = $r[0];
 		}
 
 		array_multisort($history_dates, SORT_DESC, $history);
 		
-		$amount = $this->getSoapClient('SBUY')->getCredit();
+		$credit = $this->getSoapClient('SBUY')->getCredit();
 		
 		$name = $this->getUser()->getFullName();
-		$amount_str = substr($amount, 0, -2).','.substr($amount, -2);
 		
         return array(
             'name' => $name,
-            'amount' => $amount_str,
+            'credit' => number_format($credit/100, 2),
             'history_date' => array('start' => $date_start, 'end' => $date_end),
             'history' => $history
         );
     }
 
     /**
-     * @Route("/buckutt/connect", name="buckutt_connect")
+     * @Route("/buckutt/connect/{action}", name="buckutt_connect", defaults={"action" = "connect"})
      * @Template()
      */
-    public function connectAction()
+    public function connectAction($action)
     {
+        if ($action == 'disconnect'){
+            $this->get('session')->remove('buckutt_soap_cookie');
+            return $this->redirect($this->generateUrl('buckutt_history'));
+        }
+
         if (! $this->getUserLayer()->isConnected()) {
             return $this->createAccessDeniedResponse();
         }
@@ -155,13 +159,65 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/buckutt/reload", name="buckutt_reload")
+     * @Route("/buckutt/reload/{step}", name="buckutt_reload", defaults={"step" = 0})
      * @Template()
      */
-    public function reloadAction()
+    public function reloadAction($step)
     {
-        $name = "name";
-        return array('name' => $name);
+        /*
+         * Step 0 -> form where we choose how many we charge
+         * Step 1 -> check amount is ok and conform from user
+         * Step 2 -> make transaction thrue the server
+         * */
+        if (! $this->getUserLayer()->isConnected()) {
+            return $this->createAccessDeniedResponse();
+        }
+
+        define('MAX_AMOUNT', 10000);
+        $clientSBUY = $this->getSoapClient('SBUY');
+        $credit = $clientSBUY->getCredit();
+        $possible_amount = MAX_AMOUNT - $credit;
+
+        $name = $this->getUser()->getFullName();
+
+        if($step < 2){// step 0 et 1
+            $form = $this->createFormBuilder()
+                ->add('amount', null, array('required' => true))
+                ->getForm();
+
+            if ($form->bind($this->getRequest())->isValid()) {
+
+                $login = $this->getUser()->getLogin();
+                $data = $form->getData();
+                $amount = $data['amount'];
+
+                $table = $this->str_getcsv_buckutt($clientSBUY->transactionEncode($amount*100));
+
+                return array(
+                    'name' => $name,
+                    'step' => $step,
+                    'form' => $form->createView(),
+                    'amount' => number_format(($credit+$amount)/100, 2),
+                    'credit' => number_format($credit/100, 2),
+                    'htmlForm' => base64_decode($table[0][1])
+                );
+            }
+        }
+
+        if($step == 2){// step 2
+
+            $credit = $clientSBUY->getCredit();
+            $possible_amount = MAX_AMOUNT - $credit;
+        }
+
+        return array(
+            'name' => $name,
+            'step' => $step,
+            'form' => $form->createView(),
+            'credit' => number_format($credit/100, 2),
+            'possible_amount' => number_format($possible_amount/100, 2),
+            'max_amount' => number_format(MAX_AMOUNT/100, 2)
+        );
     }
 
     private function getSoapClient($wsdlName)

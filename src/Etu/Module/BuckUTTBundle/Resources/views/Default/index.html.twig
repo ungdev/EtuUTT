@@ -9,10 +9,10 @@
 {% block content %}
     <p>
         Bonjour {{ name }}<br />
-        Tu a {{ amount }} € sur ton comtpe
+        Tu a {{ credit }} € sur ton comtpe
     </p>
     <hr />
-    <a href="">Historique</a> | <a href="">Recharger</a> | Administrer | Deconnexion
+    <a href="{{ path('buckutt_history') }}">Historique</a> | <a href="{{ path('buckutt_reload') }}">Recharger</a> | Administrer | <a href="{{ path('buckutt_connect', {'action':'disconnect'}) }}">Deconnexion</a>
     <hr />
     <p>
         Historique des transactions du {{ history_date.start }} au {{ history_date.end }}
