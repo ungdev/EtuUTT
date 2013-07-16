@@ -19,7 +19,7 @@ class EtuModuleBuckUTTBundle extends Module
 	 */
 	public function isReadyToUse()
 	{
-		return false;
+		return true;
 	}
 
 	/**

@@ -1,0 +1,11 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'buckutt.main.index.title'|trans }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/bundles/buckutt.css') }}" type="text/css" />
+{% endblock %}
+
+{% block content %}
+    Reload {{ name }}!
+{% endblock %}

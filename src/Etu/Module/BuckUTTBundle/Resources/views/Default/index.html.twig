@@ -1,1 +1,44 @@
-Hello {{ name }}!
+{% extends '::page-1col.html.twig' %}
+
+{% block title %}{{ 'buckutt.main.index.title'|trans }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/bundles/buckutt.css') }}" type="text/css" />
+{% endblock %}
+
+{% block content %}
+    <p>
+        Bonjour {{ name }}<br />
+        Tu a {{ amount }} € sur ton comtpe
+    </p>
+    <hr />
+    <a href="">Historique</a> | <a href="">Recharger</a> | Administrer | Deconnexion
+    <hr />
+    <p>
+        Historique des transactions du {{ history_date.start }} au {{ history_date.end }}
+    </p>
+    <ul id="buckutt-history" class="buckutt-history-results">
+        {% if history|length == 0 %}
+            <p>
+                Aucun achat ou rechargement effectué entre ces dates
+            </p>
+        {% endif %}
+        {% for hi in history %}
+        <li class="buckutt-history-results-{{ hi.type }}">
+            <p>
+                {% if hi.type == 0 %}
+                    {{ hi.date }} - {{ hi.amount }} €
+                    <br />
+                    {{ hi.object }}
+                    <br />
+                    {{ hi.point }} - {{ hi.fundation }}
+                {% else %}
+                    {{ hi.date }} - {{ hi.amount }} €
+                    <br />
+                    {{ hi.point }}
+                {% endif %}
+            </p>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

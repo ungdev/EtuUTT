@@ -1,0 +1,20 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'buckutt.main.index.title'|trans }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/bundles/buckutt.css') }}" type="text/css" />
+{% endblock %}
+
+{% block content %}
+    <div class="buckutt-connect-form">
+        <form method="get" action="{{ path('buckutt_connect') }}">
+            <h4>Entre ton code PIN BuckUTT</h4>
+            {{ form_widget(form.pin) }}
+            <div class="buckutt-connect-submit">
+                {{ form_rest(form) }}
+                <button type="submit" class="btn">Connexion</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
