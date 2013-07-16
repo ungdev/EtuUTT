@@ -187,7 +187,6 @@ databsse, it will only update them.
 
 				$entity
 					->setCategory($regEntity->getCategory())
-					->setTarget($regEntity->getTarget())
 					->setName($regEntity->getName())
 					->setCm($regEntity->getCm())
 					->setTd($regEntity->getTd())
@@ -254,10 +253,6 @@ databsse, it will only update them.
 		$equals = true;
 
 		if ($registryUV->getCategory() != $databaseUV->getCategory()) {
-			$equals = false;
-		}
-
-		if ($registryUV->getTarget() != $databaseUV->getTarget()) {
 			$equals = false;
 		}
 

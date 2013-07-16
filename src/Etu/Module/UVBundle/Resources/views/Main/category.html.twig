@@ -1,6 +1,6 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block title %}{{ 'uvs.main.category.title'|trans({'%category%': category|upper}) }}{% endblock %}
+{% block title %}{{ 'uvs.main.category.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
 	<img src="{{ asset('img/titles/uvs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -18,7 +18,7 @@
 
 		<hr />
 
-		<ul class="uvs-list-half">
+		<ul class="uvs-list">
 			{% for uv in pagination %}
 				<li>
 					<a href="{{ path('uvs_view', {'slug': uv.slug, 'name': uv.name|slugify}) }}">

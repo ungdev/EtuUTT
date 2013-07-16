@@ -13,6 +13,13 @@
 
 {% block content %}
 <div class="padding20-all">
+	{% include 'EtuModuleUVBundle:Main:chooser.html.twig' %}
+
+	<img src="{{ asset('img/uvs/'~uv.category~'.png') }}"
+		 class="uv-view-category"
+		 alt="{{ ('uvs.categories.'~uv.category)|trans }}"
+		 title="{{ ('uvs.categories.'~uv.category)|trans }}" />
+
 	<h4>{{ uv.code }} - {{ uv.name }}</h4>
 
 	<div class="uv-view">
@@ -22,20 +29,6 @@
 					Cette UV n'existe plus
 				</div>
 			{% endif %}
-			<div class="uv-view-infos-category">
-				<div class="uv-view-infos-row">
-					<div class="uv-view-infos-label">
-						{% if uv.target == 'ing' %}
-							Ingénieur
-						{% elseif uv.target == 'mast' %}
-							Master
-						{% else %}
-							Ingénieur et Master
-						{% endif %}
-					</div>
-					<div class="uv-view-infos-value"></div>
-				</div>
-			</div>
 			<div class="uv-view-infos-category">
 				<div class="uv-view-infos-row">
 					<div class="uv-view-infos-label">
@@ -73,7 +66,7 @@
 			<div class="uv-view-infos-category">
 				<div class="uv-view-infos-row">
 					<div class="uv-view-infos-label">
-						Disponible
+						Semestre
 					</div>
 					<div class="uv-view-infos-value">
 						{% if uv.automne and not uv.printemps %}
@@ -81,7 +74,7 @@
 						{% elseif uv.printemps and not uv.automne %}
 							Printemps
 						{% else %}
-							Automne et au printemps
+							Automne et printemps
 						{% endif %}
 					</div>
 				</div>
@@ -89,13 +82,21 @@
 		</div>
 
 		<div class="uv-view-content">
-			{% for line in uv.objectifs %}
-				{{ line }}<br />
-			{% endfor %}
+			{% if uv.objectifs %}
+				<h4>Programme</h4>
 
-			{% for line in uv.programme %}
-				{{ line }}<br />
-			{% endfor %}
+				<p>
+					{{ uv.programme }}
+				</p>
+			{% endif %}
+
+			{% if uv.objectifs %}
+				<h4>Objectifs</h4>
+
+				<p>
+					{{ uv.objectifs }}
+				</p>
+			{% endif %}
 		</div>
 	</div>
 

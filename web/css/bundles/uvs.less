@@ -78,7 +78,12 @@
 	vertical-align: text-top;
 }
 
+.uv-view-category {
+	float: right;
+}
 .uv-view {
+	margin-top: 30px;
+
 	.uv-view-infos {
 		background: #f5f5f5;
 		float: left;
@@ -88,19 +93,26 @@
 		.uv-view-infos-category {
 			clear: both;
 		}
-		.uv-view-infos-label {
+		.uv-view-infos-label, .uv-view-infos-value {
 			float: left;
-			width: 150px;
 			padding: 5px;
 			border-top: 1px solid #e5e5e5;
 		}
+		.uv-view-infos-label {
+			width: 185px;
+			text-align: right;
+			font-weight: bold;
+		}
 		.uv-view-infos-value {
-			float: left;
-			width: 150px;
+			width: 120px;
 		}
 	}
 
 	.uv-view-content {
 		margin-left: 370px;
+
+		h4 {
+			margin-top: 30px;
+		}
 	}
 }
