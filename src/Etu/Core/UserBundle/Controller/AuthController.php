@@ -29,6 +29,12 @@ class AuthController extends Controller
 			return $this->redirect($this->generateUrl('homepage'));
 		}
 
+		if ($this->get('session')->has('etu.last_url')) {
+			$this->get('session')->set('etu.login_target', $this->get('session')->get('etu.last_url'));
+		} else {
+			$this->get('session')->set('etu.login_target', $this->generateUrl('homepage'));
+		}
+
 		if ($this->getKernel()->getEnvironment() != 'test') {
 			$this->initializeCAS();
 			\phpCAS::setNoCasServerValidation();
@@ -87,7 +93,11 @@ class AuthController extends Controller
 						$this->get('session')->set('_locale', $user->getLanguage());
 					}
 
-					return $this->redirect($this->generateUrl('homepage'));
+					if ($this->get('session')->has('etu.login_target')) {
+						return $this->redirect($this->get('session')->get('etu.login_target'));
+					} else {
+						return $this->redirect($this->generateUrl('homepage'));
+					}
 				} elseif ($user instanceof Organization) {
 					$this->get('session')->set('orga', $user->getId());
 					$this->get('session')->getFlashBag()->set('message', array(
@@ -95,12 +105,16 @@ class AuthController extends Controller
 						'message' => 'user.auth.connect.confirm'
 					));
 
-					return $this->redirect($this->generateUrl('homepage'));
+					if ($this->get('session')->has('etu.login_target')) {
+						return $this->redirect($this->get('session')->get('etu.login_target'));
+					} else {
+						return $this->redirect($this->generateUrl('homepage'));
+					}
 				}
 			}
 		}
 
-		// If we can't, we ask for the method
+		// If we can't auto-connect, we ask for the method
 		return array();
 	}
 
@@ -199,7 +213,11 @@ class AuthController extends Controller
 			return $this->redirect($this->generateUrl('user_connect'));
 		}
 
-		return $this->redirect($this->generateUrl('homepage'));
+		if ($this->get('session')->has('etu.login_target')) {
+			return $this->redirect($this->get('session')->get('etu.login_target'));
+		} else {
+			return $this->redirect($this->generateUrl('homepage'));
+		}
 	}
 
 	/**
@@ -240,7 +258,11 @@ class AuthController extends Controller
 					$this->get('session')->set('_locale', $user->getLanguage());
 				}
 
-				return $this->redirect($this->generateUrl('homepage'));
+				if ($this->get('session')->has('etu.login_target')) {
+					return $this->redirect($this->get('session')->get('etu.login_target'));
+				} else {
+					return $this->redirect($this->generateUrl('homepage'));
+				}
 			} else {
 				$this->get('session')->getFlashBag()->set('message', array(
 					'type' => 'error',
