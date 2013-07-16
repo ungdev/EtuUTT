@@ -71,9 +71,16 @@ class MainController extends Controller
 		$orgas = (array) $em->getRepository('EtuUserBundle:Organization')->findBy(array(), array('name' => 'ASC'));
 		$userOrgas = array();
 
+		/** @var Member[] $memberships */
+		$memberships = $this->getUser()->getMemberships();
+
+		if ($memberships instanceof \Doctrine\ORM\PersistentCollection) {
+			$memberships = $memberships->toArray();
+		}
+
 		foreach ($orgas as $key => $orga) {
 			if ($this->getUserLayer()->isUser()) {
-				foreach ((array) $this->getUser()->getMemberships() as $membership) {
+				foreach ($memberships as $membership) {
 					if ($membership->getOrganization()->getId() == $orga->getId()) {
 						unset($orgas[$key]);
 						$userOrgas[] = $orga;

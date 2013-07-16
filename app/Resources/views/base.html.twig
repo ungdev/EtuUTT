@@ -238,8 +238,7 @@
 
 		{% block js_libs %}
 			<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-		<!--<script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>-->
-			<script src="{{ asset('bundles/fosjsrouting/js/routes.js') }}"></script>
+			<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
 			<script src="{{ asset('redactor-js/redactor/redactor.min.js') }}" type="text/javascript"></script>
 			<script src="{{ asset('redactor-js/redactor/langs/fr.js') }}" type="text/javascript"></script>
 			<script src="{{ asset('facebox/src/facebox.js') }}" type="text/javascript"></script>
@@ -255,8 +254,7 @@
 						$.getJSON(Routing.generate('notifs_new'), function(data) {
 							if (typeof data.status != 'undefined' && data.status == 200) {
 								if (data.result.count > 0) {
-									$('#head-menu-home-pins').text(data.result.count);
-									$('#head-menu-home-pins').show();
+									$('#head-menu-home-pins').text(data.result.count).show();
 									setCountTitle(data.result.count);
 								} else {
 									$('#head-menu-home-pins').hide();

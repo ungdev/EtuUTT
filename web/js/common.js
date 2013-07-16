@@ -56,48 +56,23 @@ function removeCountTitle() {
 	}
 }
 
-$(function() {
+userbox.link.click(function() {
+	userbox.box.toggleClass('userbox-clicked');
+	userbox.menu.toggleClass('userbox-menu-clicked');
+	userbox.menu.toggle();
+	return false;
+});
 
-	facebox.facebox();
+more.click(function() {
+	if (! $(this).hasClass('active')) {
+		menu.head.items.each(function() {
+			if ($(this).hasClass('active')) {
+				$(this).removeClass('active').addClass('old-active');
+			}
+		});
 
-	tip.tipsy({
-		gravity: 's',
-		html: true
-	});
-
-	userbox.link.click(function() {
-		userbox.box.toggleClass('userbox-clicked');
-		userbox.menu.toggleClass('userbox-menu-clicked');
-		userbox.menu.toggle();
-		return false;
-	});
-
-	more.click(function() {
-		if (! $(this).hasClass('active')) {
-			menu.head.items.each(function() {
-				if ($(this).hasClass('active')) {
-					$(this).removeClass('active').addClass('old-active');
-				}
-			});
-
-			$(this).addClass('active');
-		} else {
-			menu.head.items.each(function() {
-				if ($(this).hasClass('old-active')) {
-					$(this).removeClass('old-active').addClass('active');
-				}
-			});
-
-			$(this).removeClass('active');
-		}
-
-		overlay.toggle();
-		menu.mobile.toggle();
-
-		return false;
-	});
-
-	changeLocale.link.click(function() {
+		$(this).addClass('active');
+	} else {
 		menu.head.items.each(function() {
 			if ($(this).hasClass('old-active')) {
 				$(this).removeClass('old-active').addClass('active');
@@ -105,15 +80,50 @@ $(function() {
 		});
 
 		$(this).removeClass('active');
-		menu.mobile.hide();
+	}
 
-		overlay.show();
-		changeLocale.box.show();
+	overlay.toggle();
+	menu.mobile.toggle();
 
-		return false;
+	return false;
+});
+
+changeLocale.link.click(function() {
+	menu.head.items.each(function() {
+		if ($(this).hasClass('old-active')) {
+			$(this).removeClass('old-active').addClass('active');
+		}
 	});
 
-	page.on('click', function(e) {
+	$(this).removeClass('active');
+	menu.mobile.hide();
+
+	overlay.show();
+	changeLocale.box.show();
+
+	return false;
+});
+
+page.on('click', function(e) {
+	userbox.box.removeClass('userbox-clicked');
+	userbox.menu.removeClass('userbox-menu-clicked');
+	userbox.menu.hide();
+
+	menu.head.items.each(function() {
+		if ($(this).hasClass('old-active')) {
+			$(this).removeClass('old-active').addClass('active');
+		}
+	});
+
+	$(this).removeClass('active');
+
+	overlay.hide();
+	menu.mobile.hide();
+	changeLocale.box.hide();
+});
+
+$(document).keypress(function(event) {
+	if (event.keyCode == 27) {
 		userbox.box.removeClass('userbox-clicked');
 		userbox.menu.removeClass('userbox-menu-clicked');
 		userbox.menu.hide();
@@ -129,30 +139,76 @@ $(function() {
 		overlay.hide();
 		menu.mobile.hide();
 		changeLocale.box.hide();
+	}
+});
+
+$('.userbox a, #menu-mobile a, #change-locale-choices a').click(function() {
+	return true;
+});
+
+// Suscribe
+subscriptions.follow.click(function() {
+	var url = Routing.generate('notifs_subscribe', {
+		'entityType': $(this).attr('data-entityType'),
+		'entityId': $(this).attr('data-entityId')
 	});
 
-	$(document).keypress(function(event) {
-		if (event.keyCode == 27) {
-			userbox.box.removeClass('userbox-clicked');
-			userbox.menu.removeClass('userbox-menu-clicked');
-			userbox.menu.hide();
+	var id = $(this).attr('id').replace('-subscribe', '');
 
-			menu.head.items.each(function() {
-				if ($(this).hasClass('old-active')) {
-					$(this).removeClass('old-active').addClass('active');
-				}
-			});
+	$('#'+ id +'-subscribe').hide();
+	$('#'+ id +'-loader').show();
 
-			$(this).removeClass('active');
+	$.getJSON(url, function(data) {
+		$('#'+ id +'-loader').hide();
 
-			overlay.hide();
-			menu.mobile.hide();
-			changeLocale.box.hide();
+		if (typeof data.status != 'undefined' && data.status == 200) {
+			$('#'+ id +'-unsubscribe').show();
+		} else {
+			$('#'+ id +'-subscribe').show();
+
+			alert('Une erreur s\'est produite. Veuillez réessayer ou signaler le problème.');
 		}
 	});
 
-	$('.userbox a, #menu-mobile a, #change-locale-choices a').click(function() {
-		return true;
+	return false;
+});
+
+
+// Unsubscribe
+subscriptions.unfollow.click(function() {
+	var url = Routing.generate('notifs_unsubscribe', {
+		'entityType': $(this).attr('data-entityType'),
+		'entityId': $(this).attr('data-entityId')
+	});
+
+	var id = $(this).attr('id').replace('-unsubscribe', '');
+
+	$('#'+ id +'-unsubscribe').hide();
+	$('#'+ id +'-loader').show();
+
+	$.getJSON(url, function(data) {
+		$('#'+ id +'-loader').hide();
+
+		if (typeof data.status != 'undefined' && data.status == 200) {
+			$('#'+ id +'-subscribe').show();
+		} else {
+			$('#'+ id +'-unsubscribe').show();
+
+			alert('Une erreur s\'est produite. Veuillez réessayer ou signaler le problème.');
+		}
+	});
+
+	return false;
+});
+
+
+$(function() {
+
+	facebox.facebox();
+
+	tip.tipsy({
+		gravity: 's',
+		html: true
 	});
 
 	// Load Redactor
@@ -182,62 +238,6 @@ $(function() {
 			'alignleft', 'aligncenter', 'alignright', '|',
 			'unorderedlist', '|', 'image', 'link'
 		]
-	});
-
-
-	// Suscribe
-	subscriptions.follow.click(function() {
-		var url = Routing.generate('notifs_subscribe', {
-			'entityType': $(this).attr('data-entityType'),
-			'entityId': $(this).attr('data-entityId')
-		});
-
-		var id = $(this).attr('id').replace('-subscribe', '');
-
-		$('#'+ id +'-subscribe').hide();
-		$('#'+ id +'-loader').show();
-
-		$.getJSON(url, function(data) {
-			$('#'+ id +'-loader').hide();
-
-			if (typeof data.status != 'undefined' && data.status == 200) {
-				$('#'+ id +'-unsubscribe').show();
-			} else {
-				$('#'+ id +'-subscribe').show();
-
-				alert('Une erreur s\'est produite. Veuillez réessayer ou signaler le problème.');
-			}
-		});
-
-		return false;
-	});
-
-
-	// Unsubscribe
-	subscriptions.unfollow.click(function() {
-		var url = Routing.generate('notifs_unsubscribe', {
-			'entityType': $(this).attr('data-entityType'),
-			'entityId': $(this).attr('data-entityId')
-		});
-
-		var id = $(this).attr('id').replace('-unsubscribe', '');
-
-		$('#'+ id +'-unsubscribe').hide();
-		$('#'+ id +'-loader').show();
-
-		$.getJSON(url, function(data) {
-			$('#'+ id +'-loader').hide();
-
-			if (typeof data.status != 'undefined' && data.status == 200) {
-				$('#'+ id +'-subscribe').show();
-			} else {
-				$('#'+ id +'-unsubscribe').show();
-
-				alert('Une erreur s\'est produite. Veuillez réessayer ou signaler le problème.');
-			}
-		});
-
-		return false;
 	});
 
 	// Users autocomplete
