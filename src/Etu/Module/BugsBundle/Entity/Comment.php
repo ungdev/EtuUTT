@@ -19,7 +19,7 @@ class Comment
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -44,7 +44,7 @@ class Comment
     /**
      * @var string
      *
-     * @ORM\Column(name="body", type="text")
+     * @ORM\Column(type="text")
      * @Assert\NotBlank()
      * @Assert\Length(min = "15")
      */
@@ -54,7 +54,7 @@ class Comment
      * @var \DateTime
      *
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(name="createdAt", type="datetime")
+     * @ORM\Column(type="datetime")
      */
     protected $createdAt;
 
@@ -62,14 +62,14 @@ class Comment
 	 * @var \DateTime
 	 *
 	 * @Gedmo\Timestampable(on="update")
-	 * @ORM\Column(name="updatedAt", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $updatedAt;
 
 	/**
 	 * @var \DateTime $deletedAt
 	 *
-	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 * @ORM\Column(type="datetime", nullable = true)
 	 */
 	protected $deletedAt;
 
@@ -78,7 +78,7 @@ class Comment
 	 *
 	 * @var boolean
 	 *
-	 * @ORM\Column(name="isStateUpdate", type="boolean")
+	 * @ORM\Column(type="boolean")
 	 */
 	protected $isStateUpdate = false;
 

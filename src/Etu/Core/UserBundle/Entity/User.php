@@ -53,7 +53,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -62,7 +62,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="login", type="string", length=50)
+	 * @ORM\Column(type="string", length=50)
 	 */
 	protected $login;
 
@@ -71,35 +71,35 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @var string
 	 *
-	 * @ORM\Column(name="password", type="string", length=100, nullable=true)
+	 * @ORM\Column(type="string", length=100, nullable=true)
 	 */
 	protected $password;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="studentId", type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $studentId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="mail", type="string", length=100, nullable=true)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $mail;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="fullName", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $fullName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="firstName", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Length(min = "2", max = "50")
      */
     protected $firstName;
@@ -107,7 +107,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="lastName", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Length(min = "2", max = "50")
      */
     protected $lastName;
@@ -115,28 +115,28 @@ class User implements UserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="formation", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $formation;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="niveau", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $niveau;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="filiere", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $filiere;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="phoneNumber", type="string", length=30, nullable=true)
+	 * @ORM\Column(type="string", length=30, nullable=true)
 	 * @Assert\Regex("/^0[1-68]([-. ]?[0-9]{2}){4}$/")
 	 */
 	protected $phoneNumber;
@@ -144,7 +144,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="phoneNumberPrivacy", type="integer")
+	 * @ORM\Column(type="integer")
 	 * @Assert\NotBlank()
 	 */
 	protected $phoneNumberPrivacy;
@@ -152,7 +152,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Length(min = "2", max = "50")
      */
     protected $title;
@@ -160,7 +160,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="room", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Length(min = "2", max = "50")
      */
     protected $room;
@@ -168,21 +168,21 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
+	 * @ORM\Column(type="string", length=255, nullable=true)
 	 */
 	protected $avatar;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="sex", type="string", length=50, nullable=true)
+	 * @ORM\Column(type="string", length=50, nullable=true)
 	 */
 	protected $sex;
 
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="sexPrivacy", type="integer")
+	 * @ORM\Column(type="integer")
 	 * @Assert\NotBlank()
 	 */
 	protected $sexPrivacy;
@@ -190,7 +190,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="nationality", type="string", length=50, nullable=true)
+	 * @ORM\Column(type="string", length=50, nullable=true)
 	 * @Assert\Length(min = "2", max = "50")
 	 */
 	protected $nationality;
@@ -198,7 +198,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="nationalityPrivacy", type="integer")
+	 * @ORM\Column(type="integer")
 	 * @Assert\NotBlank()
 	 */
 	protected $nationalityPrivacy;
@@ -206,7 +206,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="adress", type="string", length=100, nullable=true)
+	 * @ORM\Column(type="string", length=100, nullable=true)
 	 * @Assert\Length(min = "2", max = "100")
 	 */
 	protected $adress;
@@ -214,7 +214,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="adressPrivacy", type="integer")
+	 * @ORM\Column(type="integer")
 	 * @Assert\NotBlank()
 	 */
 	protected $adressPrivacy;
@@ -222,7 +222,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="postalCode", type="string", length=50, nullable=true)
+	 * @ORM\Column(type="string", length=50, nullable=true)
 	 * @Assert\Type("integer")
 	 */
 	protected $postalCode;
@@ -230,7 +230,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="postalCodePrivacy", type="integer")
+	 * @ORM\Column(type="integer")
 	 * @Assert\NotBlank()
 	 */
 	protected $postalCodePrivacy;
@@ -238,7 +238,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="city", type="string", length=100, nullable=true)
+	 * @ORM\Column(type="string", length=100, nullable=true)
 	 * @Assert\Length(min = "2", max = "50")
 	 */
 	protected $city;
@@ -246,7 +246,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="cityPrivacy", type="integer")
+	 * @ORM\Column(type="integer")
 	 * @Assert\NotBlank()
 	 */
 	protected $cityPrivacy;
@@ -254,7 +254,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="country", type="string", length=50, nullable=true)
+	 * @ORM\Column(type="string", length=50, nullable=true)
 	 * @Assert\Length(min = "2", max = "50")
 	 */
 	protected $country;
@@ -262,7 +262,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="countryPrivacy", type="integer")
+	 * @ORM\Column(type="integer")
 	 * @Assert\NotBlank()
 	 */
 	protected $countryPrivacy;
@@ -270,7 +270,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var \DateTime
 	 *
-	 * @ORM\Column(name="birthday", type="date", nullable=true)
+	 * @ORM\Column(type="date", nullable=true)
 	 * @Assert\Date()
 	 */
 	protected $birthday;
@@ -278,7 +278,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="birthdayPrivacy", type="integer")
+	 * @ORM\Column(type="integer")
 	 * @Assert\NotBlank()
 	 */
 	protected $birthdayPrivacy;
@@ -286,14 +286,14 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var boolean
 	 *
-	 * @ORM\Column(name="birthdayDisplayOnlyAge", type="boolean")
+	 * @ORM\Column(type="boolean")
 	 */
 	protected $birthdayDisplayOnlyAge;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="personnalMail", type="string", length=100, nullable=true)
+	 * @ORM\Column(type="string", length=100, nullable=true)
 	 * @Assert\Email()
 	 */
 	protected $personnalMail;
@@ -301,7 +301,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="personnalMailPrivacy", type="integer")
+	 * @ORM\Column(type="integer")
 	 * @Assert\NotBlank()
 	 */
 	protected $personnalMailPrivacy;
@@ -309,14 +309,14 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="language", type="string", length=10, nullable=true)
+	 * @ORM\Column(type="string", length=10, nullable=true)
 	 */
 	protected $language;
 
 	/**
 	 * @var boolean
 	 *
-	 * @ORM\Column(name="isStudent", type="boolean")
+	 * @ORM\Column(type="boolean")
 	 */
 	protected $isStudent;
 
@@ -324,7 +324,7 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *     > For trombi
 	 *
-	 * @ORM\Column(name="surnom", type="string", length=50, nullable=true)
+	 * @ORM\Column(type="string", length=50, nullable=true)
 	 * @Assert\Length(max = "50")
 	 */
 	protected $surnom;
@@ -333,7 +333,7 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *     > For trombi
 	 *
-	 * @ORM\Column(name="jadis", type="text", nullable=true)
+	 * @ORM\Column(type="text", nullable=true)
 	 * @Assert\Length(min = "15")
 	 */
 	protected $jadis;
@@ -342,7 +342,7 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *     > For trombi
 	 *
-	 * @ORM\Column(name="passions", type="text", nullable=true)
+	 * @ORM\Column(type="text", nullable=true)
 	 * @Assert\Length(min = "15")
 	 */
 	protected $passions;
@@ -350,7 +350,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="website", type="string", length=100, nullable=true)
+	 * @ORM\Column(type="string", length=100, nullable=true)
 	 * @Assert\Url()
 	 */
 	protected $website;
@@ -358,7 +358,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="facebook", type="string", length=100, nullable=true)
+	 * @ORM\Column(type="string", length=100, nullable=true)
 	 * @Assert\Url()
 	 */
 	protected $facebook;
@@ -366,7 +366,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="twitter", type="string", length=100, nullable=true)
+	 * @ORM\Column(type="string", length=100, nullable=true)
 	 * @Assert\Url()
 	 */
 	protected $twitter;
@@ -374,7 +374,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="linkedin", type="string", length=100, nullable=true)
+	 * @ORM\Column(type="string", length=100, nullable=true)
 	 * @Assert\Url()
 	 */
 	protected $linkedin;
@@ -382,7 +382,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="viadeo", type="string", length=100, nullable=true)
+	 * @ORM\Column(type="string", length=100, nullable=true)
 	 * @Assert\Url()
 	 */
 	protected $viadeo;
@@ -390,7 +390,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="uvs", type="string", length=100, nullable=true)
+	 * @ORM\Column(type="string", length=100, nullable=true)
 	 */
 	protected $uvs;
 
@@ -399,7 +399,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @var boolean
 	 *
-	 * @ORM\Column(name="keepActive", type="boolean")
+	 * @ORM\Column(type="boolean")
 	 */
 	protected $keepActive;
 
@@ -409,7 +409,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @var array
 	 *
-	 * @ORM\Column(name="permissions", type="array")
+	 * @ORM\Column(type="array")
 	 */
 	protected $permissions = array();
 
@@ -419,7 +419,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @var array
 	 *
-	 * @ORM\Column(name="removedPermissions", type="array")
+	 * @ORM\Column(type="array")
 	 */
 	protected $removedPermissions = array();
 
@@ -428,7 +428,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @var boolean
 	 *
-	 * @ORM\Column(name="isAdmin", type="boolean")
+	 * @ORM\Column(type="boolean")
 	 */
 	protected $isAdmin;
 
@@ -437,7 +437,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @var boolean
 	 *
-	 * @ORM\Column(name="isReadOnly", type="boolean")
+	 * @ORM\Column(type="boolean")
 	 */
 	protected $isReadOnly;
 
@@ -446,7 +446,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @var \DateTime
 	 *
-	 * @ORM\Column(name="readOnlyExpirationDate", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $readOnlyExpirationDate;
 
@@ -455,7 +455,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @var array
 	 *
-	 * @ORM\Column(name="badges", type="array")
+	 * @ORM\Column(type="array")
 	 */
 	protected $badges = array();
 
@@ -464,7 +464,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @var array
 	 *
-	 * @ORM\Column(name="options", type="array")
+	 * @ORM\Column(type="array")
 	 */
 	protected $options;
 
@@ -473,7 +473,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @var \DateTime
 	 *
-	 * @ORM\Column(name="lastVisitHome", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $lastVisitHome;
 
@@ -481,7 +481,7 @@ class User implements UserInterface, \Serializable
 	 * @var \DateTime $created
 	 *
 	 * @Gedmo\Timestampable(on="create")
-	 * @ORM\Column(name="createdAt", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $createdAt;
 
@@ -489,14 +489,14 @@ class User implements UserInterface, \Serializable
 	 * @var \DateTime $updated
 	 *
 	 * @Gedmo\Timestampable(on="update")
-	 * @ORM\Column(name="updatedAt", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $updatedAt;
 
 	/**
 	 * @var \DateTime $deletedAt
 	 *
-	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 * @ORM\Column(type="datetime", nullable = true)
 	 */
 	protected $deletedAt;
 

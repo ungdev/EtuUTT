@@ -27,7 +27,7 @@ class Page
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="id", type="integer")
+	 * @ORM\Column(type="integer")
 	 * @ORM\Id
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
@@ -60,7 +60,7 @@ class Page
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="title", type="string", length=50)
+	 * @ORM\Column(type="string", length=50)
 	 * @Assert\NotBlank()
 	 * @Assert\Length(min = "10", max = "50")
 	 */
@@ -71,7 +71,7 @@ class Page
 	 *
 	 * @var integer
 	 *
-	 * @ORM\Column(name="levelToView", type="integer")
+	 * @ORM\Column(type="integer")
 	 */
 	protected $levelToView;
 
@@ -80,7 +80,7 @@ class Page
 	 *
 	 * @var integer
 	 *
-	 * @ORM\Column(name="levelToEdit", type="integer")
+	 * @ORM\Column(type="integer")
 	 */
 	protected $levelToEdit;
 
@@ -89,7 +89,7 @@ class Page
 	 *
 	 * @var integer
 	 *
-	 * @ORM\Column(name="levelToEditPermissions", type="integer")
+	 * @ORM\Column(type="integer")
 	 */
 	protected $levelToEditPermissions;
 
@@ -98,7 +98,7 @@ class Page
 	 *
 	 * @var boolean
 	 *
-	 * @ORM\Column(name="isHome", type="boolean")
+	 * @ORM\Column(type="boolean")
 	 */
 	protected $isHome;
 
@@ -106,7 +106,7 @@ class Page
 	 * @var \DateTime $created
 	 *
 	 * @Gedmo\Timestampable(on="create")
-	 * @ORM\Column(name="createdAt", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $createdAt;
 
@@ -114,14 +114,14 @@ class Page
 	 * @var \DateTime $updated
 	 *
 	 * @Gedmo\Timestampable(on="update")
-	 * @ORM\Column(name="updatedAt", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $updatedAt;
 
 	/**
 	 * @var \DateTime $deletedAt
 	 *
-	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 * @ORM\Column(type="datetime", nullable = true)
 	 */
 	protected $deletedAt;
 

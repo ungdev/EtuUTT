@@ -23,7 +23,7 @@ class Comment
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -88,7 +88,7 @@ class Comment
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -104,14 +104,14 @@ class Comment
     public function setBody($body)
     {
         $this->body = $body;
-    
+
         return $this;
     }
 
     /**
      * Get body
      *
-     * @return string 
+     * @return string
      */
     public function getBody()
     {
@@ -127,14 +127,14 @@ class Comment
     public function setRating($rating)
     {
         $this->rating = $rating;
-    
+
         return $this;
     }
 
     /**
      * Get rating
      *
-     * @return integer 
+     * @return integer
      */
     public function getRating()
     {
@@ -150,14 +150,14 @@ class Comment
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -173,14 +173,14 @@ class Comment
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -196,14 +196,14 @@ class Comment
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
-    
+
         return $this;
     }
 
     /**
      * Get deletedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDeletedAt()
     {
@@ -219,14 +219,14 @@ class Comment
     public function setUser(\Etu\Core\UserBundle\Entity\User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return \Etu\Core\UserBundle\Entity\User 
+     * @return \Etu\Core\UserBundle\Entity\User
      */
     public function getUser()
     {
@@ -242,14 +242,14 @@ class Comment
     public function setUv(\Etu\Module\UVBundle\Entity\UV $uv = null)
     {
         $this->uv = $uv;
-    
+
         return $this;
     }
 
     /**
      * Get uv
      *
-     * @return \Etu\Module\UVBundle\Entity\UV 
+     * @return \Etu\Module\UVBundle\Entity\UV
      */
     public function getUv()
     {

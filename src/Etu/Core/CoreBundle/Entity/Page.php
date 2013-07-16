@@ -17,7 +17,7 @@ class Page
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -26,14 +26,14 @@ class Page
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="slug", type="string", length=50)
+	 * @ORM\Column(type="string", length=50)
 	 */
 	protected $slug;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="title", type="string", length=50)
+	 * @ORM\Column(type="string", length=50)
 	 * @Assert\NotBlank()
 	 * @Assert\Length(min = "2", max = "50")
 	 */
@@ -42,7 +42,7 @@ class Page
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="content", type="text")
+	 * @ORM\Column(type="text")
 	 * @Assert\NotBlank()
 	 */
 	protected $content;
@@ -51,14 +51,14 @@ class Page
 	 * @var \DateTime $created
 	 *
 	 * @Gedmo\Timestampable(on="create")
-	 * @ORM\Column(name="createdAt", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $createdAt;
 
 	/**
 	 * @var \DateTime $deletedAt
 	 *
-	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 * @ORM\Column(type="datetime", nullable = true)
 	 */
 	protected $deletedAt;
 

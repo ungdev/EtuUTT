@@ -16,7 +16,7 @@ class Notification
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="id", type="integer")
+	 * @ORM\Column(type="integer")
 	 * @ORM\Id
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
@@ -25,21 +25,21 @@ class Notification
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="authorId", type="integer")
+	 * @ORM\Column(type="integer")
 	 */
 	protected $authorId;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="entityType", type="string", length=50)
+	 * @ORM\Column(type="string", length=50)
 	 */
 	protected $entityType;
 
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="entityId", type="integer")
+	 * @ORM\Column(type="integer")
 	 */
 	protected $entityId;
 
@@ -48,7 +48,7 @@ class Notification
 	 *
 	 * @var string
 	 *
-	 * @ORM\Column(name="helper", type="string", length=100)
+	 * @ORM\Column(type="string", length=100)
 	 */
 	protected $helper;
 
@@ -57,7 +57,7 @@ class Notification
 	 *
 	 * @var array
 	 *
-	 * @ORM\Column(name="entities", type="array")
+	 * @ORM\Column(type="array")
 	 */
 	protected $entities;
 
@@ -66,7 +66,7 @@ class Notification
 	 *
 	 * @var string
 	 *
-	 * @ORM\Column(name="module", type="string", length=100)
+	 * @ORM\Column(type="string", length=100)
 	 */
 	protected $module;
 
@@ -75,14 +75,14 @@ class Notification
 	 *
 	 * @var boolean
 	 *
-	 * @ORM\Column(name="isSuper", type="boolean")
+	 * @ORM\Column(type="boolean")
 	 */
 	protected $isSuper;
 
 	/**
 	 * @var \DateTime
 	 *
-	 * @ORM\Column(name="expiration", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $expiration;
 
@@ -90,14 +90,14 @@ class Notification
 	 * @var \DateTime $created
 	 *
 	 * @Gedmo\Timestampable(on="create")
-	 * @ORM\Column(name="createdAt", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $createdAt;
 
 	/**
 	 * @var \DateTime $deletedAt
 	 *
-	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 * @ORM\Column(type="datetime", nullable = true)
 	 */
 	protected $deletedAt;
 

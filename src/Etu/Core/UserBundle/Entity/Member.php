@@ -29,7 +29,7 @@ class Member
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -54,7 +54,7 @@ class Member
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="role", type="smallint")
+	 * @ORM\Column(type="smallint")
 	 */
 	protected $role;
 
@@ -62,21 +62,21 @@ class Member
 	 * @var \DateTime $created
 	 *
 	 * @Gedmo\Timestampable(on="create")
-	 * @ORM\Column(name="createdAt", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $createdAt;
 
 	/**
 	 * @var \DateTime $deletedAt
 	 *
-	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 * @ORM\Column(type="datetime", nullable = true)
 	 */
 	protected $deletedAt;
 
 	/**
 	 * @var array
 	 *
-	 * @ORM\Column(name="permissions", type="array")
+	 * @ORM\Column(type="array")
 	 */
 	protected $permissions;
 

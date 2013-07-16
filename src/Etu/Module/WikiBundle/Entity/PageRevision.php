@@ -19,7 +19,7 @@ class PageRevision
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="id", type="integer")
+	 * @ORM\Column(type="integer")
 	 * @ORM\Id
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
@@ -28,7 +28,7 @@ class PageRevision
 	/**
 	 * @var integer $page
 	 *
-	 * @ORM\Column(name="page", type="integer", nullable=true)
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $page;
 
@@ -43,7 +43,7 @@ class PageRevision
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="text", type="text")
+	 * @ORM\Column(type="text")
 	 * @Assert\NotBlank()
 	 * @Assert\Length(min = "15")
 	 */
@@ -52,7 +52,7 @@ class PageRevision
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="comment", type="string", length=140, nullable=true)
+	 * @ORM\Column(type="string", length=140, nullable=true)
 	 * @Assert\Length(max = "140")
 	 */
 	protected $comment;
@@ -61,7 +61,7 @@ class PageRevision
 	 * @var \DateTime $created
 	 *
 	 * @Gedmo\Timestampable(on="create")
-	 * @ORM\Column(name="createdAt", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $createdAt;
 
@@ -69,14 +69,14 @@ class PageRevision
 	 * @var \DateTime $updated
 	 *
 	 * @Gedmo\Timestampable(on="update")
-	 * @ORM\Column(name="updatedAt", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $updatedAt;
 
 	/**
 	 * @var \DateTime $deletedAt
 	 *
-	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 * @ORM\Column(type="datetime", nullable = true)
 	 */
 	protected $deletedAt;
 
