@@ -2,19 +2,21 @@
 
 namespace Etu\Module\UVBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Validator\Constraints as Assert;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+use Doctrine\ORM\Mapping as ORM;
+
+use Gedmo\Mapping\Annotation as Gedmo;
+
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="etu_uvs_reviews")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
-class UVReview
+class Review
 {
 	const TYPE_PARTIEL = 'partiel';
 	const TYPE_MIDTERM = 'midterm';
@@ -156,7 +158,7 @@ class UVReview
      * Set type
      *
      * @param string $type
-     * @return UVReview
+     * @return Review
      */
     public function setType($type)
     {
@@ -179,7 +181,7 @@ class UVReview
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     * @return UVReview
+     * @return Review
      */
     public function setCreatedAt($createdAt)
     {
@@ -202,7 +204,7 @@ class UVReview
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
-     * @return UVReview
+     * @return Review
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -225,7 +227,7 @@ class UVReview
      * Set deletedAt
      *
      * @param \DateTime $deletedAt
-     * @return UVReview
+     * @return Review
      */
     public function setDeletedAt($deletedAt)
     {
@@ -248,7 +250,7 @@ class UVReview
      * Set semester
      *
      * @param string $semester
-     * @return UVReview
+     * @return Review
      */
     public function setSemester($semester)
     {
@@ -271,7 +273,7 @@ class UVReview
      * Set filename
      *
      * @param string $filename
-     * @return UVReview
+     * @return Review
      */
     public function setFilename($filename)
     {
@@ -294,7 +296,7 @@ class UVReview
      * Set validated
      *
      * @param boolean $validated
-     * @return UVReview
+     * @return Review
      */
     public function setValidated($validated)
     {
@@ -317,7 +319,7 @@ class UVReview
      * Set uv
      *
      * @param \Etu\Module\UVBundle\Entity\UV $uv
-     * @return UVReview
+     * @return Review
      */
     public function setUv(\Etu\Module\UVBundle\Entity\UV $uv = null)
     {
