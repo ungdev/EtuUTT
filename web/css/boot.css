@@ -1573,6 +1573,16 @@ textarea {
 .uv-view .uv-view-content h4 {
   margin-top: 30px;
 }
+.uv-view-reviews {
+  float: left;
+  width: 325px;
+}
+.uv-view-comments {
+  margin-left: 370px;
+}
+.uv-view-comments h4 {
+  margin-top: 33px;
+}
 /*
  * Wiki
  */
