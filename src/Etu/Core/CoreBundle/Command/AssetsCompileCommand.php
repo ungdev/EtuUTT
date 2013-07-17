@@ -42,7 +42,16 @@ class AssetsCompileCommand extends ContainerAwareCommand
 			$directory.'../app'
 		));
 
-		$files = array(
+		$css = array(
+			'bootstrap/css/bootstrap.min.css',
+			'bootstrap/css/bootstrap-responsive.min.css',
+			'redactor-js/redactor/redactor.css',
+			'tipsy/src/tipsy.css',
+			'facebox/src/facebox.css',
+			'css/boot.css',
+		);
+
+		$js = array(
 			'bootstrap/js/bootstrap.min.js',
 			'redactor-js/redactor/redactor.min.js',
 			'redactor-js/redactor/langs/fr.js',
@@ -53,13 +62,40 @@ class AssetsCompileCommand extends ContainerAwareCommand
 			'js/common.js',
 		);
 
-		$output->writeln("\nCompiling...");
-
+		/*
+		 * CSS
+		 */
+		$output->writeln("\nCompiling CSS...");
 		$compiled = '';
 
-		foreach ($files as $file) {
-			$content = file_get_contents($directory.$file);
-			$compiled .= "\n".$content;
+		foreach ($css as $file) {
+			$compiled .= ' '.file_get_contents($directory.$file);
+		}
+
+		// Send CSS to CSSMinifier
+		$compiled = file_get_contents('http://cssminifier.com/raw', false, stream_context_create(array(
+			'http' => array(
+				'method'  => 'POST',
+				'header'  => 'Content-type: application/x-www-form-urlencoded',
+				'content' => http_build_query(array(
+					'input' => $compiled
+				))
+			)
+		)));
+
+		file_put_contents($directory.'css/compiled.css', $compiled);
+
+		$output->writeln("Compiled code written in web/css/compiled.css");
+
+
+		/*
+		 * Javascript
+		 */
+		$output->writeln("Compiling JS...");
+		$compiled = '';
+
+		foreach ($js as $file) {
+			$compiled .= ' '.file_get_contents($directory.$file);
 		}
 
 		// Send JS to Google Closure that minify it in a really smart way
@@ -78,7 +114,7 @@ class AssetsCompileCommand extends ContainerAwareCommand
 
 		file_put_contents($directory.'js/compiled.js', $compiled);
 
-		$output->writeln("Compiled code written in web/js/compiled.js.\n");
+		$output->writeln("Compiled code written in web/js/compiled.js\n");
 
 	}
 }
