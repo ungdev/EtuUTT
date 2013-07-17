@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Util\RedactorJsEscaper;
+use Etu\Core\UserBundle\Entity\Member;
 use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Module\WikiBundle\Entity\Page;
 use Etu\Module\WikiBundle\Entity\PageRevision;
@@ -76,6 +77,10 @@ class MainController extends Controller
 
 		if ($memberships instanceof \Doctrine\ORM\PersistentCollection) {
 			$memberships = $memberships->toArray();
+		}
+
+		if (! is_array($memberships)) {
+			$memberships = array();
 		}
 
 		foreach ($orgas as $key => $orga) {
