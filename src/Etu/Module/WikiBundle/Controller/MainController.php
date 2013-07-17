@@ -68,8 +68,18 @@ class MainController extends Controller
 			$em->flush();
 		}
 
+
+		$query = $em->getRepository('EtuUserBundle:Organization')
+			->createQueryBuilder('o')
+			->select('o')
+			->orderBy('o.name', 'ASC')
+			->getQuery();
+
+		$query->useResultCache(true, 3600*24*30);
+
 		/** @var Organization[] $orgas */
-		$orgas = (array) $em->getRepository('EtuUserBundle:Organization')->findBy(array(), array('name' => 'ASC'));
+		$orgas = (array) $query->getResult();
+
 		$userOrgas = array();
 
 		/** @var Member[] $memberships */

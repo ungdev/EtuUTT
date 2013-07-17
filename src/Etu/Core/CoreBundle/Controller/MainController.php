@@ -200,8 +200,18 @@ class MainController extends Controller
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
 
+		$query = $em->getRepository('EtuCoreBundle:Page')
+			->createQueryBuilder('p')
+			->select('p')
+			->where('p.slug = :slug')
+			->setParameter('slug', $slug)
+			->setMaxResults(1)
+			->getQuery();
+
+		$query->useResultCache(true, 3600 * 24 * 7);
+
 		/** @var $page Page */
-		$page = $em->getRepository('EtuCoreBundle:Page')->findOneBySlug($slug);
+		$page = $query->getOneOrNullResult();
 
 		if (! $page) {
 			throw $this->createNotFoundException('Invalid slug');
@@ -223,7 +233,7 @@ class MainController extends Controller
 		$events = array();
 
 		if ($modulesManager->getModuleByIdentifier('events')->isEnabled()) {
-			$events = $em->createQueryBuilder()
+			$query = $em->createQueryBuilder()
 				->select('e, o')
 				->from('EtuModuleEventsBundle:Event', 'e')
 				->leftJoin('e.orga', 'o')
@@ -232,8 +242,11 @@ class MainController extends Controller
 				->orderBy('e.begin', 'ASC')
 				->addOrderBy('e.end', 'ASC')
 				->setMaxResults(5)
-				->getQuery()
-				->getResult();
+				->getQuery();
+
+			$query->useResultCache(true, 3600);
+
+			$events = $query->getResult();
 		}
 
 		return $this->render('EtuCoreBundle:Main:indexAnonymous.html.twig', array(
