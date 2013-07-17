@@ -74,11 +74,11 @@ class Category
 	protected $countMessages;
 
 	/**
-	 * @var Message $lastMesssage
+	 * @var Message $lastMessage
 	 *
-	 * @ORM\Column(name="lastMesssage", type="object", nullable=true)
+	 * @ORM\Column(name="lastMessage", type="object", nullable=true)
 	 */
-	protected $lastMesssage;
+	protected $lastMessage;
 
 
 	/**
@@ -178,12 +178,12 @@ class Category
 	}
 
 	/**
-	 * @param \Etu\Module\ForumBundle\Entity\Message $lastMesssage
+	 * @param \Etu\Module\ForumBundle\Entity\Message $lastMessage
 	 * @return Category
 	 */
-	public function setLastMesssage(Message $lastMesssage)
+	public function setLastMessage(Message $lastMessage)
 	{
-		$this->lastMesssage = $lastMesssage;
+		$this->lastMessage = $lastMessage;
 
 		return $this;
 	}
@@ -191,9 +191,9 @@ class Category
 	/**
 	 * @return \Etu\Module\ForumBundle\Entity\Message
 	 */
-	public function getLastMesssage()
+	public function getlastMessage()
 	{
-		return $this->lastMesssage;
+		return $this->lastMessage;
 	}
 
 	/**
