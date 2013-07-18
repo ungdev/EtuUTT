@@ -2,19 +2,21 @@
 
 namespace Etu\Module\UVBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Validator\Constraints as Assert;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+use Doctrine\ORM\Mapping as ORM;
+
+use Gedmo\Mapping\Annotation as Gedmo;
+
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="etu_uvs_reviews")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
-class UVReview
+class Review
 {
 	const TYPE_PARTIEL = 'partiel';
 	const TYPE_MIDTERM = 'midterm';
@@ -29,7 +31,7 @@ class UVReview
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -54,7 +56,7 @@ class UVReview
 	 * @var \DateTime
 	 *
 	 * @Gedmo\Timestampable(on="create")
-	 * @ORM\Column(name="createdAt", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $createdAt;
 
@@ -62,14 +64,14 @@ class UVReview
 	 * @var \DateTime
 	 *
 	 * @Gedmo\Timestampable(on="update")
-	 * @ORM\Column(name="updatedAt", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $updatedAt;
 
 	/**
 	 * @var \DateTime $deletedAt
 	 *
-	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 * @ORM\Column(type="datetime", nullable = true)
 	 */
 	protected $deletedAt;
 
@@ -145,7 +147,7 @@ class UVReview
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -156,19 +158,19 @@ class UVReview
      * Set type
      *
      * @param string $type
-     * @return UVReview
+     * @return Review
      */
     public function setType($type)
     {
         $this->type = $type;
-    
+
         return $this;
     }
 
     /**
      * Get type
      *
-     * @return string 
+     * @return string
      */
     public function getType()
     {
@@ -179,19 +181,19 @@ class UVReview
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     * @return UVReview
+     * @return Review
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -202,19 +204,19 @@ class UVReview
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
-     * @return UVReview
+     * @return Review
      */
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -225,19 +227,19 @@ class UVReview
      * Set deletedAt
      *
      * @param \DateTime $deletedAt
-     * @return UVReview
+     * @return Review
      */
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
-    
+
         return $this;
     }
 
     /**
      * Get deletedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDeletedAt()
     {
@@ -248,19 +250,19 @@ class UVReview
      * Set semester
      *
      * @param string $semester
-     * @return UVReview
+     * @return Review
      */
     public function setSemester($semester)
     {
         $this->semester = $semester;
-    
+
         return $this;
     }
 
     /**
      * Get semester
      *
-     * @return string 
+     * @return string
      */
     public function getSemester()
     {
@@ -271,19 +273,19 @@ class UVReview
      * Set filename
      *
      * @param string $filename
-     * @return UVReview
+     * @return Review
      */
     public function setFilename($filename)
     {
         $this->filename = $filename;
-    
+
         return $this;
     }
 
     /**
      * Get filename
      *
-     * @return string 
+     * @return string
      */
     public function getFilename()
     {
@@ -294,19 +296,19 @@ class UVReview
      * Set validated
      *
      * @param boolean $validated
-     * @return UVReview
+     * @return Review
      */
     public function setValidated($validated)
     {
         $this->validated = $validated;
-    
+
         return $this;
     }
 
     /**
      * Get validated
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getValidated()
     {
@@ -317,19 +319,19 @@ class UVReview
      * Set uv
      *
      * @param \Etu\Module\UVBundle\Entity\UV $uv
-     * @return UVReview
+     * @return Review
      */
     public function setUv(\Etu\Module\UVBundle\Entity\UV $uv = null)
     {
         $this->uv = $uv;
-    
+
         return $this;
     }
 
     /**
      * Get uv
      *
-     * @return \Etu\Module\UVBundle\Entity\UV 
+     * @return \Etu\Module\UVBundle\Entity\UV
      */
     public function getUv()
     {

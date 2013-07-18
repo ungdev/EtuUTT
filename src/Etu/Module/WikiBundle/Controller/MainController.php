@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Util\RedactorJsEscaper;
+use Etu\Core\UserBundle\Entity\Member;
 use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Module\WikiBundle\Entity\Page;
 use Etu\Module\WikiBundle\Entity\PageRevision;
@@ -67,13 +68,34 @@ class MainController extends Controller
 			$em->flush();
 		}
 
+
+		$query = $em->getRepository('EtuUserBundle:Organization')
+			->createQueryBuilder('o')
+			->select('o')
+			->orderBy('o.name', 'ASC')
+			->getQuery();
+
+		$query->useResultCache(true, 3600*24*30);
+
 		/** @var Organization[] $orgas */
-		$orgas = (array) $em->getRepository('EtuUserBundle:Organization')->findBy(array(), array('name' => 'ASC'));
+		$orgas = (array) $query->getResult();
+
 		$userOrgas = array();
+
+		/** @var Member[] $memberships */
+		$memberships = $this->getUser()->getMemberships();
+
+		if ($memberships instanceof \Doctrine\ORM\PersistentCollection) {
+			$memberships = $memberships->toArray();
+		}
+
+		if (! is_array($memberships)) {
+			$memberships = array();
+		}
 
 		foreach ($orgas as $key => $orga) {
 			if ($this->getUserLayer()->isUser()) {
-				foreach ((array) $this->getUser()->getMemberships() as $membership) {
+				foreach ($memberships as $membership) {
 					if ($membership->getOrganization()->getId() == $orga->getId()) {
 						unset($orgas[$key]);
 						$userOrgas[] = $orga;

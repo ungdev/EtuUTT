@@ -56,7 +56,7 @@ class Event extends AbstractEvent
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="title", type="string", length=50)
+	 * @ORM\Column(type="string", length=50)
 	 * @Assert\NotBlank()
 	 * @Assert\Length(min = "10", max = "50")
 	 */
@@ -65,14 +65,14 @@ class Event extends AbstractEvent
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="category", type="string", length=20)
+	 * @ORM\Column(type="string", length=20)
 	 */
 	protected $category;
 
 	/**
 	 * @var \DateTime
 	 *
-	 * @ORM\Column(name="begin", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 * @Assert\Date()
 	 */
 	protected $begin;
@@ -80,7 +80,7 @@ class Event extends AbstractEvent
 	/**
 	 * @var \DateTime
 	 *
-	 * @ORM\Column(name="end", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 * @Assert\Date()
 	 */
 	protected $end;
@@ -88,21 +88,21 @@ class Event extends AbstractEvent
 	/**
 	 * @var boolean
 	 *
-	 * @ORM\Column(name="isAllDay", type="boolean")
+	 * @ORM\Column(type="boolean")
 	 */
 	protected $isAllDay;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="location", type="string", length=100)
+	 * @ORM\Column(type="string", length=100)
 	 */
 	protected $location;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="description", type="text")
+	 * @ORM\Column(type="text")
 	 * @Assert\NotBlank()
 	 * @Assert\Length(min = "15")
 	 */
@@ -111,7 +111,7 @@ class Event extends AbstractEvent
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="countMembers", type="integer")
+	 * @ORM\Column(type="integer")
 	 */
 	protected $countMembers;
 
@@ -119,14 +119,14 @@ class Event extends AbstractEvent
 	 * @var \DateTime $created
 	 *
 	 * @Gedmo\Timestampable(on="create")
-	 * @ORM\Column(name="createdAt", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $createdAt;
 
 	/**
 	 * @var \DateTime $deletedAt
 	 *
-	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 * @ORM\Column(type="datetime", nullable = true)
 	 */
 	protected $deletedAt;
 

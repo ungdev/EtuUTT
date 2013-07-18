@@ -20,6 +20,7 @@ parameters:
 
     etu.modules_boot_listener.class: Etu\Core\CoreBundle\Framework\Listener\ModulesBootListener
     etu.locale_listener.class: Etu\Core\CoreBundle\Framework\Listener\LocaleListener
+    etu.terminate_listener.class: Etu\Core\CoreBundle\Framework\Listener\TerminateListener
 
     etu.twig.string_manipulation.class: Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension
     etu.twig.notif_helper.class: Etu\Core\CoreBundle\Twig\Extension\NotificationHelperExtension
@@ -100,19 +101,22 @@ services:
         tags:
             - { name: twig.extension }
 
-    # Module boot listener
+    # Listeners
     etu.modules_boot_listener:
         class: %etu.modules_boot_listener.class%
         arguments: [@router, @etu.core.modules_manager, @etu.twig.global_accessor, @service_container]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-
-    # Locale listener
     etu.locale_listener:
         class: %etu.locale_listener.class%
         arguments: [@session, @translator]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+    etu.terminate_listener:
+        class: %etu.terminate_listener.class%
+        arguments: [@session]
+        tags:
+            - { name: kernel.event_listener, event: kernel.terminate, method: onKernelTerminate }
 
     # String manipulation
     etu.twig.string_manipulation:

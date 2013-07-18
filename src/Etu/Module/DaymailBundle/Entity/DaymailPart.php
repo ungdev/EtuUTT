@@ -19,7 +19,7 @@ class DaymailPart
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="id", type="integer")
+	 * @ORM\Column(type="integer")
 	 * @ORM\Id
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
@@ -36,7 +36,7 @@ class DaymailPart
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="title", type="string", length=50)
+	 * @ORM\Column(type="string", length=50)
 	 * @Assert\NotBlank()
 	 * @Assert\Length(min = "10", max = "50")
 	 */
@@ -45,7 +45,7 @@ class DaymailPart
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="body", type="text")
+	 * @ORM\Column(type="text")
 	 * @Assert\NotBlank()
 	 * @Assert\Length(min = "15")
 	 */
@@ -54,14 +54,14 @@ class DaymailPart
 	/**
 	 * @var \DateTime
 	 *
-	 * @ORM\Column(name="date", type="date")
+	 * @ORM\Column(type="date")
 	 */
 	protected $date;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="day", type="string", length=10)
+	 * @ORM\Column(type="string", length=10)
 	 */
 	protected $day;
 
@@ -69,7 +69,7 @@ class DaymailPart
 	 * @var \DateTime $created
 	 *
 	 * @Gedmo\Timestampable(on="create")
-	 * @ORM\Column(name="createdAt", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $createdAt;
 
@@ -77,14 +77,14 @@ class DaymailPart
 	 * @var \DateTime $updated
 	 *
 	 * @Gedmo\Timestampable(on="update")
-	 * @ORM\Column(name="updatedAt", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $updatedAt;
 
 	/**
 	 * @var \DateTime $deletedAt
 	 *
-	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 * @ORM\Column(type="datetime", nullable = true)
 	 */
 	protected $deletedAt;
 

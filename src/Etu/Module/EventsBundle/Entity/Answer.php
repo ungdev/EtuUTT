@@ -18,7 +18,7 @@ class Answer
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="id", type="integer")
+	 * @ORM\Column(type="integer")
 	 * @ORM\Id
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
@@ -43,7 +43,7 @@ class Answer
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="answer", type="string", length=20)
+	 * @ORM\Column(type="string", length=20)
 	 */
 	protected $answer;
 

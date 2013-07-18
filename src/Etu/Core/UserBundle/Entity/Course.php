@@ -30,7 +30,7 @@ class Course
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -47,7 +47,7 @@ class Course
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="day", type="string", length=20)
+	 * @ORM\Column(type="string", length=20)
 	 * @Assert\NotBlank()
 	 */
 	protected $day;
@@ -55,7 +55,7 @@ class Course
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="start", type="string", length=10)
+	 * @ORM\Column(type="string", length=10)
 	 * @Assert\NotBlank()
 	 */
 	protected $start;
@@ -63,7 +63,7 @@ class Course
     /**
      * @var string
      *
-     * @ORM\Column(name="end", type="string", length=10)
+     * @ORM\Column(type="string", length=10)
      * @Assert\NotBlank()
      */
     protected $end;
@@ -71,7 +71,7 @@ class Course
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="week", type="string", length=10)
+	 * @ORM\Column(type="string", length=10)
 	 * @Assert\NotBlank()
 	 */
 	protected $week;
@@ -79,7 +79,7 @@ class Course
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="uv", type="string", length=50)
+	 * @ORM\Column(type="string", length=50)
 	 * @Assert\NotBlank()
 	 */
 	protected $uv;
@@ -87,7 +87,7 @@ class Course
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="type", type="string", length=50)
+	 * @ORM\Column(type="string", length=50)
 	 * @Assert\NotBlank()
 	 */
 	protected $type;
@@ -95,7 +95,7 @@ class Course
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="room", type="string", length=50)
+	 * @ORM\Column(type="string", length=50)
 	 * @Assert\NotBlank()
 	 */
 	protected $room;
@@ -104,14 +104,14 @@ class Course
 	 * @var \DateTime $created
 	 *
 	 * @Gedmo\Timestampable(on="create")
-	 * @ORM\Column(name="createdAt", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $createdAt;
 
 	/**
 	 * @var \DateTime $deletedAt
 	 *
-	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 * @ORM\Column(type="datetime", nullable = true)
 	 */
 	protected $deletedAt;
 

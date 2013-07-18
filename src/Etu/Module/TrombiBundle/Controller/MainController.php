@@ -97,7 +97,10 @@ class MainController extends Controller
 					->setParameter('personnalMail', $user->getPersonnalMail());
 			}
 
-			$users = $this->get('knp_paginator')->paginate($users->getQuery(), $page, 10);
+			$query = $users->getQuery();
+			$query->useResultCache(true, 3600*24);
+
+			$users = $this->get('knp_paginator')->paginate($query, $page, 10);
 		}
 
 		return array(

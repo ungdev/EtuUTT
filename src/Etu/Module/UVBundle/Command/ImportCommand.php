@@ -2,16 +2,16 @@
 
 namespace Etu\Module\UVBundle\Command;
 
-use Doctrine\ORM\EntityManager;
-use Etu\Core\UserBundle\Command\Util\ProgressBar;
-use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\Container;
+
 use Guzzle\Http;
+
+use Etu\Core\UserBundle\Command\Util\ProgressBar;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Module\UVBundle\Entity\UV;
 
@@ -69,7 +69,7 @@ This command helps you to import the official UV guide.');
 
 		$client = new Http\Client();
 
-		// Create a request with basic Auth
+		// Create a request
 		$response = $client->get($url)->send();
 
 		file_put_contents($file, $response->getBody(true));

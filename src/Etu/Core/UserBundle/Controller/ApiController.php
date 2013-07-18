@@ -48,8 +48,7 @@ class ApiController extends Controller
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
 
-		/** @var $users User[] */
-		$users = $em->createQueryBuilder()
+		$query = $em->createQueryBuilder()
 			->select('u')
 			->from('EtuUserBundle:User', 'u')
 			->where('u.login LIKE :login')
@@ -57,8 +56,12 @@ class ApiController extends Controller
 			->setParameter('login', $search)
 			->setParameter('fullName', $search)
 			->setMaxResults(10)
-			->getQuery()
-			->getArrayResult();
+			->getQuery();
+
+		$query->useResultCache(true, 3600);
+
+		/** @var $users User[] */
+		$users = $query->getArrayResult();
 
 		// Privacy
 		foreach ($users as &$user) {
@@ -170,7 +173,10 @@ class ApiController extends Controller
 				->setParameter('isStudent', $search);
 		}
 
-		$users = $users->setMaxResults(1)->getQuery()->getArrayResult();
+		$query = $users->setMaxResults(1)->getQuery();
+		$query->useResultCache(true, 3600);
+
+		$users = $query->getArrayResult();
 
 		// Privacy
 		foreach ($users as &$user) {

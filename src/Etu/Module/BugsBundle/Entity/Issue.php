@@ -29,7 +29,7 @@ class Issue
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="id", type="integer")
+	 * @ORM\Column(type="integer")
 	 * @ORM\Id
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
@@ -46,7 +46,7 @@ class Issue
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="title", type="string", length=500)
+	 * @ORM\Column(type="string", length=500)
 	 * @Assert\NotBlank()
 	 * @Assert\Length(min = "10", max = "50")
 	 */
@@ -55,7 +55,7 @@ class Issue
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="criticality", type="string", length=20)
+	 * @ORM\Column(type="string", length=20)
 	 */
 	protected $criticality;
 
@@ -78,7 +78,7 @@ class Issue
 	 * @var \DateTime
 	 *
 	 * @Gedmo\Timestampable(on="create")
-	 * @ORM\Column(name="createdAt", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $createdAt;
 
@@ -86,28 +86,28 @@ class Issue
 	 * @var \DateTime
 	 *
 	 * @Gedmo\Timestampable(on="update")
-	 * @ORM\Column(name="updatedAt", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $updatedAt;
 
 	/**
 	 * @var \DateTime
 	 *
-	 * @ORM\Column(name="closedAt", type="datetime", nullable=true)
+	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $closedAt;
 
 	/**
 	 * @var \DateTime $deletedAt
 	 *
-	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 * @ORM\Column(type="datetime", nullable = true)
 	 */
 	protected $deletedAt;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="body", type="text")
+	 * @ORM\Column(type="text")
 	 * @Assert\NotBlank()
 	 * @Assert\Length(min = "15")
 	 */

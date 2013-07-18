@@ -27,7 +27,7 @@ class Organization implements UserInterface, \Serializable
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -36,7 +36,7 @@ class Organization implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="login", type="string", length=50)
+	 * @ORM\Column(type="string", length=50)
 	 * @Assert\NotBlank()
 	 */
 	protected $login;
@@ -52,7 +52,7 @@ class Organization implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="name", type="string", length=50)
+	 * @ORM\Column(type="string", length=50)
 	 * @Assert\NotBlank()
 	 * @Assert\Length(min = "2", max = "50")
 	 */
@@ -61,7 +61,7 @@ class Organization implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="contactMail", type="string", length=100, nullable=true)
+	 * @ORM\Column(type="string", length=100, nullable=true)
 	 * @Assert\Email()
 	 */
 	protected $contactMail;
@@ -69,7 +69,7 @@ class Organization implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="contactPhone", type="string", length=100, nullable=true)
+	 * @ORM\Column(type="string", length=100, nullable=true)
 	 * @Assert\Regex("/^0[1-68]([-. ]?[0-9]{2}){4}$/")
 	 */
 	protected $contactPhone;
@@ -77,7 +77,7 @@ class Organization implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="description", type="text", nullable=true)
+	 * @ORM\Column(type="text", nullable=true)
 	 * @Assert\Length(min = "15")
 	 */
 	protected $description;
@@ -85,7 +85,7 @@ class Organization implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="descriptionShort", type="string", length=200, nullable=true)
+	 * @ORM\Column(type="string", length=200, nullable=true)
 	 * @Assert\Length(min = "2", max = "200")
 	 */
 	protected $descriptionShort;
@@ -93,7 +93,7 @@ class Organization implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="website", type="string", length=100, nullable=true)
+	 * @ORM\Column(type="string", length=100, nullable=true)
 	 * @Assert\Url()
 	 */
 	protected $website;
@@ -101,14 +101,14 @@ class Organization implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="logo", type="string", length=100, nullable=true)
+	 * @ORM\Column(type="string", length=100, nullable=true)
 	 */
 	protected $logo;
 
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="countMembers", type="integer", nullable=true)
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $countMembers;
 
@@ -116,7 +116,7 @@ class Organization implements UserInterface, \Serializable
 	 * @var \DateTime $created
 	 *
 	 * @Gedmo\Timestampable(on="create")
-	 * @ORM\Column(name="createdAt", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $createdAt;
 
@@ -124,14 +124,14 @@ class Organization implements UserInterface, \Serializable
 	 * @var \DateTime $updated
 	 *
 	 * @Gedmo\Timestampable(on="update")
-	 * @ORM\Column(name="updatedAt", type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $updatedAt;
 
 	/**
 	 * @var \DateTime $deletedAt
 	 *
-	 * @ORM\Column(name="deletedAt", type="datetime", nullable = true)
+	 * @ORM\Column(type="datetime", nullable = true)
 	 */
 	protected $deletedAt;
 

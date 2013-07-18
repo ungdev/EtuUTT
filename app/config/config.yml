@@ -51,6 +51,7 @@ doctrine:
                 class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
                 enabled: true
 
+
 # Swiftmailer Configuration
 swiftmailer:
     transport: %mailer_transport%
