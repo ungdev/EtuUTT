@@ -173,17 +173,21 @@ class DefaultController extends Controller
             return $this->createAccessDeniedResponse();
         }
 
+        if (!$this->get('session')->get('buckutt_soap_cookie')) {
+            return $this->redirect($this->generateUrl('buckutt_connect'));
+        }
+
         define('MAX_AMOUNT', 10000);
         $clientSBUY = $this->getSoapClient('SBUY');
         $credit = $clientSBUY->getCredit();
         $possible_amount = MAX_AMOUNT - $credit;
 
         $name = $this->getUser()->getFullName();
+        $form = $this->createFormBuilder()
+            ->add('amount', null, array('required' => true))
+            ->getForm();
 
         if($step < 2){// step 0 et 1
-            $form = $this->createFormBuilder()
-                ->add('amount', null, array('required' => true))
-                ->getForm();
 
             if ($form->bind($this->getRequest())->isValid()) {
 
@@ -191,7 +195,17 @@ class DefaultController extends Controller
                 $data = $form->getData();
                 $amount = $data['amount'];
 
-                $table = $this->str_getcsv_buckutt($clientSBUY->transactionEncode($amount*100));
+                $param = '';
+                $param .=' normal_return_url=http://openutt.utt.fr/buckutt/reload/2';
+                $param .=' cancel_return_url=http://openutt.utt.fr/buckutt/reload';
+                $param .=' automatic_response_url=http://openutt.utt.fr/buckutt/sherlocks/return';
+                $param .=' language=fr';
+                $param .=' payment_means=CB,2,VISA,2,MASTERCARD,2';
+                $param .=' header_flag=yes';
+                $param .=' target=_self';
+                $param .=' customer_ip_address='.$this->get('request')->getClientIp();
+
+                $table = $this->str_getcsv_buckutt($clientSBUY->transactionEncode($amount*100, $param));
 
                 return array(
                     'name' => $name,
@@ -204,7 +218,12 @@ class DefaultController extends Controller
             }
         }
 
-        if($step == 2){// step 2
+        if($step == 2){// step 2, step final
+
+            $this->get('session')->getFlashBag()->set('message', array(
+                'type' => 'success',
+                'message' => 'Rechargement correctement effectué'
+            ));
 
             $credit = $clientSBUY->getCredit();
             $possible_amount = MAX_AMOUNT - $credit;
@@ -218,6 +237,32 @@ class DefaultController extends Controller
             'possible_amount' => number_format($possible_amount/100, 2),
             'max_amount' => number_format(MAX_AMOUNT/100, 2)
         );
+    }
+
+    /**
+     * @Route("/buckutt/sherlocks/return", name="buckutt_sherlocks")
+     * @Template()
+     */
+    public function sherlocksAction()
+    {
+        /*
+         * Cette page est appelé par le serveur de sherlocks pour confirmer une rechargement
+         * */
+
+        $clientSBUY = $this->getSoapClient('SBUY');
+
+        $clientSBUY->transactionDecode(base64_encode($_POST['DATA']));
+
+        //return sfView::NONE;
+        //return array();
+        // Render nothing ?
+        //*
+        return $this->render('EtuModuleBuckUTTBundle:Default:index.html.twig', array(
+            'name' => $_POST['DATA'],
+            'credit' => 0,
+            'history_date' => array('start' => '', 'end' => ''),
+            'history' => array()
+        ));//*/
     }
 
     private function getSoapClient($wsdlName)
