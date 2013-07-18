@@ -43,15 +43,18 @@ class SoapManager
     public function __call($name, $arguments)
     {
         xdebug_disable();
-        //try{
+        try{
             $rtn = call_user_func_array(array($this->client, $name), $arguments);
-        /*}
-        catch(SoapFault $e){
+        }
+        catch(\SoapFault $e){
             // We are disconnected
-            /*
-            if($this->login($this->login, $this->pin) == 1)
-                return false;//*/
-        //}//*/
+            //*
+            if($this->_login($this->login, $this->pin) != 1)
+                return false;
+
+            $rtn = call_user_func_array(array($this->client, $name), $arguments);
+            //*/
+        }
         xdebug_enable();
 
         if($this->firstUse){
