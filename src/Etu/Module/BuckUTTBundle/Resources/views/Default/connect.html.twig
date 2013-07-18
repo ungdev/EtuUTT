@@ -8,7 +8,7 @@
 
 {% block content %}
     <div class="buckutt-connect-form">
-        <form method="get" action="{{ path('buckutt_connect') }}">
+        <form method="POST" action="{{ path('buckutt_connect') }}">
             <h4>Entre ton code PIN BuckUTT</h4>
             {{ form_widget(form.pin) }}
             <div class="buckutt-connect-submit">

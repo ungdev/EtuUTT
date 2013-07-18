@@ -47,7 +47,7 @@ class UserMenuBuilder
 			->end()
 			->add('base.user.menu.buckutt')
 				->setIcon('duck.png')
-				->setUrl('')
+				->setUrl($router->generate('buckutt_history'))
 			->end()
 			->add('base.user.menu.emails')
 				->setIcon('mails.png')

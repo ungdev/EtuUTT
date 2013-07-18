@@ -1,0 +1,16 @@
+.buckutt-history-results{
+    list-style-type:none;
+}
+.buckutt-history-results-buy{
+    text-align: right;
+}
+
+.buckutt-history-results-rec{
+    text-align: left;
+}
+
+.buckutt-connect-form{
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
