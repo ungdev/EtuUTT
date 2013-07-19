@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\User;
 
+use Etu\Core\UserBundle\Model\Badge;
 use Symfony\Component\HttpFoundation\Response;
 
 // Import @Route() and @Template() annotations
@@ -55,27 +56,26 @@ class ApiController extends Controller
 
 		$count = (int) $count;
 
-		$user->removeBadge('subscriptions_more_10');
-		$user->removeBadge('subscriptions_more_20');
-		$user->removeBadge('subscriptions_more_30');
-		$user->removeBadge('subscriptions_more_50');
-		$user->removeBadge('subscriptions_more_100');
+		$user->removeBadge('subscriber');
 
+		if ($count >= 2) {
+			$user->addBadge(new Badge('subscriber', 1));
+		}
+		if ($count >= 5) {
+			$user->getBadge('subscriber')->setLevel(2);
+		}
 		if ($count >= 10) {
-			$user->addBadge('subscriptions_more_10');
+			$user->getBadge('subscriber')->setLevel(3);
 		}
 		if ($count >= 20) {
-			$user->addBadge('subscriptions_more_20');
+			$user->getBadge('subscriber')->setLevel(4);
 		}
-		if ($count >= 30) {
-			$user->addBadge('subscriptions_more_30');
+		if ($count >= 40) {
+			$user->getBadge('subscriber')->setLevel(5);
 		}
-		if ($count >= 50) {
-			$user->addBadge('subscriptions_more_50');
-		}
-		if ($count >= 100) {
-			$user->addBadge('subscriptions_more_100');
-		}
+
+		$em->persist($user);
+		$em->flush();
 
 		return new Response(json_encode(array(
 			'status' => 200,
@@ -120,27 +120,26 @@ class ApiController extends Controller
 
 		$count = (int) $count;
 
-		$user->removeBadge('subscriptions_more_10');
-		$user->removeBadge('subscriptions_more_20');
-		$user->removeBadge('subscriptions_more_30');
-		$user->removeBadge('subscriptions_more_50');
-		$user->removeBadge('subscriptions_more_100');
+		$user->removeBadge('subscriber');
 
+		if ($count >= 2) {
+			$user->addBadge(new Badge('subscriber', 1));
+		}
+		if ($count >= 5) {
+			$user->getBadge('subscriber')->setLevel(2);
+		}
 		if ($count >= 10) {
-			$user->addBadge('subscriptions_more_10');
+			$user->getBadge('subscriber')->setLevel(3);
 		}
 		if ($count >= 20) {
-			$user->addBadge('subscriptions_more_20');
+			$user->getBadge('subscriber')->setLevel(4);
 		}
-		if ($count >= 30) {
-			$user->addBadge('subscriptions_more_30');
+		if ($count >= 40) {
+			$user->getBadge('subscriber')->setLevel(5);
 		}
-		if ($count >= 50) {
-			$user->addBadge('subscriptions_more_50');
-		}
-		if ($count >= 100) {
-			$user->addBadge('subscriptions_more_100');
-		}
+
+		$em->persist($user);
+		$em->flush();
 
 		return new Response(json_encode(array(
 			'status' => 200,

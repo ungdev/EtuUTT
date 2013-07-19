@@ -10,6 +10,7 @@ use Etu\Core\CoreBundle\Framework\Definition\Permission;
 use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Core\UserBundle\Entity\User;
 
+use Etu\Core\UserBundle\Model\Badge;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -186,7 +187,7 @@ class AdminController extends Controller
 			$em = $this->getDoctrine()->getManager();
 
 			if ($user->getProfileCompletion() == 100 && ! $user->hasBadge('profile_completed')) {
-				$user->addBadge('profile_completed');
+				$user->addBadge(new Badge('profile_completed'));
 			}
 
 			if ($user->getProfileCompletion() != 100 && $user->hasBadge('profile_completed')) {
@@ -505,7 +506,7 @@ class AdminController extends Controller
 			$em = $this->getDoctrine()->getManager();
 
 			if ($user->getProfileCompletion() == 100 && ! $user->hasBadge('profile_completed')) {
-				$user->addBadge('profile_completed');
+				$user->addBadge(new Badge('profile_completed'));
 			}
 
 			if ($user->getProfileCompletion() != 100 && $user->hasBadge('profile_completed')) {

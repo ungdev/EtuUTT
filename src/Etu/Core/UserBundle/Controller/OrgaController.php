@@ -8,6 +8,7 @@ use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\Member;
 use Etu\Core\UserBundle\Entity\User;
 
+use Etu\Core\UserBundle\Model\Badge;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -200,17 +201,17 @@ class OrgaController extends Controller
 					$this->getUser()->addCountMembers();
 					$em->persist($this->getUser());
 
-					$user->addBadge('orga_member');
+					$user->addBadge(new Badge('orga_member'));
 
 					if ($member->isFromBureau()) {
-						$user->addBadge('orga_admin');
+						$user->addBadge(new Badge('orga_admin'));
 					}
 
 					if ($member->getRole() == Member::ROLE_PRESIDENT) {
-						$user->addBadge('orga_president');
+						$user->addBadge(new Badge('orga_president'));
 
 						if ($member->getOrganization()->getLogin() == 'bde') {
-							$user->addBadge('orga_bde_president');
+							$user->addBadge(new Badge('orga_bde_president'));
 						}
 					}
 
