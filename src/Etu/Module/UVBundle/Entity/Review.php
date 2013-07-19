@@ -3,6 +3,7 @@
 namespace Etu\Module\UVBundle\Entity;
 
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
+use Etu\Core\UserBundle\Entity\User;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,9 +24,9 @@ class Review
 	const TYPE_FINAL = 'final';
 
 	public static $types = array(
-		self::TYPE_PARTIEL,
-		self::TYPE_MIDTERM,
-		self::TYPE_FINAL,
+		self::TYPE_PARTIEL => 'uvs.reviews.partiel',
+		self::TYPE_MIDTERM => 'uvs.reviews.midterm',
+		self::TYPE_FINAL => 'uvs.reviews.final',
 	);
 
     /**
@@ -46,9 +47,19 @@ class Review
 	protected $uv;
 
 	/**
+	 * @var User $sender
+	 *
+	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
+	 * @ORM\JoinColumn()
+	 */
+	protected $sender;
+
+	/**
 	 * @var string
 	 *
 	 * @ORM\Column(type="string", length=20)
+	 *
+	 * @Assert\NotBlank()
 	 */
 	protected $type = self::TYPE_PARTIEL;
 
@@ -78,14 +89,16 @@ class Review
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(type="string", length=10)
+	 * @ORM\Column(type="string", length=10, nullable = true)
+	 *
+	 * @Assert\NotBlank()
 	 */
 	protected $semester;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(type="string", length=50)
+	 * @ORM\Column(type="string", length=50, nullable = true)
 	 */
 	protected $filename;
 
@@ -94,7 +107,7 @@ class Review
 	 *
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $validated;
+	protected $validated = false;
 
 	/**
 	 * Temporary variable to store uploaded file during update
@@ -116,12 +129,35 @@ class Review
 	{
 		$semesters = array();
 
-		for ($i = date('Y') - 10; $i <= date('Y'); $i++) {
+		for ($i = date('Y') - 5; $i <= date('Y'); $i++) {
 			$semesters['P'.$i] = 'P'.$i;
 			$semesters['A'.$i] = 'A'.$i;
 		}
 
+		if (self::currentSemester() == 'P'.date('Y')) {
+			unset($semesters['A'.date('Y')]);
+		}
+
 		return $semesters;
+	}
+
+	/**
+	 * @return string
+	 */
+	public static function currentSemester()
+	{
+		$dayInYear = date('z');
+
+		$springStart = 31; // January 31
+		$springEnd = 212; // July 31
+
+		if ($dayInYear > $springStart && $dayInYear < $springEnd) {
+			$semester = 'P';
+		} else {
+			$semester = 'A';
+		}
+
+		return $semester.date('Y');
 	}
 
 	/**
@@ -139,7 +175,28 @@ class Review
 			mkdir(__DIR__.'/../../../../../web/uploads/uvs', 0777, true);
 		}
 
-		$this->file->move(__DIR__.'/../../../../../web/uploads/uvs');
+		if ($this->type == self::TYPE_FINAL) {
+			$name = 'final';
+		} elseif ($this->type == self::TYPE_MIDTERM) {
+			$name = 'median';
+		} else {
+			$name = 'partiel';
+		}
+
+		$name .= '-'.$this->semester;
+		$name .= '-'.substr(md5(uniqid(true)), 0, 3);
+
+		$ext = $this->file->guessExtension();
+
+		if (! $ext) {
+			$ext = $this->file->getClientOriginalExtension();
+		}
+
+		$name .= '.'.$ext;
+
+		$this->file->move(__DIR__.'/../../../../../web/uploads/uvs', $name);
+
+		$this->filename = $name;
 
 		return true;
 	}
@@ -337,4 +394,27 @@ class Review
     {
         return $this->uv;
     }
+
+	/**
+	 * Set sender
+	 *
+	 * @param User $sender
+	 * @return Review
+	 */
+	public function setSender(User $sender = null)
+	{
+		$this->sender = $sender;
+
+		return $this;
+	}
+
+	/**
+	 * Get sender
+	 *
+	 * @return User
+	 */
+	public function getSender()
+	{
+		return $this->sender;
+	}
 }
