@@ -33,10 +33,10 @@ class MainController extends Controller
 	}
 	
 	/**
-	 * @Route("/forum/{id}-{slug}", name="forum_category")
+	 * @Route("/forum/{id}-{slug}/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="forum_category")
 	 * @Template()
 	 */
-	public function categoryAction($id, $slug)
+	public function categoryAction($id, $slug, $page)
 	{
 		$em = $this->getDoctrine()->getManager();
 		$category = $em->getRepository('EtuModuleForumBundle:Category')
@@ -69,15 +69,17 @@ class MainController extends Controller
 			->addOrderBy('m.createdAt', 'DESC')
 			->getQuery()
 			->getResult();
+
+		$threads = $this->get('knp_paginator')->paginate($threads, $page, 15);
 		
 		return array('category' => $category, 'parents' => $parents, 'threads' => $threads);
 	}
 
 	/**
-	 * @Route("/forum/thread/{id}-{slug}", name="forum_thread")
+	 * @Route("/forum/thread/{id}-{slug}/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="forum_thread")
 	 * @Template()
 	 */
-	public function threadAction($id, $slug)
+	public function threadAction($id, $slug, $page)
 	{
 		return array();
 	}
