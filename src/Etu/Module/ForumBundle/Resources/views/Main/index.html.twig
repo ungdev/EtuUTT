@@ -9,17 +9,19 @@
 {% block content %}
 	<table class="table table-bordered table-hover forum-table">
 	{% for category in categories %}
-		{% if category.depth == 0 %}
-			<caption>
-				<a href="{{ path('forum_category', {'id': category.id, 'slug': category.slug}) }}">{{ category.title }}</a>
-			</caption>
-		{% elseif category.depth == 1 %}
-			<tr>
-				<td><a href="{{ path('forum_category', {'id': category.id, 'slug': category.slug}) }}">{{ category.title }}</a><br />{{ category.description }}</td>
-				<td>{{ category.countThreads }}</td>
-				<td>{{ category.countMessages }}</td>
-				<td>{% if category.lastMessage == NULL %}{{ 'forum.main.index.noMessage'|trans }}{% else %}{% endif %}</td>
-			</tr>
+		{% if forum_can_read(app.user, category) %}
+			{% if category.depth == 0 %}
+				<caption>
+					<a href="{{ path('forum_category', {'id': category.id, 'slug': category.slug}) }}">{{ category.title }}</a>
+				</caption>
+			{% elseif category.depth == 1 %}
+				<tr>
+					<td><a href="{{ path('forum_category', {'id': category.id, 'slug': category.slug}) }}">{{ category.title }}</a><br />{{ category.description }}</td>
+					<td>{{ category.countThreads }}</td>
+					<td>{{ category.countMessages }}</td>
+					<td>{% if category.lastMessage == NULL %}{{ 'forum.main.index.noMessage'|trans }}{% else %}{% endif %}</td>
+				</tr>
+			{% endif %}
 		{% endif %}
 	{% endfor %}
 	</table>
