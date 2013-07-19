@@ -4,6 +4,7 @@ namespace Etu\Module\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Etu\Core\UserBundle\Entity\User;
+use \Etu\Module\ForumBundle\Entity\Message;
 
 /**
  * @ORM\Table(name="etu_forum_threads")
@@ -14,6 +15,9 @@ class Thread
 	const STATE_OPEN = 100;
 	const STATE_CLOSED = 200;
 	const STATE_HIDDEN = 300;
+
+	const WEIGHT_BASIC = 100;
+	const WEIGHT_STICKY = 200;
 
 	/**
 	 * @ORM\Id
@@ -69,6 +73,13 @@ class Thread
 	protected $state;
 
 	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="weight", type="smallint")
+	 */
+	protected $weight;
+
+	/**
 	 * @var integer $countMessages
 	 *
 	 * @ORM\Column(name="countMessages", type="integer")
@@ -76,11 +87,11 @@ class Thread
 	protected $countMessages;
 
 	/**
-	 * @var Message $lastMesssage
+	 * @var \Etu\Module\ForumBundle\Entity\Message $lastMessage
 	 *
-	 * @ORM\Column(name="lastMesssage", type="object", nullable=true)
+	 * @ORM\OneToOne(targetEntity="\Etu\Module\ForumBundle\Entity\Message")
 	 */
-	protected $lastMesssage;
+	protected $lastMessage;
 
 
 	/**
@@ -181,9 +192,9 @@ class Thread
 	 * @param \Etu\Module\ForumBundle\Entity\Message $lastMesssage
 	 * @return Thread
 	 */
-	public function setLastMesssage(Message $lastMesssage)
+	public function setLastMessage(Message $lastMessage)
 	{
-		$this->lastMesssage = $lastMesssage;
+		$this->lastMessage = $lastMessage;
 
 		return $this;
 	}
@@ -191,9 +202,9 @@ class Thread
 	/**
 	 * @return \Etu\Module\ForumBundle\Entity\Message
 	 */
-	public function getLastMesssage()
+	public function getLastMessage()
 	{
-		return $this->lastMesssage;
+		return $this->lastMessage;
 	}
 
 	/**
@@ -229,6 +240,32 @@ class Thread
 		}
 
 		$this->state = $state;
+
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getWeight()
+	{
+		return $this->weight;
+	}
+
+	/**
+	 * @param int $weight
+	 * @return $this
+	 * @throws \InvalidArgumentException
+	 */
+	public function setWeight($weight)
+	{
+		if (! in_array($weight, array(self::WEIGHT_BASIC, self::WEIGHT_STICKY))) {
+			throw new \InvalidArgumentException(
+				sprintf('Invalid thread weight (%s given, Thread constante expected).', $weight)
+			);
+		}
+
+		$this->weight = $weight;
 
 		return $this;
 	}

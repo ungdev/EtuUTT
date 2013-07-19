@@ -3,3 +3,10 @@ forum:
     main:
         index:
             noMessage: Pas de message
+        thread:
+            thread: Sujet
+            by: Par
+            date: Date
+            messages: Messages
+            lastMessage: Dernier message
+            post: Créer un nouveau sujet
