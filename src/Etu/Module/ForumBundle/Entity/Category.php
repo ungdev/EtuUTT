@@ -76,9 +76,9 @@ class Category
 	protected $countMessages;
 
 	/**
-	 * @var Message $lastMessage
+	 * @var \Etu\Module\ForumBundle\Entity\Message $lastMessage
 	 *
-	 * @ORM\Column(name="lastMessage", type="object", nullable=true)
+	 * @ORM\ManyToOne(targetEntity="\Etu\Module\ForumBundle\Entity\Message")
 	 */
 	protected $lastMessage;
 

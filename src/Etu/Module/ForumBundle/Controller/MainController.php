@@ -50,13 +50,44 @@ class MainController extends Controller
 		$parents = $em->createQueryBuilder()
 			->select('c')
 			->from('EtuModuleForumBundle:Category', 'c')
-			->where('c.left <= :left AND c.right >= :right')
+			->where('c.left <= :left')
+			->andWhere('c.right >= :right')
 			->setParameter('left', $category->getLeft())
 			->setParameter('right', $category->getRight())
 			->orderBy('c.depth')
 			->getQuery()
 			->getResult();
+
+		$threads = $em->createQueryBuilder()
+			->select('t, m')
+			->from('EtuModuleForumBundle:Thread', 't')
+			->leftJoin('t.lastMessage', 'm')
+			->where('t.category = :category')
+			->andWhere('t.state != 300')
+			->setParameter('category', $category)
+			->orderBy('t.weight', 'DESC')
+			->addOrderBy('m.createdAt', 'DESC')
+			->getQuery()
+			->getResult();
 		
-		return array('category' => $category, 'parents' => $parents);
+		return array('category' => $category, 'parents' => $parents, 'threads' => $threads);
+	}
+
+	/**
+	 * @Route("/forum/thread/{id}-{slug}", name="forum_thread")
+	 * @Template()
+	 */
+	public function threadAction($id, $slug)
+	{
+		return array();
+	}
+
+	/**
+	 * @Route("/forum/post/{id}-{slug}", name="forum_post")
+	 * @Template()
+	 */
+	public function postAction($id, $slug)
+	{
+		return array();
 	}
 }
