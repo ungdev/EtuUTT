@@ -43,11 +43,20 @@ class MainController extends Controller
 			->find($id);
 
 		$checker = new PermissionsChecker($this->getUser());
-		if ($checker->canRead($category)) {
-			return array();
+		if (!$checker->canRead($category)) {
+			return $this->createAccessDeniedResponse();
 		}
-		else {
-			header('Location: ./denied');
-		}
+
+		$parents = $em->createQueryBuilder()
+			->select('c')
+			->from('EtuModuleForumBundle:Category', 'c')
+			->where('c.left <= :left AND c.right >= :right')
+			->setParameter('left', $category->getLeft())
+			->setParameter('right', $category->getRight())
+			->orderBy('c.depth')
+			->getQuery()
+			->getResult();
+		
+		return array('category' => $category, 'parents' => $parents);
 	}
 }

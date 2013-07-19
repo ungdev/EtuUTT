@@ -1,0 +1,14 @@
+{% extends '::page-1col.html.twig' %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/bundles/forum.css') }}" type="text/css" />
+{% endblock %}
+
+{% block title %}{{ category.title }}{% endblock %}
+
+{% block content %}
+	<a href="{{ path('forum_index') }}">Forum</a>
+	{% for parent in parents %}
+		 > <a href="{{ path('forum_category', {'id': parent.id, 'slug': parent.slug}) }}">{{ parent.title }}</a>
+	{% endfor %}
+{% endblock %}
