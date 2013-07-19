@@ -1,4 +1,11 @@
 
-parameters: ~
+parameters:
+    etu.forum.twig.permissions.class: Etu\Module\ForumBundle\Twig\Extension\PermissionsExtension
 
-services: ~
+services:
+
+    # Twig permissions checker extension
+    etu.forum.twig.permissions:
+        class: %etu.forum.twig.permissions.class%
+        tags:
+            - { name: twig.extension }

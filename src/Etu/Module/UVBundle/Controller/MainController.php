@@ -31,13 +31,16 @@ class MainController extends Controller
 		/** @var EntityManager $em */
 		$em = $this->getDoctrine()->getManager();
 
-		/** @var UV[] $my */
-		$my = $em->createQueryBuilder()
+		$query = $em->createQueryBuilder()
 			->select('uv')
 			->from('EtuModuleUVBundle:UV', 'uv')
 			->where('uv.code IN(\''.implode('\', \'', $this->getUser()->getUvsList()).'\')')
-			->getQuery()
-			->getResult();
+			->getQuery();
+
+		$query->useResultCache(true, 3600*24*30);
+
+		/** @var UV[] $my */
+		$my = $query->getResult();
 
 		return array(
 			'my' => $my
@@ -68,6 +71,8 @@ class MainController extends Controller
 			->setParameter('category', $category)
 			->orderBy('u.code', 'ASC')
 			->getQuery();
+
+		$query->useResultCache(true, 3600*24*30);
 
 		$pagination = $this->get('knp_paginator')->paginate($query, $page, 20);
 
@@ -105,6 +110,8 @@ class MainController extends Controller
 			->setParameter('name', '%'.$term.'%')
 			->orderBy('u.code', 'ASC')
 			->getQuery();
+
+		$query->useResultCache(true, 3600*24*30);
 
 		$pagination = $this->get('knp_paginator')->paginate($query, $page, 20);
 

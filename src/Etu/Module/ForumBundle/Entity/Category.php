@@ -4,6 +4,8 @@ namespace Etu\Module\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Etu\Module\ForumBundle\Entity\Permissions;
+
 /**
  * @ORM\Table(name="etu_forum_categories")
  * @ORM\Entity
@@ -74,11 +76,16 @@ class Category
 	protected $countMessages;
 
 	/**
-	 * @var Message $lastMesssage
+	 * @var Message $lastMessage
 	 *
-	 * @ORM\Column(name="lastMesssage", type="object", nullable=true)
+	 * @ORM\Column(name="lastMessage", type="object", nullable=true)
 	 */
-	protected $lastMesssage;
+	protected $lastMessage;
+
+	/**
+	 * @ORM\OneToMany(targetEntity="\Etu\Module\ForumBundle\Entity\Permissions", mappedBy="category")
+	 */
+	protected $permissions;
 
 
 	/**
@@ -91,6 +98,7 @@ class Category
 		$this->left = 0;
 		$this->right = 0;
 		$this->depth = 0;
+		$this->permissions = new \Doctrine\Common\Collections\ArrayCollection();
 	}
 
 	/**
@@ -178,12 +186,12 @@ class Category
 	}
 
 	/**
-	 * @param \Etu\Module\ForumBundle\Entity\Message $lastMesssage
+	 * @param \Etu\Module\ForumBundle\Entity\Message $lastMessage
 	 * @return Category
 	 */
-	public function setLastMesssage(Message $lastMesssage)
+	public function setLastMessage(Message $lastMessage)
 	{
-		$this->lastMesssage = $lastMesssage;
+		$this->lastMessage = $lastMessage;
 
 		return $this;
 	}
@@ -191,9 +199,9 @@ class Category
 	/**
 	 * @return \Etu\Module\ForumBundle\Entity\Message
 	 */
-	public function getLastMesssage()
+	public function getlastMessage()
 	{
-		return $this->lastMesssage;
+		return $this->lastMessage;
 	}
 
 	/**
@@ -270,5 +278,13 @@ class Category
 	public function getTitle()
 	{
 		return $this->title;
+	}
+
+	/**
+	 * @return Etu\Module\ForumBundle\Entity\Permissions
+	 */
+	public function getPermissions()
+	{
+		return $this->permissions;
 	}
 }

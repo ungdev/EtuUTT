@@ -15,7 +15,9 @@
     <a href="{{ path('buckutt_history') }}">Historique</a> | <a href="{{ path('buckutt_reload') }}">Recharger</a> | Administrer | <a href="{{ path('buckutt_connect', {'action':'disconnect'}) }}">Deconnexion</a>
     <hr />
     {% if step == 1 %}
-        <p>Text de confirmation ici</p>
+        <p>Actuellement, tu as un crédit de {{ credit }} € sur ton compte.<br />
+            Tu souhaites effectuer un rechargement de {{ amount }} €.<br />
+            Ton solde sera donc de {{ amount_total }} €.</p>
         <br />
         {{ htmlForm|raw }}
     {% else %}

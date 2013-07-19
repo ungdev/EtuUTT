@@ -42,43 +42,78 @@ class AssetsCompileCommand extends ContainerAwareCommand
 			$directory.'../app'
 		));
 
-		$files = array(
+		$css = array(
+			'bootstrap/css/bootstrap.min.css',
+			'bootstrap/css/bootstrap-responsive.min.css',
+			'redactor-js/redactor/redactor.css',
+			'tipsy/src/tipsy.css',
+			'facebox/src/facebox.css',
+			'css/boot.css',
+		);
+
+		$js = array(
 			'bootstrap/js/bootstrap.min.js',
+			'bundles/fosjsrouting/js/router.js',
+			'js/fos_js_routes.js',
 			'redactor-js/redactor/redactor.min.js',
 			'redactor-js/redactor/langs/fr.js',
 			'facebox/src/facebox.js',
 			'tipsy/src/jquery.tipsy.js',
-			'bundles/fosjsrouting/js/router.js',
-			'js/fos_js_routes.js',
 			'js/common.js',
 		);
 
-		$output->writeln("\nCompiling...");
+		/*
+		 * CSS
+		 */
+		$output->writeln("\nCompiling CSS...");
+		$code = '';
 
-		$compiled = '';
-
-		foreach ($files as $file) {
-			$content = file_get_contents($directory.$file);
-			$compiled .= "\n".$content;
+		foreach ($css as $file) {
+			$code .= "\n".file_get_contents($directory.$file);
 		}
 
-		// Send JS to Google Closure that minify it in a really smart way
-		$compiled = file_get_contents('http://closure-compiler.appspot.com/compile', false, stream_context_create(array(
+		// Send CSS to CSSMinifier
+		file_put_contents($directory.'css/compiled.css', $this->minifyCss($code));
+		$output->writeln("Compiled code written in web/css/compiled.css");
+
+
+		/*
+		 * Javascript
+		 */
+		$output->writeln("Compiling JS...");
+		$code = '';
+
+		foreach ($js as $file) {
+			$code .= "\n".$this->minifyJs(file_get_contents($directory.$file));
+		}
+
+		file_put_contents($directory.'js/compiled.js', $code);
+		$output->writeln("Written in web/js/compiled.js\n");
+	}
+
+	/**
+	 * @param $input
+	 * @return string
+	 */
+	protected function minifyCss($input)
+	{
+		return file_get_contents('http://cssminifier.com/raw', false, stream_context_create(array(
 			'http' => array(
 				'method'  => 'POST',
 				'header'  => 'Content-type: application/x-www-form-urlencoded',
 				'content' => http_build_query(array(
-					'js_code' => $compiled,
-					'compilation_level' => 'SIMPLE_OPTIMIZATIONS',
-					'output_format' => 'text',
-					'output_info' => 'compiled_code',
+					'input' => $input
 				))
 			)
 		)));
+	}
 
-		file_put_contents($directory.'js/compiled.js', $compiled);
-
-		$output->writeln("Compiled code written in web/js/compiled.js.\n");
-
+	/**
+	 * @param $input
+	 * @return string
+	 */
+	protected function minifyJs($input)
+	{
+		return \JShrink\Minifier::minify($input, array('flaggedComments' => false));
 	}
 }

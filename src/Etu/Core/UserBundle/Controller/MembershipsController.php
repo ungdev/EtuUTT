@@ -28,7 +28,7 @@ class MembershipsController extends Controller
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
 
-		$memberships = $em->createQueryBuilder()
+		$query = $em->createQueryBuilder()
 			->select('m, o')
 			->from('EtuUserBundle:Member', 'm')
 			->leftJoin('m.organization', 'o')
@@ -36,8 +36,12 @@ class MembershipsController extends Controller
 			->setParameter('user', $this->getUser()->getId())
 			->orderBy('m.role', 'DESC')
 			->addOrderBy('o.name', 'ASC')
-			->getQuery()
-			->getResult();
+			->getQuery();
+
+		$query->useResultCache(true, 60);
+
+		/** @var $memberships Member[] */
+		$memberships = $query->getResult();
 
 		return array(
 			'memberships' => $memberships
@@ -57,8 +61,7 @@ class MembershipsController extends Controller
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
 
-		/** @var $memberships Member[] */
-		$memberships = $em->createQueryBuilder()
+		$query = $em->createQueryBuilder()
 			->select('m, o')
 			->from('EtuUserBundle:Member', 'm')
 			->leftJoin('m.organization', 'o')
@@ -66,8 +69,12 @@ class MembershipsController extends Controller
 			->setParameter('user', $this->getUser()->getId())
 			->orderBy('m.role', 'DESC')
 			->addOrderBy('o.name', 'ASC')
-			->getQuery()
-			->getResult();
+			->getQuery();
+
+		$query->useResultCache(true, 60);
+
+		/** @var $memberships Member[] */
+		$memberships = $query->getResult();
 
 		$membership = null;
 
@@ -112,8 +119,7 @@ class MembershipsController extends Controller
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
 
-		/** @var $memberships Member[] */
-		$memberships = $em->createQueryBuilder()
+		$query = $em->createQueryBuilder()
 			->select('m, o')
 			->from('EtuUserBundle:Member', 'm')
 			->leftJoin('m.organization', 'o')
@@ -121,8 +127,12 @@ class MembershipsController extends Controller
 			->setParameter('user', $this->getUser()->getId())
 			->orderBy('m.role', 'DESC')
 			->addOrderBy('o.name', 'ASC')
-			->getQuery()
-			->getResult();
+			->getQuery();
+
+		$query->useResultCache(true, 60);
+
+		/** @var $memberships Member[] */
+		$memberships = $query->getResult();
 
 		$membership = null;
 
@@ -187,8 +197,7 @@ class MembershipsController extends Controller
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
 
-		/** @var $memberships Member[] */
-		$memberships = $em->createQueryBuilder()
+		$query = $em->createQueryBuilder()
 			->select('m, o')
 			->from('EtuUserBundle:Member', 'm')
 			->leftJoin('m.organization', 'o')
@@ -196,8 +205,12 @@ class MembershipsController extends Controller
 			->setParameter('user', $this->getUser()->getId())
 			->orderBy('m.role', 'DESC')
 			->addOrderBy('o.name', 'ASC')
-			->getQuery()
-			->getResult();
+			->getQuery();
+
+		$query->useResultCache(true, 60);
+
+		/** @var $memberships Member[] */
+		$memberships = $query->getResult();
 
 		$membership = null;
 
@@ -252,8 +265,7 @@ class MembershipsController extends Controller
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
 
-		/** @var $memberships Member[] */
-		$memberships = $em->createQueryBuilder()
+		$query = $em->createQueryBuilder()
 			->select('m, o')
 			->from('EtuUserBundle:Member', 'm')
 			->leftJoin('m.organization', 'o')
@@ -261,8 +273,12 @@ class MembershipsController extends Controller
 			->setParameter('user', $this->getUser()->getId())
 			->orderBy('m.role', 'DESC')
 			->addOrderBy('o.name', 'ASC')
-			->getQuery()
-			->getResult();
+			->getQuery();
+
+		$query->useResultCache(true, 60);
+
+		/** @var $memberships Member[] */
+		$memberships = $query->getResult();
 
 		$membership = null;
 
@@ -370,8 +386,7 @@ class MembershipsController extends Controller
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
 
-		/** @var $memberships Member[] */
-		$memberships = $em->createQueryBuilder()
+		$query = $em->createQueryBuilder()
 			->select('m, o')
 			->from('EtuUserBundle:Member', 'm')
 			->leftJoin('m.organization', 'o')
@@ -379,8 +394,12 @@ class MembershipsController extends Controller
 			->setParameter('user', $this->getUser()->getId())
 			->orderBy('m.role', 'DESC')
 			->addOrderBy('o.name', 'ASC')
-			->getQuery()
-			->getResult();
+			->getQuery();
+
+		$query->useResultCache(true, 60);
+
+		/** @var $memberships Member[] */
+		$memberships = $query->getResult();
 
 		$membership = null;
 
@@ -437,18 +456,5 @@ class MembershipsController extends Controller
 			'membership' => $membership,
 			'form' => $form->createView(),
 		);
-	}
-
-	/**
-	 * @Route("/user/membership/{login}/events", name="memberships_orga_events")
-	 * @Template()
-	 */
-	public function eventsAction($login)
-	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
-
-		return array();
 	}
 }

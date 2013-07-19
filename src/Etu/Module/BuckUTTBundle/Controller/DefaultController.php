@@ -3,6 +3,7 @@
 namespace Etu\Module\BuckUTTBundle\Controller;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
+use Etu\Module\BuckUTTBundle\Soap\SoapManager;
 
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -20,7 +21,7 @@ class DefaultController extends Controller
 			return $this->createAccessDeniedResponse();
 		}
 
-		if (!$this->get('session')->get('buckutt_soap_cookie')) {
+		if (!$this->get('session')->get(SoapManager::cookie_name)) {
 			return $this->redirect($this->generateUrl('buckutt_connect'));
 		}
 		
@@ -28,14 +29,9 @@ class DefaultController extends Controller
 		$history_dates = array();
 		/* $history -> array($type, $date, $obj_name, $poi_name, $fun_name, $price) 
 		type= rec/buy */
-        
-		define('BUCKUTT_BUY', 0);
-		define('BUCKUTT_REC', 1);
+
 		define('DATE_FORMAT', 'Y-m-d H:i');
-        $date_start_int = 0;// format timestamp
-        $date_end_int = 0;// format timestamp
-		
-		// si on spécifie pas la date ou qu'elle n'a pas le bon format
+
 		if($date_start == 0 || !preg_match('/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/',$date_start)){
 			$date_start_int = time() - (100*24*3600);// j-10
             $date_start = date(DATE_FORMAT,$date_start_int);
@@ -52,9 +48,8 @@ class DefaultController extends Controller
             $date_end_int = strtotime($date_end);
         }
 
-        $clientSADMIN = $this->getSoapClient('SADMIN');
-
-		$achats = $this->str_getcsv_buckutt($clientSADMIN->getHistoriqueAchats($date_start_int, $date_end_int));
+        $clientSADMIN = new SoapManager('SADMIN', $this->get('session'));
+		$achats = $clientSADMIN->getHistoriqueAchats($date_start_int, $date_end_int);
 
         if((int)$achats == 400){
             return array(
@@ -66,7 +61,7 @@ class DefaultController extends Controller
 
         foreach($achats as $a){
 			$history[] = array(
-				'type' => BUCKUTT_BUY, 
+				'type' => 'buy',
 				'date' => date(DATE_FORMAT, $a[0]), // pur_date
 				'user' => ($a[2].' '.$a[3]), // usr_firstname  usr_lastname
 				'object' => $a[1], // obj_name
@@ -77,11 +72,11 @@ class DefaultController extends Controller
 			$history_dates[] = $a[0];
 		}
 		
-		$recharges = $this->str_getcsv_buckutt($clientSADMIN->getHistoriqueRecharge($date_start_int, $date_end_int));
+		$recharges = $clientSADMIN->getHistoriqueRecharge($date_start_int, $date_end_int);
         //-> array($don['rec_date'], $don['rty_name'], $don['usr_firstname'], $don['usr_lastname'], $don['poi_name'], $don['rec_credit'])
 		foreach($recharges as $r){
             $history[] = array(
-                'type' => BUCKUTT_REC,
+                'type' => 'rec',
                 'date' => date(DATE_FORMAT, $r[0]), // pur_date
                 'user' => null,
                 'object' => $r[1], // obj_name
@@ -93,8 +88,9 @@ class DefaultController extends Controller
 		}
 
 		array_multisort($history_dates, SORT_DESC, $history);
-		
-		$credit = $this->getSoapClient('SBUY')->getCredit();
+
+        $SBUY = new SoapManager('SBUY', $this->get('session'));
+		$credit = $SBUY->getCredit();
 		
 		$name = $this->getUser()->getFullName();
 		
@@ -112,36 +108,32 @@ class DefaultController extends Controller
      */
     public function connectAction($action)
     {
-        if ($action == 'disconnect'){
-            $this->get('session')->remove('buckutt_soap_cookie');
-            return $this->redirect($this->generateUrl('buckutt_history'));
-        }
-
         if (! $this->getUserLayer()->isConnected()) {
             return $this->createAccessDeniedResponse();
         }
 
+        if ($action == 'disconnect'){
+            $this->get('session')->remove(SoapManager::cookie_name);
+            return $this->redirect($this->generateUrl('buckutt_history'));
+        }
+
         $form = $this->createFormBuilder()
-            ->add('pin', null, array('required' => true))
+            ->add('pin', 'password', array('required' => true, 'max_length' => 4))
             ->getForm();
 
         if ($form->bind($this->getRequest())->isValid()) {
 
-            $SBUY = $this->getSoapClient('SBUY');
-            $SADMIN = $this->getSoapClient('SADMIN');
+            $SBUY = new SoapManager('SBUY', $this->get('session'));
+            $SADMIN = new SoapManager('SADMIN', $this->get('session'));
 
             $login = $this->getUser()->getLogin();
             $data = $form->getData();
-            $pin = $data['pin'];
+            $pin = (int)$data['pin'];
 
-            if($SADMIN->login($login, 1, $pin, 'etu.utt.fr') == 1
-            && $SBUY->login($login, 1, $pin, 'etu.utt.fr') == 1){
-                    $this->get('session')->set('buckutt_soap_cookie', array(
-                        'SADMIN' => $SADMIN->_cookies["PHPSESSID"][0],
-                        'SBUY' => $SBUY->_cookies["PHPSESSID"][0]
-                    ));
+            if($SADMIN->_login($login, $pin) == 1
+            && $SBUY->_login($login, $pin) == 1){
 
-                    return $this->redirect($this->generateUrl('buckutt_history'));
+                return $this->redirect($this->generateUrl('buckutt_history'));
             }
             else{
                 $this->get('session')->getFlashBag()->set('message', array(
@@ -154,7 +146,8 @@ class DefaultController extends Controller
         $name = $this->getUser()->getFullName();
         return array(
             'form' => $form->createView(),
-            'name' => $name);
+            'name' => $name
+        );
 
     }
 
@@ -173,38 +166,57 @@ class DefaultController extends Controller
             return $this->createAccessDeniedResponse();
         }
 
+        if (!$this->get('session')->get(SoapManager::cookie_name)) {
+            return $this->redirect($this->generateUrl('buckutt_connect'));
+        }
+
         define('MAX_AMOUNT', 10000);
-        $clientSBUY = $this->getSoapClient('SBUY');
+        $clientSBUY = new SoapManager('SBUY', $this->get('session'));
         $credit = $clientSBUY->getCredit();
         $possible_amount = MAX_AMOUNT - $credit;
 
         $name = $this->getUser()->getFullName();
+        $form = $this->createFormBuilder()
+            ->add('amount', 'money', array('required' => true, 'max_length' => 5))
+            ->getForm();
 
-        if($step < 2){// step 0 et 1
-            $form = $this->createFormBuilder()
-                ->add('amount', null, array('required' => true))
-                ->getForm();
+        if($step == 1){
 
             if ($form->bind($this->getRequest())->isValid()) {
 
                 $login = $this->getUser()->getLogin();
                 $data = $form->getData();
-                $amount = $data['amount'];
+                $amount = $data['amount']*100;
 
-                $table = $this->str_getcsv_buckutt($clientSBUY->transactionEncode($amount*100));
+                $param = '';
+                $param .=' normal_return_url=http://openutt.utt.fr/buckutt/reload/2';
+                $param .=' cancel_return_url=http://openutt.utt.fr/buckutt/reload';
+                $param .=' automatic_response_url=http://openutt.utt.fr/buckutt/sherlocks/return';
+                $param .=' language=fr';
+                $param .=' payment_means=CB,2,VISA,2,MASTERCARD,2';
+                $param .=' header_flag=yes';
+                $param .=' target=_self';
+                $param .=' customer_ip_address='.$this->get('request')->getClientIp();
+
+                $table = $clientSBUY->transactionEncode($amount, $param);
 
                 return array(
                     'name' => $name,
                     'step' => $step,
                     'form' => $form->createView(),
-                    'amount' => number_format(($credit+$amount)/100, 2),
+                    'amount' => number_format($amount/100, 2),
+                    'amount_total' => number_format(($credit+$amount)/100, 2),
                     'credit' => number_format($credit/100, 2),
                     'htmlForm' => base64_decode($table[0][1])
                 );
             }
         }
+        elseif($step == 2){// step 2, step final
 
-        if($step == 2){// step 2
+            $this->get('session')->getFlashBag()->set('message', array(
+                'type' => 'success',
+                'message' => 'Rechargement correctement effectué'
+            ));
 
             $credit = $clientSBUY->getCredit();
             $possible_amount = MAX_AMOUNT - $credit;
@@ -220,58 +232,30 @@ class DefaultController extends Controller
         );
     }
 
-    private function getSoapClient($wsdlName)
+    /**
+     * @Route("/buckutt/sherlocks/return", name="buckutt_sherlocks")
+     * @Template()
+     */
+    public function sherlocksAction()
     {
-        $wsdl = array(
-            'SBUY' => 'http://10.10.10.1:8080/SBUY.class.php?wsdl',
-            'SADMIN' => 'http://10.10.10.1:8080/SADMIN.class.php?wsdl'
-        );
+        /*
+         * Cette page est appelé par le serveur de sherlocks pour confirmer une rechargement
+         * */
 
-        $client = null;
-        $cookie = $this->get('session')->get('buckutt_soap_cookie');
-        if (!$cookie) {
-            $client = new \SoapClient($wsdl[$wsdlName], array("cache_wsdl" => WSDL_CACHE_NONE));
-        } else {
-            $client = @new \SoapClient($wsdl[$wsdlName], array("cache_wsdl" => WSDL_CACHE_BOTH));
-            $client->__setCookie("PHPSESSID", $cookie[$wsdlName]);
-        }
+        $clientSBUY = new SoapManager('SBUY', $this->get('session'));
 
-        return $client;
+        $clientSBUY->transactionDecode(base64_encode($_POST['DATA']));
+
+        //return sfView::NONE;
+        //return array();
+        // Render nothing ?
+        //*
+        return $this->render('EtuModuleBuckUTTBundle:Default:index.html.twig', array(
+            'name' => $_POST['DATA'],
+            'credit' => 0,
+            'history_date' => array('start' => '', 'end' => ''),
+            'history' => array()
+        ));//*/
     }
-
-    private function formatData($data) {
-        if (strpos($data, '","') != false) {
-            $data = $this->str_getcsv_lines($data);
-            if (count($data) == 1) {
-                $data = array_pop($data);
-            }
-        }
-        return $data;
-    }
-
-    private function str_getcsv_lines($string_csv) {
-        $array0 = explode(";\n", $string_csv, -1);
-        $array2 = array();
-        foreach ($array0 as $array1) {
-            $array2[] = str_getcsv($array1, ',', '"');
-        }
-        return $array2;
-    }
-
-    private function str_getcsv_buckutt($string_csv) {
-        $pattern = ',';
-        if (!empty($string_csv) && is_string($string_csv)) {
-            $array0 = explode(";\n", $string_csv, -1);
-            foreach ($array0 as $i=>$array1) {
-                $array2 = substr($array1, 1, -1);
-                $array0[$i] = explode('"'.$pattern.'"', $array2);
-                foreach ($array0[$i] as $j=>$array3) {
-                    $array0[$i][$j] = $array3;
-                }
-            }
-            return $array0;
-        } else { return 400; }
-    }
-
 
 }

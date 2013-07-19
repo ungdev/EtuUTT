@@ -30,6 +30,8 @@ class MainController extends Controller
 			->orderBy('a.name')
 			->getQuery();
 
+		$query->useResultCache(true, 3600);
+
 		$orgas = $this->get('knp_paginator')->paginate($query, $page, 10);
 
 		return array(
