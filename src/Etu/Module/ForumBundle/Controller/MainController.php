@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\ForumBundle\Entity\Category;
+use Etu\Module\ForumBundle\Model\PermissionsChecker;
 
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -37,6 +38,16 @@ class MainController extends Controller
 	 */
 	public function categoryAction($id, $slug)
 	{
-		return array();
+		$em = $this->getDoctrine()->getManager();
+		$category = $em->getRepository('EtuModuleForumBundle:Category')
+			->find($id);
+
+		$checker = new PermissionsChecker($this->getUser());
+		if ($checker->canRead($category)) {
+			return array();
+		}
+		else {
+			header('Location: ./denied');
+		}
 	}
 }

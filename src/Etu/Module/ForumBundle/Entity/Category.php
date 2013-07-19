@@ -4,6 +4,8 @@ namespace Etu\Module\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Etu\Module\ForumBundle\Entity\Permissions;
+
 /**
  * @ORM\Table(name="etu_forum_categories")
  * @ORM\Entity
@@ -80,6 +82,11 @@ class Category
 	 */
 	protected $lastMessage;
 
+	/**
+	 * @ORM\OneToMany(targetEntity="\Etu\Module\ForumBundle\Entity\Permissions", mappedBy="category")
+	 */
+	protected $permissions;
+
 
 	/**
 	 * Constructor
@@ -91,6 +98,7 @@ class Category
 		$this->left = 0;
 		$this->right = 0;
 		$this->depth = 0;
+		$this->permissions = new \Doctrine\Common\Collections\ArrayCollection();
 	}
 
 	/**
@@ -270,5 +278,13 @@ class Category
 	public function getTitle()
 	{
 		return $this->title;
+	}
+
+	/**
+	 * @return Etu\Module\ForumBundle\Entity\Permissions
+	 */
+	public function getPermissions()
+	{
+		return $this->permissions;
 	}
 }

@@ -85,6 +85,13 @@ class Permissions
 	 */
 	protected $move;
 
+	/**
+	 * @var integer $basic
+	 *
+	 * @ORM\Column(name="basic", type="integer")
+	 */
+	protected $basic;
+
 
 	/**
 	 * Constructor
@@ -98,6 +105,7 @@ class Permissions
 		$this->sticky = 0;
 		$this->lock = 0;
 		$this->move = 0;
+		$this->basic = 1;
 	}
 	
 	/**
@@ -162,5 +170,13 @@ class Permissions
 	public function getMove()
 	{
 		return $this->move;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getBasic()
+	{
+		return $this->basic;
 	}
 }
