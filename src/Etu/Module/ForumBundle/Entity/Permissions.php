@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Etu\Module\ForumBundle\Entity\Category;
 use Etu\Core\UserBundle\Entity\Organization;
+use Etu\Core\UserBundle\Entity\User;
 
 /**
  * @ORM\Table(name="etu_forum_permissions")
@@ -35,6 +36,14 @@ class Permissions
 	 * @ORM\JoinColumn()
 	 */
 	protected $organization;
+
+	/**
+	 * @var User $user
+	 *
+	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
+	 * @ORM\JoinColumn()
+	 */
+	protected $user;
 
 	/**
 	 * @var integer $read
@@ -86,11 +95,11 @@ class Permissions
 	protected $move;
 
 	/**
-	 * @var integer $basic
+	 * @var integer $type
 	 *
-	 * @ORM\Column(name="basic", type="integer")
+	 * @ORM\Column(name="type", type="integer")
 	 */
-	protected $basic;
+	protected $type;
 
 
 	/**
@@ -105,7 +114,7 @@ class Permissions
 		$this->sticky = 0;
 		$this->lock = 0;
 		$this->move = 0;
-		$this->basic = 1;
+		$this->type = 1;
 	}
 	
 	/**
@@ -175,8 +184,24 @@ class Permissions
 	/**
 	 * @return int
 	 */
-	public function getBasic()
+	public function getType()
 	{
-		return $this->basic;
+		return $this->type;
+	}
+
+	/**
+	 * @return \Etu\Core\UserBundle\Entity\Organization
+	 */
+	public function getOrganization()
+	{
+		return $this->organization;
+	}
+
+	/**
+	 * @return \Etu\Core\UserBundle\Entity\User
+	 */
+	public function getUser()
+	{
+		return $this->user;
 	}
 }

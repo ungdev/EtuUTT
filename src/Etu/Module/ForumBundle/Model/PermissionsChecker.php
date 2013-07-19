@@ -47,34 +47,291 @@ class PermissionsChecker
 
 		$permissions = new Permissions();
 
-		foreach($category->getPermissions() as $value)
-		{
-			if($value->getBasic() == 1)
-			{
+		foreach($category->getPermissions() as $value) {
+			if($value->getType() == 1) {
 				$permissions = $value;
 			}
 		}
 		if($permissions->getRead()) return true;
-		else {
-			if ($this->user instanceof Organization) {
-				foreach($category->getPermissions() as $value) {
-					if($value->getOrganization() == $this->user) {
-						$permissions = $value;
-					}
+
+		if ($this->user instanceof Organization) {
+			foreach($category->getPermissions() as $value) {
+				if($value->getOrganization() == $this->user) {
+					$permissions = $value;
 				}
-				if($permissions->getRead()) return true;
 			}
-			else {
-				foreach($this->memberships as $value) {
-					foreach($category->getPermissions() as $value) {
-						if($value->getOrganization() == $this->user) {
+			if($permissions->getRead()) return true;
+		}
+		else {
+			foreach($category->getPermissions() as $value) {
+				if($value->getType() == 2) {
+					foreach($this->memberships as $membership) {
+						if($value->getOrganization() == $membership->getOrganization()) {
 							$permissions = $value;
+							if($permissions->getRead()) return true;
 						}
 					}
-					if($permissions->getRead()) return true;
+				}
+				if($value->getType() == 3) {
+					if($value->getUser() == $this->user) {
+						$permissions = $value;
+						if($permissions->getRead()) return true;
+					}
 				}
 			}
 		}
-		
+	}
+
+	/**
+	 * @param Category $category
+	 * @return bool
+	 */
+	public function canPost(Category $category)
+	{
+
+		if ($this->user->getIsAdmin()) {
+			return true;
+		}
+
+		if(!$this->user->getIsReadOnly()) {
+			$permissions = new Permissions();
+
+			foreach($category->getPermissions() as $value) {
+				if($value->getType() == 1) {
+					$permissions = $value;
+				}
+			}
+			if($permissions->getPost()) return true;
+
+			if (!$this->user instanceof Organization) {
+				foreach($category->getPermissions() as $value) {
+					if($value->getType() == 2) {
+						foreach($this->memberships as $membership) {
+							if($value->getOrganization() == $membership->getOrganization()) {
+								$permissions = $value;
+								if($permissions->getPost()) return true;
+							}
+						}
+					}
+					if($value->getType() == 3) {
+						if($value->getUser() == $this->user) {
+							$permissions = $value;
+							if($permissions->getPost()) return true;
+						}
+					}
+				}
+			}
+		}
+	}
+
+
+	/**
+	 * @param Category $category
+	 * @return bool
+	 */
+	public function canAnswer(Category $category)
+	{
+
+		if ($this->user->getIsAdmin()) {
+			return true;
+		}
+
+		if(!$this->user->getIsReadOnly()) {
+			$permissions = new Permissions();
+
+			foreach($category->getPermissions() as $value) {
+				if($value->getType() == 1) {
+					$permissions = $value;
+				}
+			}
+			if($permissions->getAnswer()) return true;
+
+			if (!$this->user instanceof Organization) {
+				foreach($category->getPermissions() as $value) {
+					if($value->getType() == 2) {
+						foreach($this->memberships as $membership) {
+							if($value->getOrganization() == $membership->getOrganization()) {
+								$permissions = $value;
+								if($permissions->getAnswer()) return true;
+							}
+						}
+					}
+					if($value->getType() == 3) {
+						if($value->getUser() == $this->user) {
+							$permissions = $value;
+							if($permissions->getAnswer()) return true;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param Category $category
+	 * @return bool
+	 */
+	public function canEdit(Category $category)
+	{
+
+		if ($this->user->getIsAdmin()) {
+			return true;
+		}
+
+		if(!$this->user->getIsReadOnly()) {
+			$permissions = new Permissions();
+
+			foreach($category->getPermissions() as $value) {
+				if($value->getType() == 1) {
+					$permissions = $value;
+				}
+			}
+			if($permissions->getEdit()) return true;
+
+			if (!$this->user instanceof Organization) {
+				foreach($category->getPermissions() as $value) {
+					if($value->getType() == 2) {
+						foreach($this->memberships as $membership) {
+							if($value->getOrganization() == $membership->getOrganization()) {
+								$permissions = $value;
+								if($permissions->getEdit()) return true;
+							}
+						}
+					}
+					if($value->getType() == 3) {
+						if($value->getUser() == $this->user) {
+							$permissions = $value;
+							if($permissions->getEdit()) return true;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param Category $category
+	 * @return bool
+	 */
+	public function canSticky(Category $category)
+	{
+
+		if ($this->user->getIsAdmin()) {
+			return true;
+		}
+
+		if(!$this->user->getIsReadOnly()) {
+			$permissions = new Permissions();
+
+			foreach($category->getPermissions() as $value) {
+				if($value->getType() == 1) {
+					$permissions = $value;
+				}
+			}
+			if($permissions->getSticky()) return true;
+
+			if (!$this->user instanceof Organization) {
+				foreach($category->getPermissions() as $value) {
+					if($value->getType() == 2) {
+						foreach($this->memberships as $membership) {
+							if($value->getOrganization() == $membership->getOrganization()) {
+								$permissions = $value;
+								if($permissions->getSticky()) return true;
+							}
+						}
+					}
+					if($value->getType() == 3) {
+						if($value->getUser() == $this->user) {
+							$permissions = $value;
+							if($permissions->getSticky()) return true;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param Category $category
+	 * @return bool
+	 */
+	public function canLock(Category $category)
+	{
+
+		if ($this->user->getIsAdmin()) {
+			return true;
+		}
+
+		if(!$this->user->getIsReadOnly()) {
+			$permissions = new Permissions();
+
+			foreach($category->getPermissions() as $value) {
+				if($value->getType() == 1) {
+					$permissions = $value;
+				}
+			}
+			if($permissions->getLock()) return true;
+
+			if (!$this->user instanceof Organization) {
+				foreach($category->getPermissions() as $value) {
+					if($value->getType() == 2) {
+						foreach($this->memberships as $membership) {
+							if($value->getOrganization() == $membership->getOrganization()) {
+								$permissions = $value;
+								if($permissions->getLock()) return true;
+							}
+						}
+					}
+					if($value->getType() == 3) {
+						if($value->getUser() == $this->user) {
+							$permissions = $value;
+							if($permissions->getLock()) return true;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param Category $category
+	 * @return bool
+	 */
+	public function canMove(Category $category)
+	{
+
+		if ($this->user->getIsAdmin()) {
+			return true;
+		}
+
+		if(!$this->user->getIsReadOnly()) {
+			$permissions = new Permissions();
+
+			foreach($category->getPermissions() as $value) {
+				if($value->getType() == 1) {
+					$permissions = $value;
+				}
+			}
+			if($permissions->getMove()) return true;
+
+			if (!$this->user instanceof Organization) {
+				foreach($category->getPermissions() as $value) {
+					if($value->getType() == 2) {
+						foreach($this->memberships as $membership) {
+							if($value->getOrganization() == $membership->getOrganization()) {
+								$permissions = $value;
+								if($permissions->getMove()) return true;
+							}
+						}
+					}
+					if($value->getType() == 3) {
+						if($value->getUser() == $this->user) {
+							$permissions = $value;
+							if($permissions->getMove()) return true;
+						}
+					}
+				}
+			}
+		}
 	}
 }
