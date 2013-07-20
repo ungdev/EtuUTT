@@ -4,10 +4,11 @@ namespace Etu\Module\UVBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Entity\Notification;
+use Etu\Core\CoreBundle\Util\RedactorJsEscaper;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Model\Badge;
+use Etu\Module\UVBundle\Entity\Comment;
 use Etu\Module\UVBundle\Entity\Review;
-use MyProject\Proxies\__CG__\OtherProject\Proxies\__CG__\stdClass;
 use Symfony\Component\HttpFoundation\Request;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
@@ -24,10 +25,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class ViewController extends Controller
 {
 	/**
-	 * @Route("/{slug}-{name}", name="uvs_view")
+	 * @Route("/{slug}-{name}/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="uvs_view")
 	 * @Template()
 	 */
-	public function viewAction($slug, $name)
+	public function viewAction(Request $request, $slug, $name, $page = 1)
 	{
 		if (! $this->getUserLayer()->isUser()) {
 			return $this->createAccessDeniedResponse();
@@ -50,6 +51,44 @@ class ViewController extends Controller
 			)), 301);
 		}
 
+		$comment = new Comment();
+		$comment->setUv($uv)
+			->setUser($this->getUser());
+
+		$commentForm = $this->createFormBuilder($comment)
+			->add('body', 'redactor')
+			->getForm();
+
+		if ($request->getMethod() == 'POST' && $commentForm->submit($request)->isValid()) {
+			$comment->setBody(RedactorJsEscaper::escape($comment->getBody()));
+
+			$em->persist($comment);
+			$em->flush();
+
+			// Notify subscribers
+			$notif = new Notification();
+
+			$notif
+				->setModule($this->getCurrentBundle()->getIdentifier())
+				->setHelper('uv_new_comment')
+				->setAuthorId($this->getUser()->getId())
+				->setEntityType('uv')
+				->setEntityId($uv->getId())
+				->addEntity($comment);
+
+			$this->getNotificationsSender()->send($notif);
+
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'uvs.main.comment.confirm'
+			));
+
+			return $this->redirect($this->generateUrl('uvs_view', array(
+				'slug' => $slug,
+				'name' => $name
+			)));
+		}
+
 		/** @var Review[] $results */
 		$results = $em->createQueryBuilder()
 			->select('r, s')
@@ -63,6 +102,7 @@ class ViewController extends Controller
 			->getResult();
 
 		$reviews = array();
+		$reviewsCount = 0;
 
 		foreach ($results as $result) {
 			if (! isset($reviews[$result->getSemester()]['count'])) {
@@ -80,11 +120,26 @@ class ViewController extends Controller
 			$key = ($result->getValidated()) ? 'validated' : 'pending';
 			$reviews[$result->getSemester()][$key][] = $result;
 			$reviews[$result->getSemester()]['count']++;
+			$reviewsCount++;
 		}
+
+		$query = $em->createQueryBuilder()
+			->select('c, u')
+			->from('EtuModuleUVBundle:Comment', 'c')
+			->leftJoin('c.user', 'u')
+			->where('c.uv = :uv')
+			->setParameter('uv', $uv->getId())
+			->orderBy('c.createdAt', 'DESC')
+			->getQuery();
+
+		$pagination = $this->get('knp_paginator')->paginate($query, $page, 10);
 
 		return array(
 			'uv' => $uv,
-			'semesters' => $reviews
+			'semesters' => $reviews,
+			'reviewsCount' => $reviewsCount,
+			'pagination' => $pagination,
+			'commentForm' => $commentForm->createView(),
 		);
 	}
 
@@ -137,17 +192,13 @@ class ViewController extends Controller
 
 			$review->file = null;
 
-			$entity = new \stdClass();
-			$entity->uv = $uv;
-			$entity->review = $review;
-
 			$notif
 				->setModule($this->getCurrentBundle()->getIdentifier())
 				->setHelper('uv_new_review')
 				->setAuthorId($this->getUser()->getId())
 				->setEntityType('uv')
 				->setEntityId($uv->getId())
-				->addEntity($entity);
+				->addEntity($review);
 
 			$this->getNotificationsSender()->send($notif);
 
@@ -191,7 +242,7 @@ class ViewController extends Controller
 
 		return array(
 			'uv' => $uv,
-			'form' => $form->createView()
+			'form' => $form->createView(),
 		);
 	}
 }

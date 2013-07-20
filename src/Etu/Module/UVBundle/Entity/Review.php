@@ -175,6 +175,7 @@ class Review
 		}
 
 		$name .= '-'.$this->semester;
+		$name .= '-'.$this->getUv()->getSlug();
 		$name .= '-'.substr(md5(uniqid(true)), 0, 3);
 
 		$ext = $this->file->guessExtension();
