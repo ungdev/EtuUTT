@@ -65,6 +65,17 @@ class MainController extends Controller
 			->getQuery()
 			->getResult();
 
+		$subCategories = $em->createQueryBuilder()
+			->select('c')
+			->from('EtuModuleForumBundle:Category', 'c')
+			->where('c.left > :left')
+			->andWhere('c.right < :right')
+			->setParameter('left', $category->getLeft())
+			->setParameter('right', $category->getRight())
+			->orderBy('c.depth')
+			->getQuery()
+			->getResult();
+
 		$threads = $em->createQueryBuilder()
 			->select('t, m')
 			->from('EtuModuleForumBundle:Thread', 't')
@@ -79,7 +90,7 @@ class MainController extends Controller
 
 		$threads = $this->get('knp_paginator')->paginate($threads, $page, 15);
 		
-		return array('category' => $category, 'parents' => $parents, 'threads' => $threads);
+		return array('category' => $category, 'subCategories' => $subCategories, 'parents' => $parents, 'threads' => $threads);
 	}
 
 	/**

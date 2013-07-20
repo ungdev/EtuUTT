@@ -12,24 +12,45 @@
 		 > <a href="{{ path('forum_category', {'id': parent.id, 'slug': parent.slug}) }}">{{ parent.title }}</a>
 	{% endfor %}
 
-	{# display navigation #}
-	<div class="navigation">
-		{{ knp_pagination_render(threads) }}
-	</div>
-
 	<table class="table table-bordered table-hover forum-table">
-		<tr><th>{{'forum.main.thread.thread'|trans }}</th><th>{{'forum.main.thread.by'|trans }}</th><th>{{'forum.main.thread.messages'|trans }}</th><th>{{'forum.main.thread.lastMessage'|trans }}</th></tr>
-	{% for thread in threads %}
-		 <tr><td><a href="{{ path('forum_thread', {'id': thread.id, 'slug': thread.slug}) }}">{{ thread.title }}</a></td><td>{{ thread.author.getFullName() }}</td><td>{{ thread.countMessages }}</td><td>{% if thread.getLastMessage() == NULL %}{{ 'forum.main.index.noMessage'|trans }}{% else %}{{ thread.getLastMessage().author.getFullName() }}{% endif %}</td></tr>
+	{% for category in subCategories %}
+		{% if forum_can_read(app.user, category) %}
+			{% if category.depth == 0 %}
+				<caption>
+					<a href="{{ path('forum_category', {'id': category.id, 'slug': category.slug}) }}">{{ category.title }}</a>
+				</caption>
+			{% elseif category.depth == 1 %}
+				<tr>
+					<td><a href="{{ path('forum_category', {'id': category.id, 'slug': category.slug}) }}">{{ category.title }}</a><br />{{ category.description }}</td>
+					<td>{{ category.countThreads }}</td>
+					<td>{{ category.countMessages }}</td>
+					<td>{% if category.lastMessage == NULL %}{{ 'forum.main.index.noMessage'|trans }}{% else %}{{ category.getLastMessage().author.getFullName() }}{% endif %}</td>
+				</tr>
+			{% endif %}
+		{% endif %}
 	{% endfor %}
 	</table>
 
-	{# display navigation #}
-	<div class="navigation">
-		{{ knp_pagination_render(threads) }}
-	</div>
+	{% if category.depth > 0 %}
+		{# display navigation #}
+		<div class="navigation">
+			{{ knp_pagination_render(threads) }}
+		</div>
 
-	{% if forum_can_post(app.user, category) %}
-		<a href="{{ path('forum_post', {'id': category.id, 'slug': category.slug}) }}">{{'forum.main.thread.post'|trans }}</a>
+		<table class="table table-bordered table-hover forum-table">
+			<tr><th>{{'forum.main.thread.thread'|trans }}</th><th>{{'forum.main.thread.by'|trans }}</th><th>{{'forum.main.thread.messages'|trans }}</th><th>{{'forum.main.thread.lastMessage'|trans }}</th></tr>
+		{% for thread in threads %}
+			 <tr><td><a href="{{ path('forum_thread', {'id': thread.id, 'slug': thread.slug}) }}">{{ thread.title }}</a></td><td>{{ thread.author.getFullName() }}</td><td>{{ thread.countMessages }}</td><td>{% if thread.getLastMessage() == NULL %}{{ 'forum.main.index.noMessage'|trans }}{% else %}{{ thread.getLastMessage().author.getFullName() }}{% endif %}</td></tr>
+		{% endfor %}
+		</table>
+
+		{# display navigation #}
+		<div class="navigation">
+			{{ knp_pagination_render(threads) }}
+		</div>
+
+		{% if forum_can_post(app.user, category) %}
+			<a href="{{ path('forum_post', {'id': category.id, 'slug': category.slug}) }}">{{'forum.main.thread.post'|trans }}</a>
+		{% endif %}
 	{% endif %}
 {% endblock %}
