@@ -155,6 +155,22 @@ class UV
 	 */
 	protected $deletedAt;
 
+	/**
+	 * @var Review[] $reviews
+	 *
+	 * @ORM\OneToMany(targetEntity="Review", mappedBy="uv")
+	 * @ORM\JoinColumn()
+	 */
+	protected $reviews;
+
+	/**
+	 * @var Comment[] $comments
+	 *
+	 * @ORM\OneToMany(targetEntity="Comment", mappedBy="uv")
+	 * @ORM\JoinColumn()
+	 */
+	protected $comments;
+
     /**
      * Get id
      *

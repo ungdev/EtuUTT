@@ -25,7 +25,7 @@ class ImportCommand extends ContainerAwareCommand
 		$this
 			->setName('etu:uv:import')
 			->setDescription('Import UV informations from the PDF official guide')
-			->addArgument('file', InputArgument::REQUIRED, 'The file URL to download')
+			->addArgument('file', InputArgument::OPTIONAL, 'The file URL to download')
 		;
 	}
 
@@ -59,20 +59,30 @@ This command helps you to import the official UV guide.');
 		 * Start the process
 		 */
 		// Download the guide
-		$url = $input->getArgument('file');
-
-		$output->writeln("\nDownloading ...");
+		if ($input->hasArgument('file')) {
+			$url = $input->getArgument('file');
+			$local = false;
+			$output->writeln("\nDownloading ...");
+		} elseif (file_exists(__DIR__.'/../Resources/objects/current-guide.pdf')) {
+			$url = __DIR__.'/../Resources/objects/current-guide.pdf';
+			$local = true;
+			$output->writeln("\nUsing cached file");
+		} else {
+			throw new \RuntimeException('An URL where to download the guide is required');
+		}
 
 		$file = __DIR__.'/../Resources/objects/current-guide.pdf';
 		$html = __DIR__.'/../Resources/objects/current-guide.html';
 		$registry = __DIR__.'/../Resources/objects/registry.json';
 
-		$client = new Http\Client();
+		if (! $local) {
+			$client = new Http\Client();
 
-		// Create a request
-		$response = $client->get($url)->send();
+			// Create a request
+			$response = $client->get($url)->send();
 
-		file_put_contents($file, $response->getBody(true));
+			file_put_contents($file, $response->getBody(true));
+		}
 
 		$output->writeln("Converting to HTML ...");
 

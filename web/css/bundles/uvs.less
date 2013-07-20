@@ -130,3 +130,46 @@
 		margin-top: 33px;
 	}
 }
+
+.uv-view-reviews-semester {
+	margin-bottom: 15px;
+}
+.uv-view-reviews-reviews-validated,
+.uv-view-reviews-reviews-pending {
+	display: none;
+
+	a {
+		display: block;
+		padding: 5px 10px;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+	small {
+		display: block;
+		padding: 5px 10px;
+	}
+}
+.uv-view-reviews-semester-first {
+	.uv-view-reviews-reviews-validated,
+	.uv-view-reviews-reviews-pending {
+		display: block !important;
+	}
+}
+.uv-view-reviews-count {
+	margin-top: 8px;
+}
+.uv-view-reviews-reviews-validated {
+	color: #468847;
+	background-color: #dff0d8;
+	border-top: 1px solid #d6e9c6;
+	margin-bottom: 5px;
+}
+.uv-view-reviews-reviews-pending {
+	color: #b94a48;
+	background-color: #f2dede;
+	border-top: 1px solid #eed3d7;
+	margin-bottom: 5px;
+}

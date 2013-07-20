@@ -9,6 +9,11 @@ uvs:
         st: Stages
         other: Autre
 
+    reviews:
+        partiel: Partiel
+        midterm: Médian
+        final: Final
+
     main:
         index:
             title: Les UV
@@ -22,4 +27,33 @@ uvs:
             noResult: Aucun résultat
         view:
             title: Détail d'une UV - %code%
+            dontExists: Cette UV n'existe plus
+            credits: Crédits
+            cm: Cours magistral
+            td: Travaux dirigés
+            tp: Travaux pratiques
+            the: Travail personnel
+            available: Disponibilité
+            autumn: Automne
+            spring: Printemps
+            autumnAndSpring: Automne et printemps
+            content: Programme
+            aims: Objectifs
+            reviews: Annales
+            approuved: Approuvées par l'équipe
+            pending: En attente de validation
+            countReviews: %count% annale|%count% annales
+            sendReview: Envoyer une annale
+            winBadges: Envoyez des annales pour gagnez des badges !
+            comments: Commentaires
+        sendReview:
+            title: Envoyer une annale
+            back: Retour
+            type: Type d'examen
+            semester: Semestre de l'annale
+            file: Fichier (accepté : pdf, jpg, jpeg, png)
+            submit: Envoyer l'annale
+            cancel: Annuler
+            confirm: Votre annale a bien été envoyée. Merci de votre participation !
+
 

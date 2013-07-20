@@ -3,6 +3,7 @@
 namespace Etu\Core\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Etu\Core\UserBundle\Model\Badge;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -223,7 +224,6 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(type="string", length=50, nullable=true)
-	 * @Assert\Type("integer")
 	 */
 	protected $postalCode;
 
@@ -638,6 +638,27 @@ class User implements UserInterface, \Serializable
 			$this->phoneNumber, $this->sex, $this->nationality, $this->adress, $this->postalCode, $this->city,
 			$this->country, $this->birthday, $this->personnalMail
 		);
+
+		$completion = 0;
+		$count = 0;
+
+		foreach ($infos as $value) {
+			$count++;
+
+			if (! empty($value)) {
+				$completion++;
+			}
+		}
+
+		return round($completion / $count, 2) * 100;
+	}
+
+	/**
+	 * @return integer
+	 */
+	public function getTrombiCompletion()
+	{
+		$infos = array($this->surnom, $this->jadis, $this->passions);
 
 		$completion = 0;
 		$count = 0;
@@ -2142,28 +2163,41 @@ class User implements UserInterface, \Serializable
     }
 
 	/**
-	 * @param string $badgeName
-	 * @return boolean
+	 * @param $badgeName
+	 * @return bool
 	 */
 	public function hasBadge($badgeName)
 	{
-		return in_array($badgeName, $this->badges);
+		return array_key_exists($badgeName, $this->badges);
 	}
 
 	/**
-	 * @param string $badgeName
-	 * @return User
+	 * @param Badge $badge
+	 * @return $this
 	 */
-	public function addBadge($badgeName)
+	public function addBadge(Badge $badge)
 	{
-		$this->badges[] = $badgeName;
+		$this->badges[$badge->getName()] = $badge;
 
 		return $this;
 	}
 
 	/**
-	 * @param string $badgeName
-	 * @return User
+	 * @param $badgeName
+	 * @return Badge
+	 */
+	public function getBadge($badgeName)
+	{
+		if (! $this->hasBadge($badgeName)) {
+			return false;
+		}
+
+		return $this->badges[$badgeName];
+	}
+
+	/**
+	 * @param $badgeName
+	 * @return $this
 	 */
 	public function removeBadge($badgeName)
 	{
