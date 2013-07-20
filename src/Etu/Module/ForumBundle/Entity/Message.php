@@ -3,6 +3,7 @@
 namespace Etu\Module\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Etu\Core\UserBundle\Entity\User;
 
 /**
@@ -48,6 +49,7 @@ class Message
 	/**
 	 * @var \DateTime
 	 *
+	 * @Gedmo\Timestampable(on="create")
 	 * @ORM\Column(name="createdAt", type="datetime")
 	 */
 	protected $createdAt;
@@ -55,6 +57,7 @@ class Message
 	/**
 	 * @var \DateTime
 	 *
+	 * @Gedmo\Timestampable(on="update")
 	 * @ORM\Column(name="updatedAt", type="datetime", nullable=true)
 	 */
 	protected $updatedAt;

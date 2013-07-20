@@ -88,6 +88,9 @@ class PermissionsChecker
 	 */
 	public function canPost(Category $category)
 	{
+		if($category->getDepth() == 0) {
+			return false;
+		}
 
 		if ($this->user->getIsAdmin()) {
 			return true;
