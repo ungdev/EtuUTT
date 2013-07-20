@@ -316,7 +316,7 @@
 			<hr />
 
 			<ul class="badges-list">
-				{% for badge in app.user.badges %}
+				{% for badge in user.badges %}
 					<li>
 						<img src="{{ asset('img/badges/'~badge.name~'-'~badge.level~'.png') }}" class="tip"
 							 title="{{ ('badges.'~badge.name~'.'~badge.level~'.description')|trans }}" />
