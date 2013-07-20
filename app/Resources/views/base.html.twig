@@ -39,7 +39,7 @@
 				<div class="pull-left title">
 					<h1 class="seo-title">{{ block('title') }} - {{ 'base.title'|trans }}</h1>
 
-					{% if app.user.isOrga %}
+					{% if app.user and app.user.isOrga %}
 					<a href="{{ path('orga_admin') }}">
 					{% else %}
 					<a href="{{ path('homepage') }}">
