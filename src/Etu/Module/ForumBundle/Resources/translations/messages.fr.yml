@@ -10,3 +10,11 @@ forum:
             messages: Messages
             lastMessage: Dernier message
             post: Créer un nouveau sujet
+        post:
+            title: Création d'un sujet
+            threadTitle: Titre du sujet
+            content: Message
+            sticky: Epinglé ?
+            yes: Oui
+            no: Non
+

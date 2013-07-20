@@ -3,6 +3,7 @@
 namespace Etu\Module\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Etu\Core\UserBundle\Entity\User;
 use \Etu\Module\ForumBundle\Entity\Message;
 
@@ -59,6 +60,7 @@ class Thread
 	/**
 	 * @var \DateTime $createdAt
 	 *
+	 * @Gedmo\Timestampable(on="create")
 	 * @ORM\Column(name="createdAt", type="datetime")
 	 */
 	protected $createdAt;
@@ -89,7 +91,7 @@ class Thread
 	/**
 	 * @var \Etu\Module\ForumBundle\Entity\Message $lastMessage
 	 *
-	 * @ORM\OneToOne(targetEntity="\Etu\Module\ForumBundle\Entity\Message")
+	 * @ORM\OneToOne(targetEntity="\Etu\Module\ForumBundle\Entity\Message", cascade={"persist"})
 	 */
 	protected $lastMessage;
 
@@ -100,6 +102,7 @@ class Thread
 	public function __construct()
 	{
 		$this->state = self::STATE_OPEN;
+		$this->weight = self::WEIGHT_BASIC;
 		$this->createdAt = new \DateTime();
 		$this->countMessages = 0;
 	}
@@ -259,6 +262,7 @@ class Thread
 	 */
 	public function setWeight($weight)
 	{
+		if($weight == NULL) $weight = WEIGHT_BASIC;
 		if (! in_array($weight, array(self::WEIGHT_BASIC, self::WEIGHT_STICKY))) {
 			throw new \InvalidArgumentException(
 				sprintf('Invalid thread weight (%s given, Thread constante expected).', $weight)
