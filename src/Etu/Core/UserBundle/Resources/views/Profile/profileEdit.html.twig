@@ -49,6 +49,13 @@
 		<form method="post">
 			{{ form_errors(form) }}
 
+			<p class="pull-right muted" style="text-align: right;">
+				<small>
+					{{ 'user.privacy.public'|trans }} : {{ 'user.privacy.publicMore'|trans }}<br />
+					{{ 'user.privacy.private'|trans }} : {{ 'user.privacy.privateMore'|trans }}
+				</small>
+			</p>
+
 			<div class="row-fluid">
 				<div class="span3">
 					<div class="profileEdit-avatar">

@@ -3,6 +3,8 @@ user:
     privacy:
         public: Public
         private: Privé
+        publicMore: Visible seulement par les membres du site étudiant
+        privateMore: Visible seulement par moi
 
     denied: Vous n'avez pas le droit de voir cette page
 
