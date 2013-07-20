@@ -46,6 +46,9 @@ uvs:
             sendReview: Envoyer une annale
             winBadges: Envoyez des annales pour gagnez des badges !
             comments: Commentaires
+            noComment: Aucun commentaire pour le moment
+            body: Ajouter un commentaire
+            submit: Commenter
         sendReview:
             title: Envoyer une annale
             back: Retour
@@ -55,5 +58,7 @@ uvs:
             submit: Envoyer l'annale
             cancel: Annuler
             confirm: Votre annale a bien été envoyée. Merci de votre participation !
+        comment:
+            confirm: Votre commentaire a bien été envoyée. Merci de votre participation !
 
 

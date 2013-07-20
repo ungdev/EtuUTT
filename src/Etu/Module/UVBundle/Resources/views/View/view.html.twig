@@ -116,7 +116,7 @@
 	<hr />
 
 	<div class="uv-view-reviews">
-		<h4>{{ 'uvs.main.view.reviews'|trans }}</h4>
+		<h4>{{ 'uvs.main.view.reviews'|trans }} ({{ reviewsCount }})</h4>
 
 		{% set first = true %}
 
@@ -135,10 +135,10 @@
 				<div class="uv-view-reviews-reviews-validated">
 					<small class="muted">{{ 'uvs.main.view.approuved'|trans }}</small>
 					{% for review in reviews.validated %}
-					<a href="">
-						{{ review.type|trans }}
-						<small class="pull-right muted">{{ review.sender.fullName }}</small>
-					</a>
+						<a href="{{ asset('uploads/uvs/'~review.filename) }}">
+							{{ ('uvs.reviews.'~review.type)|trans }}
+							<span class="pull-right muted">{{ review.sender.fullName }}</span>
+						</a>
 					{% endfor %}
 				</div>
 				{% endif %}
@@ -147,7 +147,7 @@
 				<div class="uv-view-reviews-reviews-pending">
 					<small class="muted">{{ 'uvs.main.view.pending'|trans }}</small>
 					{% for review in reviews.pending %}
-						<a href="">
+						<a href="{{ asset('uploads/uvs/'~review.filename) }}">
 							{{ ('uvs.reviews.'~review.type)|trans }}
 							<span class="pull-right muted">{{ review.sender.fullName }}</span>
 						</a>
@@ -167,7 +167,54 @@
 		</p>
 	</div>
 	<div class="uv-view-comments">
-		<h4>{{ 'uvs.main.view.comments'|trans }}</h4>
+		<h4>{{ 'uvs.main.view.comments'|trans }} ({{ pagination.totalItemCount }})</h4>
+
+		{% for comment in pagination %}
+			<div class="uv-view-comment">
+				<a href="{{ path('user_view', {'login': comment.user.login}) }}">
+					<img src="{{ asset('photos/'~comment.user.avatar) }}" class="uv-view-comment-avatar" />
+				</a>
+				<div class="uv-view-comment-author">
+					<a href="{{ path('user_view', {'login': comment.user.login}) }}">
+						{{ comment.user.fullName }}
+					</a>
+				</div>
+				<div class="uv-view-comment-date">
+					{{ comment.createdAt|date('d/m/Y H:i') }}
+				</div>
+				<div class="uv-view-comment-content">
+					{{ comment.body|raw }}
+				</div>
+			</div>
+		{% else %}
+			<p>{{ 'uvs.main.view.noComment'|trans }}</p>
+		{% endfor %}
+
+		<div class="navigation">
+			{{ knp_pagination_render(pagination) }}
+		</div>
+
+		<hr />
+
+		<form method="post">
+			{{ form_errors(commentForm) }}
+
+			<div class="control-group">
+				<label class="control-label">{{ 'uvs.main.view.body'|trans }}</label>
+				<div class="controls">{{ form_widget(commentForm.body) }}</div>
+				<span class="help-block">{{ form_errors(commentForm.body) }}</span>
+			</div>
+
+			<div class="control-group">
+				<div class="controls">
+					{{ form_rest(commentForm) }}
+
+					<button type="submit" class="btn">
+						{{ 'uvs.main.view.submit'|trans }}
+					</button>
+				</div>
+			</div>
+		</form>
 	</div>
 </div>
 {% endblock %}
