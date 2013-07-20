@@ -10,7 +10,7 @@ trombi:
             search_title: Rechercher un étudiant
             search: Rechercher
             more: Plus de critères
-            name: Nom
+            name: Nom, prénom ou surnom
             studentId: Numéro d'étudiant
             uv: UVs (séparées par des virgules)
             phone: Numéro de téléphone

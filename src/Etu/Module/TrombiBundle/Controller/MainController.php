@@ -58,8 +58,9 @@ class MainController extends Controller
 			}
 
 			if ($user->getFullName()) {
-				$users->andWhere('u.fullName LIKE :fullName')
-					->setParameter('fullName', '%'.str_replace(' ', '%', $user->getFullName()).'%');
+				$users->andWhere('u.fullName LIKE :fullName OR u.surnom LIKE :surnom')
+					->setParameter('fullName', '%'.str_replace(' ', '%', $user->getFullName()).'%')
+					->setParameter('surnom', '%'.str_replace(' ', '%', $user->getFullName()).'%');
 			}
 
 			if ($user->getStudentId()) {
