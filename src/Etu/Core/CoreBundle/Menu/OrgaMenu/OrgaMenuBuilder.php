@@ -39,7 +39,7 @@ class OrgaMenuBuilder
 		$this
 			->add('base.user.menu.admin')
 				->setIcon('gear.png')
-				->setUrl($router->generate('homepage'))
+				->setUrl($router->generate('orga_admin'))
 			->end()
 			->add('base.user.menu.members')
 				->setIcon('users.png')

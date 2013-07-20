@@ -39,8 +39,12 @@
 				<div class="pull-left title">
 					<h1 class="seo-title">{{ block('title') }} - {{ 'base.title'|trans }}</h1>
 
+					{% if app.user.isOrga %}
+					<a href="{{ path('orga_admin') }}">
+					{% else %}
 					<a href="{{ path('homepage') }}">
-						<img src="{{ asset('img/logo.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="logo" />
+					{% endif %}
+						<img src="{{ asset('img/logo.jpg') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="logo" />
 					</a>
 				</div>
 
@@ -218,7 +222,7 @@
 						Français
 					</a>
 				</li>
-				<li>
+				<!--<li>
 					<a href="{{ path('change_locale', {'lang': 'en'}) }}">
 						<img src="{{ asset('img/lang/en.png') }}" />
 						English
@@ -229,7 +233,7 @@
 						<img src="{{ asset('img/lang/es.png') }}" />
 						Español
 					</a>
-				</li>
+				</li>-->
 			</ul>
 		</div>
 

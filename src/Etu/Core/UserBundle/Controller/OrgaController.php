@@ -55,7 +55,7 @@ class OrgaController extends Controller
 			->add('name')
 			->add('contactMail', 'email')
 			->add('contactPhone', null, array('required' => false))
-			->add('description', 'redactor')
+			->add('description', 'redactor_limited')
 			->add('descriptionShort', 'textarea')
 			->add('website', null, array('required' => false))
 			->getForm();
@@ -82,6 +82,7 @@ class OrgaController extends Controller
 		return array(
 			'form' => $form->createView(),
 			'avatarForm' => $avatarForm->createView(),
+			'rand' => substr(md5(uniqid(true)), 0, 5),
 		);
 	}
 
