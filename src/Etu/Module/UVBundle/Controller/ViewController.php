@@ -4,6 +4,7 @@ namespace Etu\Module\UVBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Entity\Notification;
+use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Model\Badge;
 use Etu\Module\UVBundle\Entity\Review;
 use MyProject\Proxies\__CG__\OtherProject\Proxies\__CG__\stdClass;
@@ -117,7 +118,7 @@ class ViewController extends Controller
 		$review = new Review();
 		$review->setUv($uv)
 			->setSender($this->getUser())
-			->setSemester(Review::currentSemester());
+			->setSemester(User::currentSemester());
 
 		$form = $this->createFormBuilder($review)
 			->add('type', 'choice', array('choices' => Review::$types))

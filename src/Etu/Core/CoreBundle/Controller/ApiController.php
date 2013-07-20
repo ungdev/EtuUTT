@@ -58,20 +58,14 @@ class ApiController extends Controller
 
 		$user->removeBadge('subscriber');
 
-		if ($count >= 2) {
+		if ($count >= 1) {
 			$user->addBadge(new Badge('subscriber', 1));
 		}
-		if ($count >= 5) {
+		if ($count >= 10) {
 			$user->getBadge('subscriber')->setLevel(2);
 		}
-		if ($count >= 10) {
+		if ($count >= 30) {
 			$user->getBadge('subscriber')->setLevel(3);
-		}
-		if ($count >= 20) {
-			$user->getBadge('subscriber')->setLevel(4);
-		}
-		if ($count >= 40) {
-			$user->getBadge('subscriber')->setLevel(5);
 		}
 
 		$em->persist($user);
@@ -122,20 +116,14 @@ class ApiController extends Controller
 
 		$user->removeBadge('subscriber');
 
-		if ($count >= 2) {
+		if ($count >= 1) {
 			$user->addBadge(new Badge('subscriber', 1));
 		}
-		if ($count >= 5) {
+		if ($count >= 10) {
 			$user->getBadge('subscriber')->setLevel(2);
 		}
-		if ($count >= 10) {
+		if ($count >= 30) {
 			$user->getBadge('subscriber')->setLevel(3);
-		}
-		if ($count >= 20) {
-			$user->getBadge('subscriber')->setLevel(4);
-		}
-		if ($count >= 40) {
-			$user->getBadge('subscriber')->setLevel(5);
 		}
 
 		$em->persist($user);

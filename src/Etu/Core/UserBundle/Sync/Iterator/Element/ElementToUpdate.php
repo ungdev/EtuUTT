@@ -5,6 +5,7 @@ namespace Etu\Core\UserBundle\Sync\Iterator\Element;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Etu\Core\UserBundle\Ldap\Model\User as LdapUser;
 use Etu\Core\UserBundle\Entity\User as DbUser;
+use Etu\Core\UserBundle\Model\Badge;
 
 /**
  * Element to update in database
@@ -63,6 +64,7 @@ class ElementToUpdate
 		$persist = false;
 
 		$user = $this->database;
+		$history = $user->addCureentSemesterToHistory();
 
 		if (ucfirst(strtolower($this->ldap->getFormation())) != $this->database->getFormation()) {
 			$persist = true;
@@ -84,8 +86,14 @@ class ElementToUpdate
 			$user->setUvs(implode('|', $this->ldap->getUvs()));
 		}
 
+		/*
+		 * Add badges
+		 */
+		if (substr($history['niveau'], 0, 2) == 'TC' && substr($user->getNiveau(), 0, 2) != 'TC') {
+			$user->addBadge(new Badge('tc_survivor'));
+		}
+
 		if ($persist) {
-			$user->setLdapInformations($this->ldap);
 			$this->doctrine->getManager()->persist($user);
 		}
 

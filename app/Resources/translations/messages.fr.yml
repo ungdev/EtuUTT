@@ -105,3 +105,88 @@ error:
         title: Hum ... Erreur !
         subtitle: Hum ...
         content: Une erreur s'est produite sur le serveur ...
+
+# Badges
+badges:
+    profile_completed:
+        1:
+            title: Data lover
+            description: A complété son profil entièrement
+    trombi_completed:
+        1:
+            title: Fiché
+            description: A complété son trombi entièrement
+    orga_member:
+        1:
+            title: Associatif
+            description: Membre d'une association de l'UTT
+    orga_admin:
+        1:
+            title: Remue-méninges
+            description: Membre du bureau d'une association de l'UTT
+    orga_president:
+        1:
+            title: Rameur en chef
+            description: Président d'une association de l'UTT
+    orga_bde_president:
+        1:
+            title: Ohé, ohé, Capitaine
+            description: Président du BDE de l'UTT
+    tc01:
+        1:
+            title: The wrong hole
+            description: Est en TC01
+    tc06:
+        1:
+            title: T.T. est mon ami
+            description: Est en TC06
+    tc_survivor:
+        1:
+            title: Le survivant
+            description: A terminé son TC
+    starter:
+        1:
+            title: Starter
+            description: A obtenu les 3 badges "What's up", "Heure révélatrice" et "Data lover"
+    uvs_reviews:
+        1:
+            title: Fait ou fiction
+            description: A posté 1 annale sur le site
+        2:
+            title: Récidive
+            description: A posté 2 annales sur le site
+        3:
+            title: Vous en voulez encore ?
+            description: A posté 4 annales sur le site
+        4:
+            title: I <3 Annale
+            description: A posté 10 annales sur le site
+    subscriber:
+        1:
+            title: What's up ?
+            description: A ajouté 1 élément à ses abonnements
+        2:
+            title: Je me renseigne
+            description: A ajouté 10 éléments à ses abonnements
+        3:
+            title: Sacre de l'abondance
+            description: A ajouté 30 éléments à ses abonnements
+    challenge:
+        1:
+            title: Attrapez les tous !
+            description: A obtenu 10 badges
+        2:
+            title: Attrapez les tous !
+            description: A obtenu 20 badges
+        3:
+            title: Attrapez les tous !
+            description: A obtenu 30 badges
+        4:
+            title: Attrapez les tous !
+            description: A obtenu 40 badges
+        5:
+            title: Attrapez les tous !
+            description: A obtenu 50 badges
+        6:
+            title: Attrapez les tous !
+            description: A obtenu 60 badges

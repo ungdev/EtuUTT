@@ -134,7 +134,7 @@ class Review
 			$semesters['A'.$i] = 'A'.$i;
 		}
 
-		if (self::currentSemester() == 'P'.date('Y')) {
+		if (User::currentSemester() == 'P'.date('Y')) {
 			unset($semesters['A'.date('Y')]);
 		}
 
@@ -142,22 +142,13 @@ class Review
 	}
 
 	/**
+	 * @deprecated Deprecated since version 10.0 Bêta1, to be removed in 10.1. Use
+	 *             {@link User::currentSemester()} instead.
 	 * @return string
 	 */
 	public static function currentSemester()
 	{
-		$dayInYear = date('z');
-
-		$springStart = 31; // January 31
-		$springEnd = 212; // July 31
-
-		if ($dayInYear > $springStart && $dayInYear < $springEnd) {
-			$semester = 'P';
-		} else {
-			$semester = 'A';
-		}
-
-		return $semester.date('Y');
+		return User::currentSemester();
 	}
 
 	/**

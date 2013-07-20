@@ -201,21 +201,6 @@ class OrgaController extends Controller
 					$this->getUser()->addCountMembers();
 					$em->persist($this->getUser());
 
-					$user->addBadge(new Badge('orga_member'));
-
-					if ($member->isFromBureau()) {
-						$user->addBadge(new Badge('orga_admin'));
-					}
-
-					if ($member->getRole() == Member::ROLE_PRESIDENT) {
-						$user->addBadge(new Badge('orga_president'));
-
-						if ($member->getOrganization()->getLogin() == 'bde') {
-							$user->addBadge(new Badge('orga_bde_president'));
-						}
-					}
-
-					$em->persist($user);
 					$em->persist($member);
 					$em->flush();
 
@@ -379,13 +364,7 @@ class OrgaController extends Controller
 		}
 
 		if ($confirm == 'confirm') {
-
 			$user = $member->getUser();
-
-			$user->removeBadge('orga_member');
-			$user->removeBadge('orga_admin');
-			$user->removeBadge('orga_president');
-			$user->removeBadge('orga_bde_president');
 
 			$em->persist($user);
 			$em->remove($member);

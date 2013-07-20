@@ -26,8 +26,8 @@ use Imagine\Image\Point;
  * User
  *
  * @ORM\Table(
- *      name="etu_users",
- *      uniqueConstraints={@ORM\UniqueConstraint(name="search", columns={"login", "mail"})}
+ *	  name="etu_users",
+ *	  uniqueConstraints={@ORM\UniqueConstraint(name="search", columns={"login", "mail"})}
  * )
  * @ORM\Entity()
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
@@ -51,14 +51,14 @@ class User implements UserInterface, \Serializable
 		'6' => '6', '7' => '7', '8' => '8', '9' => '9', '10' => '10'
 	);
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(type="integer")
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 */
+	protected $id;
 
 	/**
 	 * @var string
@@ -76,63 +76,63 @@ class User implements UserInterface, \Serializable
 	 */
 	protected $password;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    protected $studentId;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	protected $studentId;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    protected $mail;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string", length=100, nullable=true)
+	 */
+	protected $mail;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $fullName;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 */
+	protected $fullName;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Length(min = "2", max = "50")
-     */
-    protected $firstName;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 * @Assert\Length(min = "2", max = "50")
+	 */
+	protected $firstName;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Length(min = "2", max = "50")
-     */
-    protected $lastName;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 * @Assert\Length(min = "2", max = "50")
+	 */
+	protected $lastName;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $formation;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 */
+	protected $formation;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $niveau;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 */
+	protected $niveau;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $filiere;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 */
+	protected $filiere;
 
 	/**
 	 * @var string
@@ -150,21 +150,21 @@ class User implements UserInterface, \Serializable
 	 */
 	protected $phoneNumberPrivacy;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Length(min = "2", max = "50")
-     */
-    protected $title;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 * @Assert\Length(min = "2", max = "50")
+	 */
+	protected $title;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Length(min = "2", max = "50")
-     */
-    protected $room;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 * @Assert\Length(min = "2", max = "50")
+	 */
+	protected $room;
 
 	/**
 	 * @var string
@@ -322,7 +322,7 @@ class User implements UserInterface, \Serializable
 
 	/**
 	 * @var string
-	 *     > For trombi
+	 *	 > For trombi
 	 *
 	 * @ORM\Column(type="string", length=50, nullable=true)
 	 * @Assert\Length(max = "50")
@@ -331,7 +331,7 @@ class User implements UserInterface, \Serializable
 
 	/**
 	 * @var string
-	 *     > For trombi
+	 *	 > For trombi
 	 *
 	 * @ORM\Column(type="text", nullable=true)
 	 * @Assert\Length(min = "15")
@@ -340,7 +340,7 @@ class User implements UserInterface, \Serializable
 
 	/**
 	 * @var string
-	 *     > For trombi
+	 *	 > For trombi
 	 *
 	 * @ORM\Column(type="text", nullable=true)
 	 * @Assert\Length(min = "15")
@@ -405,7 +405,7 @@ class User implements UserInterface, \Serializable
 
 	/**
 	 * Added permissions
-	 *      => used for administration permissions
+	 *	  => used for administration permissions
 	 *
 	 * @var array
 	 *
@@ -415,7 +415,7 @@ class User implements UserInterface, \Serializable
 
 	/**
 	 * Removed permissions
-	 *      => used for classic permissions that everyone but this specific user have
+	 *	  => used for classic permissions that everyone but this specific user have
 	 *
 	 * @var array
 	 *
@@ -467,6 +467,15 @@ class User implements UserInterface, \Serializable
 	 * @ORM\Column(type="array")
 	 */
 	protected $options;
+
+	/**
+	 * Semesters history for badges and customizations
+	 *
+	 * @var array
+	 *
+	 * @ORM\Column(type="array")
+	 */
+	protected $semestersHistory = array();
 
 	/**
 	 * Last visit date
@@ -837,51 +846,51 @@ class User implements UserInterface, \Serializable
 		) = unserialize($serialized);
 	}
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+	/**
+	 * Get id
+	 *
+	 * @return integer
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
 
-    /**
-     * Set login
-     *
-     * @param string $login
-     * @return User
-     */
-    public function setLogin($login)
-    {
-        $this->login = $login;
+	/**
+	 * Set login
+	 *
+	 * @param string $login
+	 * @return User
+	 */
+	public function setLogin($login)
+	{
+		$this->login = $login;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get login
-     *
-     * @return string
-     */
-    public function getLogin()
-    {
-        return $this->login;
-    }
+	/**
+	 * Get login
+	 *
+	 * @return string
+	 */
+	public function getLogin()
+	{
+		return $this->login;
+	}
 
-    /**
-     * Set password
-     *
-     * @param string $password
-     * @return User
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
+	/**
+	 * Set password
+	 *
+	 * @param string $password
+	 * @return User
+	 */
+	public function setPassword($password)
+	{
+		$this->password = $password;
 
-        return $this;
-    }
+		return $this;
+	}
 
 	/**
 	 * @param int $studentId
@@ -898,38 +907,38 @@ class User implements UserInterface, \Serializable
 		return $this;
 	}
 
-    /**
-     * Get studentId
-     *
-     * @return integer
-     */
-    public function getStudentId()
-    {
-        return $this->studentId;
-    }
+	/**
+	 * Get studentId
+	 *
+	 * @return integer
+	 */
+	public function getStudentId()
+	{
+		return $this->studentId;
+	}
 
-    /**
-     * Set mail
-     *
-     * @param string $mail
-     * @return User
-     */
-    public function setMail($mail)
-    {
-        $this->mail = $mail;
+	/**
+	 * Set mail
+	 *
+	 * @param string $mail
+	 * @return User
+	 */
+	public function setMail($mail)
+	{
+		$this->mail = $mail;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get mail
-     *
-     * @return string
-     */
-    public function getMail()
-    {
-        return $this->mail;
-    }
+	/**
+	 * Get mail
+	 *
+	 * @return string
+	 */
+	public function getMail()
+	{
+		return $this->mail;
+	}
 
 	/**
 	 * @param string $fullName
@@ -959,51 +968,51 @@ class User implements UserInterface, \Serializable
 		return $this->fullName;
 	}
 
-    /**
-     * Set firstName
-     *
-     * @param string $firstName
-     * @return User
-     */
-    public function setFirstName($firstName)
-    {
-        $this->firstName = $firstName;
+	/**
+	 * Set firstName
+	 *
+	 * @param string $firstName
+	 * @return User
+	 */
+	public function setFirstName($firstName)
+	{
+		$this->firstName = $firstName;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get firstName
-     *
-     * @return string
-     */
-    public function getFirstName()
-    {
-        return $this->firstName;
-    }
+	/**
+	 * Get firstName
+	 *
+	 * @return string
+	 */
+	public function getFirstName()
+	{
+		return $this->firstName;
+	}
 
-    /**
-     * Set lastName
-     *
-     * @param string $lastName
-     * @return User
-     */
-    public function setLastName($lastName)
-    {
-        $this->lastName = $lastName;
+	/**
+	 * Set lastName
+	 *
+	 * @param string $lastName
+	 * @return User
+	 */
+	public function setLastName($lastName)
+	{
+		$this->lastName = $lastName;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get lastName
-     *
-     * @return string
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
-    }
+	/**
+	 * Get lastName
+	 *
+	 * @return string
+	 */
+	public function getLastName()
+	{
+		return $this->lastName;
+	}
 
 	/**
 	 * @param string $formation
@@ -1020,15 +1029,15 @@ class User implements UserInterface, \Serializable
 		return $this;
 	}
 
-    /**
-     * Get formation
-     *
-     * @return string
-     */
-    public function getFormation()
-    {
-        return $this->formation;
-    }
+	/**
+	 * Get formation
+	 *
+	 * @return string
+	 */
+	public function getFormation()
+	{
+		return $this->formation;
+	}
 
 	/**
 	 * @param string $niveau
@@ -1045,15 +1054,15 @@ class User implements UserInterface, \Serializable
 		return $this;
 	}
 
-    /**
-     * Get niveau
-     *
-     * @return string
-     */
-    public function getNiveau()
-    {
-        return $this->niveau;
-    }
+	/**
+	 * Get niveau
+	 *
+	 * @return string
+	 */
+	public function getNiveau()
+	{
+		return $this->niveau;
+	}
 
 	/**
 	 * @param string $filiere
@@ -1070,15 +1079,15 @@ class User implements UserInterface, \Serializable
 		return $this;
 	}
 
-    /**
-     * Get filiere
-     *
-     * @return string
-     */
-    public function getFiliere()
-    {
-        return $this->filiere;
-    }
+	/**
+	 * Get filiere
+	 *
+	 * @return string
+	 */
+	public function getFiliere()
+	{
+		return $this->filiere;
+	}
 
 	/**
 	 * @param string $phoneNumber
@@ -1095,38 +1104,38 @@ class User implements UserInterface, \Serializable
 		return $this;
 	}
 
-    /**
-     * Get phoneNumber
-     *
-     * @return string
-     */
-    public function getPhoneNumber()
-    {
-        return $this->phoneNumber;
-    }
+	/**
+	 * Get phoneNumber
+	 *
+	 * @return string
+	 */
+	public function getPhoneNumber()
+	{
+		return $this->phoneNumber;
+	}
 
-    /**
-     * Set phoneNumberPrivacy
-     *
-     * @param integer $phoneNumberPrivacy
-     * @return User
-     */
-    public function setPhoneNumberPrivacy($phoneNumberPrivacy)
-    {
-        $this->phoneNumberPrivacy = $phoneNumberPrivacy;
+	/**
+	 * Set phoneNumberPrivacy
+	 *
+	 * @param integer $phoneNumberPrivacy
+	 * @return User
+	 */
+	public function setPhoneNumberPrivacy($phoneNumberPrivacy)
+	{
+		$this->phoneNumberPrivacy = $phoneNumberPrivacy;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get phoneNumberPrivacy
-     *
-     * @return integer
-     */
-    public function getPhoneNumberPrivacy()
-    {
-        return $this->phoneNumberPrivacy;
-    }
+	/**
+	 * Get phoneNumberPrivacy
+	 *
+	 * @return integer
+	 */
+	public function getPhoneNumberPrivacy()
+	{
+		return $this->phoneNumberPrivacy;
+	}
 
 	/**
 	 * @param string $title
@@ -1143,15 +1152,15 @@ class User implements UserInterface, \Serializable
 		return $this;
 	}
 
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
+	/**
+	 * Get title
+	 *
+	 * @return string
+	 */
+	public function getTitle()
+	{
+		return $this->title;
+	}
 
 	/**
 	 * @param string $room
@@ -1169,336 +1178,336 @@ class User implements UserInterface, \Serializable
 	}
 
 	/**
-     * Get room
-     *
-     * @return string
-     */
-    public function getRoom()
-    {
-        return $this->room;
-    }
+	 * Get room
+	 *
+	 * @return string
+	 */
+	public function getRoom()
+	{
+		return $this->room;
+	}
 
-    /**
-     * Set avatar
-     *
-     * @param string $avatar
-     * @return User
-     */
-    public function setAvatar($avatar)
-    {
-        $this->avatar = $avatar;
+	/**
+	 * Set avatar
+	 *
+	 * @param string $avatar
+	 * @return User
+	 */
+	public function setAvatar($avatar)
+	{
+		$this->avatar = $avatar;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get avatar
-     *
-     * @return string
-     */
-    public function getAvatar()
-    {
-        return $this->avatar;
-    }
+	/**
+	 * Get avatar
+	 *
+	 * @return string
+	 */
+	public function getAvatar()
+	{
+		return $this->avatar;
+	}
 
-    /**
-     * Set sex
-     *
-     * @param string $sex
-     * @return User
-     */
-    public function setSex($sex)
-    {
-        $this->sex = $sex;
+	/**
+	 * Set sex
+	 *
+	 * @param string $sex
+	 * @return User
+	 */
+	public function setSex($sex)
+	{
+		$this->sex = $sex;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get sex
-     *
-     * @return string
-     */
-    public function getSex()
-    {
-        return $this->sex;
-    }
+	/**
+	 * Get sex
+	 *
+	 * @return string
+	 */
+	public function getSex()
+	{
+		return $this->sex;
+	}
 
-    /**
-     * Set sexPrivacy
-     *
-     * @param integer $sexPrivacy
-     * @return User
-     */
-    public function setSexPrivacy($sexPrivacy)
-    {
-        $this->sexPrivacy = $sexPrivacy;
+	/**
+	 * Set sexPrivacy
+	 *
+	 * @param integer $sexPrivacy
+	 * @return User
+	 */
+	public function setSexPrivacy($sexPrivacy)
+	{
+		$this->sexPrivacy = $sexPrivacy;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get sexPrivacy
-     *
-     * @return integer
-     */
-    public function getSexPrivacy()
-    {
-        return $this->sexPrivacy;
-    }
+	/**
+	 * Get sexPrivacy
+	 *
+	 * @return integer
+	 */
+	public function getSexPrivacy()
+	{
+		return $this->sexPrivacy;
+	}
 
-    /**
-     * Set nationality
-     *
-     * @param string $nationality
-     * @return User
-     */
-    public function setNationality($nationality)
-    {
-        $this->nationality = $nationality;
+	/**
+	 * Set nationality
+	 *
+	 * @param string $nationality
+	 * @return User
+	 */
+	public function setNationality($nationality)
+	{
+		$this->nationality = $nationality;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get nationality
-     *
-     * @return string
-     */
-    public function getNationality()
-    {
-        return $this->nationality;
-    }
+	/**
+	 * Get nationality
+	 *
+	 * @return string
+	 */
+	public function getNationality()
+	{
+		return $this->nationality;
+	}
 
-    /**
-     * Set nationalityPrivacy
-     *
-     * @param integer $nationalityPrivacy
-     * @return User
-     */
-    public function setNationalityPrivacy($nationalityPrivacy)
-    {
-        $this->nationalityPrivacy = $nationalityPrivacy;
+	/**
+	 * Set nationalityPrivacy
+	 *
+	 * @param integer $nationalityPrivacy
+	 * @return User
+	 */
+	public function setNationalityPrivacy($nationalityPrivacy)
+	{
+		$this->nationalityPrivacy = $nationalityPrivacy;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get nationalityPrivacy
-     *
-     * @return integer
-     */
-    public function getNationalityPrivacy()
-    {
-        return $this->nationalityPrivacy;
-    }
+	/**
+	 * Get nationalityPrivacy
+	 *
+	 * @return integer
+	 */
+	public function getNationalityPrivacy()
+	{
+		return $this->nationalityPrivacy;
+	}
 
-    /**
-     * Set adress
-     *
-     * @param string $adress
-     * @return User
-     */
-    public function setAdress($adress)
-    {
-        $this->adress = $adress;
+	/**
+	 * Set adress
+	 *
+	 * @param string $adress
+	 * @return User
+	 */
+	public function setAdress($adress)
+	{
+		$this->adress = $adress;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get adress
-     *
-     * @return string
-     */
-    public function getAdress()
-    {
-        return $this->adress;
-    }
+	/**
+	 * Get adress
+	 *
+	 * @return string
+	 */
+	public function getAdress()
+	{
+		return $this->adress;
+	}
 
-    /**
-     * Set adressPrivacy
-     *
-     * @param integer $adressPrivacy
-     * @return User
-     */
-    public function setAdressPrivacy($adressPrivacy)
-    {
-        $this->adressPrivacy = $adressPrivacy;
+	/**
+	 * Set adressPrivacy
+	 *
+	 * @param integer $adressPrivacy
+	 * @return User
+	 */
+	public function setAdressPrivacy($adressPrivacy)
+	{
+		$this->adressPrivacy = $adressPrivacy;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get adressPrivacy
-     *
-     * @return integer
-     */
-    public function getAdressPrivacy()
-    {
-        return $this->adressPrivacy;
-    }
+	/**
+	 * Get adressPrivacy
+	 *
+	 * @return integer
+	 */
+	public function getAdressPrivacy()
+	{
+		return $this->adressPrivacy;
+	}
 
-    /**
-     * Set postalCode
-     *
-     * @param string $postalCode
-     * @return User
-     */
-    public function setPostalCode($postalCode)
-    {
-        $this->postalCode = $postalCode;
+	/**
+	 * Set postalCode
+	 *
+	 * @param string $postalCode
+	 * @return User
+	 */
+	public function setPostalCode($postalCode)
+	{
+		$this->postalCode = $postalCode;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get postalCode
-     *
-     * @return string
-     */
-    public function getPostalCode()
-    {
-        return $this->postalCode;
-    }
+	/**
+	 * Get postalCode
+	 *
+	 * @return string
+	 */
+	public function getPostalCode()
+	{
+		return $this->postalCode;
+	}
 
-    /**
-     * Set postalCodePrivacy
-     *
-     * @param integer $postalCodePrivacy
-     * @return User
-     */
-    public function setPostalCodePrivacy($postalCodePrivacy)
-    {
-        $this->postalCodePrivacy = $postalCodePrivacy;
+	/**
+	 * Set postalCodePrivacy
+	 *
+	 * @param integer $postalCodePrivacy
+	 * @return User
+	 */
+	public function setPostalCodePrivacy($postalCodePrivacy)
+	{
+		$this->postalCodePrivacy = $postalCodePrivacy;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get postalCodePrivacy
-     *
-     * @return integer
-     */
-    public function getPostalCodePrivacy()
-    {
-        return $this->postalCodePrivacy;
-    }
+	/**
+	 * Get postalCodePrivacy
+	 *
+	 * @return integer
+	 */
+	public function getPostalCodePrivacy()
+	{
+		return $this->postalCodePrivacy;
+	}
 
-    /**
-     * Set city
-     *
-     * @param string $city
-     * @return User
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
+	/**
+	 * Set city
+	 *
+	 * @param string $city
+	 * @return User
+	 */
+	public function setCity($city)
+	{
+		$this->city = $city;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get city
-     *
-     * @return string
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
+	/**
+	 * Get city
+	 *
+	 * @return string
+	 */
+	public function getCity()
+	{
+		return $this->city;
+	}
 
-    /**
-     * Set cityPrivacy
-     *
-     * @param integer $cityPrivacy
-     * @return User
-     */
-    public function setCityPrivacy($cityPrivacy)
-    {
-        $this->cityPrivacy = $cityPrivacy;
+	/**
+	 * Set cityPrivacy
+	 *
+	 * @param integer $cityPrivacy
+	 * @return User
+	 */
+	public function setCityPrivacy($cityPrivacy)
+	{
+		$this->cityPrivacy = $cityPrivacy;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get cityPrivacy
-     *
-     * @return integer
-     */
-    public function getCityPrivacy()
-    {
-        return $this->cityPrivacy;
-    }
+	/**
+	 * Get cityPrivacy
+	 *
+	 * @return integer
+	 */
+	public function getCityPrivacy()
+	{
+		return $this->cityPrivacy;
+	}
 
-    /**
-     * Set country
-     *
-     * @param string $country
-     * @return User
-     */
-    public function setCountry($country)
-    {
-        $this->country = $country;
+	/**
+	 * Set country
+	 *
+	 * @param string $country
+	 * @return User
+	 */
+	public function setCountry($country)
+	{
+		$this->country = $country;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get country
-     *
-     * @return string
-     */
-    public function getCountry()
-    {
-        return $this->country;
-    }
+	/**
+	 * Get country
+	 *
+	 * @return string
+	 */
+	public function getCountry()
+	{
+		return $this->country;
+	}
 
-    /**
-     * Set countryPrivacy
-     *
-     * @param integer $countryPrivacy
-     * @return User
-     */
-    public function setCountryPrivacy($countryPrivacy)
-    {
-        $this->countryPrivacy = $countryPrivacy;
+	/**
+	 * Set countryPrivacy
+	 *
+	 * @param integer $countryPrivacy
+	 * @return User
+	 */
+	public function setCountryPrivacy($countryPrivacy)
+	{
+		$this->countryPrivacy = $countryPrivacy;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get countryPrivacy
-     *
-     * @return integer
-     */
-    public function getCountryPrivacy()
-    {
-        return $this->countryPrivacy;
-    }
+	/**
+	 * Get countryPrivacy
+	 *
+	 * @return integer
+	 */
+	public function getCountryPrivacy()
+	{
+		return $this->countryPrivacy;
+	}
 
-    /**
-     * Set birthday
-     *
-     * @param \DateTime $birthday
-     * @return User
-     */
-    public function setBirthday($birthday)
-    {
-        $this->birthday = $birthday;
+	/**
+	 * Set birthday
+	 *
+	 * @param \DateTime $birthday
+	 * @return User
+	 */
+	public function setBirthday($birthday)
+	{
+		$this->birthday = $birthday;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get birthday
-     *
-     * @return \DateTime
-     */
-    public function getBirthday()
-    {
-        return $this->birthday;
-    }
+	/**
+	 * Get birthday
+	 *
+	 * @return \DateTime
+	 */
+	public function getBirthday()
+	{
+		return $this->birthday;
+	}
 
 	/**
 	 * @return integer
@@ -1508,350 +1517,350 @@ class User implements UserInterface, \Serializable
 		return $this->birthday->diff(new \DateTime())->y;
 	}
 
-    /**
-     * Set birthdayPrivacy
-     *
-     * @param integer $birthdayPrivacy
-     * @return User
-     */
-    public function setBirthdayPrivacy($birthdayPrivacy)
-    {
-        $this->birthdayPrivacy = $birthdayPrivacy;
+	/**
+	 * Set birthdayPrivacy
+	 *
+	 * @param integer $birthdayPrivacy
+	 * @return User
+	 */
+	public function setBirthdayPrivacy($birthdayPrivacy)
+	{
+		$this->birthdayPrivacy = $birthdayPrivacy;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get birthdayPrivacy
-     *
-     * @return integer
-     */
-    public function getBirthdayPrivacy()
-    {
-        return $this->birthdayPrivacy;
-    }
+	/**
+	 * Get birthdayPrivacy
+	 *
+	 * @return integer
+	 */
+	public function getBirthdayPrivacy()
+	{
+		return $this->birthdayPrivacy;
+	}
 
-    /**
-     * Set birthdayDisplayOnlyAge
-     *
-     * @param boolean $birthdayDisplayOnlyAge
-     * @return User
-     */
-    public function setBirthdayDisplayOnlyAge($birthdayDisplayOnlyAge)
-    {
-        $this->birthdayDisplayOnlyAge = $birthdayDisplayOnlyAge;
+	/**
+	 * Set birthdayDisplayOnlyAge
+	 *
+	 * @param boolean $birthdayDisplayOnlyAge
+	 * @return User
+	 */
+	public function setBirthdayDisplayOnlyAge($birthdayDisplayOnlyAge)
+	{
+		$this->birthdayDisplayOnlyAge = $birthdayDisplayOnlyAge;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get birthdayDisplayOnlyAge
-     *
-     * @return boolean
-     */
-    public function getBirthdayDisplayOnlyAge()
-    {
-        return $this->birthdayDisplayOnlyAge;
-    }
+	/**
+	 * Get birthdayDisplayOnlyAge
+	 *
+	 * @return boolean
+	 */
+	public function getBirthdayDisplayOnlyAge()
+	{
+		return $this->birthdayDisplayOnlyAge;
+	}
 
-    /**
-     * Set personnalMail
-     *
-     * @param string $personnalMail
-     * @return User
-     */
-    public function setPersonnalMail($personnalMail)
-    {
-        $this->personnalMail = $personnalMail;
+	/**
+	 * Set personnalMail
+	 *
+	 * @param string $personnalMail
+	 * @return User
+	 */
+	public function setPersonnalMail($personnalMail)
+	{
+		$this->personnalMail = $personnalMail;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get personnalMail
-     *
-     * @return string
-     */
-    public function getPersonnalMail()
-    {
-        return $this->personnalMail;
-    }
+	/**
+	 * Get personnalMail
+	 *
+	 * @return string
+	 */
+	public function getPersonnalMail()
+	{
+		return $this->personnalMail;
+	}
 
-    /**
-     * Set personnalMailPrivacy
-     *
-     * @param integer $personnalMailPrivacy
-     * @return User
-     */
-    public function setPersonnalMailPrivacy($personnalMailPrivacy)
-    {
-        $this->personnalMailPrivacy = $personnalMailPrivacy;
+	/**
+	 * Set personnalMailPrivacy
+	 *
+	 * @param integer $personnalMailPrivacy
+	 * @return User
+	 */
+	public function setPersonnalMailPrivacy($personnalMailPrivacy)
+	{
+		$this->personnalMailPrivacy = $personnalMailPrivacy;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get personnalMailPrivacy
-     *
-     * @return integer
-     */
-    public function getPersonnalMailPrivacy()
-    {
-        return $this->personnalMailPrivacy;
-    }
+	/**
+	 * Get personnalMailPrivacy
+	 *
+	 * @return integer
+	 */
+	public function getPersonnalMailPrivacy()
+	{
+		return $this->personnalMailPrivacy;
+	}
 
-    /**
-     * Set language
-     *
-     * @param string $language
-     * @return User
-     */
-    public function setLanguage($language)
-    {
-        $this->language = $language;
+	/**
+	 * Set language
+	 *
+	 * @param string $language
+	 * @return User
+	 */
+	public function setLanguage($language)
+	{
+		$this->language = $language;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get language
-     *
-     * @return string
-     */
-    public function getLanguage()
-    {
-        return $this->language;
-    }
+	/**
+	 * Get language
+	 *
+	 * @return string
+	 */
+	public function getLanguage()
+	{
+		return $this->language;
+	}
 
-    /**
-     * Set isStudent
-     *
-     * @param boolean $isStudent
-     * @return User
-     */
-    public function setIsStudent($isStudent)
-    {
-        $this->isStudent = $isStudent;
+	/**
+	 * Set isStudent
+	 *
+	 * @param boolean $isStudent
+	 * @return User
+	 */
+	public function setIsStudent($isStudent)
+	{
+		$this->isStudent = $isStudent;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get isStudent
-     *
-     * @return boolean
-     */
-    public function getIsStudent()
-    {
-        return $this->isStudent;
-    }
+	/**
+	 * Get isStudent
+	 *
+	 * @return boolean
+	 */
+	public function getIsStudent()
+	{
+		return $this->isStudent;
+	}
 
-    /**
-     * Set surnom
-     *
-     * @param string $surnom
-     * @return User
-     */
-    public function setSurnom($surnom)
-    {
-        $this->surnom = $surnom;
+	/**
+	 * Set surnom
+	 *
+	 * @param string $surnom
+	 * @return User
+	 */
+	public function setSurnom($surnom)
+	{
+		$this->surnom = $surnom;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get surnom
-     *
-     * @return string
-     */
-    public function getSurnom()
-    {
-        return $this->surnom;
-    }
+	/**
+	 * Get surnom
+	 *
+	 * @return string
+	 */
+	public function getSurnom()
+	{
+		return $this->surnom;
+	}
 
-    /**
-     * Set jadis
-     *
-     * @param string $jadis
-     * @return User
-     */
-    public function setJadis($jadis)
-    {
-        $this->jadis = $jadis;
+	/**
+	 * Set jadis
+	 *
+	 * @param string $jadis
+	 * @return User
+	 */
+	public function setJadis($jadis)
+	{
+		$this->jadis = $jadis;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get jadis
-     *
-     * @return string
-     */
-    public function getJadis()
-    {
-        return $this->jadis;
-    }
+	/**
+	 * Get jadis
+	 *
+	 * @return string
+	 */
+	public function getJadis()
+	{
+		return $this->jadis;
+	}
 
-    /**
-     * Set passions
-     *
-     * @param string $passions
-     * @return User
-     */
-    public function setPassions($passions)
-    {
-        $this->passions = $passions;
+	/**
+	 * Set passions
+	 *
+	 * @param string $passions
+	 * @return User
+	 */
+	public function setPassions($passions)
+	{
+		$this->passions = $passions;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get passions
-     *
-     * @return string
-     */
-    public function getPassions()
-    {
-        return $this->passions;
-    }
+	/**
+	 * Get passions
+	 *
+	 * @return string
+	 */
+	public function getPassions()
+	{
+		return $this->passions;
+	}
 
-    /**
-     * Set website
-     *
-     * @param string $website
-     * @return User
-     */
-    public function setWebsite($website)
-    {
-        $this->website = $website;
+	/**
+	 * Set website
+	 *
+	 * @param string $website
+	 * @return User
+	 */
+	public function setWebsite($website)
+	{
+		$this->website = $website;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get website
-     *
-     * @return string
-     */
-    public function getWebsite()
-    {
-        return $this->website;
-    }
+	/**
+	 * Get website
+	 *
+	 * @return string
+	 */
+	public function getWebsite()
+	{
+		return $this->website;
+	}
 
-    /**
-     * Set facebook
-     *
-     * @param string $facebook
-     * @return User
-     */
-    public function setFacebook($facebook)
-    {
-        $this->facebook = $facebook;
+	/**
+	 * Set facebook
+	 *
+	 * @param string $facebook
+	 * @return User
+	 */
+	public function setFacebook($facebook)
+	{
+		$this->facebook = $facebook;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get facebook
-     *
-     * @return string
-     */
-    public function getFacebook()
-    {
-        return $this->facebook;
-    }
+	/**
+	 * Get facebook
+	 *
+	 * @return string
+	 */
+	public function getFacebook()
+	{
+		return $this->facebook;
+	}
 
-    /**
-     * Set twitter
-     *
-     * @param string $twitter
-     * @return User
-     */
-    public function setTwitter($twitter)
-    {
-        $this->twitter = $twitter;
+	/**
+	 * Set twitter
+	 *
+	 * @param string $twitter
+	 * @return User
+	 */
+	public function setTwitter($twitter)
+	{
+		$this->twitter = $twitter;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get twitter
-     *
-     * @return string
-     */
-    public function getTwitter()
-    {
-        return $this->twitter;
-    }
+	/**
+	 * Get twitter
+	 *
+	 * @return string
+	 */
+	public function getTwitter()
+	{
+		return $this->twitter;
+	}
 
-    /**
-     * Set linkedin
-     *
-     * @param string $linkedin
-     * @return User
-     */
-    public function setLinkedin($linkedin)
-    {
-        $this->linkedin = $linkedin;
+	/**
+	 * Set linkedin
+	 *
+	 * @param string $linkedin
+	 * @return User
+	 */
+	public function setLinkedin($linkedin)
+	{
+		$this->linkedin = $linkedin;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get linkedin
-     *
-     * @return string
-     */
-    public function getLinkedin()
-    {
-        return $this->linkedin;
-    }
+	/**
+	 * Get linkedin
+	 *
+	 * @return string
+	 */
+	public function getLinkedin()
+	{
+		return $this->linkedin;
+	}
 
-    /**
-     * Set viadeo
-     *
-     * @param string $viadeo
-     * @return User
-     */
-    public function setViadeo($viadeo)
-    {
-        $this->viadeo = $viadeo;
+	/**
+	 * Set viadeo
+	 *
+	 * @param string $viadeo
+	 * @return User
+	 */
+	public function setViadeo($viadeo)
+	{
+		$this->viadeo = $viadeo;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get viadeo
-     *
-     * @return string
-     */
-    public function getViadeo()
-    {
-        return $this->viadeo;
-    }
+	/**
+	 * Get viadeo
+	 *
+	 * @return string
+	 */
+	public function getViadeo()
+	{
+		return $this->viadeo;
+	}
 
-    /**
-     * Set uvs
-     *
-     * @param string $uvs
-     * @return User
-     */
-    public function setUvs($uvs)
-    {
-        $this->uvs = $uvs;
+	/**
+	 * Set uvs
+	 *
+	 * @param string $uvs
+	 * @return User
+	 */
+	public function setUvs($uvs)
+	{
+		$this->uvs = $uvs;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get uvs
-     *
-     * @return string
-     */
-    public function getUvs()
-    {
-        return $this->uvs;
-    }
+	/**
+	 * Get uvs
+	 *
+	 * @return string
+	 */
+	public function getUvs()
+	{
+		return $this->uvs;
+	}
 
 	/**
 	 * @return array
@@ -1869,49 +1878,51 @@ class User implements UserInterface, \Serializable
 		return implode(', ', $this->getUvsList());
 	}
 
-    /**
-     * Set ldapInformations
-     *
-     * @param \stdClass $ldapInformations
-     * @return User
-     */
-    public function setLdapInformations($ldapInformations)
-    {
-        return $this;
-    }
+	/**
+	 * Set ldapInformations
+	 *
+	 * @deprecated Deprecated since version 10.0 Bêta1, to be removed in 10.1
+	 * @param \stdClass $ldapInformations
+	 * @return User
+	 */
+	public function setLdapInformations($ldapInformations)
+	{
+		return $this;
+	}
 
-    /**
-     * Get ldapInformations
-     *
-     * @return \stdClass
-     */
-    public function getLdapInformations()
-    {
-        return new \stdClass();
-    }
+	/**
+	 * Get ldapInformations
+	 *
+	 * @deprecated Deprecated since version 10.0 Bêta1, to be removed in 10.1
+	 * @return \stdClass
+	 */
+	public function getLdapInformations()
+	{
+		return new \stdClass();
+	}
 
-    /**
-     * Set keepActive
-     *
-     * @param boolean $keepActive
-     * @return User
-     */
-    public function setKeepActive($keepActive)
-    {
-        $this->keepActive = $keepActive;
+	/**
+	 * Set keepActive
+	 *
+	 * @param boolean $keepActive
+	 * @return User
+	 */
+	public function setKeepActive($keepActive)
+	{
+		$this->keepActive = $keepActive;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get keepActive
-     *
-     * @return boolean
-     */
-    public function getKeepActive()
-    {
-        return $this->keepActive;
-    }
+	/**
+	 * Get keepActive
+	 *
+	 * @return boolean
+	 */
+	public function getKeepActive()
+	{
+		return $this->keepActive;
+	}
 
 	/**
 	 * @return boolean
@@ -1921,28 +1932,28 @@ class User implements UserInterface, \Serializable
 		return $this->keepActive;
 	}
 
-    /**
-     * Set permissions
-     *
-     * @param array $permissions
-     * @return User
-     */
-    public function setPermissions($permissions)
-    {
-        $this->permissions = $permissions;
+	/**
+	 * Set permissions
+	 *
+	 * @param array $permissions
+	 * @return User
+	 */
+	public function setPermissions($permissions)
+	{
+		$this->permissions = $permissions;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get permissions
-     *
-     * @return array
-     */
-    public function getPermissions()
-    {
-        return $this->permissions;
-    }
+	/**
+	 * Get permissions
+	 *
+	 * @return array
+	 */
+	public function getPermissions()
+	{
+		return $this->permissions;
+	}
 
 	/**
 	 * @param string $permissionName
@@ -1996,28 +2007,28 @@ class User implements UserInterface, \Serializable
 		return $this;
 	}
 
-    /**
-     * Set removedPermissions
-     *
-     * @param array $removedPermissions
-     * @return User
-     */
-    public function setRemovedPermissions($removedPermissions)
-    {
-        $this->removedPermissions = $removedPermissions;
+	/**
+	 * Set removedPermissions
+	 *
+	 * @param array $removedPermissions
+	 * @return User
+	 */
+	public function setRemovedPermissions($removedPermissions)
+	{
+		$this->removedPermissions = $removedPermissions;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get removedPermissions
-     *
-     * @return array
-     */
-    public function getRemovedPermissions()
-    {
-        return $this->removedPermissions;
-    }
+	/**
+	 * Get removedPermissions
+	 *
+	 * @return array
+	 */
+	public function getRemovedPermissions()
+	{
+		return $this->removedPermissions;
+	}
 
 	/**
 	 * @param string $permission
@@ -2054,64 +2065,64 @@ class User implements UserInterface, \Serializable
 		return $this;
 	}
 
-    /**
-     * Set isAdmin
-     *
-     * @param boolean $isAdmin
-     * @return User
-     */
-    public function setIsAdmin($isAdmin)
-    {
-        $this->isAdmin = $isAdmin;
+	/**
+	 * Set isAdmin
+	 *
+	 * @param boolean $isAdmin
+	 * @return User
+	 */
+	public function setIsAdmin($isAdmin)
+	{
+		$this->isAdmin = $isAdmin;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get isAdmin
-     *
-     * @return boolean
-     */
-    public function getIsAdmin()
-    {
-        return $this->isAdmin;
-    }
+	/**
+	 * Get isAdmin
+	 *
+	 * @return boolean
+	 */
+	public function getIsAdmin()
+	{
+		return $this->isAdmin;
+	}
 
-    /**
-     * Set isReadOnly
-     *
-     * @param boolean $isReadOnly
-     * @return User
-     */
-    public function setIsReadOnly($isReadOnly)
-    {
-        $this->isReadOnly = $isReadOnly;
+	/**
+	 * Set isReadOnly
+	 *
+	 * @param boolean $isReadOnly
+	 * @return User
+	 */
+	public function setIsReadOnly($isReadOnly)
+	{
+		$this->isReadOnly = $isReadOnly;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get isReadOnly
-     *
-     * @return boolean
-     */
-    public function getIsReadOnly()
-    {
-        return $this->isReadOnly;
-    }
+	/**
+	 * Get isReadOnly
+	 *
+	 * @return boolean
+	 */
+	public function getIsReadOnly()
+	{
+		return $this->isReadOnly;
+	}
 
-    /**
-     * Set readOnlyExpirationDate
-     *
-     * @param \DateTime $readOnlyExpirationDate
-     * @return User
-     */
-    public function setReadOnlyExpirationDate($readOnlyExpirationDate)
-    {
-        $this->readOnlyExpirationDate = $readOnlyExpirationDate;
+	/**
+	 * Set readOnlyExpirationDate
+	 *
+	 * @param \DateTime $readOnlyExpirationDate
+	 * @return User
+	 */
+	public function setReadOnlyExpirationDate($readOnlyExpirationDate)
+	{
+		$this->readOnlyExpirationDate = $readOnlyExpirationDate;
 
-        return $this;
-    }
+		return $this;
+	}
 
 	/**
 	 * @param string $dateString
@@ -2129,38 +2140,92 @@ class User implements UserInterface, \Serializable
 		return $this;
 	}
 
-    /**
-     * Get readOnlyExpirationDate
-     *
-     * @return \DateTime
-     */
-    public function getReadOnlyExpirationDate()
-    {
-        return $this->readOnlyExpirationDate;
-    }
+	/**
+	 * Get readOnlyExpirationDate
+	 *
+	 * @return \DateTime
+	 */
+	public function getReadOnlyExpirationDate()
+	{
+		return $this->readOnlyExpirationDate;
+	}
 
-    /**
-     * Set badges
-     *
-     * @param array $badges
-     * @return User
-     */
-    public function setBadges($badges)
-    {
-        $this->badges = $badges;
+	/**
+	 * Set badges
+	 *
+	 * @param array $badges
+	 * @return User
+	 */
+	public function setBadges($badges)
+	{
+		$this->badges = $badges;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get badges
-     *
-     * @return array
-     */
-    public function getBadges()
-    {
-        return $this->badges;
-    }
+	/**
+	 * Get badges (generate some of them on the fly)
+	 *
+	 * @return array
+	 */
+	public function getBadges()
+	{
+		$badges = $this->badges;
+
+		if (count($badges) > 10) {
+			$badges['challenge'] = new Badge('challenge');
+		}
+		if (count($badges) > 20) {
+			$badges['challenge']->setLevel(2);
+		}
+		if (count($badges) > 30) {
+			$badges['challenge']->setLevel(3);
+		}
+		if (count($badges) > 40) {
+			$badges['challenge']->setLevel(4);
+		}
+		if (count($badges) > 50) {
+			$badges['challenge']->setLevel(5);
+		}
+		if (count($badges) > 60) {
+			$badges['challenge']->setLevel(6);
+		}
+
+		if ($this->getNiveau() == 'TC1' || $this->getNiveau() == 'TC01') {
+			$badges['tc01'] = new Badge('tc01');
+		}
+
+		if ($this->getNiveau() == 'TC6' || $this->getNiveau() == 'TC06') {
+			$badges['tc06'] = new Badge('tc06');
+		}
+
+		if ($this->hasBadge('subscriber') && $this->hasBadge('forum_message') && $this->hasBadge('profile_completed')) {
+			$badges['starter'] = new Badge('starter');
+		}
+
+		/** @var Member[] $memberships */
+		$memberships = $this->getMemberships()->toArray();
+
+		if (count($memberships) > 0) {
+			$badges['orga_member'] = new Badge('orga_member');
+		}
+
+		foreach ($memberships as $member) {
+			if ($member->isFromBureau()) {
+				$badges['orga_admin'] = new Badge('orga_admin');
+			}
+
+			if ($member->getRole() == Member::ROLE_PRESIDENT) {
+				$badges['orga_president'] = new Badge('orga_president');
+
+				if ($member->getOrganization()->getLogin() == 'bde') {
+					$badges['orga_bde_president'] = new Badge('orga_bde_president');
+				}
+			}
+		}
+
+		return $badges;
+	}
 
 	/**
 	 * @param $badgeName
@@ -2233,15 +2298,15 @@ class User implements UserInterface, \Serializable
 		return $this;
 	}
 
-    /**
-     * Get options
-     *
-     * @return UserOptionsCollection
-     */
-    public function getOptions()
-    {
-        return new UserOptionsCollection($this->options);
-    }
+	/**
+	 * Get options
+	 *
+	 * @return UserOptionsCollection
+	 */
+	public function getOptions()
+	{
+		return new UserOptionsCollection($this->options);
+	}
 
 	/**
 	 * @param $key
@@ -2252,128 +2317,187 @@ class User implements UserInterface, \Serializable
 		return $this->getOptions()->get($key);
 	}
 
-    /**
-     * Set lastVisitHome
-     *
-     * @param \DateTime $lastVisitHome
-     * @return User
-     */
-    public function setLastVisitHome($lastVisitHome)
-    {
-        $this->lastVisitHome = $lastVisitHome;
+	/**
+	 * Set lastVisitHome
+	 *
+	 * @param \DateTime $lastVisitHome
+	 * @return User
+	 */
+	public function setLastVisitHome($lastVisitHome)
+	{
+		$this->lastVisitHome = $lastVisitHome;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get lastVisitHome
-     *
-     * @return \DateTime
-     */
-    public function getLastVisitHome()
-    {
-        return $this->lastVisitHome;
-    }
+	/**
+	 * Get lastVisitHome
+	 *
+	 * @return \DateTime
+	 */
+	public function getLastVisitHome()
+	{
+		return $this->lastVisitHome;
+	}
 
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     * @return User
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
+	/**
+	 * Set createdAt
+	 *
+	 * @param \DateTime $createdAt
+	 * @return User
+	 */
+	public function setCreatedAt($createdAt)
+	{
+		$this->createdAt = $createdAt;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
+	/**
+	 * Get createdAt
+	 *
+	 * @return \DateTime
+	 */
+	public function getCreatedAt()
+	{
+		return $this->createdAt;
+	}
 
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     * @return User
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
+	/**
+	 * Set updatedAt
+	 *
+	 * @param \DateTime $updatedAt
+	 * @return User
+	 */
+	public function setUpdatedAt($updatedAt)
+	{
+		$this->updatedAt = $updatedAt;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
+	/**
+	 * Get updatedAt
+	 *
+	 * @return \DateTime
+	 */
+	public function getUpdatedAt()
+	{
+		return $this->updatedAt;
+	}
 
-    /**
-     * Set deletedAt
-     *
-     * @param \DateTime $deletedAt
-     * @return User
-     */
-    public function setDeletedAt($deletedAt)
-    {
-        $this->deletedAt = $deletedAt;
+	/**
+	 * Set deletedAt
+	 *
+	 * @param \DateTime $deletedAt
+	 * @return User
+	 */
+	public function setDeletedAt($deletedAt)
+	{
+		$this->deletedAt = $deletedAt;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get deletedAt
-     *
-     * @return \DateTime
-     */
-    public function getDeletedAt()
-    {
-        return $this->deletedAt;
-    }
+	/**
+	 * Get deletedAt
+	 *
+	 * @return \DateTime
+	 */
+	public function getDeletedAt()
+	{
+		return $this->deletedAt;
+	}
 
-    /**
-     * Add memberships
-     *
-     * @param \Etu\Core\UserBundle\Entity\Member $memberships
-     * @return User
-     */
-    public function addMembership(\Etu\Core\UserBundle\Entity\Member $memberships)
-    {
-        $this->memberships[] = $memberships;
+	/**
+	 * Add memberships
+	 *
+	 * @param \Etu\Core\UserBundle\Entity\Member $memberships
+	 * @return User
+	 */
+	public function addMembership(\Etu\Core\UserBundle\Entity\Member $memberships)
+	{
+		$this->memberships[] = $memberships;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Remove memberships
-     *
-     * @param \Etu\Core\UserBundle\Entity\Member $memberships
-     */
-    public function removeMembership(\Etu\Core\UserBundle\Entity\Member $memberships)
-    {
-        $this->memberships->removeElement($memberships);
-    }
+	/**
+	 * Remove memberships
+	 *
+	 * @param \Etu\Core\UserBundle\Entity\Member $memberships
+	 */
+	public function removeMembership(\Etu\Core\UserBundle\Entity\Member $memberships)
+	{
+		$this->memberships->removeElement($memberships);
+	}
 
-    /**
-     * Get memberships
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getMemberships()
-    {
-        return $this->memberships;
-    }
+	/**
+	 * Get memberships
+	 *
+	 * @return \Doctrine\Common\Collections\Collection
+	 */
+	public function getMemberships()
+	{
+		return $this->memberships;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function addCureentSemesterToHistory()
+	{
+		$history = array(
+			'formation' => $this->formation,
+			'niveau' => $this->niveau,
+			'filiere' => $this->filiere,
+			'uvs' => $this->getUvsList(),
+		);
+
+		$this->semestersHistory[self::currentSemester()] = $history;
+
+		return $history;
+	}
+
+	/**
+	 * @return string
+	 */
+	public static function currentSemester()
+	{
+		$dayInYear = date('z');
+
+		$springStart = 31; // January 31
+		$springEnd = 212; // July 31
+
+		if ($dayInYear > $springStart && $dayInYear < $springEnd) {
+			$semester = 'P';
+		} else {
+			$semester = 'A';
+		}
+
+		return $semester.date('Y');
+	}
+
+	/**
+	 * Set semestersHistory
+	 *
+	 * @param array $semestersHistory
+	 * @return User
+	 */
+	public function setSemestersHistory($semestersHistory)
+	{
+		$this->semestersHistory = $semestersHistory;
+
+		return $this;
+	}
+
+	/**
+	 * Get semestersHistory
+	 *
+	 * @return array
+	 */
+	public function getSemestersHistory()
+	{
+		return $this->semestersHistory;
+	}
 }
