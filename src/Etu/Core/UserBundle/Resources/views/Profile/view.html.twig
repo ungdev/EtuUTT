@@ -319,10 +319,10 @@
 				{% for badge in user.badges %}
 					<li>
 						<img src="{{ asset('img/badges/'~badge.name~'-'~badge.level~'.png') }}" class="tip"
-							 title="{{ ('badges.'~badge.name~'.'~badge.level~'.description')|trans }}" />
-						<p>
-							{{ ('badges.'~badge.name~'.'~badge.level~'.title')|trans }}
-						</p>
+							 title="<strong style='font-size: 13px;'>
+							 	{{ ('badges.'~badge.name~'.'~badge.level~'.title')|trans }}
+							 </strong><br />
+							 {{ ('badges.'~badge.name~'.'~badge.level~'.description')|trans }}" />
 					</li>
 				{% else %}
 					<li>{{ 'user.profile.profile.no_badge'|trans }}</li>

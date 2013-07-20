@@ -208,7 +208,8 @@ $(function() {
 
 	tip.tipsy({
 		gravity: 's',
-		html: true
+		html: true,
+		opacity: 1
 	});
 
 	// Load Redactor

@@ -1335,8 +1335,8 @@ textarea {
   display: block;
   text-align: center;
   float: left;
-  width: 150px;
-  margin: 0 10px 10px 0;
+  width: 110px;
+  margin: 0 15px 15px 0;
 }
 .badges-list li img {
   max-width: 75px;
