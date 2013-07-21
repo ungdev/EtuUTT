@@ -1,0 +1,44 @@
+{% extends '::page-1col.html.twig' %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/bundles/forum.css') }}" type="text/css" />
+{% endblock %}
+
+{% block title %}{{ 'forum.main.post.title'|trans }}{% endblock %}
+
+{% block content %}
+	<div class="forum-breadcrumb">
+		<a href="{{ path('forum_index') }}">Forum</a>
+		{% for parent in parents %}
+			 > <a href="{{ path('forum_category', {'id': parent.id, 'slug': parent.slug}) }}">{{ parent.title }}</a>
+		{% endfor %}
+	</div>
+
+	<form action="{{ path('forum_post', {'id': category.id, 'slug': category.slug}) }}" method="post" {{ form_enctype(form) }}>
+		<fieldset class="forum_post">
+			{{ form_errors(form) }}
+			<div>
+			  {{ form_label(form.title, 'forum.main.post.threadTitle'|trans) }}
+			  {{ form_errors(form.title) }}
+			  {{ form_widget(form.title) }}
+			</div>
+
+			<div>
+			  {{ form_label(form.lastMessage.content, 'forum.main.post.content'|trans) }}
+			  {{ form_errors(form.lastMessage.content) }}
+			  {{ form_widget(form.lastMessage.content) }}
+			</div>
+
+			{% if forum_can_sticky(app.user, category) %}
+			<div>
+			  {{ form_label(form.weight, 'forum.main.post.sticky'|trans) }}
+			  {{ form_errors(form.weight) }}
+			  {{ form_widget(form.weight) }}
+			</div>
+			{% endif %}
+
+			{{ form_rest(form) }}
+			<input type="submit" class="btn btn-primary" />
+		</fieldset>
+	</form>
+{% endblock %}

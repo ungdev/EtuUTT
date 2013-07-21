@@ -3,14 +3,24 @@ forum:
     main:
         index:
             noMessage: Pas de message
+            forum: Forum
+            category: Catégorie
+            nbThreads: Sujets
+            nbMessages: Messages
+            lastMessage: Dernier message
         thread:
             thread: Sujet
+            in: Dans
             by: Par
             date: Date
+            datePrefix: Le
+            dateHour: à
+            dateFormat: d/m/Y
             messages: Messages
             lastMessage: Dernier message
             post: Créer un nouveau sujet
             answer: Répondre
+            read: Lire
         post:
             title: Création d'un sujet
             threadTitle: Titre du sujet

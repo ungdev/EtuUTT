@@ -23,8 +23,9 @@
 	{% for message in messages %}
 		<div class="forum-message" id="{{ message.id }}">
 			<div class="message-left">
-				{{ message.author.getFullName() }}<br />
-				<img src="/photos/{{ message.author.getLogin() }}.jpg" alt="{{ message.author.getFullName() }}"/>
+				<a href="{{ path('user_view', {'login': message.author.getLogin()}) }}">{{ message.author.getFullName() }}</a><br />
+				<img src="/photos/{{ message.author.getLogin() }}.jpg" alt="{{ message.author.getFullName() }}"/><br />
+				<span class="message-date">{{ 'forum.main.thread.datePrefix'|trans }} {{ message.createdAt|date('forum.main.thread.dateFormat'|trans) }}  {{ 'forum.main.thread.dateHour'|trans }} {{ message.createdAt|date("H:i") }}</span>
 			</div>
 			<div class="message-right">
 				<div class="message-options"></div>

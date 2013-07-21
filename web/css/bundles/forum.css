@@ -2,12 +2,76 @@
  * Forum
  */
 
+.forum-table
+{
+	width:1150px;
+	margin:auto;
+	margin-top:10px;
+}
+
+.forum-table .subjects
+{
+	width:550px;
+}
+
+.forum-table .subjects a
+{
+	font-weight:bold;
+}
+
+.forum-table .subjects .by
+{
+	font-size:12px;
+}
+
+.forum-table .category
+{
+	width:650px;
+}
+
+.forum-table .category a
+{
+	font-weight:bold;
+}
+
+.forum-table .countSubjets
+{
+	width:123px;
+}
+
+.forum-table td.countSubjets
+{
+	text-align:center;
+}
+
+.forum-table .countMessages
+{
+	width:123px;
+}
+
+.forum-table td.countMessages
+{
+	text-align:center;
+}
+
+.forum-table th.lastMessage
+{
+	width:250px;
+}
+
+.forum-table td.lastMessage
+{
+	width:200px;
+	font-size:12px;
+}
+
 .forum-table caption
 {
 	text-align:left;
 	font-weight:bold;
-	padding-left:10px;
-	font-size:15px;
+	margin-left:-10px;
+	font-size:17px;
+	padding-bottom:3px;
 }
 
 .forum-breadcrumb
@@ -38,6 +102,13 @@
 .forum-message .message-left img
 {
 	height:100px;
+	margin-top:5px;
+	margin-bottom:5px;
+}
+
+.forum-message .message-left .message-date
+{
+	font-size:12px;
 }
 
 .forum-message .message-right

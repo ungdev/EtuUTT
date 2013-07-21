@@ -25,7 +25,7 @@ class Permissions
 	 * @var Category $category
 	 *
 	 * @ORM\ManyToOne(targetEntity="Category")
-	 * @ORM\JoinColumn()
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $category;
 	
@@ -33,7 +33,7 @@ class Permissions
 	 * @var Organization $organization
 	 *
 	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\Organization")
-	 * @ORM\JoinColumn()
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $organization;
 
@@ -41,7 +41,7 @@ class Permissions
 	 * @var User $user
 	 *
 	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
-	 * @ORM\JoinColumn()
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $user;
 

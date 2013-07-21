@@ -26,7 +26,7 @@ class Message
 	 * @var User $user
 	 *
 	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
-	 * @ORM\JoinColumn()
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $author;
 
@@ -34,7 +34,7 @@ class Message
 	 * @var Category $category
 	 *
 	 * @ORM\ManyToOne(targetEntity="Category")
-	 * @ORM\JoinColumn()
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $category;
 
@@ -42,7 +42,7 @@ class Message
 	 * @var Thread $thread
 	 *
 	 * @ORM\ManyToOne(targetEntity="Thread")
-	 * @ORM\JoinColumn()
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $thread;
 

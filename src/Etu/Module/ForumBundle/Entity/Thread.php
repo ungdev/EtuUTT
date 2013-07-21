@@ -31,7 +31,7 @@ class Thread
 	 * @var User $user
 	 *
 	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
-	 * @ORM\JoinColumn()
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $author;
 
@@ -39,7 +39,7 @@ class Thread
 	 * @var Category $category
 	 *
 	 * @ORM\ManyToOne(targetEntity="Category")
-	 * @ORM\JoinColumn()
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $category;
 
@@ -92,6 +92,7 @@ class Thread
 	 * @var \Etu\Module\ForumBundle\Entity\Message $lastMessage
 	 *
 	 * @ORM\OneToOne(targetEntity="\Etu\Module\ForumBundle\Entity\Message", cascade={"persist"})
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $lastMessage;
 
