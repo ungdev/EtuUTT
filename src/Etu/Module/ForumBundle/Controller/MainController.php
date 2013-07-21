@@ -99,7 +99,48 @@ class MainController extends Controller
 	 */
 	public function threadAction($id, $slug, $page)
 	{
-		return array();
+		$em = $this->getDoctrine()->getManager();
+		$thread = $em->createQueryBuilder()
+			->select('t, c')
+			->from('EtuModuleForumBundle:Thread', 't')
+			->leftJoin('t.category', 'c')
+			->where('t.id = :id')
+			->andWhere('t.state != 300')
+			->setParameter('id', $id)
+			->getQuery()
+			->getSingleResult();
+
+		$category = $thread->getCategory();
+
+		$checker = new PermissionsChecker($this->getUser());
+		if (!$checker->canRead($category)) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$parents = $em->createQueryBuilder()
+			->select('c')
+			->from('EtuModuleForumBundle:Category', 'c')
+			->where('c.left <= :left')
+			->andWhere('c.right >= :right')
+			->setParameter('left', $category->getLeft())
+			->setParameter('right', $category->getRight())
+			->orderBy('c.depth')
+			->getQuery()
+			->getResult();
+
+		$messages = $em->createQueryBuilder()
+			->select('m, u')
+			->from('EtuModuleForumBundle:Message', 'm')
+			->leftJoin('m.author', 'u')
+			->where('m.thread = :thread')
+			->setParameter('thread', $thread)
+			->orderBy('m.createdAt')
+			->getQuery()
+			->getResult();
+
+		$messages = $this->get('knp_paginator')->paginate($messages, $page, 10);
+
+		return array('category' => $category, 'thread' => $thread, 'parents' => $parents, 'messages' => $messages);
 	}
 
 	/**
@@ -148,8 +189,7 @@ class MainController extends Controller
 				$thread->setLastMessage($message);
 				$category->setCountMessages($category->getCountMessages()+1)
 					->setCountThreads($category->getCountThreads()+1);
-				foreach($parents as $parent)
-				{
+				foreach($parents as $parent) {
 					$parent->setLastMessage($message);
 					$em->persist($parent);
 				}
@@ -163,5 +203,14 @@ class MainController extends Controller
 		}
 
 		return array('category' => $category, 'parents' => $parents, 'form' => $form->createView());
+	}
+
+	/**
+	 * @Route("/forum/answer/{id}-{slug}", name="forum_answer")
+	 * @Template()
+	 */
+	public function answerAction($id, $slug)
+	{
+		return array();
 	}
 }

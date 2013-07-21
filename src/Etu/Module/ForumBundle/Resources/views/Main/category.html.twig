@@ -7,10 +7,12 @@
 {% block title %}{{ category.title }}{% endblock %}
 
 {% block content %}
-	<a href="{{ path('forum_index') }}">Forum</a>
-	{% for parent in parents %}
-		 > <a href="{{ path('forum_category', {'id': parent.id, 'slug': parent.slug}) }}">{{ parent.title }}</a>
-	{% endfor %}
+	<div class="forum-breadcrumb">
+		<a href="{{ path('forum_index') }}">Forum</a>
+		{% for parent in parents %}
+			 > <a href="{{ path('forum_category', {'id': parent.id, 'slug': parent.slug}) }}">{{ parent.title }}</a>
+		{% endfor %}
+	</div>
 
 	<table class="table table-bordered table-hover forum-table">
 	{% for category in subCategories %}

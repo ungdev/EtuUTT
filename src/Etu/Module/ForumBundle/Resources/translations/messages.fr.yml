@@ -10,6 +10,7 @@ forum:
             messages: Messages
             lastMessage: Dernier message
             post: Créer un nouveau sujet
+            answer: Répondre
         post:
             title: Création d'un sujet
             threadTitle: Titre du sujet
