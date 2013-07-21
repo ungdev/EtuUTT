@@ -150,3 +150,9 @@
 {
 	font-weight:bold;
 }
+
+.forum-locked
+{
+	font-weight:bold;
+	color:red;
+}

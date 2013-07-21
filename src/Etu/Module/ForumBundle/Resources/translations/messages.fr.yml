@@ -22,6 +22,7 @@ forum:
             answer: Répondre
             read: Lire
             sticky: Epinglé
+            locked: Bloqué
         post:
             title: Création d'un sujet
             threadTitle: Titre du sujet
