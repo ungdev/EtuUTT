@@ -37,7 +37,7 @@ class SoapManager
     public function _login($login, $pin){
         $this->login = $login;
         $this->pin = (int)$pin;
-        return $this->login('chabanop', 1, 8783, 'etu.utt.fr');
+        return $this->login($this->login, 1, $this->pin, 'etu.utt.fr');
     }
 
     public function __call($name, $arguments)
@@ -75,9 +75,6 @@ class SoapManager
                     }
                 }
                 return $array0;
-            }
-            else {
-                return 400;
             }
         }
         return $rtn;

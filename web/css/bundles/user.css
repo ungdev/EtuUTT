@@ -106,6 +106,29 @@
   padding: 5px;
   margin-left: 200px;
 }
+.badges-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.badges-list li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  text-align: center;
+  float: left;
+  width: 110px;
+  margin: 0 15px 15px 0;
+}
+.badges-list li img {
+  max-width: 75px;
+}
+.badges-list li p {
+  display: block;
+  font-weight: bold;
+  margin-top: 5px;
+}
 /*
  * Organizations
  */

@@ -48,7 +48,7 @@ class NestedPagesTree
 			}
 		}
 
-		foreach ($this->categories as $key => $category) {
+		foreach ((array) $this->categories as $key => $category) {
 			$this->categories[$key]->children = $this->getChildren($category);
 
 			if (! empty($category->children)) {
@@ -56,7 +56,7 @@ class NestedPagesTree
 			}
 		}
 
-		foreach ($this->categories as $key => $category) {
+		foreach ((array) $this->categories as $key => $category) {
 			if ($category->getDepth() != 0) {
 				unset($this->categories[$key]);
 			}

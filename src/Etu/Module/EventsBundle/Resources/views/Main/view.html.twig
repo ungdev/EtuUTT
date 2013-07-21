@@ -22,7 +22,7 @@
 				{{ 'events.main.view.back'|trans }}
 			</a>
 		</li>
-		{% if app.user %}
+		{% if app.user.isStudent %}
 			<li class="pull-right">
 				<a href="{{ path('events_members', {'id': event.id, 'slug': event.title|slugify}) }}">
 					{{ 'events.main.view.menu.subscribers'|trans }}

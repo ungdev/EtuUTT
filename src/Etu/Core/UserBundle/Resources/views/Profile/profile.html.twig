@@ -253,13 +253,21 @@
 		<div class="block">
 			<div class="block-title">{{ 'user.profile.profile.badges'|trans }}</div>
 
-			<ul>
+			<ul class="badges-list">
 			{% for badge in app.user.badges %}
-				<li>{{ badge }}</li>
+				<li>
+					<img src="{{ asset('img/badges/'~badge.name~'-'~badge.level~'.png') }}" class="tip"
+						 title="{{ ('badges.'~badge.name~'.'~badge.level~'.description')|trans }}" />
+					<p>
+						{{ ('badges.'~badge.name~'.'~badge.level~'.title')|trans }}
+					</p>
+				</li>
 			{% else %}
 				<li>{{ 'user.profile.profile.no_badge'|trans }}</li>
 			{% endfor %}
 			</ul>
+
+			<div class="clear"></div>
 		</div>
 	</div>
 {% endblock %}

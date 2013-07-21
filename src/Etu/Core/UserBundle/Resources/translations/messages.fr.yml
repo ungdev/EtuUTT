@@ -3,6 +3,8 @@ user:
     privacy:
         public: Public
         private: Privé
+        publicMore: Visible seulement par les membres du site étudiant
+        privateMore: Visible seulement par moi
 
     denied: Vous n'avez pas le droit de voir cette page
 
@@ -105,6 +107,9 @@ user:
             confirm: Vous êtes bien connecté
             error: La connexion a échoué, vos identifiants semblent incorrects
             orga_exists_ldap: Cette association existe bien mais doit être autorisée à se connecter par l'UNG
+            betaAssos: |
+                La connexion en tant qu'utilisateur est impossible pour le moment. Cette bêta est
+                réservée aux associations.
         connectExternal:
             title: Connexion d'un exterieur
             desc: Connectez-vous en utilisant l'identifiant et le mot de passe qui vous ont été fournis par l'UNG :

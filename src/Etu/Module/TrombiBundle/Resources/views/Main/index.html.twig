@@ -121,7 +121,12 @@
 					<li class="trombi-search-results-item">
 						<a href="{{ path('user_view', {'login': user.login}) }}?from=trombi">
 							<img src="{{ asset('photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
-							<h5>{{ user.fullName }}</h5>
+							<h5>
+								{{ user.fullName }}
+								{% if user.surnom %}
+									<span class="muted">- {{ user.surnom }}</span>
+								{% endif %}
+							</h5>
 							<p>
 								{{ user.niveau }} {{ user.filiere }} ({{ user.formation }})<br />
 								{{ user.mail }}

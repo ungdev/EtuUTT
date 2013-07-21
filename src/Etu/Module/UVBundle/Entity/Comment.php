@@ -55,14 +55,6 @@ class Comment
 	protected $body;
 
 	/**
-	 * @var string
-	 *
-	 * @ORM\Column(type="smallint")
-	 * @Assert\NotBlank()
-	 */
-	protected $rating;
-
-	/**
 	 * @var \DateTime
 	 *
 	 * @Gedmo\Timestampable(on="create")
@@ -116,29 +108,6 @@ class Comment
     public function getBody()
     {
         return $this->body;
-    }
-
-    /**
-     * Set rating
-     *
-     * @param integer $rating
-     * @return Comment
-     */
-    public function setRating($rating)
-    {
-        $this->rating = $rating;
-
-        return $this;
-    }
-
-    /**
-     * Get rating
-     *
-     * @return integer
-     */
-    public function getRating()
-    {
-        return $this->rating;
     }
 
     /**

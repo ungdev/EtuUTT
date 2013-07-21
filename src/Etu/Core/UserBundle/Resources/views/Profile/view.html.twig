@@ -307,6 +307,27 @@
 					</div>
 				{% endif %}
 			</div>
+
+			<div class="clear"></div>
+			<hr />
+
+			<h4>Badges</h4>
+
+			<hr />
+
+			<ul class="badges-list">
+				{% for badge in user.badges %}
+					<li>
+						<img src="{{ asset('img/badges/'~badge.name~'-'~badge.level~'.png') }}" class="tip"
+							 title="<strong style='font-size: 13px;'>
+							 	{{ ('badges.'~badge.name~'.'~badge.level~'.title')|trans }}
+							 </strong><br />
+							 {{ ('badges.'~badge.name~'.'~badge.level~'.description')|trans }}" />
+					</li>
+				{% else %}
+					<li>{{ 'user.profile.profile.no_badge'|trans }}</li>
+				{% endfor %}
+			</ul>
 		</div>
 	</div>
 {% endblock %}
