@@ -90,8 +90,11 @@ class MainController extends Controller
 			->getResult();
 
 		$threads = $this->get('knp_paginator')->paginate($threads, $page, 15);
+
+		$noThreads = true;
+		if(count($threads) > 0) $noThreads = false;
 		
-		return array('category' => $category, 'subCategories' => $subCategories, 'parents' => $parents, 'threads' => $threads);
+		return array('category' => $category, 'subCategories' => $subCategories, 'parents' => $parents, 'threads' => $threads, 'noThreads' => $noThreads);
 	}
 
 	/**

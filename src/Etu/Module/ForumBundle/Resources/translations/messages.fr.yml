@@ -8,6 +8,7 @@ forum:
             nbThreads: Sujets
             nbMessages: Messages
             lastMessage: Dernier message
+            noMessage: Il n'y a pas de message dans cette catégorie.
         thread:
             thread: Sujet
             in: Dans

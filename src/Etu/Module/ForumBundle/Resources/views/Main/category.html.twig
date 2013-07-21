@@ -44,6 +44,11 @@
 
 		<table class="table table-bordered table-hover forum-table">
 			<tr><th class="subjects">{{'forum.main.thread.thread'|trans }}</th><th class="date">{{'forum.main.thread.date'|trans }}</th><th class="countMessages">{{'forum.main.thread.messages'|trans }}</th><th class="lastMessage">{{'forum.main.thread.lastMessage'|trans }}</th></tr>
+		{% if noThreads %}
+			<tr class="catTitle">
+				<td colspan="4">{{'forum.main.index.noMessage'|trans }}</td>
+			</tr>
+		{% endif %}
 		{% for thread in threads %}
 			 <tr>
 				<td class="subjects">
