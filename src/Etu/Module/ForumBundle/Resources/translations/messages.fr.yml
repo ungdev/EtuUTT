@@ -18,4 +18,5 @@ forum:
             sticky: Epinglé ?
             yes: Oui
             no: Non
-
+        answer:
+            title: Répondre

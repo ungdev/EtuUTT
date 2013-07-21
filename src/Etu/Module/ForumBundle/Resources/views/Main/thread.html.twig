@@ -1,0 +1,50 @@
+{% extends '::page-1col.html.twig' %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/bundles/forum.css') }}" type="text/css" />
+{% endblock %}
+
+{% block title %}{{ thread.title }}{% endblock %}
+
+{% block content %}
+	<div class="forum-breadcrumb">
+		<a href="{{ path('forum_index') }}">Forum</a>
+		{% for parent in parents %}
+			 > <a href="{{ path('forum_category', {'id': parent.id, 'slug': parent.slug}) }}">{{ parent.title }}</a>
+		{% endfor %}
+		 > <a href="{{ path('forum_thread', {'id': thread.id, 'slug': thread.slug}) }}">{{ thread.title }}</a>
+	</div>
+
+	{# display navigation #}
+	<div class="navigation">
+		{{ knp_pagination_render(messages) }}
+	</div>
+
+	{% for message in messages %}
+		<div class="forum-message" id="{{ message.id }}">
+			<div class="message-left">
+				{{ message.author.getFullName() }}<br />
+				<img src="/photos/{{ message.author.getLogin() }}.jpg" alt="{{ message.author.getFullName() }}"/>
+			</div>
+			<div class="message-right">
+				<div class="message-options"></div>
+				<div class="message-content">
+					{{ message.content }}
+				</div>
+			</div>
+			<div class="forum-clear"></div>
+		</div>
+		<div class="forum-clear"></div>
+	{% endfor %}
+
+	{# display navigation #}
+	<div class="navigation">
+		{{ knp_pagination_render(messages) }}
+	</div>
+
+	{% if forum_can_answer(app.user, category) %}
+		{% if cantAnswer == false %}
+			<a href="{{ path('forum_answer', {'id': thread.id, 'slug': thread.slug}) }}">{{'forum.main.thread.answer'|trans }}</a>
+		{% endif %}
+	{% endif %}
+{% endblock %}

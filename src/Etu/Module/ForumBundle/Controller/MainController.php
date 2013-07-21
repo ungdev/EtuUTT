@@ -9,6 +9,7 @@ use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 
 use Etu\Module\ForumBundle\Entity\Category;
 use Etu\Module\ForumBundle\Entity\Thread;
+use Etu\Module\ForumBundle\Entity\Message;
 
 use Etu\Module\ForumBundle\Form\ThreadType;
 use Etu\Module\ForumBundle\Form\MessageType;
@@ -140,7 +141,9 @@ class MainController extends Controller
 
 		$messages = $this->get('knp_paginator')->paginate($messages, $page, 10);
 
-		return array('category' => $category, 'thread' => $thread, 'parents' => $parents, 'messages' => $messages);
+		$cantAnswer = (bool) $thread->getState() == 200 && !$checker->canLock($category) && !$user->getIsAdmin();
+
+		return array('category' => $category, 'thread' => $thread, 'parents' => $parents, 'messages' => $messages, 'cantAnswer' => $cantAnswer);
 	}
 
 	/**
@@ -187,14 +190,13 @@ class MainController extends Controller
 					->setThread($thread)
 					->setState(100);
 				$thread->setLastMessage($message);
-				$category->setCountMessages($category->getCountMessages()+1)
-					->setCountThreads($category->getCountThreads()+1);
 				foreach($parents as $parent) {
-					$parent->setLastMessage($message);
+					$parent->setLastMessage($message)
+						->setCountMessages($parent->getCountMessages()+1)
+						->setCountThreads($parent->getCountThreads()+1);
 					$em->persist($parent);
 				}
 				$em->persist($thread);
-				$em->persist($category);
 				$em->flush();
 
 				return $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug())));
@@ -211,6 +213,63 @@ class MainController extends Controller
 	 */
 	public function answerAction($id, $slug)
 	{
-		return array();
+		$em = $this->getDoctrine()->getManager();
+		$thread = $em->createQueryBuilder()
+			->select('t, c')
+			->from('EtuModuleForumBundle:Thread', 't')
+			->leftJoin('t.category', 'c')
+			->where('t.id = :id')
+			->andWhere('t.state != 300')
+			->setParameter('id', $id)
+			->getQuery()
+			->getSingleResult();
+
+		$category = $thread->getCategory();
+
+		$checker = new PermissionsChecker($this->getUser());
+		if (!$checker->canAnswer($category) || ($thread->getState() == 200 && !$checker->canLock($category) && !$user->getIsAdmin())) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$parents = $em->createQueryBuilder()
+			->select('c')
+			->from('EtuModuleForumBundle:Category', 'c')
+			->where('c.left <= :left')
+			->andWhere('c.right >= :right')
+			->setParameter('left', $category->getLeft())
+			->setParameter('right', $category->getRight())
+			->orderBy('c.depth')
+			->getQuery()
+			->getResult();
+
+		$message = new Message();
+		$form = $this->createForm(new MessageType, $message);
+
+		$request = $this->get('request');
+		if ($request->getMethod() == 'POST') {
+			$form->bind($request);
+			if ($form->isValid()) {
+				$message->setAuthor($this->getUser())
+					->setCategory($category)
+					->setThread($thread)
+					->setState(100);
+				$thread->setCountMessages($thread->getCountMessages()+1)
+					->setLastMessage($message);
+				foreach($parents as $parent) {
+					$parent->setLastMessage($message)
+						->setCountMessages($parent->getCountMessages()+1);
+					$em->persist($parent);
+				}
+				$em->persist($thread);
+				$em->flush();
+
+				$page = ceil($thread->getCountMessages()/10);
+
+				return $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug(), 'page' => $page)) . '#'.$message->getId());
+			}
+			else return array('errors' => $form->getErrors(), 'thread' => $thread, 'parents' => $parents, 'form' => $form->createView());
+		}
+
+		return array('thread' => $thread, 'parents' => $parents, 'form' => $form->createView());
 	}
 }
