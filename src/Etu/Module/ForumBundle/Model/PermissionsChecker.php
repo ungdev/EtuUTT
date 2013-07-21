@@ -30,6 +30,11 @@ class PermissionsChecker
 	 */
 	public function __construct($user)
 	{
+		if($user == NULL)
+		{
+			$user = new User();
+			$user->setIsReadOnly(true);
+		}
 		$this->user = $user;
 		$this->memberships = ($this->user instanceof User) ? $this->user->getMemberships() : array();
 	}

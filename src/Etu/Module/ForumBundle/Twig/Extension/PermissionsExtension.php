@@ -32,7 +32,7 @@ class PermissionsExtension extends \Twig_Extension
 	 * @param Category      $category
 	 * @return bool
 	 */
-	public function canRead(UserInterface $user, Category $category)
+	public function canRead($user, Category $category)
 	{
 		$checker = new PermissionsChecker($user);
 
@@ -44,7 +44,7 @@ class PermissionsExtension extends \Twig_Extension
 	 * @param Category      $category
 	 * @return bool
 	 */
-	public function canPost(UserInterface $user, Category $category)
+	public function canPost($user, Category $category)
 	{
 		$checker = new PermissionsChecker($user);
 
@@ -56,7 +56,7 @@ class PermissionsExtension extends \Twig_Extension
 	 * @param Category      $category
 	 * @return bool
 	 */
-	public function canAnswer(UserInterface $user, Category $category)
+	public function canAnswer($user, Category $category)
 	{
 		$checker = new PermissionsChecker($user);
 
@@ -68,7 +68,7 @@ class PermissionsExtension extends \Twig_Extension
 	 * @param Category      $category
 	 * @return bool
 	 */
-	public function canEdit(UserInterface $user, Category $category)
+	public function canEdit($user, Category $category)
 	{
 		$checker = new PermissionsChecker($user);
 
@@ -80,7 +80,7 @@ class PermissionsExtension extends \Twig_Extension
 	 * @param Category      $category
 	 * @return bool
 	 */
-	public function canSticky(UserInterface $user, Category $category)
+	public function canSticky($user, Category $category)
 	{
 		$checker = new PermissionsChecker($user);
 
@@ -93,7 +93,7 @@ class PermissionsExtension extends \Twig_Extension
 	 * @param Category      $category
 	 * @return bool
 	 */
-	public function canLock(UserInterface $user, Category $category)
+	public function canLock($user, Category $category)
 	{
 		$checker = new PermissionsChecker($user);
 
@@ -105,7 +105,7 @@ class PermissionsExtension extends \Twig_Extension
 	 * @param Category      $category
 	 * @return bool
 	 */
-	public function canMove(UserInterface $user, Category $category)
+	public function canMove($user, Category $category)
 	{
 		$checker = new PermissionsChecker($user);
 
