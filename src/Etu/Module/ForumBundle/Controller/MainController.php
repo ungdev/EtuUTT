@@ -148,6 +148,11 @@ class MainController extends Controller
 				$thread->setLastMessage($message);
 				$category->setCountMessages($category->getCountMessages()+1)
 					->setCountThreads($category->getCountThreads()+1);
+				foreach($parents as $parent)
+				{
+					$parent->setLastMessage($message);
+					$em->persist($parent);
+				}
 				$em->persist($thread);
 				$em->persist($category);
 				$em->flush();
