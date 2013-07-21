@@ -21,6 +21,7 @@ forum:
             post: Créer un nouveau sujet
             answer: Répondre
             read: Lire
+            sticky: Epinglé
         post:
             title: Création d'un sujet
             threadTitle: Titre du sujet

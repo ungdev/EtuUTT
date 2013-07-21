@@ -47,7 +47,7 @@
 		{% for thread in threads %}
 			 <tr>
 				<td class="subjects">
-					<a href="{{ path('forum_thread', {'id': thread.id, 'slug': thread.slug}) }}">{{ thread.title }}</a><br /> <span class="by">{{'forum.main.thread.by'|trans|lower }} <a href="{{ path('user_view', {'login': thread.author.getLogin()}) }}">{{ thread.author.getFullName() }}</a></span>
+					{% if thread.sticky %}<span class="forum-sticky">{{'forum.main.thread.sticky'|trans}}:</span> {% endif %}<a href="{{ path('forum_thread', {'id': thread.id, 'slug': thread.slug}) }}">{{ thread.title }}</a><br /> <span class="by">{{'forum.main.thread.by'|trans|lower }} <a href="{{ path('user_view', {'login': thread.author.getLogin()}) }}">{{ thread.author.getFullName() }}</a></span>
 				</td>
 				<td class="date">
 					{{ 'forum.main.thread.datePrefix'|trans }} {{ thread.createdAt|date('forum.main.thread.dateFormat'|trans) }}  {{ 'forum.main.thread.dateHour'|trans }} {{ thread.createdAt|date("H:i") }}
