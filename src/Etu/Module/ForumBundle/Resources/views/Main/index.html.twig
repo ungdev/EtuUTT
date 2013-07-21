@@ -11,9 +11,9 @@
 	{% for category in categories %}
 		{% if forum_can_read(app.user, category) %}
 			{% if category.depth == 0 %}
-				<caption>
-					<a href="{{ path('forum_category', {'id': category.id, 'slug': category.slug}) }}">{{ category.title }}</a>
-				</caption>
+				<tr class="catTitle">
+					<td colspan="4"><a href="{{ path('forum_category', {'id': category.id, 'slug': category.slug}) }}">{{ category.title }}</a></td>
+				</tr>
 				<tr><th class="category">{{ 'forum.main.index.forum'|trans }}</th><th class="countSubjets">{{ 'forum.main.index.nbThreads'|trans }}</th><th class="countMessages">{{ 'forum.main.index.nbMessages'|trans }}</th><th class="lastMessage">{{ 'forum.main.index.lastMessage'|trans }}</th></tr>
 			{% elseif category.depth == 1 %}
 				<tr>

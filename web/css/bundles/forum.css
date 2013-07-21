@@ -9,6 +9,11 @@
 	margin-top:10px;
 }
 
+.forum-table th
+{
+	border-top:1px solid #DDDDDD;
+}
+
 .forum-table .subjects
 {
 	width:550px;
@@ -65,13 +70,17 @@
 	font-size:12px;
 }
 
-.forum-table caption
+.forum-table .catTitle
 {
-	text-align:left;
 	font-weight:bold;
-	margin-left:-10px;
+	padding-left:-10px;
 	font-size:17px;
-	padding-bottom:3px;
+	padding-bottom:2px;
+}
+
+.forum-table .catTitle td
+{
+	text-align:center;
 }
 
 .forum-breadcrumb
