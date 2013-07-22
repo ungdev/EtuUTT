@@ -78,7 +78,7 @@ class Category
 	/**
 	 * @var \Etu\Module\ForumBundle\Entity\Message $lastMessage
 	 *
-	 * @ORM\ManyToOne(targetEntity="\Etu\Module\ForumBundle\Entity\Message")
+	 * @ORM\ManyToOne(targetEntity="\Etu\Module\ForumBundle\Entity\Message", cascade={"persist"})
 	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $lastMessage;

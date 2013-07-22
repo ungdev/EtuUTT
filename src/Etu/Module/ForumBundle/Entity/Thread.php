@@ -10,6 +10,7 @@ use \Etu\Module\ForumBundle\Entity\Message;
 /**
  * @ORM\Table(name="etu_forum_threads")
  * @ORM\Entity
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Thread
 {
@@ -26,6 +27,11 @@ class Thread
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
 	protected $id;
+
+	/**
+	 * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
+	 */
+	protected $deletedAt;
 
 	/**
 	 * @var User $user
@@ -114,6 +120,25 @@ class Thread
 	public function getId()
 	{
 		return $this->id;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getDeletedAt()
+	{
+		return $this->deletedAt;
+	}
+
+	/**
+	 * @param \DateTime $createdAt
+	 * @return $this
+	 */
+	public function setDeletedAt($deletedAt)
+	{
+		$this->deletedAt = $deletedAt;
+
+		return $this;
 	}
 
 	/**

@@ -96,8 +96,11 @@ class MainController extends Controller
 
 		$noThreads = true;
 		if(count($threads) > 0) $noThreads = false;
+
+		$isSubCategories = false;
+		if(count($subCategories) > 0) $isSubCategories = true;
 		
-		return array('category' => $category, 'subCategories' => $subCategories, 'parents' => $parents, 'threads' => $threads, 'noThreads' => $noThreads);
+		return array('category' => $category, 'subCategories' => $subCategories, 'parents' => $parents, 'threads' => $threads, 'noThreads' => $noThreads, 'isSubCategories' => $isSubCategories);
 	}
 
 	/**
@@ -357,9 +360,119 @@ class MainController extends Controller
 	 * @Route("/forum/mod/{action}/{threadId}-{slug}/{messageId}", defaults={"messageId" = null}, requirements={"messageId" = "\d+"}, name="forum_mod")
 	 * @Template()
 	 */
-	public function modAction($action,$threadId=null,$messageId=null)
+	public function modAction($action,$threadId,$messageId=null)
 	{
-		return array();
+		$em = $this->getDoctrine()->getManager();
+		$thread = $em->createQueryBuilder()
+			->select('t, c')
+			->from('EtuModuleForumBundle:Thread', 't')
+			->leftJoin('t.category', 'c')
+			->where('t.id = :id')
+			->andWhere('t.state != 300')
+			->setParameter('id', $threadId)
+			->getQuery()
+			->getSingleResult();
+
+		$category = $thread->getCategory();
+		$categoryId = $category->getId();
+		switch($action) {
+			case 'remove':
+				$checker = new PermissionsChecker($this->getUser());
+				if (!$checker->canDelete($category)) {
+					return $this->createAccessDeniedResponse();
+				}
+				if($messageId == null) {
+					$messages = $em->createQueryBuilder()
+						->select('m')
+						->from('EtuModuleForumBundle:Message', 'm')
+						->where('m.thread = :thread')
+						->setParameter('thread', $thread)
+						->orderBy('m.createdAt')
+						->getQuery()
+						->getResult();
+					foreach($messages as $message) {
+						$category->setCountMessages($category->getCountMessages()-1);
+						$thread->setCountMessages($thread->getCountMessages()-1);
+						$em->remove($message);
+					}
+					$category->setCountThreads($category->getCountThreads()-1);
+					$em->remove($thread);
+
+				}
+
+				$message = $em->getRepository('EtuModuleForumBundle:Message')
+					->find($messageId);
+				if($message->getCreatedAt() == $thread->getCreatedAt()) {
+					$messages = $em->createQueryBuilder()
+						->select('m')
+						->from('EtuModuleForumBundle:Message', 'm')
+						->where('m.thread = :thread')
+						->setParameter('thread', $thread)
+						->orderBy('m.createdAt')
+						->getQuery()
+						->getResult();
+					foreach($messages as $message) {
+						$category->setCountMessages($category->getCountMessages()-1);
+						$thread->setCountMessages($thread->getCountMessages()-1);
+						$em->remove($message);
+					}
+					$category->setCountThreads($category->getCountThreads()-1);
+					$em->remove($thread);
+
+				}
+				else {
+					$thread->setCountMessages($thread->getCountMessages()-1);
+					$category->setCountMessages($thread->getCountMessages()-1);
+					$em->remove($message);
+
+				}
+				$em->flush();
+
+				$category = $em->getRepository('EtuModuleForumBundle:Category')
+					->find($categoryId);
+				$thread = $em->getRepository('EtuModuleForumBundle:Category')
+					->find($threadId);
+
+				$getLastMessage = $em->createQueryBuilder()
+					->select('m')
+					->from('EtuModuleForumBundle:Message', 'm')
+					->where('m.category = :category')
+					->setParameter('category', $category)
+					->orderBy('m.createdAt', 'DESC')
+					->setMaxResults(1)
+					->getQuery();
+
+				try {
+					$getLastMessage = $getLastMessage->getSingleResult();
+					$category->setLastMessage($getLastMessage);
+				}
+				catch (\Doctrine\Orm\NoResultException $e) {
+					$category->setLastMessage();
+				}
+
+				$getLastMessage = $em->createQueryBuilder()
+					->select('m')
+					->from('EtuModuleForumBundle:Message', 'm')
+					->where('m.thread = :thread')
+					->setParameter('thread', $thread)
+					->orderBy('m.createdAt', 'DESC')
+					->setMaxResults(1)
+					->getQuery();
+				try {
+					$getLastMessage = $getLastMessage->getSingleResult();
+					$thread->setLastMessage($getLastMessage);
+					$em->persist($thread);
+					$return = $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug())));
+				}
+				catch (\Doctrine\Orm\NoResultException $e) {
+					$return = $this->redirect($this->generateUrl('forum_category', array('id' => $category->getId(), 'slug' => $category->getSlug())));
+				}
+
+				$em->persist($category);
+				$em->flush();
+				break;
+		}
+		return $return;
 	}
 
 }

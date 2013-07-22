@@ -39,3 +39,8 @@ forum:
             title: Répondre
         edit:
             title: Editer un message
+        mod:
+            title: Panneau de modération
+            removeThreadWarning: Attention, la suppression de ce message entraine la suppression du sujet. Êtes-vous sûr de vouloir le supprimer ?
+            removeThread: Êtes-vous sûr de vouloir supprimer ce sujet ?
+            removeMessage: Êtes-vous sûr de vouloir supprimer ce message ?

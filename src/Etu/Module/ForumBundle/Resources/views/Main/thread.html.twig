@@ -4,6 +4,30 @@
 	<link rel="stylesheet" href="{{ asset('css/bundles/forum.css') }}" type="text/css" />
 {% endblock %}
 
+{% block javascripts %}
+	<script type="text/javascript">
+		$(".remove").click(function() {
+			switch($(this).attr("rel")) {
+				case 'removeMessage':
+					if(!confirm("{{ 'forum.main.mod.removeMessage'|trans }}")) {
+						return false;
+					}
+					break;
+				case 'removeThread':
+					if(!confirm("{{ 'forum.main.mod.removeThread'|trans }}")) {
+						return false;
+					}
+					break;
+				case 'removeThreadWarning':
+					if(!confirm("{{ 'forum.main.mod.removeThreadWarning'|trans }}")) {
+						return false;
+					}
+					break;
+			}
+		});
+	</script>
+{% endblock %}
+
 {% block title %}{{ thread.title }}{% endblock %}
 
 {% block content %}
@@ -28,7 +52,7 @@
 				<span class="message-date">{{ 'forum.main.thread.datePrefix'|trans }} {{ message.createdAt|date('forum.main.thread.dateFormat'|trans) }}  {{ 'forum.main.thread.dateHour'|trans }} {{ message.createdAt|date("H:i") }}</span>
 			</div>
 			<div class="message-right">
-				<div class="message-options">{% if forum_can_delete(app.user, category) %}<a href="{{ path('forum_mod', {'messageId': message.id, 'threadId': thread.id, 'slug': thread.slug, 'action': 'remMessage'}) }}">{{ 'forum.main.thread.remove'|trans }}</a>{% endif %} {% if forum_can_delete(app.user, category) and forum_can_edit(app.user, category) %} - {% endif %} {% if forum_can_edit(app.user, category) %} <a href="{{ path('forum_edit', {'messageId': message.id, 'threadId': thread.id, 'slug': thread.slug}) }}">{{ 'forum.main.thread.edit'|trans }}</a>{% endif %}</div>
+				<div class="message-options">{% if forum_can_delete(app.user, category) %}<a href="{{ path('forum_mod', {'messageId': message.id, 'threadId': thread.id, 'slug': thread.slug, 'action': 'remove'}) }}" class="remove" rel="{% if thread.createdAt == message.createdAt %}removeThreadWarning{% else %}removeMessage{% endif %}">{{ 'forum.main.thread.remove'|trans }}</a>{% endif %} {% if forum_can_delete(app.user, category) and forum_can_edit(app.user, category) %} - {% endif %} {% if forum_can_edit(app.user, category) %} <a href="{{ path('forum_edit', {'messageId': message.id, 'threadId': thread.id, 'slug': thread.slug}) }}">{{ 'forum.main.thread.edit'|trans }}</a>{% endif %}</div>
 				<div class="message-content">
 					{{ message.content|raw }}
 				</div>
