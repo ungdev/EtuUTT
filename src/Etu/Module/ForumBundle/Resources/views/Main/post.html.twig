@@ -4,6 +4,15 @@
 	<link rel="stylesheet" href="{{ asset('css/bundles/forum.css') }}" type="text/css" />
 {% endblock %}
 
+{% block javascripts %}
+	<script type="text/javascript">
+	$(function()
+		{
+			$('#etu_module_forumbundle_threadtype_lastMessage_content').redactor();
+		});
+	</script>
+{% endblock %}
+
 {% block title %}{{ 'forum.main.post.title'|trans }}{% endblock %}
 
 {% block content %}
