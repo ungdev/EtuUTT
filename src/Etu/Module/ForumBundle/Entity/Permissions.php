@@ -95,6 +95,13 @@ class Permissions
 	protected $move;
 
 	/**
+	 * @var integer $delete
+	 *
+	 * @ORM\Column(name="delete", type="integer")
+	 */
+	protected $delete;
+
+	/**
 	 * @var integer $type
 	 *
 	 * @ORM\Column(name="type", type="integer")
@@ -177,6 +184,14 @@ class Permissions
 	 * @return int
 	 */
 	public function getMove()
+	{
+		return $this->move;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getDelete()
 	{
 		return $this->move;
 	}

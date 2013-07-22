@@ -24,6 +24,10 @@ forum:
             read: Lire
             sticky: Epinglé
             locked: Bloqué
+            lock: Bloquer
+            unlock: Débloquer
+            remove: Supprimer
+            edit: Editer
         post:
             title: Création d'un sujet
             threadTitle: Titre du sujet
@@ -33,3 +37,5 @@ forum:
             no: Non
         answer:
             title: Répondre
+        edit:
+            title: Editer un message

@@ -263,7 +263,7 @@ class Thread
 	 */
 	public function setWeight($weight)
 	{
-		if($weight == NULL) $weight = WEIGHT_BASIC;
+		if($weight == NULL) $weight = self::WEIGHT_BASIC;
 		if (! in_array($weight, array(self::WEIGHT_BASIC, self::WEIGHT_STICKY))) {
 			throw new \InvalidArgumentException(
 				sprintf('Invalid thread weight (%s given, Thread constante expected).', $weight)

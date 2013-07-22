@@ -14,6 +14,7 @@ use Etu\Module\ForumBundle\Entity\Thread;
 use Etu\Module\ForumBundle\Entity\Message;
 
 use Etu\Module\ForumBundle\Form\ThreadType;
+use Etu\Module\ForumBundle\Form\MessageEditType;
 use Etu\Module\ForumBundle\Form\MessageType;
 
 use Etu\Module\ForumBundle\Model\PermissionsChecker;
@@ -279,4 +280,86 @@ class MainController extends Controller
 
 		return array('thread' => $thread, 'parents' => $parents, 'form' => $form->createView());
 	}
+
+	/**
+	 * @Route("/forum/edit/{threadId}-{slug}/{messageId}", name="forum_edit")
+	 * @Template()
+	 */
+	public function editAction($messageId)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$message = $em->createQueryBuilder()
+			->select('m, t')
+			->from('EtuModuleForumBundle:Message', 'm')
+			->leftJoin('m.thread', 't')
+			->where('m.id = :id')
+			->andWhere('t.state != 300')
+			->setParameter('id', $messageId)
+			->getQuery()
+			->getSingleResult();
+
+		$thread = $message->getThread();
+		$category = $message->getCategory();
+
+		$checker = new PermissionsChecker($this->getUser());
+		if (!$checker->canEdit($category) || ($thread->getState() == 200 && !$checker->canLock($category) && !$user->getIsAdmin())) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$parents = $em->createQueryBuilder()
+			->select('c')
+			->from('EtuModuleForumBundle:Category', 'c')
+			->where('c.left <= :left')
+			->andWhere('c.right >= :right')
+			->setParameter('left', $category->getLeft())
+			->setParameter('right', $category->getRight())
+			->orderBy('c.depth')
+			->getQuery()
+			->getResult();
+
+		if($message->getCreatedAt() == $thread->getCreatedAt()) {
+			$form = $this->createForm(new MessageEditType, $message);
+			$typeForm = 'thread';
+		}
+		else {
+			$form = $this->createForm(new MessageType, $message);
+			$typeForm = 'message';
+		}
+
+		$request = $this->get('request');
+		if ($request->getMethod() == 'POST') {
+			$form->bind($request);
+			if ($form->isValid()) {
+				$em->persist($message);
+				$em->flush();
+
+				$nbMessages = $em->createQueryBuilder()
+					->select('count(m.id)')
+					->from('EtuModuleForumBundle:Message', 'm')
+					->where('m.thread = :thread')
+					->andWhere('m.id <= :mid')
+					->setParameter('thread', $thread->getId())
+					->setParameter('mid', $message->getId())
+					->getQuery()
+					->getSingleScalarResult();
+
+				$page = ceil($nbMessages/10);
+
+				return $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug(), 'page' => $page)) . '#'.$message->getId());
+				}
+				else return array('errors' => $form->getErrors(), 'messageContent' => $message, 'thread' => $thread, 'parents' => $parents, 'form' => $form->createView(), 'category' => $category, 'typeForm' => $typeForm);
+		}
+
+		return array('messageContent' => $message, 'thread' => $thread, 'parents' => $parents, 'form' => $form->createView(), 'category' => $category, 'typeForm' => $typeForm);
+	}
+
+	/**
+	 * @Route("/forum/mod/{action}/{threadId}-{slug}/{messageId}", defaults={"messageId" = null}, requirements={"messageId" = "\d+"}, name="forum_mod")
+	 * @Template()
+	 */
+	public function modAction($action,$threadId=null,$messageId=null)
+	{
+		return array();
+	}
+
 }

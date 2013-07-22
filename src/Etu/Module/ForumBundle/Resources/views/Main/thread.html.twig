@@ -28,7 +28,7 @@
 				<span class="message-date">{{ 'forum.main.thread.datePrefix'|trans }} {{ message.createdAt|date('forum.main.thread.dateFormat'|trans) }}  {{ 'forum.main.thread.dateHour'|trans }} {{ message.createdAt|date("H:i") }}</span>
 			</div>
 			<div class="message-right">
-				<div class="message-options"></div>
+				<div class="message-options">{% if forum_can_delete(app.user, category) %}<a href="{{ path('forum_mod', {'messageId': message.id, 'threadId': thread.id, 'slug': thread.slug, 'action': 'remMessage'}) }}">{{ 'forum.main.thread.remove'|trans }}</a>{% endif %} {% if forum_can_delete(app.user, category) and forum_can_edit(app.user, category) %} - {% endif %} {% if forum_can_edit(app.user, category) %} <a href="{{ path('forum_edit', {'messageId': message.id, 'threadId': thread.id, 'slug': thread.slug}) }}">{{ 'forum.main.thread.edit'|trans }}</a>{% endif %}</div>
 				<div class="message-content">
 					{{ message.content|raw }}
 				</div>

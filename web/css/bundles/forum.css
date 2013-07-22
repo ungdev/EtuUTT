@@ -128,8 +128,10 @@
 
 .forum-message .message-right .message-options
 {
-	width:1000px;
+	width:995px;
 	height:30px;
+	text-align:right;
+	padding-right:5px;
 }
 
 .forum-message .message-right .message-content

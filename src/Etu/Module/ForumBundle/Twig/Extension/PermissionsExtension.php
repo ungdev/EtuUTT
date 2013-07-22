@@ -23,7 +23,8 @@ class PermissionsExtension extends \Twig_Extension
 			'forum_can_edit' => new \Twig_Function_Method($this, 'canEdit'),
 			'forum_can_sticky' => new \Twig_Function_Method($this, 'canSticky'),
 			'forum_can_lock' => new \Twig_Function_Method($this, 'canLock'),
-			'forum_can_move' => new \Twig_Function_Method($this, 'canMove')
+			'forum_can_move' => new \Twig_Function_Method($this, 'canMove'),
+			'forum_can_delete' => new \Twig_Function_Method($this, 'canDelete')
 		);
 	}
 
@@ -110,6 +111,18 @@ class PermissionsExtension extends \Twig_Extension
 		$checker = new PermissionsChecker($user);
 
 		return $checker->canMove($category);
+	}
+
+	/**
+	 * @param UserInterface $user
+	 * @param Category      $category
+	 * @return bool
+	 */
+	public function canDelete($user, Category $category)
+	{
+		$checker = new PermissionsChecker($user);
+
+		return $checker->canDelete($category);
 	}
 
 
