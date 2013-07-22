@@ -156,3 +156,48 @@
 	font-weight:bold;
 	color:red;
 }
+
+.forum-post
+{
+	width:1000px;
+	margin:auto;
+}
+
+.forum-post label
+{
+	font-weight:bold;
+}
+
+.forum-post .forum-post-left
+{
+	float:left;
+	width:120px;
+}
+
+.forum-post .forum-post-right
+{
+	float:left;
+	width:880px;
+}
+
+.forum-post .forum-post-title
+{
+	height:40px;
+}
+
+.forum-post .forum-post-content
+{
+	min-height:100px;
+	margin-bottom:10px;
+}
+
+.forum-post .forum-post-sticky
+{
+	height:60px;
+}
+
+.forum-post .forum-post-sticky input[type="radio"]
+{
+	float:left;
+	margin-right:5px;
+}

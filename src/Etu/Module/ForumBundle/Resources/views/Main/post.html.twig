@@ -4,15 +4,6 @@
 	<link rel="stylesheet" href="{{ asset('css/bundles/forum.css') }}" type="text/css" />
 {% endblock %}
 
-{% block javascripts %}
-	<script type="text/javascript">
-	$(function()
-		{
-			$('#etu_module_forumbundle_threadtype_lastMessage_content').redactor();
-		});
-	</script>
-{% endblock %}
-
 {% block title %}{{ 'forum.main.post.title'|trans }}{% endblock %}
 
 {% block content %}
@@ -24,30 +15,42 @@
 	</div>
 
 	<form action="{{ path('forum_post', {'id': category.id, 'slug': category.slug}) }}" method="post" {{ form_enctype(form) }}>
-		<fieldset class="forum_post">
+		<fieldset class="forum-post">
 			{{ form_errors(form) }}
-			<div>
-			  {{ form_label(form.title, 'forum.main.post.threadTitle'|trans) }}
-			  {{ form_errors(form.title) }}
-			  {{ form_widget(form.title) }}
-			</div>
+			<div class="forum-post-left">
+				<div class="forum-post-title">
+				  {{ form_label(form.title, 'forum.main.post.threadTitle'|trans) }}
+				</div>
 
-			<div>
-			  {{ form_label(form.lastMessage.content, 'forum.main.post.content'|trans) }}
-			  {{ form_errors(form.lastMessage.content) }}
-			  {{ form_widget(form.lastMessage.content) }}
-			</div>
+				{% if forum_can_sticky(app.user, category) %}
+					<div class="forum-post-sticky">
+					  {{ form_label(form.weight, 'forum.main.post.sticky'|trans) }}
+					</div>
+				{% endif %}
 
-			{% if forum_can_sticky(app.user, category) %}
-			<div>
-			  {{ form_label(form.weight, 'forum.main.post.sticky'|trans) }}
-			  {{ form_errors(form.weight) }}
-			  {{ form_widget(form.weight) }}
-			</div>
-			{% endif %}
+				<div class="forum-post-content">
+				  {{ form_label(form.lastMessage.content, 'forum.main.post.content'|trans) }}
+				</div>
 
-			{{ form_rest(form) }}
-			<input type="submit" class="btn btn-primary" />
+			</div>
+			<div class="forum-post-right">
+				<div class="forum-post-title">
+				  {{ form_errors(form.title) }}
+				  {{ form_widget(form.title) }}
+				</div>
+				{% if forum_can_sticky(app.user, category) %}
+					<div class="forum-post-sticky">
+					  {{ form_errors(form.weight) }}
+					  {{ form_widget(form.weight) }}
+					</div>
+				{% endif %}
+				<div class="forum-post-content">
+				  {{ form_errors(form.lastMessage.content) }}
+				  {{ form_widget(form.lastMessage.content) }}
+				</div>
+				{{ form_rest(form) }}
+				<input type="submit" class="btn btn-primary" />
+			</div>
 		</fieldset>
 	</form>
 {% endblock %}
