@@ -102,6 +102,13 @@ class Category
 		$this->permissions = new \Doctrine\Common\Collections\ArrayCollection();
 	}
 
+	public function __toString()
+	{
+		$addSpaces = '';
+		for($i = 0; $i < $this->depth;$i++) $addSpaces .= '_';
+		return $addSpaces.' '.$this->title;
+	}
+
 	/**
 	 * @return integer
 	 */

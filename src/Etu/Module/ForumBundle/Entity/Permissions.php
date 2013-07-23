@@ -193,7 +193,7 @@ class Permissions
 	 */
 	public function getDelete()
 	{
-		return $this->move;
+		return $this->delete;
 	}
 
 	/**

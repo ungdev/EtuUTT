@@ -33,3 +33,4 @@ class ThreadEditType extends AbstractType
         return 'etu_module_forumbundle_threadedittype';
     }
 }
+
