@@ -6,12 +6,13 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class MessageType extends AbstractType
+class MessageEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('content', 'redactor')
+            ->add('thread', new ThreadEditType())
         ;
     }
 
@@ -24,6 +25,6 @@ class MessageType extends AbstractType
 
     public function getName()
     {
-        return 'etu_module_forumbundle_messagetype';
+        return 'etu_module_forumbundle_messageedittype';
     }
 }

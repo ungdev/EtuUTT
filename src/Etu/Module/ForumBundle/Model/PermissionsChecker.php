@@ -30,6 +30,11 @@ class PermissionsChecker
 	 */
 	public function __construct($user)
 	{
+		if($user == NULL)
+		{
+			$user = new User();
+			$user->setIsReadOnly(true);
+		}
 		$this->user = $user;
 		$this->memberships = ($this->user instanceof User) ? $this->user->getMemberships() : array();
 	}
@@ -331,6 +336,48 @@ class PermissionsChecker
 						if($value->getUser() == $this->user) {
 							$permissions = $value;
 							if($permissions->getMove()) return true;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param Category $category
+	 * @return bool
+	 */
+	public function canDelete(Category $category)
+	{
+
+		if ($this->user->getIsAdmin()) {
+			return true;
+		}
+
+		if(!$this->user->getIsReadOnly()) {
+			$permissions = new Permissions();
+
+			foreach($category->getPermissions() as $value) {
+				if($value->getType() == 1) {
+					$permissions = $value;
+				}
+			}
+			if($permissions->getDelete()) return true;
+
+			if (!$this->user instanceof Organization) {
+				foreach($category->getPermissions() as $value) {
+					if($value->getType() == 2) {
+						foreach($this->memberships as $membership) {
+							if($value->getOrganization() == $membership->getOrganization()) {
+								$permissions = $value;
+								if($permissions->getDelete()) return true;
+							}
+						}
+					}
+					if($value->getType() == 3) {
+						if($value->getUser() == $this->user) {
+							$permissions = $value;
+							if($permissions->getDelete()) return true;
 						}
 					}
 				}

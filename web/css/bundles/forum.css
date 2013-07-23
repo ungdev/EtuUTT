@@ -2,10 +2,216 @@
  * Forum
  */
 
-.forum-table caption
+.forum-table
 {
-	text-align:left;
+	width:1150px;
+	margin:auto;
+	margin-top:10px;
+}
+
+.forum-table th
+{
+	border-top:1px solid #DDDDDD;
+}
+
+.forum-table .subjects
+{
+	width:550px;
+}
+
+.forum-table .subjects a
+{
 	font-weight:bold;
+}
+
+.forum-table .subjects .by
+{
+	font-size:12px;
+}
+
+.forum-table .category
+{
+	width:650px;
+}
+
+.forum-table .category a
+{
+	font-weight:bold;
+}
+
+.forum-table .countSubjets
+{
+	width:123px;
+}
+
+.forum-table td.countSubjets
+{
+	text-align:center;
+}
+
+.forum-table .countMessages
+{
+	width:123px;
+}
+
+.forum-table td.countMessages
+{
+	text-align:center;
+}
+
+.forum-table th.lastMessage
+{
+	width:250px;
+}
+
+.forum-table td.lastMessage
+{
+	width:200px;
+	font-size:12px;
+}
+
+.forum-table .catTitle
+{
+	font-weight:bold;
+	padding-left:-10px;
+	font-size:17px;
+	padding-bottom:2px;
+}
+
+.forum-table .catTitle td
+{
+	text-align:center;
+}
+
+.forum-breadcrumb
+{
+	margin-top:2px;
+	margin-left:5px;
+	margin-bottom:10px;
+}
+
+.forum-message
+{
+	width:1150px;
+	min-height:150px;
+	margin:auto;
+	border:solid 1px #DDDDDD;
+	margin-bottom:-1px;
+}
+
+.forum-message .message-left
+{
+	width:150px;
+	float:left;
+	text-align:center;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+.forum-message .message-left img
+{
+	height:100px;
+	margin-top:5px;
+	margin-bottom:5px;
+}
+
+.forum-message .message-left .message-date
+{
+	font-size:12px;
+}
+
+.forum-message .message-right
+{
+	width:1000px;
+	float:left;
+}
+
+.forum-message .message-right .message-options
+{
+	width:995px;
+	height:30px;
+	text-align:right;
+	padding-right:5px;
+}
+
+.forum-message .message-right .message-content
+{
+	width:980px;
 	padding-left:10px;
-	font-size:15px;
+	padding-right:10px;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+.forum-clear
+{
+	clear:both;
+}
+
+.forum-sticky
+{
+	font-weight:bold;
+}
+
+.forum-locked
+{
+	font-weight:bold;
+	color:red;
+}
+
+.forum-post
+{
+	width:1000px;
+	margin:auto;
+}
+
+.forum-post label
+{
+	font-weight:bold;
+}
+
+.forum-post .forum-post-left
+{
+	float:left;
+	width:120px;
+}
+
+.forum-post .forum-post-right
+{
+	float:left;
+	width:880px;
+}
+
+.forum-post .forum-post-title
+{
+	height:40px;
+}
+
+.forum-post .forum-post-content
+{
+	min-height:100px;
+	margin-bottom:10px;
+}
+
+.forum-post .forum-post-sticky
+{
+	height:60px;
+}
+
+.forum-post .forum-post-sticky input[type="radio"]
+{
+	float:left;
+	margin-right:5px;
+}
+
+.forum-modPanel
+{
+	width:100%;
+	text-align:center;
+	margin-bottom:10px;
+}
+
+.forum-modPanel .forum-moderation
+{
+	font-weight:bold;
 }

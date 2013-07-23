@@ -3,13 +3,28 @@ forum:
     main:
         index:
             noMessage: Pas de message
+            forum: Forum
+            category: Catégorie
+            nbThreads: Sujets
+            nbMessages: Messages
+            lastMessage: Dernier message
+            noMessage: Il n'y a pas de message dans cette catégorie.
         thread:
             thread: Sujet
+            in: Dans
             by: Par
             date: Date
+            datePrefix: Le
+            dateHour: à
+            dateFormat: d/m/Y
             messages: Messages
             lastMessage: Dernier message
             post: Créer un nouveau sujet
+            answer: Répondre
+            read: Lire
+            sticky: Epinglé
+            locked: Bloqué
+            edit: Editer
         post:
             title: Création d'un sujet
             threadTitle: Titre du sujet
@@ -17,4 +32,21 @@ forum:
             sticky: Epinglé ?
             yes: Oui
             no: Non
-
+        answer:
+            title: Répondre
+        edit:
+            title: Editer un message
+        mod:
+            title: Panneau de modération
+            lock: Bloquer
+            unlock: Débloquer
+            remove: Supprimer
+            removeThreadWarning: Attention, la suppression de ce message entraine la suppression du sujet. Êtes-vous sûr de vouloir le supprimer ?
+            removeThread: Êtes-vous sûr de vouloir supprimer ce sujet ?
+            removeMessage: Êtes-vous sûr de vouloir supprimer ce message ?
+            back: Retour
+            locked: Le sujet a bien été bloqué
+            unlocked: Le sujet a bien été débloqué
+            moderation: Modération
+            move: Déplacer
+            where: Vers où déplacer le sujet ?

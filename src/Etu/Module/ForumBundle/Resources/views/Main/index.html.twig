@@ -4,22 +4,29 @@
 	<link rel="stylesheet" href="{{ asset('css/bundles/forum.css') }}" type="text/css" />
 {% endblock %}
 
-{% block title %}Forum{% endblock %}
+{% block title %}{{ 'forum.main.index.forum'|trans }}{% endblock %}
 
 {% block content %}
 	<table class="table table-bordered table-hover forum-table">
 	{% for category in categories %}
 		{% if forum_can_read(app.user, category) %}
 			{% if category.depth == 0 %}
-				<caption>
-					<a href="{{ path('forum_category', {'id': category.id, 'slug': category.slug}) }}">{{ category.title }}</a>
-				</caption>
+				<tr class="catTitle">
+					<td colspan="4"><a href="{{ path('forum_category', {'id': category.id, 'slug': category.slug}) }}">{{ category.title }}</a></td>
+				</tr>
+				<tr><th class="category">{{ 'forum.main.index.forum'|trans }}</th><th class="countSubjets">{{ 'forum.main.index.nbThreads'|trans }}</th><th class="countMessages">{{ 'forum.main.index.nbMessages'|trans }}</th><th class="lastMessage">{{ 'forum.main.index.lastMessage'|trans }}</th></tr>
 			{% elseif category.depth == 1 %}
 				<tr>
-					<td><a href="{{ path('forum_category', {'id': category.id, 'slug': category.slug}) }}">{{ category.title }}</a><br />{{ category.description }}</td>
-					<td>{{ category.countThreads }}</td>
-					<td>{{ category.countMessages }}</td>
-					<td>{% if category.lastMessage == NULL %}{{ 'forum.main.index.noMessage'|trans }}{% else %}{{ category.getLastMessage().author.getFullName() }}{% endif %}</td>
+					<td class="category"><a href="{{ path('forum_category', {'id': category.id, 'slug': category.slug}) }}">{{ category.title }}</a><br />{{ category.description }}</td>
+					<td class="countSubjets">{{ category.countThreads }}</td>
+					<td class="countMessages">{{ category.countMessages }}</td>
+					<td class="lastMessage">
+						{% if category.getLastMessage() == NULL %}
+							{{ 'forum.main.index.noMessage'|trans }}
+						{% else %}
+							{{ 'forum.main.thread.in'|trans }} <a href="{{ path('forum_thread', {'id': category.getLastMessage().getThread().getId(), 'slug': category.getLastMessage().getThread().getSlug(), 'page': (category.getLastMessage().getThread().getCountMessages()/10)|ceil}) }}#{{ category.getLastMessage().getId() }}">{{ category.getLastMessage().getThread().getTitle() }}</a><br />{{ 'forum.main.thread.datePrefix'|trans }} {{ category.getLastMessage().createdAt|date('forum.main.thread.dateFormat'|trans) }}  {{ 'forum.main.thread.dateHour'|trans }} {{ category.getLastMessage().createdAt|date("H:i") }} {{ 'forum.main.thread.by'|trans|lower }} <a href="{{ path('user_view', {'login': category.getLastMessage().author.getLogin()}) }}">{{ category.getLastMessage().author.getFullName() }}</a>
+						{% endif %}
+					</td>
 				</tr>
 			{% endif %}
 		{% endif %}

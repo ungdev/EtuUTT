@@ -78,7 +78,8 @@ class Category
 	/**
 	 * @var \Etu\Module\ForumBundle\Entity\Message $lastMessage
 	 *
-	 * @ORM\ManyToOne(targetEntity="\Etu\Module\ForumBundle\Entity\Message")
+	 * @ORM\ManyToOne(targetEntity="\Etu\Module\ForumBundle\Entity\Message", cascade={"persist"})
+	 * @ORM\JoinColumn(onDelete="SET NULL", nullable=true)
 	 */
 	protected $lastMessage;
 
@@ -99,6 +100,13 @@ class Category
 		$this->right = 0;
 		$this->depth = 0;
 		$this->permissions = new \Doctrine\Common\Collections\ArrayCollection();
+	}
+
+	public function __toString()
+	{
+		$addSpaces = '';
+		for($i = 0; $i < $this->depth;$i++) $addSpaces .= '_';
+		return $addSpaces.' '.$this->title;
 	}
 
 	/**
@@ -189,7 +197,7 @@ class Category
 	 * @param \Etu\Module\ForumBundle\Entity\Message $lastMessage
 	 * @return Category
 	 */
-	public function setLastMessage(Message $lastMessage)
+	public function setLastMessage(Message $lastMessage = NULL)
 	{
 		$this->lastMessage = $lastMessage;
 

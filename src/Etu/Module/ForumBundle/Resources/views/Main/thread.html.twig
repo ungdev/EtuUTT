@@ -1,0 +1,78 @@
+{% extends '::page-1col.html.twig' %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/bundles/forum.css') }}" type="text/css" />
+{% endblock %}
+
+{% block javascripts %}
+	<script type="text/javascript">
+		$(".remove").click(function() {
+			switch($(this).attr("rel")) {
+				case 'removeMessage':
+					if(!confirm("{{ 'forum.main.mod.removeMessage'|trans }}")) {
+						return false;
+					}
+					break;
+				case 'removeThread':
+					if(!confirm("{{ 'forum.main.mod.removeThread'|trans }}")) {
+						return false;
+					}
+					break;
+				case 'removeThreadWarning':
+					if(!confirm("{{ 'forum.main.mod.removeThreadWarning'|trans }}")) {
+						return false;
+					}
+					break;
+			}
+		});
+	</script>
+{% endblock %}
+
+{% block title %}{{ thread.title }}{% endblock %}
+
+{% block content %}
+	<div class="forum-breadcrumb">
+		<a href="{{ path('forum_index') }}">Forum</a>
+		{% for parent in parents %}
+			 > <a href="{{ path('forum_category', {'id': parent.id, 'slug': parent.slug}) }}">{{ parent.title }}</a>
+		{% endfor %}
+		 > <a href="{{ path('forum_thread', {'id': thread.id, 'slug': thread.slug}) }}">{{ thread.title }}</a>
+	</div>
+
+	<div class="forum-modPanel">
+		{% if forum_can_lock(app.user, category) or forum_can_move(app.user, category) %}<span class="forum-moderation">{{ 'forum.main.mod.moderation'|trans }} : </span>{% endif %}{% if forum_can_lock(app.user, category) %}<a href="{{ path('forum_mod', {'action': 'lock', 'threadId': thread.id, slug: thread.slug}) }}">{% if thread.state == 100 %}{{ 'forum.main.mod.lock'|trans }}{% elseif thread.state == 200 %}{{ 'forum.main.mod.unlock'|trans }}{% endif %}</a>{% endif %}{% if forum_can_lock(app.user, category) and forum_can_move(app.user, category) %} - {% endif %}{% if forum_can_move(app.user, category) %}<a href="{{ path('forum_mod', {'action': 'move', 'threadId': thread.id, slug: thread.slug}) }}">{{ 'forum.main.mod.move'|trans }}</a>{% endif %}
+	</div>
+
+	{# display navigation #}
+	<div class="navigation">
+		{{ knp_pagination_render(messages) }}
+	</div>
+	{% for message in messages %}
+		<div class="forum-message" id="{{ message.id }}">
+			<div class="message-left">
+				<a href="{{ path('user_view', {'login': message.author.getLogin()}) }}">{{ message.author.getFullName() }}</a><br />
+				<img src="/photos/{{ message.author.getLogin() }}.jpg" alt="{{ message.author.getFullName() }}"/><br />
+				<span class="message-date">{{ 'forum.main.thread.datePrefix'|trans }} {{ message.createdAt|date('forum.main.thread.dateFormat'|trans) }}  {{ 'forum.main.thread.dateHour'|trans }} {{ message.createdAt|date("H:i") }}</span>
+			</div>
+			<div class="message-right">
+				<div class="message-options">{% if forum_can_delete(app.user, category) %}<a href="{{ path('forum_mod', {'messageId': message.id, 'threadId': thread.id, 'slug': thread.slug, 'action': 'remove'}) }}" class="remove" rel="{% if thread.createdAt == message.createdAt %}removeThreadWarning{% else %}removeMessage{% endif %}">{{ 'forum.main.mod.remove'|trans }}</a>{% endif %} {% if forum_can_delete(app.user, category) and forum_can_edit(app.user, category) %} - {% endif %} {% if forum_can_edit(app.user, category) %} <a href="{{ path('forum_edit', {'messageId': message.id, 'threadId': thread.id, 'slug': thread.slug}) }}">{{ 'forum.main.thread.edit'|trans }}</a>{% endif %}</div>
+				<div class="message-content">
+					{{ message.content|raw }}
+				</div>
+			</div>
+			<div class="forum-clear"></div>
+		</div>
+		<div class="forum-clear"></div>
+	{% endfor %}
+
+	{# display navigation #}
+	<div class="navigation">
+		{{ knp_pagination_render(messages) }}
+	</div>
+
+	{% if forum_can_answer(app.user, category) %}
+		{% if cantAnswer == false %}
+			<a href="{{ path('forum_answer', {'id': thread.id, 'slug': thread.slug}) }}">{{'forum.main.thread.answer'|trans }}</a>
+		{% endif %}
+	{% endif %}
+{% endblock %}

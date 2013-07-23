@@ -7,29 +7,34 @@
 {% block title %}{{ category.title }}{% endblock %}
 
 {% block content %}
-	<a href="{{ path('forum_index') }}">Forum</a>
-	{% for parent in parents %}
-		 > <a href="{{ path('forum_category', {'id': parent.id, 'slug': parent.slug}) }}">{{ parent.title }}</a>
-	{% endfor %}
+	<div class="forum-breadcrumb">
+		<a href="{{ path('forum_index') }}">Forum</a>
+		{% for parent in parents %}
+			 > <a href="{{ path('forum_category', {'id': parent.id, 'slug': parent.slug}) }}">{{ parent.title }}</a>
+		{% endfor %}
+	</div>
 
-	<table class="table table-bordered table-hover forum-table">
-	{% for category in subCategories %}
-		{% if forum_can_read(app.user, category) %}
-			{% if category.depth == 0 %}
-				<caption>
-					<a href="{{ path('forum_category', {'id': category.id, 'slug': category.slug}) }}">{{ category.title }}</a>
-				</caption>
-			{% elseif category.depth == 1 %}
+	{% if isSubCategories %}
+		<table class="table table-bordered table-hover forum-table">
+			<tr><th class="category">{{ 'forum.main.index.forum'|trans }}</th><th class="countSubjets">{{ 'forum.main.index.nbThreads'|trans }}</th><th class="countMessages">{{ 'forum.main.index.nbMessages'|trans }}</th><th class="lastMessage">{{ 'forum.main.index.lastMessage'|trans }}</th></tr>
+		{% for subCategory in subCategories %}
+			{% if forum_can_read(app.user, category) %}
 				<tr>
-					<td><a href="{{ path('forum_category', {'id': category.id, 'slug': category.slug}) }}">{{ category.title }}</a><br />{{ category.description }}</td>
-					<td>{{ category.countThreads }}</td>
-					<td>{{ category.countMessages }}</td>
-					<td>{% if category.lastMessage == NULL %}{{ 'forum.main.index.noMessage'|trans }}{% else %}{{ category.getLastMessage().author.getFullName() }}{% endif %}</td>
+					<td class="category"><a href="{{ path('forum_category', {'id': subCategory.id, 'slug': subCategory.slug}) }}">{{ subCategory.title }}</a><br />{{ subCategory.description }}</td>
+					<td class="countSubjets">{{ subCategory.countThreads }}</td>
+					<td class="countMessages">{{ subCategory.countMessages }}</td>
+					<td class="lastMessage">
+						{% if subCategory.getLastMessage() == NULL %}
+							{{ 'forum.main.index.noMessage'|trans }}
+						{% else %}
+							{{ 'forum.main.thread.in'|trans }} <a href="{{ path('forum_thread', {'id': subCategory.getLastMessage().getThread().getId(), 'slug': subCategory.getLastMessage().getThread().getSlug(), 'page': (subCategory.getLastMessage().getThread().getCountMessages()/10)|ceil}) }}#{{ subCategory.getLastMessage().getId() }}">{{ subCategory.getLastMessage().getThread().getTitle() }}</a><br />{{ 'forum.main.thread.datePrefix'|trans }} {{ subCategory.getLastMessage().createdAt|date('forum.main.thread.dateFormat'|trans) }}  {{ 'forum.main.thread.dateHour'|trans }} {{ subCategory.getLastMessage().createdAt|date("H:i") }} {{ 'forum.main.thread.by'|trans|lower }} <a href="{{ path('user_view', {'login': subCategory.getLastMessage().author.getLogin()}) }}">{{ subCategory.getLastMessage().author.getFullName() }}</a>
+						{% endif %}
+					</td>
 				</tr>
 			{% endif %}
-		{% endif %}
-	{% endfor %}
-	</table>
+		{% endfor %}
+		</table>
+	{% endif %}
 
 	{% if category.depth > 0 %}
 		{# display navigation #}
@@ -38,9 +43,30 @@
 		</div>
 
 		<table class="table table-bordered table-hover forum-table">
-			<tr><th>{{'forum.main.thread.thread'|trans }}</th><th>{{'forum.main.thread.by'|trans }}</th><th>{{'forum.main.thread.messages'|trans }}</th><th>{{'forum.main.thread.lastMessage'|trans }}</th></tr>
+			<tr><th class="subjects">{{'forum.main.thread.thread'|trans }}</th><th class="date">{{'forum.main.thread.date'|trans }}</th><th class="countMessages">{{'forum.main.thread.messages'|trans }}</th><th class="lastMessage">{{'forum.main.thread.lastMessage'|trans }}</th></tr>
+		{% if noThreads %}
+			<tr class="catTitle">
+				<td colspan="4">{{'forum.main.index.noMessage'|trans }}</td>
+			</tr>
+		{% endif %}
 		{% for thread in threads %}
-			 <tr><td><a href="{{ path('forum_thread', {'id': thread.id, 'slug': thread.slug}) }}">{{ thread.title }}</a></td><td>{{ thread.author.getFullName() }}</td><td>{{ thread.countMessages }}</td><td>{% if thread.getLastMessage() == NULL %}{{ 'forum.main.index.noMessage'|trans }}{% else %}{{ thread.getLastMessage().author.getFullName() }}{% endif %}</td></tr>
+			 <tr>
+				<td class="subjects">
+					{% if thread.weight == 200 %}<span class="forum-sticky">{{'forum.main.thread.sticky'|trans}}:</span> {% elseif thread.state == 200 %}<span class="forum-locked">{{'forum.main.thread.locked'|trans}}:</span> {% endif %}<a href="{{ path('forum_thread', {'id': thread.id, 'slug': thread.slug}) }}">{{ thread.title }}</a><br /> <span class="by">{{'forum.main.thread.by'|trans|lower }} <a href="{{ path('user_view', {'login': thread.author.getLogin()}) }}">{{ thread.author.getFullName() }}</a></span>
+				</td>
+				<td class="date">
+					{{ 'forum.main.thread.datePrefix'|trans }} {{ thread.createdAt|date('forum.main.thread.dateFormat'|trans) }}  {{ 'forum.main.thread.dateHour'|trans }} {{ thread.createdAt|date("H:i") }}
+				</td>
+				<td class="countMessages">{{ thread.countMessages }}</td>
+				<td class="lastMessage">
+					{% if thread.getLastMessage() == NULL %}
+						{{ 'forum.main.index.noMessage'|trans }}
+					{% else %}
+						{{ 'forum.main.thread.datePrefix'|trans }} {{ thread.getLastMessage().createdAt|date('forum.main.thread.dateFormat'|trans) }}  {{ 'forum.main.thread.dateHour'|trans }} {{ thread.getLastMessage().createdAt|date("H:i") }} {{ 'forum.main.thread.by'|trans|lower }} <a href="{{ path('user_view', {'login': thread.getLastMessage().author.getLogin()}) }}">{{ thread.getLastMessage().author.getFullName() }}</a><br />
+						<a href="{{ path('forum_thread', {'id': thread.getLastMessage().getThread().getId(), 'slug': thread.getLastMessage().getThread().getSlug(), 'page': (thread.getLastMessage().getThread().getCountMessages()/10)|ceil}) }}#{{ thread.getLastMessage().getId() }}">{{ 'forum.main.thread.read'|trans }}</a>
+					{% endif %}
+				</td>
+			</tr>
 		{% endfor %}
 		</table>
 

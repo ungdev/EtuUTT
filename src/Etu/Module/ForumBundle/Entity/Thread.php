@@ -10,6 +10,7 @@ use \Etu\Module\ForumBundle\Entity\Message;
 /**
  * @ORM\Table(name="etu_forum_threads")
  * @ORM\Entity
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Thread
 {
@@ -28,10 +29,15 @@ class Thread
 	protected $id;
 
 	/**
+	 * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
+	 */
+	protected $deletedAt;
+
+	/**
 	 * @var User $user
 	 *
 	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
-	 * @ORM\JoinColumn()
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $author;
 
@@ -39,7 +45,7 @@ class Thread
 	 * @var Category $category
 	 *
 	 * @ORM\ManyToOne(targetEntity="Category")
-	 * @ORM\JoinColumn()
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $category;
 
@@ -92,6 +98,7 @@ class Thread
 	 * @var \Etu\Module\ForumBundle\Entity\Message $lastMessage
 	 *
 	 * @ORM\OneToOne(targetEntity="\Etu\Module\ForumBundle\Entity\Message", cascade={"persist"})
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $lastMessage;
 
@@ -113,6 +120,25 @@ class Thread
 	public function getId()
 	{
 		return $this->id;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getDeletedAt()
+	{
+		return $this->deletedAt;
+	}
+
+	/**
+	 * @param \DateTime $createdAt
+	 * @return $this
+	 */
+	public function setDeletedAt($deletedAt)
+	{
+		$this->deletedAt = $deletedAt;
+
+		return $this;
 	}
 
 	/**
@@ -262,7 +288,7 @@ class Thread
 	 */
 	public function setWeight($weight)
 	{
-		if($weight == NULL) $weight = WEIGHT_BASIC;
+		if($weight == NULL) $weight = self::WEIGHT_BASIC;
 		if (! in_array($weight, array(self::WEIGHT_BASIC, self::WEIGHT_STICKY))) {
 			throw new \InvalidArgumentException(
 				sprintf('Invalid thread weight (%s given, Thread constante expected).', $weight)

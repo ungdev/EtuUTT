@@ -25,7 +25,7 @@ class Permissions
 	 * @var Category $category
 	 *
 	 * @ORM\ManyToOne(targetEntity="Category")
-	 * @ORM\JoinColumn()
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $category;
 	
@@ -33,7 +33,7 @@ class Permissions
 	 * @var Organization $organization
 	 *
 	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\Organization")
-	 * @ORM\JoinColumn()
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $organization;
 
@@ -41,7 +41,7 @@ class Permissions
 	 * @var User $user
 	 *
 	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
-	 * @ORM\JoinColumn()
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $user;
 
@@ -93,6 +93,13 @@ class Permissions
 	 * @ORM\Column(name="move", type="integer")
 	 */
 	protected $move;
+
+	/**
+	 * @var integer $delete
+	 *
+	 * @ORM\Column(name="delete", type="integer")
+	 */
+	protected $delete;
 
 	/**
 	 * @var integer $type
@@ -179,6 +186,14 @@ class Permissions
 	public function getMove()
 	{
 		return $this->move;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getDelete()
+	{
+		return $this->delete;
 	}
 
 	/**

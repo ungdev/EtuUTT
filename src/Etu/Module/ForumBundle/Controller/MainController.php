@@ -3,14 +3,19 @@
 namespace Etu\Module\ForumBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 
+use Etu\Core\CoreBundle\Util\RedactorJsEscaper;
+
 use Etu\Module\ForumBundle\Entity\Category;
 use Etu\Module\ForumBundle\Entity\Thread;
+use Etu\Module\ForumBundle\Entity\Message;
 
 use Etu\Module\ForumBundle\Form\ThreadType;
+use Etu\Module\ForumBundle\Form\MessageEditType;
 use Etu\Module\ForumBundle\Form\MessageType;
 
 use Etu\Module\ForumBundle\Model\PermissionsChecker;
@@ -89,8 +94,14 @@ class MainController extends Controller
 			->getResult();
 
 		$threads = $this->get('knp_paginator')->paginate($threads, $page, 15);
+
+		$noThreads = true;
+		if(count($threads) > 0) $noThreads = false;
+
+		$isSubCategories = false;
+		if(count($subCategories) > 0) $isSubCategories = true;
 		
-		return array('category' => $category, 'subCategories' => $subCategories, 'parents' => $parents, 'threads' => $threads);
+		return array('category' => $category, 'subCategories' => $subCategories, 'parents' => $parents, 'threads' => $threads, 'noThreads' => $noThreads, 'isSubCategories' => $isSubCategories);
 	}
 
 	/**
@@ -99,7 +110,50 @@ class MainController extends Controller
 	 */
 	public function threadAction($id, $slug, $page)
 	{
-		return array();
+		$em = $this->getDoctrine()->getManager();
+		$thread = $em->createQueryBuilder()
+			->select('t, c')
+			->from('EtuModuleForumBundle:Thread', 't')
+			->leftJoin('t.category', 'c')
+			->where('t.id = :id')
+			->andWhere('t.state != 300')
+			->setParameter('id', $id)
+			->getQuery()
+			->getSingleResult();
+
+		$category = $thread->getCategory();
+
+		$checker = new PermissionsChecker($this->getUser());
+		if (!$checker->canRead($category)) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$parents = $em->createQueryBuilder()
+			->select('c')
+			->from('EtuModuleForumBundle:Category', 'c')
+			->where('c.left <= :left')
+			->andWhere('c.right >= :right')
+			->setParameter('left', $category->getLeft())
+			->setParameter('right', $category->getRight())
+			->orderBy('c.depth')
+			->getQuery()
+			->getResult();
+
+		$messages = $em->createQueryBuilder()
+			->select('m, u')
+			->from('EtuModuleForumBundle:Message', 'm')
+			->leftJoin('m.author', 'u')
+			->where('m.thread = :thread')
+			->setParameter('thread', $thread)
+			->orderBy('m.createdAt')
+			->getQuery()
+			->getResult();
+
+		$messages = $this->get('knp_paginator')->paginate($messages, $page, 10);
+
+		$cantAnswer = (bool) ($thread->getState() == 200 && !$checker->canLock($category) && !$this->getUser()->getIsAdmin());
+
+		return array('category' => $category, 'thread' => $thread, 'parents' => $parents, 'messages' => $messages, 'cantAnswer' => $cantAnswer);
 	}
 
 	/**
@@ -144,12 +198,17 @@ class MainController extends Controller
 				$message->setAuthor($this->getUser())
 					->setCategory($category)
 					->setThread($thread)
-					->setState(100);
+					->setState(100)
+					->setCreatedAt($thread->getCreatedAt())
+					->setContent(RedactorJsEscaper::escape($message->getContent()));
 				$thread->setLastMessage($message);
-				$category->setCountMessages($category->getCountMessages()+1)
-					->setCountThreads($category->getCountThreads()+1);
+				foreach($parents as $parent) {
+					$parent->setLastMessage($message)
+						->setCountMessages($parent->getCountMessages()+1)
+						->setCountThreads($parent->getCountThreads()+1);
+					$em->persist($parent);
+				}
 				$em->persist($thread);
-				$em->persist($category);
 				$em->flush();
 
 				return $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug())));
@@ -159,4 +218,402 @@ class MainController extends Controller
 
 		return array('category' => $category, 'parents' => $parents, 'form' => $form->createView());
 	}
+
+	/**
+	 * @Route("/forum/answer/{id}-{slug}", name="forum_answer")
+	 * @Template()
+	 */
+	public function answerAction($id, $slug)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$thread = $em->createQueryBuilder()
+			->select('t, c')
+			->from('EtuModuleForumBundle:Thread', 't')
+			->leftJoin('t.category', 'c')
+			->where('t.id = :id')
+			->andWhere('t.state != 300')
+			->setParameter('id', $id)
+			->getQuery()
+			->getSingleResult();
+
+		$category = $thread->getCategory();
+
+		$checker = new PermissionsChecker($this->getUser());
+		if (!$checker->canAnswer($category) || ($thread->getState() == 200 && !$checker->canLock($category) && !$this->getUser()->getIsAdmin())) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$parents = $em->createQueryBuilder()
+			->select('c')
+			->from('EtuModuleForumBundle:Category', 'c')
+			->where('c.left <= :left')
+			->andWhere('c.right >= :right')
+			->setParameter('left', $category->getLeft())
+			->setParameter('right', $category->getRight())
+			->orderBy('c.depth')
+			->getQuery()
+			->getResult();
+
+		$message = new Message();
+		$form = $this->createForm(new MessageType, $message);
+
+		$request = $this->get('request');
+		if ($request->getMethod() == 'POST') {
+			$form->bind($request);
+			if ($form->isValid()) {
+				$message->setAuthor($this->getUser())
+					->setCategory($category)
+					->setThread($thread)
+					->setState(100)
+					->setContent(RedactorJsEscaper::escape($message->getContent()));
+				$thread->setCountMessages($thread->getCountMessages()+1)
+					->setLastMessage($message);
+				foreach($parents as $parent) {
+					$parent->setLastMessage($message)
+						->setCountMessages($parent->getCountMessages()+1);
+					$em->persist($parent);
+				}
+				$em->persist($thread);
+				$em->flush();
+
+				$page = ceil($thread->getCountMessages()/10);
+
+				return $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug(), 'page' => $page)) . '#'.$message->getId());
+			}
+			else return array('errors' => $form->getErrors(), 'thread' => $thread, 'parents' => $parents, 'form' => $form->createView());
+		}
+
+		return array('thread' => $thread, 'parents' => $parents, 'form' => $form->createView());
+	}
+
+	/**
+	 * @Route("/forum/edit/{threadId}-{slug}/{messageId}", name="forum_edit")
+	 * @Template()
+	 */
+	public function editAction($messageId)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$message = $em->createQueryBuilder()
+			->select('m, t')
+			->from('EtuModuleForumBundle:Message', 'm')
+			->leftJoin('m.thread', 't')
+			->where('m.id = :id')
+			->andWhere('t.state != 300')
+			->setParameter('id', $messageId)
+			->getQuery()
+			->getSingleResult();
+
+		$thread = $message->getThread();
+		$category = $message->getCategory();
+
+		$checker = new PermissionsChecker($this->getUser());
+		if (!$checker->canEdit($category) || ($thread->getState() == 200 && !$checker->canLock($category) && !$this->getUser()->getIsAdmin())) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$parents = $em->createQueryBuilder()
+			->select('c')
+			->from('EtuModuleForumBundle:Category', 'c')
+			->where('c.left <= :left')
+			->andWhere('c.right >= :right')
+			->setParameter('left', $category->getLeft())
+			->setParameter('right', $category->getRight())
+			->orderBy('c.depth')
+			->getQuery()
+			->getResult();
+
+		if($message->getCreatedAt() == $thread->getCreatedAt()) {
+			$form = $this->createForm(new MessageEditType, $message);
+			$typeForm = 'thread';
+		}
+		else {
+			$form = $this->createForm(new MessageType, $message);
+			$typeForm = 'message';
+		}
+
+		$request = $this->get('request');
+		if ($request->getMethod() == 'POST') {
+			$form->bind($request);
+			if ($form->isValid()) {
+				$em->persist($message);
+				$em->flush();
+
+				$nbMessages = $em->createQueryBuilder()
+					->select('count(m.id)')
+					->from('EtuModuleForumBundle:Message', 'm')
+					->where('m.thread = :thread')
+					->andWhere('m.id <= :mid')
+					->setParameter('thread', $thread->getId())
+					->setParameter('mid', $message->getId())
+					->getQuery()
+					->getSingleScalarResult();
+
+				$page = ceil($nbMessages/10);
+
+				return $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug(), 'page' => $page)) . '#'.$message->getId());
+				}
+				else return array('errors' => $form->getErrors(), 'messageContent' => $message, 'thread' => $thread, 'parents' => $parents, 'form' => $form->createView(), 'category' => $category, 'typeForm' => $typeForm);
+		}
+
+		return array('messageContent' => $message, 'thread' => $thread, 'parents' => $parents, 'form' => $form->createView(), 'category' => $category, 'typeForm' => $typeForm);
+	}
+
+	/**
+	 * @Route("/forum/mod/{action}/{threadId}-{slug}/{messageId}", defaults={"messageId" = null}, requirements={"messageId" = "\d+"}, name="forum_mod")
+	 * @Template()
+	 */
+	public function modAction($action,$threadId,$messageId=null)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$thread = $em->createQueryBuilder()
+			->select('t, c')
+			->from('EtuModuleForumBundle:Thread', 't')
+			->leftJoin('t.category', 'c')
+			->where('t.id = :id')
+			->andWhere('t.state != 300')
+			->setParameter('id', $threadId)
+			->getQuery()
+			->getSingleResult();
+
+		$category = $thread->getCategory();
+		$categoryId = $category->getId();
+
+		$parents = $em->createQueryBuilder()
+			->select('c')
+			->from('EtuModuleForumBundle:Category', 'c')
+			->where('c.left <= :left')
+			->andWhere('c.right >= :right')
+			->setParameter('left', $category->getLeft())
+			->setParameter('right', $category->getRight())
+			->orderBy('c.depth')
+			->getQuery()
+			->getResult();
+
+		$return = array();
+
+		switch($action) {
+			case 'remove':
+				$checker = new PermissionsChecker($this->getUser());
+				if (!$checker->canDelete($category)) {
+					$return = $this->createAccessDeniedResponse();
+				}
+				if($messageId == null) {
+					$messages = $em->createQueryBuilder()
+						->select('m')
+						->from('EtuModuleForumBundle:Message', 'm')
+						->where('m.thread = :thread')
+						->setParameter('thread', $thread)
+						->orderBy('m.createdAt')
+						->getQuery()
+						->getResult();
+					foreach($messages as $message) {
+						$category->setCountMessages($category->getCountMessages()-1);
+						$thread->setCountMessages($thread->getCountMessages()-1);
+						$em->remove($message);
+					}
+					$category->setCountThreads($category->getCountThreads()-1);
+					$em->remove($thread);
+
+				}
+
+				$message = $em->getRepository('EtuModuleForumBundle:Message')
+					->find($messageId);
+				if($message->getCreatedAt() == $thread->getCreatedAt()) {
+					$messages = $em->createQueryBuilder()
+						->select('m')
+						->from('EtuModuleForumBundle:Message', 'm')
+						->where('m.thread = :thread')
+						->setParameter('thread', $thread)
+						->orderBy('m.createdAt')
+						->getQuery()
+						->getResult();
+					foreach($messages as $message) {
+						$category->setCountMessages($category->getCountMessages()-1);
+						$thread->setCountMessages($thread->getCountMessages()-1);
+						$em->remove($message);
+					}
+					$category->setCountThreads($category->getCountThreads()-1);
+					$em->remove($thread);
+
+				}
+				else {
+					$thread->setCountMessages($thread->getCountMessages()-1);
+					$category->setCountMessages($thread->getCountMessages()-1);
+					$em->remove($message);
+
+				}
+				$em->flush();
+
+				$category = $em->getRepository('EtuModuleForumBundle:Category')
+					->find($categoryId);
+				$thread = $em->getRepository('EtuModuleForumBundle:Category')
+					->find($threadId);
+
+				$getLastMessage = $em->createQueryBuilder()
+					->select('m')
+					->from('EtuModuleForumBundle:Message', 'm')
+					->where('m.category = :category')
+					->setParameter('category', $category)
+					->orderBy('m.createdAt', 'DESC')
+					->setMaxResults(1)
+					->getQuery();
+
+				try {
+					$getLastMessage = $getLastMessage->getSingleResult();
+					$category->setLastMessage($getLastMessage);
+				}
+				catch (\Doctrine\Orm\NoResultException $e) {
+					$category->setLastMessage(NULL);
+				}
+
+				$getLastMessage = $em->createQueryBuilder()
+					->select('m')
+					->from('EtuModuleForumBundle:Message', 'm')
+					->where('m.thread = :thread')
+					->setParameter('thread', $thread)
+					->orderBy('m.createdAt', 'DESC')
+					->setMaxResults(1)
+					->getQuery();
+				try {
+					$getLastMessage = $getLastMessage->getSingleResult();
+					$thread->setLastMessage($getLastMessage);
+					$em->persist($thread);
+					$return = $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug())));
+				}
+				catch (\Doctrine\Orm\NoResultException $e) {
+					$return = $this->redirect($this->generateUrl('forum_category', array('id' => $category->getId(), 'slug' => $category->getSlug())));
+				}
+
+				$em->persist($category);
+				$em->flush();
+				break;
+			case 'lock':
+				$thread = $em->getRepository('EtuModuleForumBundle:Thread')
+					->find($threadId);
+				$category = $thread->getCategory();
+
+				$checker = new PermissionsChecker($this->getUser());
+				if (!$checker->canLock($category)) {
+					$return = $this->createAccessDeniedResponse();
+				}
+
+				if($thread->getState() == 200) {
+					$thread->setState(100);
+					$return = array('parents' => $parents, 'thread' => $thread, 'action' => 'unlock');
+				}
+				else {
+					$thread->setState(200);
+					$return = array('parents' => $parents, 'thread' => $thread, 'action' => 'lock');
+				}
+				break;
+			case 'move':
+				$thread = $em->getRepository('EtuModuleForumBundle:Thread')
+					->find($threadId);
+				$category = $thread->getCategory();
+
+				$checker = new PermissionsChecker($this->getUser());
+				if (!$checker->canMove($category)) {
+					$return = $this->createAccessDeniedResponse();
+				}
+
+				$c = $em->getRepository('EtuModuleForumBundle:Category');
+
+				$form = $this->createFormBuilder($thread)
+					->add('category', 'entity', array(
+						'class' => 'EtuModuleForumBundle:Category',
+						'query_builder' => function(EntityRepository $er) {
+						$categoriesList = array();
+						$categories = $er->createQueryBuilder('c')
+							->orderBy('c.left')
+							->getQuery()
+							->getResult();
+
+						foreach($categories as $category) {
+							$checker = new PermissionsChecker($this->getUser());
+							if ($checker->canRead($category)) {
+								array_push($categoriesList, $category);
+							}
+						}
+
+						$categories = $er->createQueryBuilder('c');
+						$categories->where('c.id = 0');
+						$i = 0;
+						foreach($categoriesList as $category) {
+							$categories->orWhere('c.id = :cat'.$i);
+							$categories->setParameter('cat'.$i, $category->getId());
+							$i++;
+						}
+						$categories->orderBy('c.left');
+						return $categories;
+ 						})
+					)
+					->getForm();
+
+				$request = $this->get('request');
+				if ($request->getMethod() == 'POST') {
+					$form->bind($request);
+					if ($form->isValid()) {
+						$category->setCountThreads($category->getCountThreads()-1)
+							->setCountMessages($category->getCountMessages()-$thread->getCountMessages());
+
+						$newCat = $thread->getCategory();
+						$newCat->setCountThreads($newCat->getCountThreads()+1)
+							->setCountMessages($newCat->getCountMessages()+$thread->getCountMessages());
+
+						$thread->setCategory($newCat);
+
+						$modMessages = $em->createQueryBuilder()->update('EtuModuleForumBundle:Message', 'm')
+							->set('m.category', ':newCat')
+							->setParameter('newCat', $newCat)
+							->where('m.thread = :thread')
+							->setParameter('thread', $thread)
+							->getQuery()
+							->execute();
+						$em->persist($thread);
+
+						$getLastMessage = $em->createQueryBuilder()
+							->select('m')
+							->from('EtuModuleForumBundle:Message', 'm')
+							->where('m.category = :category')
+							->setParameter('category', $category)
+							->orderBy('m.createdAt', 'DESC')
+							->setMaxResults(1)
+							->getQuery();
+
+						try {
+							$getLastMessage = $getLastMessage->getSingleResult();
+							$category->setLastMessage($getLastMessage);
+						}
+						catch (\Doctrine\Orm\NoResultException $e) {
+							$category->setLastMessage(NULL);
+						}
+						$em->persist($category);
+
+						$getLastMessage = $em->createQueryBuilder()
+							->select('m')
+							->from('EtuModuleForumBundle:Message', 'm')
+							->where('m.category = :category')
+							->setParameter('category', $newCat)
+							->orderBy('m.createdAt', 'DESC')
+							->setMaxResults(1)
+							->getQuery();
+
+						try {
+							$getLastMessage = $getLastMessage->getSingleResult();
+							$newCat->setLastMessage($getLastMessage);
+						}
+						catch (\Doctrine\Orm\NoResultException $e) {
+							$newCat->setLastMessage(NULL);
+						}
+						$em->persist($newCat);
+
+						$em->flush();
+						$return = $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug())));
+					}
+				}
+				else $return = array('parents' => $parents, 'action' => 'move', 'thread' => $thread, 'form' => $form->createView());
+		}
+		return $return;
+	}
+
 }
