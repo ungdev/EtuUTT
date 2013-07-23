@@ -150,7 +150,7 @@ class MainController extends Controller
 
 		$messages = $this->get('knp_paginator')->paginate($messages, $page, 10);
 
-		$cantAnswer = (bool) $thread->getState() == 200 && !$checker->canLock($category) && !$user->getIsAdmin();
+		$cantAnswer = (bool) $thread->getState() == 200 && !$checker->canLock($category) && !$this->getUser()->getIsAdmin();
 
 		return array('category' => $category, 'thread' => $thread, 'parents' => $parents, 'messages' => $messages, 'cantAnswer' => $cantAnswer);
 	}
@@ -198,7 +198,7 @@ class MainController extends Controller
 					->setCategory($category)
 					->setThread($thread)
 					->setState(100)
-					->setCreatedAt($thread->getCreatedAd())
+					->setCreatedAt($thread->getCreatedAt())
 					->setContent(RedactorJsEscaper::escape($message->getContent()));
 				$thread->setLastMessage($message);
 				foreach($parents as $parent) {
@@ -238,7 +238,7 @@ class MainController extends Controller
 		$category = $thread->getCategory();
 
 		$checker = new PermissionsChecker($this->getUser());
-		if (!$checker->canAnswer($category) || ($thread->getState() == 200 && !$checker->canLock($category) && !$user->getIsAdmin())) {
+		if (!$checker->canAnswer($category) || ($thread->getState() == 200 && !$checker->canLock($category) && !$this->getUser()->getIsAdmin())) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -306,7 +306,7 @@ class MainController extends Controller
 		$category = $message->getCategory();
 
 		$checker = new PermissionsChecker($this->getUser());
-		if (!$checker->canEdit($category) || ($thread->getState() == 200 && !$checker->canLock($category) && !$user->getIsAdmin())) {
+		if (!$checker->canEdit($category) || ($thread->getState() == 200 && !$checker->canLock($category) && !$this->getUser()->getIsAdmin())) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -376,11 +376,14 @@ class MainController extends Controller
 
 		$category = $thread->getCategory();
 		$categoryId = $category->getId();
+
+		$return = array();
+
 		switch($action) {
 			case 'remove':
 				$checker = new PermissionsChecker($this->getUser());
 				if (!$checker->canDelete($category)) {
-					return $this->createAccessDeniedResponse();
+					$return = $this->createAccessDeniedResponse();
 				}
 				if($messageId == null) {
 					$messages = $em->createQueryBuilder()
@@ -471,6 +474,25 @@ class MainController extends Controller
 
 				$em->persist($category);
 				$em->flush();
+				break;
+			case 'lock':
+				$thread = $em->getRepository('EtuModuleForumBundle:Thread')
+					->find($threadId);
+				$category = $thread->getCategory();
+
+				$checker = new PermissionsChecker($this->getUser());
+				if (!$checker->canLock($category)) {
+					$return = $this->createAccessDeniedResponse();
+				}
+
+				if($thread->getState() == 200) {
+					$thread->setState(100);
+					$return = array('thread' => $thread, 'action' => 'unlock');
+				}
+				else {
+					$thread->setState(200);
+					$return = array('thread' => $thread, 'action' => 'lock');
+				}
 				break;
 		}
 		return $return;

@@ -203,3 +203,15 @@
 	float:left;
 	margin-right:5px;
 }
+
+.forum-modPanel
+{
+	width:100%;
+	text-align:center;
+	margin-bottom:10px;
+}
+
+.forum-modPanel .forum-moderation
+{
+	font-weight:bold;
+}

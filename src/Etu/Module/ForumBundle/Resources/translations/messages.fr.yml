@@ -24,9 +24,6 @@ forum:
             read: Lire
             sticky: Epinglé
             locked: Bloqué
-            lock: Bloquer
-            unlock: Débloquer
-            remove: Supprimer
             edit: Editer
         post:
             title: Création d'un sujet
@@ -41,6 +38,14 @@ forum:
             title: Editer un message
         mod:
             title: Panneau de modération
+            lock: Bloquer
+            unlock: Débloquer
+            remove: Supprimer
             removeThreadWarning: Attention, la suppression de ce message entraine la suppression du sujet. Êtes-vous sûr de vouloir le supprimer ?
             removeThread: Êtes-vous sûr de vouloir supprimer ce sujet ?
             removeMessage: Êtes-vous sûr de vouloir supprimer ce message ?
+            back: Retour
+            locked: Le sujet a bien été bloqué
+            unlocked: Le sujet a bien été débloqué
+            moderation: Modération
+            move: Déplacer
