@@ -18,8 +18,8 @@
 
 
 	<div class="padding20-sides">
-		<div class="row-fluid">
-			<form method="post" class="form-horizontal">
+		<form method="post" class="form-horizontal">
+			<div class="row-fluid">
 				<div class="span4">
 					<div class="profileEdit-avatar">
 						<img src="{{ asset('photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
@@ -33,26 +33,27 @@
 					<div class="control-group">
 						<label class="control-label" for="isAdmin">{{ 'user.orga.memberEdit.role'|trans }}</label>
 						<div class="controls">
-							{{ form_widget(roleForm.role) }}
+							<select name="role" required="required">
+								{% for role in roles %}
+									<option value="{{ role.identifier }}"
+											{% if role.selected %} selected="selected"{% endif %}>
+										{{ role.name|trans }}
+									</option>
+								{% endfor %}
+							</select>
 						</div>
 					</div>
 
 					<p class="pull-right">
-						{{ form_rest(roleForm) }}
-						<a href="{{ path('orga_admin_members_delete', {'login': user.login}) }}" class="btn">
-							{{ 'user.orga.memberEdit.delete'|trans }}
-						</a>
 						<button type="submit" class="btn btn-primary">
 							{{ 'user.orga.memberEdit.submit'|trans }}
 						</button>
 					</p>
 				</div>
-			</form>
-		</div>
+			</div>
 
-		<hr />
+			<hr />
 
-		<form method="post" class="form-horizontal">
 			<div class="row-fluid">
 				<div class="span6">
 					{% for permission in permissions1 %}
@@ -90,6 +91,16 @@
 				<input type="hidden" name="sent" value="true" />
 
 				<button type="submit" class="btn btn-primary">{{ 'user.orga.memberEdit.submit'|trans }}</button>
+			</p>
+
+			<div class="clear"></div>
+
+			<hr />
+
+			<p class="pull-right">
+				<a href="{{ path('orga_admin_members_delete', {'login': user.login}) }}" class="btn">
+					{{ 'user.orga.memberEdit.delete'|trans }}
+				</a>
 			</p>
 		</form>
 	</div>

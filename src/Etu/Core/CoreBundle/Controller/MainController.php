@@ -28,10 +28,6 @@ class MainController extends Controller
 			return $this->indexUserAction();
 		}
 
-		if ($this->getUserLayer()->isOrga()) {
-			return $this->redirect($this->generateUrl('orga_admin'));
-		}
-
 		return $this->indexAnonymousAction();
 	}
 

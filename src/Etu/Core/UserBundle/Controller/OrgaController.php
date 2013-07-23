@@ -258,15 +258,15 @@ class OrgaController extends Controller
 			throw $this->createNotFoundException(sprintf('Login %s or membership not found', $login));
 		}
 
-		$roles = Member::getAvailableRoles();
+		$availableRoles = Member::getAvailableRoles();
 
-		foreach ($roles as $key => $role) {
-			$roles[$key] = 'user.orga.role.'.$role;
+		foreach ($availableRoles as $key => $role) {
+			$availableRoles[$key] = array(
+				'identifier' => $role,
+				'name' => 'user.orga.role.'.$role,
+				'selected' => $role == $member->getRole()
+			);
 		}
-
-		$roleForm = $this->createFormBuilder($member)
-			->add('role', 'choice', array('choices' => $roles))
-			->getForm();
 
 		$availablePermissions = $this->getKernel()->getAvailableOrganizationsPermissions()->toArray();
 
@@ -293,7 +293,9 @@ class OrgaController extends Controller
 		$request = $this->getRequest();
 
 		if ($request->getMethod() == 'POST') {
-			$roleForm->bind($request);
+			if ($request->get('role') != null && in_array(intval($request->get('role')), Member::getAvailableRoles())) {
+				$member->setRole(intval($request->get('role')));
+			}
 
 			if ($member->getRole() == Member::ROLE_PRESIDENT) {
 				$this->getUser()->setPresident($member->getUser());
@@ -328,7 +330,7 @@ class OrgaController extends Controller
 		return array(
 			'member' => $member,
 			'user' => $member->getUser(),
-			'roleForm' => $roleForm->createView(),
+			'roles' => $availableRoles,
 			'permissions1' => $permissions1,
 			'permissions2' => $permissions2
 		);
