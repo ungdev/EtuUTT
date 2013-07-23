@@ -39,6 +39,8 @@
 		 > <a href="{{ path('forum_thread', {'id': thread.id, 'slug': thread.slug}) }}">{{ thread.title }}</a>
 	</div>
 
+	{{ render_subscribe_button('thread_created', thread.id) }}
+
 	<div class="forum-modPanel">
 		{% if forum_can_lock(app.user, category) or forum_can_move(app.user, category) %}<span class="forum-moderation">{{ 'forum.main.mod.moderation'|trans }} : </span>{% endif %}{% if forum_can_lock(app.user, category) %}<a href="{{ path('forum_mod', {'action': 'lock', 'threadId': thread.id, slug: thread.slug}) }}">{% if thread.state == 100 %}{{ 'forum.main.mod.lock'|trans }}{% elseif thread.state == 200 %}{{ 'forum.main.mod.unlock'|trans }}{% endif %}</a>{% endif %}{% if forum_can_lock(app.user, category) and forum_can_move(app.user, category) %} - {% endif %}{% if forum_can_move(app.user, category) %}<a href="{{ path('forum_mod', {'action': 'move', 'threadId': thread.id, slug: thread.slug}) }}">{{ 'forum.main.mod.move'|trans }}</a>{% endif %}
 	</div>

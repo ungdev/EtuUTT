@@ -2,6 +2,7 @@
 parameters:
     etu.forum.twig.permissions.class: Etu\Module\ForumBundle\Twig\Extension\PermissionsExtension
     etu.forum.twig.number.class: Etu\Module\ForumBundle\Twig\Extension\NumberExtension
+    etu.notifs.thread_created.class: Etu\Module\ForumBundle\Notification\Helper\ThreadCreatedHelper
 
 services:
 
@@ -14,3 +15,8 @@ services:
         class: %etu.forum.twig.number.class%
         tags:
             - { name: twig.extension }
+    etu.notifs.thread_created:
+        class: %etu.notifs.thread_created.class%
+        arguments: [@twig]
+        tags:
+            - { name: etu.notifs_helper }
