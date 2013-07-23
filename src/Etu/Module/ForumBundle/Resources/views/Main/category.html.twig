@@ -24,7 +24,7 @@
 					<td class="countSubjets">{{ subCategory.countThreads }}</td>
 					<td class="countMessages">{{ subCategory.countMessages }}</td>
 					<td class="lastMessage">
-						{% if subCategory.lastMessage == NULL %}
+						{% if subCategory.getLastMessage() == NULL %}
 							{{ 'forum.main.index.noMessage'|trans }}
 						{% else %}
 							{{ 'forum.main.thread.in'|trans }} <a href="{{ path('forum_thread', {'id': subCategory.getLastMessage().getThread().getId(), 'slug': subCategory.getLastMessage().getThread().getSlug(), 'page': (subCategory.getLastMessage().getThread().getCountMessages()/10)|ceil}) }}#{{ subCategory.getLastMessage().getId() }}">{{ subCategory.getLastMessage().getThread().getTitle() }}</a><br />{{ 'forum.main.thread.datePrefix'|trans }} {{ subCategory.getLastMessage().createdAt|date('forum.main.thread.dateFormat'|trans) }}  {{ 'forum.main.thread.dateHour'|trans }} {{ subCategory.getLastMessage().createdAt|date("H:i") }} {{ 'forum.main.thread.by'|trans|lower }} <a href="{{ path('user_view', {'login': subCategory.getLastMessage().author.getLogin()}) }}">{{ subCategory.getLastMessage().author.getFullName() }}</a>

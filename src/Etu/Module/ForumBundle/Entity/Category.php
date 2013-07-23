@@ -79,7 +79,7 @@ class Category
 	 * @var \Etu\Module\ForumBundle\Entity\Message $lastMessage
 	 *
 	 * @ORM\ManyToOne(targetEntity="\Etu\Module\ForumBundle\Entity\Message", cascade={"persist"})
-	 * @ORM\JoinColumn(onDelete="SET NULL")
+	 * @ORM\JoinColumn(onDelete="SET NULL", nullable=true)
 	 */
 	protected $lastMessage;
 
@@ -190,7 +190,7 @@ class Category
 	 * @param \Etu\Module\ForumBundle\Entity\Message $lastMessage
 	 * @return Category
 	 */
-	public function setLastMessage(Message $lastMessage)
+	public function setLastMessage(Message $lastMessage = NULL)
 	{
 		$this->lastMessage = $lastMessage;
 

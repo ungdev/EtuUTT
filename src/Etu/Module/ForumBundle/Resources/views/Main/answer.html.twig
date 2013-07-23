@@ -1,0 +1,45 @@
+{% extends '::page-1col.html.twig' %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/bundles/forum.css') }}" type="text/css" />
+{% endblock %}
+
+{% block javascripts %}
+	<script type="text/javascript">
+	$(function()
+		{
+			$('#etu_module_forumbundle_messagetype_content').redactor();
+		});
+	</script>
+{% endblock %}
+
+{% block title %}{{ 'forum.main.answer.title'|trans }}{% endblock %}
+
+{% block content %}
+	<div class="forum-breadcrumb">
+		<a href="{{ path('forum_index') }}">Forum</a>
+		{% for parent in parents %}
+			 > <a href="{{ path('forum_category', {'id': parent.id, 'slug': parent.slug}) }}">{{ parent.title }}</a>
+		{% endfor %}
+		 > <a href="{{ path('forum_thread', {'id': thread.id, 'slug': thread.slug}) }}">{{ thread.title }}</a>
+	</div>
+
+	<form action="{{ path('forum_answer', {'id': thread.id, 'slug': thread.slug}) }}" method="post" {{ form_enctype(form) }}>
+		<fieldset class="forum-post">
+			{{ form_errors(form) }}
+			<div class="forum-post-left">
+				<div class="forum-post-content">
+				  {{ form_label(form.content, 'forum.main.post.content'|trans) }}
+				</div>
+			</div>
+			<div class="forum-post-right">
+				<div class="forum-post-content">
+				  {{ form_errors(form.content) }}
+				  {{ form_widget(form.content) }}
+				</div>
+				{{ form_rest(form) }}
+				<input type="submit" class="btn btn-primary" />
+			</div>
+		</fieldset>
+	</form>
+{% endblock %}

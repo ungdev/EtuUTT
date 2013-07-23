@@ -198,6 +198,7 @@ class MainController extends Controller
 					->setCategory($category)
 					->setThread($thread)
 					->setState(100)
+					->setCreatedAt($thread->getCreatedAd())
 					->setContent(RedactorJsEscaper::escape($message->getContent()));
 				$thread->setLastMessage($message);
 				foreach($parents as $parent) {
@@ -447,7 +448,7 @@ class MainController extends Controller
 					$category->setLastMessage($getLastMessage);
 				}
 				catch (\Doctrine\Orm\NoResultException $e) {
-					$category->setLastMessage();
+					$category->setLastMessage(NULL);
 				}
 
 				$getLastMessage = $em->createQueryBuilder()
