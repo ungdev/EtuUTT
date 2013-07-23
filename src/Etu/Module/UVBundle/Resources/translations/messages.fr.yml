@@ -1,5 +1,9 @@
 
 uvs:
+    notifs:
+        newComment: Nouveau commentaire dans l'UV %uv% (par %user%)
+        newReview: Nouvelle annale dans l'UV %uv% (par %user%)
+
     categories:
         cs: Connaissances scientifiques
         tm: Techniques et méthodes

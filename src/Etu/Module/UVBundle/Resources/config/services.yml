@@ -1,4 +1,18 @@
 
-parameters: ~
+parameters:
+    etu.notifs.uv_new_comment.class: Etu\Module\UVBundle\Notification\Helper\NewCommentHelper
+    etu.notifs.uv_new_review.class: Etu\Module\UVBundle\Notification\Helper\NewReviewHelper
 
-services: ~
+services:
+
+    # Notifications helper
+    etu.notifs.uv_new_comment:
+        class: %etu.notifs.uv_new_comment.class%
+        arguments: [@twig]
+        tags:
+            - { name: etu.notifs_helper }
+    etu.notifs.uv_new_review:
+        class: %etu.notifs.uv_new_review.class%
+        arguments: [@twig]
+        tags:
+            - { name: etu.notifs_helper }
