@@ -9,6 +9,7 @@ use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 
 use Etu\Core\CoreBundle\Util\RedactorJsEscaper;
+use Etu\Core\CoreBundle\Entity\Notification;
 
 use Etu\Module\ForumBundle\Entity\Category;
 use Etu\Module\ForumBundle\Entity\Thread;
@@ -208,8 +209,11 @@ class MainController extends Controller
 						->setCountThreads($parent->getCountThreads()+1);
 					$em->persist($parent);
 				}
+
 				$em->persist($thread);
 				$em->flush();
+
+				$this->getSubscriptionsManager()->subscribe($this->getUser(), 'thread_created', $thread->getId());
 
 				return $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug())));
 			}
@@ -277,6 +281,19 @@ class MainController extends Controller
 				$em->flush();
 
 				$page = ceil($thread->getCountMessages()/10);
+
+				$notif = new Notification();
+				$notif
+					->setModule($this->getCurrentBundle()->getIdentifier())
+					->setHelper('thread_created')
+					->setAuthorId($this->getUser()->getId())
+					->setEntityType('thread_created')
+					->setEntityId($thread->getId())
+					->addEntity($message);
+
+				$this->getNotificationsSender()->send($notif);
+
+				$this->getSubscriptionsManager()->subscribe($this->getUser(), 'thread_created', $thread->getId());
 
 				return $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug(), 'page' => $page)) . '#'.$message->getId());
 			}

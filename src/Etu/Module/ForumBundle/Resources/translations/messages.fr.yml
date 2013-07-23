@@ -50,3 +50,6 @@ forum:
             moderation: Modération
             move: Déplacer
             where: Vers où déplacer le sujet ?
+
+    notifs:
+            threadCreated: %author% a répondu à %title%
