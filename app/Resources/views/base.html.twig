@@ -34,6 +34,12 @@
 		{% block stylesheets %}{% endblock %}
 	</head>
 	<body class="bg-soft-grey">
+		<div id="loader" class="overlay">
+			<div class="loader">
+				<img src="{{ asset('img/loader-big.gif') }}" />
+			</div>
+		</div>
+
 		<header class="bg-dark-blue fixed head">
 			<div class="container" id="top">
 				<div class="pull-left title">
@@ -108,9 +114,9 @@
 				<div class="pull-right userbox">
 					{% if app.user %}
 						{% if app.user.isOrga %}
-							<img src="{{ asset('logos/'~app.user.logo) }}" alt="{{ app.user.fullName }}" title="{{ app.user.fullName }}" class="pull-left avatar" />
+							<img src="{{ asset('logos/'~app.user.logo) }}" id="top-bar-avatar" alt="{{ app.user.fullName }}" title="{{ app.user.fullName }}" class="pull-left avatar" />
 						{% else %}
-							<img src="{{ asset('photos/'~app.user.avatar) }}" alt="{{ app.user.fullName }}" title="{{ app.user.fullName }}" class="pull-left avatar" />
+							<img src="{{ asset('photos/'~app.user.avatar) }}" id="top-bar-avatar" alt="{{ app.user.fullName }}" title="{{ app.user.fullName }}" class="pull-left avatar" />
 						{% endif %}
 
 					<a href="#" class="userbox-link">

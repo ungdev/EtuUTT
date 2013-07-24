@@ -62,27 +62,28 @@
   padding-right: 22px;
 }
 .profileEdit-avatar {
-  text-align: center;
+  width: 100px;
 }
-.profileEdit-avatar img {
-  width: 50%;
+.profileEdit-avatar-actions {
+  position: absolute;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.5);
 }
 .profileEdit-fixedValue {
-  font-weight: bold;
-  padding-top: 4px;
+  padding-top: 0;
 }
 .profileEdit-privacy-select {
   width: 100px;
 }
-.avatarUploadBox-form {
-  text-align: center;
-}
-.profile-avatar {
-  text-align: center;
+.profileEdit-web {
+  width: 180px;
 }
 .trombi-textarea {
-  width: 65%;
+  width: 96%;
   height: 120px;
+}
+.view-avatar {
+  width: 50%;
 }
 .view-group {
   border-top: 1px solid #eee;

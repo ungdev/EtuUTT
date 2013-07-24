@@ -38,6 +38,9 @@ parameters:
     etu.redactor_type.class: Etu\Core\CoreBundle\Form\RedactorType
     etu.redactor_limited_type.class: Etu\Core\CoreBundle\Form\RedactorLimitedType
 
+    etu.form.date_picker_type.class: Etu\Core\CoreBundle\Form\DatePickerType
+    etu.form.birthday_picker_type.class: Etu\Core\CoreBundle\Form\BirthdayPickerType
+
 services:
 
     # Modules manager
@@ -176,4 +179,14 @@ services:
         class: %etu.redactor_limited_type.class%
         tags:
             - { name: form.type, alias: redactor_limited }
+
+    # Form
+    etu.form.date_picker_type:
+        class: %etu.form.date_picker_type.class%
+        tags:
+            - { name: form.type, alias: date_picker }
+    etu.form.birthday_picker_type:
+        class: %etu.form.birthday_picker_type.class%
+        tags:
+            - { name: form.type, alias: birthday_picker }
 

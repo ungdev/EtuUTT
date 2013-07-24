@@ -58,9 +58,13 @@
 				{% if orga.president %}
 					<p>
 						<strong>{{ 'assos.main.members.president'|trans }}</strong><br />
-						<a href="{{ path('user_view', {'login': orga.president.login}) }}">
+						{% if app.user %}
+							<a href="{{ path('user_view', {'login': orga.president.login}) }}">
+								{{ orga.president.fullName }}
+							</a>
+						{% else %}
 							{{ orga.president.fullName }}
-						</a>
+						{% endif %}
 					</p>
 				{% endif %}
 

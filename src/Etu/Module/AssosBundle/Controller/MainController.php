@@ -66,6 +66,10 @@ class MainController extends Controller
 	 */
 	public function membersAction($login)
 	{
+		if (! $this->getUserLayer()->isConnected()) {
+			return $this->createAccessDeniedResponse();
+		}
+
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
 

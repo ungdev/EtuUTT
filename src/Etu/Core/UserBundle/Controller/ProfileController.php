@@ -13,6 +13,7 @@ use Etu\Core\UserBundle\Schedule\Helper\ScheduleBuilder;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\FormError;
 
 class ProfileController extends Controller
 {
@@ -71,11 +72,7 @@ class ProfileController extends Controller
 			->add('cityPrivacy', 'choice', $privacyChoice)
 			->add('country', null, array('required' => false))
 			->add('countryPrivacy', 'choice', $privacyChoice)
-			->add('birthday', 'birthday', array(
-				'widget' => 'single_text',
-				'format' => 'dd/MM/yyyy',
-				'required' => false
-			))
+			->add('birthday', 'birthday_picker', array('required' => false))
 			->add('birthdayPrivacy', 'choice', $privacyChoice)
 			->add('birthdayDisplayOnlyAge', null, array('required' => false))
 			->add('personnalMail', null, array('required' => false))
@@ -108,7 +105,7 @@ class ProfileController extends Controller
 				'message' => 'user.profile.profileEdit.confirm'
 			));
 
-			return $this->redirect($this->generateUrl('user_profile'));
+			return $this->redirect($this->generateUrl('user_profile_edit'));
 		}
 
 		// Avatar lightbox
@@ -123,7 +120,7 @@ class ProfileController extends Controller
 	}
 
 	/**
-	 * @Route("/user/profile/avatar", name="user_profile_avatar", options={"expose"=true})
+	 * @Route("/user/profile/avatar", name="user_profile_avatar")
 	 * @Template()
 	 */
 	public function profileAvatarAction()
@@ -144,21 +141,27 @@ class ProfileController extends Controller
 		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 
-			$user->upload();
+			$file = $user->upload();
 
 			$em->persist($user);
 			$em->flush();
 
-			$this->get('session')->getFlashBag()->set('message', array(
-				'type' => 'success',
-				'message' => 'user.profile.profileAvatar.confirm'
-			));
-
-			return $this->redirect($this->generateUrl('user_profile_edit'));
+			return array(
+				'result' => 'success',
+				'data' => json_encode(array(
+					'filename' => '/photos/'.$file
+				))
+			);
 		}
 
+		/** @var $error FormError[] */
+		$error = $form->get('file')->getErrors();
+
 		return array(
-			'form' => $form->createView()
+			'result' => 'error',
+			'data' => json_encode(array(
+				'message' => (isset($error[0])) ? $error[0]->getMessage() : 'An error occured'
+			))
 		);
 	}
 

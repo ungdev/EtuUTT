@@ -627,7 +627,7 @@ class User implements UserInterface, \Serializable
 
 		$this->avatar = $this->getLogin().'.png';
 
-		return true;
+		return $this->avatar;
 	}
 
 	/**

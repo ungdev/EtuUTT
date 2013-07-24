@@ -2,33 +2,26 @@
 /*
  * Page d'accueil anonyme
  */
-.homepage-events-title {
-	font-weight: lighter;
-	padding: 10px;
-	margin: 0;
-	margin-bottom: 17px;;
-	font-size: 22px;
-}
-.homepage-events {
-	padding: 0;
-	margin: 0 auto;
-	width: 95%;
-}
 .homepage-event {
 	display: block;
-	padding: 0.5%;
-	padding-top: 1.5%;
-	margin: 0.5%;
-	width: 31%;
-	float: left;
-	text-align: center;
-	border: 1px solid #e5e5e5;
+	padding: 10px;
+	margin: 10px 0;
+
+	&:hover {
+		background: #f5f5f5;
+		text-decoration: none;
+
+		h5 {
+			text-decoration: underline;
+		}
+	}
+	img {
+		max-width: 70px;
+		max-height: 70px;
+	}
 }
-.homepage-event:hover {
-	background: #f5f5f5;
-}
-.homepage-event img {
-	width: 80%;
+.homepage-event-meta {
+	margin-left: 90px;
 }
 
 /*

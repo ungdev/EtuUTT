@@ -17,22 +17,25 @@
 			<div class="span4">
 				<h4>{{ 'core.main.indexAnonymous.events'|trans }}</h4>
 
+				<hr />
+
 				{% for event in events %}
-					<div class="well well-small">
-						<h5>
-							<a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}">
-								{{ event.title|limit(27) }}
-							</a>
-							<small class="pull-right">
+					<a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}" class="homepage-event">
+						<img src="{{ asset('events/'~(event.title|slugify)~'-'~event.id~'.png') }}" class="pull-left event-tooltip-image" />
+
+						<div class="homepage-event-meta">
+							<h5>{{ event.title|limit(27) }}</h5>
+
+							<small class="muted">
 								{{ 'core.main.indexAnonymous.date'|trans({'%date%': event.begin|date('d/m/Y')}) }}
 							</small>
-						</h5>
+						</div>
 
-						<p>
-							{{ event.description|limit(100)|raw }}
-						</p>
-					</div>
+						<div class="clear"></div>
+					</a>
 				{% endfor %}
+
+				<hr />
 
 				<p class="pull-right">
 					<a href="{{ path('events_index') }}">

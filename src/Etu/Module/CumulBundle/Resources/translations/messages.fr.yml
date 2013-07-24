@@ -3,9 +3,9 @@ cumul:
     main:
         index:
             title: Cumul d'emploi du temps
-            desc: |
-                Le cumul d'emploi du temps vous permet de comparer votre emploi du temps avec celui de n'importe quel
-                étudiant de l'UTT
+            explainations: |
+                Cette page vous permet de comparer facilement les emplois du temps de plusieurs étudiants
+                (jusqu'à 5).<br />Pour cela, ajoutez les étudiants souahités dans la colonne de gauche.
             placeholder: Nom / Prénom
             add: Ajouter l'étudiant
             week: Semaine

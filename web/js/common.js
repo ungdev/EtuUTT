@@ -201,9 +201,21 @@ subscriptions.unfollow.click(function() {
 	return false;
 });
 
+$('.date-picker').datepicker({
+	dateFormat: 'dd/mm/yy',
+	changeMonth: true,
+	changeYear: true
+});
+
+$('.birthday-picker').datepicker({
+	dateFormat: 'dd/mm/yy',
+	changeMonth: true,
+	changeYear: true,
+	yearRange: "-100:-10"
+});
+
 
 $(function() {
-
 	facebox.facebox();
 
 	tip.tipsy({
