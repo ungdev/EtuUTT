@@ -2,7 +2,9 @@
 
 namespace Etu\Module\EventsBundle\Controller;
 
+use CalendR\Calendar;
 use CalendR\Period\Month;
+use CalendR\Period\Range;
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Entity\Notification;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,19 +18,20 @@ use Etu\Module\EventsBundle\Entity\Event;
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 
 class MembershipsController extends Controller
 {
 	/**
 	 * @Route(
-	 *      "/user/membership/{login}/events/create",
-	 *      name="memberships_orga_events_create"
+	 *      "/user/membership/{login}/events",
+	 *      defaults={"day" = "current"},
+	 *      name="memberships_orga_events"
 	 * )
 	 * @Template()
 	 */
-	public function createAction(Request $request, $login)
+	public function eventsAction($login)
 	{
-
 		if (! $this->getUserLayer()->isUser()) {
 			return $this->createAccessDeniedResponse();
 		}
@@ -79,88 +82,27 @@ class MembershipsController extends Controller
 		$form = $this->createFormBuilder($event)
 			->add('title')
 			->add('category', 'choice', array('choices' => $categories))
-			->add('file', 'file')
 			->add('location', 'textarea')
-			->add('description', 'redactor')
 			->getForm();
-
-		if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
-			$event->setDescription(RedactorJsEscaper::escape($event->getDescription()));
-
-			$em->persist($event);
-			$em->flush();
-
-			$event->upload();
-
-			$entity = array(
-				'id' => $event->getId(),
-				'title' => $event->getTitle(),
-				'category' => $categories[$event->getCategory()],
-				'orga' => array(
-					'name' => $event->getOrga()->getName()
-				)
-			);
-
-
-			// Send notifications to subscribers of all eventts
-			$notif = new Notification();
-
-			$notif
-				->setModule($this->getCurrentBundle()->getIdentifier())
-				->setHelper('event_created_all')
-				->setAuthorId($this->getUser()->getId())
-				->setEntityType('event')
-				->setEntityId(0)
-				->addEntity($entity);
-
-			$this->getNotificationsSender()->send($notif);
-
-			// Send notifications to subscribers of specific category
-			$notif = new Notification();
-
-			$availableCategories = Event::$categories;
-			array_unshift($availableCategories, 'all');
-			$keys = array_flip($availableCategories);
-
-			$notif
-				->setModule($this->getCurrentBundle()->getIdentifier())
-				->setHelper('event_created_category')
-				->setAuthorId($this->getUser()->getId())
-				->setEntityType('event-category')
-				->setEntityId($keys[$event->getCategory()])
-				->addEntity($entity);
-
-			$this->getNotificationsSender()->send($notif);
-
-			// Confirmation
-			$this->get('session')->getFlashBag()->set('message', array(
-				'type' => 'success',
-				'message' => 'events.memberships.create.confirm'
-			));
-
-			return $this->redirect($this->generateUrl('memberships_orga_events', array(
-				'login' => $login,
-				'month' => $event->getBegin()->format('m-Y')
-			)));
-		}
 
 		return array(
 			'memberships' => $memberships,
 			'membership' => $membership,
 			'orga' => $orga,
-			'form' => $form->createView(),
+			'form' => $form->createView()
 		);
 	}
 
 	/**
 	 * @Route(
-	 *      "/user/membership/{login}/events/{month}",
-	 *      defaults={"day" = "current"},
-	 *      name="memberships_orga_events"
+	 *      "/user/membership/{login}/events/find",
+	 *      defaults={"_format"="json"},
+	 *      name="memberships_orga_events_find",
+	 *      options={"expose"=true}
 	 * )
 	 * @Template()
 	 */
-	public function eventsAction($login, $month = 'current')
+	public function ajaxEventsAction(Request $request, $login)
 	{
 		if (! $this->getUserLayer()->isUser()) {
 			return $this->createAccessDeniedResponse();
@@ -200,62 +142,200 @@ class MembershipsController extends Controller
 
 		$orga = $membership->getOrganization();
 
-		$currentMonth = array(
-			'month' => date('m'),
-			'year' => date('Y'),
-		);
+		$start = $request->query->get('start');
+		$end = $request->query->get('end');
 
-		if ($month == 'current') {
-			$month = $currentMonth;
-		} else {
-			$month = \DateTime::createFromFormat('m-Y', $month);
+		if (! $start) {
+			return new Response(json_encode(array(
+				'status' => 'error',
+				'message' => '"start" parameter is required',
+			)));
+		}
 
-			if (! $month) {
-				$month = $currentMonth;
-			} else {
-				$month = array(
-					'month' => $month->format('m'),
-					'year' => $month->format('Y'),
-				);
+		if (! $end) {
+			return new Response(json_encode(array(
+				'status' => 'error',
+				'message' => '"end" parameter is required',
+			)));
+		}
+
+		$start = \DateTime::createFromFormat('U', $start);
+		$end = \DateTime::createFromFormat('U', $end);
+
+		/** @var Calendar $calendr */
+		$calendr = $this->get('calendr');
+
+		/** @var \CalendR\Event\Collection\Basic $events */
+		$events = $calendr->getEvents(new Range($start, $end));
+
+		/** @var array $json */
+		$json = array();
+
+		/** @var Event $event */
+		foreach ($events->all() as $event) {
+			if ($event->getOrga()->getId() != $orga->getId()) {
+				continue;
+			}
+
+			$json[] = array(
+				'id' => $event->getId(),
+				'title' => $event->getTitle(),
+				'start' => $event->getBegin()->format('Y-m-d H:i:00'),
+				'end' => $event->getEnd()->format('Y-m-d H:i:00'),
+				'allDay' => $event->getIsAllDay(),
+				'url' => $this->generateUrl('memberships_orga_events_edit', array(
+					'login' => $orga->getLogin(),
+					'id' => $event->getId(),
+					'slug' => StringManipulationExtension::slugify($event->getTitle()),
+				))
+			);
+		}
+
+		return new Response(json_encode($json));
+	}
+	/**
+	 * @Route(
+	 *      "/user/membership/{login}/events/create",
+	 *      name="memberships_orga_events_create",
+	 *      options={"expose"=true}
+	 * )
+	 * @Template()
+	 */
+	public function createAction(Request $request, $login)
+	{
+		if (! $this->getUserLayer()->isUser()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $memberships Member[] */
+		$memberships = $em->createQueryBuilder()
+			->select('m, o')
+			->from('EtuUserBundle:Member', 'm')
+			->leftJoin('m.organization', 'o')
+			->andWhere('m.user = :user')
+			->setParameter('user', $this->getUser()->getId())
+			->orderBy('m.role', 'DESC')
+			->addOrderBy('o.name', 'ASC')
+			->getQuery()
+			->getResult();
+
+		$membership = null;
+
+		foreach ($memberships as $m) {
+			if ($m->getOrganization()->getLogin() == $login) {
+				$membership = $m;
+				break;
 			}
 		}
 
-		/** @var $month Month */
-		$month = $this->get('calendr')->getMonth($month['year'], $month['month']);
-
-		$previous = clone $month->getBegin();
-		$previous->sub(new \DateInterval('P1M'));
-
-		$next = clone $month->getBegin();
-		$next->add(new \DateInterval('P1M'));
-
-		$monthsList = array();
-
-		for ($i = 1; $i <= 5; $i++) {
-			$m = clone $month->getBegin();
-			$m->sub(new \DateInterval('P'.$i.'M'));
-
-			$monthsList[] = $m;
+		if (! $membership) {
+			throw $this->createNotFoundException('Membership or organization not found for login '.$login);
 		}
 
-		$monthsList = array_reverse($monthsList);
-		$monthsList[] = $month->getBegin();
+		if (! $membership->hasPermission('events')) {
+			return $this->createAccessDeniedResponse();
+		}
 
-		for ($i = 1; $i <= 5; $i++) {
-			$m = clone $month->getBegin();
-			$m->add(new \DateInterval('P'.$i.'M'));
+		$start = $request->query->get('s');
+		$end = $request->query->get('e');
+		$allDay = ($request->query->get('a') == 'true') ? true : false;
 
-			$monthsList[] = $m;
+		if (! $start || ! $end) {
+			throw $this->createNotFoundException();
+		}
+
+		$orga = $membership->getOrganization();
+
+		$event = new Event(
+			null,
+			\DateTime::createFromFormat('d-m-Y--H-i', $start),
+			\DateTime::createFromFormat('d-m-Y--H-i', $end)
+		);
+		$event->setOrga($orga)
+			->setIsAllDay($allDay);
+
+		$categories = array();
+
+		foreach (Event::$categories as $category) {
+			$categories[$category] = 'events.categories.'.$category;
+		}
+
+		$form = $this->createFormBuilder($event)
+			->add('title')
+			->add('category', 'choice', array('choices' => $categories))
+			->add('file', 'file')
+			->add('location', 'textarea')
+			->add('description', 'redactor')
+			->getForm();
+
+		if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
+			$event->setDescription(RedactorJsEscaper::escape($event->getDescription()));
+
+			$event->upload();
+
+			$em->persist($event);
+			$em->flush();
+
+			$entity = array(
+				'id' => $event->getId(),
+				'title' => $event->getTitle(),
+				'category' => $categories[$event->getCategory()],
+				'orga' => array(
+					'id' => $event->getOrga()->getId(),
+					'name' => $event->getOrga()->getName(),
+				)
+			);
+
+			// Send notifications to subscribers of all eventts
+			$notif = new Notification();
+
+			$notif
+				->setModule($this->getCurrentBundle()->getIdentifier())
+				->setHelper('event_created_all')
+				->setAuthorId($this->getUser()->getId())
+				->setEntityType('event')
+				->setEntityId(0)
+				->addEntity($entity);
+
+			$this->getNotificationsSender()->send($notif);
+
+			// Send notifications to subscribers of specific category
+			$notif = new Notification();
+
+			$availableCategories = Event::$categories;
+			array_unshift($availableCategories, 'all');
+			$keys = array_flip($availableCategories);
+
+			$notif
+				->setModule($this->getCurrentBundle()->getIdentifier())
+				->setHelper('event_created_category')
+				->setAuthorId($this->getUser()->getId())
+				->setEntityType('event-category')
+				->setEntityId($keys[$event->getCategory()])
+				->addEntity($entity);
+
+			$this->getNotificationsSender()->send($notif);
+
+			// Confirmation
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'events.memberships.create.confirm'
+			));
+
+			return $this->redirect($this->generateUrl('memberships_orga_events', array(
+				'login' => $login
+			)));
 		}
 
 		return array(
 			'memberships' => $memberships,
 			'membership' => $membership,
 			'orga' => $orga,
-			'month' => $month,
-			'monthsList' => $monthsList,
-			'previous' => $previous,
-			'next' => $next,
+			'form' => $form->createView(),
+			'event' => $event
 		);
 	}
 
@@ -342,16 +422,6 @@ class MembershipsController extends Controller
 		$form = $this->createFormBuilder($event)
 			->add('title')
 			->add('category', 'choice', array('choices' => $categories))
-			->add('begin', null, array(
-				'attr' => array('class' => 'event-select-date'),
-				'widget' => 'choice',
-				'minutes' => array(0)
-			))
-			->add('end', null, array(
-				'attr' => array('class' => 'event-select-date'),
-				'widget' => 'choice',
-				'minutes' => array(0)
-			))
 			->add('location', 'textarea')
 			->add('description', 'redactor')
 			->getForm();

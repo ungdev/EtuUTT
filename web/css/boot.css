@@ -217,7 +217,8 @@ textarea {
   z-index: 999;
 }
 .loader,
-.error {
+.error,
+.subpage {
   position: fixed;
   padding: 3% 1%;
   background: #fff;
@@ -229,6 +230,12 @@ textarea {
   padding: 1% 1% 2.5% 1%;
   width: 25%;
   margin: 5% 37%;
+}
+.subpage {
+  padding: 1% 1% 2.5% 1%;
+  width: 39%;
+  margin: 5% 30%;
+  text-align: left;
 }
 [class^="etu-icon-"],
 [class*=" etu-icon-"] {

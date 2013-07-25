@@ -81,6 +81,19 @@
 					</a>
 				</p>
 
+				<p>
+					{% if event.isAllDay %}
+						{% if event.begin|date('d/m/Y') == event.end|date('d/m/Y') %}
+							Le {{ event.begin|date('d/m/Y') }}
+						{% else %}
+							Entre le {{ event.begin|date('d/m/Y') }} et le {{ event.end|date('d/m/Y') }}
+						{% endif %}
+					{% else %}
+					Le {{ event.begin|date('d/m/Y') }},
+						de {{ event.begin|date('H:i') }} à {{ event.end|date('H:i') }}
+					{% endif %}
+				</p>
+
 				<form method="post" action="" {{ form_enctype(form) }}>
 					{{ form_errors(form) }}
 
@@ -107,22 +120,6 @@
 						</div>
 						<span class="help-block">{{ form_errors(form.file) }}</span>
 					</div>
-
-					{#<div class="control-group">
-						<label class="control-label">{{ 'events.memberships.create.begin'|trans }}</label>
-						<div class="controls">
-							{{ form_widget(form.begin) }}
-						</div>
-						<span class="help-block">{{ form_errors(form.begin) }}</span>
-					</div>
-
-					<div class="control-group">
-						<label class="control-label">{{ 'events.memberships.create.end'|trans }}</label>
-						<div class="controls">
-							{{ form_widget(form.end) }}
-						</div>
-						<span class="help-block">{{ form_errors(form.end) }}</span>
-					</div>#}
 
 					<div class="control-group">
 						<label class="control-label">{{ 'events.memberships.create.location'|trans }}</label>
