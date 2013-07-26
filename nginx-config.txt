@@ -1,0 +1,87 @@
+server {
+	listen 80;
+
+	server_name openutt.utt.fr;
+	root /var/www/web;
+
+	error_log /var/log/nginx/dev.error.log;
+	access_log /var/log/nginx/dev.access.log;
+
+	# strip app.php/ prefix if it is present
+	rewrite ^/app\.php/?(.*)$ /$1 permanent;
+	# rewrite ^/app_dev\.php/?(.*)$ /$1 permanent;
+
+	rewrite ^/launch$ /launch/index.php last;
+	rewrite ^/launcher$ /launch/launcher.php last;
+	rewrite ^/mail/?$ /mail/index.php last;
+
+	index index.php index.html;
+
+	auth_basic             "Restricted Beta access";
+	auth_basic_user_file   /var/www/.htpasswd;
+
+	location /phpmyadmin {
+		root /usr/share/;
+		index index.php index.html index.htm;
+
+		location ~ ^/phpmyadmin/(.+\.php)$ {
+			try_files $uri = 404;
+			root /usr/share/;
+			fastcgi_pass unix:/var/run/php5-fpm.sock;
+			fastcgi_index index.php;
+			fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+			include /etc/nginx/fastcgi_params;
+		}
+
+		location ~* ^/phpmyadmin/(.+\.(jpg|jpeg|gif|css|png|js|ico|html|xml|txt))$ {
+			root /usr/share/;
+		}
+	}
+
+	location /beta {
+		root /var/www/beta/web;
+		index app.php;
+
+		if (-f $request_filename) {
+			break;
+		}
+
+		rewrite ^(.*)$ /app.php$1 last;
+	}
+
+	location / {
+		index app.php;
+
+		if (-f $request_filename) {
+			break;
+		}
+
+		rewrite ^(.*)$ /app.php$1 last;
+	}
+
+	location ~ \.php($|/) {
+		include fastcgi_params;
+
+		set $script $uri;
+		set $path_info "";
+
+		if ($uri ~ "^(.+\.php)($|/)") {
+			set $script $1;
+		}
+
+		if ($uri ~ "^(.+\.php)(/.+)") {
+			set $script $1;
+			set $path_info $2;
+		}
+
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		fastcgi_param SCRIPT_NAME $script;
+		fastcgi_param PATH_INFO $path_info;
+		fastcgi_pass unix:/var/run/php5-fpm.sock;
+		fastcgi_buffers 8 512k;
+		fastcgi_buffer_size 256k;
+		fastcgi_send_timeout 5m;
+		fastcgi_read_timeout 5m;
+		fastcgi_connect_timeout 5m;
+	}
+}
