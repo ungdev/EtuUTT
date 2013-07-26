@@ -75,7 +75,7 @@
 		<h3>{{ event.title }}</h3>
 
 		<div class="event-view-orga-logo">
-			<img src="{{ asset('events/'~(event.title|slugify)~'-'~event.id~'.png') }}" alt="{{ event.title }}" title="{{ event.title }}" />
+			<img src="{{ asset('events/'~event.id~'.png') }}" alt="{{ event.title }}" title="{{ event.title }}" />
 		</div>
 
 		<div class="event-view-infos">
@@ -107,13 +107,13 @@
 					</p>
 				</div>
 				<div class="span3 event-view-count-members">
-					<h4 class="event-view-count-members-number">{{ answersYesCount }}</h4>
+					<h4 class="event-view-count-members-number" id="count-yes">{{ answersYesCount }}</h4>
 					<p class="event-view-count-members-sentence muted">
 						{{ 'events.main.subscribers.yes'|trans }}
 					</p>
 				</div>
 				<div class="span3 event-view-count-members">
-					<h4 class="event-view-count-members-number">{{ answersProbablyCount }}</h4>
+					<h4 class="event-view-count-members-number" id="count-probably">{{ answersProbablyCount }}</h4>
 					<p class="event-view-count-members-sentence muted">
 						{{ 'events.main.subscribers.probably'|trans }}
 					</p>

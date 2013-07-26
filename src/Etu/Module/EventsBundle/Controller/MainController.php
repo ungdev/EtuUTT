@@ -2,27 +2,32 @@
 
 namespace Etu\Module\EventsBundle\Controller;
 
+use CalendR\Calendar;
 use CalendR\Period\Month;
+use CalendR\Period\Range;
 use CalendR\Period\Week;
+
 use Doctrine\ORM\EntityManager;
+
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Module\EventsBundle\Entity\Answer;
 use Etu\Module\EventsBundle\Entity\Event;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 class MainController extends Controller
 {
 	/**
-	 * @Route("/events/{month}/{category}", defaults={"category" = "all"}, name="events_index")
+	 * @Route("/events/{category}", defaults={"category" = "all"}, name="events_index")
 	 * @Template()
 	 */
-	public function indexAction($category = 'all', $month = 'current')
+	public function indexAction($category = 'all')
 	{
 		$availableCategories = Event::$categories;
 		array_unshift($availableCategories, 'all');
@@ -31,65 +36,79 @@ class MainController extends Controller
 			throw $this->createNotFoundException(sprintf('Invalid category "%s"', $category));
 		}
 
-		$currentMonth = array(
-			'month' => date('m'),
-			'year' => date('Y'),
-		);
-
-		if ($month == 'current') {
-			$month = $currentMonth;
-		} else {
-			$month = \DateTime::createFromFormat('m-Y', $month);
-
-			if (! $month) {
-				$month = $currentMonth;
-			} else {
-				$month = array(
-					'month' => $month->format('m'),
-					'year' => $month->format('Y'),
-				);
-			}
-		}
-
-		/** @var $month Month */
-		$month = $this->get('calendr')->getMonth($month['year'], $month['month']);
-
-		$previous = clone $month->getBegin();
-		$previous->sub(new \DateInterval('P1M'));
-
-		$next = clone $month->getBegin();
-		$next->add(new \DateInterval('P1M'));
-
-		$monthsList = array();
-
-		for ($i = 1; $i <= 5; $i++) {
-			$m = clone $month->getBegin();
-			$m->sub(new \DateInterval('P'.$i.'M'));
-
-			$monthsList[] = $m;
-		}
-
-		$monthsList = array_reverse($monthsList);
-		$monthsList[] = $month->getBegin();
-
-		for ($i = 1; $i <= 5; $i++) {
-			$m = clone $month->getBegin();
-			$m->add(new \DateInterval('P'.$i.'M'));
-
-			$monthsList[] = $m;
-		}
-
 		$keys = array_flip($availableCategories);
 
 		return array(
-			'month' => $month,
-			'monthsList' => $monthsList,
-			'previous' => $previous,
-			'next' => $next,
 			'availableCategories' => $availableCategories,
 			'currentCategory' => $category,
 			'currentCategoryId' => $keys[$category],
 		);
+	}
+
+	/**
+	 * @Route(
+	 *      "/events/{category}/find",
+	 *      defaults={"_format" = "json", "category" = "all"},
+	 *      name="events_find",
+	 *      options={"expose"=true}
+	 * )
+	 * @Template()
+	 */
+	public function ajaxEventsAction(Request $request, $category = 'all')
+	{
+		if (! $this->getUserLayer()->isUser()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$start = $request->query->get('start');
+		$end = $request->query->get('end');
+
+		if (! $start) {
+			return new Response(json_encode(array(
+				'status' => 'error',
+				'message' => '"start" parameter is required',
+			)));
+		}
+
+		if (! $end) {
+			return new Response(json_encode(array(
+				'status' => 'error',
+				'message' => '"end" parameter is required',
+			)));
+		}
+
+		$start = \DateTime::createFromFormat('U', $start);
+		$end = \DateTime::createFromFormat('U', $end);
+
+		/** @var Calendar $calendr */
+		$calendr = $this->get('calendr');
+
+		/** @var \CalendR\Event\Collection\Basic $events */
+		$events = $calendr->getEvents(new Range($start, $end));
+
+		/** @var array $json */
+		$json = array();
+
+		/** @var Event $event */
+		foreach ($events->all() as $event) {
+			if ($category != 'all' && $event->getCategory() != $category) {
+				continue;
+			}
+
+			$json[] = array(
+				'id' => $event->getId(),
+				'title' => $event->getTitle(),
+				'start' => $event->getBegin()->format('Y-m-d H:i:00'),
+				'end' => $event->getEnd()->format('Y-m-d H:i:00'),
+				'allDay' => $event->getIsAllDay(),
+				'url' => $this->generateUrl('events_view', array(
+					'id' => $event->getId(),
+					'slug' => StringManipulationExtension::slugify($event->getTitle()),
+				))
+			);
+		}
+
+		return new Response(json_encode($json));
 	}
 
 	/**

@@ -102,7 +102,7 @@
 
 				<hr />
 
-				<form method="post" action="">
+				<form method="post" action="" {{ form_enctype(form) }}>
 					{{ form_errors(form) }}
 
 					<div class="control-group">
@@ -131,7 +131,7 @@
 
 					<div class="row-fluid">
 						<div class="span2">
-							<img src="{{ asset('events/'~event.id~'.png') }}"
+							<img src="{{ asset('events/'~event.id~'.png')~'?'~rand }}"
 								 alt="{{ event.title }}" title="{{ event.title }}" />
 						</div>
 						<div class="span10">

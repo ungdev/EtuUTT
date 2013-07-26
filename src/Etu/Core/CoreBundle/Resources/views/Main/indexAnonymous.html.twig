@@ -21,7 +21,7 @@
 
 				{% for event in events %}
 					<a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}" class="homepage-event">
-						<img src="{{ asset('events/'~(event.title|slugify)~'-'~event.id~'.png') }}" class="pull-left event-tooltip-image" />
+						<img src="{{ asset('events/'~event.id~'.png') }}" class="pull-left event-tooltip-image" />
 
 						<div class="homepage-event-meta">
 							<h5>{{ event.title|limit(27) }}</h5>

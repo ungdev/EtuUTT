@@ -10,8 +10,7 @@ var subscriber = {
 
 var eventId = subscriber.button.attr('data-event-id');
 
-var calendar = $('#calendar'),
-	createBox = $('#create-event');
+var calendar = $('#calendar');
 
 var loader = $('#loader');
 

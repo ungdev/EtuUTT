@@ -41,7 +41,7 @@
 		<h3>{{ event.title }}</h3>
 
 		<div class="event-view-orga-logo">
-			<img src="{{ asset('events/'~(event.title|slugify)~'-'~event.id~'.png') }}" alt="{{ event.title }}" title="{{ event.title }}" />
+			<img src="{{ asset('events/'~event.id~'.png') }}" alt="{{ event.title }}" title="{{ event.title }}" />
 		</div>
 
 		<div class="event-view-infos">
