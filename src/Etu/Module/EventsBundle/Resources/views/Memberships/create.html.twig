@@ -81,6 +81,8 @@
 					</a>
 				</p>
 
+				<hr />
+
 				<p>
 					{% if event.isAllDay %}
 						{% if event.begin|date('d/m/Y') == event.end|date('d/m/Y') %}
@@ -94,44 +96,62 @@
 					{% endif %}
 				</p>
 
+				<hr />
+
 				<form method="post" action="" {{ form_enctype(form) }}>
 					{{ form_errors(form) }}
 
 					<div class="control-group">
-						<label class="control-label">{{ 'events.memberships.create.title'|trans }}</label>
+						<label class="control-label">
+							<strong>{{ 'events.memberships.edit.title'|trans }}</strong>
+						</label>
 						<div class="controls">
 							{{ form_widget(form.title, {'attr': {'class': 'span8'}}) }}
 						</div>
 						<span class="help-block">{{ form_errors(form.title) }}</span>
 					</div>
 
+					<hr />
+
 					<div class="control-group">
-						<label class="control-label">{{ 'events.memberships.create.category'|trans }}</label>
+						<label class="control-label">
+							<strong>{{ 'events.memberships.edit.category'|trans }}</strong>
+						</label>
 						<div class="controls">
 							{{ form_widget(form.category) }}
 						</div>
 						<span class="help-block">{{ form_errors(form.category) }}</span>
 					</div>
 
+					<hr />
+
 					<div class="control-group">
-						<label class="control-label">{{ 'events.memberships.create.image.label'|trans }}</label>
+						<label class="control-label">
+							<strong>{{ 'events.memberships.create.image.label'|trans }}</strong>
+						</label>
 						<div class="controls">
 							{{ form_widget(form.file) }}
 						</div>
 						<span class="help-block">{{ form_errors(form.file) }}</span>
 					</div>
 
+					<hr />
+
 					<div class="control-group">
-						<label class="control-label">{{ 'events.memberships.create.location'|trans }}</label>
+						<label class="control-label">
+							<strong>{{ 'events.memberships.edit.location'|trans }}</strong>
+						</label>
 						<div class="controls">
 							{{ form_widget(form.location) }}
 						</div>
 						<span class="help-block">{{ form_errors(form.location) }}</span>
 					</div>
 
+					<hr />
+
 					<div class="control-group">
 						<label class="control-label">
-							{{ 'events.memberships.create.description'|trans }}
+							<strong>{{ 'events.memberships.edit.description'|trans }}</strong>
 							<span class="pull-right">
 								{% include 'EtuModuleUploadBundle::upload_link.html.twig' %}
 							</span>
@@ -141,6 +161,8 @@
 						</div>
 						<span class="help-block">{{ form_errors(form.description) }}</span>
 					</div>
+
+					<hr />
 
 					<div class="control-group">
 						<div class="controls">

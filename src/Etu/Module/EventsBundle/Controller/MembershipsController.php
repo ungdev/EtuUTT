@@ -2,13 +2,16 @@
 
 namespace Etu\Module\EventsBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 use CalendR\Calendar;
 use CalendR\Period\Month;
 use CalendR\Period\Range;
-use Doctrine\ORM\EntityManager;
-use Etu\Core\CoreBundle\Entity\Notification;
-use Symfony\Component\HttpFoundation\Request;
 
+use Doctrine\ORM\EntityManager;
+
+use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Core\CoreBundle\Util\RedactorJsEscaper;
@@ -18,19 +21,19 @@ use Etu\Module\EventsBundle\Entity\Event;
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Response;
 
 class MembershipsController extends Controller
 {
 	/**
 	 * @Route(
-	 *      "/user/membership/{login}/events",
-	 *      defaults={"day" = "current"},
+	 *      "/user/membership/{login}/events/{year}/{month}/{day}",
+	 *      defaults={"month" = "current", "year" = "current", "day" = "current"},
+	 *      requirements={"month" = "\d+", "year" = "\d+", "day" = "\d+"},
 	 *      name="memberships_orga_events"
 	 * )
 	 * @Template()
 	 */
-	public function eventsAction($login)
+	public function eventsAction($login, $day = 'current', $month = 'current', $year = 'current')
 	{
 		if (! $this->getUserLayer()->isUser()) {
 			return $this->createAccessDeniedResponse();
@@ -85,10 +88,17 @@ class MembershipsController extends Controller
 			->add('location', 'textarea')
 			->getForm();
 
+		$day = ($day == 'current') ? (int) date('d') : (int) $day;
+		$month = ($month == 'current') ? (int) date('m') : (int) $month;
+		$year = ($year == 'current') ? (int) date('Y') : (int) $year;
+
 		return array(
 			'memberships' => $memberships,
 			'membership' => $membership,
 			'orga' => $orga,
+			'day' => $day,
+			'month' => $month - 1,
+			'year' => $year,
 			'form' => $form->createView()
 		);
 	}
@@ -193,6 +203,7 @@ class MembershipsController extends Controller
 
 		return new Response(json_encode($json));
 	}
+
 	/**
 	 * @Route(
 	 *      "/user/membership/{login}/events/create",
@@ -274,10 +285,10 @@ class MembershipsController extends Controller
 		if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
 			$event->setDescription(RedactorJsEscaper::escape($event->getDescription()));
 
-			$event->upload();
-
 			$em->persist($event);
 			$em->flush();
+
+			$event->upload();
 
 			$entity = array(
 				'id' => $event->getId(),
@@ -326,7 +337,10 @@ class MembershipsController extends Controller
 			));
 
 			return $this->redirect($this->generateUrl('memberships_orga_events', array(
-				'login' => $login
+				'login' => $login,
+				'day' => $event->getBegin()->format('d'),
+				'month' => $event->getBegin()->format('m'),
+				'year' => $event->getBegin()->format('Y')
 			)));
 		}
 
@@ -417,11 +431,10 @@ class MembershipsController extends Controller
 			$categories[$category] = 'events.categories.'.$category;
 		}
 
-		$oldEvent = clone $event;
-
 		$form = $this->createFormBuilder($event)
 			->add('title')
 			->add('category', 'choice', array('choices' => $categories))
+			->add('file', 'file', array('required' => false))
 			->add('location', 'textarea')
 			->add('description', 'redactor')
 			->getForm();
@@ -432,82 +445,7 @@ class MembershipsController extends Controller
 			$em->persist($event);
 			$em->flush();
 
-			// Send smart notification
-			$elementsToChange = array(
-				'begin' => false,
-				'beginDate' => false,
-				'beginHour' => false,
-				'end' => false,
-				'endDate' => false,
-				'endHour' => false,
-				'location' => false,
-				'other' => false,
-			);
-
-			if ($oldEvent->getBegin() != $event->getBegin()) {
-				$elementsToChange['begin'] = true;
-
-				if ($oldEvent->getBegin()->format('d-m-Y') != $event->getBegin()->format('d-m-Y')) {
-					$elementsToChange['beginDate'] = true;
-				}
-
-				if ($oldEvent->getBegin()->format('H') != $event->getBegin()->format('H')) {
-					$elementsToChange['beginHour'] = true;
-				}
-			}
-
-			if ($oldEvent->getEnd() != $event->getEnd()) {
-				$elementsToChange['end'] = true;
-
-				if ($oldEvent->getEnd()->format('d-m-Y') != $event->getEnd()->format('d-m-Y')) {
-					$elementsToChange['endDate'] = true;
-				}
-
-				if ($oldEvent->getEnd()->format('H') != $event->getEnd()->format('H')) {
-					$elementsToChange['endHour'] = true;
-				}
-			}
-
-			if ($oldEvent->getLocation() != $event->getLocation()) {
-				$elementsToChange['location'] = true;
-			}
-
-			if (
-				$oldEvent->getDescription() != $event->getDescription()
-				|| $oldEvent->getTitle() != $event->getTitle()
-				|| $oldEvent->getCategory() != $event->getCategory()
-			) {
-				$elementsToChange['other'] = true;
-			}
-
-			$entity = array(
-				'event' => array(
-					'id' => $event->getId(),
-					'title' => $event->getTitle(),
-					'location' => $event->getLocation(),
-					'begin' => $event->getBegin(),
-					'end' => $event->getEnd(),
-					'orga' => array(
-						'id' => $event->getOrga()->getId(),
-						'name' => $event->getOrga()->getName(),
-					)
-				),
-				'changes' => $elementsToChange
-			);
-
-
-			// Send notifications to subscribers
-			$notif = new Notification();
-
-			$notif
-				->setModule($this->getCurrentBundle()->getIdentifier())
-				->setHelper('event_edited')
-				->setAuthorId($this->getUser()->getId())
-				->setEntityType('event')
-				->setEntityId($event->getId())
-				->addEntity($entity);
-
-			$this->getNotificationsSender()->send($notif);
+			$event->upload();
 
 			// Confirmation
 			$this->get('session')->getFlashBag()->set('message', array(
@@ -529,6 +467,81 @@ class MembershipsController extends Controller
 			'event' => $event,
 			'form' => $form->createView(),
 		);
+	}
+
+	/**
+	 * @Route(
+	 *      "/user/membership/{login}/events/edit/{id}",
+	 *      defaults={"_format"="json"},
+	 *      name="memberships_orga_events_ajax_edit",
+	 *      options={"expose"=true}
+	 * )
+	 * @Template()
+	 */
+	public function ajaxEditAction(Request $request, $login, Event $event)
+	{
+		if (! $this->getUserLayer()->isUser()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $memberships Member[] */
+		$memberships = $em->createQueryBuilder()
+			->select('m, o')
+			->from('EtuUserBundle:Member', 'm')
+			->leftJoin('m.organization', 'o')
+			->andWhere('m.user = :user')
+			->setParameter('user', $this->getUser()->getId())
+			->orderBy('m.role', 'DESC')
+			->addOrderBy('o.name', 'ASC')
+			->getQuery()
+			->getResult();
+
+		$membership = null;
+
+		foreach ($memberships as $m) {
+			if ($m->getOrganization()->getLogin() == $login) {
+				$membership = $m;
+				break;
+			}
+		}
+
+		if (! $membership) {
+			throw $this->createNotFoundException('Membership or organization not found for login '.$login);
+		}
+
+		if (! $membership->hasPermission('events')) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$orga = $membership->getOrganization();
+
+		if ($event->getOrga()->getId() != $orga->getId()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$eventUpdate = $request->request->get('event');
+
+		if (! $eventUpdate) {
+			throw $this->createNotFoundException('No event patch provided');
+		}
+
+		$eventUpdate['start'] = \DateTime::createFromFormat('d-m-Y--H-i', $eventUpdate['start']);
+		$eventUpdate['end'] = \DateTime::createFromFormat('d-m-Y--H-i', $eventUpdate['end']);
+		$eventUpdate['allDay'] = ($eventUpdate['allDay'] == 'true') ? true : false;
+
+		$event->setBegin($eventUpdate['start'])
+			->setEnd($eventUpdate['end'])
+			->setIsAllDay($eventUpdate['allDay']);
+
+		$em->persist($event);
+		$em->flush();
+
+		return new Response(json_encode(array(
+			'status' => 'success',
+		)));
 	}
 
 	/**

@@ -54,6 +54,26 @@ subscriber.no.click(function() {
 	return false;
 });
 
+
+var calendarManager = {
+	persist: function(event) {
+		var data = {
+			id: event.id,
+			start: moment(event.start).format('DD-MM-YYYY--HH-mm'),
+			end: moment(event.end).format('DD-MM-YYYY--HH-mm'),
+			allDay: event.allDay
+		};
+
+		$.post(
+			Routing.generate('memberships_orga_events_ajax_edit', { login: orgaLogin, id: event.id }),
+			{ event: data },
+			function(data) {
+				loader.hide();
+			}
+		);
+	}
+};
+
 $(function() {
 	calendar.fullCalendar({
 		header: {
@@ -61,6 +81,9 @@ $(function() {
 			center: 'title',
 			right: 'month,agendaWeek,agendaDay'
 		},
+		date: currentDate.day,
+		month: currentDate.month,
+		year: currentDate.year,
 		selectable: true,
 		selectHelper: true,
 		editable: true,
@@ -109,9 +132,13 @@ $(function() {
 
 		events: source,
 
-		eventDrop: function(event, delta) {
-			/*alert(event.title + ' was moved ' + delta + ' days\n' +
-				'(should probably update your database)');*/
+		eventDrop: function(event) {
+			loader.show();
+			calendarManager.persist(event);
+		},
+		eventResize: function(event) {
+			loader.show();
+			calendarManager.persist(event);
 		},
 		select: function(start, end, allDay) {
 			loader.show();

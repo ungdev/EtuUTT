@@ -194,8 +194,7 @@ class Event extends AbstractEvent
 
 		// Save the result
 		$image->save(
-			__DIR__ . '/../../../../../web/events/'.
-			StringManipulationExtension::slugify($this->getTitle()).'-'.$this->getId().'.png'
+			__DIR__ . '/../../../../../web/events/'.$this->getId().'.png'
 		);
 
 		return true;

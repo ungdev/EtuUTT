@@ -91,6 +91,7 @@ events:
             publicView: Voir la page de l'évènement
             title: Titre
             category: Categorie
+            image: Image
             begin: Début
             end: Fin
             location: Lieu

@@ -75,7 +75,7 @@
 				</ul>
 
 				<p>
-					<a href="{{ path('memberships_orga_events', {'login': orga.login, 'month': event.begin|date('m-Y')}) }}">
+					<a href="{{ path('memberships_orga_events', {'login': orga.login}) }}">
 						<i class="icon-chevron-left"></i>
 						{{ 'events.memberships.edit.back'|trans }}
 					</a>
@@ -85,52 +85,85 @@
 					</a>
 				</p>
 
+				<hr />
+
+				<p>
+					{% if event.isAllDay %}
+						{% if event.begin|date('d/m/Y') == event.end|date('d/m/Y') %}
+							Le {{ event.begin|date('d/m/Y') }}
+						{% else %}
+							Entre le {{ event.begin|date('d/m/Y') }} et le {{ event.end|date('d/m/Y') }}
+						{% endif %}
+					{% else %}
+						Le {{ event.begin|date('d/m/Y') }},
+						de {{ event.begin|date('H:i') }} à {{ event.end|date('H:i') }}
+					{% endif %}
+				</p>
+
+				<hr />
+
 				<form method="post" action="">
 					{{ form_errors(form) }}
 
 					<div class="control-group">
-						<label class="control-label">{{ 'events.memberships.edit.title'|trans }}</label>
+						<label class="control-label">
+							<strong>{{ 'events.memberships.edit.title'|trans }}</strong>
+						</label>
 						<div class="controls">
 							{{ form_widget(form.title, {'attr': {'class': 'span8'}}) }}
 						</div>
 						<span class="help-block">{{ form_errors(form.title) }}</span>
 					</div>
 
+					<hr />
+
 					<div class="control-group">
-						<label class="control-label">{{ 'events.memberships.edit.category'|trans }}</label>
+						<label class="control-label">
+							<strong>{{ 'events.memberships.edit.category'|trans }}</strong>
+						</label>
 						<div class="controls">
 							{{ form_widget(form.category) }}
 						</div>
 						<span class="help-block">{{ form_errors(form.category) }}</span>
 					</div>
 
-					<div class="control-group">
-						<label class="control-label">{{ 'events.memberships.edit.begin'|trans }}</label>
-						<div class="controls">
-							{{ form_widget(form.begin) }}
+					<hr />
+
+					<div class="row-fluid">
+						<div class="span2">
+							<img src="{{ asset('events/'~event.id~'.png') }}"
+								 alt="{{ event.title }}" title="{{ event.title }}" />
 						</div>
-						<span class="help-block">{{ form_errors(form.begin) }}</span>
+						<div class="span10">
+							<div class="control-group">
+								<label class="control-label">
+									<strong>{{ 'events.memberships.edit.image'|trans }}</strong>
+								</label>
+								<div class="controls">
+									{{ form_widget(form.file) }}
+								</div>
+								<span class="help-block">{{ form_errors(form.file) }}</span>
+							</div>
+						</div>
 					</div>
 
-					<div class="control-group">
-						<label class="control-label">{{ 'events.memberships.edit.end'|trans }}</label>
-						<div class="controls">
-							{{ form_widget(form.end) }}
-						</div>
-						<span class="help-block">{{ form_errors(form.end) }}</span>
-					</div>
+					<hr />
 
 					<div class="control-group">
-						<label class="control-label">{{ 'events.memberships.edit.location'|trans }}</label>
+						<label class="control-label">
+							<strong>{{ 'events.memberships.edit.location'|trans }}</strong>
+						</label>
 						<div class="controls">
 							{{ form_widget(form.location) }}
 						</div>
 						<span class="help-block">{{ form_errors(form.location) }}</span>
 					</div>
 
+					<hr />
+
 					<div class="control-group">
 						<label class="control-label">
-							{{ 'events.memberships.edit.description'|trans }}
+							<strong>{{ 'events.memberships.edit.description'|trans }}</strong>
 							<span class="pull-right">
 								{% include 'EtuModuleUploadBundle::upload_link.html.twig' %}
 							</span>
@@ -141,11 +174,13 @@
 						<span class="help-block">{{ form_errors(form.description) }}</span>
 					</div>
 
+					<hr />
+
 					<div class="control-group">
 						<div class="controls">
 							{{ form_rest(form) }}
 
-							<button type="submit" class="btn">
+							<button type="submit" class="btn btn-primary">
 								{{ 'events.memberships.edit.submit'|trans }}
 							</button>
 
