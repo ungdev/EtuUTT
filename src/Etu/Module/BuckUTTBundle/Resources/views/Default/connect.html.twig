@@ -1,20 +1,71 @@
-{% extends '::page-2cols.html.twig' %}
+{% extends '::base.html.twig' %}
 
 {% block title %}{{ 'buckutt.main.index.title'|trans }}{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/bundles/buckutt.css') }}" type="text/css" />
+	<link rel="stylesheet" href="{{ asset('css/bundles/buckutt.css') }}" type="text/css" />
 {% endblock %}
 
-{% block content %}
-    <div class="buckutt-connect-form">
-        <form method="POST" action="{{ path('buckutt_connect') }}">
-            <h4>Entre ton code PIN BuckUTT</h4>
-            {{ form_widget(form.pin) }}
-            <div class="buckutt-connect-submit">
-                {{ form_rest(form) }}
-                <button type="submit" class="btn">Connexion</button>
-            </div>
-        </form>
-    </div>
+{% block page %}
+	<section class="page">
+		<div class="container page-container">
+
+			<h2 class="page-title source-sans-pro">
+				<img src="{{ asset('img/titles/buckutt.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+
+				{{ block('title') }}
+			</h2>
+
+			{% if message %}
+				<div class="page-alert-mobile alert alert-{{ message.type }}">
+					{{ message.message|trans }}
+				</div>
+			{% endif %}
+
+			<div class="content content-connect">
+				<div class="padding20-all">
+					<form method="post" action="{{ path('buckutt_connect') }}">
+						<h4>{{ 'buckutt.main.connect.ask'|trans }}</h4>
+
+						<br />
+
+						{{ form_widget(form.pin) }}
+
+						<br />
+						<br />
+
+						<div class="buckutt-connect-submit">
+							{{ form_rest(form) }}
+							<button type="submit" class="btn btn-primary">
+								{{ 'buckutt.main.connect.connect'|trans }}
+							</button>
+						</div>
+					</form>
+				</div>
+
+				<div class="clear"></div>
+			</div>
+
+		</div>
+	</section>
+
+	<footer class="container footer-bottom">
+		<p>
+			<a href="#" class="footer-link change-locale">
+				{{ 'base.footer.change_locale'|trans }}
+			</a>
+			<a href="" id="next-change-locale-link" class="footer-link">
+				{{ 'base.footer.legalities'|trans }}
+			</a>
+			<a href="" class="footer-link">
+				{{ 'base.footer.help_us'|trans }}
+			</a>
+			<a href="" class="footer-link">
+				{{ 'base.footer.developers'|trans }}
+			</a>
+			<span class="pull-right">
+				{{ 'base.footer.1col_text'|trans|raw }} - {% include '::version.html.twig' %}
+			</span>
+		</p>
+	</footer>
 {% endblock %}

@@ -1,4 +1,4 @@
-{% extends '::page-1col.html.twig' %}
+{% extends '::page-2cols.html.twig' %}
 
 {% block title %}{{ 'buckutt.main.index.title'|trans }}{% endblock %}
 
@@ -6,14 +6,33 @@
     <link rel="stylesheet" href="{{ asset('css/bundles/buckutt.css') }}" type="text/css" />
 {% endblock %}
 
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/buckutt.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
 {% block content %}
+	<ul class="nav nav-tabs page-tabs">
+		<li class="active page-tabs-resolved-active">
+			<a href="{{ path('buckutt_history') }}">
+				{{ 'buckutt.main.menu.history'|trans }}
+			</a>
+		</li>
+		<li>
+			<a href="{{ path('buckutt_reload') }}">
+				{{ 'buckutt.main.menu.reload'|trans }}
+			</a>
+		</li>
+		<li class="pull-right">
+			<a href="{{ path('buckutt_connect', {'action': 'disconnect'}) }}">
+				{{ 'buckutt.main.menu.logout'|trans }}
+			</a>
+		</li>
+	</ul>
+
     <p>
         Bonjour {{ name }}<br />
-        Tu a {{ credit }} € sur ton comtpe
+        Tu as {{ credit }} € sur ton comtpe
     </p>
-    <hr />
-    <a href="{{ path('buckutt_history') }}">Historique</a> | <a href="{{ path('buckutt_reload') }}">Recharger</a> | Administrer | <a href="{{ path('buckutt_connect', {'action':'disconnect'}) }}">Deconnexion</a>
-    <hr />
     <p>
         Historique des transactions du {{ history_date.start }} au {{ history_date.end }}
     </p>

@@ -24,7 +24,7 @@ class SoapManager
         );
 
         self::$cookies = $session->get(self::cookie_name);
-        if (!self::$cookies) {
+        if (!self::$cookies || ! isset(self::$cookies[$wsdlName])) {
             $this->client = new \SoapClient($wsdl[$wsdlName], array("cache_wsdl" => WSDL_CACHE_NONE));
             $this->firstUse = true;
         }

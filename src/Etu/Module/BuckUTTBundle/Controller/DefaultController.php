@@ -21,30 +21,28 @@ class DefaultController extends Controller
 			return $this->createAccessDeniedResponse();
 		}
 
-		if (!$this->get('session')->get(SoapManager::cookie_name)) {
+		if (! $this->get('session')->get(SoapManager::cookie_name)) {
 			return $this->redirect($this->generateUrl('buckutt_connect'));
 		}
-		
+
 		$history = array();
 		$history_dates = array();
-		/* $history -> array($type, $date, $obj_name, $poi_name, $fun_name, $price) 
+		/* $history -> array($type, $date, $obj_name, $poi_name, $fun_name, $price)
 		type= rec/buy */
 
 		define('DATE_FORMAT', 'Y-m-d H:i');
 
-		if($date_start == 0 || !preg_match('/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/',$date_start)){
+		if ($date_start == 0 || ! preg_match('/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/', $date_start)) {
 			$date_start_int = time() - (100*24*3600);// j-10
-            $date_start = date(DATE_FORMAT,$date_start_int);
-        }
-		else{
+            $date_start = date(DATE_FORMAT, $date_start_int);
+        } else {
             $date_start_int = strtotime($date_start);
         }
 
-		if($date_end == 0 || !preg_match('/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/',$date_end)){
+		if ($date_end == 0 || ! preg_match('/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/', $date_end)) {
 			$date_end_int = time();
-            $date_end = date(DATE_FORMAT,$date_end_int);
-        }
-        else{
+            $date_end = date(DATE_FORMAT, $date_end_int);
+        } else {
             $date_end_int = strtotime($date_end);
         }
 
@@ -71,7 +69,7 @@ class DefaultController extends Controller
 			);
 			$history_dates[] = $a[0];
 		}
-		
+
 		$recharges = $clientSADMIN->getHistoriqueRecharge($date_start_int, $date_end_int);
         //-> array($don['rec_date'], $don['rty_name'], $don['usr_firstname'], $don['usr_lastname'], $don['poi_name'], $don['rec_credit'])
 		foreach($recharges as $r){
@@ -91,9 +89,9 @@ class DefaultController extends Controller
 
         $SBUY = new SoapManager('SBUY', $this->get('session'));
 		$credit = $SBUY->getCredit();
-		
+
 		$name = $this->getUser()->getFullName();
-		
+
         return array(
             'name' => $name,
             'credit' => number_format($credit/100, 2),

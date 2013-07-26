@@ -1,6 +1,15 @@
 
 buckutt:
     main:
+        menu:
+            history: Historique
+            reload: Recharger
+            logout: Déconnexion
+
+        connect:
+            ask: Entre ton code PIN BuckUTT
+            connect: Connexion
+
         index:
             title: BuckUTT
             main_title: Gérer son compte BuckUTT
