@@ -120,5 +120,32 @@ class MainController extends Controller
 			'term' => $term
 		);
 	}
+
+	/**
+	 * @Route("/goto/{code}", name="uvs_goto")
+	 * @Template()
+	 */
+	public function goToAction($code)
+	{
+		if (! $this->getUserLayer()->isUser()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var EntityManager $em */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var UV $uv */
+		$uv = $em->getRepository('EtuModuleUVBundle:UV')
+			->findOneBy(array('code' => $code));
+
+		if (! $uv) {
+			throw $this->createNotFoundException(sprintf('UV for code %s not found', $code));
+		}
+
+		return $this->redirect($this->generateUrl('uvs_view', array(
+			'slug' => $uv->getSlug(),
+			'name' => StringManipulationExtension::slugify($uv->getName())
+		)), 301);
+	}
 }
 

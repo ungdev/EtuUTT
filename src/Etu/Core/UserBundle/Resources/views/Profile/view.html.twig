@@ -169,7 +169,11 @@
 						<div class="view-label">{{ 'user.profile.view.uvs'|trans }}</div>
 						<div class="view-value">
 							{% if etu.modules.isEnabled('uv') %}
-								{% for uv in user.uvsList %}{% if loop.index > 1 %}, {% endif %}<a href="">{{ uv }}</a>{% endfor %}
+								{% for uv in user.uvsList %}{% if loop.index > 1 %}, {% endif %}
+									<a href="{{ path('uvs_goto', {'code': uv}) }}">
+										{{ uv }}
+									</a>
+								{% endfor %}
 							{% else %}
 								{{ user.displayUvs }}
 							{% endif %}
