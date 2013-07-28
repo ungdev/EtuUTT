@@ -6,12 +6,12 @@ faire fonctionner EtuUTT.
 
 ## Installation
 
-Le contexte dexécution recomandé pour EtuUTT est nginx + php-fpm + mysql. Nous allons donc installer
+Le contexte d'exécution recomandé pour EtuUTT est nginx + php-fpm + mysql. Nous allons donc installer
 ces programmes, et quelques autres améliorant les performances, la sécurité et les fonctionnalités.
 
 ### PHP
 
-EtuUTT requiert au moins PHP 5.3.8 (du à Symfony 2.3). Cependant, il est recommandé d'utiliser la
+EtuUTT requiert au moins PHP 5.3.8 (Symfony 2.3). Cependant, il est recommandé d'utiliser la
 dernière version stable disponible sur votre machine (PHP 5.4.4 sous debian wheezy au moment où
 j'écrit ces lignes).
 
@@ -21,20 +21,18 @@ Installons PHP et des modules importants de base :
 	php5-mcrypt php5-mysql php5-suhosin php-xdebug php5-fpm php5-intl php5-ldap php5-sqlite
 
 Si vous avez une version de PHP en dessous de la version 5.5, vous ne disposez pas par défaut d'un
-opcache (comme APC ou ZendOptimiser+, ce dernier étant intétgré au coeur de PHP à partir de la
-version 5.5). Installons le :
+opcache (comme APC ou ZendOptimiser+), celui-ci étant intétgré au coeur de PHP à partir de la
+version 5.5. Installons APC :
 
 	sudo apt-get install php-apc
 
-### Nginx
+Si vous utilisez PHP 5.5, activez l'utilisation de OpCache dans php.ini.
 
-Très simplement :
+### Nginx
 
 	sudo apt-get install nginx
 
 ### MySQL
-
-De la même manière :
 
 	sudo apt-get install mysql-server mysql-client
 
@@ -58,8 +56,8 @@ Pour l'installer, passons par curl :
 Composer est désormais accessible depuis n'importe où sur le système en utilisant `composer`.
 Pour mettre à jour les dépendances d'EtuUTT, exécutez :
 
-	dev-v10:/var/www$ sudo composer self-update			// Met à jour Composer lui-même
-	dev-v10:/var/www$ sudo composer update				// Met à jour EtuUTT
+	vm:/var/www$ sudo composer self-update			// Met à jour Composer lui-même
+	vm:/var/www$ sudo composer update				// Met à jour les dépendances d'EtuUTT
 
 ### PHPUnit
 
@@ -84,9 +82,12 @@ Ensuite, démarrons Composer :
 
 	sudo composer install
 
-PHPUnit est maintenant installé sur votre mahcine. Lancez `phpunit --version` pour vous en assurer.
+PHPUnit est maintenant installé sur votre machine. Lancez `phpunit --version` pour vous en assurer.
 
 ### Poppler-utils
+
+**Note:** Poppler-utils sera déprécié lorsque nous aurons un accès à la base de données des UV depuis
+le CRI.
 
 Poppler-utils n'est pas nécessaire au bon fonctionnement d'EtuUTT. Cependant, il est utilisé par le
 parser du guide des UV pour importer facilement les UV depuis une source officielle, il est donc
@@ -112,12 +113,10 @@ fortement recommandé de l'installer.
 		rewrite ^/app_dev\.php/?(.*)$ /$1 permanent;
 
 		# Réécritures pour éviter d'appeler Symfony
-		rewrite ^/launch$ /launch/index.php last;
-		rewrite ^/launcher$ /launch/launcher.php last;
 		rewrite ^/mail/?$ /mail/index.php last;
 
 		# Développement : index index.php app_dev.php;
-		index.php app.php;
+		index index.php app.php;
 
 		location / {
 			if (-f $request_filename) {
@@ -180,7 +179,7 @@ Production :
 	display_startup_errors = Off
 	log_errors = On
 
-### 20-xdebug.ini
+#### 20-xdebug.ini
 
 xdebug.max_nesting_level = 256
 xdebug.var_display_max_depth = 5

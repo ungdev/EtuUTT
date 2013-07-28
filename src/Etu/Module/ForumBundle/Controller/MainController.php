@@ -2,23 +2,19 @@
 
 namespace Etu\Module\ForumBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
-
 use Etu\Core\CoreBundle\Util\RedactorJsEscaper;
 use Etu\Core\CoreBundle\Entity\Notification;
 
 use Etu\Module\ForumBundle\Entity\Category;
 use Etu\Module\ForumBundle\Entity\Thread;
 use Etu\Module\ForumBundle\Entity\Message;
-
 use Etu\Module\ForumBundle\Form\ThreadType;
 use Etu\Module\ForumBundle\Form\MessageEditType;
 use Etu\Module\ForumBundle\Form\MessageType;
-
 use Etu\Module\ForumBundle\Model\PermissionsChecker;
 
 // Import annotations
@@ -44,7 +40,7 @@ class MainController extends Controller
 
 		return array('categories' => $categories);
 	}
-	
+
 	/**
 	 * @Route("/forum/{id}-{slug}/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="forum_category")
 	 * @Template()
@@ -52,10 +48,13 @@ class MainController extends Controller
 	public function categoryAction($id, $slug, $page)
 	{
 		$em = $this->getDoctrine()->getManager();
+
+		/** @var Category $category */
 		$category = $em->getRepository('EtuModuleForumBundle:Category')
 			->find($id);
 
 		$checker = new PermissionsChecker($this->getUser());
+
 		if (!$checker->canRead($category)) {
 			return $this->createAccessDeniedResponse();
 		}
@@ -65,8 +64,10 @@ class MainController extends Controller
 			->from('EtuModuleForumBundle:Category', 'c')
 			->where('c.left <= :left')
 			->andWhere('c.right >= :right')
+			->andWhere('c.id != :id')
 			->setParameter('left', $category->getLeft())
 			->setParameter('right', $category->getRight())
+			->setParameter('id', $category->getId())
 			->orderBy('c.depth')
 			->getQuery()
 			->getResult();
@@ -101,7 +102,7 @@ class MainController extends Controller
 
 		$isSubCategories = false;
 		if(count($subCategories) > 0) $isSubCategories = true;
-		
+
 		return array('category' => $category, 'subCategories' => $subCategories, 'parents' => $parents, 'threads' => $threads, 'noThreads' => $noThreads, 'isSubCategories' => $isSubCategories);
 	}
 
@@ -154,7 +155,17 @@ class MainController extends Controller
 
 		$cantAnswer = (bool) ($thread->getState() == 200 && !$checker->canLock($category) && !$this->getUser()->getIsAdmin());
 
-		return array('category' => $category, 'thread' => $thread, 'parents' => $parents, 'messages' => $messages, 'cantAnswer' => $cantAnswer);
+		$message = new Message();
+		$form = $this->createForm(new MessageType, $message);
+
+		return array(
+			'category' => $category,
+			'thread' => $thread,
+			'parents' => $parents,
+			'messages' => $messages,
+			'cantAnswer' => $cantAnswer,
+			'form' => $form->createView(),
+		);
 	}
 
 	/**
@@ -511,17 +522,19 @@ class MainController extends Controller
 
 				$checker = new PermissionsChecker($this->getUser());
 				if (!$checker->canLock($category)) {
-					$return = $this->createAccessDeniedResponse();
+					return $this->createAccessDeniedResponse();
 				}
 
 				if($thread->getState() == 200) {
 					$thread->setState(100);
-					$return = array('parents' => $parents, 'thread' => $thread, 'action' => 'unlock');
-				}
-				else {
+				} else {
 					$thread->setState(200);
-					$return = array('parents' => $parents, 'thread' => $thread, 'action' => 'lock');
 				}
+
+				$return = $this->redirect($this->generateUrl('forum_thread', array(
+					'id' => $thread->getId(),
+					'slug' => $thread->getSlug()
+				)));
 				break;
 			case 'move':
 				$thread = $em->getRepository('EtuModuleForumBundle:Thread')

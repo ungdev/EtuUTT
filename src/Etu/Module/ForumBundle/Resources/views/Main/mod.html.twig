@@ -6,40 +6,57 @@
 
 {% block title %}{{ 'forum.main.mod.title'|trans }}{% endblock %}
 
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/forum.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
 {% block content %}
-	<div class="forum-breadcrumb">
-		<a href="{{ path('forum_index') }}">Forum</a>
+	<ul class="breadcrumb">
+		<li>
+			<a href="{{ path('forum_index') }}">Forum</a>
+			<span class="divider">/</span>
+		</li>
 		{% for parent in parents %}
-			 > <a href="{{ path('forum_category', {'id': parent.id, 'slug': parent.slug}) }}">{{ parent.title }}</a>
+			<li>
+				<a href="{{ path('forum_category', {'id': parent.id, 'slug': parent.slug}) }}">
+					{{ parent.title }}</a>
+				<span class="divider">/</span>
+			</li>
 		{% endfor %}
-		 > <a href="{{ path('forum_thread', {'id': thread.id, 'slug': thread.slug}) }}">{{ thread.title }}</a>
+		<li class="active">
+			{{ thread.title }}
+		</li>
+	</ul>
+
+	<div class="padding20-sides">
+		{% if action == 'lock' %}
+			{{ 'forum.main.mod.locked'|trans }}<br />
+			<a href="{{ path('forum_thread', {'id': thread.getId(), 'slug': thread.getSlug()}) }}">{{ 'forum.main.mod.back'|trans }}</a>
+		{% elseif action == 'unlock' %}
+			{{ 'forum.main.mod.unlocked'|trans }}<br />
+			<a href="{{ path('forum_thread', {'id': thread.getId(), 'slug': thread.getSlug()}) }}">{{ 'forum.main.mod.back'|trans }}</a>
+		{% elseif action == 'move' %}
+			<form action="{{ path('forum_mod', {'action': 'move', 'threadId': thread.id, 'slug': thread.slug}) }}" method="post" {{ form_enctype(form) }}>
+				<fieldset class="forum-post">
+					{{ form_errors(form) }}
+					<div class="forum-post-left">
+						<div class="forum-post-title">
+							{{ form_label(form.category, 'forum.main.mod.where'|trans) }}
+						</div>
+
+					</div>
+					<div class="forum-post-right">
+						<div class="forum-post-title">
+							{{ form_errors(form.category) }}
+							{{ form_widget(form.category) }}
+						</div>
+						{{ form_rest(form) }}
+						<input type="submit" class="btn btn-primary" />
+						<a href="{{ path('forum_thread', {'id': thread.id, 'slug': thread.slug}) }}"
+						   class="btn">Annuler</a>
+					</div>
+				</fieldset>
+			</form>
+		{% endif %}
 	</div>
-
-	{% if action == 'lock' %}
-		{{ 'forum.main.mod.locked'|trans }}<br />
-		<a href="{{ path('forum_thread', {'id': thread.getId(), 'slug': thread.getSlug()}) }}">{{ 'forum.main.mod.back'|trans }}</a>
-	{% elseif action == 'unlock' %}
-		{{ 'forum.main.mod.unlocked'|trans }}<br />
-		<a href="{{ path('forum_thread', {'id': thread.getId(), 'slug': thread.getSlug()}) }}">{{ 'forum.main.mod.back'|trans }}</a>
-	{% elseif action == 'move' %}
-		<form action="{{ path('forum_mod', {'action': 'move', 'threadId': thread.id, 'slug': thread.slug}) }}" method="post" {{ form_enctype(form) }}>
-			<fieldset class="forum-post">
-				{{ form_errors(form) }}
-				<div class="forum-post-left">
-					<div class="forum-post-title">
-					  {{ form_label(form.category, 'forum.main.mod.where'|trans) }}
-					</div>
-
-				</div>
-				<div class="forum-post-right">
-					<div class="forum-post-title">
-					  {{ form_errors(form.category) }}
-					  {{ form_widget(form.category) }}
-					</div>
-					{{ form_rest(form) }}
-					<input type="submit" class="btn btn-primary" />
-				</div>
-			</fieldset>
-		</form>
-	{% endif %}
 {% endblock %}

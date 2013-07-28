@@ -1,4 +1,4 @@
-{% extends '::page-1col.html.twig' %}
+{% extends '::page-2cols.html.twig' %}
 
 {% block stylesheets %}
 	<link rel="stylesheet" href="{{ asset('css/bundles/forum.css') }}" type="text/css" />
@@ -13,33 +13,30 @@
 	</script>
 {% endblock %}
 
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/forum.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
 {% block title %}{{ 'forum.main.answer.title'|trans }}{% endblock %}
 
 {% block content %}
-	<div class="forum-breadcrumb">
-		<a href="{{ path('forum_index') }}">Forum</a>
+	<ul class="breadcrumb">
+		<li>
+			<a href="{{ path('forum_index') }}">Forum</a>
+			<span class="divider">/</span>
+		</li>
 		{% for parent in parents %}
-			 > <a href="{{ path('forum_category', {'id': parent.id, 'slug': parent.slug}) }}">{{ parent.title }}</a>
+			<li>
+				<a href="{{ path('forum_category', {'id': parent.id, 'slug': parent.slug}) }}">
+					{{ parent.title }}</a>
+				<span class="divider">/</span>
+			</li>
 		{% endfor %}
-		 > <a href="{{ path('forum_thread', {'id': thread.id, 'slug': thread.slug}) }}">{{ thread.title }}</a>
-	</div>
+		<li class="active">
+			{{ thread.title }}
+		</li>
+	</ul>
 
-	<form action="{{ path('forum_answer', {'id': thread.id, 'slug': thread.slug}) }}" method="post" {{ form_enctype(form) }}>
-		<fieldset class="forum-post">
-			{{ form_errors(form) }}
-			<div class="forum-post-left">
-				<div class="forum-post-content">
-				  {{ form_label(form.content, 'forum.main.post.content'|trans) }}
-				</div>
-			</div>
-			<div class="forum-post-right">
-				<div class="forum-post-content">
-				  {{ form_errors(form.content) }}
-				  {{ form_widget(form.content) }}
-				</div>
-				{{ form_rest(form) }}
-				<input type="submit" class="btn btn-primary" />
-			</div>
-		</fieldset>
-	</form>
+	<div class="padding20-sides">
+	</div>
 {% endblock %}
