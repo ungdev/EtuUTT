@@ -101,7 +101,7 @@
 				<div class="etu-comment-infos">
 					<div class="etu-comment-date">
 						<small>
-							<a href="#{{ loop.index }}">#{{ loop.index }}</a> -
+							<a href="#{{ message.id }}">#{{ message.id }}</a> -
 							<a href="{{ path('user_view', {'login': message.author.login}) }}">
 								{{ message.author.fullName }}
 							</a>

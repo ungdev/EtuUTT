@@ -83,18 +83,6 @@ class AuthController extends Controller
 				}
 
 				if ($user instanceof \Etu\Core\UserBundle\Entity\User) {
-					/**
-					 * @todo Remove this when we will finish the beta assos
-					 */
-					if ($this->getKernel()->getEnvironment() == 'prod') {
-						$this->get('session')->getFlashBag()->set('message', array(
-							'type' => 'error',
-							'message' => 'user.auth.connect.betaAssos'
-						));
-
-						return $this->redirect($this->generateUrl('user_disconnect'));
-					}
-
 					$this->get('session')->set('user', $user->getId());
 					$this->get('session')->getFlashBag()->set('message', array(
 						'type' => 'success',
@@ -201,18 +189,6 @@ class AuthController extends Controller
 		}
 
 		if ($user instanceof \Etu\Core\UserBundle\Entity\User) {
-			/**
-			 * @todo Remove this when we will finish the beta assos
-			 */
-			if ($this->getKernel()->getEnvironment() == 'prod') {
-				$this->get('session')->getFlashBag()->set('message', array(
-					'type' => 'error',
-					'message' => 'user.auth.connect.betaAssos'
-				));
-
-				return $this->redirect($this->generateUrl('user_disconnect'));
-			}
-
 			$this->get('session')->set('user', $user->getId());
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
