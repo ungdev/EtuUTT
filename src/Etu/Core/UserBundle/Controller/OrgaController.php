@@ -8,7 +8,6 @@ use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\Member;
 use Etu\Core\UserBundle\Entity\User;
 
-use Etu\Core\UserBundle\Model\Badge;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 

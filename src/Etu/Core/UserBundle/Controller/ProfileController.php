@@ -8,7 +8,7 @@ use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\Course;
 use Etu\Core\UserBundle\Entity\Member;
 use Etu\Core\UserBundle\Entity\User;
-use Etu\Core\UserBundle\Model\Badge;
+use Etu\Core\UserBundle\Model\BadgesManager;
 use Etu\Core\UserBundle\Schedule\Helper\ScheduleBuilder;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -90,11 +90,11 @@ class ProfileController extends Controller
 			$em = $this->getDoctrine()->getManager();
 
 			if ($user->getProfileCompletion() == 100 && ! $user->hasBadge('profile_completed')) {
-				$user->addBadge(new Badge('profile_completed'));
+				$user->addBadge(BadgesManager::findBySerie('profile_completed'));
 			}
 
 			if ($user->getProfileCompletion() != 100 && $user->hasBadge('profile_completed')) {
-				$user->removeBadge('profile_completed');
+				$user->removeBadge(BadgesManager::findBySerie('profile_completed'));
 			}
 
 			$em->persist($user);
@@ -190,11 +190,11 @@ class ProfileController extends Controller
 			$em = $this->getDoctrine()->getManager();
 
 			if ($user->getTrombiCompletion() == 100 && ! $user->hasBadge('trombi_completed')) {
-				$user->addBadge(new Badge('trombi_completed'));
+				$user->addBadge(BadgesManager::findBySerie('trombi_completed'));
 			}
 
 			if ($user->getTrombiCompletion() != 100 && $user->hasBadge('trombi_completed')) {
-				$user->removeBadge('trombi_completed');
+				$user->removeBadge(BadgesManager::findBySerie('trombi_completed'));
 			}
 
 			$em->persist($user);

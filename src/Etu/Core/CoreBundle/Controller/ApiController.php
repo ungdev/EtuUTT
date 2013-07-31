@@ -6,8 +6,9 @@ use Doctrine\ORM\EntityManager;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\User;
+use Etu\Core\UserBundle\Entity\Badge;
 
-use Etu\Core\UserBundle\Model\Badge;
+use Etu\Core\UserBundle\Model\BadgesManager;
 use Symfony\Component\HttpFoundation\Response;
 
 // Import @Route() and @Template() annotations
@@ -56,16 +57,18 @@ class ApiController extends Controller
 
 		$count = (int) $count;
 
-		$user->removeBadge('subscriber');
+		$user->removeBadge(BadgesManager::findBySerie('subscriber', 1));
+		$user->removeBadge(BadgesManager::findBySerie('subscriber', 2));
+		$user->removeBadge(BadgesManager::findBySerie('subscriber', 3));
 
 		if ($count >= 1) {
-			$user->addBadge(new Badge('subscriber', 1));
+			$user->addBadge(BadgesManager::findBySerie('subscriber', 1));
 		}
 		if ($count >= 10) {
-			$user->getBadge('subscriber')->setLevel(2);
+			$user->addBadge(BadgesManager::findBySerie('subscriber', 2));
 		}
 		if ($count >= 30) {
-			$user->getBadge('subscriber')->setLevel(3);
+			$user->addBadge(BadgesManager::findBySerie('subscriber', 3));
 		}
 
 		$em->persist($user);
@@ -114,16 +117,18 @@ class ApiController extends Controller
 
 		$count = (int) $count;
 
-		$user->removeBadge('subscriber');
+		$user->removeBadge(BadgesManager::findBySerie('subscriber', 1));
+		$user->removeBadge(BadgesManager::findBySerie('subscriber', 2));
+		$user->removeBadge(BadgesManager::findBySerie('subscriber', 3));
 
 		if ($count >= 1) {
-			$user->addBadge(new Badge('subscriber', 1));
+			$user->addBadge(BadgesManager::findBySerie('subscriber', 1));
 		}
 		if ($count >= 10) {
-			$user->getBadge('subscriber')->setLevel(2);
+			$user->addBadge(BadgesManager::findBySerie('subscriber', 2));
 		}
 		if ($count >= 30) {
-			$user->getBadge('subscriber')->setLevel(3);
+			$user->addBadge(BadgesManager::findBySerie('subscriber', 3));
 		}
 
 		$em->persist($user);

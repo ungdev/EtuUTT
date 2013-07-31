@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Util\RedactorJsEscaper;
 use Etu\Core\UserBundle\Entity\User;
-use Etu\Core\UserBundle\Model\Badge;
+use Etu\Core\UserBundle\Model\BadgesManager;
 use Etu\Module\UVBundle\Entity\Comment;
 use Etu\Module\UVBundle\Entity\Review;
 use Symfony\Component\HttpFoundation\Request;
@@ -211,19 +211,22 @@ class ViewController extends Controller
 				->getQuery()
 				->getSingleScalarResult();
 
-			$this->getUser()->removeBadge('uvs_reviews');
+			$this->getUser()->removeBadge(BadgesManager::findBySerie('uvs_reviews', 1));
+			$this->getUser()->removeBadge(BadgesManager::findBySerie('uvs_reviews', 2));
+			$this->getUser()->removeBadge(BadgesManager::findBySerie('uvs_reviews', 3));
+			$this->getUser()->removeBadge(BadgesManager::findBySerie('uvs_reviews', 4));
 
 			if ($count >= 1) {
-				$this->getUser()->addBadge(new Badge('uvs_reviews', 1));
+				$this->getUser()->addBadge(BadgesManager::findBySerie('uvs_reviews', 1));
 			}
 			if ($count >= 2) {
-				$this->getUser()->getBadge('uvs_reviews')->setLevel(2);
+				$this->getUser()->addBadge(BadgesManager::findBySerie('uvs_reviews', 2));
 			}
 			if ($count >= 4) {
-				$this->getUser()->getBadge('uvs_reviews')->setLevel(3);
+				$this->getUser()->addBadge(BadgesManager::findBySerie('uvs_reviews', 3));
 			}
 			if ($count >= 10) {
-				$this->getUser()->getBadge('uvs_reviews')->setLevel(4);
+				$this->getUser()->addBadge(BadgesManager::findBySerie('uvs_reviews', 4));
 			}
 
 			$em->persist($this->getUser());

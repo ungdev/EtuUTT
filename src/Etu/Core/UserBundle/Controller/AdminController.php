@@ -11,6 +11,7 @@ use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Core\UserBundle\Entity\User;
 
 use Etu\Core\UserBundle\Model\Badge;
+use Etu\Core\UserBundle\Model\BadgesManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -187,11 +188,11 @@ class AdminController extends Controller
 			$em = $this->getDoctrine()->getManager();
 
 			if ($user->getProfileCompletion() == 100 && ! $user->hasBadge('profile_completed')) {
-				$user->addBadge(new Badge('profile_completed'));
+				$user->addBadge(BadgesManager::findBySerie('profile_completed'));
 			}
 
 			if ($user->getProfileCompletion() != 100 && $user->hasBadge('profile_completed')) {
-				$user->removeBadge('profile_completed');
+				$user->removeBadge(BadgesManager::findBySerie('profile_completed'));
 			}
 
 			$em->persist($user);
@@ -506,11 +507,11 @@ class AdminController extends Controller
 			$em = $this->getDoctrine()->getManager();
 
 			if ($user->getProfileCompletion() == 100 && ! $user->hasBadge('profile_completed')) {
-				$user->addBadge(new Badge('profile_completed'));
+				$user->addBadge(BadgesManager::findBySerie('profile_completed'));
 			}
 
 			if ($user->getProfileCompletion() != 100 && $user->hasBadge('profile_completed')) {
-				$user->removeBadge('profile_completed');
+				$user->removeBadge(BadgesManager::findBySerie('profile_completed'));
 			}
 
 			$user->setPassword($this->get('etu.user.crypting')->encrypt($user->getPassword()));
