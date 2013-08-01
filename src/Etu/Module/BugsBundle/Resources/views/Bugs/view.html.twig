@@ -35,15 +35,15 @@
 		<h3>
 			{{ bug.title }}
 
-			{% if bug.criticality == 'security' %}
+			{% if bug.criticality == 60 %}
 				<span class="label label-important">
 					{{ ('bugs.criticality.'~bug.criticality)|trans }}
 				</span>
-			{% elseif bug.criticality == 'critical' or bug.criticality == 'major' %}
+			{% elseif bug.criticality == 50 or bug.criticality == 40 %}
 				<span class="label label-warning">
 					{{ ('bugs.criticality.'~bug.criticality)|trans }}
 				</span>
-			{% elseif bug.criticality == 'minor' %}
+			{% elseif bug.criticality == 30 %}
 				<span class="label label-info">
 					{{ ('bugs.criticality.'~bug.criticality)|trans }}
 				</span>
