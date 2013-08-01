@@ -19,6 +19,7 @@ bugs:
         closed:
             title: Bugs résolus
             no_bug: Aucun bug résolu pour le moment
+            count: %count% bug résolu|%count% bugs résolus
         create:
             title: Signaler un bug
             confirm: Votre problème a été signalé. Merci de votre participation !
@@ -38,6 +39,7 @@ bugs:
             title: Bugs ouverts
             assigned_to: Assigné à %name%
             no_bug: Aucun bug ouvert pour le moment
+            count: %count% bug ouvert|%count% bugs ouverts
         view:
             title: Détails d'un bug
             assigned_to: assigné à %name%
