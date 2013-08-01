@@ -11,7 +11,7 @@
 
 		<title>{% block title %}{{ 'home.index.page.title'|trans }}{% endblock %} - {{ 'base.title'|trans }}</title>
 
-		<meta name="description" content="{{ 'base.title'|trans }}" />
+		<meta name="description" content="{% block meta_desc %}{{ 'base.meta'|trans }}{% endblock %}" />
 
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.min.css" type="text/css" />
 

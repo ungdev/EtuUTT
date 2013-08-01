@@ -6,6 +6,7 @@ assos:
             members: Membres
         index:
             title: Les associations
+            meta: Découvrez les associations étudiantes de l'UTT !
             president: Président
         view:
             title: Détail d'une assocation

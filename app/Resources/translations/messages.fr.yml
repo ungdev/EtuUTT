@@ -4,6 +4,9 @@
 base:
     title: Site étudiant de l'UTT
     description: Site créé et géré par les étudiants de l'Université de Technologie de Troyes
+    meta: |
+        Le site étudiant de l'UTT connecte la communauté des UTTiens et offre de multiples
+        services pour faciliter leur vie étudiante
 
     # Logo
     logo:

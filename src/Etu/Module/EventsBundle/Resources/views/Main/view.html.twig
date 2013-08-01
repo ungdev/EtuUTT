@@ -2,6 +2,8 @@
 
 {% block title %}{{ 'events.main.view.title'|trans }}{% endblock %}
 
+{% block meta_desc %}{{ event.title }}, le {{ event.begin|date('d/m/Y à H:i') }}, {{ event.location }}{% endblock %}
+
 {% block titleIcon %}
 	<img src="{{ asset('img/titles/events.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}

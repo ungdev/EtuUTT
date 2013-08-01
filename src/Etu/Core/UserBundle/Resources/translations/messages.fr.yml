@@ -101,6 +101,7 @@ user:
     auth:
         connect:
             title: Connexion
+            meta: Se connecter au site étudiant, en tant que membre de l'UTT ou qu'exterieur
             desc: "Veuillez choisir une méthode d'authentification pour EtuUTT :"
             cas: En utilisant un compte UTT
             external: En utilisant un compte exterieur
@@ -112,6 +113,7 @@ user:
                 réservée aux associations.
         connectExternal:
             title: Connexion d'un exterieur
+            meta: Se connecter au site étudiant en tant qu'exterieur
             desc: Connectez-vous en utilisant l'identifiant et le mot de passe qui vous ont été fournis par l'UNG :
             identifier: Identifiant
             password: Mot de passe

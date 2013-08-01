@@ -49,6 +49,7 @@ events:
             dec: Décembre
         index:
             title: Evènements
+            meta: Découvrez les évènements étudiants organisés à l'UTT !
             category_orga: Dans %category%, organisé par %orga%
         week:
             week: Semaine

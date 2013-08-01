@@ -1,7 +1,10 @@
 
 forum:
+    meta: Les forums du site étudiant de l'UTT
+
     main:
         index:
+            meta: Les forums du site étudiant de l'UTT : discutez et débattez !
             noMessage: Pas de message
             forum: Forum
             category: Catégorie

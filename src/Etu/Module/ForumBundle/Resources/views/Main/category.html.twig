@@ -10,6 +10,8 @@
 
 {% block title %}{{ category.title }}{% endblock %}
 
+{% block meta_desc %}{{ 'forum.meta'|trans }} : {{ category.title }}{% endblock %}
+
 {% block content %}
 	<ul class="breadcrumb">
 		<li>
