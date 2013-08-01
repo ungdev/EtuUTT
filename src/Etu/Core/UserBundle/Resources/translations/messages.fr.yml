@@ -130,7 +130,7 @@ user:
             daymail: Daymail
         index:
             title: Associatif
-            desc_1: Vous faites parti de %count% association|Vous faites parti de %count% associations
+            desc_1: Vous faites partie de %count% association|Vous faites partie de %count% associations
             desc_2: |
                 Cette page vous permet d'effectuer des actions d'administration sur ces associations,
                 selon vos droits. Vous pourrez par exemple envoyer un daymail au nom de l'association,
