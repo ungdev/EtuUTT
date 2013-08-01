@@ -122,35 +122,43 @@
 					</div>
 					<div class="profile-infos-value">
 						{% if app.user.adress or app.user.postalCode or app.user.city or app.user.country %}
-							{{ app.user.adress }}
-							{% if is_private(app.user.adressPrivacy) %}
-								<i class="icon-lock" title="{{ 'user.privacy.private'|trans }}"></i>
-							{% else %}
-								<i class="icon-globe" title="{{ 'user.privacy.public'|trans }}"></i>
+							{% if app.user.adress %}
+								{{ app.user.adress }}
+								{% if is_private(app.user.adressPrivacy) %}
+									<i class="icon-lock" title="{{ 'user.privacy.private'|trans }}"></i>
+								{% else %}
+									<i class="icon-globe" title="{{ 'user.privacy.public'|trans }}"></i>
+								{% endif %}
+								<br />
 							{% endif %}
-							<br />
 
-							{{ app.user.postalCode }}
-							{% if is_private(app.user.postalCodePrivacy) %}
-								<i class="icon-lock" title="{{ 'user.privacy.private'|trans }}"></i>
-							{% else %}
-								<i class="icon-globe" title="{{ 'user.privacy.public'|trans }}"></i>
+							{% if app.user.postalCode %}
+								{{ app.user.postalCode }}
+								{% if is_private(app.user.postalCodePrivacy) %}
+									<i class="icon-lock" title="{{ 'user.privacy.private'|trans }}"></i>
+								{% else %}
+									<i class="icon-globe" title="{{ 'user.privacy.public'|trans }}"></i>
+								{% endif %}
+								<br />
 							{% endif %}
-							<br />
 
-							{{ app.user.city }}
-							{% if is_private(app.user.cityPrivacy) %}
-								<i class="icon-lock" title="{{ 'user.privacy.private'|trans }}"></i>
-							{% else %}
-								<i class="icon-globe" title="{{ 'user.privacy.public'|trans }}"></i>
+							{% if app.user.city %}
+								{{ app.user.city }}
+								{% if is_private(app.user.cityPrivacy) %}
+									<i class="icon-lock" title="{{ 'user.privacy.private'|trans }}"></i>
+								{% else %}
+									<i class="icon-globe" title="{{ 'user.privacy.public'|trans }}"></i>
+								{% endif %}
+								<br />
 							{% endif %}
-							<br />
 
-							{{ app.user.country }}
-							{% if is_private(app.user.countryPrivacy) %}
-								<i class="icon-lock" title="{{ 'user.privacy.private'|trans }}"></i>
-							{% else %}
-								<i class="icon-globe" title="{{ 'user.privacy.public'|trans }}"></i>
+							{% if app.user.country %}
+								{{ app.user.country }}
+								{% if is_private(app.user.countryPrivacy) %}
+									<i class="icon-lock" title="{{ 'user.privacy.private'|trans }}"></i>
+								{% else %}
+									<i class="icon-globe" title="{{ 'user.privacy.public'|trans }}"></i>
+								{% endif %}
 							{% endif %}
 						{% else %}
 							<em class="muted">{{ 'user.profile.profile.unknown'|trans }}</em>
