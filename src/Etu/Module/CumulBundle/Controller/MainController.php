@@ -87,6 +87,10 @@ class MainController extends Controller
 			$users[$course->getUser()->getLogin()] = $course->getUser();
 		}
 
+		if (empty($users)) {
+			$users[$this->getUser()->getLogin()] = $this->getUser();
+		}
+
 		foreach ($builders as $key => $builder) {
 			$builders[$key] = $builder->build();
 		}
@@ -111,6 +115,7 @@ class MainController extends Controller
 		$letters = array('a', 'b', 'c', 'd', 'e');
 		$usersLetters = array();
 		$i = 0;
+		$user = null;
 
 		foreach ($users as $user) {
 			$usersLetters[$user->getLogin()] = $letters[$i];

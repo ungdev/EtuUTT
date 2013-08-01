@@ -171,15 +171,15 @@ class AdminController extends Controller
 		/** @var $processor Processor */
 		$processor = $this->get('tga_audience.stats')->getProcessor();
 
-		$uniqueVisitors = array_merge(array(array('Date', 'Visitors')), $processor->getUniqueVisitors());
-		$pagesCalls = array_merge(array(array('Date', 'Calls')), $processor->getPageCalls());
+		$uniqueVisitors = array_merge(array(array('Date', 'Visitors')), (array) $processor->getUniqueVisitors());
+		$pagesCalls = array_merge(array(array('Date', 'Calls')), (array) $processor->getPageCalls());
 
-		$platforms = array_merge(array(array('Platform', 'Count')), $processor->getPlatforms());
-		$browsers = array_merge(array(array('Browser', 'Count')), $processor->getBrowsers());
+		$platforms = array_merge(array(array('Platform', 'Count')), (array) $processor->getPlatforms());
+		$browsers = array_merge(array(array('Browser', 'Count')), (array) $processor->getBrowsers());
 
-		$externalSources = array_merge(array(array('Source', 'Count')), $processor->getExternalSources());
+		$externalSources = array_merge(array(array('Source', 'Count')), (array) $processor->getExternalSources());
 
-		$allExternalSources = $processor->getMostUsedExternalSources();
+		$allExternalSources = (array) $processor->getMostUsedExternalSources();
 
 		foreach ($allExternalSources as $key => $value) {
 			if (! is_object($value)) {

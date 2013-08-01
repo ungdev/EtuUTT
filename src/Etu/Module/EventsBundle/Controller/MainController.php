@@ -56,10 +56,6 @@ class MainController extends Controller
 	 */
 	public function ajaxEventsAction(Request $request, $category = 'all')
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
-
 		$start = $request->query->get('start');
 		$end = $request->query->get('end');
 
@@ -162,7 +158,7 @@ class MainController extends Controller
 				$answersProbably[] = $answer;
 			}
 
-			if ($answer->getUser()->getId() == $this->getUser()->getId()) {
+			if ($this->getUser() && $answer->getUser()->getId() == $this->getUser()->getId()) {
 				$userAnswer = $answer;
 			}
 		}

@@ -96,7 +96,7 @@ tga_audience:
         - notifs_new
         - admin_stats
         - admin_index
-    environnements: ['prod', 'dev'] # List of environnements where the bundle will track requests
+    environnements: ['prod', 'beta'] # List of environnements where the bundle will track requests
 
 # EtuUTT
 etu_core:

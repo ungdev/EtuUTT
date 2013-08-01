@@ -22,7 +22,7 @@ $rcmail_config = array();
 // For examples see http://pear.php.net/manual/en/package.database.mdb2.intro-dsn.php
 // currently supported db_providers: mysql, mysqli, pgsql, sqlite, mssql or sqlsrv
 
-$rcmail_config['db_dsnw'] = 'sqlite:////usr/share/nginx/www/web/mail/data/roundcube.db?mode=0646';
+$rcmail_config['db_dsnw'] = 'sqlite:////var/www/web/mail/data/roundcube.db?mode=0646';
 // postgres example: 'pgsql://roundcube:pass@localhost/roundcubemail';
 // Warning: for SQLite use absolute path in DSN:
 // sqlite example: 'sqlite:////full/path/to/sqlite.db?mode=0646';
