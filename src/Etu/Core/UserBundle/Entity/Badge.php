@@ -2,6 +2,7 @@
 
 namespace Etu\Core\UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -103,6 +104,7 @@ class Badge
 		$this->picture = $picture;
 		$this->level = $level;
 		$this->countLevels = $countLevels;
+		$this->users = new ArrayCollection();
 	}
 
 	/**
@@ -255,5 +257,23 @@ class Badge
 	public function getPicture()
 	{
 		return $this->picture;
+	}
+
+	/**
+	 * @param mixed $users
+	 * @return $this
+	 */
+	public function setUsers($users)
+	{
+		$this->users = $users;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getUsers()
+	{
+		return $this->users;
 	}
 }

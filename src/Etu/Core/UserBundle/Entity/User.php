@@ -452,13 +452,9 @@ class User implements UserInterface, \Serializable
 	protected $readOnlyExpirationDate;
 
 	/**
-	 * Badges
+	 * @var UserBadge[]
 	 *
-	 * @ORM\ManyToMany(targetEntity="Badge")
-	 * @ORM\JoinTable(name="etu_users_badges",
-	 *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-	 *      inverseJoinColumns={@ORM\JoinColumn(name="badge_id", referencedColumnName="id")}
-	 * )
+	 * @ORM\OneToMany(targetEntity="UserBadge", mappedBy="user")
 	 */
 	protected $badges;
 
@@ -2387,7 +2383,15 @@ class User implements UserInterface, \Serializable
 	 */
 	public function addBadge(Badge $badge)
     {
-        $this->badges[$badge->getSerie().$badge->getLevel()] = $badge;
+	    $userBadges = $this->badges->toArray();
+
+	    foreach ($userBadges as &$ub) {
+		    if ($ub->getBadge()->getSerie() == $badge->getSerie() && $ub->getBadge()->getLevel() == $badge->getLevel()) {
+				return $this;
+		    }
+	    }
+
+        $this->badges[$badge->getSerie().$badge->getLevel()] = new UserBadge($badge, $this);
 
         return $this;
     }
@@ -2421,6 +2425,10 @@ class User implements UserInterface, \Serializable
 	public function getBadges()
 	{
 		$badges = $this->badges->toArray();
+
+		foreach ($badges as &$badge) {
+			$badge = $badge->getBadge();
+		}
 
 		if (count($badges) > 3) {
 			$this->addBadge(BadgesManager::findBySerie('challenge', 1));
