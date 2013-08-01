@@ -64,7 +64,9 @@
 					<hr />
 
 					<strong>{{ user.fullName }}</strong><br />
+					{% if user.formation %}
 					<em>{{ user.niveau }} {{ user.filiere }} ({{ user.formation }})</em>
+					{% endif %}
 				</div>
 
 				<hr />
