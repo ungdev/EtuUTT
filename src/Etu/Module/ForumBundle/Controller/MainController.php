@@ -14,6 +14,7 @@ use Etu\Module\ForumBundle\Entity\Thread;
 use Etu\Module\ForumBundle\Entity\Message;
 use Etu\Module\ForumBundle\Entity\View;
 use Etu\Module\ForumBundle\Form\ThreadType;
+use Etu\Module\ForumBundle\Form\ThreadTypeNoSticky;
 use Etu\Module\ForumBundle\Form\MessageEditType;
 use Etu\Module\ForumBundle\Form\MessageType;
 use Etu\Module\ForumBundle\Model\PermissionsChecker;
@@ -220,7 +221,12 @@ class MainController extends Controller
 			->getResult();
 
 		$thread = new Thread();
-		$form = $this->createForm(new ThreadType, $thread);
+		if($checker->canSticky($category)) {
+			$form = $this->createForm(new ThreadType, $thread);
+		}
+		else {
+			$form = $this->createForm(new ThreadTypeNoSticky, $thread);
+		}
 
 		$request = $this->get('request');
 		if ($request->getMethod() == 'POST') {
