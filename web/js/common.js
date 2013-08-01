@@ -258,11 +258,13 @@ $(function() {
 		usersAutocomplete.autocomplete({
 			minLength: 3,
 			source: function(request, response) {
-				$.getJSON(Routing.generate('api_users_search'), { term: request.term }, function(data) {
-					response($.map(data, function( item ) {
+				$.getJSON(Routing.generate('api_user_search', {term: request.term}), {format: 'json'}, function(data) {
+					var users = data.body.users;
+
+					response($.map(users, function( item ) {
 						return {
-							label: item.fullName,
-							value: item.fullName,
+							label: item.firstName+' '+item.lastName,
+							value: item.firstName+' '+item.lastName,
 							user: item
 						}
 					}));
@@ -275,7 +277,7 @@ $(function() {
 				return $("<li style=\"margin-bottom: 3px;\">")
 					.append(
 						"<a>" +
-							"<img src=\"/photos/"+ item.user.avatar +"\" style=\"float: left; max-height: 25px; max-width: 25px; margin-right: 5px;\" />" +
+							"<img src=\"/photos/"+ item.user.picture +"\" style=\"float: left; max-height: 25px; max-width: 25px; margin-right: 5px;\" />" +
 							"<span style=\"display: block; float: left; margin-top: 0;\">" + item.label + "</span>" +
 							"<div style=\"clear: both;\"></div>" +
 							"</a>"

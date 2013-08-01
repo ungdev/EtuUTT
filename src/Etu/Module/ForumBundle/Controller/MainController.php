@@ -12,6 +12,7 @@ use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Module\ForumBundle\Entity\Category;
 use Etu\Module\ForumBundle\Entity\Thread;
 use Etu\Module\ForumBundle\Entity\Message;
+use Etu\Module\ForumBundle\Entity\View;
 use Etu\Module\ForumBundle\Form\ThreadType;
 use Etu\Module\ForumBundle\Form\MessageEditType;
 use Etu\Module\ForumBundle\Form\MessageType;
@@ -72,24 +73,30 @@ class MainController extends Controller
 			->getQuery()
 			->getResult();
 
+		$depth = count($parents)+1;
+
 		$subCategories = $em->createQueryBuilder()
 			->select('c')
 			->from('EtuModuleForumBundle:Category', 'c')
 			->where('c.left > :left')
 			->andWhere('c.right < :right')
+			->andWhere('c.depth = :depth')
 			->setParameter('left', $category->getLeft())
 			->setParameter('right', $category->getRight())
-			->orderBy('c.depth')
+			->setParameter('depth', $depth)
+			->orderBy('c.left')
 			->getQuery()
 			->getResult();
 
 		$threads = $em->createQueryBuilder()
-			->select('t, m')
+			->select('t, m, v')
 			->from('EtuModuleForumBundle:Thread', 't')
 			->leftJoin('t.lastMessage', 'm')
+			->leftJoin('t.viewed', 'v', 'WITH', 'v.user = :user')
 			->where('t.category = :category')
 			->andWhere('t.state != 300')
 			->setParameter('category', $category)
+			->setParameter('user', $this->getUser())
 			->orderBy('t.weight', 'DESC')
 			->addOrderBy('m.createdAt', 'DESC')
 			->getQuery()
@@ -154,6 +161,24 @@ class MainController extends Controller
 		$messages = $this->get('knp_paginator')->paginate($messages, $page, 10);
 
 		$cantAnswer = (bool) ($thread->getState() == 200 && !$checker->canLock($category) && !$this->getUser()->getIsAdmin());
+
+		$views = $em->createQueryBuilder()
+			->select('v')
+			->from('EtuModuleForumBundle:View', 'v')
+			->where('v.thread = :thread')
+			->setParameter('thread', $thread)
+			->andWhere('v.user = :user')
+			->setParameter('user', $this->getUser())
+			->getQuery()
+			->getResult();
+
+		if($this->getUser() && count($views) == 0) {
+			$viewed = new View();
+			$viewed->setUser($this->getUser())
+				->setThread($thread);
+			$em->persist($viewed);
+			$em->flush();
+		}
 
 		$message = new Message();
 		$form = $this->createForm(new MessageType, $message);
@@ -289,6 +314,13 @@ class MainController extends Controller
 					$em->persist($parent);
 				}
 				$em->persist($thread);
+
+				$views = $em->getRepository('EtuModuleForumBundle:View')
+					->findByThread($thread);
+				foreach($views as $view) {
+					$em->remove($view);
+				}
+
 				$em->flush();
 
 				$page = ceil($thread->getCountMessages()/10);

@@ -113,7 +113,7 @@
 					<div class="etu-comment-body">
 						{{ message.content|raw }}
 
-						{% if message.author.id == app.user.id or app.user.isAdmin %}
+						{% if app.user and (message.author.id == app.user.id or app.user.isAdmin) %}
 							<p class="pull-right">
 								{% if forum_can_edit(app.user, category) %}
 									<a href="{{ path('forum_edit', {'messageId': message.id, 'threadId': thread.id, 'slug': thread.slug}) }}"

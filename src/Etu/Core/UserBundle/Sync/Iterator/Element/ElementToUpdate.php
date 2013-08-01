@@ -5,7 +5,7 @@ namespace Etu\Core\UserBundle\Sync\Iterator\Element;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Etu\Core\UserBundle\Ldap\Model\User as LdapUser;
 use Etu\Core\UserBundle\Entity\User as DbUser;
-use Etu\Core\UserBundle\Model\Badge;
+use Etu\Core\UserBundle\Model\BadgesManager;
 
 /**
  * Element to update in database
@@ -90,7 +90,7 @@ class ElementToUpdate
 		 * Add badges
 		 */
 		if (substr($history['niveau'], 0, 2) == 'TC' && substr($user->getNiveau(), 0, 2) != 'TC') {
-			$user->addBadge(new Badge('tc_survivor'));
+			$user->addBadge(BadgesManager::findBySerie('tc_survivor'));
 		}
 
 		if ($persist) {
