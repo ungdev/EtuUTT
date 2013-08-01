@@ -23,7 +23,7 @@
 	</ul>
 
 	<div class="padding20-sides">
-		<form method="post" action="" class="form-horizontal">
+		<form method="post" action="">
 			<div class="control-group">
 				<label class="control-label">{{ form_label(form.title, 'bugs.bugs.create.name'|trans) }}</label>
 				<div class="controls">
@@ -39,7 +39,10 @@
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label">{{ form_label(form.body, 'bugs.bugs.create.body'|trans) }}</label>
+				<label class="control-label">
+					{{ form_label(form.body, 'bugs.bugs.create.body'|trans) }}
+					{% include 'EtuModuleUploadBundle::upload_link.html.twig' %}
+				</label>
 				<div class="controls">
 					{{ form_widget(form.body, {'attr': {'class': 'bugs-view-comment-textarea redactor'}}) }}
 					<span class="help-block">{{ form_errors(form.body) }}</span>

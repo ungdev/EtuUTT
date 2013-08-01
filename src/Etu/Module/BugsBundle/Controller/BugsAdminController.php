@@ -340,7 +340,7 @@ class BugsAdminController extends Controller
 			->setAuthorId($this->getUser()->getId())
 			->setEntityType('issue')
 			->setEntityId($bug->getId())
-			->addEntity($comment);
+			->addEntity($bug);
 
 		$this->getNotificationsSender()->send($notif);
 

@@ -24,6 +24,11 @@
 
 			<div class="content content-connect">
 				<div class="padding20-all">
+					{% if app.environment != 'dev' %}
+					<div class="alert alert-error">
+						BuckUTT n'est pas disponible en bêta
+					</div>
+					{% else %}
 					<form method="post" action="{{ path('buckutt_connect') }}">
 						<h4>{{ 'buckutt.main.connect.ask'|trans }}</h4>
 
@@ -41,6 +46,7 @@
 							</button>
 						</div>
 					</form>
+					{% endif %}
 				</div>
 
 				<div class="clear"></div>
