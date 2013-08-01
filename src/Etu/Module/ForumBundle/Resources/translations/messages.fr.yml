@@ -25,6 +25,7 @@ forum:
             sticky: Epinglé
             locked: Bloqué
             edit: Editer
+            new: Non lu
         post:
             title: Création d'un sujet
             threadTitle: Titre du sujet

@@ -102,6 +102,11 @@ class Thread
 	 */
 	protected $lastMessage;
 
+	/**
+	 * @ORM\OneToMany(targetEntity="\Etu\Module\ForumBundle\Entity\View", mappedBy="thread")
+	 */
+	protected $viewed;
+
 
 	/**
 	 * Constructor
@@ -325,5 +330,13 @@ class Thread
 	public function getTitle()
 	{
 		return $this->title;
+	}
+
+	/**
+	 * @return View
+	 */
+	public function getViewed()
+	{
+		return $this->viewed;
 	}
 }
