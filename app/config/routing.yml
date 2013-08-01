@@ -19,6 +19,12 @@ roundcube_index:
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 
+# API
+api_user_search:
+    pattern:  /api/v1/users/search/{term}
+    options:
+        expose: true
+
 # Load modules routes
 etu_modules:
     resource: .

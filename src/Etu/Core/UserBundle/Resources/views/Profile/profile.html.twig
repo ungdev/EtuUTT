@@ -256,11 +256,9 @@
 			<ul class="badges-list">
 			{% for badge in app.user.badges %}
 				<li>
-					<img src="{{ asset('img/badges/'~badge.name~'-'~badge.level~'.png') }}" class="tip"
-						 title="{{ ('badges.'~badge.name~'.'~badge.level~'.description')|trans }}" />
-					<p>
-						{{ ('badges.'~badge.name~'.'~badge.level~'.title')|trans }}
-					</p>
+					<img src="{{ asset('img/badges/'~badge.picture~'.png') }}" class="tip"
+						 title="<strong style='font-size: 13px;'>{{ badge.name }}</strong>
+							 <br />{{ badge.description }}" />
 				</li>
 			{% else %}
 				<li>{{ 'user.profile.profile.no_badge'|trans }}</li>
