@@ -27,7 +27,7 @@
 	<div class="padding20-sides">
 		<form method="post" action="" class="form-horizontal">
 			<div class="control-group">
-				<label class="control-label">{{ form_label(form.body, 'bugs.view.comment.comment'|trans) }}</label>
+				<label class="control-label">{{ form_label(form.body, 'bugs.bugs.view.comment_body'|trans) }}</label>
 				<div class="controls">
 					{{ form_widget(form.body, {'attr': {'class': 'bugs-view-comment-textarea redactor'}}) }}
 					<span class="help-block">{{ form_errors(form.body) }}</span>
@@ -37,7 +37,7 @@
 				<div class="controls">
 					{{ form_rest(form) }}
 
-					<button type="submit" class="btn">{{ 'bugs.edit.submit'|trans }}</button>
+					<button type="submit" class="btn">{{ 'bugs.bugs.edit.submit'|trans }}</button>
 				</div>
 			</div>
 		</form>
