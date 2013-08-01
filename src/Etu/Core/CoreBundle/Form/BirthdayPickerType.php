@@ -12,7 +12,7 @@ class BirthdayPickerType extends AbstractType
 		$resolver->setDefaults(array(
 			'widget' => 'single_text',
 			'format' => 'dd/MM/yyyy',
-			'attr' => array('class' => 'date-picker')
+			'attr' => array('class' => 'birthday-picker')
 		));
 	}
 
