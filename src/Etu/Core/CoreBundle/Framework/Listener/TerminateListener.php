@@ -31,6 +31,18 @@ class TerminateListener
 			return;
 		}
 
+		if ($event->getResponse()->headers->get('Content-Type') == 'application/json') {
+			return;
+		}
+
+		if ($event->getResponse()->headers->get('Content-Type') == 'application/js') {
+			return;
+		}
+
+		if ($event->getResponse()->headers->get('Content-Type') == 'application/xml') {
+			return;
+		}
+
 		$this->session->set('etu.last_url', $event->getRequest()->getRequestUri());
 	}
 }
