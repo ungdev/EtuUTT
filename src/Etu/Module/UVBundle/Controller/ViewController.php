@@ -176,9 +176,9 @@ class ViewController extends Controller
 			->setSemester(User::currentSemester());
 
 		$form = $this->createFormBuilder($review)
-			->add('type', 'choice', array('choices' => Review::$types))
-			->add('semester', 'choice', array('choices' => Review::availableSemesters()))
-			->add('file')
+			->add('type', 'choice', array('choices' => Review::$types, 'required' => true))
+			->add('semester', 'choice', array('choices' => Review::availableSemesters(), 'required' => true))
+			->add('file', null, array('required' => true))
 			->getForm();
 
 		if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
