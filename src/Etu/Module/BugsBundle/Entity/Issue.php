@@ -19,12 +19,12 @@ class Issue
 	/**
 	 * Issues criticalities
 	 */
-	const CRITICALITY_TYPO = 'typo';
-	const CRITICALITY_VISUAL = 'visual';
-	const CRITICALITY_MINOR = 'minor';
-	const CRITICALITY_MAJOR = 'major';
-	const CRITICALITY_CRITICAL = 'critical';
-	const CRITICALITY_SECURITY = 'security';
+	const CRITICALITY_TYPO = 10;
+	const CRITICALITY_VISUAL = 20;
+	const CRITICALITY_MINOR = 30;
+	const CRITICALITY_MAJOR = 40;
+	const CRITICALITY_CRITICAL = 50;
+	const CRITICALITY_SECURITY = 60;
 
 	/**
 	 * @var integer

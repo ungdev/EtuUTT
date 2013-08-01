@@ -45,7 +45,8 @@
 						{{ ('bugs.criticality.'~bug.criticality)|trans }}
 					</span>
 					<span class="pull-right bug-date">
-						{{ time_diff(bug.createdAt)|ucfirst }}
+						{{ time_diff(bug.createdAt)|ucfirst }},
+						{{ 'bugs.bugs.closed.by'|trans }} {{ bug.user.fullName }}
 					</span>
 				</h5>
 

@@ -41,15 +41,15 @@
 				<h5 class="bug-title">
 					{{ bug.title }}
 
-					{% if bug.criticality == 'security' %}
+					{% if bug.criticality == 60 %}
 						<span class="label label-important pull-right hidden-phone">
 							{{ ('bugs.criticality.'~bug.criticality)|trans }}
 						</span>
-					{% elseif bug.criticality == 'critical' or bug.criticality == 'major' %}
+					{% elseif bug.criticality == 50 or bug.criticality == 40 %}
 						<span class="label label-warning pull-right hidden-phone">
 							{{ ('bugs.criticality.'~bug.criticality)|trans }}
 						</span>
-					{% elseif bug.criticality == 'minor' %}
+					{% elseif bug.criticality == 30 %}
 						<span class="label label-info pull-right hidden-phone">
 							{{ ('bugs.criticality.'~bug.criticality)|trans }}
 						</span>
@@ -65,7 +65,8 @@
 						{% endif %}
 					</span>
 					<span class="pull-right bug-date">
-						{{ time_diff(bug.createdAt)|ucfirst }}
+						{{ time_diff(bug.createdAt)|ucfirst }},
+						{{ 'bugs.bugs.index.by'|trans }} {{ bug.user.fullName }}
 					</span>
 				</h5>
 

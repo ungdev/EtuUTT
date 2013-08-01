@@ -5,12 +5,12 @@ bugs:
             bugs: Signaler un bug
 
     criticality:
-        critical: Problème critique
-        security: Problème de sécurité
-        major: Problème majeur
-        minor: Problème mineur
-        visual: Problème visuel
-        typo: Coquille
+        10: Coquille
+        20: Problème visuel
+        30: Problème mineur
+        40: Problème majeur
+        50: Problème critique
+        60: Problème de sécurité
 
     bugs:
         state:
@@ -20,6 +20,7 @@ bugs:
             title: Bugs résolus
             no_bug: Aucun bug résolu pour le moment
             count: %count% bug résolu|%count% bugs résolus
+            by: par
         create:
             title: Signaler un bug
             confirm: Votre problème a été signalé. Merci de votre participation !
@@ -40,6 +41,7 @@ bugs:
             assigned_to: Assigné à %name%
             no_bug: Aucun bug ouvert pour le moment
             count: %count% bug ouvert|%count% bugs ouverts
+            by: par
         view:
             title: Détails d'un bug
             assigned_to: assigné à %name%
