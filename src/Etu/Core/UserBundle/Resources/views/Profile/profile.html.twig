@@ -260,18 +260,20 @@
 
 		<div class="block">
 			<div class="block-title">{{ 'user.profile.profile.badges'|trans }}</div>
-
-			<ul class="badges-list">
-			{% for badge in app.user.badges %}
-				<li>
-					<img src="{{ asset('img/badges/'~badge.picture~'.png') }}" class="tip"
-						 title="<strong style='font-size: 13px;'>{{ badge.name }}</strong>
-							 <br />{{ badge.description }}" />
-				</li>
+			{% if app.user.badges %}
+				<ul class="badges-list">
+					{% for badge in app.user.badges %}
+						<li>
+							<img src="{{ asset('img/badges/'~badge.picture~'.png') }}" class="tip"
+								 title="<strong style='font-size: 13px;'>{{ badge.name }}</strong><br />{{ badge.description }}" />
+						</li>
+					{% endfor %}
+				</ul>
 			{% else %}
-				<li>{{ 'user.profile.profile.no_badge'|trans }}</li>
-			{% endfor %}
-			</ul>
+				<p>
+					{{ 'user.profile.profileEdit.no_badge'|trans }}
+				</p>
+			{% endif %}
 
 			<div class="clear"></div>
 		</div>

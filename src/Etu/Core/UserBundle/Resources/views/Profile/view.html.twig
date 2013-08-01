@@ -322,17 +322,20 @@
 
 			<hr />
 
+			{% if user.badges %}
 			<ul class="badges-list">
 				{% for badge in user.badges %}
 					<li>
 						<img src="{{ asset('img/badges/'~badge.picture~'.png') }}" class="tip"
-							 title="<strong style='font-size: 13px;'>{{ badge.name }}</strong>
-							 <br />{{ badge.description }}" />
+							 title="<strong style='font-size: 13px;'>{{ badge.name }}</strong><br />{{ badge.description }}" />
 					</li>
-				{% else %}
-					<li>{{ 'user.profile.profile.no_badge'|trans }}</li>
 				{% endfor %}
 			</ul>
+			{% else %}
+			<p>
+				{{ 'user.profile.profile.no_badge'|trans({'%firstName%': user.firstName}) }}
+			</p>
+			{% endif %}
 		</div>
 	</div>
 {% endblock %}

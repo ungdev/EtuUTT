@@ -261,7 +261,7 @@ user:
             jadis: Jadis
             passions: Passions
             badges: Badges
-            no_badge: Aucun badge pour le moment. Participez pour en gagner !
+            no_badge: %firstName% n'a aucun badge pour le moment
         profileAvatar:
             title: Ma photo
             file: Image
@@ -295,6 +295,7 @@ user:
             birthdayOnlyAge:
                 label: Afficher mon âge
                 desc: Afficher seulement l'âge sur le profil (si la date de naissance est privée)
+            no_badge: Aucun badge pour le moment. Participez pour en gagner !
         trombiEdit:
             title: Mon trombinoscope
             confirm: Vous avez bien modifié votre fiche trombi
