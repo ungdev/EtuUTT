@@ -30,9 +30,15 @@
 				<p>
 					{{ 'user.memberships.index.desc_2'|trans }}
 				</p>
+				{% if memberships|count > 0 %}
 				<p>
 					{{ 'user.memberships.index.desc_3'|trans }}
 				</p>
+				{% else %}
+				<p>
+					{{ 'user.memberships.index.desc_no_orga'|trans }}
+				</p>
+				{% endif %}
 			</div>
 		</div>
 	</div>

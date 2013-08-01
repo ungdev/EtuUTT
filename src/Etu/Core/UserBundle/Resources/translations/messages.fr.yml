@@ -136,8 +136,12 @@ user:
                 selon vos droits. Vous pourrez par exemple envoyer un daymail au nom de l'association,
                 modifier sa description ou encore envoyer des notifications à ses abonnés.
             desc_3: |
-                Afin d'effectuer ces opérations, choisissez tout d'abord l'association que vous voulez administrer
+                Afin d'effectuer ces opérations, choisissez tout d'abord l'association que vous voulez
+                administrer
                 sur la gauche.
+            desc_no_orga: |
+                Vous ne faites parti d'aucune association, vous n'avez donc pas la possibilité
+                d'effectuer de telles actions.
         orga:
             position: Au sein de %orga%, vous êtes
             since: Vous faites parti de cette association depuis le %date%.
