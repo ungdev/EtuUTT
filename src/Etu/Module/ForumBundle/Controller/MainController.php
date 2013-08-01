@@ -73,13 +73,17 @@ class MainController extends Controller
 			->getQuery()
 			->getResult();
 
+		$depth = count($parents)+1;
+
 		$subCategories = $em->createQueryBuilder()
 			->select('c')
 			->from('EtuModuleForumBundle:Category', 'c')
 			->where('c.left > :left')
 			->andWhere('c.right < :right')
+			->andWhere('c.depth = :depth')
 			->setParameter('left', $category->getLeft())
 			->setParameter('right', $category->getRight())
+			->setParameter('depth', $depth)
 			->orderBy('c.left')
 			->getQuery()
 			->getResult();
