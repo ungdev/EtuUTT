@@ -93,7 +93,7 @@ class PermissionsChecker
 	 */
 	public function canPost(Category $category)
 	{
-		if($category->getDepth() == 0) {
+		if($category->getDepth() == 0 || $this->user instanceof Organization) {
 			return false;
 		}
 
@@ -111,21 +111,19 @@ class PermissionsChecker
 			}
 			if($permissions->getPost()) return true;
 
-			if (!$this->user instanceof Organization) {
-				foreach($category->getPermissions() as $value) {
-					if($value->getType() == 2) {
-						foreach($this->memberships as $membership) {
-							if($value->getOrganization() == $membership->getOrganization()) {
-								$permissions = $value;
-								if($permissions->getPost()) return true;
-							}
-						}
-					}
-					if($value->getType() == 3) {
-						if($value->getUser() == $this->user) {
+			foreach($category->getPermissions() as $value) {
+				if($value->getType() == 2) {
+					foreach($this->memberships as $membership) {
+						if($value->getOrganization() == $membership->getOrganization()) {
 							$permissions = $value;
 							if($permissions->getPost()) return true;
 						}
+					}
+				}
+				if($value->getType() == 3) {
+					if($value->getUser() == $this->user) {
+						$permissions = $value;
+						if($permissions->getPost()) return true;
 					}
 				}
 			}
@@ -139,6 +137,9 @@ class PermissionsChecker
 	 */
 	public function canAnswer(Category $category)
 	{
+		if($this->user instanceof Organization) {
+			return false;
+		}
 
 		if ($this->user->getIsAdmin()) {
 			return true;
@@ -154,21 +155,19 @@ class PermissionsChecker
 			}
 			if($permissions->getAnswer()) return true;
 
-			if (!$this->user instanceof Organization) {
-				foreach($category->getPermissions() as $value) {
-					if($value->getType() == 2) {
-						foreach($this->memberships as $membership) {
-							if($value->getOrganization() == $membership->getOrganization()) {
-								$permissions = $value;
-								if($permissions->getAnswer()) return true;
-							}
-						}
-					}
-					if($value->getType() == 3) {
-						if($value->getUser() == $this->user) {
+			foreach($category->getPermissions() as $value) {
+				if($value->getType() == 2) {
+					foreach($this->memberships as $membership) {
+						if($value->getOrganization() == $membership->getOrganization()) {
 							$permissions = $value;
 							if($permissions->getAnswer()) return true;
 						}
+					}
+				}
+				if($value->getType() == 3) {
+					if($value->getUser() == $this->user) {
+						$permissions = $value;
+						if($permissions->getAnswer()) return true;
 					}
 				}
 			}
@@ -181,6 +180,9 @@ class PermissionsChecker
 	 */
 	public function canEdit(Category $category)
 	{
+		if($this->user instanceof Organization) {
+			return false;
+		}
 
 		if ($this->user->getIsAdmin()) {
 			return true;
@@ -196,21 +198,19 @@ class PermissionsChecker
 			}
 			if($permissions->getEdit()) return true;
 
-			if (!$this->user instanceof Organization) {
-				foreach($category->getPermissions() as $value) {
-					if($value->getType() == 2) {
-						foreach($this->memberships as $membership) {
-							if($value->getOrganization() == $membership->getOrganization()) {
-								$permissions = $value;
-								if($permissions->getEdit()) return true;
-							}
-						}
-					}
-					if($value->getType() == 3) {
-						if($value->getUser() == $this->user) {
+			foreach($category->getPermissions() as $value) {
+				if($value->getType() == 2) {
+					foreach($this->memberships as $membership) {
+						if($value->getOrganization() == $membership->getOrganization()) {
 							$permissions = $value;
 							if($permissions->getEdit()) return true;
 						}
+					}
+				}
+				if($value->getType() == 3) {
+					if($value->getUser() == $this->user) {
+						$permissions = $value;
+						if($permissions->getEdit()) return true;
 					}
 				}
 			}
@@ -223,6 +223,9 @@ class PermissionsChecker
 	 */
 	public function canSticky(Category $category)
 	{
+		if($this->user instanceof Organization) {
+			return false;
+		}
 
 		if ($this->user->getIsAdmin()) {
 			return true;
@@ -238,21 +241,19 @@ class PermissionsChecker
 			}
 			if($permissions->getSticky()) return true;
 
-			if (!$this->user instanceof Organization) {
-				foreach($category->getPermissions() as $value) {
-					if($value->getType() == 2) {
-						foreach($this->memberships as $membership) {
-							if($value->getOrganization() == $membership->getOrganization()) {
-								$permissions = $value;
-								if($permissions->getSticky()) return true;
-							}
-						}
-					}
-					if($value->getType() == 3) {
-						if($value->getUser() == $this->user) {
+			foreach($category->getPermissions() as $value) {
+				if($value->getType() == 2) {
+					foreach($this->memberships as $membership) {
+						if($value->getOrganization() == $membership->getOrganization()) {
 							$permissions = $value;
 							if($permissions->getSticky()) return true;
 						}
+					}
+				}
+				if($value->getType() == 3) {
+					if($value->getUser() == $this->user) {
+						$permissions = $value;
+						if($permissions->getSticky()) return true;
 					}
 				}
 			}
@@ -265,6 +266,9 @@ class PermissionsChecker
 	 */
 	public function canLock(Category $category)
 	{
+		if($this->user instanceof Organization) {
+			return false;
+		}
 
 		if ($this->user->getIsAdmin()) {
 			return true;
@@ -280,21 +284,19 @@ class PermissionsChecker
 			}
 			if($permissions->getLock()) return true;
 
-			if (!$this->user instanceof Organization) {
-				foreach($category->getPermissions() as $value) {
-					if($value->getType() == 2) {
-						foreach($this->memberships as $membership) {
-							if($value->getOrganization() == $membership->getOrganization()) {
-								$permissions = $value;
-								if($permissions->getLock()) return true;
-							}
-						}
-					}
-					if($value->getType() == 3) {
-						if($value->getUser() == $this->user) {
+			foreach($category->getPermissions() as $value) {
+				if($value->getType() == 2) {
+					foreach($this->memberships as $membership) {
+						if($value->getOrganization() == $membership->getOrganization()) {
 							$permissions = $value;
 							if($permissions->getLock()) return true;
 						}
+					}
+				}
+				if($value->getType() == 3) {
+					if($value->getUser() == $this->user) {
+						$permissions = $value;
+						if($permissions->getLock()) return true;
 					}
 				}
 			}
@@ -307,6 +309,9 @@ class PermissionsChecker
 	 */
 	public function canMove(Category $category)
 	{
+		if($this->user instanceof Organization) {
+			return false;
+		}
 
 		if ($this->user->getIsAdmin()) {
 			return true;
@@ -322,21 +327,19 @@ class PermissionsChecker
 			}
 			if($permissions->getMove()) return true;
 
-			if (!$this->user instanceof Organization) {
-				foreach($category->getPermissions() as $value) {
-					if($value->getType() == 2) {
-						foreach($this->memberships as $membership) {
-							if($value->getOrganization() == $membership->getOrganization()) {
-								$permissions = $value;
-								if($permissions->getMove()) return true;
-							}
-						}
-					}
-					if($value->getType() == 3) {
-						if($value->getUser() == $this->user) {
+			foreach($category->getPermissions() as $value) {
+				if($value->getType() == 2) {
+					foreach($this->memberships as $membership) {
+						if($value->getOrganization() == $membership->getOrganization()) {
 							$permissions = $value;
 							if($permissions->getMove()) return true;
 						}
+					}
+				}
+				if($value->getType() == 3) {
+					if($value->getUser() == $this->user) {
+						$permissions = $value;
+						if($permissions->getMove()) return true;
 					}
 				}
 			}
@@ -349,6 +352,9 @@ class PermissionsChecker
 	 */
 	public function canDelete(Category $category)
 	{
+		if($this->user instanceof Organization) {
+			return false;
+		}
 
 		if ($this->user->getIsAdmin()) {
 			return true;
@@ -364,21 +370,19 @@ class PermissionsChecker
 			}
 			if($permissions->getDelete()) return true;
 
-			if (!$this->user instanceof Organization) {
-				foreach($category->getPermissions() as $value) {
-					if($value->getType() == 2) {
-						foreach($this->memberships as $membership) {
-							if($value->getOrganization() == $membership->getOrganization()) {
-								$permissions = $value;
-								if($permissions->getDelete()) return true;
-							}
-						}
-					}
-					if($value->getType() == 3) {
-						if($value->getUser() == $this->user) {
+			foreach($category->getPermissions() as $value) {
+				if($value->getType() == 2) {
+					foreach($this->memberships as $membership) {
+						if($value->getOrganization() == $membership->getOrganization()) {
 							$permissions = $value;
 							if($permissions->getDelete()) return true;
 						}
+					}
+				}
+				if($value->getType() == 3) {
+					if($value->getUser() == $this->user) {
+						$permissions = $value;
+						if($permissions->getDelete()) return true;
 					}
 				}
 			}
