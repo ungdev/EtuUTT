@@ -2471,6 +2471,26 @@ class User implements UserInterface, \Serializable
 			}
 		}
 
-		return $badges;
+		/*
+		 * Create a usable list
+		 */
+		$list = array();
+
+		foreach (BadgesManager::findBadgesList() as $serie => $badges) {
+			foreach ($badges as $level => $badge) {
+				$list[$serie][$level] = array(
+					'owned' => false,
+					'badge' => $badge,
+				);
+			}
+		}
+
+		/** @var $userBadge UserBadge */
+		foreach ($this->badges->toArray() as $userBadge) {
+			$badge = $userBadge->getBadge();
+			$list[$badge->getSerie()][$badge->getLevel()]['owned'] = true;
+		}
+
+		return $list;
 	}
 }

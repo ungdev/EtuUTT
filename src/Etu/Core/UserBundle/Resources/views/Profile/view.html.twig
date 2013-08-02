@@ -323,18 +323,22 @@
 			<hr />
 
 			{% if user.badges|count > 0 %}
-			<ul class="badges-list">
-				{% for badge in user.badgesList %}
-					<li>
-						<img src="{{ asset('img/badges/'~badge.picture~'.png') }}" class="tip"
-							 title="<strong style='font-size: 13px;'>{{ badge.name }}</strong><br />{{ badge.description }}" />
-					</li>
+				{% for serie in user.badgesList %}
+					<ul class="badges-list">
+						{% for userBadge in serie %}
+							<li>
+								<img src="{{ asset('img/badges/'~userBadge.badge.picture~'.png') }}" class="tip"
+									 {% if not userBadge.owned %}style="opacity:0.5;"{% endif %}
+									 title="<strong style='font-size: 13px;'>{{ userBadge.badge.name }}</strong><br />{{ userBadge.badge.description }}" />
+							</li>
+						{% endfor %}
+					</ul>
+					<div class="clear"></div>
 				{% endfor %}
-			</ul>
 			{% else %}
-			<p>
-				{{ 'user.profile.profile.no_badge'|trans({'%firstName%': user.firstName}) }}
-			</p>
+				<p>
+					{{ 'user.profile.profile.no_badge'|trans({'%firstName%': user.firstName}) }}
+				</p>
 			{% endif %}
 		</div>
 	</div>

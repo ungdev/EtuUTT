@@ -58,6 +58,25 @@ class BadgesManager
 	}
 
 	/**
+	 * @return Badge[][]
+	 * @throws \InvalidArgumentException
+	 */
+	public static function findBadgesList()
+	{
+		if (! self::$initialized) {
+			self::initialize();
+		}
+
+		$list = array();
+
+		foreach (self::$badges as $badge) {
+			$list[$badge->getSerie()][$badge->getLevel()] = $badge;
+		}
+
+		return $list;
+	}
+
+	/**
 	 * @param $serie
 	 * @param $level
 	 * @return Badge

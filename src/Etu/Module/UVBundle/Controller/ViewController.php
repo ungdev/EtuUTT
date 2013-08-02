@@ -211,6 +211,8 @@ class ViewController extends Controller
 				->getQuery()
 				->getSingleScalarResult();
 
+			$user = $this->getUser();
+
 			if ($count >= 1) {
 				BadgesManager::userAddBadge($user, 'uvs_reviews', 1);
 			} else {
@@ -236,7 +238,7 @@ class ViewController extends Controller
 			}
 
 			BadgesManager::userPersistBadges($user);
-			$em->persist($this->getUser());
+			$em->persist($user);
 			$em->flush();
 
 			$this->get('session')->getFlashBag()->set('message', array(
