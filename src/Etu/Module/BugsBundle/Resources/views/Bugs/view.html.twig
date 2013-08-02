@@ -144,6 +144,8 @@
 				<div class="etu-comment-body">
 					{{ bug.body|bbcode_filter('default_filter') }}
 
+					<br /><br />
+
 					{% if bug.user.id == app.user.id or app.user.isAdmin %}
 						<p class="pull-right">
 							<a href="{{ path('bugs_edit', {'slug': bug.title|slugify, 'id': bug.id}) }}"
@@ -202,7 +204,9 @@
 							</small>
 						</div>
 						<div class="etu-comment-body">
-							{{ comment.body|raw }}
+							{{ comment.body|bbcode_filter('default_filter') }}
+
+							<br /><br />
 
 							{% if comment.user.id == app.user.id or app.user.isAdmin %}
 								<p class="pull-right">
