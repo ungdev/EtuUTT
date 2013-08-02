@@ -142,7 +142,7 @@
 					</small>
 				</div>
 				<div class="etu-comment-body">
-					{{ bug.body|raw }}
+					{{ bug.body|bbcode_filter('default_filter') }}
 
 					{% if bug.user.id == app.user.id or app.user.isAdmin %}
 						<p class="pull-right">

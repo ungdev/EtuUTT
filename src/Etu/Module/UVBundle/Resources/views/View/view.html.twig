@@ -183,7 +183,7 @@
 					{{ comment.createdAt|date('d/m/Y H:i') }}
 				</div>
 				<div class="uv-view-comment-content">
-					{{ comment.body|raw }}
+					{{ comment.body|bbcode_filter('default_filter') }}
 				</div>
 			</div>
 		{% else %}

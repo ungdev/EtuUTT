@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "fdc2a56c0cedf91289932080afd2e322",
+    "hash": "d547519e75c2a30cffddf75ad2f13581",
     "packages": [
         {
             "name": "avalanche123/imagine-bundle",
@@ -506,12 +506,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineFixturesBundle.git",
-                "reference": "512fc0fa1d0ce7bdcc6a0a91812eb531f20e0828"
+                "reference": "8070624b47f7f171db4c9e4134436db7de51244c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineFixturesBundle/zipball/512fc0fa1d0ce7bdcc6a0a91812eb531f20e0828",
-                "reference": "512fc0fa1d0ce7bdcc6a0a91812eb531f20e0828",
+                "url": "https://api.github.com/repos/doctrine/DoctrineFixturesBundle/zipball/8070624b47f7f171db4c9e4134436db7de51244c",
+                "reference": "8070624b47f7f171db4c9e4134436db7de51244c",
                 "shasum": ""
             },
             "require": {
@@ -555,7 +555,7 @@
                 "Fixture",
                 "persistence"
             ],
-            "time": "2013-06-21 10:31:45"
+            "time": "2013-07-18 09:26:47"
         },
         {
             "name": "doctrine/inflector",
@@ -895,19 +895,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "cb9c23b63a578f20d677292168ed739f3c2d4699"
+                "reference": "7548356058efd68c1b4d9dd29636c784727b0519"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/cb9c23b63a578f20d677292168ed739f3c2d4699",
-                "reference": "cb9c23b63a578f20d677292168ed739f3c2d4699",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/7548356058efd68c1b4d9dd29636c784727b0519",
+                "reference": "7548356058efd68c1b4d9dd29636c784727b0519",
                 "shasum": ""
             },
             "require": {
                 "doctrine/inflector": "1.0.*",
                 "friendsofsymfony/rest": ">=0.7.0,<0.9.0-dev",
                 "php": ">=5.3.2",
-                "symfony/framework-bundle": "~2.1"
+                "symfony/framework-bundle": "~2.1",
+                "willdurand/negotiation": "1.0.*"
             },
             "conflict": {
                 "jms/serializer": "<0.12",
@@ -960,7 +961,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2013-07-10 13:41:35"
+            "time": "2013-07-29 19:32:37"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -1135,6 +1136,68 @@
             "time": "2013-07-05 20:17:54"
         },
         {
+            "name": "helios-ag/fm-bbcode-bundle",
+            "version": "6.2",
+            "target-dir": "FM/BbcodeBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/helios-ag/FMBbCodeBundle.git",
+                "reference": "6.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/helios-ag/FMBbCodeBundle/zipball/6.2",
+                "reference": "6.2",
+                "shasum": ""
+            },
+            "require": {
+                "mjohnson/decoda": "6.*",
+                "php": ">=5.3.2",
+                "sensio/distribution-bundle": "~2.1",
+                "symfony/assetic-bundle": "~2.0",
+                "symfony/config": "~2.0",
+                "symfony/console": "~2.0",
+                "symfony/dependency-injection": "~2.0",
+                "symfony/framework-bundle": "~2.1",
+                "symfony/http-foundation": "~2.1",
+                "symfony/http-kernel": "~2.0",
+                "symfony/process": "~2.0",
+                "symfony/templating": "~2.0",
+                "symfony/twig-bundle": "~2.0",
+                "symfony/yaml": "~2.0"
+            },
+            "require-dev": {
+                "symfony/symfony": "~2.1"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "6.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "FM\\BbcodeBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Albert Ganiev",
+                    "email": "helios.ag@gmail.com"
+                }
+            ],
+            "description": "Symfony FMBbCodeBundle",
+            "homepage": "https://github.com/helios-ag/FMBbCodeBundle",
+            "keywords": [
+                "bbcode"
+            ],
+            "time": "2013-07-28 04:43:04"
+        },
+        {
             "name": "imagine/imagine",
             "version": "v0.3.0",
             "source": {
@@ -1280,158 +1343,6 @@
                 "sql"
             ],
             "time": "2013-04-26 18:42:52"
-        },
-        {
-            "name": "jms/aop-bundle",
-            "version": "1.0.0",
-            "target-dir": "JMS/AopBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/schmittjoh/JMSAopBundle",
-                "reference": "1.0.0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/schmittjoh/JMSAopBundle/zipball/1.0.0",
-                "reference": "1.0.0",
-                "shasum": ""
-            },
-            "require": {
-                "jms/cg": "1.0.0",
-                "symfony/framework-bundle": "2.*"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-0": {
-                    "JMS\\AopBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache"
-            ],
-            "authors": [
-                {
-                    "name": "Johannes M. Schmitt",
-                    "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
-                    "role": "Developer of wrapped JMSSerializerBundle"
-                }
-            ],
-            "description": "Adds AOP capabilities to Symfony2",
-            "keywords": [
-                "annotations",
-                "aop"
-            ],
-            "time": "2012-01-02 12:50:26"
-        },
-        {
-            "name": "jms/cg",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "git://github.com/schmittjoh/cg-library.git",
-                "reference": "1.0.0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/schmittjoh/cg-library/zipball/1.0.0",
-                "reference": "1.0.0",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "CG\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache"
-            ],
-            "authors": [
-                {
-                    "name": "Johannes M. Schmitt",
-                    "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
-                    "role": "Developer of wrapped JMSSerializerBundle"
-                }
-            ],
-            "description": "Toolset for generating PHP code",
-            "keywords": [
-                "code generation"
-            ],
-            "time": "2012-01-02 12:40:52"
-        },
-        {
-            "name": "jms/di-extra-bundle",
-            "version": "1.4.0",
-            "target-dir": "JMS/DiExtraBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/schmittjoh/JMSDiExtraBundle.git",
-                "reference": "1.4.0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSDiExtraBundle/zipball/1.4.0",
-                "reference": "1.4.0",
-                "shasum": ""
-            },
-            "require": {
-                "jms/aop-bundle": ">=1.0.0,<1.2-dev",
-                "jms/metadata": "1.*",
-                "symfony/finder": ">=2.1,<3.0",
-                "symfony/framework-bundle": ">=2.1,<3.0",
-                "symfony/process": ">=2.1,<3.0"
-            },
-            "require-dev": {
-                "doctrine/doctrine-bundle": "*",
-                "doctrine/orm": "*",
-                "jms/security-extra-bundle": "1.*",
-                "phpcollection/phpcollection": ">=0.1,<0.3-dev",
-                "sensio/framework-extra-bundle": "*",
-                "symfony/browser-kit": "*",
-                "symfony/class-loader": "*",
-                "symfony/form": "*",
-                "symfony/security-bundle": "*",
-                "symfony/twig-bundle": "*",
-                "symfony/validator": "*",
-                "symfony/yaml": "*"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "JMS\\DiExtraBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache"
-            ],
-            "authors": [
-                {
-                    "name": "Johannes M. Schmitt",
-                    "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
-                    "role": "Developer of wrapped JMSSerializerBundle"
-                }
-            ],
-            "description": "Allows to configure dependency injection using annotations",
-            "homepage": "http://jmsyst.com/bundles/JMSDiExtraBundle",
-            "keywords": [
-                "annotations",
-                "dependency injection"
-            ],
-            "time": "2013-06-08 13:13:40"
         },
         {
             "name": "jms/metadata",
@@ -1594,16 +1505,15 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/JMSSerializerBundle.git",
-                "reference": "66d2fe197bacb82f7b476099144f03596719b24d"
+                "reference": "c7f57e622ec4ad531f59ac79b2536b0cb5681559"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/66d2fe197bacb82f7b476099144f03596719b24d",
-                "reference": "66d2fe197bacb82f7b476099144f03596719b24d",
+                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/c7f57e622ec4ad531f59ac79b2536b0cb5681559",
+                "reference": "c7f57e622ec4ad531f59ac79b2536b0cb5681559",
                 "shasum": ""
             },
             "require": {
-                "jms/di-extra-bundle": "~1.3",
                 "jms/serializer": "~0.11",
                 "php": ">=5.3.2",
                 "symfony/framework-bundle": "~2.1"
@@ -1620,6 +1530,9 @@
                 "symfony/twig-bundle": "*",
                 "symfony/validator": "*",
                 "symfony/yaml": "*"
+            },
+            "suggest": {
+                "jms/di-extra-bundle": "Required to get lazy loading (de)serialization visitors, ~1.3"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -1653,7 +1566,7 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2013-06-10 06:27:25"
+            "time": "2013-07-29 12:32:39"
         },
         {
             "name": "knplabs/knp-components",
@@ -1723,12 +1636,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpPaginatorBundle.git",
-                "reference": "e798c5689ff63edfb22df2b65d5094485c0e6bd2"
+                "reference": "2.3.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpPaginatorBundle/zipball/e798c5689ff63edfb22df2b65d5094485c0e6bd2",
-                "reference": "e798c5689ff63edfb22df2b65d5094485c0e6bd2",
+                "url": "https://api.github.com/repos/KnpLabs/KnpPaginatorBundle/zipball/2.3.3",
+                "reference": "2.3.3",
                 "shasum": ""
             },
             "require": {
@@ -1773,7 +1686,7 @@
                 "pagination",
                 "paginator"
             ],
-            "time": "2013-04-23 07:46:41"
+            "time": "2013-07-30 20:36:09"
         },
         {
             "name": "knplabs/knp-time-bundle",
@@ -1836,21 +1749,21 @@
         },
         {
             "name": "kriswallsmith/assetic",
-            "version": "v1.1.1",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kriswallsmith/assetic.git",
-                "reference": "v1.1.1"
+                "reference": "v1.1.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/v1.1.1",
-                "reference": "v1.1.1",
+                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/v1.1.2",
+                "reference": "v1.1.2",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.1",
-                "symfony/process": ">=2.1,<3.0"
+                "symfony/process": "~2.1"
             },
             "require-dev": {
                 "cssmin/cssmin": "*",
@@ -1860,9 +1773,9 @@
                 "leafo/scssphp": "*",
                 "leafo/scssphp-compass": "*",
                 "mrclay/minify": "*",
-                "phpunit/phpunit": ">=3.7,<4.0",
+                "phpunit/phpunit": "~3.7",
                 "ptachoire/cssembed": "*",
-                "twig/twig": ">=1.6,<2.0"
+                "twig/twig": "~1.6"
             },
             "suggest": {
                 "leafo/lessphp": "Assetic provides the integration with the lessphp LESS compiler",
@@ -1903,30 +1816,76 @@
                 "compression",
                 "minification"
             ],
-            "time": "2013-06-01 22:13:43"
+            "time": "2013-07-19 00:03:27"
         },
         {
-            "name": "monolog/monolog",
-            "version": "1.5.0",
+            "name": "mjohnson/decoda",
+            "version": "6.2.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "1.5.0"
+                "url": "https://github.com/milesj/Decoda.git",
+                "reference": "6.2.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1.5.0",
-                "reference": "1.5.0",
+                "url": "https://api.github.com/repos/milesj/Decoda/zipball/6.2.0",
+                "reference": "6.2.0",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Decoda": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Miles Johnson",
+                    "homepage": "http://milesj.me"
+                }
+            ],
+            "description": "A lightweight lexical string parser for BBCode styled markup.",
+            "homepage": "http://milesj.me/code/php/decoda",
+            "keywords": [
+                "HOOK",
+                "bbcode",
+                "decoda",
+                "filter",
+                "markup",
+                "parser"
+            ],
+            "time": "2013-07-24 20:04:51"
+        },
+        {
+            "name": "monolog/monolog",
+            "version": "1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Seldaek/monolog.git",
+                "reference": "1.6.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1.6.0",
+                "reference": "1.6.0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0",
-                "psr/log": ">=1.0,<2.0"
+                "psr/log": "~1.0"
             },
             "require-dev": {
                 "doctrine/couchdb": "dev-master",
                 "mlehner/gelf-php": "1.0.*",
-                "raven/raven": "0.3.*"
+                "raven/raven": "0.5.*"
             },
             "suggest": {
                 "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
@@ -1938,7 +1897,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.4.x-dev"
+                    "dev-master": "1.6.x-dev"
                 }
             },
             "autoload": {
@@ -1965,7 +1924,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2013-04-23 10:09:48"
+            "time": "2013-07-28 22:38:30"
         },
         {
             "name": "phpcollection/phpcollection",
@@ -2736,12 +2695,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/tgalopin/AudienceBundle.git",
-                "reference": "e7b77b7c126728a5591f0663668cc4a9ee6a4488"
+                "reference": "d3155e62dda8eba7cb20b8bce8fa0f912c722102"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tgalopin/AudienceBundle/zipball/e7b77b7c126728a5591f0663668cc4a9ee6a4488",
-                "reference": "e7b77b7c126728a5591f0663668cc4a9ee6a4488",
+                "url": "https://api.github.com/repos/tgalopin/AudienceBundle/zipball/d3155e62dda8eba7cb20b8bce8fa0f912c722102",
+                "reference": "d3155e62dda8eba7cb20b8bce8fa0f912c722102",
                 "shasum": ""
             },
             "require": {
@@ -2771,7 +2730,7 @@
                 "stats",
                 "visitors"
             ],
-            "time": "2013-06-14 13:06:41"
+            "time": "2013-08-01 20:32:31"
         },
         {
             "name": "twig/extensions",
@@ -2868,6 +2827,56 @@
                 "templating"
             ],
             "time": "2012-11-11 17:17:59"
+        },
+        {
+            "name": "willdurand/negotiation",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/willdurand/Negotiation.git",
+                "reference": "1.0.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/willdurand/Negotiation/zipball/1.0.1",
+                "reference": "1.0.1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Negotiation": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "William Durand",
+                    "email": "william.durand1@gmail.com",
+                    "homepage": "http://www.willdurand.fr"
+                }
+            ],
+            "description": "Content Negotiation tools for PHP provided as a standalone library.",
+            "homepage": "http://williamdurand.fr/Negotiation/",
+            "keywords": [
+                "accept",
+                "content",
+                "format",
+                "header",
+                "negotiation"
+            ],
+            "time": "2013-08-01 14:42:09"
         },
         {
             "name": "yohang/calendr",

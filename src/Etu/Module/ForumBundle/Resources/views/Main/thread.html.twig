@@ -109,31 +109,27 @@
 							</a>
 						</small>
 						<small class="pull-right">
+							{% if forum_can_edit(app.user, category) %}
+								<a href="{{ path('forum_edit', {'messageId': message.id, 'threadId': thread.id, 'slug': thread.slug}) }}"
+								   class="btn btn-small">
+									<i class="icon-edit"></i>
+									{{ 'forum.main.thread.edit'|trans }}
+								</a>
+							{% endif %}
+
+							{% if forum_can_delete(app.user, category) %}
+								<a href="{{ path('forum_mod', {'messageId': message.id, 'threadId': thread.id, 'slug': thread.slug, 'action': 'remove'}) }}"
+								   class="btn btn-small" rel="{% if thread.createdAt == message.createdAt %}removeThreadWarning{% else %}removeMessage{% endif %}">
+									<i class="icon-remove"></i>
+									{{ 'forum.main.mod.remove'|trans }}
+								</a>
+							{% endif %}
+
 							{{ time_diff(message.createdAt)|ucfirst }}
 						</small>
 					</div>
 					<div class="etu-comment-body">
-						{{ message.content }}
-
-						{% if app.user and (message.author.id == app.user.id or app.user.isAdmin) %}
-							<p class="pull-right">
-								{% if forum_can_edit(app.user, category) %}
-									<a href="{{ path('forum_edit', {'messageId': message.id, 'threadId': thread.id, 'slug': thread.slug}) }}"
-									   class="btn btn-small">
-										<i class="icon-edit"></i>
-										{{ 'forum.main.thread.edit'|trans }}
-									</a>
-								{% endif %}
-
-								{% if forum_can_delete(app.user, category) %}
-									<a href="{{ path('forum_mod', {'messageId': message.id, 'threadId': thread.id, 'slug': thread.slug, 'action': 'remove'}) }}"
-									   class="btn btn-small" rel="{% if thread.createdAt == message.createdAt %}removeThreadWarning{% else %}removeMessage{% endif %}">
-										<i class="icon-remove"></i>
-										{{ 'forum.main.mod.remove'|trans }}
-									</a>
-								{% endif %}
-							</p>
-						{% endif %}
+						{{ message.content|bbcode_filter('default_filter') }}
 					</div>
 				</div>
 

@@ -42,19 +42,18 @@ class AppKernel extends EtuKernel
 	        // Add annotations for controllers (@Template, @Cache, ...) and some useful other features
 	        new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
-	        // JMS libraries
-	        new JMS\SerializerBundle\JMSSerializerBundle(), // Serializer for XML, JSON, YAML, ...
-
 	        // Knp libraries
 	        new Knp\Bundle\TimeBundle\KnpTimeBundle(), // Time library to display pretty dates
 	        new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(), // Useful paginator
 
 	        // FOS libraries
 	        new FOS\JsRoutingBundle\FOSJsRoutingBundle(), // Generate routes from Javascript
-	        new FOS\RestBundle\FOSRestBundle(), // JSON and XML REST API helper
 
 	        // CalendR
 	        new FrequenceWeb\Bundle\CalendRBundle\FrequenceWebCalendRBundle(), // Calendar and events library
+
+	        // BBCode
+	        new FM\BbcodeBundle\FMBbcodeBundle(),
 
 	        // Tga
 	        new Tga\AudienceBundle\TgaAudienceBundle(), // Track visitors caracteristics

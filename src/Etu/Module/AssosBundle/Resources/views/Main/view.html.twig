@@ -90,7 +90,7 @@
 				{% endif %}
 			</div>
 			<div class="span9">
-				{{ orga.description|raw }}
+				{{ orga.description|bbcode_filter('default_filter') }}
 			</div>
 		</div>
 	</div>

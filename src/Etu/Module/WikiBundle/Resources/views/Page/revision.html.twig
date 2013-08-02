@@ -114,7 +114,7 @@
 				<hr />
 
 				<h3>{{ page.title }}</h3>
-				{{ currentRevision.body|raw }}
+				{{ currentRevision.body|bbcode_filter('default_filter') }}
 
 				<hr />
 

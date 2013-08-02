@@ -52,7 +52,7 @@
 			</div>
 
 			<div class="span9">
-				{{ page.revision.body|raw }}
+				{{ page.revision.body|bbcode_filter('default_filter') }}
 			</div>
 		</div>
 	</div>
