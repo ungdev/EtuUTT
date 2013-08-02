@@ -11,9 +11,10 @@ use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Model\BadgesManager;
 use Etu\Core\UserBundle\Schedule\Helper\ScheduleBuilder;
 
+use Symfony\Component\Form\FormError;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\Form\FormError;
 
 class ProfileController extends Controller
 {
@@ -89,14 +90,13 @@ class ProfileController extends Controller
 		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 
-			if ($user->getProfileCompletion() == 100 && ! $user->hasBadge('profile_completed')) {
-				$user->addBadge(BadgesManager::findBySerie('profile_completed'));
+			if ($user->getProfileCompletion() == 100) {
+				BadgesManager::userAddBadge($user, 'profile_completed');
+			} else {
+				BadgesManager::userRemoveBadge($user, 'profile_completed');
 			}
 
-			if ($user->getProfileCompletion() != 100 && $user->hasBadge('profile_completed')) {
-				$user->removeBadge(BadgesManager::findBySerie('profile_completed'));
-			}
-
+			BadgesManager::userPersistBadges($user);
 			$em->persist($user);
 			$em->flush();
 
@@ -189,14 +189,13 @@ class ProfileController extends Controller
 		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 
-			if ($user->getTrombiCompletion() == 100 && ! $user->hasBadge('trombi_completed')) {
-				$user->addBadge(BadgesManager::findBySerie('trombi_completed'));
+			if ($user->getTrombiCompletion() == 100) {
+				BadgesManager::userAddBadge($user, 'trombi_completed');
+			} else {
+				BadgesManager::userRemoveBadge($user, 'trombi_completed');
 			}
 
-			if ($user->getTrombiCompletion() != 100 && $user->hasBadge('trombi_completed')) {
-				$user->removeBadge(BadgesManager::findBySerie('trombi_completed'));
-			}
-
+			BadgesManager::userPersistBadges($user);
 			$em->persist($user);
 			$em->flush();
 

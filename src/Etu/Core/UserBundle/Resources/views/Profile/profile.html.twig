@@ -262,7 +262,7 @@
 			<div class="block-title">{{ 'user.profile.profile.badges'|trans }}</div>
 			{% if app.user.badges %}
 				<ul class="badges-list">
-					{% for badge in app.user.badges %}
+					{% for badge in app.user.badgesList %}
 						<li>
 							<img src="{{ asset('img/badges/'~badge.picture~'.png') }}" class="tip"
 								 title="<strong style='font-size: 13px;'>{{ badge.name }}</strong><br />{{ badge.description }}" />

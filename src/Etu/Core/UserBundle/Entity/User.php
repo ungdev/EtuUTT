@@ -2377,52 +2377,44 @@ class User implements UserInterface, \Serializable
 		return $this->semestersHistory;
 	}
 
-	/**
-	 * @param Badge $badge
-	 * @return $this
-	 */
-	public function addBadge(Badge $badge)
+    /**
+     * Add badges
+     *
+     * @param \Etu\Core\UserBundle\Entity\UserBadge $badges
+     * @return User
+     */
+    public function addBadge(\Etu\Core\UserBundle\Entity\UserBadge $badges)
     {
-	    $userBadges = $this->badges->toArray();
-
-	    foreach ($userBadges as &$ub) {
-		    if ($ub->getBadge()->getSerie() == $badge->getSerie() && $ub->getBadge()->getLevel() == $badge->getLevel()) {
-				return $this;
-		    }
-	    }
-
-        $this->badges[$badge->getSerie().$badge->getLevel()] = new UserBadge($badge, $this);
+        $this->badges[] = $badges;
 
         return $this;
     }
 
-	/**
-	 * @param Badge $badge
-	 */
-	public function removeBadge(Badge $badge)
+    /**
+     * Remove badges
+     *
+     * @param \Etu\Core\UserBundle\Entity\UserBadge $badges
+     */
+    public function removeBadge(\Etu\Core\UserBundle\Entity\UserBadge $badges)
     {
-        $this->badges->remove($badge->getSerie().$badge->getLevel());
+        $this->badges->removeElement($badges);
     }
 
 	/**
-	 * Set badges
-	 *
-	 * @param array $badges
-	 * @return User
+	 * @return ArrayCollection|UserBadge[]
 	 */
-	public function setBadges($badges)
+	public function getBadges()
 	{
-		$this->badges = $badges;
-
-		return $this;
+		return $this->badges;
 	}
+
 
 	/**
 	 * Get badges (generate some of them on the fly)
 	 *
 	 * @return array
 	 */
-	public function getBadges()
+	public function getBadgesList()
 	{
 		$badges = $this->badges->toArray();
 
@@ -2431,78 +2423,56 @@ class User implements UserInterface, \Serializable
 		}
 
 		if (count($badges) > 3) {
-			$this->addBadge(BadgesManager::findBySerie('challenge', 1));
+			BadgesManager::userAddBadge($this, 'challenge', 1);
 		}
 		if (count($badges) > 7) {
-			$this->addBadge(BadgesManager::findBySerie('challenge', 2));
+			BadgesManager::userAddBadge($this, 'challenge', 2);
 		}
 		if (count($badges) > 13) {
-			$this->addBadge(BadgesManager::findBySerie('challenge', 3));
+			BadgesManager::userAddBadge($this, 'challenge', 3);
 		}
 		if (count($badges) > 20) {
-			$this->addBadge(BadgesManager::findBySerie('challenge', 4));
+			BadgesManager::userAddBadge($this, 'challenge', 4);
 		}
 		if (count($badges) > 32) {
-			$this->addBadge(BadgesManager::findBySerie('challenge', 5));
+			BadgesManager::userAddBadge($this, 'challenge', 5);
 		}
 
 		if ($this->getNiveau() == 'TC1' || $this->getNiveau() == 'TC01') {
-			$this->addBadge(BadgesManager::findBySerie('tc01'));
+			BadgesManager::userAddBadge($this, 'tc01');
 		}
 
 		if ($this->getNiveau() == 'TC6' || $this->getNiveau() == 'TC06') {
-			$this->addBadge(BadgesManager::findBySerie('tc06'));
+			BadgesManager::userAddBadge($this, 'tc06');
 		}
 
-		if ($this->hasBadge('subscriber') && $this->hasBadge('forum_message') && $this->hasBadge('profile_completed')) {
-			$this->addBadge(BadgesManager::findBySerie('starter'));
+		if (        BadgesManager::userHasBadge($this, 'subscriber')
+				&&  BadgesManager::userHasBadge($this, 'forum_message')
+				&&  BadgesManager::userHasBadge($this, 'profile_completed')) {
+			BadgesManager::userAddBadge($this, 'starter');
 		}
 
 		/** @var Member[] $memberships */
 		$memberships = $this->getMemberships()->toArray();
 
 		if (count($memberships) > 0) {
-			$this->addBadge(BadgesManager::findBySerie('orga_member', 1));
+			BadgesManager::userAddBadge($this, 'orga_member', 1);
 		}
 
 		foreach ($memberships as $member) {
 			if ($member->isFromBureau()) {
-				$this->addBadge(BadgesManager::findBySerie('orga_member', 2));
+				BadgesManager::userAddBadge($this, 'orga_member', 2);
 			}
 
 			if ($member->getRole() == Member::ROLE_PRESIDENT) {
-				$this->addBadge(BadgesManager::findBySerie('orga_member', 3));
+				BadgesManager::userAddBadge($this, 'orga_member', 3);
 
 				if ($member->getOrganization()->getLogin() == 'bde') {
-					$this->addBadge(BadgesManager::findBySerie('orga_bde_president', 1));
+					BadgesManager::userAddBadge($this, 'orga_bde_president');
 				}
 			}
 		}
 
 		return $badges;
-	}
-
-	/**
-	 * @param $serie
-	 * @param int $level
-	 * @return bool
-	 */
-	public function hasBadge($serie, $level = 1)
-	{
-		return array_key_exists($serie.$level, $this->badges->toArray());
-	}
-
-	/**
-	 * @param $serie
-	 * @param int $level
-	 * @return Badge
-	 */
-	public function getBadge($serie, $level = 1)
-	{
-		if (! $this->hasBadge($serie, $level)) {
-			return false;
-		}
-
-		return $this->badges[$serie.$level];
 	}
 }

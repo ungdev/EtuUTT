@@ -211,24 +211,31 @@ class ViewController extends Controller
 				->getQuery()
 				->getSingleScalarResult();
 
-			$this->getUser()->removeBadge(BadgesManager::findBySerie('uvs_reviews', 1));
-			$this->getUser()->removeBadge(BadgesManager::findBySerie('uvs_reviews', 2));
-			$this->getUser()->removeBadge(BadgesManager::findBySerie('uvs_reviews', 3));
-			$this->getUser()->removeBadge(BadgesManager::findBySerie('uvs_reviews', 4));
-
 			if ($count >= 1) {
-				$this->getUser()->addBadge(BadgesManager::findBySerie('uvs_reviews', 1));
-			}
-			if ($count >= 2) {
-				$this->getUser()->addBadge(BadgesManager::findBySerie('uvs_reviews', 2));
-			}
-			if ($count >= 4) {
-				$this->getUser()->addBadge(BadgesManager::findBySerie('uvs_reviews', 3));
-			}
-			if ($count >= 10) {
-				$this->getUser()->addBadge(BadgesManager::findBySerie('uvs_reviews', 4));
+				BadgesManager::userAddBadge($user, 'uvs_reviews', 1);
+			} else {
+				BadgesManager::userRemoveBadge($user, 'uvs_reviews', 1);
 			}
 
+			if ($count >= 2) {
+				BadgesManager::userAddBadge($user, 'uvs_reviews', 2);
+			} else {
+				BadgesManager::userRemoveBadge($user, 'uvs_reviews', 2);
+			}
+
+			if ($count >= 4) {
+				BadgesManager::userAddBadge($user, 'uvs_reviews', 3);
+			} else {
+				BadgesManager::userRemoveBadge($user, 'uvs_reviews', 3);
+			}
+
+			if ($count >= 10) {
+				BadgesManager::userAddBadge($user, 'uvs_reviews', 4);
+			} else {
+				BadgesManager::userRemoveBadge($user, 'uvs_reviews', 4);
+			}
+
+			BadgesManager::userPersistBadges($user);
 			$em->persist($this->getUser());
 			$em->flush();
 

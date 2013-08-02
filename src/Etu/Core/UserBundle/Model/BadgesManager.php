@@ -5,6 +5,8 @@ namespace Etu\Core\UserBundle\Model;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Etu\Core\UserBundle\Entity\Badge;
+use Etu\Core\UserBundle\Entity\User;
+use Etu\Core\UserBundle\Entity\UserBadge;
 
 class BadgesManager
 {
@@ -24,9 +26,19 @@ class BadgesManager
 	protected static $badges;
 
 	/**
-	 * @var Badge[]
+	 * @var UserBadge[]
+	 */
+	protected static $usersBadges;
+
+	/**
+	 * @var boolean
 	 */
 	protected static $initialized = false;
+
+	/**
+	 * @var boolean
+	 */
+	protected static $initializedUsers = false;
 
 
 	/**
@@ -65,6 +77,102 @@ class BadgesManager
 	}
 
 	/**
+	 * @param User $user
+	 * @param      $serie
+	 * @param      $level
+	 * @return bool|UserBadge
+	 */
+	public static function getUserBadge(User $user, $serie, $level)
+	{
+		if (! self::$initializedUsers) {
+			self::initializeUsersBadges();
+		}
+
+		if (! isset(self::$usersBadges[$user->getId().$serie.$level])) {
+			return false;
+		}
+
+		return self::$usersBadges[$user->getId().$serie.$level];
+	}
+
+	/**
+	 * @param User $user
+	 * @param      $serie
+	 * @param int  $level
+	 * @return bool
+	 */
+	public static function userHasBadge(User $user, $serie, $level = 1)
+	{
+		if (! self::$initializedUsers) {
+			self::initializeUsersBadges();
+		}
+
+		return isset(self::$usersBadges[$user->getId().$serie.$level]);
+	}
+
+	/**
+	 * @param User $user
+	 * @param string $badgeSerie
+	 * @param integer $badgeLevel
+	 * @return User
+	 */
+	public static function userAddBadge(User &$user, $badgeSerie, $badgeLevel = 1)
+	{
+		if (! self::$initialized) {
+			self::initialize();
+		}
+
+		if (! self::$initializedUsers) {
+			self::initializeUsersBadges();
+		}
+
+		$badge = self::findBySerie($badgeSerie, $badgeLevel);
+
+		if (! self::userHasBadge($user, $badgeSerie, $badgeLevel)) {
+			$user->addBadge(new UserBadge($badge, $user));
+		}
+
+		return $user;
+	}
+
+	/**
+	 * @param User $user
+	 * @param string $badgeSerie
+	 * @param integer $badgeLevel
+	 * @return User
+	 */
+	public static function userRemoveBadge(User &$user, $badgeSerie, $badgeLevel = 1)
+	{
+		if (! self::$initialized) {
+			self::initialize();
+		}
+
+		if (! self::$initializedUsers) {
+			self::initializeUsersBadges();
+		}
+
+		if (self::userHasBadge($user, $badgeSerie, $badgeLevel)) {
+			self::$doctrine->remove(self::getUserBadge($user, $badgeSerie, $badgeLevel));
+			self::$doctrine->flush();
+		}
+
+		return $user;
+	}
+
+	/**
+	 * @param User $user
+	 * @return User
+	 */
+	public static function userPersistBadges(User $user)
+	{
+		foreach ($user->getBadges() as $userBadge) {
+			self::$doctrine->persist($userBadge);
+		}
+
+		self::$doctrine->flush();
+	}
+
+	/**
 	 * Initialize the badges list
 	 */
 	protected static function initialize()
@@ -77,5 +185,29 @@ class BadgesManager
 		foreach ($badges as $badge) {
 			self::$badges[$badge->getSerie().$badge->getLevel()] = $badge;
 		}
+
+		self::$initialized = true;
+	}
+
+	/**
+	 * Initialize the badges list
+	 */
+	protected static function initializeUsersBadges()
+	{
+		/** @var UserBadge[] $usersBadges */
+		$usersBadges = self::$doctrine->getRepository('EtuUserBundle:UserBadge')
+			->createQueryBuilder('ub')
+			->select('ub, u, b')
+			->leftJoin('ub.user', 'u')
+			->leftJoin('ub.badge', 'b')
+			->getQuery()
+			->getResult();
+
+		foreach ($usersBadges as $userBadge) {
+			self::$usersBadges[$userBadge->getUser()->getId().
+				$userBadge->getBadge()->getSerie().$userBadge->getBadge()->getLevel()] = $userBadge;
+		}
+
+		self::$initializedUsers = true;
 	}
 }

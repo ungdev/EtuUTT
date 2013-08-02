@@ -187,14 +187,19 @@ class AdminController extends Controller
 		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 
-			if ($user->getProfileCompletion() == 100 && ! $user->hasBadge('profile_completed')) {
-				$user->addBadge(BadgesManager::findBySerie('profile_completed'));
+			if ($user->getProfileCompletion() == 100) {
+				BadgesManager::userAddBadge($user, 'profile_completed');
+			} else {
+				BadgesManager::userRemoveBadge($user, 'profile_completed');
 			}
 
-			if ($user->getProfileCompletion() != 100 && $user->hasBadge('profile_completed')) {
-				$user->removeBadge(BadgesManager::findBySerie('profile_completed'));
+			if ($user->getTrombiCompletion() == 100) {
+				BadgesManager::userAddBadge($user, 'trombi_completed');
+			} else {
+				BadgesManager::userRemoveBadge($user, 'trombi_completed');
 			}
 
+			BadgesManager::userPersistBadges($user);
 			$em->persist($user);
 			$em->flush();
 
@@ -506,14 +511,19 @@ class AdminController extends Controller
 		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 
-			if ($user->getProfileCompletion() == 100 && ! $user->hasBadge('profile_completed')) {
-				$user->addBadge(BadgesManager::findBySerie('profile_completed'));
+			if ($user->getProfileCompletion() == 100) {
+				BadgesManager::userAddBadge($user, 'profile_completed');
+			} else {
+				BadgesManager::userRemoveBadge($user, 'profile_completed');
 			}
 
-			if ($user->getProfileCompletion() != 100 && $user->hasBadge('profile_completed')) {
-				$user->removeBadge(BadgesManager::findBySerie('profile_completed'));
+			if ($user->getTrombiCompletion() == 100) {
+				BadgesManager::userAddBadge($user, 'trombi_completed');
+			} else {
+				BadgesManager::userRemoveBadge($user, 'trombi_completed');
 			}
 
+			BadgesManager::userPersistBadges($user);
 			$user->setPassword($this->get('etu.user.crypting')->encrypt($user->getPassword()));
 			$user->setKeepActive(true);
 

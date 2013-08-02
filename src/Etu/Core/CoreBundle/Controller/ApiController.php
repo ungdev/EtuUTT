@@ -57,20 +57,25 @@ class ApiController extends Controller
 
 		$count = (int) $count;
 
-		$user->removeBadge(BadgesManager::findBySerie('subscriber', 1));
-		$user->removeBadge(BadgesManager::findBySerie('subscriber', 2));
-		$user->removeBadge(BadgesManager::findBySerie('subscriber', 3));
-
 		if ($count >= 1) {
-			$user->addBadge(BadgesManager::findBySerie('subscriber', 1));
-		}
-		if ($count >= 10) {
-			$user->addBadge(BadgesManager::findBySerie('subscriber', 2));
-		}
-		if ($count >= 30) {
-			$user->addBadge(BadgesManager::findBySerie('subscriber', 3));
+			BadgesManager::userAddBadge($user, 'subscriber', 1);
+		} else {
+			BadgesManager::userRemoveBadge($user, 'subscriber', 1);
 		}
 
+		if ($count >= 10) {
+			BadgesManager::userAddBadge($user, 'subscriber', 2);
+		} else {
+			BadgesManager::userRemoveBadge($user, 'subscriber', 2);
+		}
+
+		if ($count >= 30) {
+			BadgesManager::userAddBadge($user, 'subscriber', 3);
+		} else {
+			BadgesManager::userRemoveBadge($user, 'subscriber', 3);
+		}
+
+		BadgesManager::userPersistBadges($user);
 		$em->persist($user);
 		$em->flush();
 
@@ -117,20 +122,25 @@ class ApiController extends Controller
 
 		$count = (int) $count;
 
-		$user->removeBadge(BadgesManager::findBySerie('subscriber', 1));
-		$user->removeBadge(BadgesManager::findBySerie('subscriber', 2));
-		$user->removeBadge(BadgesManager::findBySerie('subscriber', 3));
-
 		if ($count >= 1) {
-			$user->addBadge(BadgesManager::findBySerie('subscriber', 1));
-		}
-		if ($count >= 10) {
-			$user->addBadge(BadgesManager::findBySerie('subscriber', 2));
-		}
-		if ($count >= 30) {
-			$user->addBadge(BadgesManager::findBySerie('subscriber', 3));
+			BadgesManager::userAddBadge($user, 'subscriber', 1);
+		} else {
+			BadgesManager::userRemoveBadge($user, 'subscriber', 1);
 		}
 
+		if ($count >= 10) {
+			BadgesManager::userAddBadge($user, 'subscriber', 2);
+		} else {
+			BadgesManager::userRemoveBadge($user, 'subscriber', 2);
+		}
+
+		if ($count >= 30) {
+			BadgesManager::userAddBadge($user, 'subscriber', 3);
+		} else {
+			BadgesManager::userRemoveBadge($user, 'subscriber', 3);
+		}
+
+		BadgesManager::userPersistBadges($user);
 		$em->persist($user);
 		$em->flush();
 

@@ -90,7 +90,8 @@ class ElementToUpdate
 		 * Add badges
 		 */
 		if (substr($history['niveau'], 0, 2) == 'TC' && substr($user->getNiveau(), 0, 2) != 'TC') {
-			$user->addBadge(BadgesManager::findBySerie('tc_survivor'));
+			BadgesManager::userAddBadge($user, 'tc_survivor');
+			BadgesManager::userPersistBadges($user);
 		}
 
 		if ($persist) {

@@ -322,9 +322,9 @@
 
 			<hr />
 
-			{% if user.badges %}
+			{% if user.badges|count > 0 %}
 			<ul class="badges-list">
-				{% for badge in user.badges %}
+				{% for badge in user.badgesList %}
 					<li>
 						<img src="{{ asset('img/badges/'~badge.picture~'.png') }}" class="tip"
 							 title="<strong style='font-size: 13px;'>{{ badge.name }}</strong><br />{{ badge.description }}" />
