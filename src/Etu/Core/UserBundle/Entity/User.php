@@ -335,7 +335,6 @@ class User implements UserInterface, \Serializable
 	 *	 > For trombi
 	 *
 	 * @ORM\Column(type="text", nullable=true)
-	 * @Assert\Length(min = "15")
 	 */
 	protected $jadis;
 
@@ -344,7 +343,6 @@ class User implements UserInterface, \Serializable
 	 *	 > For trombi
 	 *
 	 * @ORM\Column(type="text", nullable=true)
-	 * @Assert\Length(min = "15")
 	 */
 	protected $passions;
 

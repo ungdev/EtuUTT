@@ -103,7 +103,7 @@
 					{% if user.website %}
 						<p>
 							<strong>{{ 'user.profile.view.website'|trans }}</strong><br />
-							{{ user.website }}
+							<a href="{{ user.website }}">{{ user.website }}</a>
 						</p>
 					{% endif %}
 
@@ -244,22 +244,22 @@
 						<div class="view-label">{{ 'user.profile.view.adress'|trans }}</div>
 						<div class="view-value">
 
-							{% if is_public(app.user.adressPrivacy) and user.adress %}
+							{% if is_public(user.adressPrivacy) and user.adress %}
 								{{ app.user.adress }}
 								<br />
 							{% endif %}
 
-							{% if is_public(app.user.postalCodePrivacy) and user.postalCode %}
+							{% if is_public(user.postalCodePrivacy) and user.postalCode %}
 								{{ app.user.postalCode }}
 								<br />
 							{% endif %}
 
-							{% if is_public(app.user.cityPrivacy) and user.city %}
+							{% if is_public(user.cityPrivacy) and user.city %}
 								{{ app.user.city }}
 								<br />
 							{% endif %}
 
-							{% if is_public(app.user.countryPrivacy) and user.country %}
+							{% if is_public(user.countryPrivacy) and user.country %}
 								{{ app.user.country }}
 								<br />
 							{% endif %}
