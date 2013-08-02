@@ -3,6 +3,7 @@ parameters:
     etu.forum.twig.permissions.class: Etu\Module\ForumBundle\Twig\Extension\PermissionsExtension
     etu.forum.twig.number.class: Etu\Module\ForumBundle\Twig\Extension\NumberExtension
     etu.notifs.thread_created.class: Etu\Module\ForumBundle\Notification\Helper\ThreadCreatedHelper
+    etu.notifs.thread_answered.class: Etu\Module\ForumBundle\Notification\Helper\ThreadAnsweredHelper
 
 services:
 
@@ -17,6 +18,11 @@ services:
             - { name: twig.extension }
     etu.notifs.thread_created:
         class: %etu.notifs.thread_created.class%
+        arguments: [@twig]
+        tags:
+            - { name: etu.notifs_helper }
+    etu.notifs.thread_answered:
+        class: %etu.notifs.thread_answered.class%
         arguments: [@twig]
         tags:
             - { name: etu.notifs_helper }

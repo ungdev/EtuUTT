@@ -38,7 +38,7 @@
 
 {% block sidebar %}
 	{% if app.user %}
-		{{ render_subscribe_button('thread_created', thread.id) }}
+		{{ render_subscribe_button('message', thread.id) }}
 	{% endif %}
 
 	{{ parent() }}
@@ -113,7 +113,7 @@
 						</small>
 					</div>
 					<div class="etu-comment-body">
-						{{ message.content|raw }}
+						{{ message.content }}
 
 						{% if app.user and (message.author.id == app.user.id or app.user.isAdmin) %}
 							<p class="pull-right">

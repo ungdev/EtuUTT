@@ -255,7 +255,7 @@ class MainController extends Controller
 				$em->persist($thread);
 				$em->flush();
 
-				$this->getSubscriptionsManager()->subscribe($this->getUser(), 'thread_created', $thread->getId());
+				$this->getSubscriptionsManager()->subscribe($this->getUser(), 'message', $thread->getId());
 
 				return $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug())));
 			}
@@ -334,15 +334,15 @@ class MainController extends Controller
 				$notif = new Notification();
 				$notif
 					->setModule($this->getCurrentBundle()->getIdentifier())
-					->setHelper('thread_created')
+					->setHelper('thread_answered')
 					->setAuthorId($this->getUser()->getId())
-					->setEntityType('thread_created')
+					->setEntityType('message')
 					->setEntityId($thread->getId())
 					->addEntity($message);
 
 				$this->getNotificationsSender()->send($notif);
 
-				$this->getSubscriptionsManager()->subscribe($this->getUser(), 'thread_created', $thread->getId());
+				$this->getSubscriptionsManager()->subscribe($this->getUser(), 'message', $thread->getId());
 
 				return $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug(), 'page' => $page)) . '#'.$message->getId());
 			}
