@@ -47,6 +47,15 @@ class AuthController extends Controller
 
 				$user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
 
+				if ($user && $user->getIsBanned()) {
+					$this->get('session')->getFlashBag()->set('message', array(
+						'type' => 'error',
+						'message' => 'Vous avez été banni d\'EtuUTT.'
+					));
+
+					return $this->redirect($this->generateUrl('homepage'));
+				}
+
 				// If the user can't be loaded from database, we try for an organization
 				if (! $user) {
 					$orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(array('login' => $login));
@@ -145,6 +154,15 @@ class AuthController extends Controller
 		$em = $this->getDoctrine()->getManager();
 
 		$user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
+
+		if ($user && $user->getIsBanned()) {
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'error',
+				'message' => 'Vous avez été banni d\'EtuUTT.'
+			));
+
+			return $this->redirect($this->generateUrl('homepage'));
+		}
 
 		// If the user can't be loaded from database, we try for an organization
 		if (! $user) {

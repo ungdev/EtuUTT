@@ -432,6 +432,15 @@ class User implements UserInterface, \Serializable
 	protected $isAdmin;
 
 	/**
+	 * If the user is banned
+	 *
+	 * @var boolean
+	 *
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $isBanned;
+
+	/**
 	 * Read-only mode enabled fo this user?
 	 *
 	 * @var boolean
@@ -2106,6 +2115,25 @@ class User implements UserInterface, \Serializable
 	public function getIsReadOnly()
 	{
 		return $this->isReadOnly;
+	}
+
+	/**
+	 * @param boolean $isBanned
+	 * @return User
+	 */
+	public function setIsBanned($isBanned)
+	{
+		$this->isBanned = $isBanned;
+
+		return $this;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getIsBanned()
+	{
+		return $this->isBanned;
 	}
 
 	/**
