@@ -198,6 +198,7 @@ class BadgesManager
 	{
 		/** @var Badge[] $badges */
 		$badges = self::$doctrine->getRepository('EtuUserBundle:Badge')->findBy(array(), array(
+			'countLevels' => 'ASC',
 			'serie' => 'ASC'
 		));
 

@@ -2493,18 +2493,18 @@ class User implements UserInterface, \Serializable
 			BadgesManager::userAddBadge($this, 'challenge', 5);
 		}
 
-		if ($this->getNiveau() == 'TC1' || $this->getNiveau() == 'TC01') {
+		if ($this->getBranch() == 'TC' && $this->getNiveau() == '1') {
 			BadgesManager::userAddBadge($this, 'tc01');
 		}
 
-		if ($this->getNiveau() == 'TC6' || $this->getNiveau() == 'TC06') {
+		if ($this->getBranch() == 'TC' && $this->getNiveau() == '6') {
 			BadgesManager::userAddBadge($this, 'tc06');
 		}
 
 		if (        BadgesManager::userHasBadge($this, 'subscriber')
 				&&  BadgesManager::userHasBadge($this, 'forum_message')
 				&&  BadgesManager::userHasBadge($this, 'profile_completed')) {
-			BadgesManager::userAddBadge($this, 'starter');
+					BadgesManager::userAddBadge($this, 'starter');
 		}
 
 		/** @var Member[] $memberships */
@@ -2535,17 +2535,29 @@ class User implements UserInterface, \Serializable
 
 		foreach (BadgesManager::findBadgesList() as $serie => $badges) {
 			foreach ($badges as $level => $badge) {
-				$list[$serie][$level] = array(
-					'owned' => false,
-					'badge' => $badge,
-				);
+				if ($badge->getCountLevels() > 1) {
+					$list[$serie][$level] = array(
+						'owned' => false,
+						'badge' => $badge,
+					);
+				} else {
+					$list['singles'][$serie] = array(
+						'owned' => false,
+						'badge' => $badge,
+					);
+				}
 			}
 		}
 
 		/** @var $userBadge UserBadge */
 		foreach ($this->badges->toArray() as $userBadge) {
 			$badge = $userBadge->getBadge();
-			$list[$badge->getSerie()][$badge->getLevel()]['owned'] = true;
+
+			if ($badge->getCountLevels() > 1) {
+				$list[$badge->getSerie()][$badge->getLevel()]['owned'] = true;
+			} else {
+				$list['singles'][$badge->getSerie()]['owned'] = true;
+			}
 		}
 
 		return $list;

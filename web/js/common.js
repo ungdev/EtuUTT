@@ -4,6 +4,7 @@
  */
 var facebox = $('a[rel*=facebox]'),
 	tip = $('.tip'),
+	tipTransparent = $('.tip-transparent'),
 	overlay = $('#overlay'),
 	more = $('#more'),
 	page = $('body'),
@@ -221,6 +222,12 @@ $(function() {
 		gravity: 's',
 		html: true,
 		opacity: 1
+	});
+
+	tipTransparent.tipsy({
+		gravity: 's',
+		html: true,
+		opacity: 0.5
 	});
 
 	// Load CKEditor
