@@ -124,7 +124,14 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(type="string", length=255, nullable=true)
+	 * @ORM\Column(type="string", length=10, nullable=true)
+	 */
+	protected $branch;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string", length=10, nullable=true)
 	 */
 	protected $niveau;
 
@@ -429,7 +436,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $isAdmin;
+	protected $isAdmin = false;
 
 	/**
 	 * If the user is banned
@@ -438,7 +445,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $isBanned;
+	protected $isBanned = false;
 
 	/**
 	 * Read-only mode enabled fo this user?
@@ -447,7 +454,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $isReadOnly;
+	protected $isReadOnly = false;
 
 	/**
 	 * Read-only expiration date
@@ -1043,6 +1050,28 @@ class User implements UserInterface, \Serializable
 	public function getFormation()
 	{
 		return $this->formation;
+	}
+
+	/**
+	 * @param string $branch
+	 * @return $this
+	 */
+	public function setBranch($branch)
+	{
+		if ($branch == 'NC') {
+			$branch = null;
+		}
+
+		$this->branch = $branch;
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getBranch()
+	{
+		return $this->branch;
 	}
 
 	/**

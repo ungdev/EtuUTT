@@ -73,7 +73,7 @@ ask you to keep or delete him/her.
 
 		$output->writeln(sprintf('%s user(s) to import from LDAP', $usersImportIterator->count()));
 		$output->writeln(sprintf('%s user(s) to remove/keep in database', $usersRemoveIterator->count()));
-		$output->writeln(sprintf('%s user(s) to update from LDAP', $usersUpdateIterator->count()));
+		$output->writeln(sprintf('%s user(s) to compare with the LDAP', $usersUpdateIterator->count()));
 
 		$output->write("\n");
 
@@ -112,6 +112,7 @@ ask you to keep or delete him/her.
 				$i++;
 			}
 
+			$output->write("\n");
 			$output->writeln('Saving in database ...');
 			$container->get('doctrine')->getManager()->flush();
 		}
@@ -120,20 +121,29 @@ ask you to keep or delete him/her.
 		// Updating users
 		if ($usersUpdateIterator->count() > 0) {
 			$output->write("\n");
-			$output->writeln('Updating users ...');
+			$output->writeln('Comparing users ...');
 
 			$bar = new ProgressBar('%fraction% [%bar%] %percent%', '=>', ' ', 80, $usersUpdateIterator->count());
 			$bar->update(0);
 			$i = 1;
+			$countPersisted = 0;
 
 			/** @var $user ElementToUpdate */
 			foreach($usersUpdateIterator as $user) {
-				$user->update();
+				$persisted = $user->update();
+
+				if ($persisted) {
+					$countPersisted++;
+				}
+
 				$bar->update($i);
 				$i++;
 			}
 
+			$output->write("\n");
 			$output->writeln('Saving in database ...');
+			$output->write("\n");
+			$output->writeln($countPersisted.' user(s) updated');
 			$container->get('doctrine')->getManager()->flush();
 		}
 
@@ -196,7 +206,7 @@ ask you to keep or delete him/her.
 				while (! in_array($choice, array(1, 2, 3))) {
 					$output->writeln("1 - Delete all of them");
 					$output->writeln("2 - Ask me for some to keep, delete the rest");
-					$output->writeln("3 - Keep all of them\n");
+					$output->writeln("3 - Keep all of them");
 					$output->writeln("4 - Display the list\n");
 
 					$choice = $dialog->ask($output, 'What do you choose [2]? ', '2');
@@ -205,7 +215,7 @@ ask you to keep or delete him/her.
 						$names = array();
 
 						foreach ($usersRemoveIterator as $user) {
-							$names[] = $user->getDatabaseUser()->getFullName().' ('.$user->getDatabaseUser()->getLogin().')';
+							$names[] = $user->getElement()->getFullName().' ('.$user->getElement()->getLogin().')';
 						}
 
 						$output->writeln(implode("\n", $names)."\n");
