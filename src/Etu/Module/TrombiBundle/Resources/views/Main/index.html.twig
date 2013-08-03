@@ -26,8 +26,10 @@
 		</div>
 	{% else %}
 		<div class="trombi-search-box">
-			<form method="get" action="{{ path('trombi_index') }}">
+			<form method="post" action="{{ path('trombi_index') }}">
 				<h4>{{ 'trombi.main.index.search_title'|trans }}</h4>
+
+				{{ form_errors(form) }}
 
 				<div class="row-fluid">
 					<div class="span4">
@@ -58,13 +60,13 @@
 								<span class="help-block">{{ form_errors(form.studentId) }}</span>
 							</div>
 							<div class="control-group">
-								{{ form_label(form.filiere, 'trombi.main.index.branche'|trans) }}
+								{{ form_label(form.branch, 'trombi.main.index.branche'|trans) }}
 								<div class="controls">
-									{{ form_widget(form.filiere, {'attr': {'class': 'span4'} }) }}
+									{{ form_widget(form.branch, {'attr': {'class': 'span4'} }) }}
 									{{ form_widget(form.niveau, {'attr': {'class': 'span4'} }) }}
 								</div>
 							<span class="help-block">
-								{{ form_errors(form.filiere) }}
+								{{ form_errors(form.branch) }}
 								{{ form_errors(form.niveau) }}
 							</span>
 							</div>
@@ -129,7 +131,7 @@
 							</h5>
 							<p>
 								{% if user.formation %}
-								{{ user.niveau }} {{ user.filiere }} ({{ user.formation }})<br />
+								{{ user.branch~user.niveau }} {{ user.filiere }} ({{ user.formation }})<br />
 								{% endif %}
 								{{ user.mail }}
 								{% if is_public(user.personnalMailPrivacy) and user.personnalMail %}

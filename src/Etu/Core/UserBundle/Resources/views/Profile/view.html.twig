@@ -65,7 +65,7 @@
 
 					<strong>{{ user.fullName }}</strong><br />
 					{% if user.formation %}
-					<em>{{ user.niveau }} {{ user.filiere }} ({{ user.formation }})</em>
+					<em>{{ user.branch~user.niveau }} {{ user.filiere }} ({{ user.formation }})</em>
 					{% endif %}
 				</div>
 
