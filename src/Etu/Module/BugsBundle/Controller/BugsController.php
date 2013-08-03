@@ -69,7 +69,8 @@ class BugsController extends Controller
 			->leftJoin('i.user', 'u')
 			->leftJoin('i.assignee', 'a')
 			->where('i.isOpened = 0')
-			->orderBy('i.createdAt', 'DESC')
+			->orderBy('i.criticality', 'DESC')
+			->addOrderBy('i.createdAt', 'DESC')
 			->setMaxResults(20);
 
 		$pagination = $this->get('knp_paginator')->paginate($query, $page, 20);
