@@ -1,0 +1,24 @@
+
+user:
+    validation:
+        phoneNumber: Le numéro de téléphone n'est pas valide
+        firstname:
+            length_min: Le prénom doit contenir au minimum {{ limit }} caractères
+            length_max: Le prénom doit contenir au maximum {{ limit }} caractères
+        lastname:
+            length_min: Le nom doit contenir au minimum {{ limit }} caractères
+            length_max: Le nom doit contenir au maximum {{ limit }} caractères
+        nationality:
+            length_min: La nationalité doit contenir au minimum {{ limit }} caractères
+            length_max: La nationalité doit contenir au maximum {{ limit }} caractères
+        address:
+            length_min: L'addresse doit contenir au minimum {{ limit }} caractères
+            length_max: L'addresse doit contenir au maximum {{ limit }} caractères
+        city:
+            length_min: La ville doit contenir au minimum {{ limit }} caractères
+            length_max: La ville doit contenir au maximum {{ limit }} caractères
+        country:
+            length_min: Le pays doit contenir au minimum {{ limit }} caractères
+            length_max: Le pays doit contenir au maximum {{ limit }} caractères
+        surnom:
+            length_max: Le surnom doit contenir au maximum {{ limit }} caractères

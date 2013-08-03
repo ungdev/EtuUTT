@@ -102,7 +102,11 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(type="string", length=255, nullable=true)
-	 * @Assert\Length(min = "2", max = "50")
+	 * @Assert\Length(
+	 *      min = "2", max = "50",
+	 *      minMessage = "user.validation.firstname.length_min",
+	 *      maxMessage = "user.validation.firstname.length_max"
+	 * )
 	 */
 	protected $firstName;
 
@@ -110,7 +114,11 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(type="string", length=255, nullable=true)
-	 * @Assert\Length(min = "2", max = "50")
+	 * @Assert\Length(
+	 *      min = "2", max = "50",
+	 *      minMessage = "user.validation.lastname.length_min",
+	 *      maxMessage = "user.validation.lastname.length_max"
+	 * )
 	 */
 	protected $lastName;
 
@@ -146,7 +154,10 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(type="string", length=30, nullable=true)
-	 * @Assert\Regex("/^0[1-68]([-. ]?[0-9]{2}){4}$/")
+	 * @Assert\Regex(
+	 *      pattern = "/^0[1-68]([-. ]?[0-9]{2}){4}$/",
+	 *      message = "user.validation.phoneNumber"
+	 * )
 	 */
 	protected $phoneNumber;
 
@@ -162,7 +173,6 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(type="string", length=255, nullable=true)
-	 * @Assert\Length(min = "2", max = "50")
 	 */
 	protected $title;
 
@@ -170,7 +180,6 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(type="string", length=255, nullable=true)
-	 * @Assert\Length(min = "2", max = "50")
 	 */
 	protected $room;
 
@@ -200,7 +209,11 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(type="string", length=50, nullable=true)
-	 * @Assert\Length(min = "2", max = "50")
+	 * @Assert\Length(
+	 *      min = "2", max = "50",
+	 *      minMessage = "user.validation.nationality.length_min",
+	 *      minMessage = "user.validation.nationality.length_max"
+	 * )
 	 */
 	protected $nationality;
 
@@ -216,7 +229,11 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(type="string", length=100, nullable=true)
-	 * @Assert\Length(min = "2", max = "100")
+	 * @Assert\Length(
+	 *      min = "2", max = "100",
+	 *      minMessage = "user.validation.address.length_min",
+	 *      minMessage = "user.validation.address.length_max"
+	 * )
 	 */
 	protected $adress;
 
@@ -247,7 +264,11 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(type="string", length=100, nullable=true)
-	 * @Assert\Length(min = "2", max = "50")
+	 * @Assert\Length(
+	 *      min = "2", max = "50",
+	 *      minMessage = "user.validation.city.length_min",
+	 *      minMessage = "user.validation.city.length_max"
+	 * )
 	 */
 	protected $city;
 
@@ -263,7 +284,11 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(type="string", length=50, nullable=true)
-	 * @Assert\Length(min = "2", max = "50")
+	 * @Assert\Length(
+	 *      min = "2", max = "50",
+	 *      minMessage = "user.validation.country.length_min",
+	 *      minMessage = "user.validation.country.length_max"
+	 * )
 	 */
 	protected $country;
 
@@ -333,7 +358,10 @@ class User implements UserInterface, \Serializable
 	 *	 > For trombi
 	 *
 	 * @ORM\Column(type="string", length=50, nullable=true)
-	 * @Assert\Length(max = "50")
+	 * @Assert\Length(
+	 *      max = "50",
+	 *      maxMessage = "user.validation.surnom.length_max"
+	 * )
 	 */
 	protected $surnom;
 
