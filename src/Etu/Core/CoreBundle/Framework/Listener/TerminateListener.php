@@ -31,6 +31,10 @@ class TerminateListener
 			return;
 		}
 
+		if ($event->getRequest()->get('_route') == 'notifs_new') {
+			return;
+		}
+
 		if ($event->getResponse()->headers->get('Content-Type') == 'application/json') {
 			return;
 		}
