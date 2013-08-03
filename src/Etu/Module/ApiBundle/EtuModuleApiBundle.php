@@ -15,14 +15,6 @@ class EtuModuleApiBundle extends Module
 	}
 
 	/**
-	 * @return bool
-	 */
-	public function isReadyToUse()
-	{
-		return false;
-	}
-
-	/**
 	 * Module identifier (to be required by other modules)
 	 *
 	 * @return string
