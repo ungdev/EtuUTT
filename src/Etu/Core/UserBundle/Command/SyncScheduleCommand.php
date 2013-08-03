@@ -20,7 +20,7 @@ class SyncScheduleCommand extends ContainerAwareCommand
 	protected function configure()
 	{
 		$this
-			->setName('etu:db:sync-schedule')
+			->setName('etu:users:sync-schedule')
 			->setDescription('Synchronize officials schedules with database schedules.')
 			->addOption('force', 'f', InputOption::VALUE_NONE, 'Force to re-downlaod files')
 		;
