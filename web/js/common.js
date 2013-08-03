@@ -246,17 +246,19 @@ $(function() {
 		usersAutocomplete.autocomplete({
 			minLength: 3,
 			source: function(request, response) {
-				$.getJSON(Routing.generate('api_user_search', {term: request.term}), {format: 'json'}, function(data) {
-					var users = data.body.users;
+				$.getJSON(Routing.generate('api_user_search', {term: request.term}),
+					{ format: 'json', token: _t },
+					function(data) {
+						var users = data.body.users;
 
-					response($.map(users, function( item ) {
-						return {
-							label: item.firstName+' '+item.lastName,
-							value: item.firstName+' '+item.lastName,
-							user: item
-						}
-					}));
-				});
+						response($.map(users, function( item ) {
+							return {
+								label: item.firstName+' '+item.lastName,
+								value: item.firstName+' '+item.lastName,
+								user: item
+							}
+						}));
+					});
 			}
 		});
 
