@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManager;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
-use Etu\Core\CoreBundle\Util\RedactorJsEscaper;
 use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Module\WikiBundle\Entity\Category;
 use Etu\Module\WikiBundle\Entity\Page;
@@ -108,7 +107,7 @@ class PageController extends Controller
 			}
 
 			$revision = $page->createRevision();
-			$revision->setBody(RedactorJsEscaper::escape($page->body));
+			$revision->setBody($page->body);
 			$revision->setComment('Création');
 			$revision->setUser($this->getUser());
 
@@ -335,9 +334,9 @@ class PageController extends Controller
 				$page->putToRoot();
 			}
 
-			if (RedactorJsEscaper::escape($page->body) != $page->getRevision()->getBody()) {
+			if ($page->body != $page->getRevision()->getBody()) {
 				$revision = $page->createRevision();
-				$revision->setBody(RedactorJsEscaper::escape($page->body));
+				$revision->setBody($page->body);
 				$revision->setComment($page->comment);
 				$revision->setUser($this->getUser());
 

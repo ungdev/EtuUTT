@@ -5,7 +5,6 @@ namespace Etu\Module\DaymailBundle\Controller;
 use Doctrine\ORM\EntityManager;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
-use Etu\Core\CoreBundle\Util\RedactorJsEscaper;
 use Etu\Core\UserBundle\Entity\Member;
 use Etu\Module\DaymailBundle\Entity\DaymailPart;
 
@@ -134,10 +133,6 @@ class MembershipsController extends Controller
 		$request = $this->getRequest();
 
 		if ($request->getMethod() == 'POST' && $form->submit($request)->isValid() && $canEdit) {
-			$daymailPart->setBody(RedactorJsEscaper::escape(
-				str_replace('<img ', '<img style="max-width: 600px; max-height: 400px;" ', $daymailPart->getBody())
-			));
-
 			$em->persist($daymailPart);
 			$em->flush();
 

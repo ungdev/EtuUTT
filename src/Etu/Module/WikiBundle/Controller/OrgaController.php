@@ -5,7 +5,6 @@ namespace Etu\Module\WikiBundle\Controller;
 use Doctrine\ORM\EntityManager;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
-use Etu\Core\CoreBundle\Util\RedactorJsEscaper;
 use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Module\WikiBundle\Entity\Category;
 use Etu\Module\WikiBundle\Entity\Page;
@@ -146,9 +145,9 @@ class OrgaController extends Controller
 		$request = $this->getRequest();
 
 		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
-			if (RedactorJsEscaper::escape($page->body) != $home->getRevision()->getBody()) {
+			if ($page->body != $home->getRevision()->getBody()) {
 				$revision = $home->createRevision();
-				$revision->setBody(RedactorJsEscaper::escape($page->body));
+				$revision->setBody($page->body);
 				$revision->setComment($page->comment);
 
 				$home->setRevision($revision);

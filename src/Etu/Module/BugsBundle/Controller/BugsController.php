@@ -6,7 +6,6 @@ use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Entity\Subscription;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
-use Etu\Core\CoreBundle\Util\RedactorJsEscaper;
 use Etu\Module\BugsBundle\Entity\Comment;
 use Etu\Module\BugsBundle\Entity\Issue;
 
@@ -134,9 +133,6 @@ class BugsController extends Controller
 		$request = $this->getRequest();
 
 		if ($request->getMethod() == 'POST' && $form->submit($request)->isValid() && $this->getUser()->hasPermission('bugs.add')) {
-
-			// Create the comment
-			$comment->setBody(RedactorJsEscaper::escape($comment->getBody()));
 			$em->persist($comment);
 			$em->flush();
 
@@ -224,8 +220,6 @@ class BugsController extends Controller
 		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
 			/** @var $em EntityManager */
 			$em = $this->getDoctrine()->getManager();
-
-			$bug->setBody(RedactorJsEscaper::escape($bug->getBody()));
 
 			$em->persist($bug);
 			$em->flush();
@@ -318,8 +312,6 @@ class BugsController extends Controller
 		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 
-			$bug->setBody(RedactorJsEscaper::escape($bug->getBody()));
-
 			$em->persist($bug);
 			$em->flush();
 
@@ -400,7 +392,6 @@ class BugsController extends Controller
 		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 
-			$comment->setBody(RedactorJsEscaper::escape($comment->getBody()));
 			$em->persist($comment);
 			$em->flush();
 

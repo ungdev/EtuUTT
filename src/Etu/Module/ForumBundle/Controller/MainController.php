@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityRepository;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
-use Etu\Core\CoreBundle\Util\RedactorJsEscaper;
 use Etu\Core\CoreBundle\Entity\Notification;
 
 use Etu\Module\ForumBundle\Entity\Category;
@@ -242,8 +241,7 @@ class MainController extends Controller
 					->setCategory($category)
 					->setThread($thread)
 					->setState(100)
-					->setCreatedAt($thread->getCreatedAt())
-					->setContent(RedactorJsEscaper::escape($message->getContent()));
+					->setCreatedAt($thread->getCreatedAt());
 				$thread->setLastMessage($message);
 				foreach($parents as $parent) {
 					$parent->setLastMessage($message)
@@ -310,8 +308,7 @@ class MainController extends Controller
 				$message->setAuthor($this->getUser())
 					->setCategory($category)
 					->setThread($thread)
-					->setState(100)
-					->setContent(RedactorJsEscaper::escape($message->getContent()));
+					->setState(100);
 				$thread->setCountMessages($thread->getCountMessages()+1)
 					->setLastMessage($message);
 				foreach($parents as $parent) {
