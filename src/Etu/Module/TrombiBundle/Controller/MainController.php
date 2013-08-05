@@ -38,7 +38,7 @@ class MainController extends Controller
 			->add('personnalMail', null, array('required' => false))
 			->getForm();
 
-		if ($this->getRequest()->getMethod() == 'POST' && $form->bind($this->getRequest())->isValid()) {
+		if ($this->getRequest()->query->has('form') && $form->bind($this->getRequest())->isValid()) {
 			$search = true;
 
 			/** @var $em EntityManager */
