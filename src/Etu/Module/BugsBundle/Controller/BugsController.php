@@ -208,12 +208,12 @@ class BugsController extends Controller
 			->add('title')
 			->add('criticality', 'choice', array(
 				'choices' => array(
-					Issue::CRITICALITY_SECURITY => 'bugs.criticality.security',
-					Issue::CRITICALITY_CRITICAL => 'bugs.criticality.critical',
-					Issue::CRITICALITY_MAJOR => 'bugs.criticality.major',
-					Issue::CRITICALITY_MINOR => 'bugs.criticality.minor',
-					Issue::CRITICALITY_VISUAL => 'bugs.criticality.visual',
-					Issue::CRITICALITY_TYPO => 'bugs.criticality.typo',
+					Issue::CRITICALITY_SECURITY => 'bugs.criticality.60',
+					Issue::CRITICALITY_CRITICAL => 'bugs.criticality.50',
+					Issue::CRITICALITY_MAJOR => 'bugs.criticality.40',
+					Issue::CRITICALITY_MINOR => 'bugs.criticality.30',
+					Issue::CRITICALITY_VISUAL => 'bugs.criticality.20',
+					Issue::CRITICALITY_TYPO => 'bugs.criticality.10',
 				)))
 			->add('body')
 			->getForm();
@@ -302,12 +302,12 @@ class BugsController extends Controller
 			->add('title')
 			->add('criticality', 'choice', array(
 				'choices' => array(
-					Issue::CRITICALITY_SECURITY => 'bugs.criticality.security',
-					Issue::CRITICALITY_CRITICAL => 'bugs.criticality.critical',
-					Issue::CRITICALITY_MAJOR => 'bugs.criticality.major',
-					Issue::CRITICALITY_MINOR => 'bugs.criticality.minor',
-					Issue::CRITICALITY_VISUAL => 'bugs.criticality.visual',
-					Issue::CRITICALITY_TYPO => 'bugs.criticality.typo',
+					Issue::CRITICALITY_SECURITY => 'bugs.criticality.60',
+					Issue::CRITICALITY_CRITICAL => 'bugs.criticality.50',
+					Issue::CRITICALITY_MAJOR => 'bugs.criticality.40',
+					Issue::CRITICALITY_MINOR => 'bugs.criticality.30',
+					Issue::CRITICALITY_VISUAL => 'bugs.criticality.20',
+					Issue::CRITICALITY_TYPO => 'bugs.criticality.10',
 				)))
 			->add('body')
 			->getForm();
