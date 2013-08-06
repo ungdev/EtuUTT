@@ -281,10 +281,12 @@ class MainController extends Controller
 		if (! empty($subscriptions)) {
 
 			foreach ($subscriptions as $key => $subscription) {
-				$subscriptionsWhere[] = '(n.entityType = :type_'.$key.' AND n.entityId = :id_'.$key.')';
+				$subscriptionsWhere[] =
+					'(n.entityType = :type_'.$key.' AND n.entityId = :id_'.$key.' AND n.createdAt > :date_'.$key.')';
 
 				$query->setParameter('type_'.$key, $subscription->getEntityType());
 				$query->setParameter('id_'.$key, $subscription->getEntityId());
+				$query->setParameter('date_'.$key, $subscription->getCreatedAt());
 			}
 
 			if (! empty($subscriptionsWhere)) {
