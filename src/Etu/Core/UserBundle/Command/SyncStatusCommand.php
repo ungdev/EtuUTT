@@ -18,7 +18,7 @@ class SyncStatusCommand extends ContainerAwareCommand
 	protected function configure()
 	{
 		$this
-			->setName('etu:db:sync-status')
+			->setName('etu:users:sync-status')
 			->setDescription('Find differences between LDAP and database.')
 		;
 	}

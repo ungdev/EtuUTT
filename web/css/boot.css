@@ -29,7 +29,8 @@ textarea {
 }
 /* Redactor */
 .redactor {
-  width: 95%;
+  width: 100%;
+  height: 250px;
   margin-bottom: 5px;
 }
 /* Police */
@@ -697,6 +698,10 @@ textarea {
 .etu-comment-date small {
   display: inline-block;
   padding: 5px 10px;
+}
+.etu-comment-date small a.btn {
+  margin-top: -3px;
+  margin-right: 10px;
 }
 .etu-comment-body {
   padding: 10px;

@@ -63,7 +63,7 @@
 
 					{% if app.user.niveau or app.user.filiere or app.user.formation %}
 					<p>
-						{{ app.user.niveau }} {{ app.user.filiere }} ({{ app.user.formation }})
+						{{ app.user.branch~app.user.niveau }} {{ app.user.filiere }} ({{ app.user.formation }})
 					</p>
 					{% endif %}
 

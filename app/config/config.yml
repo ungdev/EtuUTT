@@ -87,6 +87,15 @@ stof_doctrine_extensions:
             softdeleteable: true
             uploadable:     false
 
+## FMBbcode
+fm_bbcode:
+    filter_sets:
+        default_filter:
+            locale: %locale%
+            xhtml: true
+            filters: [ default, block, text, code, image, list, table, quote, video, url ]
+            hooks: [ clickable, emoticon ]
+
 # TgaAudienceBundle
 tga_audience:
     session_duration: 300           # Duration meanwhile a visitor is unique

@@ -14,7 +14,6 @@ use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
-use Etu\Core\CoreBundle\Util\RedactorJsEscaper;
 use Etu\Core\UserBundle\Entity\Member;
 use Etu\Module\EventsBundle\Entity\Event;
 
@@ -283,8 +282,6 @@ class MembershipsController extends Controller
 			->getForm();
 
 		if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
-			$event->setDescription(RedactorJsEscaper::escape($event->getDescription()));
-
 			$em->persist($event);
 			$em->flush();
 
@@ -440,8 +437,6 @@ class MembershipsController extends Controller
 			->getForm();
 
 		if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
-			$event->setDescription(RedactorJsEscaper::escape($event->getDescription()));
-
 			$em->persist($event);
 			$em->flush();
 

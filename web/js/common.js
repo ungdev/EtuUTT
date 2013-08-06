@@ -4,11 +4,11 @@
  */
 var facebox = $('a[rel*=facebox]'),
 	tip = $('.tip'),
+	tipTransparent = $('.tip-transparent'),
 	overlay = $('#overlay'),
 	more = $('#more'),
 	page = $('body'),
-	redactor = $('.redactor'),
-	redactorLimited = $('.redactor-limited'),
+	ckeditor = $('.redactor'),
 	usersAutocomplete = $('.user-autocomplete'),
 	changeLocale = {
 		link: $('.change-locale'),
@@ -224,33 +224,58 @@ $(function() {
 		opacity: 1
 	});
 
-	// Load Redactor
-	redactor.redactor({
-		fixed: true,
-		lang: 'fr',
-		buttons: [
-			'formatting', '|', 'bold', 'italic', 'deleted', 'underline', '|',
-			'fontcolor', 'backcolor', '|', 'alignment', '|',
-			'unorderedlist', 'orderedlist', '|', 'image', 'video', 'file', 'table', 'link', '|',
-			'horizontalrule', '|', 'html'
-		]
-
-		/*
-		 'html', '|', 'formatting', '|', 'bold', 'italic', 'deleted', '|',
-		 'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
-		 'image', 'video', 'file', 'table', 'link', '|',
-		 'fontcolor', 'backcolor', '|', 'alignment'
-		 */
+	tipTransparent.tipsy({
+		gravity: 's',
+		html: true,
+		opacity: 0.5
 	});
 
-	redactorLimited.redactor({
-		fixed: true,
-		lang: 'fr',
-		buttons: [
-			'bold', 'italic', 'deleted', 'underline', 'fontcolor', '|',
-			'alignleft', 'aligncenter', 'alignright', '|',
-			'unorderedlist', '|', 'image', 'link'
-		]
+	// Load CKEditor
+	ckeditor.sceditor({
+		plugins: "bbcode",
+		style: "/sceditor/minified/jquery.sceditor.default.min.css",
+		emoticonsRoot: '/',
+		toolbar:
+			"source|bold,italic,underline,strike,subscript,superscript|left,center,right,justify" +
+			"|font,size,removeformat|bulletlist,orderedlist" +
+			"|table|quote|link,unlink|image,youtube|maximize",
+		emoticons: {
+			dropdown: {
+				">:(": "emoticons/angry.png",
+				":aw:": "emoticons/aw.png",
+				"8)": "emoticons/cool.png",
+				":D": "emoticons/ecstatic.png",
+				">:D": "emoticons/furious.png",
+				":O": "emoticons/gah.png",
+				":)": "emoticons/happy.png",
+				"<3": "emoticons/heart.png",
+				":/": "emoticons/hm.png",
+				":3": "emoticons/kiss.png",
+				":|": "emoticons/meh.png",
+				":x": "emoticons/mmf.png",
+				":(": "emoticons/sad.png",
+				":P": "emoticons/tongue.png",
+				":o": "emoticons/what.png",
+				";)": "emoticons/wink.png"
+			},
+			hidden: {
+				">:[": "emoticons/angry.png",
+				"8]": "emoticons/cool.png",
+				"D:": "emoticons/gah.png",
+				":]": "emoticons/happy.png",
+				":\\": "emoticons/hm.png",
+				"-.-": "emoticons/meh.png",
+				"-_-": "emoticons/meh.png",
+				":X": "emoticons/mmf.png",
+				":[": "emoticons/sad.png",
+				":\'(": "emoticons/sad.png",
+				":\'[": "emoticons/sad.png",
+				":p": "emoticons/tongue.png",
+				":?": "emoticons/what.png",
+				";]": "emoticons/wink.png",
+				";D": "emoticons/wink.png"
+			}
+		}
 	});
 
 	// Users autocomplete
@@ -258,17 +283,19 @@ $(function() {
 		usersAutocomplete.autocomplete({
 			minLength: 3,
 			source: function(request, response) {
-				$.getJSON(Routing.generate('api_user_search', {term: request.term}), {format: 'json'}, function(data) {
-					var users = data.body.users;
+				$.getJSON(Routing.generate('api_user_search', {term: request.term}),
+					{ format: 'json', token: _t },
+					function(data) {
+						var users = data.body.users;
 
-					response($.map(users, function( item ) {
-						return {
-							label: item.firstName+' '+item.lastName,
-							value: item.firstName+' '+item.lastName,
-							user: item
-						}
-					}));
-				});
+						response($.map(users, function( item ) {
+							return {
+								label: item.firstName+' '+item.lastName,
+								value: item.firstName+' '+item.lastName,
+								user: item
+							}
+						}));
+					});
 			}
 		});
 

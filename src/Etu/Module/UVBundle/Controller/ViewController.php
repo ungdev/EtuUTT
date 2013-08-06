@@ -4,7 +4,6 @@ namespace Etu\Module\UVBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Entity\Notification;
-use Etu\Core\CoreBundle\Util\RedactorJsEscaper;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Model\BadgesManager;
 use Etu\Module\UVBundle\Entity\Comment;
@@ -60,8 +59,6 @@ class ViewController extends Controller
 			->getForm();
 
 		if ($request->getMethod() == 'POST' && $commentForm->submit($request)->isValid()) {
-			$comment->setBody(RedactorJsEscaper::escape($comment->getBody()));
-
 			$em->persist($comment);
 			$em->flush();
 

@@ -10,6 +10,6 @@
 
 {% block content %}
 	<div class="padding20-all">
-		{{ page.content|raw }}
+		{{ page.content|bbcode_filter('default_filter') }}
 	</div>
 {% endblock %}

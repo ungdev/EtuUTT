@@ -23,8 +23,6 @@
 
 		"avalanche123/imagine-bundle": "v2.1",
 		"friendsofsymfony/jsrouting-bundle": "~1.1",
-		"jms/serializer-bundle": "dev-master",
-		"friendsofsymfony/rest-bundle": "dev-master",
 		"doctrine/doctrine-fixtures-bundle": "dev-master",
 		"stof/doctrine-extensions-bundle": "~1.1@dev",
 		"knplabs/knp-time-bundle": "dev-master",
@@ -32,6 +30,7 @@
 		"frequence-web/calendr-bundle": "1.*",
 		"guzzle/guzzle": "~3.7",
 		"tedivm/jshrink": "dev-master",
+		"helios-ag/fm-bbcode-bundle": "6.2",
 		"tga/audience": "dev-master"
 	},
 	"scripts": {

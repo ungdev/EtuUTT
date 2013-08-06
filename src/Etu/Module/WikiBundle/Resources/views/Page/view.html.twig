@@ -94,7 +94,7 @@
 						> {{ category.title }}
 					{% endfor %}
 				</p>
-				{{ page.revision.body|raw }}
+				{{ page.revision.body|bbcode_filter('default_filter') }}
 			</div>
 		</div>
 	</div>

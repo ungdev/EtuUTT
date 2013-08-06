@@ -89,6 +89,16 @@ class ElementToImport
 			}
 		}
 
+		$niveau = null;
+		$branch = $this->element->getNiveau();
+
+		preg_match('/^[^0-9]+/i', $this->element->getNiveau(), $match);
+
+		if (isset($match[0])) {
+			$branch = $match[0];
+			$niveau = str_replace($branch, '', $this->element->getNiveau());
+		}
+
 		$user = new \Etu\Core\UserBundle\Entity\User();
 		$user->setAvatar($avatar);
 		$user->setLogin($this->element->getLogin());
@@ -97,13 +107,13 @@ class ElementToImport
 		$user->setLastName($this->element->getLastName());
 		$user->setFiliere($this->element->getFiliere());
 		$user->setFormation(ucfirst(strtolower($this->element->getFormation())));
-		$user->setNiveau($this->element->getNiveau());
+		$user->setNiveau($niveau);
+		$user->setBranch($branch);
 		$user->setMail($this->element->getMail());
 		$user->setPhoneNumber($this->element->getPhoneNumber());
 		$user->setRoom($this->element->getRoom());
 		$user->setStudentId($this->element->getStudentId());
 		$user->setTitle($this->element->getTitle());
-		$user->setLdapInformations($this->element);
 		$user->setIsStudent($this->element->getIsStudent());
 		$user->setKeepActive(false);
 		$user->setUvs(implode('|', $this->element->getUvs()));

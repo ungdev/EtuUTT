@@ -57,7 +57,7 @@
 				<table style="width: 600px; margin: 0 auto; border-collapse: collapse;">
 					<tr>
 						<td>
-							{{ daymail.body|raw }}
+							{{ daymail.body|bbcode_filter('default_filter') }}
 						</td>
 					</tr>
 				</table>

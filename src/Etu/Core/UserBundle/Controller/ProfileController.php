@@ -9,6 +9,7 @@ use Etu\Core\UserBundle\Entity\Course;
 use Etu\Core\UserBundle\Entity\Member;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Model\BadgesManager;
+use Etu\Core\UserBundle\Model\CountriesManager;
 use Etu\Core\UserBundle\Schedule\Helper\ScheduleBuilder;
 
 use Symfony\Component\Form\FormError;
@@ -71,7 +72,7 @@ class ProfileController extends Controller
 			->add('postalCodePrivacy', 'choice', $privacyChoice)
 			->add('city', null, array('required' => false))
 			->add('cityPrivacy', 'choice', $privacyChoice)
-			->add('country', null, array('required' => false))
+			->add('country', 'choice', array('choices' => CountriesManager::getCountriesList(), 'required' => false))
 			->add('countryPrivacy', 'choice', $privacyChoice)
 			->add('birthday', 'birthday_picker', array('required' => false))
 			->add('birthdayPrivacy', 'choice', $privacyChoice)

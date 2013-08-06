@@ -66,14 +66,31 @@ class ElementToUpdate
 		$user = $this->database;
 		$history = $user->addCureentSemesterToHistory();
 
+		$niveau = null;
+		$branch = $this->ldap->getNiveau();
+
+		preg_match('/^[^0-9]+/i', $this->ldap->getNiveau(), $match);
+
+		if (isset($match[0])) {
+			$branch = $match[0];
+			$niveau = str_replace($branch, '', $this->ldap->getNiveau());
+		}
+
+
+		// Updates
 		if (ucfirst(strtolower($this->ldap->getFormation())) != $this->database->getFormation()) {
 			$persist = true;
 			$user->setFormation(ucfirst(strtolower($this->ldap->getFormation())));
 		}
 
-		if ($this->ldap->getNiveau() != $this->database->getNiveau()) {
+		if ($niveau != $this->database->getNiveau()) {
 			$persist = true;
-			$user->setNiveau($this->ldap->getNiveau());
+			$user->setNiveau($niveau);
+		}
+
+		if ($branch != $this->database->getBranch()) {
+			$persist = true;
+			$user->setBranch($branch);
 		}
 
 		if ($this->ldap->getFiliere() != $this->database->getFiliere()) {

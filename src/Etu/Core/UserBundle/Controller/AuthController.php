@@ -190,6 +190,18 @@ class AuthController extends Controller
 				$import = new ElementToImport($this->getDoctrine(), $ldapUser);
 				$user = $import->import(true);
 			} elseif ($ldapUser instanceof Organization) {
+				$this->get('session')->set('orga', null);
+				$this->get('session')->set('user', null);
+				$this->get('session')->clear();
+
+				if (ini_get('session.use_cookies')) {
+					$params = session_get_cookie_params();
+					setcookie(session_name(), '', time() - 42000,
+						$params['path'], $params['domain'],
+						$params['secure'], $params['httponly']
+					);
+				}
+
 				$this->get('session')->getFlashBag()->set('message', array(
 					'type' => 'success',
 					'message' => 'user.auth.connect.orga_exists_ldap'

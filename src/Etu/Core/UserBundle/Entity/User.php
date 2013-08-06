@@ -102,7 +102,11 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(type="string", length=255, nullable=true)
-	 * @Assert\Length(min = "2", max = "50")
+	 * @Assert\Length(
+	 *      min = "2", max = "50",
+	 *      minMessage = "user.validation.firstname.length_min",
+	 *      maxMessage = "user.validation.firstname.length_max"
+	 * )
 	 */
 	protected $firstName;
 
@@ -110,7 +114,11 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(type="string", length=255, nullable=true)
-	 * @Assert\Length(min = "2", max = "50")
+	 * @Assert\Length(
+	 *      min = "2", max = "50",
+	 *      minMessage = "user.validation.lastname.length_min",
+	 *      maxMessage = "user.validation.lastname.length_max"
+	 * )
 	 */
 	protected $lastName;
 
@@ -124,7 +132,14 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(type="string", length=255, nullable=true)
+	 * @ORM\Column(type="string", length=10, nullable=true)
+	 */
+	protected $branch;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string", length=10, nullable=true)
 	 */
 	protected $niveau;
 
@@ -139,7 +154,10 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(type="string", length=30, nullable=true)
-	 * @Assert\Regex("/^0[1-68]([-. ]?[0-9]{2}){4}$/")
+	 * @Assert\Regex(
+	 *      pattern = "/^0[1-68]([-. ]?[0-9]{2}){4}$/",
+	 *      message = "user.validation.phoneNumber"
+	 * )
 	 */
 	protected $phoneNumber;
 
@@ -155,7 +173,6 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(type="string", length=255, nullable=true)
-	 * @Assert\Length(min = "2", max = "50")
 	 */
 	protected $title;
 
@@ -163,7 +180,6 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(type="string", length=255, nullable=true)
-	 * @Assert\Length(min = "2", max = "50")
 	 */
 	protected $room;
 
@@ -193,7 +209,11 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(type="string", length=50, nullable=true)
-	 * @Assert\Length(min = "2", max = "50")
+	 * @Assert\Length(
+	 *      min = "2", max = "50",
+	 *      minMessage = "user.validation.nationality.length_min",
+	 *      minMessage = "user.validation.nationality.length_max"
+	 * )
 	 */
 	protected $nationality;
 
@@ -209,7 +229,11 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(type="string", length=100, nullable=true)
-	 * @Assert\Length(min = "2", max = "100")
+	 * @Assert\Length(
+	 *      min = "2", max = "100",
+	 *      minMessage = "user.validation.address.length_min",
+	 *      minMessage = "user.validation.address.length_max"
+	 * )
 	 */
 	protected $adress;
 
@@ -240,7 +264,11 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(type="string", length=100, nullable=true)
-	 * @Assert\Length(min = "2", max = "50")
+	 * @Assert\Length(
+	 *      min = "2", max = "50",
+	 *      minMessage = "user.validation.city.length_min",
+	 *      minMessage = "user.validation.city.length_max"
+	 * )
 	 */
 	protected $city;
 
@@ -256,7 +284,11 @@ class User implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(type="string", length=50, nullable=true)
-	 * @Assert\Length(min = "2", max = "50")
+	 * @Assert\Length(
+	 *      min = "2", max = "50",
+	 *      minMessage = "user.validation.country.length_min",
+	 *      minMessage = "user.validation.country.length_max"
+	 * )
 	 */
 	protected $country;
 
@@ -326,7 +358,10 @@ class User implements UserInterface, \Serializable
 	 *	 > For trombi
 	 *
 	 * @ORM\Column(type="string", length=50, nullable=true)
-	 * @Assert\Length(max = "50")
+	 * @Assert\Length(
+	 *      max = "50",
+	 *      maxMessage = "user.validation.surnom.length_max"
+	 * )
 	 */
 	protected $surnom;
 
@@ -429,7 +464,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $isAdmin;
+	protected $isAdmin = false;
 
 	/**
 	 * If the user is banned
@@ -438,7 +473,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $isBanned;
+	protected $isBanned = false;
 
 	/**
 	 * Read-only mode enabled fo this user?
@@ -447,7 +482,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $isReadOnly;
+	protected $isReadOnly = false;
 
 	/**
 	 * Read-only expiration date
@@ -1043,6 +1078,28 @@ class User implements UserInterface, \Serializable
 	public function getFormation()
 	{
 		return $this->formation;
+	}
+
+	/**
+	 * @param string $branch
+	 * @return $this
+	 */
+	public function setBranch($branch)
+	{
+		if ($branch == 'NC') {
+			$branch = null;
+		}
+
+		$this->branch = $branch;
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getBranch()
+	{
+		return $this->branch;
 	}
 
 	/**
@@ -2464,18 +2521,18 @@ class User implements UserInterface, \Serializable
 			BadgesManager::userAddBadge($this, 'challenge', 5);
 		}
 
-		if ($this->getNiveau() == 'TC1' || $this->getNiveau() == 'TC01') {
+		if ($this->getBranch() == 'TC' && $this->getNiveau() == '1') {
 			BadgesManager::userAddBadge($this, 'tc01');
 		}
 
-		if ($this->getNiveau() == 'TC6' || $this->getNiveau() == 'TC06') {
+		if ($this->getBranch() == 'TC' && $this->getNiveau() == '6') {
 			BadgesManager::userAddBadge($this, 'tc06');
 		}
 
 		if (        BadgesManager::userHasBadge($this, 'subscriber')
 				&&  BadgesManager::userHasBadge($this, 'forum_message')
 				&&  BadgesManager::userHasBadge($this, 'profile_completed')) {
-			BadgesManager::userAddBadge($this, 'starter');
+					BadgesManager::userAddBadge($this, 'starter');
 		}
 
 		/** @var Member[] $memberships */
@@ -2506,17 +2563,29 @@ class User implements UserInterface, \Serializable
 
 		foreach (BadgesManager::findBadgesList() as $serie => $badges) {
 			foreach ($badges as $level => $badge) {
-				$list[$serie][$level] = array(
-					'owned' => false,
-					'badge' => $badge,
-				);
+				if ($badge->getCountLevels() > 1) {
+					$list[$serie][$level] = array(
+						'owned' => false,
+						'badge' => $badge,
+					);
+				} else {
+					$list['singles'][$serie] = array(
+						'owned' => false,
+						'badge' => $badge,
+					);
+				}
 			}
 		}
 
 		/** @var $userBadge UserBadge */
 		foreach ($this->badges->toArray() as $userBadge) {
 			$badge = $userBadge->getBadge();
-			$list[$badge->getSerie()][$badge->getLevel()]['owned'] = true;
+
+			if ($badge->getCountLevels() > 1) {
+				$list[$badge->getSerie()][$badge->getLevel()]['owned'] = true;
+			} else {
+				$list['singles'][$badge->getSerie()]['owned'] = true;
+			}
 		}
 
 		return $list;

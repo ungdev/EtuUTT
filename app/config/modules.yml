@@ -1,5 +1,6 @@
 modules:
     - Etu\Module\AssosBundle\EtuModuleAssosBundle
+    - Etu\Module\ApiBundle\EtuModuleApiBundle
     - Etu\Module\BuckUTTBundle\EtuModuleBuckUTTBundle
     - Etu\Module\BugsBundle\EtuModuleBugsBundle
     - Etu\Module\CumulBundle\EtuModuleCumulBundle

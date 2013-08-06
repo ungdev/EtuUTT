@@ -1,8 +1,9 @@
 upstream phpfcgi {
     server unix:/var/run/php5-fpm.sock;
 }
+
 server {
-    listen 80;
+    listen 443;
 
     server_name openutt.utt.fr;
     root /var/www/web;
@@ -56,10 +57,77 @@ server {
 
     location ~ \.php($|/) {
         fastcgi_pass phpfcgi;
-        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+		fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
-        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        fastcgi_param  HTTPS off;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param HTTPS on;
+        fastcgi_buffers 8 512k;
+        fastcgi_buffer_size 256k;
+        fastcgi_send_timeout 5m;
+        fastcgi_read_timeout 5m;
+        fastcgi_connect_timeout 5m;
+    }
+}
+
+server {
+    listen 80;
+
+    server_name sopenutt.utt.fr;
+    root /var/www/web;
+
+    error_log /var/log/nginx/dev.error.log;
+    access_log /var/log/nginx/dev.access.log;
+
+    # strip app.php/ prefix if it is present
+    rewrite ^/app\.php/?(.*)$ /$1 permanent;
+
+    rewrite ^/mail/?$ /mail/index.php last;
+
+    auth_basic             "Restricted Beta access";
+    auth_basic_user_file   /var/www/.htpasswd;
+
+    location /phpmyadmin {
+        root /usr/share/;
+        index index.php index.html index.htm;
+
+        location ~ ^/phpmyadmin/(.+\.php)$ {
+            try_files $uri = 404;
+            root /usr/share/;
+            fastcgi_pass unix:/var/run/php5-fpm.sock;
+            fastcgi_index index.php;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            include /etc/nginx/fastcgi_params;
+        }
+
+        location ~* ^/phpmyadmin/(.+\.(jpg|jpeg|gif|css|png|js|ico|html|xml|txt))$ {
+            root /usr/share/;
+        }
+    }
+
+    location /api/v1 {
+        index app.php;
+        try_files $uri @api_v1;
+    }
+
+    location @api_v1 {
+        rewrite ^(.*)$ /api/v1/app.php/$1 last;
+    }
+
+    location / {
+        index app.php;
+        try_files $uri @site;
+    }
+
+    location @site {
+        rewrite ^(.*)$ /app.php/$1 last;
+    }
+
+    location ~ \.php($|/) {
+        fastcgi_pass phpfcgi;
+		fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param HTTPS off;
         fastcgi_buffers 8 512k;
         fastcgi_buffer_size 256k;
         fastcgi_send_timeout 5m;

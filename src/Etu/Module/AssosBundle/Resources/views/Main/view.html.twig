@@ -70,10 +70,12 @@
 					</p>
 				{% endif %}
 
+				{% if orga.contactMail %}
 				<p>
 					<strong>{{ 'assos.main.view.contactMail'|trans }}</strong><br />
 					<a href="mailto:{{ orga.contactMail }}">{{ orga.contactMail }}</a>
 				</p>
+				{% endif %}
 
 				{% if orga.website %}
 					<p>
@@ -90,7 +92,11 @@
 				{% endif %}
 			</div>
 			<div class="span9">
-				{{ orga.description|raw }}
+				{% if orga.description %}
+					{{ orga.description|bbcode_filter('default_filter') }}
+				{% else %}
+					{{ orga.descriptionShort }}
+				{% endif %}
 			</div>
 		</div>
 	</div>

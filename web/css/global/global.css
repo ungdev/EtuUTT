@@ -29,7 +29,8 @@ textarea {
 }
 /* Redactor */
 .redactor {
-  width: 95%;
+  width: 100%;
+  height: 250px;
   margin-bottom: 5px;
 }
 /* Police */
