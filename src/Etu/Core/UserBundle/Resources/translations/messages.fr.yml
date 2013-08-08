@@ -142,11 +142,11 @@ user:
                 administrer
                 sur la gauche.
             desc_no_orga: |
-                Vous ne faites parti d'aucune association, vous n'avez donc pas la possibilité
+                Vous ne faites partie d'aucune association, vous n'avez donc pas la possibilité
                 d'effectuer de telles actions.
         orga:
             position: Au sein de %orga%, vous êtes
-            since: Vous faites parti de cette association depuis le %date%.
+            since: Vous faites partie de cette association depuis le %date%.
             permissions: Vous avez les droits suivants :
             no_permission: Vous n'avez pas de permission quant à cette association
         desc:
