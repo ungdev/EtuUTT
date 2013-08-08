@@ -2091,7 +2091,7 @@
 
 				// only add width and height if one is specified
 				if((element.complete && (w || h)) || (w && h))
-					attribs = "=" + $element.width() + "x" + $element.height();
+					attribs = " width=" + $element.width() + " height=" + $element.height();
 
 				return '[img' + attribs + ']' + $element.attr('src') + '[/img]';
 			},

@@ -282,7 +282,7 @@ class AdminController extends Controller
 
 		$form = $this->createFormBuilder($page)
 			->add('title')
-			->add('content', 'redactor')
+			->add('content')
 			->getForm();
 
 		$request = $this->getRequest();
@@ -300,6 +300,7 @@ class AdminController extends Controller
 		}
 
 		return array(
+			'page' => $page,
 			'form' => $form->createView()
 		);
 	}

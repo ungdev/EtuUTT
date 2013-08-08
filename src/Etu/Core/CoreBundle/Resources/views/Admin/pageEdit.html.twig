@@ -6,9 +6,27 @@
 	<img src="{{ asset('img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
+{% block javascripts %}
+	<script src="{{ asset('ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
+	<script>
+		$(function() {
+			var editor = ace.edit('form_content_editor');
+			editor.setTheme("ace/theme/eclipse");
+			editor.getSession().setMode("ace/mode/html");
+
+			var textarea = $('#form_content');
+			textarea.hide();
+
+			$('#form').submit(function(){
+				textarea.val(editor.getValue());
+			});
+		});
+	</script>
+{% endblock %}
+
 {% block content %}
 	<div class="padding20-all">
-		<form method="post">
+		<form method="post" id="form">
 			{{ form_errors(form) }}
 
 			<div class="control-group">
@@ -21,11 +39,12 @@
 			<div class="control-group">
 				<label class="control-label">{{ form_label(form.content, 'core.admin.pageEdit.content'|trans) }}</label>
 				<div class="controls">
+					<div id="form_content_editor" style="position: absolute; width: 800px; height: 400px;">{{ page.content }}</div>
 					{{ form_widget(form.content) }}
 					<span class="help-block">{{ form_errors(form.content) }}</span>
 				</div>
 			</div>
-			<div class="control-group">
+			<div class="control-group" style="margin-top: 450px;">
 				<div class="controls">
 					{{ form_rest(form) }}
 

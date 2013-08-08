@@ -1,22 +1,28 @@
 
-# EtuUTT #
-##########
+# Symfony #
+###########
 
-/web/bundles/
-/web/mail/config/db.inc.php
-/web/mail/config/main.inc.php
+/web/bundles/*
+/web/uploads/*
 /app/bootstrap.php.cache
-/app/config/parameters.yml
 /app/cache/*
 /app/logs/*
-/build/
 /vendor/
 /bin/
 /composer.phar
-.idea/
-objects/*
-temp/*
 *.php~
+
+# Eclipse #
+###########
+.classpath
+.project
+.settings/
+
+# PHPStorm #
+############
+.idea/
+*.iml
+*.iws
 
 # Compiled source #
 ###################

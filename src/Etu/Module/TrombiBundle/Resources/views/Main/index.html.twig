@@ -26,7 +26,7 @@
 		</div>
 	{% else %}
 		<div class="trombi-search-box">
-			<form method="post" action="{{ path('trombi_index') }}">
+			<form method="get" action="{{ path('trombi_index') }}">
 				<h4>{{ 'trombi.main.index.search_title'|trans }}</h4>
 
 				{{ form_errors(form) }}
