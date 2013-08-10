@@ -1,0 +1,18 @@
+{
+    "basePath": "http://openutt.utt.fr/api--default-api-version",
+    "resourcePath": "about",
+    "apis": [
+        {
+            "path": "/",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "summary": "About the APi",
+                    "nickname": "about",
+                    "notes": "Give some informations about the EtuUTT API"
+                }
+            ],
+            "description": "About the API"
+        }
+    ]
+}

@@ -7,17 +7,13 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Etu\Core\UserBundle\Entity\User;
 
 /**
- * Issue
- *
  * @ORM\Table(name="etu_api_access")
  * @ORM\Entity()
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Access
 {
-	const READ = 10;
-	const READ_WRITE = 20;
-	const READ_WRITE_DELETE = 30;
+	const ANONYMOUS = 10;
+	const CONNECTED = 20;
 
 	/**
 	 * @var integer
@@ -41,7 +37,7 @@ class Access
 	 *
 	 * @ORM\Column(type="integer")
 	 */
-	protected $authorization = self::READ;
+	protected $authorization = self::ANONYMOUS;
 
 	/**
 	 * SHA-256 token
@@ -74,13 +70,6 @@ class Access
 	 * @ORM\Column(type="datetime")
 	 */
 	protected $updatedAt;
-
-	/**
-	 * @var \DateTime $deletedAt
-	 *
-	 * @ORM\Column(type="datetime", nullable = true)
-	 */
-	protected $deletedAt;
 
     /**
      * Get id
@@ -182,29 +171,6 @@ class Access
     public function getUpdatedAt()
     {
         return $this->updatedAt;
-    }
-
-    /**
-     * Set deletedAt
-     *
-     * @param \DateTime $deletedAt
-     * @return Access
-     */
-    public function setDeletedAt($deletedAt)
-    {
-        $this->deletedAt = $deletedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get deletedAt
-     *
-     * @return \DateTime
-     */
-    public function getDeletedAt()
-    {
-        return $this->deletedAt;
     }
 
     /**

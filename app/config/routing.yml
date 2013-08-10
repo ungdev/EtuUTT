@@ -21,7 +21,7 @@ fos_js_routing:
 
 # API
 api_user_search:
-    pattern:  /api/v1/users/search/{term}
+    pattern:  /api/users/search/{term}
     options:
         expose: true
 

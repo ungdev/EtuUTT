@@ -4,7 +4,9 @@
 	"type": "project",
 	"description": "EtuUTT",
 	"autoload": {
-		"psr-0": { "": "src/" }
+		"psr-0": {
+			"": ["src/", "api/src/"]
+		}
 	},
 	"require": {
 		"php": ">=5.3.3",
@@ -31,6 +33,7 @@
 		"guzzle/guzzle": "~3.7",
 		"tedivm/jshrink": "dev-master",
 		"helios-ag/fm-bbcode-bundle": "6.2",
+		"zircote/swagger-php": "dev-master",
 		"tga/audience": "dev-master"
 	},
 	"scripts": {
@@ -60,7 +63,7 @@
 			"file": "app/config/parameters.yml"
 		},
 		"branch-alias": {
-			"dev-master": "2.3-dev"
+			"dev-master": "10.1-dev"
 		}
 	}
 }

@@ -1,0 +1,14 @@
+{
+    "apiVersion": null,
+    "swaggerVersion": null,
+    "apis": [
+        {
+            "path": "/resources/about.{format}",
+            "description": "About the API"
+        },
+        {
+            "path": "/resources/users.{format}",
+            "description": "Operations about users"
+        }
+    ]
+}

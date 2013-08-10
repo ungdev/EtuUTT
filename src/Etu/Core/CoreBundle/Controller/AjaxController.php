@@ -6,9 +6,8 @@ use Doctrine\ORM\EntityManager;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\User;
-use Etu\Core\UserBundle\Entity\Badge;
-
 use Etu\Core\UserBundle\Model\BadgesManager;
+
 use Symfony\Component\HttpFoundation\Response;
 
 // Import @Route() and @Template() annotations
@@ -16,9 +15,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api")
+ * @Route("/ajax")
  */
-class ApiController extends Controller
+class AjaxController extends Controller
 {
 	/**
 	 * @Route(

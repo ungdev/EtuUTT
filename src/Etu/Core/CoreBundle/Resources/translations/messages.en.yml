@@ -3,13 +3,18 @@ core:
     admin:
         index:
             title: Dashboard
-            server_load: Load server
+            server_status: Load server
+            load: Load
+            disk: Disk
+            processes: Processus
         modules:
             title: Modules
             name: Name
             author: Author
             description: Description
             is_not_ready: This module is not ready to be used
+            needed_by: Required by %needed_by%
+            need: Require %need%
             enable_disable: Enable/disable
             confirm: You have successfully changed the modules
         pageCreate:
@@ -79,6 +84,16 @@ core:
         indexAnonymous:
             title: Home
             welcome: Welcome to the student website of the University of Technology of Troyes
+            desc: |
+                L'association d'informatique de l'UTT, l'UTT Net Group (UNG) est fière de vous présenter
+                ce site créé par et pour les étudiants.<br />
+                Il connecte la communauté des UTTiens et offre de multiples
+                services aux étudiants en complément<br />des services officiels pour faciliter
+                leur intégration et leur vie étudiante.<br />
+                <strong>Bonne visite !</strong>
+            events: Coming soon
+            date: On %date%
+            allEvents: All the events
         changeLocale:
             confirm: You have successfully changed the language
 

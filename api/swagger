@@ -1,0 +1,8 @@
+<?php
+
+passthru(
+	'"bin/swagger" -p "src/" -o "web/api/doc" '
+	.'--default-base-path "http://openutt.utt.fr/api"'
+	.'--default-api-version "1.0-dev"'
+	.'--default-swagger-version "1.2"'
+);
