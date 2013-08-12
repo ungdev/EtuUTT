@@ -114,6 +114,23 @@ class DefaultController extends Controller
             $this->get('session')->remove(SoapManager::cookie_name);
             return $this->redirect($this->generateUrl('buckutt_history'));
         }
+        elseif ($action == 'lostPin'){
+            $SADMIN = new SoapManager('SADMIN', $this->get('session'));
+            $state = $SADMIN->resetKey($this->getUser()->getLogin(), $this->getUser()->getMail());
+
+            if ($state ==0){
+                $this->get('session')->getFlashBag()->set('message', array(
+                    'type' => 'success',
+                    'message' => 'Un nouveau code t\'a été envoyé par mail'
+                ));
+            }
+            else {
+                $this->get('session')->getFlashBag()->set('message', array(
+                    'type' => 'error',
+                    'message' => 'Impossible d\'envoyer un mail. Contacte buckutt@utt.fr'
+                ));
+            }
+        }
 
         $form = $this->createFormBuilder()
             ->add('pin', 'password', array('required' => true, 'max_length' => 4))
