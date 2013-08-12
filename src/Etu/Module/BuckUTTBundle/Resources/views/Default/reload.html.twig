@@ -1,4 +1,4 @@
-{% extends '::page-1col.html.twig' %}
+{% extends '::page-2cols.html.twig' %}
 
 {% block title %}{{ 'buckutt.main.index.title'|trans }}{% endblock %}
 
@@ -6,33 +6,55 @@
     <link rel="stylesheet" href="{{ asset('css/bundles/buckutt.css') }}" type="text/css" />
 {% endblock %}
 
-{% block content %}
-    <p>
-        Bonjour {{ name }}<br />
-        Tu a {{ credit }} € sur ton comtpe
-    </p>
-    <hr />
-    <a href="{{ path('buckutt_history') }}">Historique</a> | <a href="{{ path('buckutt_reload') }}">Recharger</a> | Administrer | <a href="{{ path('buckutt_connect', {'action':'disconnect'}) }}">Deconnexion</a>
-    <hr />
-    {% if step == 1 %}
-        <p>Actuellement, tu as un crédit de {{ credit }} € sur ton compte.<br />
-            Tu souhaites effectuer un rechargement de {{ amount }} €.<br />
-            Ton solde sera donc de {{ amount_total }} €.</p>
-        <br />
-        {{ htmlForm|raw }}
-    {% else %}
-        <p>
-            Le montant maximum de ton compte buckutt est {{ max_amount }}.
-            Tu peux donc recharger d'un maximum de {{ possible_amount }} €.
+{% block titleIcon %}
+    <img src="{{ asset('img/titles/buckutt.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
 
-        </p>
-        <form method="post" action="{{ path('buckutt_reload', {'step':1}) }}">
-            <h4>Choisis le montant à recharger :</h4>
-            {{ form_widget(form.amount) }}
-            <div class="buckutt-reload-submit">
-                {{ form_rest(form) }}
-                <button type="submit" class="btn">Rechargement</button>
-            </div>
-        </form>
-    {% endif %}
+{% block content %}
+    <ul class="nav nav-tabs page-tabs">
+        <li>
+            <a href="{{ path('buckutt_history') }}">
+                {{ 'buckutt.main.menu.history'|trans }}
+            </a>
+        </li>
+        <li class="active page-tabs-resolved-active">
+            <a href="{{ path('buckutt_reload') }}">
+                {{ 'buckutt.main.menu.reload'|trans }}
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('buckutt_admin') }}">
+                {{ 'buckutt.main.menu.admin'|trans }}
+            </a>
+        </li>
+        <li class="pull-right">
+            <a href="{{ path('buckutt_connect', {'action': 'disconnect'}) }}">
+                {{ 'buckutt.main.menu.logout'|trans }}
+            </a>
+        </li>
+    </ul>
+
+    <div class="padding20-sides">
+        {% if step == 1 %}
+            <p>Actuellement, tu as un crédit de {{ credit }} € sur ton compte.<br />
+                Tu souhaites effectuer un rechargement de {{ amount }} €.<br />
+                Ton solde sera donc de {{ amount_total }} €.</p>
+            <br />
+            {{ htmlForm|raw }}
+        {% else %}
+            <p>
+                Le montant maximum de ton compte buckutt est {{ max_amount }}.
+                Tu peux donc recharger d'un maximum de {{ possible_amount }} €.
+
+            </p>
+            <form method="post" action="{{ path('buckutt_reload', {'step':1}) }}">
+                <h4>Choisis le montant à recharger :</h4>
+                {{ form_widget(form.amount) }}
+                <div class="buckutt-reload-submit">
+                    {{ form_rest(form) }}
+                    <button type="submit" class="btn">Rechargement</button>
+                </div>
+            </form>
+        {% endif %}
+    </div>
 {% endblock %}

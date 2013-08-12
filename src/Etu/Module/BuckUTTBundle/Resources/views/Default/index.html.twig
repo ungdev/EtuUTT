@@ -22,6 +22,11 @@
 				{{ 'buckutt.main.menu.reload'|trans }}
 			</a>
 		</li>
+        <li>
+            <a href="{{ path('buckutt_admin') }}">
+                {{ 'buckutt.main.menu.admin'|trans }}
+            </a>
+        </li>
 		<li class="pull-right">
 			<a href="{{ path('buckutt_connect', {'action': 'disconnect'}) }}">
 				{{ 'buckutt.main.menu.logout'|trans }}
@@ -29,35 +34,35 @@
 		</li>
 	</ul>
 
-    <p>
-        Bonjour {{ name }}<br />
-        Tu as {{ credit }} € sur ton comtpe
-    </p>
-    <p>
-        Historique des transactions du {{ history_date.start }} au {{ history_date.end }}
-    </p>
-    <ul id="buckutt-history" class="buckutt-history-results">
-        {% if history|length == 0 %}
-            <p>
-                Aucun achat ou rechargement effectué entre ces dates
-            </p>
-        {% endif %}
-        {% for hi in history %}
-        <li class="buckutt-history-results-{{ hi.type }}">
-            <p>
-                {% if hi.type == 0 %}
-                    {{ hi.date }} - {{ hi.amount }} €
-                    <br />
-                    {{ hi.object }}
-                    <br />
-                    {{ hi.point }} - {{ hi.fundation }}
-                {% else %}
-                    {{ hi.date }} - {{ hi.amount }} €
-                    <br />
-                    {{ hi.point }}
-                {% endif %}
-            </p>
-        </li>
-        {% endfor %}
-    </ul>
+	<div class="padding20-sides">
+		<div class="buckutt-credit">
+			<h3>Crédit : {{ credit }} €</h3>
+		</div>
+
+		<div class="buckutt-history">
+			{% for item in history %}
+			<div class="buckutt-history-item buckutt-history-{{ item.type }}">
+				<strong class="buckutt-history-item-amount">
+					{% if item.type == 'buy' %}-{% else %}+{% endif %}
+					{{ item.amount }} €
+
+					<span class="buckutt-history-item-object">
+						{% if item.type == 'buy' %}{{ item.object }}{% else %}Rechargement{% endif %}
+					</span>
+				</strong>
+				<span class="buckutt-history-item-date">
+					{{ item.date|date('d/m/Y H:i') }}
+
+					<span class="buckutt-history-item-point">
+						{{ item.point }}
+					</span>
+				</span>
+			</div>
+			{% else %}
+			<p>
+				Aucune action trouvée cette année.
+			</p>
+			{% endfor %}
+		</div>
+	</div>
 {% endblock %}

@@ -231,6 +231,102 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/buckutt/admin", name="buckutt_admin")
+     * @Template()
+     */
+    public function adminAction()
+    {
+        $formPin = $this->createFormBuilder()
+            ->add('oldpin', 'password', array('required' => true, 'max_length' => 4))
+            ->add('newpin', 'password', array('required' => true, 'max_length' => 4))
+            ->add('newpin2', 'password', array('required' => true, 'max_length' => 4))
+            ->getForm();
+
+        if ($formPin->bind($this->getRequest())->isValid()) {
+            $data = $formPin->getData();
+            $oldPin = (int)$data['oldpin'];
+            $newPin = (int)$data['newpin'];
+            $newPin2 = (int)$data['newpin2'];
+
+            $SADMIN = new SoapManager('SADMIN', $this->get('session'));
+            $state = $SADMIN->changeKeySecure($oldPin, $newPin, $newPin2);
+
+            if ($state == 1){
+                $this->get('session')->getFlashBag()->set('message', array(
+                    'type' => 'success',
+                    'message' => 'Ton code PIN a été changé avec succès'
+                ));
+            }
+            else {
+                $msg = '';
+                switch($state){
+                    case -1:
+                        $msg = 'Vous devez remplir tout les champs';
+                        break;
+                    case -2:
+                        $msg = 'Les deux nouveaux PIN ne sont pas identiques';
+                        break;
+                    case -3:
+                        $msg = 'Les codes PIN doivent êtres des entiers positifs à 4 chiffres';
+                        break;
+                    case -4:
+                        $msg = 'Nouveau PIN invalide';
+                        break;
+                    case -5:
+                        $msg = 'L\'ancien PIN est incorrect';
+                        break;
+                    default:
+                        $state = 430;
+                }
+
+                if ($state == 430)
+                    $msg = 'Erreur inconnue - Merci de contacter buckutt@utt.fr';
+
+                $this->get('session')->getFlashBag()->set('message', array(
+                    'type' => 'error',
+                    'message' => $msg
+                ));
+            }
+        }
+
+        $formBlock = $this->createFormBuilder()
+            ->add('pin', 'password', array('required' => true, 'max_length' => 4))
+            ->getForm();
+
+        if ($formBlock->bind($this->getRequest())->isValid()) {
+            $data = $formBlock->getData();
+            $pin = (int)$data['pin'];
+            $SADMIN = new SoapManager('SADMIN', $this->get('session'));
+            $state = $SADMIN->blockMe($pin);
+
+            if ($state == 1){
+                $this->get('session')->getFlashBag()->set('message', array(
+                    'type' => 'success',
+                    'message' => 'Ton compte est maintenant bloqué'
+                ));
+            }
+            else {
+                $errInfo = $SADMIN->getErrorDetail($state);
+
+                if ($errInfo == 430)
+                    $errInfo = array(430, 'Erreur inconnue', 'Merci de contacter buckutt@utt.fr');
+                else
+                    $errInfo = $errInfo[0];
+
+                $this->get('session')->getFlashBag()->set('message', array(
+                    'type' => 'error',
+                    'message' => 'Erreur '.$errInfo[0].' - '.$errInfo[1]." - ".$errInfo[2]
+                ));
+            }
+        }
+
+        return array(
+            'formPin' => $formPin->createView(),
+            'formBlock' => $formBlock->createView()
+        );
+    }
+
+    /**
      * @Route("/buckutt/sherlocks/return", name="buckutt_sherlocks")
      * @Template()
      */
