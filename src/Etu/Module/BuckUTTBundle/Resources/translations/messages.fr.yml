@@ -4,6 +4,7 @@ buckutt:
         menu:
             history: Historique
             reload: Recharger
+            admin: Administrer
             logout: Déconnexion
 
         connect:
