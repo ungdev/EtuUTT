@@ -58,10 +58,16 @@ var calendarManager = {
 	persist: function(event) {
 		var data = {
 			id: event.id,
-			start: moment(event.start).format('DD-MM-YYYY--HH-mm'),
-			end: moment(event.end).format('DD-MM-YYYY--HH-mm'),
 			allDay: event.allDay
 		};
+
+		if (event.start) {
+			data.start = moment(event.start).format('DD-MM-YYYY--HH-mm');
+		}
+
+		if (event.end) {
+			data.end = moment(event.end).format('DD-MM-YYYY--HH-mm');
+		}
 
 		$.post(
 			Routing.generate('memberships_orga_events_ajax_edit', { login: orgaLogin, id: event.id }),

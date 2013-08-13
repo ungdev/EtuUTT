@@ -524,13 +524,25 @@ class MembershipsController extends Controller
 			throw $this->createNotFoundException('No event patch provided');
 		}
 
-		$eventUpdate['start'] = \DateTime::createFromFormat('d-m-Y--H-i', $eventUpdate['start']);
-		$eventUpdate['end'] = \DateTime::createFromFormat('d-m-Y--H-i', $eventUpdate['end']);
-		$eventUpdate['allDay'] = ($eventUpdate['allDay'] == 'true') ? true : false;
+		$oldInterval = $event->getEnd()->diff($event->getBegin());
 
-		$event->setBegin($eventUpdate['start'])
-			->setEnd($eventUpdate['end'])
-			->setIsAllDay($eventUpdate['allDay']);
+		if (isset($eventUpdate['allDay'])) {
+			$event->setIsAllDay($eventUpdate['allDay'] == 'true');
+			$oldInterval = \DateInterval::createFromDateString('1 second');
+		}
+
+		if (isset($eventUpdate['start'])) {
+			$event->setBegin(\DateTime::createFromFormat('d-m-Y--H-i', $eventUpdate['start']));
+
+			$end = \DateTime::createFromFormat('d-m-Y--H-i', $eventUpdate['start']);
+			$end->add($oldInterval);
+
+			$event->setEnd($end);
+		}
+
+		if (isset($eventUpdate['end'])) {
+			$event->setEnd(\DateTime::createFromFormat('d-m-Y--H-i', $eventUpdate['end']));
+		}
 
 		$em->persist($event);
 		$em->flush();

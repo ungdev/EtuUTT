@@ -9,6 +9,17 @@ buckutt:
 
         connect:
             ask: Entre ton code PIN BuckUTT
+            explainations:
+                1: |
+                    BuckUTT est le système de paiement utilisé pour régler tes achats au foyer,
+                    au BDE ou en soirée. Il te suffit de recharger ta carte étu ici, avec ta
+                    carte bancaire, ou en passant dans la journée au BDE.
+                2: |
+                    Sur cette interface, tu peux également suivre tes derniers achats et rechargements.
+                3: |
+                     Pour commencer, connecte toi avec ton code PIN qui t'a été envoyé par mail (si
+                     tu l'a oublié, pas de panique, tu peux en regénérer un nouveau avec le lien présent
+                     sous le formulaire).
             connect: Connexion
 
         index:
