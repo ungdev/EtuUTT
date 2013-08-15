@@ -43,8 +43,11 @@
 			{% for item in history %}
 			<div class="buckutt-history-item buckutt-history-{{ item.type }}">
 				<strong class="buckutt-history-item-amount">
-					{% if item.type == 'buy' %}-{% else %}+{% endif %}
-					{{ item.amount }} €
+					{% if item.type == 'buy' %}
+						<span class="text-error">- {{ item.amount }} €</span>
+					{% else %}
+						<span class="text-success">+ {{ item.amount }} €</span>
+					{% endif %}
 
 					<span class="buckutt-history-item-object">
 						{% if item.type == 'buy' %}{{ item.object }}{% else %}Rechargement{% endif %}

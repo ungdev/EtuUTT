@@ -35,50 +35,60 @@
 	</ul>
 
 	<div class="padding20-sides">
+		<div class="row-fluid">
+			<div class="span6">
+				<fieldset>
+					<legend>Changer mon code PIN</legend>
 
-		<div class="buckutt-admin-menu">
-            <fieldset>
-                <legend>Changer mon code PIN</legend>
-                <p>Le nouveau code PIN doit contenir 4 chiffres, ni plus ni moins.</p>
-                <form method="post" action="{{ path('buckutt_admin') }}">
-                    <div>
-                        {{ form_label(formPin.oldpin, "Ancien code PIN") }}
-                        {{ form_widget(formPin.oldpin) }}
-                    </div>
-                    <div>
-                        {{ form_label(formPin.newpin, "Nouveau code PIN") }}
-                        {{ form_widget(formPin.newpin) }}
-                    </div>
-                    <div>
-                        {{ form_label(formPin.newpin2, "Resaisir le nouveau code PIN") }}
-                        {{ form_widget(formPin.newpin2) }}
-                    </div>
-                    {{ form_rest(formPin) }}
-                    <button type="submit" class="btn">Changer</button>
-                </form>
-                <p>
-                    Pour des raisons de sécurité, ton nouveau code PIN ne peut pas être un quadruplé
-                    (ex: 0000, 1111, etc), 1234 ou 4321.<br />
-                    Evite de mettre ta date de naisssance ou quoi que ce soit de trop évident.
-                </p>
-            </fieldset>
-            <br />
-            <fieldset>
-                <legend>Bloquer mon compte</legend>
-                <p>
-                    Je bloque mon comtpe en cas de perte ou de vol de ma carte.<br />
-                    ATTENTION : Tu ne pourras pas débloquer ton compte tout seul !<br />
-                    Par soucis de sécurité ton seul recours, sera de passer au BDE pour le débloquer.
-                </p>
-                <form method="post" action="{{ path('buckutt_admin') }}">
-                    <div>
-                        {{ form_label(formBlock.pin, "Par mesure de sécurité entre ton code PIN") }}
-                        {{ form_widget(formBlock.pin) }}
-                    </div>
-                    {{ form_rest(formBlock) }}
-                    <button type="submit" class="btn">Bloquer mon compte</button>
-                </form>
-            </fieldset>
+					<p class="alert alert-info buckutt-explainations">
+						Le nouveau code PIN doit contenir 4 chiffres, ni plus ni moins.
+					</p>
+
+					<form method="post" action="{{ path('buckutt_admin') }}">
+						<div>
+							{{ form_label(formPin.oldpin, "Ancien code PIN") }}
+							{{ form_widget(formPin.oldpin) }}
+						</div>
+						<div>
+							{{ form_label(formPin.newpin, "Nouveau code PIN") }}
+							{{ form_widget(formPin.newpin) }}
+						</div>
+						<div>
+							{{ form_label(formPin.newpin2, "Resaisir le nouveau code PIN") }}
+							{{ form_widget(formPin.newpin2) }}
+						</div>
+						{{ form_rest(formPin) }}
+						<button type="submit" class="btn">Changer</button>
+					</form>
+					<p class="buckutt-explainations">
+						Pour des raisons de sécurité, votre nouveau code PIN ne peut pas être un quadruplé
+						(ex: 0000, 1111, etc), 1234 ou 4321.<br />
+						Evitez de mettre votre date de naisssance ou quoi que ce soit de trop évident.
+					</p>
+				</fieldset>
+			</div>
+
+			<div class="span6">
+				<fieldset>
+					<legend>Bloquer mon compte</legend>
+					<p class="buckutt-explainations">
+						En cas de perte ou de vol de votre carte, bloquez votre compte pour empêcher
+						quiconque la trouverais d'utiliser votre compte BuckUTT.
+					</p>
+					<p class="alert alert-error buckutt-explainations">
+						Vous ne pourrez pas débloquer votre compte seul ! Vous devrez passer au BDE
+						pour le débloquer.
+					</p>
+					<form method="post" action="{{ path('buckutt_admin') }}">
+						<div>
+							{{ form_label(formBlock.pin, 'Code PIN') }}
+							{{ form_widget(formBlock.pin) }}
+						</div>
+						{{ form_rest(formBlock) }}
+						<button type="submit" class="btn">Bloquer mon compte</button>
+					</form>
+				</fieldset>
+			</div>
 		</div>
 	</div>
 {% endblock %}
