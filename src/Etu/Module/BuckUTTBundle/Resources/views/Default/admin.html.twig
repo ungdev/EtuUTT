@@ -38,54 +38,54 @@
 		<div class="row-fluid">
 			<div class="span6">
 				<fieldset>
-					<legend>Changer mon code PIN</legend>
+					<legend>{{ 'buckutt.main.admin.changePin.title'|trans }}</legend>
 
 					<p class="alert alert-info buckutt-explainations">
-						Le nouveau code PIN doit contenir 4 chiffres, ni plus ni moins.
+						{{ 'buckutt.main.admin.changePin.constraint'|trans }}
 					</p>
 
 					<form method="post" action="{{ path('buckutt_admin') }}">
 						<div>
-							{{ form_label(formPin.oldpin, "Ancien code PIN") }}
+							{{ form_label(formPin.oldpin, 'buckutt.main.admin.changePin.label.old'|trans) }}
 							{{ form_widget(formPin.oldpin) }}
 						</div>
 						<div>
-							{{ form_label(formPin.newpin, "Nouveau code PIN") }}
+							{{ form_label(formPin.newpin, 'buckutt.main.admin.changePin.label.new'|trans) }}
 							{{ form_widget(formPin.newpin) }}
 						</div>
 						<div>
-							{{ form_label(formPin.newpin2, "Resaisir le nouveau code PIN") }}
+							{{ form_label(formPin.newpin2, 'buckutt.main.admin.changePin.label.confirm'|trans) }}
 							{{ form_widget(formPin.newpin2) }}
 						</div>
 						{{ form_rest(formPin) }}
-						<button type="submit" class="btn">Changer</button>
+						<button type="submit" class="btn">
+							{{ 'buckutt.main.admin.changePin.change'|trans }}
+						</button>
 					</form>
 					<p class="buckutt-explainations">
-						Pour des raisons de sécurité, votre nouveau code PIN ne peut pas être un quadruplé
-						(ex: 0000, 1111, etc), 1234 ou 4321.<br />
-						Evitez de mettre votre date de naisssance ou quoi que ce soit de trop évident.
+						{{ 'buckutt.main.admin.changePin.security'|trans }}
 					</p>
 				</fieldset>
 			</div>
 
 			<div class="span6">
 				<fieldset>
-					<legend>Bloquer mon compte</legend>
+					<legend>{{ 'buckutt.main.admin.block.title'|trans }}</legend>
 					<p class="buckutt-explainations">
-						En cas de perte ou de vol de votre carte, bloquez votre compte pour empêcher
-						quiconque la trouverais d'utiliser votre compte BuckUTT.
+						{{ 'buckutt.main.admin.block.explaination'|trans }}
 					</p>
 					<p class="alert alert-error buckutt-explainations">
-						Vous ne pourrez pas débloquer votre compte seul ! Vous devrez passer au BDE
-						pour le débloquer.
+						{{ 'buckutt.main.admin.block.warning'|trans }}
 					</p>
 					<form method="post" action="{{ path('buckutt_admin') }}">
 						<div>
-							{{ form_label(formBlock.pin, 'Code PIN') }}
+							{{ form_label(formBlock.pin, 'buckutt.main.admin.block.label.pin'|trans) }}
 							{{ form_widget(formBlock.pin) }}
 						</div>
 						{{ form_rest(formBlock) }}
-						<button type="submit" class="btn">Bloquer mon compte</button>
+						<button type="submit" class="btn">
+							{{ 'buckutt.main.admin.block.block'|trans }}
+						</button>
 					</form>
 				</fieldset>
 			</div>

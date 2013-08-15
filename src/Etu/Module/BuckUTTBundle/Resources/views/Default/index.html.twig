@@ -3,7 +3,18 @@
 {% block title %}{{ 'buckutt.main.index.title'|trans }}{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/bundles/buckutt.css') }}" type="text/css" />
+	<link rel="stylesheet" href="{{ asset('css/bundles/buckutt.css') }}" type="text/css" />
+{% endblock %}
+
+{% block javascripts %}
+	<script type="text/javascript">
+		var items = $('.buckutt-history-item');
+
+		items.click(function() {
+			$(this).parent().find('.buckutt-history-item-meta').slideToggle();
+			return false;
+		});
+	</script>
 {% endblock %}
 
 {% block titleIcon %}
@@ -36,34 +47,73 @@
 
 	<div class="padding20-sides">
 		<div class="buckutt-credit">
-			<h3>Crédit : {{ credit }} €</h3>
+			<h3>{{ 'buckutt.main.index.credit'|trans }} : {{ credit }} €</h3>
 		</div>
 
 		<div class="buckutt-history">
 			{% for item in history %}
-			<div class="buckutt-history-item buckutt-history-{{ item.type }}">
-				<strong class="buckutt-history-item-amount">
-					{% if item.type == 'buy' %}
-						<span class="text-error">- {{ item.amount }} €</span>
-					{% else %}
-						<span class="text-success">+ {{ item.amount }} €</span>
+			<div class="buckutt-history-{{ item.type }}">
+				<a href="javascript:void(0);" class="buckutt-history-item">
+					<span class="buckutt-history-item-container">
+						{% if item.type == 'buy' %}
+							<span class="text-error buckutt-history-item-amount">- {{ item.amount }} €</span>
+						{% else %}
+							<span class="text-success buckutt-history-item-amount">+ {{ item.amount }} €</span>
+						{% endif %}
+
+						<span class="buckutt-history-item-object">
+						{% if item.type == 'buy' %}
+							{{ item.object }}
+						{% else %}
+							{{ 'buckutt.main.index.reload'|trans }}
+						{% endif %}
+						</span>
+
+						<span class="buckutt-history-item-date">
+							{{ time_diff(item.date)|ucfirst }}
+						</span>
+					</span>
+				</a>
+				<span class="buckutt-history-item-meta" style="display: none;">
+					{% if item.subObjects %}
+					<div class="buckutt-history-item-meta-info">
+						<strong class="buckutt-history-item-meta-label">Composition</strong>
+						<span class="buckutt-history-item-meta-value">{{ item.subObjectsNames }}</span>
+					</div>
 					{% endif %}
 
-					<span class="buckutt-history-item-object">
-						{% if item.type == 'buy' %}{{ item.object }}{% else %}Rechargement{% endif %}
-					</span>
-				</strong>
-				<span class="buckutt-history-item-date">
-					{{ item.date|date('d/m/Y H:i') }}
+					{% if item.date %}
+					<div class="buckutt-history-item-meta-info">
+						<strong class="buckutt-history-item-meta-label">Date</strong>
+						<span class="buckutt-history-item-meta-value">Le {{ item.date|date('d/m/Y H:i') }}</span>
+					</div>
+					{% endif %}
 
-					<span class="buckutt-history-item-point">
-						{{ item.point }}
-					</span>
+					{% if item.point %}
+					<div class="buckutt-history-item-meta-info">
+						<strong class="buckutt-history-item-meta-label">Lieu</strong>
+						<span class="buckutt-history-item-meta-value">{{ item.point }}</span>
+					</div>
+					{% endif %}
+
+					{% if item.fundation %}
+					<div class="buckutt-history-item-meta-info">
+						<strong class="buckutt-history-item-meta-label">Association</strong>
+						<span class="buckutt-history-item-meta-value">{{ item.fundation }}</span>
+					</div>
+					{% endif %}
+
+					{% if item.user %}
+					<div class="buckutt-history-item-meta-info">
+						<strong class="buckutt-history-item-meta-label">Service</strong>
+						<span class="buckutt-history-item-meta-value">{{ item.user }}</span>
+					</div>
+					{% endif %}
 				</span>
 			</div>
 			{% else %}
 			<p>
-				Aucune action trouvée cette année.
+				{{ 'buckutt.main.index.noActionFound'|trans }}
 			</p>
 			{% endfor %}
 		</div>

@@ -17,33 +17,52 @@
 .buckutt-credit {
 	float: right;
 	font-weight: bold;
-	background: #f5f5f5;
 	border-top: 1px solid #e5e5e5;
 	padding: 10px 20px;
 }
+
 .buckutt-history-item {
-	padding: 7px 15px;
+	display: block;
 	background: #f5f5f5;
 	border-top: 1px solid #e5e5e5;
+	padding: 7px 15px;
+	color: #333;
+
+	&:hover {
+		color: #333;
+		text-decoration: none;
+		background: #e5e5e5;
+	}
 }
-.buckutt-history-item-amount, .buckutt-history-item-date, .buckutt-history-item-point {
+.buckutt-history-item-container {
 	display: block;
+	width: 70%;
 }
 .buckutt-history-item-amount {
-	width: 30%;
-
-	.buckutt-history-item-object {
-		float: right;
-		font-weight: lighter;
-	}
+	display: inline-block;
+	width: 20%;
+	font-weight: bold;
+}
+.buckutt-history-item-object {
+	display: inline-block;
+	width: 50%;
 }
 .buckutt-history-item-date {
-	width: 30%;
-	font-style: italic;
+	display: inline-block;
+	width: 20%;
 	color: #999;
 	font-size: 12px;
-
-	.buckutt-history-item-point {
-		float: right;
-	}
 }
+.buckutt-history-item-meta {
+	display: block;
+	background: #fff;
+	padding: 7px 15px 20px 15px;
+	font-size: 12px;
+}
+.buckutt-history-item-meta-label {
+	display: inline-block;
+	width: 120px;
+	text-align: right;
+	padding-right: 10px;
+}
+

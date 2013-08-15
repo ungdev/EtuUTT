@@ -42,7 +42,7 @@
                                 {{ form_rest(form) }}
 								<p>
 									<a href="{{ path('buckutt_connect', {'action':'lostPin'}) }}">
-										J'ai perdu mon code Pin
+										{{ 'buckutt.main.connect.lostPin'|trans }}
 									</a>
 								</p>
                                 <button type="submit" class="btn btn-primary">
@@ -54,14 +54,12 @@
 						<hr />
 
 						<p class="alert alert-danger buckutt-explainations">
-							Comme ton code de carte bleue, ton code PIN BuckUTT est personnel.
-							Ne le donne à personne !
+							{{ 'buckutt.main.connect.warnings.1'|trans }}
 						</p>
-
                         <p class="alert alert-info buckutt-explainations">
-                            Pour des questions de sécurité, au bout de 3 tentatives ratées, ton compte
-							sera bloqué. Tu devras alors passer au BDE pour le faire débloquer.
+							{{ 'buckutt.main.connect.warnings.2'|trans }}
                         </p>
+
 						<p class="buckutt-explainations">
 							{{ 'buckutt.main.connect.explainations.1'|trans }}
 						</p>

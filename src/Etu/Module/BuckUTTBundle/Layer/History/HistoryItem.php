@@ -23,6 +23,11 @@ class HistoryItem
 	protected $object;
 
 	/**
+	 * @var array
+	 */
+	protected $subObjects;
+
+	/**
 	 * @var string
 	 */
 	protected $point;
@@ -112,6 +117,48 @@ class HistoryItem
 	public function getObject()
 	{
 		return $this->object;
+	}
+
+	/**
+	 * @param HistoryItem[] $subObjects
+	 * @return $this
+	 */
+	public function setSubObjects(array $subObjects)
+	{
+		$this->subObjects = $subObjects;
+		return $this;
+	}
+
+	/**
+	 * @param HistoryItem $subObject
+	 * @return $this
+	 */
+	public function addSubObject(HistoryItem $subObject)
+	{
+		$this->subObjects[] = $subObject;
+		return $this;
+	}
+
+	/**
+	 * @return HistoryItem[]
+	 */
+	public function getSubObjects()
+	{
+		return $this->subObjects;
+	}
+
+	/**
+	 * @return HistoryItem[]
+	 */
+	public function getSubObjectsNames()
+	{
+		$names = array();
+
+		foreach ($this->getSubObjects() as $object) {
+			$names[] = $object->getObject();
+		}
+
+		return implode(', ', $names);
 	}
 
 	/**

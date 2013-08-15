@@ -22,6 +22,23 @@ class BuckUTTLayer
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getUserCredit()
+	{
+		$client = $this->builder->createManager('SBUY');
+		return number_format($client->getCredit() / 100, 2);
+	}
+
+	/**
+	 * @return float
+	 */
+	public function getLastYearHistory()
+	{
+		return $this->getHistoryBetween(new \DateTime('1 year ago'), new \DateTime());
+	}
+
+	/**
 	 * @param \DateTime $start
 	 * @param \DateTime $end
 	 * @return array
@@ -102,6 +119,7 @@ class BuckUTTLayer
 	 */
 	public function getHistoryBetween(\DateTime $start, \DateTime $end)
 	{
+		/** @var HistoryItem[] $history */
 		$history = array();
 		$dates = array();
 
@@ -114,6 +132,8 @@ class BuckUTTLayer
 			return array();
 		}
 
+		$subObjects = array();
+
 		foreach ($purchases as $purchase) {
 			$item = new HistoryItem();
 			$item->setType(HistoryItem::TYPE_BUY)
@@ -124,8 +144,17 @@ class BuckUTTLayer
 				->setFundation($purchase[5])
 				->setAmount(number_format($purchase[6]/100, 2));
 
-			$history[] = $item;
-			$dates[] = $purchase[0];
+			if ($item->getAmount() == '0.00') {
+				$subObjects[] = $item;
+			} else {
+				if (! empty($subObjects)) {
+					$item->setSubObjects($subObjects);
+					$subObjects = array();
+				}
+
+				$history[] = $item;
+				$dates[] = $purchase[0];
+			}
 		}
 
 		$reloads = $client->getHistoriqueRecharge($start->format('U'), $end->format('U'));
