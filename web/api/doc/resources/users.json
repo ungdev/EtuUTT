@@ -1,5 +1,5 @@
 {
-    "basePath": "http://openutt.utt.fr/api--default-api-version",
+    "basePath": "http://openutt.utt.fr/api",
     "resourcePath": "users",
     "apis": [
         {
