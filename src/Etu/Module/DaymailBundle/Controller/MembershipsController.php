@@ -127,7 +127,7 @@ class MembershipsController extends Controller
 
 		$form = $this->createFormBuilder($daymailPart)
 			->add('title', 'text', array('required' => true, 'max_length' => 100))
-			->add('body', 'redactor_limited', array('required' => true))
+			->add('body', 'redactor_html', array('required' => true))
 			->getForm();
 
 		$request = $this->getRequest();

@@ -8,7 +8,8 @@ var facebox = $('a[rel*=facebox]'),
 	overlay = $('#overlay'),
 	more = $('#more'),
 	page = $('body'),
-	ckeditor = $('.redactor'),
+	sceditor = $('.redactor'),
+	redactorHtml = $('.redactor-html'),
 	usersAutocomplete = $('.user-autocomplete'),
 	changeLocale = {
 		link: $('.change-locale'),
@@ -231,7 +232,7 @@ $(function() {
 	});
 
 	// Load CKEditor
-	ckeditor.sceditor({
+	sceditor.sceditor({
 		plugins: "bbcode",
 		style: "/sceditor/minified/jquery.sceditor.default.min.css",
 		emoticonsRoot: '/',
@@ -276,6 +277,17 @@ $(function() {
 				";D": "emoticons/wink.png"
 			}
 		}
+	});
+
+	// HTML redactor
+	redactorHtml.redactor({
+		fixed: true,
+		lang: 'fr',
+		buttons: [
+			'bold', 'italic', 'deleted', 'underline', 'fontcolor', '|',
+			'alignleft', 'aligncenter', 'alignright', '|',
+			'unorderedlist', '|', 'image', 'link'
+		]
 	});
 
 	// Users autocomplete

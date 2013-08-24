@@ -37,6 +37,7 @@ parameters:
 
     etu.redactor_type.class: Etu\Core\CoreBundle\Form\RedactorType
     etu.redactor_limited_type.class: Etu\Core\CoreBundle\Form\RedactorLimitedType
+    etu.redactor_html_type.class: Etu\Core\CoreBundle\Form\RedactorHtmlType
 
     etu.form.date_picker_type.class: Etu\Core\CoreBundle\Form\DatePickerType
     etu.form.birthday_picker_type.class: Etu\Core\CoreBundle\Form\BirthdayPickerType
@@ -179,6 +180,11 @@ services:
         class: %etu.redactor_limited_type.class%
         tags:
             - { name: form.type, alias: redactor_limited }
+
+    etu.redactor_html_type:
+        class: %etu.redactor_html_type.class%
+        tags:
+            - { name: form.type, alias: redactor_html }
 
     # Form
     etu.form.date_picker_type:

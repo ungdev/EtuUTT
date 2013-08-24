@@ -6,7 +6,13 @@
 	<img src="{{ asset('img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('redactor-js/redactor/redactor.css') }}" type="text/css" />
+{% endblock %}
+
 {% block javascripts %}
+	<script type="text/javascript" src="{{ asset('redactor-js/redactor/redactor.min.js') }}"></script>
+
 	{% if wantPreview %}
 	<script type="text/javascript">
 		$(function() {
