@@ -27,9 +27,14 @@ buckutt:
                 2: |
                     Pour des questions de sécurité, au bout de 3 tentatives ratées, votre compte
                     sera bloqué. Vous devrez alors passer au BDE pour le faire débloquer.
+            notStudent: |
+                Votre compte n'est pas un compte UTT : vous ne pouvez pas accéder à BuckUTT, qui n'est
+                accessible qu'en tant qu'étudiant UTT.
             connect: Connexion
             invalidPin: Code PIN incorrect
             lostPin: J'ai perdu mon code PIN
+            cantSendMail: Impossible d\'envoyer un mail. Merci de contacter buckutt@utt.fr
+            newPinSent: Un nouveau code vous a été envoyé par mail
 
         index:
             title: BuckUTT

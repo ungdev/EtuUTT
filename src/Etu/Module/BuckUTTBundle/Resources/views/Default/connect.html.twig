@@ -9,7 +9,6 @@
 {% block page %}
 	<section class="page">
 		<div class="container page-container">
-
 			<h2 class="page-title source-sans-pro">
 				<img src="{{ asset('img/titles/buckutt.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 
@@ -24,6 +23,7 @@
 
 			<div class="content content-connect">
 				<div class="padding20-all">
+					{% if not app.user.keepActive %}
 					<form method="post" action="{{ path('buckutt_connect') }}">
 						<h4>{{ 'buckutt.main.connect.ask'|trans }}</h4>
 
@@ -64,6 +64,11 @@
 					<p class="buckutt-explainations">
 						{{ 'buckutt.main.connect.explainations.3'|trans }}
 					</p>
+					{% else %}
+					<p class="alert alert-info">
+						{{ 'buckutt.main.connect.notStudent'|trans }}
+					</p>
+					{% endif %}
 				</div>
 
 				<div class="clear"></div>
