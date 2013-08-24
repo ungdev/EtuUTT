@@ -778,6 +778,7 @@ class User implements UserInterface, \Serializable
 			$this->firstName,
 			$this->lastName,
 			$this->formation,
+			$this->branch,
 			$this->niveau,
 			$this->filiere,
 			$this->phoneNumber,
@@ -816,12 +817,18 @@ class User implements UserInterface, \Serializable
 			$this->keepActive,
 			$this->permissions,
 			$this->removedPermissions,
+			$this->isAdmin,
+			$this->isBanned,
+			$this->isReadOnly,
+			$this->readOnlyExpirationDate,
 			$this->badges,
 			$this->options,
+			$this->semestersHistory,
 			$this->lastVisitHome,
 			$this->createdAt,
 			$this->updatedAt,
 			$this->deletedAt,
+			$this->memberships,
 		));
 	}
 
@@ -840,6 +847,7 @@ class User implements UserInterface, \Serializable
 			$this->firstName,
 			$this->lastName,
 			$this->formation,
+			$this->branch,
 			$this->niveau,
 			$this->filiere,
 			$this->phoneNumber,
@@ -878,12 +886,18 @@ class User implements UserInterface, \Serializable
 			$this->keepActive,
 			$this->permissions,
 			$this->removedPermissions,
+			$this->isAdmin,
+			$this->isBanned,
+			$this->isReadOnly,
+			$this->readOnlyExpirationDate,
 			$this->badges,
 			$this->options,
+			$this->semestersHistory,
 			$this->lastVisitHome,
 			$this->createdAt,
 			$this->updatedAt,
 			$this->deletedAt,
+			$this->memberships,
 		) = unserialize($serialized);
 	}
 
