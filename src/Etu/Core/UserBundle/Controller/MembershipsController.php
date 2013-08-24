@@ -157,7 +157,7 @@ class MembershipsController extends Controller
 		$form = $this->createFormBuilder($orga)
 			->add('contactMail', 'email')
 			->add('contactPhone', null, array('required' => false))
-			->add('description', 'redactor')
+			->add('description', 'redactor', array('required' => false))
 			->add('descriptionShort', 'textarea')
 			->add('website', null, array('required' => false))
 			->getForm();
