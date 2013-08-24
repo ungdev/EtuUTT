@@ -11,6 +11,7 @@
 
 namespace Etu\Core\UserBundle\Security\Layer;
 
+use Etu\Core\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
@@ -27,11 +28,17 @@ class SessionLayer
 	protected $session;
 
 	/**
+	 * @var User
+	 */
+	protected $user;
+
+	/**
 	 * @param Session|null $session
 	 */
 	public function __construct($session)
 	{
 		$this->session = $session;
+		$this->user = $session->get('user_data');
 	}
 
 	/**
@@ -55,8 +62,6 @@ class SessionLayer
 	}
 
 	/**
-	 * Connected organization
-	 *
 	 * @return bool
 	 */
 	public function isOrga()
@@ -72,5 +77,35 @@ class SessionLayer
 	public function isOrganization()
 	{
 		return $this->isOrga();
+	}
+
+	/**
+	 * Connected user as student
+	 *
+	 * @return bool
+	 */
+	public function isStudent()
+	{
+		return $this->isUser() && $this->user->getIsStudent();
+	}
+
+	/**
+	 * Connected user as UTT member
+	 *
+	 * @return bool
+	 */
+	public function isUttMember()
+	{
+		return $this->isUser() && ! $this->user->getIsStudent() && ! $this->user->getKeepActive();
+	}
+
+	/**
+	 * Connected user as external
+	 *
+	 * @return bool
+	 */
+	public function isExternal()
+	{
+		return $this->isUser() && $this->user->getKeepActive();
 	}
 }

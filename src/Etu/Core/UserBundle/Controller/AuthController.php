@@ -2,6 +2,7 @@
 
 namespace Etu\Core\UserBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Etu\Core\UserBundle\Ldap\LdapManager;
 use Etu\Core\UserBundle\Sync\Iterator\Element\ElementToImport;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
@@ -93,6 +94,8 @@ class AuthController extends Controller
 
 				if ($user instanceof \Etu\Core\UserBundle\Entity\User) {
 					$this->get('session')->set('user', $user->getId());
+					$this->get('session')->set('user_data', $user);
+
 					$this->get('session')->getFlashBag()->set('message', array(
 						'type' => 'success',
 						'message' => 'user.auth.connect.confirm'
@@ -107,8 +110,9 @@ class AuthController extends Controller
 					} else {
 						return $this->redirect($this->generateUrl('homepage'));
 					}
-				} elseif ($user instanceof Organization) {
+				} elseif ($user instanceof \Etu\Core\UserBundle\Entity\Organization) {
 					$this->get('session')->set('orga', $user->getId());
+					$this->get('session')->set('orga_data', $user);
 					$this->get('session')->getFlashBag()->set('message', array(
 						'type' => 'success',
 						'message' => 'user.auth.connect.confirm'
@@ -151,8 +155,10 @@ class AuthController extends Controller
 		// Try to connect user
 		$login = \phpCAS::getUser();
 
+		/** @var EntityManager $em */
 		$em = $this->getDoctrine()->getManager();
 
+		/** @var \Etu\Core\UserBundle\Entity\User $user */
 		$user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
 
 		if ($user && $user->getIsBanned()) {
@@ -220,6 +226,8 @@ class AuthController extends Controller
 
 		if ($user instanceof \Etu\Core\UserBundle\Entity\User) {
 			$this->get('session')->set('user', $user->getId());
+			$this->get('session')->set('user_data', $user);
+
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
 				'message' => 'user.auth.connect.confirm'
@@ -230,6 +238,7 @@ class AuthController extends Controller
 			}
 		} elseif ($user instanceof \Etu\Core\UserBundle\Entity\Organization) {
 			$this->get('session')->set('orga', $user->getId());
+
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
 				'message' => 'user.auth.connect.confirm'
@@ -271,7 +280,8 @@ class AuthController extends Controller
 
 		$request = $this->getRequest();
 
-		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+		if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
+			/** @var \Etu\Core\UserBundle\Entity\User $result */
 			$result = $em->getRepository('EtuUserBundle:User')->findOneBy(array(
 				'login' => $user->getLogin(),
 				'password' => $this->get('etu.user.crypting')->encrypt($user->getPassword())
@@ -279,6 +289,8 @@ class AuthController extends Controller
 
 			if ($result) {
 				$this->get('session')->set('user', $result->getId());
+				$this->get('session')->set('user_data', $result);
+
 				$this->get('session')->getFlashBag()->set('message', array(
 					'type' => 'success',
 					'message' => 'user.auth.connect.confirm'

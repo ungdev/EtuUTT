@@ -11,7 +11,20 @@ class EtuModuleBuckUTTBundle extends Module
 	 */
 	public function mustBoot()
 	{
-		return true;
+		return $this->getSessionLayer()->isUser();
+	}
+
+	/**
+	 * At module boot, update the sidebar
+	 */
+	public function onModuleBoot()
+	{
+		$this->getUserMenuBuilder()
+			->add('base.user.menu.buckutt')
+				->setIcon('duck.png')
+				->setPosition(3)
+				->setUrl($this->getRouter()->generate('buckutt_history'))
+			->end();
 	}
 
 	/**
@@ -49,7 +62,7 @@ class EtuModuleBuckUTTBundle extends Module
 	 */
 	public function getAuthor()
 	{
-		return 'anonymous';
+		return 'Paul Chabanon et Titouan Galopin';
 	}
 
 	/**
@@ -59,7 +72,7 @@ class EtuModuleBuckUTTBundle extends Module
 	 */
 	public function getDescription()
 	{
-		return 'A faire';
+		return 'Interface de gestion de son compte BuckUTT';
 	}
 
 	/**
