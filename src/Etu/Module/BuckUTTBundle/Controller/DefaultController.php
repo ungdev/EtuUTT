@@ -48,6 +48,22 @@ class DefaultController extends Controller
 		if ($action == 'disconnect'){
 			$this->get('session')->remove(SoapManager::cookie_name);
 			return $this->redirect($this->generateUrl('buckutt_history'));
+		} elseif ($action == 'lostPin'){
+			$SADMIN = new SoapManager('SADMIN', $this->get('session'));
+			$state = $SADMIN->resetKey($this->getUser()->getLogin(), $this->getUser()->getMail());
+
+			if ($state == 0){
+				$this->get('session')->getFlashBag()->set('message', array(
+					'type' => 'success',
+					'message' => 'buckutt.main.connect.newPinSent'
+				));
+			}
+			else {
+				$this->get('session')->getFlashBag()->set('message', array(
+					'type' => 'error',
+					'message' => 'buckutt.main.connect.cantSendMail'
+				));
+			}
 		}
 
 		$form = $this->createFormBuilder()
@@ -67,7 +83,7 @@ class DefaultController extends Controller
 			} else {
 				$this->get('session')->getFlashBag()->set('message', array(
 					'type' => 'error',
-					'message' => 'buckutt.main.index.invalidPin'
+					'message' => 'buckutt.main.connect.invalidPin'
 				));
 			}
 		}
@@ -108,7 +124,7 @@ class DefaultController extends Controller
 			->add('amount', 'money', array('required' => true, 'max_length' => 5))
 			->getForm();
 
-		if ($step == 1){
+		if ($step == 1) {
 			if ($form->submit($this->getRequest())->isValid()) {
 				if ($this->getRequest()->server->has('HTTP_X_FORWARDED_FOR')) {
 					$ip = $this->getRequest()->server->get('HTTP_X_FORWARDED_FOR');
@@ -140,6 +156,8 @@ class DefaultController extends Controller
 					'credit' => number_format($credit/100, 2),
 					'htmlForm' => base64_decode($table[0][1])
 				);
+			} else {
+				return $this->redirect($this->generateUrl('buckutt_reload'));
 			}
 		} elseif ($step == 2) { // step 2, final step
 			$credit = $clientSBUY->getCredit();
