@@ -2,9 +2,8 @@
 
 namespace Etu\Core\UserBundle\Sync;
 
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Doctrine\ORM\EntityManager;
-use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Ldap\LdapManager;
 
@@ -19,15 +18,15 @@ class Synchronizer
 	protected $ldap;
 
 	/**
-	 * @var Registry
+	 * @var Doctrine
 	 */
 	protected $doctrine;
 
 	/**
 	 * @param LdapManager $ldap
-	 * @param Registry    $doctrine
+	 * @param Doctrine    $doctrine
 	 */
-	public function __construct(LdapManager $ldap, Registry $doctrine)
+	public function __construct(LdapManager $ldap, Doctrine $doctrine)
 	{
 		$this->ldap = $ldap;
 		$this->doctrine = $doctrine;

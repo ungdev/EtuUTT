@@ -7,7 +7,7 @@ namespace Etu\Core\UserBundle\Schedule\Browser;
  */
 class CriBrowser
 {
-	const ROOT_URL = 'http://dmedev.utt.fr/ung/site-etu-api/app.php';
+	const ROOT_URL = 'http://bellodalix.utt.fr/ung/site-etu-api/app.php';
 
 	public function request(array $parameters = array())
 	{

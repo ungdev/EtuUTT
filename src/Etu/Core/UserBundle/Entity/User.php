@@ -2519,19 +2519,19 @@ class User implements UserInterface, \Serializable
 			$badge = $badge->getBadge();
 		}
 
-		if (count($badges) > 3) {
+		if (count($badges) >= 3) {
 			BadgesManager::userAddBadge($this, 'challenge', 1);
 		}
-		if (count($badges) > 7) {
+		if (count($badges) >= 7) {
 			BadgesManager::userAddBadge($this, 'challenge', 2);
 		}
-		if (count($badges) > 13) {
+		if (count($badges) >= 13) {
 			BadgesManager::userAddBadge($this, 'challenge', 3);
 		}
-		if (count($badges) > 20) {
+		if (count($badges) >= 20) {
 			BadgesManager::userAddBadge($this, 'challenge', 4);
 		}
-		if (count($badges) > 32) {
+		if (count($badges) >= 32) {
 			BadgesManager::userAddBadge($this, 'challenge', 5);
 		}
 
@@ -2565,7 +2565,7 @@ class User implements UserInterface, \Serializable
 				BadgesManager::userAddBadge($this, 'orga_member', 3);
 
 				if ($member->getOrganization()->getLogin() == 'bde') {
-					BadgesManager::userAddBadge($this, 'orga_bde_president');
+					BadgesManager::userAddBadge($this, 'orga_member', 4);
 				}
 			}
 		}

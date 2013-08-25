@@ -34,9 +34,27 @@ class ElementToUpdate
 	 */
 	public function __construct(Registry $doctrine, array $elements)
 	{
-		if (! $elements['database'] instanceof DbUser || ! $elements['ldap'] instanceof LdapUser) {
+		if (! $elements['ldap'] instanceof LdapUser) {
+			if (is_object($elements['ldap'])) {
+				$given = get_class($elements['ldap']);
+			} else {
+				$given = gettype($elements['ldap']);
+			}
+
 			throw new \RuntimeException(sprintf(
-				'EtuUTT synchonizer can only update User objects'
+				'EtuUTT synchonizer can only update User objects (ldap: %s given)', $given
+			));
+		}
+
+		if (! $elements['database'] instanceof DbUser) {
+			if (is_object($elements['database'])) {
+				$given = get_class($elements['database']);
+			} else {
+				$given = gettype($elements['database']);
+			}
+
+			throw new \RuntimeException(sprintf(
+				'EtuUTT synchonizer can only update User objects (database: %s given)', $given
 			));
 		}
 
@@ -58,7 +76,7 @@ class ElementToUpdate
 		 *      - niveau
 		 *      - filiere
 		 *      - uvs
-		 *      - ldapInformations
+		 *      - semesters history
 		 */
 
 		$persist = false;
