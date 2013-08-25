@@ -8,6 +8,8 @@ parameters:
     etu.user.sync.class: Etu\Core\UserBundle\Sync\Synchronizer
     etu.user.badges_listener.class: Etu\Core\UserBundle\Model\BadgesManager
 
+    etu.notifs.new_badge.class: Etu\Core\UserBundle\Notification\Helper\NewBadgeHelper
+
 services:
 
     # Users authentication
@@ -49,3 +51,10 @@ services:
         arguments: [@doctrine]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    # Notifications helper
+    etu.notifs.new_badge:
+        class: %etu.notifs.new_badge.class%
+        arguments: [@twig]
+        tags:
+            - { name: etu.notifs_helper }

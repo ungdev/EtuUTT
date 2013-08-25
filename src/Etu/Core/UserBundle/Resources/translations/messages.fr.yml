@@ -1,5 +1,8 @@
 
 user:
+    notifs:
+        newBadge: Vous avez gagné le badge %badge% !
+
     privacy:
         public: Public
         private: Privé

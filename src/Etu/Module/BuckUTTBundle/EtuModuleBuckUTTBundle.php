@@ -11,7 +11,7 @@ class EtuModuleBuckUTTBundle extends Module
 	 */
 	public function mustBoot()
 	{
-		return $this->getSessionLayer()->isStudent();
+		return $this->getSessionLayer()->isUser();
 	}
 
 	/**
