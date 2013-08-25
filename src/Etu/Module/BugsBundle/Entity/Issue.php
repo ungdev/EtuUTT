@@ -46,7 +46,7 @@ class Issue
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(type="string", length=500)
+	 * @ORM\Column(type="string", length=50)
 	 * @Assert\NotBlank()
 	 * @Assert\Length(min = "10", max = "50")
 	 */
