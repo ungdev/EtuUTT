@@ -279,17 +279,6 @@ $(function() {
 		}
 	});
 
-	// HTML redactor
-	redactorHtml.redactor({
-		fixed: true,
-		lang: 'fr',
-		buttons: [
-			'bold', 'italic', 'deleted', 'underline', 'fontcolor', '|',
-			'alignleft', 'aligncenter', 'alignright', '|',
-			'unorderedlist', '|', 'image', 'link'
-		]
-	});
-
 	// Users autocomplete
 	if (usersAutocomplete) {
 		usersAutocomplete.autocomplete({

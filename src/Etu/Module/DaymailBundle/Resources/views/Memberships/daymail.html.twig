@@ -13,6 +13,19 @@
 {% block javascripts %}
 	<script type="text/javascript" src="{{ asset('redactor-js/redactor/redactor.min.js') }}"></script>
 
+	<script type="text/javascript">
+		// HTML redactor
+		redactorHtml.redactor({
+			fixed: true,
+			lang: 'fr',
+			buttons: [
+				'bold', 'italic', 'deleted', 'underline', 'fontcolor', '|',
+				'alignleft', 'aligncenter', 'alignright', '|',
+				'unorderedlist', '|', 'image', 'link'
+			]
+		});
+	</script>
+
 	{% if wantPreview %}
 	<script type="text/javascript">
 		$(function() {
