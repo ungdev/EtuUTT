@@ -5,6 +5,7 @@ namespace Etu\Core\UserBundle\Command;
 use Doctrine\ORM\EntityManager;
 use Etu\Core\UserBundle\Command\Util\ProgressBar;
 use Etu\Core\UserBundle\Entity\User;
+use Etu\Core\UserBundle\Schedule\Browser\CriBrowser;
 use Etu\Core\UserBundle\Schedule\Model\Course;
 use Etu\Core\UserBundle\Schedule\ScheduleApi;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -45,8 +46,8 @@ By default, the command will use cached version of schedules. If you want to
 re-download schedules, use --force or -f.
 ');
 
-		$output->writeln("\nGetting officials schedules (this will last long) ...");
-		$output->writeln("------------------------------------------------------------\n");
+		$output->writeln("\nGetting officials schedules ...");
+		$output->writeln("------------------------------------------------------------");
 
 		$tempDirectory = __DIR__.'/../Resources/temp';
 
@@ -59,21 +60,24 @@ re-download schedules, use --force or -f.
 		$content = array();
 		$readingFromCacheWritten = false;
 
+		if ($input->getOption('force')) {
+			$output->writeln('Requesting CRI API ('.CriBrowser::ROOT_URL.') ...');
+		} else {
+			$output->writeln('Reading from cache ...');
+		}
+
+		$bar = new ProgressBar('%fraction% [%bar%] %percent%', '=>', ' ', 80, 445);
+		$bar->update(0);
+
 		for ($page = 1; true; $page++) {
-			if (! file_exists($tempDirectory.'/schedules/page-'.$page.'.temp') OR $input->getOption('force')) {
+			if (! file_exists($tempDirectory.'/schedules/page-'.$page.'.temp') || $input->getOption('force')) {
 				// Requesting CRI API
-				$output->writeln('Requesting CRI API (page '.$page.') ...');
 
 				$pageContent = $scheduleApi->findPage($page);
 				$readingFromCacheWritten = false;
 
 				file_put_contents($tempDirectory.'/schedules/page-'.$page.'.temp', serialize($pageContent));
 			} else {
-				if (! $readingFromCacheWritten) {
-					$output->writeln('Reading from cache ...');
-					$readingFromCacheWritten = true;
-				}
-
 				$pageContent = unserialize(file_get_contents($tempDirectory.'/schedules/page-'.$page.'.temp'));
 			}
 
@@ -83,7 +87,11 @@ re-download schedules, use --force or -f.
 
 			/** @var $content Course[] */
 			$content = array_merge($content, $pageContent);
+
+			$bar->update($page);
 		}
+
+		$bar->update(445);
 
 		$output->writeln('Loading users from database ...');
 
@@ -129,17 +137,14 @@ re-download schedules, use --force or -f.
 
 			$em->persist($course);
 
-			// Flush each 500 elements
-			if ($i % 500 == 0) {
-				$em->flush();
-			}
-
 			$bar->update($i);
 			$i++;
 		}
 
-		$em->flush();
 		$bar->update(count($content));
+
+		$output->writeln('Inserting in database ...');
+		$em->flush();
 
 		$output->writeln("\nDone.\n");
 	}
