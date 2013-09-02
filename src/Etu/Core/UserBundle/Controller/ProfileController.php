@@ -340,4 +340,40 @@ class ProfileController extends Controller
 			'from' => $from
 		);
 	}
+
+	/**
+	 * @Route("/user/{login}/badges", name="user_view_badges")
+	 * @Template()
+	 */
+	public function badgesAction($login)
+	{
+		if (! $this->getUserLayer()->isConnected()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		if ($login != $this->getUser()->getLogin()) {
+			/** @var $em EntityManager */
+			$em = $this->getDoctrine()->getManager();
+
+			/** @var $user User */
+			$user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
+
+			if (! $user) {
+				throw $this->createNotFoundException('Login "'.$login.'" not found');
+			}
+		} else {
+			$user = $this->getUser();
+		}
+
+		$from = null;
+
+		if (in_array($this->getRequest()->get('from'), array('search', 'profile', 'trombi', 'admin'))) {
+			$from = $this->getRequest()->get('from');
+		}
+
+		return array(
+			'user' => $user,
+			'from' => $from
+		);
+	}
 }

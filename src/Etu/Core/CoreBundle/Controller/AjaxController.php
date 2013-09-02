@@ -56,13 +56,13 @@ class AjaxController extends Controller
 
 		$count = (int) $count;
 
-		if ($count >= 1) {
+		if ($count >= 10) {
 			BadgesManager::userAddBadge($user, 'subscriber', 1);
 		} else {
 			BadgesManager::userRemoveBadge($user, 'subscriber', 1);
 		}
 
-		if ($count >= 10) {
+		if ($count >= 20) {
 			BadgesManager::userAddBadge($user, 'subscriber', 2);
 		} else {
 			BadgesManager::userRemoveBadge($user, 'subscriber', 2);
@@ -72,6 +72,12 @@ class AjaxController extends Controller
 			BadgesManager::userAddBadge($user, 'subscriber', 3);
 		} else {
 			BadgesManager::userRemoveBadge($user, 'subscriber', 3);
+		}
+
+		if ($count >= 40) {
+			BadgesManager::userAddBadge($user, 'subscriber', 4);
+		} else {
+			BadgesManager::userRemoveBadge($user, 'subscriber', 4);
 		}
 
 		BadgesManager::userPersistBadges($user);

@@ -2505,7 +2505,6 @@ class User implements UserInterface, \Serializable
 		return $this->badges;
 	}
 
-
 	/**
 	 * Get badges (generate some of them on the fly)
 	 *
@@ -2597,11 +2596,59 @@ class User implements UserInterface, \Serializable
 
 			if ($badge->getCountLevels() > 1) {
 				$list[$badge->getSerie()][$badge->getLevel()]['owned'] = true;
+				$list[$badge->getSerie()][$badge->getLevel()]['createdAt'] = $userBadge->getCreatedAt();
 			} else {
 				$list['singles'][$badge->getSerie()]['owned'] = true;
+				$list['singles'][$badge->getLevel()]['createdAt'] = $userBadge->getCreatedAt();
 			}
 		}
 
 		return $list;
+	}
+
+	/**
+	 * Get badges 2D (generate some of them on the fly)
+	 *
+	 * @return array
+	 */
+	public function getBadges2d()
+	{
+		$badges = array();
+
+		foreach ($this->getBadgesList() as $serie) {
+			foreach ($serie as $badge) {
+				$badges[] = $badge;
+			}
+		}
+
+		return $badges;
+	}
+
+	/**
+	 * Get badges 2D (generate some of them on the fly)
+	 *
+	 * @return array
+	 */
+	public function getLastBadges($count = 6)
+	{
+		$badges = array();
+		$dates = array();
+		$i = 0;
+
+		/** @var $userBadge UserBadge */
+		foreach ($this->badges->toArray() as $userBadge) {
+			$badges[] = $userBadge->getBadge();
+			$dates[] = $userBadge->getCreatedAt();
+
+			$i++;
+
+			if ($i >= $count) {
+				break;
+			}
+		}
+
+		array_multisort($badges, $dates, SORT_DESC);
+
+		return $badges;
 	}
 }

@@ -114,21 +114,29 @@
 }
 .badges-list li {
   list-style-type: none;
-  margin: 0;
+  margin: 0 0 10px 0;
   padding: 0;
   display: block;
   text-align: center;
   float: left;
-  width: 110px;
-  margin: 0 15px 15px 0;
+  width: 80px;
 }
 .badges-list li img {
-  max-width: 75px;
+  max-width: 60px;
 }
 .badges-list li p {
   display: block;
   font-weight: bold;
   margin-top: 5px;
+}
+.badges-list .not-owned {
+  opacity: 0.2;
+}
+.badges-list-big li {
+  width: 100px;
+}
+.badges-list-big li img {
+  max-width: 80px;
 }
 /*
  * Organizations

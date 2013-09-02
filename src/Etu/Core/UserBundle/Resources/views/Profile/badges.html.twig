@@ -37,7 +37,7 @@
 				</a>
 			</li>
 		{% endif %}
-		<li class="pull-right">
+		<li class="pull-right active page-tabs-resolved-active">
 			<a href="{{ path('user_view_badges', {'login': user.login}) }}?from={{ from }}">
 				{{ 'user.profile.menu.badges'|trans }}
 			</a>
@@ -47,7 +47,7 @@
 				{{ 'user.profile.menu.schedule'|trans }}
 			</a>
 		</li>
-		<li class="pull-right active page-tabs-resolved-active">
+		<li class="pull-right">
 			<a href="{{ path('user_organizations', {'login': user.login}) }}?from={{ from }}">
 				{{ 'user.profile.menu.organizations'|trans }}
 			</a>
@@ -59,7 +59,8 @@
 		</li>
 	</ul>
 
-	<div class="padding20-all">
+	<div class="padding20-sides">
+
 		<div class="row-fluid">
 			<div class="span3">
 				<div class="align-center">
@@ -108,7 +109,7 @@
 					{% if user.website %}
 						<p>
 							<strong>{{ 'user.profile.view.website'|trans }}</strong><br />
-							{{ user.website }}
+							<a href="{{ user.website }}">{{ user.website }}</a>
 						</p>
 					{% endif %}
 
@@ -143,28 +144,29 @@
 			</div>
 
 			<div class="span9">
-				{% if memberships|length > 0 %}
-					<p>
-						{{ 'user.profile.organizations.is_in'|trans({'%name%': user.fullName, '%count%': memberships|length}) }}
-					</p>
-					<ul>
-					{% for member in memberships %}
-						<li>
-							{% if etu.modules.isEnabled('assos') %}
-								<a href="{{ path('orgas_view', {'login': member.organization.login}) }}">
-									{{ member.organization.name }}</a>
+				<h4>{{ 'user.profile.badges.by'|trans({'%name%': user.fullName}) }}</h4>
+
+				<hr />
+
+				{% for name, serie in user.badgesList %}
+					<ul class="badges-list">
+						{% for level, userBadge in serie %}
+							{% if userBadge.owned is not defined %}
+								{{ dump(name, level, userBadge) }}
 							{% else %}
-								{{ member.organization.name }}
+								{% if userBadge.owned %}
+									<li>
+										<img src="{{ asset('img/badges/'~userBadge.badge.picture~'.png') }}" class="tip"
+											 title="<strong style='font-size: 13px;'>{{ userBadge.badge.name }}</strong>{% if userBadge.owned %}<br />{{ userBadge.badge.description }}{% endif %}" />
+									</li>
+								{% endif %}
 							{% endif %}
-							<span class="muted">- {{ ('user.orga.role.'~member.role)|trans }}</span>
-						</li>
-					{% endfor %}
+						{% endfor %}
 					</ul>
-				{% else %}
-					<p>
-						{{ 'user.profile.organizations.not_asso'|trans({'%name%': user.fullName}) }}
-					</p>
-				{% endif %}
+					<div class="clear"></div>
+					<hr />
+				{% endfor %}
+
 			</div>
 		</div>
 	</div>

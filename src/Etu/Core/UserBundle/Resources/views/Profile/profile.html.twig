@@ -260,16 +260,12 @@
 
 		<div class="block">
 			<div class="block-title">{{ 'user.profile.profile.badges'|trans }}</div>
+
 			{% for serie in app.user.badgesList %}
 				<ul class="badges-list">
 					{% for userBadge in serie %}
-						<li>
-							<img src="{{ asset('img/badges/'~userBadge.badge.picture~'.png') }}"
-									{% if not userBadge.owned %}
-										class="tip-transparent" style="opacity:0.5;"
-									{% else %}
-										class="tip"
-									{% endif %}
+						<li {% if not userBadge.owned %}class="not-owned"{% endif %}>
+							<img src="{{ asset('img/badges/'~userBadge.badge.picture~'.png') }}" class="tip"
 								 title="<strong style='font-size: 13px;'>{{ userBadge.badge.name }}</strong><br />{{ userBadge.badge.description }}" />
 						</li>
 					{% endfor %}

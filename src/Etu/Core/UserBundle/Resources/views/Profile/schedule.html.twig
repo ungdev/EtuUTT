@@ -37,21 +37,26 @@
 			</a>
 		</li>
 	{% endif %}
-	<li class="pull-right active page-tabs-resolved-active">
-		<a href="{{ path('user_view_schedule', {'login': user.login}) }}?from={{ from }}">
-			{{ 'user.profile.menu.schedule'|trans }}
-		</a>
-	</li>
-	<li class="pull-right">
-		<a href="{{ path('user_organizations', {'login': user.login}) }}?from={{ from }}">
-			{{ 'user.profile.menu.organizations'|trans }}
-		</a>
-	</li>
-	<li class="pull-right">
-		<a href="{{ path('user_view', {'login': user.login}) }}?from={{ from }}">
-			{{ 'user.profile.menu.profile'|trans }}
-		</a>
-	</li>
+		<li class="pull-right">
+			<a href="{{ path('user_view_badges', {'login': user.login}) }}?from={{ from }}">
+				{{ 'user.profile.menu.badges'|trans }}
+			</a>
+		</li>
+		<li class="pull-right active page-tabs-resolved-active">
+			<a href="{{ path('user_view_schedule', {'login': user.login}) }}?from={{ from }}">
+				{{ 'user.profile.menu.schedule'|trans }}
+			</a>
+		</li>
+		<li class="pull-right">
+			<a href="{{ path('user_organizations', {'login': user.login}) }}?from={{ from }}">
+				{{ 'user.profile.menu.organizations'|trans }}
+			</a>
+		</li>
+		<li class="pull-right">
+			<a href="{{ path('user_view', {'login': user.login}) }}?from={{ from }}">
+				{{ 'user.profile.menu.profile'|trans }}
+			</a>
+		</li>
 	</ul>
 
 	<div class="padding20-all">

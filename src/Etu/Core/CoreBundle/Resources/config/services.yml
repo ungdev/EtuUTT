@@ -23,6 +23,7 @@ parameters:
     etu.terminate_listener.class: Etu\Core\CoreBundle\Framework\Listener\TerminateListener
 
     etu.twig.string_manipulation.class: Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension
+    etu.twig.array_manipulation.class: Etu\Core\CoreBundle\Twig\Extension\ArrayManipulationExtension
     etu.twig.notif_helper.class: Etu\Core\CoreBundle\Twig\Extension\NotificationHelperExtension
 
     etu.twig.global_accessor.class: Etu\Core\CoreBundle\Framework\Twig\GlobalAccessorObject
@@ -127,12 +128,15 @@ services:
         class: %etu.twig.string_manipulation.class%
         tags:
             - { name: twig.extension }
+    etu.twig.array_manipulation:
+        class: %etu.twig.array_manipulation.class%
+        tags:
+            - { name: twig.extension }
 
     # Global accessor
     etu.twig.global_accessor:
         class: %etu.twig.global_accessor.class%
         arguments: [{domain: %etu.domain%}]
-
     etu.twig.global_listener:
         class: %etu.twig.global_listener.class%
         arguments: [@twig, @etu.twig.global_accessor]

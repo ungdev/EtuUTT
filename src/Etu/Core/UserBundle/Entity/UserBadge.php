@@ -22,6 +22,13 @@ class UserBadge
     protected $id;
 
 	/**
+	 * @var \DateTime $createdAt
+	 *
+	 * @ORM\Column(type="datetime")
+	 */
+	protected $createdAt;
+
+	/**
 	 * @var \DateTime $deletedAt
 	 *
 	 * @ORM\Column(type="datetime", nullable = true)
@@ -49,6 +56,7 @@ class UserBadge
 	{
 		$this->badge = $badge;
 		$this->user = $user;
+		$this->createdAt = new \DateTime();
 	}
 
 	/**
@@ -111,5 +119,24 @@ class UserBadge
 	public function getUser()
 	{
 		return $this->user;
+	}
+
+	/**
+	 * @param \DateTime $createdAt
+	 * @return UserBadge
+	 */
+	public function setCreatedAt($createdAt)
+	{
+		$this->createdAt = $createdAt;
+
+		return $this;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getCreatedAt()
+	{
+		return $this->createdAt;
 	}
 }

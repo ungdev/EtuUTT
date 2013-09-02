@@ -243,6 +243,7 @@ user:
             profile: Profil
             organizations: Associatif
             schedule: Emploi du temps
+            badges: Badges
         profile:
             title: Mon profil
             edit: Modifier
@@ -340,9 +341,12 @@ user:
             surname: Surnom
             jadis: Jadis
             passions: Passions
+            last_badges: Derniers badges débloqués
         organizations:
             is_in: "%name% fait parti de %count% association(s) :"
             not_asso: %name% ne fait partie d'aucune association
+        badges:
+            by: "Badges obtenus par %name%"
 
     schedule:
         days:

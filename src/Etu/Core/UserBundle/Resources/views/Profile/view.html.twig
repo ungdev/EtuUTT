@@ -38,6 +38,11 @@
 			</li>
 		{% endif %}
 		<li class="pull-right">
+			<a href="{{ path('user_view_badges', {'login': user.login}) }}?from={{ from }}">
+				{{ 'user.profile.menu.badges'|trans }}
+			</a>
+		</li>
+		<li class="pull-right">
 			<a href="{{ path('user_view_schedule', {'login': user.login}) }}?from={{ from }}">
 				{{ 'user.profile.menu.schedule'|trans }}
 			</a>
@@ -318,23 +323,20 @@
 			<div class="clear"></div>
 			<hr />
 
-			<h4>Badges</h4>
+			<h4>{{ 'user.profile.view.last_badges'|trans }}</h4>
 
 			<hr />
 
-			{% for serie in user.badgesList %}
-				<ul class="badges-list">
-					{% for userBadge in serie %}
-						<li>
-							<img src="{{ asset('img/badges/'~userBadge.badge.picture~'.png') }}" class="tip"
-								 {% if not userBadge.owned %}style="opacity:0.5;"{% endif %}
-								 title="<strong style='font-size: 13px;'>{{ userBadge.badge.name }}</strong><br />{{ userBadge.badge.description }}" />
-						</li>
-					{% endfor %}
-				</ul>
-				<div class="clear"></div>
-				<hr />
+			<ul class="badges-list badges-list-big">
+			{% for badge in user.lastBadges %}
+				<li>
+					<img src="{{ asset('img/badges/'~badge.picture~'.png') }}" class="tip"
+						 title="<strong style='font-size: 13px;'>{{ badge.name }}</strong><br />{{ badge.description }}" />
+				</li>
 			{% endfor %}
+			</ul>
+			<div class="clear"></div>
+			<hr />
 		</div>
 	</div>
 {% endblock %}
