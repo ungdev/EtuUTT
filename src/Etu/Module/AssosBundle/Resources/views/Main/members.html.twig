@@ -94,7 +94,7 @@
 								<h5>{{ member.user.fullName }}</h5>
 								<p>
 									{{ ('user.orga.role.'~member.role)|trans }}<br />
-									{{ member.user.niveau }} {{ member.user.filiere }} ({{ member.user.formation }})
+									{{ member.user.branch~member.user.niveau }} {{ member.user.filiere }} ({{ member.user.formation }})
 								</p>
 
 								<div class="clear"></div>
@@ -116,7 +116,7 @@
 								<img src="{{ asset('photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
 								<h5>{{ member.user.fullName }}</h5>
 								<p>
-									{{ member.user.niveau }} {{ member.user.filiere }} ({{ member.user.formation }})
+									{{ member.user.branch~member.user.niveau }} {{ member.user.filiere }} ({{ member.user.formation }})
 								</p>
 
 								<div class="clear"></div>

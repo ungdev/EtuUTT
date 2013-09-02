@@ -8,62 +8,65 @@
 
 {% block content %}
 	<ul class="nav nav-tabs page-tabs">
-	{% if from == 'search' %}
-		<li>
-			<a href="">
-				<i class="icon-chevron-left"></i>
-				{{ 'user.profile.view.back_search'|trans }}
+		{% if from == 'search' %}
+			<li>
+				<a href="">
+					<i class="icon-chevron-left"></i>
+					{{ 'user.profile.view.back_search'|trans }}
+				</a>
+			</li>
+		{% elseif from == 'profile' %}
+			<li>
+				<a href="{{ path('user_profile') }}">
+					<i class="icon-chevron-left"></i>
+					{{ 'user.profile.view.back_profile'|trans }}
+				</a>
+			</li>
+		{% elseif from == 'trombi' and etu.modules.isEnabled('trombi') %}
+			<li>
+				<a href="{{ path('trombi_index') }}">
+					<i class="icon-chevron-left"></i>
+					{{ 'user.profile.view.back_trombi'|trans }}
+				</a>
+			</li>
+		{% elseif from == 'admin' and app.user.isAdmin %}
+			<li>
+				<a href="{{ path('admin_users_index') }}">
+					<i class="icon-chevron-left"></i>
+					{{ 'user.profile.view.back_admin'|trans }}
+				</a>
+			</li>
+		{% endif %}
+		<li class="pull-right">
+			<a href="{{ path('user_view_schedule', {'login': user.login}) }}?from={{ from }}">
+				{{ 'user.profile.menu.schedule'|trans }}
 			</a>
 		</li>
-	{% elseif from == 'profile' %}
-		<li>
-			<a href="{{ path('user_profile') }}">
-				<i class="icon-chevron-left"></i>
-				{{ 'user.profile.view.back_profile'|trans }}
+		<li class="pull-right active page-tabs-resolved-active">
+			<a href="{{ path('user_organizations', {'login': user.login}) }}?from={{ from }}">
+				{{ 'user.profile.menu.organizations'|trans }}
 			</a>
 		</li>
-	{% elseif from == 'trombi' and etu.modules.isEnabled('trombi') %}
-		<li>
-			<a href="{{ path('trombi_index') }}">
-				<i class="icon-chevron-left"></i>
-				{{ 'user.profile.view.back_trombi'|trans }}
+		<li class="pull-right">
+			<a href="{{ path('user_view', {'login': user.login}) }}?from={{ from }}">
+				{{ 'user.profile.menu.profile'|trans }}
 			</a>
 		</li>
-	{% elseif from == 'admin' and app.user.isAdmin %}
-		<li>
-			<a href="{{ path('admin_users_index') }}">
-				<i class="icon-chevron-left"></i>
-				{{ 'user.profile.view.back_admin'|trans }}
-			</a>
-		</li>
-	{% endif %}
-	<li class="pull-right">
-		<a href="{{ path('user_view_schedule', {'login': user.login}) }}?from={{ from }}">
-			{{ 'user.profile.menu.schedule'|trans }}
-		</a>
-	</li>
-	<li class="pull-right active page-tabs-resolved-active">
-		<a href="{{ path('user_organizations', {'login': user.login}) }}?from={{ from }}">
-			{{ 'user.profile.menu.organizations'|trans }}
-		</a>
-	</li>
-	<li class="pull-right">
-		<a href="{{ path('user_view', {'login': user.login}) }}?from={{ from }}">
-			{{ 'user.profile.menu.profile'|trans }}
-		</a>
-	</li>
 	</ul>
 
 	<div class="padding20-all">
 		<div class="row-fluid">
 			<div class="span3">
-				<div class="profileEdit-avatar">
-					<img src="{{ asset('photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
+				<div class="align-center">
+					<img src="{{ asset('photos/'~user.avatar) }}" class="view-avatar"
+						 alt="{{ user.fullName }}" title="{{ user.fullName }}" />
 
 					<hr />
 
 					<strong>{{ user.fullName }}</strong><br />
-					<em>{{ user.niveau }} {{ user.filiere }} ({{ user.formation }})</em>
+					{% if user.formation %}
+						<em>{{ user.branch~user.niveau }} {{ user.filiere }} ({{ user.formation }})</em>
+					{% endif %}
 				</div>
 
 				<hr />

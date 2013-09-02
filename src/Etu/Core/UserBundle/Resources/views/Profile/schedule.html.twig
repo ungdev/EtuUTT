@@ -57,13 +57,16 @@
 	<div class="padding20-all">
 		<div class="row-fluid">
 			<div class="span3">
-				<div class="profileEdit-avatar">
-					<img src="{{ asset('photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
+				<div class="align-center">
+					<img src="{{ asset('photos/'~user.avatar) }}" class="view-avatar"
+						 alt="{{ user.fullName }}" title="{{ user.fullName }}" />
 
 					<hr />
 
 					<strong>{{ user.fullName }}</strong><br />
-					<em>{{ user.niveau }} {{ user.filiere }} ({{ user.formation }})</em>
+					{% if user.formation %}
+						<em>{{ user.branch~user.niveau }} {{ user.filiere }} ({{ user.formation }})</em>
+					{% endif %}
 				</div>
 
 				<hr />

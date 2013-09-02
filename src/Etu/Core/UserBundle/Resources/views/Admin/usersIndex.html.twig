@@ -121,7 +121,7 @@
 							<img src="{{ asset('photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
 							<h5>{{ user.fullName }}</h5>
 							<p>
-								{{ user.niveau }} {{ user.filiere }} ({{ user.formation }})<br />
+								{{ user.branch~user.niveau }} {{ user.filiere }} ({{ user.formation }})<br />
 								{{ user.mail }}
 								{% if is_public(user.personnalMailPrivacy) and user.personnalMail %}
 									<br />
