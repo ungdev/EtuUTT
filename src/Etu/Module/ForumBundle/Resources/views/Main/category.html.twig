@@ -97,7 +97,7 @@
 				 <tr class="forum-table-list">
 					<td class="forum-table-category">
 						{% if app.user and thread.getViewed().count == 0 %}
-							<span class="forum-new">[{{'forum.main.thread.new'|trans}}] </span>
+							<span class="label label-info">{{'forum.main.thread.new'|trans}}</span>
 						{% endif %}
 						{% if thread.weight == 200 %}
 							<span class="forum-sticky">{{'forum.main.thread.sticky'|trans}}:</span>

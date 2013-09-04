@@ -8,6 +8,8 @@ use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Core\CoreBundle\Entity\Notification;
 
+use Etu\Core\UserBundle\Model\BadgesManager;
+
 use Etu\Module\ForumBundle\Entity\Category;
 use Etu\Module\ForumBundle\Entity\Thread;
 use Etu\Module\ForumBundle\Entity\Message;
@@ -30,6 +32,8 @@ class MainController extends Controller
 	 */
 	public function indexAction()
 	{
+		if(!$this->getUser()) return $this->createAccessDeniedResponse();
+
 		$em = $this->getDoctrine()->getManager();
 		$categories = $em->createQueryBuilder()
 			->select('c')
@@ -48,6 +52,7 @@ class MainController extends Controller
 	 */
 	public function categoryAction($id, $slug, $page)
 	{
+		if(!$this->getUser()) return $this->createAccessDeniedResponse();
 		$em = $this->getDoctrine()->getManager();
 
 		/** @var Category $category */
@@ -119,6 +124,7 @@ class MainController extends Controller
 	 */
 	public function threadAction($id, $slug, $page)
 	{
+		if(!$this->getUser()) return $this->createAccessDeniedResponse();
 		$em = $this->getDoctrine()->getManager();
 		$thread = $em->createQueryBuilder()
 			->select('t, c')
@@ -199,6 +205,7 @@ class MainController extends Controller
 	 */
 	public function postAction($id, $slug)
 	{
+		if(!$this->getUser()) return $this->createAccessDeniedResponse();
 		$em = $this->getDoctrine()->getManager();
 		$category = $em->getRepository('EtuModuleForumBundle:Category')
 			->find($id);
@@ -253,6 +260,8 @@ class MainController extends Controller
 				$em->persist($thread);
 				$em->flush();
 
+				$this->giveBadges();
+
 				$this->getSubscriptionsManager()->subscribe($this->getUser(), 'message', $thread->getId());
 
 				return $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug())));
@@ -269,6 +278,7 @@ class MainController extends Controller
 	 */
 	public function answerAction($id, $slug)
 	{
+		if(!$this->getUser()) return $this->createAccessDeniedResponse();
 		$em = $this->getDoctrine()->getManager();
 		$thread = $em->createQueryBuilder()
 			->select('t, c')
@@ -323,8 +333,9 @@ class MainController extends Controller
 				foreach($views as $view) {
 					$em->remove($view);
 				}
-
 				$em->flush();
+
+				$this->giveBadges();
 
 				$page = ceil($thread->getCountMessages()/10);
 
@@ -355,6 +366,7 @@ class MainController extends Controller
 	 */
 	public function editAction($messageId)
 	{
+		if(!$this->getUser()) return $this->createAccessDeniedResponse();
 		$em = $this->getDoctrine()->getManager();
 		$message = $em->createQueryBuilder()
 			->select('m, t')
@@ -427,6 +439,7 @@ class MainController extends Controller
 	 */
 	public function modAction($action,$threadId,$messageId=null)
 	{
+		if(!$this->getUser()) return $this->createAccessDeniedResponse();
 		$em = $this->getDoctrine()->getManager();
 		$thread = $em->createQueryBuilder()
 			->select('t, c')
@@ -679,6 +692,41 @@ class MainController extends Controller
 				else $return = array('parents' => $parents, 'action' => 'move', 'thread' => $thread, 'form' => $form->createView());
 		}
 		return $return;
+	}
+
+	private function giveBadges()
+	{
+		$em = $this->getDoctrine()->getManager();
+		$messages = $em->createQueryBuilder()
+			->select('m')
+			->from('EtuModuleForumBundle:Message', 'm')
+			->where('m.author = :user')
+			->setParameter('user', $this->getUser())
+			->getQuery()
+			->getResult();
+
+		$nbMessages = count($messages);
+
+		if($nbMessages >= 1) {
+			BadgesManager::userAddBadge($this->getUser(), 'monkey', 1);
+			BadgesManager::userPersistBadges($this->getUser());
+		}
+		if($nbMessages >= 20) {
+			BadgesManager::userAddBadge($this->getUser(), 'monkey', 2);
+			BadgesManager::userPersistBadges($this->getUser());
+		}
+		if($nbMessages >= 50) {
+			BadgesManager::userAddBadge($this->getUser(), 'monkey', 3);
+			BadgesManager::userPersistBadges($this->getUser());
+		}
+		if($nbMessages >= 100) {
+			BadgesManager::userAddBadge($this->getUser(), 'monkey', 4);
+			BadgesManager::userPersistBadges($this->getUser());
+		}
+		if($nbMessages >= 500) {
+			BadgesManager::userAddBadge($this->getUser(), 'monkey', 5);
+			BadgesManager::userPersistBadges($this->getUser());
+		}
 	}
 
 }
