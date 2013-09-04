@@ -32,6 +32,8 @@ class MainController extends Controller
 	 */
 	public function indexAction()
 	{
+		if(!$this->getUser()) return $this->createAccessDeniedResponse();
+
 		$em = $this->getDoctrine()->getManager();
 		$categories = $em->createQueryBuilder()
 			->select('c')
@@ -50,6 +52,7 @@ class MainController extends Controller
 	 */
 	public function categoryAction($id, $slug, $page)
 	{
+		if(!$this->getUser()) return $this->createAccessDeniedResponse();
 		$em = $this->getDoctrine()->getManager();
 
 		/** @var Category $category */
@@ -121,6 +124,7 @@ class MainController extends Controller
 	 */
 	public function threadAction($id, $slug, $page)
 	{
+		if(!$this->getUser()) return $this->createAccessDeniedResponse();
 		$em = $this->getDoctrine()->getManager();
 		$thread = $em->createQueryBuilder()
 			->select('t, c')
@@ -201,6 +205,7 @@ class MainController extends Controller
 	 */
 	public function postAction($id, $slug)
 	{
+		if(!$this->getUser()) return $this->createAccessDeniedResponse();
 		$em = $this->getDoctrine()->getManager();
 		$category = $em->getRepository('EtuModuleForumBundle:Category')
 			->find($id);
@@ -273,6 +278,7 @@ class MainController extends Controller
 	 */
 	public function answerAction($id, $slug)
 	{
+		if(!$this->getUser()) return $this->createAccessDeniedResponse();
 		$em = $this->getDoctrine()->getManager();
 		$thread = $em->createQueryBuilder()
 			->select('t, c')
@@ -360,6 +366,7 @@ class MainController extends Controller
 	 */
 	public function editAction($messageId)
 	{
+		if(!$this->getUser()) return $this->createAccessDeniedResponse();
 		$em = $this->getDoctrine()->getManager();
 		$message = $em->createQueryBuilder()
 			->select('m, t')
@@ -432,6 +439,7 @@ class MainController extends Controller
 	 */
 	public function modAction($action,$threadId,$messageId=null)
 	{
+		if(!$this->getUser()) return $this->createAccessDeniedResponse();
 		$em = $this->getDoctrine()->getManager();
 		$thread = $em->createQueryBuilder()
 			->select('t, c')
