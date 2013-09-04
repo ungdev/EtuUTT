@@ -94,11 +94,15 @@
 		{% for message in messages %}
 			<div class="etu-comment" id="{{ message.id }}">
 				<div class="etu-comment-avatar">
+					{% if app.user %}
 					<a href="{{ path('user_view', {'login': message.author.login}) }}">
 						<img src="{{ asset('photos/'~message.author.avatar) }}"
 							 alt="{{ message.author.getFullName() }}"
 							 title="{{ message.author.getFullName() }}"/>
 					</a>
+					{% else %}
+						<div class="etu-comment-avatar-disconnected">{{ message.author.getLastName()|slice(0,1) ~ '.' ~ message.author.getFirstName()|slice(0,1) ~ '.' }}</div>
+					{% endif %}
 				</div>
 				<div class="etu-comment-infos">
 					<div class="etu-comment-date">

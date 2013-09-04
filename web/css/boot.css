@@ -691,6 +691,15 @@ textarea {
   width: 60px;
   height: 60px;
 }
+.etu-comment-avatar-disconnected {
+  background-color:#E4E4E4;
+  text-align:center;
+  font-size:20px;
+  padding-top:20px;
+  color:#333333;
+  width: 60px;
+  height: 40px;
+}
 .etu-comment-date {
   background-image: linear-gradient(#f8f8f8, #e1e1e1);
   border: 1px solid #cacaca;
