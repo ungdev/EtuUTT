@@ -74,7 +74,7 @@
 							</a>
 						</li>
 						{% endif %}
-						{% if etu.modules.isEnabled('forum') %}
+						{% if etu.modules.isEnabled('forum') and app.user %}
 						<li class="{% block main_menu_link_forums %}{% endblock %}">
 							<a href="{{ path('forum_index') }}">
 								<i class="icon icon-head icon-head-forums"></i>
