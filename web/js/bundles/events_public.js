@@ -54,12 +54,6 @@ $(function() {
 
 		events: source,
 
-		loading: function(bool) {
-			if (bool) {
-				loader.show();
-			} else {
-				loader.hide();
-			}
-		}
+		loading: function(bool) {}
 	});
 });
