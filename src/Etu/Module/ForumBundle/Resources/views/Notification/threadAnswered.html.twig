@@ -1,7 +1,7 @@
 
 <a class="notif{% if notif.isSuper %} super-notif{% elseif notif.isNew(app.user.lastVisitHome) %} notif-new{% endif %}"
 	{% if notif.countEntities == 1 %}
-	href="{{ path('forum_thread', {'id': notif.firstEntity.getThread().id, 'slug': notif.firstEntity.getThread().slug, 'page': (notif.firstEntity.getThread().getCountMessages()/10)|ceil}) }}"
+	href="{{ path('forum_thread', {'id': notif.firstEntity.getThread().id, 'slug': notif.firstEntity.getThread().slug}) }}"
 	{% else %}
 	href="{{ path('forum_index') }}"
 	{% endif %}>

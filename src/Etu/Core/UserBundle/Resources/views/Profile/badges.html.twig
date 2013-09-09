@@ -151,22 +151,17 @@
 				{% for name, serie in user.badgesList %}
 					<ul class="badges-list">
 						{% for level, userBadge in serie %}
-							{% if userBadge.owned is not defined %}
-								{{ dump(name, level, userBadge) }}
-							{% else %}
-								{% if userBadge.owned %}
-									<li>
-										<img src="{{ asset('img/badges/'~userBadge.badge.picture~'.png') }}" class="tip"
-											 title="<strong style='font-size: 13px;'>{{ userBadge.badge.name }}</strong>{% if userBadge.owned %}<br />{{ userBadge.badge.description }}{% endif %}" />
-									</li>
-								{% endif %}
+							{% if userBadge.owned %}
+								<li>
+									<img src="{{ asset('img/badges/'~userBadge.badge.picture~'.png') }}" class="tip"
+										 title="<strong style='font-size: 13px;'>{{ userBadge.badge.name }}</strong><br />{{ userBadge.badge.description }}" />
+								</li>
 							{% endif %}
 						{% endfor %}
 					</ul>
 					<div class="clear"></div>
 					<hr />
 				{% endfor %}
-
 			</div>
 		</div>
 	</div>

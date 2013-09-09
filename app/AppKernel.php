@@ -56,7 +56,8 @@ class AppKernel extends EtuKernel
 	        new FM\BbcodeBundle\FMBbcodeBundle(),
 
 	        // Tga
-	        new Tga\AudienceBundle\TgaAudienceBundle(), // Track visitors caracteristics
+	        // new Tga\AudienceBundle\TgaAudienceBundle(), // Track visitors caracteristics
+            // use Google Analytics instead of internal tracker
 
 	        // EtuUTT
             new Etu\Core\CoreBundle\EtuCoreBundle(),

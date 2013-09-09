@@ -261,20 +261,35 @@
 		<div class="block">
 			<div class="block-title">{{ 'user.profile.profile.badges'|trans }}</div>
 
-			{% for serie in app.user.badgesList %}
+			{% for name, serie in app.user.badgesList %}
 				<ul class="badges-list">
-					{% for userBadge in serie %}
-						<li {% if not userBadge.owned %}class="not-owned"{% endif %}>
-							<img src="{{ asset('img/badges/'~userBadge.badge.picture~'.png') }}" class="tip"
-								 title="<strong style='font-size: 13px;'>{{ userBadge.badge.name }}</strong><br />{{ userBadge.badge.description }}" />
-						</li>
+					{% for level, userBadge in serie %}
+						{% if userBadge.owned %}
+							<li>
+								<img src="{{ asset('img/badges/'~userBadge.badge.picture~'.png') }}" class="tip"
+									 title="<strong style='font-size: 13px;'>{{ userBadge.badge.name }}</strong><br />{{ userBadge.badge.description }}" />
+							</li>
+						{% endif %}
 					{% endfor %}
 				</ul>
 				<div class="clear"></div>
 				<hr />
 			{% endfor %}
 
+			<ul class="badges-list">
+				{% for name, serie in app.user.badgesList %}
+					{% for level, userBadge in serie %}
+						{% if not userBadge.owned %}
+							<li>
+								<img src="{{ asset('img/badges/riddle_00.png') }}" class="tip not-owned"
+									 title="<strong style='font-size: 13px;'>{{ userBadge.badge.name }}</strong>" />
+							</li>
+						{% endif %}
+					{% endfor %}
+				{% endfor %}
+			</ul>
 			<div class="clear"></div>
+
 		</div>
 	</div>
 {% endblock %}

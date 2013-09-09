@@ -2599,7 +2599,7 @@ class User implements UserInterface, \Serializable
 				$list[$badge->getSerie()][$badge->getLevel()]['createdAt'] = $userBadge->getCreatedAt();
 			} else {
 				$list['singles'][$badge->getSerie()]['owned'] = true;
-				$list['singles'][$badge->getLevel()]['createdAt'] = $userBadge->getCreatedAt();
+				$list['singles'][$badge->getSerie()]['createdAt'] = $userBadge->getCreatedAt();
 			}
 		}
 
