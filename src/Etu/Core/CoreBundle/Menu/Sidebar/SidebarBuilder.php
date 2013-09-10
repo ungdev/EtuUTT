@@ -29,6 +29,11 @@ class SidebarBuilder
 
 		$this
 			->addBlock('base.sidebar.services.title')
+				->add('base.user.menu.emails')
+					->setIcon('mails.png')
+					->setUrl($router->generate('roundcube_index'))
+					->setLinkAttribute('target', '_blank')
+				->end()
 			->end()
 			->addBlock('base.sidebar.etu.title')
 				->add('base.sidebar.etu.items.team')

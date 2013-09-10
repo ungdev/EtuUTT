@@ -19,7 +19,8 @@ class EtuModuleBuckUTTBundle extends Module
 	 */
 	public function onModuleBoot()
 	{
-		$this->getUserMenuBuilder()
+		$this->getSidebarBuilder()
+			->getBlock('base.sidebar.services.title')
 			->add('base.user.menu.buckutt')
 				->setIcon('duck.png')
 				->setPosition(3)
