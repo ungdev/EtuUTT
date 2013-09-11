@@ -53,7 +53,9 @@ class Process
 		}
 
 		foreach ($toRemoveFromDb as $login => $object) {
-			$this->toRemove[$login] = new ElementToRemove($this->doctrine, $object);
+			if ($object->getKeepActive()) {
+				$this->toRemove[$login] = new ElementToRemove($this->doctrine, $object);
+			}
 		}
 
 		foreach ($toUpdate as $login => $object) {
