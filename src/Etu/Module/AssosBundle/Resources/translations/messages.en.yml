@@ -1,0 +1,29 @@
+assos:
+    main:
+        menu:
+            description: Description
+            members: Members
+        index:
+            title: The associations
+            meta: Meet the associations & clubs of UTT !
+            president: President
+        view:
+            title: Details of an association
+            back: Back to the list
+            name: Name
+            president: President
+            contactMail: E-mail contact
+            contactPhone: Phone number
+            description: Description
+            website: Website
+        members:
+            title: Members of an assocation
+            back: Back to the list
+            name: Name
+            president: President
+            contactMail: E-mail contact
+            contactPhone: Phone number
+            description: Description
+            website: Website
+            office: Board
+            members: Members

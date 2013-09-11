@@ -1,0 +1,89 @@
+buckutt:
+    main:
+        menu:
+            history: History
+            reload: Recharge
+            admin: Administrate
+            logout: Log out
+
+        unknownError: Unknown error - Please contact buckutt@utt.fr
+
+        connect:
+            ask: Enter your Buckutt PIN number
+            explainations:
+                1: |
+                    Buckutt is the payement system used by the "Foyer",
+                    at the BDE or during student nights. You will need to recharge your student card here, with your
+                    credit card, or come to the BDE when it's open.
+                2: |
+                    You can also check your latest purchases and recharges, directly on the student website.
+                3: |
+                    To start off, sign in with your Buckutt PIN code (if
+                    you forget it, no worries ! you can create a new one by clicking the link
+                    below the form).
+            warnings:
+                1: Your Buckutt PIN code is personal, keep it for yourself !
+                2: |
+                    For security measures, after 3 failed attempts, your account
+                    will be locked. You will need to come to the BDE to get it unlocked.
+            notStudent: |
+                Your account is not a UTT account : you cannot have access to Buckutt, which is
+                only accessible to UTT students.
+            connect: Connection
+            invalidPin: Invalid PIN code
+            lostPin: I have lost my PIN code
+            cantSendMail: Cannot send mail. Please contact buckutt@utt.fr
+            newPinSent: A new Buckutt PIN code has been sent to you by mail
+
+        index:
+            title: BuckUTT
+            main_title: My Buckutt Account
+            credit: Credit
+            reload: Recharges
+            noActionFound: No action found
+
+        admin:
+            changePin:
+                title: Change my PIN code
+                constraint: Your new PIN code must be 4 numbers exactly, no more no less.
+                change: Change
+                security: |
+                    For security reasons, your new PIN code cannot contain the same digit 4 times
+                    (ex: 0000, 1111, etc), 1234 ou 4321. Avoid using you date of birth
+                    or anything too obvious.
+                label:
+                    old: Previous PIN code
+                    new: New PIN code
+                    confirm: Confirm
+                results:
+                    confirm: Your PIN code has successfully changed
+                    fillAllFields: You must fill in all of the fields
+                    newDifferents: Both new PIN codes aren't identical
+                    invalids: The PIN codes must be positive whole numbers with 4 digits
+                    newInvalid: Invalid new PIN code
+                    oldInvalid: The previous PIN code is incorrect
+
+            block:
+                title: Lock my account
+                explaination: |
+                    In case of loss or theft of your card, lock your account to avoid
+                    anyone to use it without your consent.
+                warning: |
+                    You cannot unlock it by yourself ! You need to come to the BDE
+                    to unlock it.
+                label:
+                    pin: PIN code
+                block: Lock my account
+                confirm: Your account is now locked
+
+        reload:
+            explainations:
+                1: You have at the moment %credit% € on your account.
+                2: You want to recharge %amount% €.
+                3: Your account will then contain %amount_total% €.
+            infos: |
+                The maximum amount you can have on you BuckUTT account is %max_amount% €.
+                Therefore, you can recharge up to %possible_amount% €.
+            choose: Choose the amount you want to recharge
+            reload: Recharge
+            confirm: You have successfully recharged your account

@@ -1,0 +1,106 @@
+events:
+    notifs:
+        eventCreated: The event %title% has been created by %orga%
+        eventEdited:
+            location: The event %title% has changed its location (%newLocation%)
+            beginDate: The event %title% has changed its start date
+            beginHour: The event %title% has changed its start time
+            beginBoth: The event %title% has changed its start time and date
+            endDate: The event %title% has changed its end date
+            endHour: The event %title% has changed its end time
+            endBoth: The event %title% has changed its end time and date
+            locationHour:  The event %title% has changed its location (%newLocation%) and time
+            other: The event %title% has been edited
+        eventDeleted: The event %title% has been deleted
+
+    categories:
+        culture: Cultural
+        sport: Sport
+        formation: Training
+        soiree: Party
+        autre: Other
+        all: All the events
+
+    main:
+        days:
+            mon: Monday
+            tue: Tuesday
+            wed: Wednesday
+            thu: Thursday
+            fri: Friday
+            sat: Saturday
+            sun: Sunday
+        menu:
+            month: Month
+            week: Week
+        months:
+            jan: january
+            feb: february
+            mar: march
+            apr: april
+            may: may
+            jun: june
+            jul: july
+            aug: august
+            sep: september
+            oct: october
+            nov: november
+            dec: december
+        index:
+            title: Events
+            meta: Discover the student events at UTT !
+            category_orga: In %category%, organized by %orga%
+        week:
+            week: Week
+        view:
+            title: Details of an event
+            willYouCome: Will you come ?
+            back: Back to the calendar
+            in: In %category%
+            by: Organized by
+            start: Start
+            end: End
+            location: Location
+            menu:
+                description: Description
+                subscribers: Participants
+        subscribers:
+            title: Participants of an event
+            yes: Yes, I will come
+            probably: I'm not sure if I will come
+            no: No, I will not come
+
+    memberships:
+        events:
+            create: Create an event
+        create:
+            back: Back to the calender
+            title: Title
+            image:
+                label: Logo
+                desc: It will be resized in 200x200 pixels
+            category: Category
+            begin: Start
+            end: End
+            location: Location
+            description: Description
+            submit: Create the event
+            confirm: The event has been created
+        edit:
+            back: Back to the calender
+            publicView: Show the event page
+            title: Title
+            category: Category
+            image: Logo
+            begin: Start
+            end: End
+            location: Location
+            description: Description
+            submit: Edit the event
+            delete: Delete the event
+            confirm: The event has been edited
+        delete:
+            question: Do you really want to delete %title% ?
+            yes: Yes, delete
+            no: No, cancel
+            confirm: The event has been deleted

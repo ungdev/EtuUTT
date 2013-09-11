@@ -1,0 +1,127 @@
+wiki:
+    levels:
+        connected: All of the students
+        asso_member: All of the members of the assocation
+        asso_admin: Board members of the association
+        admin: Administrator of EtuUTT (you will not have this right)
+
+    menu:
+        index: Welcome page
+        read: Read
+        edit: Edit
+        delete: Delete
+        permissions: Permissions
+
+    main:
+        index:
+            title: Wiki of the associations
+        edit:
+            title: Edit welcome page
+            submit: Edit
+            revisions: Revisions
+            content: Content
+            by: by
+            comment: Comments about your modificationsCommentaire décrivant vos modifications
+            confirm: You have edited the wiki's welcome page
+        revision:
+            title: Check a revision
+            revisions: Revisions
+            by: by
+            submit: Restore the revision
+            confirm: You have restored the revision
+
+    orga:
+        index:
+            title: Wiki of %name%
+            confirm: You have edited this page
+            create: Create
+            create_page: Page
+            create_category: Category
+            edit: Edit
+        edit:
+            title: Edit welcome page
+            submit: Edit
+            content: Content
+            revisions: Revisions
+            by: by
+            comment: Comments about your modifications
+            confirm: You have edited this wiki's welcome page
+        revision:
+            title: Check a revision
+            revisions: Revisions
+            by: by
+            submit: Restore the revision
+            confirm: You have restored the revision
+        permissions:
+            toEdit: Who can edit this page ?
+            toEditPermissions: Who can edit permissions of this page ?
+            title: Edit permissions
+            submit: Edit
+            confirm: You have edited the permissions of this page
+        tree:
+            title: Edit tree diagram
+            edit: Edit %category%
+            remove: Delete %category%
+            count_pages:
+                one: %count% page
+                many: %count% pages
+        edit_category:
+            title: Edit a category
+            submit: Edit
+            name: Name of the category
+            where: Where does this category go ?
+            confirm: You have edited this category
+        delete_category:
+            title: Delete a category
+            question: |
+                Are you sure you want to delete "%categoryName%",
+                all of the catgoeries and the pages it contains ?
+            yes: Yes, delete
+            no: No, cancel
+            confirm: You have successfully deleted the category
+
+
+    page:
+        view:
+            title: Read a page
+        create:
+            title: Create a page
+            submit: Create
+            name: Name of the page
+            content: Content
+            where: Where does this page go ?
+            confirm: You have created a page
+        create_category:
+            title: Create a category
+            submit: Create
+            name: Name of the category
+            where: Where does this category go ?
+            confirm: You have created a category
+        edit:
+            title: Edit a page
+            revisions: Revisions
+            submit: Edit
+            name: Name of the page
+            content: Content
+            where: Where does this page go ?
+            comment: Comments about your modifications
+            confirm: You have edited this page
+        revision:
+            title: Check a revision
+            revisions: Revisions
+            by: by
+            submit: Restore the revision
+            confirm: You have restored the revision
+        permissions:
+            title: Edit permissions
+            submit: Edit
+            confirm: You have successfully eddited the permissions of this page
+            toView: Who can see this page ?
+            toEdit: Who can edit this page ?
+            toEditPermissions: WXho can edit the permissions of this page ?
+        delete:
+            title: Delete a page
+            question: Are you sure you want to delete "%pageName%" ?
+            yes: Yes, delete
+            no: No, cancel
+            confirm: You have deleted the page

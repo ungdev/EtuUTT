@@ -1,0 +1,58 @@
+forum:
+    meta: The forums of the UTT student website
+
+    main:
+        index:
+            meta: The forums of the UTT student website : discuss & share !
+            noMessage: No messages
+            forum: Forum
+            category: Category
+            nbThreads: Threads
+            nbMessages: Messages
+            lastMessage: Last message
+            noMessage: There are no messages in this category.
+        thread:
+            thread: Thread
+            in: In
+            by: By
+            date: Date
+            datePrefix:
+            dateHour: at
+            dateFormat: d/m/Y
+            messages: Messages
+            lastMessage: Last message
+            post: Create a new thread
+            answer: Answer
+            read: Read
+            sticky: Sticky
+            locked: Locked
+            edit: Edit
+            new: New
+        post:
+            title: New thread
+            threadTitle: Thread title
+            content: Message
+            sticky: Sticky ?
+            yes: Yes
+            no: No
+        answer:
+            title: Answer
+        edit:
+            title: Edit a message
+        mod:
+            title: Moderation panel
+            lock: Lock
+            unlock: Unlock
+            remove: Delete
+            removeThreadWarning: Beware, deleting this message will delete the thread. Are you sure you want to delete it ?
+            removeThread: Are you sure you want to delete this thread ?
+            removeMessage: Are you sure you want to delete this message?
+            back: Back
+            locked: The thread has been locked
+            unlocked: The thread has been unlocked
+            moderation: Moderation
+            move: Move
+            where: Where do you want to move the thread ?
+
+    notifs:
+            threadCreated: %author% has answered to %title%

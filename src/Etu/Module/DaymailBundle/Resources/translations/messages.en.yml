@@ -1,0 +1,33 @@
+daymail:
+    memberships:
+        daymail:
+            days:
+                mon: Monday
+                tue: Tuesday
+                wed: Wednesday
+                thu: Thursday
+                fri: Friday
+                sat: Saturday
+                sun: Sunday
+            months:
+                jan: january
+                feb: february
+                mar: march
+                apr: april
+                may: may
+                jun: june
+                jul: july
+                aug: august
+                sep: september
+                oct: october
+                nov: november
+                dec: december
+            title:
+                label: Subject
+            body:
+                label: Content
+            date:
+                label: Date of publication
+            submit: Edit this daymail
+            preview: Preview
+            confirm: You have successfully edited this daymail

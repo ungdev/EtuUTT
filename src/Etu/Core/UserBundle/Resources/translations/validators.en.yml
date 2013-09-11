@@ -1,0 +1,23 @@
+user:
+    validation:
+        phoneNumber: The phone number is not valid
+        firstname:
+            length_min: First name must contain at least {{ limit }} caracters
+            length_max: First name must contain {{ limit }} caracters maximum
+        lastname:
+            length_min: Last name must contain at least {{ limit }} caracters
+            length_max: Last name must contain {{ limit }} caracters maximum
+        nationality:
+            length_min: Nationality must contain at least {{ limit }} caracters
+            length_max: Nationality must contain {{ limit }} caracters maximum
+        address:
+            length_min: Adress must contain at least {{ limit }} caracters
+            length_max: Adress must contain {{ limit }} caracters maximum
+        city:
+            length_min: City must contain at least{{ limit }} caracters
+            length_max: City must contain {{ limit }} caracters maximum
+        country:
+            length_min: Country must contain at least {{ limit }} caracters
+            length_max: Country must contain {{ limit }} caracters maximum
+        surnom:
+            length_max: Nickname must contain {{ limit }} caracters maximum
