@@ -2672,7 +2672,7 @@ class User implements UserInterface, \Serializable
 	 */
 	public function setFirstLogin($firstLogin)
 	{
-		$this->firstLogin = $firtLogin;
+		$this->firstLogin = $firstLogin;
 
 		return $this;
 	}
