@@ -48,6 +48,10 @@ class ElementToRemove
 	 */
 	public function remove()
 	{
+		if ($this->element->getKeepActive()) {
+			return;
+		}
+
 		$this->element->setDeletedAt(new \DateTime());
 		$this->doctrine->getManager()->persist($this->element);
 	}

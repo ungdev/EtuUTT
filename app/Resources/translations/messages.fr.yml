@@ -35,9 +35,9 @@ base:
         menu:
             flux: Mon flux
             account: Mon compte
-            buckutt: Mon compte BuckUTT
+            buckutt: BuckUTT
             dailymail: Mon daymail
-            emails: Mes e-mails
+            emails: E-mails
             table: Mon emploi du temps
             logout: Déconnexion
             help: Aide

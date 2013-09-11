@@ -56,7 +56,7 @@ class Synchronizer
 		$em = $this->doctrine->getManager();
 
 		/** @var User[] $dbUsers */
-		$dbUsers = $em->getRepository('EtuUserBundle:User')->findBy(array('keepActive' => false));
+		$dbUsers = $em->getRepository('EtuUserBundle:User')->findAll();
 		$dbLogins = array();
 
 		foreach ($dbUsers as $key => $dbUser) {
