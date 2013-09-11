@@ -316,12 +316,15 @@ class MainController extends Controller
 
 		$this->get('twig')->addGlobal('etu_count_new_notifs', 0);
 
-		$view = $this->render('EtuCoreBundle:Main:index.html.twig', array(
-			'notifs' => $notifications
-		));
-
 		$user = $this->getUser();
+		
+		$view = $this->render('EtuCoreBundle:Main:index.html.twig', array(
+			'notifs' => $notifications,
+			'firstLogin' => $user->getFirstLogin()s
+		));
 		$user->setLastVisitHome(new \DateTime());
+		
+		if(!$user->getFirstLogin()) $user->setFirstLogin(true);
 
 		$em->persist($user);
 

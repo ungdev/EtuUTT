@@ -61,93 +61,96 @@
 		});
 	</script>
 	{% endif %}
-	<script type="text/javascript" src="{{ asset('js/lib/jquery-impromptu.js') }}"></script>
-	<script type="text/javascript">
-	var tourSubmitFunc = function(e,v,m,f){
-				if(v === -1){
-					$.prompt.prevState();
-					return false;
-				}
-				else if(v === 1){
-					$.prompt.nextState();
-					return false;
-				}
-	},
-	tourStates = [
-		{
-			title: 'Bienvenue !',
-			html: 'Prêt à découvrir le nouveau site étu ? C\'est parti !',
-			buttons: { Suivant: 1 },
-			focus: 0,
-			position: { container: '.page-container', x: 25, y: 15, width: 200, arrow: 'tc' },
-			submit: tourSubmitFunc
+	{% if not firstLogin %}
+		<script type="text/javascript" src="{{ asset('js/lib/jquery-impromptu.js') }}"></script>
+		<script type="text/javascript">
+		var tourSubmitFunc = function(e,v,m,f){
+					if(v === -1){
+						$.prompt.prevState();
+						return false;
+					}
+					else if(v === 1){
+						$.prompt.nextState();
+						return false;
+					}
 		},
-		{
-			title: 'Flux',
-			html: 'C\'est ici que tu peux voir quand tu reçois tes notifications ! Cliques-y pour accèder à ton flux !',
-			buttons: { Précédent: -1, Suivant: 1 },
-			focus: 1,
-			position: { container: '.page-container', x: 122, y: -5, width: 300, arrow: 'tc' },
-			submit: tourSubmitFunc
-		},
-		{
-			title: 'TON flux !',
-			html: 'Là, tu peux voir en un clin d\'oeil toutes les informations qui te concernent ! C\'est là que tu arrives en te connectant :)',
-			buttons: { Précédent: -1, Suivant: 1 },
-			focus: 1,
-			position: { container: '.page-title', x: 210, y: 20, width: 250, arrow: 'lt' },
-			submit: tourSubmitFunc
-		},
-		{
-			title: 'Tiens toi informé !',
-			html: 'Via le calendrier des associations, sois au courant de quand se déroule la prochaine nocturne, et dis à tout le monde que TOI, tu vas y participer !',
-			buttons: { Précédent: -1, Suivant: 1 },
-			focus: 1,
-			position: { container: '.page-container', x: 230, y: -2, width: 305, arrow: 'tc' },
-			submit: tourSubmitFunc
-		},
-		{
-			title: 'Sociabilise-toi !',
-			html: 'Parce que le site étu c\'est fait PAR les étus, POUR les étus, il est normal que vous puissiez vous exprimer ! Questions ? Réponses ? Go !',
-			buttons: { Précédent: -1, Suivant: 1 },
-			focus: 1,
-			position: { container: '.page-container', x: 378, y: -3, width: 305, arrow: 'tc' },
-			submit: tourSubmitFunc
-		},
-		{
-			title: 'TEH ASSOCIATRON',
-			html: 'Découvre les associations qui pourraient te plaire et abonne-toi à leurs actualités !',
-			buttons: { Précédent: -1, Suivant: 1 },
-			focus: 1,
-			position: { container: '.page-container', x: 492, y: -3, width: 305, arrow: 'tc' },
-			submit: tourSubmitFunc
-		},
-		{
-			title: 'Et c\'est pas fini !',
-			html: 'Quand y en a pu, y en a encore !<br />Clique ici pour accéder à la suite du menu !',
-			buttons: { Précédent: -1, Suivant: 1 },
-			focus: 1,
-			position: { container: '.page-container', x: 930, y: 15, width: 250, arrow: 'tc' },
-			submit: tourSubmitFunc
-		},
-		{
-			title: 'Plein d\'autres services à ta disposition !',
-			html: 'On n\'change pas une équipe qui gagne ! Comme sur l\'ancien site étu, tu peux retrouver tes potes sur le trombi, trouver vos intercours communs pour des parties enflammées de babyfoot au foyer, etc ...',
-			buttons: { Précédent: -1, Suivant: 1 },
-			focus: 1,
-			position: { container: '.sidebar-title', x: -280, y: 0, width: 250, arrow: 'rt' },
-			submit: tourSubmitFunc
-		},
-		{
-			title: 'A toi d\'jouer !',
-			html: 'Toute l\'équipe est très heureuse de te présenter le nouveau site étu, et espère qu\'il t\'accompagnera efficacement durant tes (pas si) nombreuses années à l\'UTT !',
-			buttons: { Précédent: -1, Compris: 2 },
-			focus: 1,
-			position: { container: '.page-container', x: 25, y: 15, width: 500, arrow: 'tl' },
-			submit: tourSubmitFunc
-		}
-	];
-	$.prompt(tourStates);
+		tourStates = [
+			{
+				title: 'Bienvenue !',
+				html: 'Prêt à découvrir le nouveau site étu ? C\'est parti !',
+				buttons: { Suivant: 1 },
+				focus: 0,
+				position: { container: '.page-container', x: 25, y: 15, width: 200, arrow: 'tc' },
+				submit: tourSubmitFunc
+			},
+			{
+				title: 'Flux',
+				html: 'C\'est ici que tu peux voir quand tu reçois tes notifications ! Cliques-y pour accèder à ton flux !',
+				buttons: { Précédent: -1, Suivant: 1 },
+				focus: 1,
+				position: { container: '.page-container', x: 122, y: -5, width: 300, arrow: 'tc' },
+				submit: tourSubmitFunc
+			},
+			{
+				title: 'TON flux !',
+				html: 'Là, tu peux voir en un clin d\'oeil toutes les informations qui te concernent ! C\'est là que tu arrives en te connectant :)',
+				buttons: { Précédent: -1, Suivant: 1 },
+				focus: 1,
+				position: { container: '.page-title', x: 210, y: 20, width: 250, arrow: 'lt' },
+				submit: tourSubmitFunc
+			},
+			{
+				title: 'Tiens toi informé !',
+				html: 'Via le calendrier des associations, sois au courant de quand se déroule la prochaine nocturne, et dis à tout le monde que TOI, tu vas y participer !',
+				buttons: { Précédent: -1, Suivant: 1 },
+				focus: 1,
+				position: { container: '.page-container', x: 230, y: -2, width: 305, arrow: 'tc' },
+				submit: tourSubmitFunc
+			},
+			{
+				title: 'Sociabilise-toi !',
+				html: 'Parce que le site étu c\'est fait PAR les étus, POUR les étus, il est normal que vous puissiez vous exprimer ! Questions ? Réponses ? Go !',
+				buttons: { Précédent: -1, Suivant: 1 },
+				focus: 1,
+				position: { container: '.page-container', x: 378, y: -3, width: 305, arrow: 'tc' },
+				submit: tourSubmitFunc
+			},
+			{
+				title: 'TEH ASSOCIATRON',
+				html: 'Découvre les associations qui pourraient te plaire et abonne-toi à leurs actualités !',
+				buttons: { Précédent: -1, Suivant: 1 },
+				focus: 1,
+				position: { container: '.page-container', x: 492, y: -3, width: 305, arrow: 'tc' },
+				submit: tourSubmitFunc
+			},
+			{
+				title: 'Et c\'est pas fini !',
+				html: 'Quand y en a pu, y en a encore !<br />Clique ici pour accéder à la suite du menu !',
+				buttons: { Précédent: -1, Suivant: 1 },
+				focus: 1,
+				position: { container: '.page-container', x: 930, y: 15, width: 250, arrow: 'tc' },
+				submit: tourSubmitFunc
+			},
+			{
+				title: 'Plein d\'autres services à ta disposition !',
+				html: 'On n\'change pas une équipe qui gagne ! Comme sur l\'ancien site étu, tu peux retrouver tes potes sur le trombi, trouver vos intercours communs pour des parties enflammées de babyfoot au foyer, etc ...',
+				buttons: { Précédent: -1, Suivant: 1 },
+				focus: 1,
+				position: { container: '.sidebar-title', x: -280, y: 0, width: 250, arrow: 'rt' },
+				submit: tourSubmitFunc
+			},
+			{
+				title: 'A toi d\'jouer !',
+				html: 'Toute l\'équipe est très heureuse de te présenter le nouveau site étu, et espère qu\'il t\'accompagnera efficacement durant tes (pas si) nombreuses années à l\'UTT !',
+				buttons: { Précédent: -1, Compris: 2 },
+				focus: 1,
+				position: { container: '.page-container', x: 25, y: 15, width: 500, arrow: 'tl' },
+				submit: tourSubmitFunc
+			}
+		];
+
+		$.prompt(tourStates);
+	{% endif %}
 	</script>
 {% endblock %}
 
