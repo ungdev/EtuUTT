@@ -320,7 +320,7 @@ class MainController extends Controller
 		
 		$view = $this->render('EtuCoreBundle:Main:index.html.twig', array(
 			'notifs' => $notifications,
-			'firstLogin' => $user->getFirstLogin()s
+			'firstLogin' => $user->getFirstLogin()
 		));
 		$user->setLastVisitHome(new \DateTime());
 		
