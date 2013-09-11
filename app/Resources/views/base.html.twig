@@ -52,7 +52,7 @@
 
 				<nav class="pull-left">
 					<ul class="list-horizontal list-horizontal-linked menu" id="head-menu-list">
-						<li class="first{% block main_menu_link_homepage %}{% endblock %}" id="menu_home">
+						<li class="first{% block main_menu_link_homepage %}{% endblock %}">
 							{% if etu.notifs.new_count == 0 %}
 							<span id="head-menu-home-pins" class="pins pins-alert pins-head pins-head-hidden">0</span>
 							{% else %}
@@ -61,33 +61,33 @@
 
 							<a href="{{ path('homepage') }}">
 								<i class="icon icon-head icon-head-home"></i>
-								<span class="menu-link-text">{{ 'base.menu.home'|trans }}</span>
+								<span class="menu-link-text" id="menu_home">{{ 'base.menu.home'|trans }}</span>
 								<div class="clear"></div>
 							</a>
 						</li>
 						{% if etu.modules.isEnabled('events') %}
-						<li class="{% block main_menu_link_events %}{% endblock %}" id="menu_events">
+						<li class="{% block main_menu_link_events %}{% endblock %}">
 							<a href="{{ path('events_index') }}">
 								<i class="icon icon-head icon-head-events"></i>
-								<span class="menu-link-text">{{ 'base.menu.events'|trans }}</span>
+								<span class="menu-link-text" id="menu_events">{{ 'base.menu.events'|trans }}</span>
 								<div class="clear"></div>
 							</a>
 						</li>
 						{% endif %}
 						{% if etu.modules.isEnabled('forum') and app.user %}
-						<li class="{% block main_menu_link_forums %}{% endblock %}" id="menu_forums">
+						<li class="{% block main_menu_link_forums %}{% endblock %}">
 							<a href="{{ path('forum_index') }}">
 								<i class="icon icon-head icon-head-forums"></i>
-								<span class="menu-link-text">{{ 'base.menu.forums'|trans }}</span>
+								<span class="menu-link-text" id="menu_forums">{{ 'base.menu.forums'|trans }}</span>
 								<div class="clear"></div>
 							</a>
 						</li>
 						{% endif %}
 						{% if etu.modules.isEnabled('assos') %}
-						<li class="last hidden-for-phones{% block main_menu_link_assos %}{% endblock %}" id="menu_assos">
+						<li class="last hidden-for-phones{% block main_menu_link_assos %}{% endblock %}">
 							<a href="{{ path('orgas_index') }}">
 								<i class="icon icon-head icon-head-associations"></i>
-								<span class="menu-link-text">{{ 'base.menu.associations'|trans }}</span>
+								<span class="menu-link-text" id="menu_assos">{{ 'base.menu.associations'|trans }}</span>
 								<div class="clear"></div>
 							</a>
 						</li>
