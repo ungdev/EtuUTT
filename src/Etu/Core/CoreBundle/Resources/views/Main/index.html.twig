@@ -61,7 +61,7 @@
 		});
 	</script>
 	{% endif %}
-	{% if not firstLogin %}
+	{% if not app.user.getFirstLogin() %}
 		<script type="text/javascript" src="{{ asset('js/lib/jquery-impromptu.js') }}"></script>
 		<script type="text/javascript">
 		var tourSubmitFunc = function(e,v,m,f){
