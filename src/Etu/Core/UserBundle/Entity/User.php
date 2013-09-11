@@ -557,6 +557,13 @@ class User implements UserInterface, \Serializable
 	 * @ORM\JoinColumn()
 	 */
 	protected $memberships;
+	
+	/**
+	 * @var boolean
+	 *
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $firstLogin = false;
 
 	/**
 	 * Temporary variable to store uploaded file during photo update
@@ -606,6 +613,7 @@ class User implements UserInterface, \Serializable
 		$this->uvs = '';
 		$this->lastVisitHome = new \DateTime('0000-00-00 00:00:00');
 		$this->createdAt = new \DateTime();
+		$this->firstLogin = false;
 	}
 
 	public function __toString()
@@ -829,6 +837,7 @@ class User implements UserInterface, \Serializable
 			$this->updatedAt,
 			$this->deletedAt,
 			$this->memberships,
+			$this->firstLogin,
 		));
 	}
 
@@ -2653,5 +2662,28 @@ class User implements UserInterface, \Serializable
 		array_multisort($badges, $dates, SORT_DESC);
 
 		return $badges;
+	}
+	
+	/**
+	 * Set firstLogin
+	 *
+	 * @param boolean $firstLogin
+	 * @return User
+	 */
+	public function setFirstLogin($firstLogin)
+	{
+		$this->firstLogin = $firtLogin;
+
+		return $this;
+	}
+
+	/**
+	 * Get firstLogin
+	 *
+	 * @return boolean
+	 */
+	public function getFirstLogin()
+	{
+		return $this->firstLogin;
 	}
 }
