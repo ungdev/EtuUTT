@@ -61,7 +61,7 @@
 		});
 	</script>
 	{% endif %}
-	<script type="text/javascript" src="/js/lib/jquery-impromptu.js"></script>
+	<script type="text/javascript" src="{{ asset('js/lib/jquery-impromptu.js') }}"></script>
 	<script type="text/javascript">
 	var tourSubmitFunc = function(e,v,m,f){
 				if(v === -1){
@@ -101,6 +101,10 @@
 	];
 	$.prompt(tourStates);
 	</script>
+{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/jquery-impromptu.css') }}" type="text/css" />
 {% endblock %}
 
 {% block content %}
