@@ -75,7 +75,7 @@ $rcmail_config['smtp_debug'] = false;
 // For example %n = mail.domain.tld, %t = domain.tld
 // WARNING: After hostname change update of mail_host column in users table is
 //          required to match old user data records with the new host.
-$rcmail_config['default_host'] = 'uran01.utt.fr';
+$rcmail_config['default_host'] = 'mail.utt.fr';
 
 // TCP port used for IMAP connections
 $rcmail_config['default_port'] = 143;

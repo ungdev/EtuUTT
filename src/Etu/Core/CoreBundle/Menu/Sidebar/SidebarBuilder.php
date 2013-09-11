@@ -31,7 +31,7 @@ class SidebarBuilder
 			->addBlock('base.sidebar.services.title')
 				->add('base.user.menu.emails')
 					->setIcon('mails.png')
-					->setUrl($router->generate('roundcube_index'))
+					->setUrl('http://mail.utt.fr')
 					->setLinkAttribute('target', '_blank')
 				->end()
 			->end()
