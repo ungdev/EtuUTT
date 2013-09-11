@@ -697,6 +697,33 @@ class MainController extends Controller
 	private function giveBadges()
 	{
 		$em = $this->getDoctrine()->getManager();
+		$threads = $em->createQueryBuilder()
+			->select('t')
+			->from('EtuModuleForumBundle:Thread', 't')
+			->where('t.author = :user')
+			->setParameter('user', $this->getUser())
+			->getQuery()
+			->getResult();
+
+		$nbThreads = count($threads);
+		
+		if($nbThreads >= 1) {
+			BadgesManager::userAddBadge($this->getUser(), 'mysterion', 1);
+			BadgesManager::userPersistBadges($this->getUser());
+		}
+		if($nbThreads >= 10) {
+			BadgesManager::userAddBadge($this->getUser(), 'mysterion', 2);
+			BadgesManager::userPersistBadges($this->getUser());
+		}
+		if($nbThreads >= 20) {
+			BadgesManager::userAddBadge($this->getUser(), 'mysterion', 3);
+			BadgesManager::userPersistBadges($this->getUser());
+		}
+		if($nbThreads >= 40) {
+			BadgesManager::userAddBadge($this->getUser(), 'mysterion', 4);
+			BadgesManager::userPersistBadges($this->getUser());
+		}
+		
 		$messages = $em->createQueryBuilder()
 			->select('m')
 			->from('EtuModuleForumBundle:Message', 'm')
