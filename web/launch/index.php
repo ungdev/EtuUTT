@@ -51,12 +51,6 @@ $interval->s = $diff - $days - $hours - $minutes;
 			</div>
 
 			<div class="row-fluid">
-				<p>
-					Le site étudiant de l'Université de Technologie de Troyes est en évolution ...
-				</p>
-			</div>
-
-			<div class="row-fluid">
 				<div class="span3 days date-element">
 					<h2 id="days"><?php echo $interval->days; ?></h2>
 					<span class="infos">jour<span id="s_days">s</span></span>

@@ -1,4 +1,7 @@
 
+h1 {
+	font-size: 80px;
+}
 h2 {
 	font-size: 2.2em;
 	color: white;
@@ -28,6 +31,8 @@ hr {
 	-moz-transition: border linear 0.2s, box-shadow linear 0.2s;
 	-o-transition: border linear 0.2s, box-shadow linear 0.2s;
 	transition: border linear 0.2s, box-shadow linear 0.2s;
+	font-size: 35px;
+	padding-bottom: 55px;
 }
 .date-element:hover {
 	border-color: #888;

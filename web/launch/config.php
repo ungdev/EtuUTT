@@ -14,7 +14,7 @@ $mailto = 'mailto:?subject=EtuUTT arrive bientôt ...&body=http://openutt.utt.fr
 
 
 // Launch date
-$launch = mktime(20, 0, 0, 9, 12, 2013);
+$launch = mktime(16, 30, 0, 9, 12, 2013);
 $now = time();
 
 $acceptTesters = (($now - $launch) / (24 * 3600)) > 31;
