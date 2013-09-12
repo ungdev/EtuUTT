@@ -237,7 +237,7 @@ class MainController extends Controller
 				->setParameter('begin', new \DateTime())
 				->orderBy('e.begin', 'ASC')
 				->addOrderBy('e.end', 'ASC')
-				->setMaxResults(5)
+				->setMaxResults(3)
 				->getQuery();
 
 			$query->useResultCache(true, 3600);
@@ -317,14 +317,16 @@ class MainController extends Controller
 		$this->get('twig')->addGlobal('etu_count_new_notifs', 0);
 
 		$user = $this->getUser();
-		
+
 		$view = $this->render('EtuCoreBundle:Main:index.html.twig', array(
 			'notifs' => $notifications,
 			'firstLogin' => $user->getFirstLogin()
 		));
 		$user->setLastVisitHome(new \DateTime());
-		
-		if(!$user->getFirstLogin()) $user->setFirstLogin(true);
+
+		if (!$user->getFirstLogin()) {
+			$user->setFirstLogin(true);
+		}
 
 		$em->persist($user);
 

@@ -57,11 +57,6 @@ class UserMenuBuilder
 				->setIcon('control-power.png')
 				->setUrl($router->generate('user_disconnect'))
 			->end()
-			->addSeparator()
-			->add('base.user.menu.help')
-				->setIcon('question.png')
-				->setUrl('')
-			->end()
 		;
 	}
 

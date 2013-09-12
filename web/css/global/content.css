@@ -39,3 +39,22 @@
   padding: 10px;
   margin-bottom: 20px;
 }
+/*
+ * Home intro
+ */
+.home-intro h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.home-intro h5 {
+  font-size: 16px;
+  font-weight: lighter;
+  margin-bottom: 15px;
+}
+.home-intro h6 {
+  font-size: 14px;
+  font-weight: lighter;
+  font-style: italic;
+  text-align: right;
+}
