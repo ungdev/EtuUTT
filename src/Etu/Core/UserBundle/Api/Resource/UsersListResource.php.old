@@ -62,6 +62,9 @@ class UsersListResource extends Resource
 	 */
 	public function getOperation($sortExpression, $page)
 	{
+		var_dump($sortExpression);
+		exit;
+
 		$orderBy = Sorting\Expression::getOrderBy($sortExpression, array(
 			'firstname', 'lastname', 'fullname', 'level'
 		));

@@ -45,7 +45,6 @@ class AssetsCompileCommand extends ContainerAwareCommand
 		$css = array(
 			'bootstrap/css/bootstrap.min.css',
 			'bootstrap/css/bootstrap-responsive.min.css',
-			'sceditor/minified/jquery.sceditor.default.min.css',
 			'tipsy/src/tipsy.css',
 			'facebox/src/facebox.css',
 			'css/boot.css',
@@ -55,8 +54,6 @@ class AssetsCompileCommand extends ContainerAwareCommand
 			'bootstrap/js/bootstrap.min.js',
 			'bundles/fosjsrouting/js/router.js',
 			'js/fos_js_routes.js',
-			'sceditor/minified/jquery.sceditor.min.js',
-			'sceditor/minified/jquery.sceditor.bbcode.min.js',
 			'sceditor/languages/fr.js',
 			'facebox/src/facebox.js',
 			'tipsy/src/jquery.tipsy.js',
