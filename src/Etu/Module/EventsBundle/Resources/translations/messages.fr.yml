@@ -67,9 +67,9 @@ events:
                 subscribers: Participants
         subscribers:
             title: Participants à un évènement
-            yes: Oui, je viendrais
-            probably: Je viendrais peut-être
-            no: Non, je ne viendrais pas
+            yes: Oui, je viendrai
+            probably: Je viendrai peut-être
+            no: Non, je ne viendrai pas
 
     memberships:
         events:
