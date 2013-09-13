@@ -1,0 +1,45 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'user.schedule.course.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<div class="padding20-all">
+		<p>
+			{{ 'user.schedule.course.desc'|trans({
+				'%uv%': course.uv,
+				'%day%': ('user.schedule.days_lower.'~course.day)|trans,
+				'%start%': course.start
+			}) }}
+
+			<span class="pull-right">
+				<a href=""{{ path('uvs_goto', {'code': course.uv}) }}>{{ 'user.schedule.course.uv'|trans }}</a>
+			</span>
+		</p>
+
+		<p class="align-center">
+			{{ 'user.schedule.course.students'|transchoice(students|count, {'%count%': students|count}) }}
+		</p>
+
+		<ul id="search-results" class="asso-members">
+			<ul class="asso-members">
+				{% for student in students %}
+					<li class="asso-members-item asso-members-item-member">
+						<a href="{{ path('user_view', {'login': student.user.login}) }}">
+							<img src="{{ asset('photos/'~student.user.avatar) }}" alt="{{ student.user.fullName }}" title="{{ student.user.fullName }}" />
+							<h5>{{ student.user.fullName }}</h5>
+							<p>
+								{{ student.user.branch~student.user.niveau }} {{ student.user.filiere }}
+							</p>
+
+							<div class="clear"></div>
+						</a>
+					</li>
+				{% endfor %}
+			</ul>
+		</ul>
+	</div>
+{% endblock %}

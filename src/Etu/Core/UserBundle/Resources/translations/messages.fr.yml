@@ -356,6 +356,13 @@ user:
             thursday: Jeudi
             friday: Vendredi
             sathurday: Samedi
+        days_lower:
+            monday: lundi
+            tuesday: mardi
+            wenesday: mercredi
+            thursday: jeudi
+            friday: vendredi
+            sathurday: samedi
         schedule:
             title: Mon emploi du temps
             edit: Modifier
@@ -365,3 +372,9 @@ user:
             back: Retour
         schedulePrint:
             title: Imprimer mon emploi du temps
+        course:
+            title: Créneau de cours
+            desc: Créneau de %uv%, le %day% à %start%
+            uv: Voir la description de l'UV
+            students: %count% étudiant inscrit à ce créneau|%count% étudiants inscrits à ce créneau
+

@@ -110,4 +110,37 @@ class ScheduleController extends Controller
 			'currentDay' => $day,
 		);
 	}
+
+	/**
+	 * @Route("/schedule/course/{id}", name="schedule_course")
+	 * @Template()
+	 */
+	public function courseAction(Course $course)
+	{
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		$students = $em->createQueryBuilder()
+			->select('c, u')
+			->from('EtuUserBundle:Course', 'c')
+			->leftJoin('c.user', 'u')
+			->where('c.uv = :uv')
+			->andWhere('c.start = :start')
+			->andWhere('c.end = :end')
+			->andWhere('c.week = :week')
+			->andWhere('c.room = :room')
+			->setParameter('uv', $course->getUv())
+			->setParameter('start', $course->getStart())
+			->setParameter('end', $course->getEnd())
+			->setParameter('week', $course->getWeek())
+			->setParameter('room', $course->getRoom())
+			->orderBy('u.lastName', 'ASC')
+			->getQuery()
+			->getResult();
+
+		return array(
+			'course' => $course,
+			'students' => $students
+		);
+	}
 }

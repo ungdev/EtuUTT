@@ -1447,6 +1447,12 @@ textarea {
   border-right: 1px solid #cccccc;
   text-align: center;
 }
+.schedule .item a {
+  color: #fff;
+}
+.schedule .item a:hover {
+  text-decoration: underline;
+}
 .schedule .item-half {
   width: 49%;
 }
