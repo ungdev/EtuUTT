@@ -54,7 +54,7 @@ class OrgaController extends Controller
 			->add('name')
 			->add('contactMail', 'email')
 			->add('contactPhone', null, array('required' => false))
-			->add('description', 'redactor_limited', array('required' => false))
+			->add('description', 'redactor', array('required' => false))
 			->add('descriptionShort', 'textarea')
 			->add('website', null, array('required' => false))
 			->getForm();
