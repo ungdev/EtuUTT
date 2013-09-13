@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "f84abc23e83e48cb24a9c7f476eb7890",
+    "hash": "c49626c7bc1e5c25fd06ae47a0a6a8ed",
     "packages": [
         {
             "name": "avalanche123/imagine-bundle",
@@ -2261,51 +2261,6 @@
             "time": "2012-11-26 05:07:00"
         },
         {
-            "name": "tga/audience",
-            "version": "dev-master",
-            "target-dir": "Tga/AudienceBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tgalopin/AudienceBundle.git",
-                "reference": "d3155e62dda8eba7cb20b8bce8fa0f912c722102"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tgalopin/AudienceBundle/zipball/d3155e62dda8eba7cb20b8bce8fa0f912c722102",
-                "reference": "d3155e62dda8eba7cb20b8bce8fa0f912c722102",
-                "shasum": ""
-            },
-            "require": {
-                "symfony/framework-bundle": "2.*"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-0": {
-                    "Tga\\AudienceBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache"
-            ],
-            "authors": [
-                {
-                    "name": "Titouan Galopin",
-                    "email": "galopintitouan@gmail.com",
-                    "homepage": "http://titouangalopin.com"
-                }
-            ],
-            "description": "Audience statistics bundle for Symfony2",
-            "keywords": [
-                "Audience",
-                "analystics",
-                "statistics",
-                "stats",
-                "visitors"
-            ],
-            "time": "2013-08-01 20:32:31"
-        },
-        {
             "name": "twig/extensions",
             "version": "v1.0.0",
             "source": {
@@ -2527,8 +2482,7 @@
         "knplabs/knp-time-bundle": 20,
         "knplabs/knp-paginator-bundle": 20,
         "tedivm/jshrink": 20,
-        "zircote/swagger-php": 20,
-        "tga/audience": 20
+        "zircote/swagger-php": 20
     },
     "platform": {
         "php": ">=5.3.3"

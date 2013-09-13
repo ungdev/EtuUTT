@@ -42,7 +42,8 @@ class AdminBuilder extends SidebarBuilder
 				->end()
 				->add('base.admin_menu.items.stats')
 					->setIcon('chart.png')
-					->setUrl($router->generate('admin_stats'))
+					->setLinkAttribute('target', '_blank')
+					->setUrl('https://www.google.com/analytics/web/?hl=fr&pli=1#report/visitors-overview/a43851564w73993887p76419007/')
 				->end()
 			->end()
 		;

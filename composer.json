@@ -33,8 +33,7 @@
 		"guzzle/guzzle": "~3.7",
 		"tedivm/jshrink": "dev-master",
 		"helios-ag/fm-bbcode-bundle": "6.2",
-		"zircote/swagger-php": "dev-master",
-		"tga/audience": "dev-master"
+		"zircote/swagger-php": "dev-master"
 	},
 	"scripts": {
 		"post-install-cmd": [
