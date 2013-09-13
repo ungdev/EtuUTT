@@ -98,7 +98,7 @@ fm_bbcode:
 
 # EtuUTT
 etu_core:
-    domain: openutt.utt.fr
+    domain: etu.utt.fr
     translation:
         languages: ['en', 'fr', 'es', 'cn']
 

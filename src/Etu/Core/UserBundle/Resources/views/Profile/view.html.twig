@@ -115,28 +115,28 @@
 					{% if user.facebook %}
 						<p>
 							<strong>{{ 'user.profile.view.facebook'|trans }}</strong><br />
-							{{ user.facebook }}
+							<a href="{{ user.facebook }}">{{ user.facebook }}</a>
 						</p>
 					{% endif %}
 
 					{% if user.twitter %}
 						<p>
 							<strong>{{ 'user.profile.view.twitter'|trans }}</strong><br />
-							{{ user.twitter }}
+							<a href="{{ user.twitter }}">{{ user.twitter }}</a>
 						</p>
 					{% endif %}
 
 					{% if user.linkedin %}
 						<p>
 							<strong>{{ 'user.profile.view.linkedin'|trans }}</strong><br />
-							{{ user.linkedin }}
+							<a href="{{ user.linkedin }}">{{ user.linkedin }}</a>
 						</p>
 					{% endif %}
 
 					{% if user.viadeo %}
 						<p>
 							<strong>{{ 'user.profile.view.viadeo'|trans }}</strong><br />
-							{{ user.viadeo }}
+							<a href="{{ user.viadeo }}">{{ user.viadeo }}</a>
 						</p>
 					{% endif %}
 				</div>
@@ -250,22 +250,22 @@
 						<div class="view-value">
 
 							{% if is_public(user.adressPrivacy) and user.adress %}
-								{{ app.user.adress }}
+								{{ user.adress }}
 								<br />
 							{% endif %}
 
 							{% if is_public(user.postalCodePrivacy) and user.postalCode %}
-								{{ app.user.postalCode }}
+								{{ user.postalCode }}
 								<br />
 							{% endif %}
 
 							{% if is_public(user.cityPrivacy) and user.city %}
-								{{ app.user.city }}
+								{{ user.city }}
 								<br />
 							{% endif %}
 
 							{% if is_public(user.countryPrivacy) and user.country %}
-								{{ app.user.country }}
+								{{ user.country }}
 								<br />
 							{% endif %}
 						</div>

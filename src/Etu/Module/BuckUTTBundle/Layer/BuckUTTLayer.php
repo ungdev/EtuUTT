@@ -53,7 +53,7 @@ class BuckUTTLayer
 
 		$reloads = $client->getHistoriqueRecharge($start->format('U'), $end->format('U'));
 
-		if ((int) $reloads == 400){
+		if (! is_array($reloads)) {
 			return array();
 		}
 
@@ -128,7 +128,7 @@ class BuckUTTLayer
 
 		$purchases = $client->getHistoriqueAchats($start->format('U'), $end->format('U'));
 
-		if ((int) $purchases == 400){
+		if (! is_array($purchases)) {
 			return array();
 		}
 

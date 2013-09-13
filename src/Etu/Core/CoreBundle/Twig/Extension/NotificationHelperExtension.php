@@ -41,6 +41,7 @@ class NotificationHelperExtension extends \Twig_Extension
 		return array(
 			'render_notif' => new \Twig_Function_Method($this, 'render', array('is_safe' => array('html'))),
 			'highlight_notif_data' => new \Twig_Function_Method($this, 'highlight', array('is_safe' => array('html'))),
+			'duck_catched' => new \Twig_Function_Method($this, 'duck_catched'),
 		);
 	}
 
@@ -60,5 +61,13 @@ class NotificationHelperExtension extends \Twig_Extension
 	public function highlight($string)
 	{
 		return sprintf('<span class="notif-data">%s</span>', $string);
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function duck_catched()
+	{
+		return file_get_contents(__DIR__.'/../../../../../../duck_catched.txt') != 0;
 	}
 }

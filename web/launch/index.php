@@ -3,7 +3,7 @@
 include 'config.php';
 
 if ($now >= $launch) {
-	header('Location: launcher');
+	header('Location: ../');
 	exit;
 }
 
@@ -50,6 +50,10 @@ $interval->s = $diff - $days - $hours - $minutes;
 				</div>
 			</div>
 
+			<br />
+			<br />
+			<br />
+
 			<div class="row-fluid">
 				<div class="span3 days date-element">
 					<h2 id="days"><?php echo $interval->days; ?></h2>
@@ -69,55 +73,17 @@ $interval->s = $diff - $days - $hours - $minutes;
 				</div>
 			</div>
 
-			<div class="row-fluid row-social">
-				<div class="span12 testing">
-					<a href="<?php echo $facebookUrl; ?>" target="_blank" class="sharer" id="facebookShare"></a>
-					<a href="<?php echo $twitterUrl; ?>" target="_blank" class="sharer" id="twitterShare"></a>
-					<a href="<?php echo $mailto; ?>" class="sharer" id="mailShare"></a>
-				</div>
-			</div>
+			<br />
+			<br />
+			<br />
 
-			<?php if ($acceptTesters) : ?>
-			<div id="learn-more" style="display:none;">
-				<p>
-					La phase de bêta-test sera réservé à un nombre limité de participants,
-					choisis pour constituer un échantillon représentatif des étudiants.
-				</p>
-				<p>
-					Ces participants recevront des accès au site avant sa sortie officielle
-					afin d'aider l'équipe à trouver le plus d'erreurs et de problèmes possibles.
-				</p>
-				<p>
-					Ils recevront un badge sur la nouvelle version du site étudiant pour leur
-					investissement dans le projet, uniquement délivré à cette occasion.
-				</p>
-				<p>
-					Ils recevront de plus plusieurs badges, correspondant à leur niveau
-					d'investissement dans la recherche de bug (nombre de bugs trouvés).
-				</p>
-				<p>
-					Une fois inscrit, vous recevrez un premier e-mail si vous avez été
-					choisi pour la bêta, puis un second lors du démarrage de la phase de
-					tests.
-				</p>
-			</div>
+			<br />
+			<br />
+			<br />
 
-			<div class="row-fluid">
-				<div class="span12 testing">
-					<p>
-						Vous voulez aider ? Faites parti des bêta-testeurs
-						<span class="hidden-phone">(<a href="#learn-more" rel="facebox">en savoir plus</a>)</span> :
-					</p>
-
-					<div class="input-append">
-						<input class="span4" placeholder="Email" type="text" id="subscribe-testing-email">
-						<button class="btn" type="submit" id="subscribe-testing-btn">S'inscrire</button>
-					</div>
-
-					<p id="subscribe-testing-message" class="text-error" style="display: none;"></p>
-				</div>
-			</div>
-			<?php endif; ?>
+			<br />
+			<br />
+			<br />
 
 			<div class="row-fluid">
 				<div class="span12">

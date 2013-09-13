@@ -155,7 +155,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @ORM\Column(type="string", length=30, nullable=true)
 	 * @Assert\Regex(
-	 *      pattern = "/^0[1-68]([-. ]?[0-9]{2}){4}$/",
+	 *      pattern = "/^0[1-9]([-. ]?[0-9]{2}){4}$/",
 	 *      message = "user.validation.phoneNumber"
 	 * )
 	 */
@@ -557,7 +557,7 @@ class User implements UserInterface, \Serializable
 	 * @ORM\JoinColumn()
 	 */
 	protected $memberships;
-	
+
 	/**
 	 * @var boolean
 	 *
@@ -2663,7 +2663,7 @@ class User implements UserInterface, \Serializable
 
 		return $badges;
 	}
-	
+
 	/**
 	 * Set firstLogin
 	 *

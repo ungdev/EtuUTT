@@ -284,7 +284,7 @@ $(function() {
 		usersAutocomplete.autocomplete({
 			minLength: 3,
 			source: function(request, response) {
-				$.getJSON(Routing.generate('api_user_search', {term: request.term}),
+				$.getJSON('/api/users/search/' + request.term,
 					{ format: 'json', token: _t },
 					function(data) {
 						var users = data.body.users;

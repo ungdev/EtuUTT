@@ -1,5 +1,5 @@
 {
-    "basePath": "http://openutt.utt.fr/api",
+    "basePath": "http://etu.utt.fr/api",
     "resourcePath": "about",
     "apis": [
         {

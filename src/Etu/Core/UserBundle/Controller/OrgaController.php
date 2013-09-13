@@ -201,6 +201,8 @@ class OrgaController extends Controller
 					$this->getUser()->addCountMembers();
 					$em->persist($this->getUser());
 
+					$this->getSubscriptionsManager()->subscribe($member->getUser(), 'orga', $this->getUser()->getId());
+
 					$em->persist($member);
 					$em->flush();
 
@@ -217,7 +219,7 @@ class OrgaController extends Controller
 			}
 
 			return $this->redirect($this->generateUrl(
-				'orga_admin_members_edit', array('login' => $member->getUser()->getLogin())
+				'orga_admin_members', array('page' => $page)
 			));
 		}
 

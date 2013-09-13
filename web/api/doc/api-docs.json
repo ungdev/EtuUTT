@@ -1,7 +1,7 @@
 {
     "apiVersion": null,
     "swaggerVersion": null,
-    "basePath": "http://openutt.utt.fr/api/doc",
+    "basePath": "http://etu.utt.fr/api/doc",
     "apis": [
         {
             "path": "/resources/about.{format}",

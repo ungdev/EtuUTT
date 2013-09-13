@@ -119,7 +119,7 @@
 						<i class="icon-chevron-down userbox-link-icon"></i>
 
 						<span class="hidden-for-1024">
-							{{ app.user.fullName }}<br />
+							{{ app.user.fullName|limit(21) }}<br />
 							<span class="color-soft">
 								{% if app.user.isStudent %}
 									{{ 'base.user.types.student'|trans }}
@@ -302,6 +302,12 @@
 
 			ga('create', 'UA-43851564-1', 'utt.fr');
 			ga('send', 'pageview');
+
+			{% if app.user and not duck_catched() %}
+				$(function() {
+					var i=$("<img>",{src:"/img/duck.png"});i.css({position:"absolute",bottom:"-200px",right:"-200px"});var d=$("<a>",{href:"/duck/6d081884c"}).html(i);var rand=Math.floor((Math.random()*10)+1);if(rand==7){$("body, html").css("overflow-x","hidden");$(".page").after(d);var count=0;setInterval(function(){if(count<500){i.css("bottom","+=5px");i.css("right","+=10px");count++}else{if(count!=-1){d.remove();count=-1}}},35)}
+				});
+			{% endif %}
 		</script>
 	</body>
 </html>
