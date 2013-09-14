@@ -93,10 +93,22 @@ class ViewController extends Controller
 			->leftJoin('r.sender', 's')
 			->where('r.uv = :uv')
 			->setParameter('uv', $uv->getId())
-			->orderBy('r.semester', 'DESC')
-			->addOrderBy('r.validated', 'DESC')
 			->getQuery()
 			->getResult();
+
+		$order = array();
+
+		// Order by semester: A13, P12, A12, P11, ...
+		foreach ($results as $review) {
+			$semester = (int) substr($review->getSemester(), 1);
+			$season = (substr($review->getSemester(), 0, 1)) == 'A' ? 1 : 0;
+			$order[] = $semester * 2 + $season;
+		}
+
+		array_multisort(
+			$order, SORT_DESC, SORT_NUMERIC,
+			$results
+		);
 
 		$reviews = array();
 		$reviewsCount = 0;

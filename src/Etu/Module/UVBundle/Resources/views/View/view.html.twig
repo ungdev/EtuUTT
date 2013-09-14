@@ -118,12 +118,8 @@
 	<div class="uv-view-reviews">
 		<h4>{{ 'uvs.main.view.reviews'|trans }} ({{ reviewsCount }})</h4>
 
-		{% set first = true %}
-
 		{% for semester, reviews in semesters %}
-			<div class="uv-view-reviews-semester {% if first %}uv-view-reviews-semester-first{% endif %}">
-				{% set first = false %}
-
+			<div class="uv-view-reviews-semester">
 				<a href="" class="btn btn-link uv-view-reviews-semester-link">
 					<b class="caret"></b> {{ semester }}
 				</a>
