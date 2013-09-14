@@ -7247,7 +7247,7 @@
 					src: null
 				}
 			},
-			quoteType: $.sceditor.BBCodeParser.QuoteType.never,
+			quoteType: $.sceditor.BBCodeParser.QuoteType.always,
 			format: function($element, content) {
 				var	w, h,
 					attribs   = '',
@@ -7265,7 +7265,7 @@
 
 				// only add width and height if one is specified
 				if((element.complete && (w || h)) || (w && h))
-					attribs = "=" + $element.width() + "x" + $element.height();
+					attribs = " width=\"" + $element.width() + "\" height=\"" + $element.height()+"\"";
 
 				return '[img' + attribs + ']' + $element.attr('src') + '[/img]';
 			},
