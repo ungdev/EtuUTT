@@ -164,6 +164,8 @@ class MembershipsController extends Controller
 			'currentDay' => $day,
 			'canEdit' => $canEdit,
 			'wantPreview' => $request->query->has('preview'),
+			'login' => $login,
+			'day' => $day->format('d-m-Y')
 		);
 	}
 
@@ -249,5 +251,93 @@ class MembershipsController extends Controller
 		return array(
 			'daymail' => $daymailPart
 		);
+	}
+
+	/**
+	 * @Route(
+	 *      "/user/membership/{login}/daymail/{day}/remove",
+	 *      defaults={"day" = "current"},
+	 *      name="memberships_orga_daymail_remove"
+	 * )
+	 * @Template()
+	 */
+	public function removeAction($login, $day)
+	{
+		if (! $this->getUserLayer()->isUser()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var $memberships Member[] */
+		$memberships = $em->createQueryBuilder()
+			->select('m, o')
+			->from('EtuUserBundle:Member', 'm')
+			->leftJoin('m.organization', 'o')
+			->andWhere('m.user = :user')
+			->setParameter('user', $this->getUser()->getId())
+			->orderBy('m.role', 'DESC')
+			->addOrderBy('o.name', 'ASC')
+			->getQuery()
+			->getResult();
+
+		$membership = null;
+
+		foreach ($memberships as $m) {
+			if ($m->getOrganization()->getLogin() == $login) {
+				$membership = $m;
+				break;
+			}
+		}
+
+		if (! $membership) {
+			throw $this->createNotFoundException('Membership or organization not found for login '.$login);
+		}
+
+		if (! $membership->hasPermission('daymail')) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$orga = $membership->getOrganization();
+
+		// Test day validity using DateTime
+		$tomorrow = new \DateTime();
+		$tomorrow->add(new \DateInterval('P1D'));
+
+		if ($day == 'current') {
+			$day = $tomorrow;
+		} else {
+			$day = \DateTime::createFromFormat('d-m-Y', $day);
+
+			if (! $day) {
+				$day = $tomorrow;
+			}
+		}
+
+		/** @var $daymailPart DaymailPart */
+		$daymailPart = $em->createQueryBuilder()
+			->select('d, o')
+			->from('EtuModuleDaymailBundle:DaymailPart', 'd')
+			->leftJoin('d.orga', 'o')
+			->where('o.id = :orga')
+			->setParameter('orga', $orga->getId())
+			->andWhere('d.day = :day')
+			->setParameter('day', $day->format('d-m-Y'))
+			->getQuery()
+			->setMaxResults(1)
+			->getOneOrNullResult();
+
+		if (! $daymailPart) {
+			throw $this->createNotFoundException('Daymail not found for this day');
+		}
+
+		$em->remove($daymailPart);
+		$em->flush();
+
+		return $this->redirect($this->generateUrl('memberships_orga_daymail', array(
+			'login' => $login,
+			'day' => $day->format('d-m-Y')
+		)));
 	}
 }

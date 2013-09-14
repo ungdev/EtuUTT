@@ -29,6 +29,8 @@ daymail:
                 label: Contenu
             date:
                 label: Date de publication
-            submit: Modifier ce daymail
-            preview: Prévisualiser
+            create: Créer un daymail pour le %day%
+            edit: Modifier le daymail du %day%
+            preview: Prévisualiser le daymail du %day%
+            remove: Supprimer le daymail du %day%
             confirm: Vous avez bien modifié ce daymail

@@ -181,14 +181,21 @@
 						<div class="controls">
 							{{ form_rest(form) }}
 
-							<button type="submit" class="btn">
-								{{ 'daymail.memberships.daymail.submit'|trans }}
-							</button>
-
 							{% if daymail.id > 0 %}
-							<button type="submit" class="btn" name="_preview">
-								{{ 'daymail.memberships.daymail.preview'|trans }}
-							</button>
+								<button type="submit" class="btn">
+									{{ 'daymail.memberships.daymail.edit'|trans({'%day%': currentDay|date('d/m/Y')}) }}
+								</button>
+								<button type="submit" class="btn" name="_preview">
+									{{ 'daymail.memberships.daymail.preview'|trans({'%day%': currentDay|date('d/m/Y')}) }}
+								</button>
+								<a href="{{ path('memberships_orga_daymail_remove', {'login': login, 'day': day}) }}"
+								   class="btn btn-link pull-right">
+									{{ 'daymail.memberships.daymail.remove'|trans({'%day%': currentDay|date('d/m/Y')}) }}
+								</a>
+							{% else %}
+								<button type="submit" class="btn">
+									{{ 'daymail.memberships.daymail.create'|trans({'%day%': currentDay|date('d/m/Y')}) }}
+								</button>
 							{% endif %}
 						</div>
 					</div>
