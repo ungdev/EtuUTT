@@ -166,10 +166,9 @@
 								{% elseif item.type == 'course' %}
 									<div class="item item-course item{{ item.size }}
 									{% if loop.index == 1 %} item-first{% endif %}">
-										<a href="{{ path('uvs_goto', {'code': item.course.uv}) }}" class="schedule-course-uv">
-											{{ item.course.uv }}</a>
-										<br />
 										<a href="{{ path('schedule_course', {'id': item.course.id}) }}">
+											<span class="schedule-course-uv">{{ item.course.uv }}</span>
+											<br />
 											<span class="schedule-course-room">{{ item.course.room }}</span>
 											<span class="schedule-course-type">- {{ item.course.type }}</span>
 										</a>
@@ -178,32 +177,29 @@
 									{% if item.courses.hasCourseBothWeeks %}
 										<div class="item item-half item-half-left item-course item-half-course item{{ item.size }}
 									{% if loop.index == 1 %} item-first{% endif %}">
-											<a href="{{ path('uvs_goto', {'code': item.courses.courseWeekA.uv}) }}" class="schedule-course-uv">
-												{{ item.courses.courseWeekA.uv }} (A)</a>
-											<br />
 											<a href="{{ path('schedule_course', {'id': item.courses.courseWeekA.id}) }}">
+												<span class="schedule-course-uv">{{ item.courses.courseWeekA.uv }} (A)</span>
+												<br />
 												<span class="schedule-course-room">{{ item.courses.courseWeekA.room }}</span>
 												<span class="schedule-course-type">- {{ item.courses.courseWeekA.type }}</span>
 											</a>
 										</div>
 										<div class="item item-half item-half-right item-course item-half-course item{{ item.size }}
 									{% if loop.index == 1 %} item-first{% endif %}">
-											<a href="{{ path('uvs_goto', {'code': item.courses.courseWeekB.uv}) }}" class="schedule-course-uv">
-												{{ item.courses.courseWeekB.uv }} (B)</a>
-											<br />
-											<a href="{{ path('schedule_course', {'id': item.courses.courseWeekA.id}) }}">
-												<span class="schedule-course-room">{{ item.courses.courseWeekA.room }}</span>
-												<span class="schedule-course-type">- {{ item.courses.courseWeekA.type }}</span>
+											<a href="{{ path('schedule_course', {'id': item.courses.courseWeekB.id}) }}">
+												<span class="schedule-course-uv">{{ item.courses.courseWeekB.uv }} (B)</span>
+												<br />
+												<span class="schedule-course-room">{{ item.courses.courseWeekB.room }}</span>
+												<span class="schedule-course-type">- {{ item.courses.courseWeekB.type }}</span>
 											</a>
 										</div>
 										<div class="clear-right"></div>
 									{% elseif item.courses.hasCourseWeekA %}
 										<div class="item item-half item-half-left item-course item-half-course item{{ item.size }}
 									{% if loop.index == 1 %} item-first{% endif %}">
-											<a href="{{ path('uvs_goto', {'code': item.courses.courseWeekA.uv}) }}" class="schedule-course-uv">
-												{{ item.courses.courseWeekA.uv }} (A)</a>
-											<br />
 											<a href="{{ path('schedule_course', {'id': item.courses.courseWeekA.id}) }}">
+												<span class="schedule-course-uv">{{ item.courses.courseWeekA.uv }} (A)</span>
+												<br />
 												<span class="schedule-course-room">{{ item.courses.courseWeekA.room }}</span>
 												<span class="schedule-course-type">- {{ item.courses.courseWeekA.type }}</span>
 											</a>
@@ -216,10 +212,9 @@
 									{% if loop.index == 1 %} item-first{% endif %}"></div>
 										<div class="item item-half item-half-right item-course item-half-course item{{ item.size }}
 									{% if loop.index == 1 %} item-first{% endif %}">
-											<a href="{{ path('uvs_goto', {'code': item.courses.courseWeekB.uv}) }}" class="schedule-course-uv">
-												{{ item.courses.courseWeekB.uv }} (B)</a>
-											<br />
 											<a href="{{ path('schedule_course', {'id': item.courses.courseWeekB.id}) }}">
+												<span class="schedule-course-uv">{{ item.courses.courseWeekB.uv }} (B)</span>
+												<br />
 												<span class="schedule-course-room">{{ item.courses.courseWeekB.room }}</span>
 												<span class="schedule-course-type">- {{ item.courses.courseWeekB.type }}</span>
 											</a>
