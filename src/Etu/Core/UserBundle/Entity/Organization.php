@@ -70,7 +70,7 @@ class Organization implements UserInterface, \Serializable
 	 * @var string
 	 *
 	 * @ORM\Column(type="string", length=100, nullable=true)
-	 * @Assert\Regex("/^0[1-68]([-. ]?[0-9]{2}){4}$/")
+	 * @Assert\Regex("/^0[1-9]([-. ]?[0-9]{2}){4}$/")
 	 */
 	protected $contactPhone;
 
