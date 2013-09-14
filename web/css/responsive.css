@@ -254,7 +254,7 @@
     margin-left: 75px;
   }
   .trombi-search-results li {
-    width: 98%;
+    width: 98% !important;
   }
   .view-label {
     display: none;

@@ -41,7 +41,7 @@
 								</div>
 								<span class="help-block">{{ form_errors(form.fullName) }}</span>
 							</div>
-							<div class="control-group">
+							<div class="control-group hidden-phone">
 								{{ form_label(form.uvs, 'trombi.main.index.uv'|trans) }}
 								<div class="controls">
 									{{ form_widget(form.uvs) }}
@@ -50,29 +50,29 @@
 							</div>
 						</div>
 					</div>
-					<div class="span4 hidden-phone">
+					<div class="span4">
 						<div class="form-vertical">
-							<div class="control-group">
+							<div class="control-group hidden-phone">
 								{{ form_label(form.studentId, 'trombi.main.index.studentId'|trans) }}
 								<div class="controls">
 									{{ form_widget(form.studentId) }}
 								</div>
 								<span class="help-block">{{ form_errors(form.studentId) }}</span>
 							</div>
-							<div class="control-group">
+							<div class="control-group hidden-phone">
 								{{ form_label(form.branch, 'trombi.main.index.branche'|trans) }}
 								<div class="controls">
 									{{ form_widget(form.branch, {'attr': {'class': 'span4'} }) }}
 									{{ form_widget(form.niveau, {'attr': {'class': 'span4'} }) }}
 								</div>
-							<span class="help-block">
-								{{ form_errors(form.branch) }}
-								{{ form_errors(form.niveau) }}
-							</span>
+								<span class="help-block">
+									{{ form_errors(form.branch) }}
+									{{ form_errors(form.niveau) }}
+								</span>
 							</div>
 						</div>
 					</div>
-					<div class="span4 hidden-phone">
+					<div class="span4">
 						<div class="form-vertical">
 							<div class="control-group">
 								{{ form_label(form.phoneNumber, 'trombi.main.index.phone'|trans) }}
@@ -81,7 +81,7 @@
 								</div>
 								<span class="help-block">{{ form_errors(form.phoneNumber) }}</span>
 							</div>
-							<div class="control-group">
+							<div class="control-group hidden-phone">
 								{{ form_label(form.personnalMail, 'trombi.main.index.personnalMail'|trans) }}
 								<div class="controls">
 									{{ form_widget(form.personnalMail) }}
