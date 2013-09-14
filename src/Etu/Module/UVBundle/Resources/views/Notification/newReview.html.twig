@@ -1,12 +1,12 @@
 
-<a href="{{ path('uvs_view', {'id': notif.firstEntity.uv.id, 'slug': notif.firstEntity.uv.slug}) }}"
+<a href="{{ path('uvs_view', {'name': notif.firstEntity.uv.name|slugify, 'slug': notif.firstEntity.uv.slug}) }}"
    class="notif{% if notif.isSuper %} super-notif{% elseif notif.isNew(app.user.lastVisitHome) %} notif-new{% endif %}">
 	<img src="{{ asset('img/icons-big/uv.png') }}" />
 
 	<h4 class="notif-title">
 		{{ 'uvs.notifs.newReview'|trans({
 			'%uv%': highlight_notif_data(notif.firstEntity.uv.name),
-			'%user%': highlight_notif_data(notif.firstEntity.user.fullName)
+			'%user%': highlight_notif_data(notif.firstEntity.sender.fullName)
 		})|raw }}
 	</h4>
 
