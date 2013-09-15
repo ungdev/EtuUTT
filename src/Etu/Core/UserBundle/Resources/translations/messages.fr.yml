@@ -367,6 +367,7 @@ user:
             title: Mon emploi du temps
             edit: Modifier
             print: Imprimer
+            export: Exporter au format iCalendar
         scheduleEdit:
             title: Modifier
             back: Retour

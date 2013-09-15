@@ -243,6 +243,7 @@ user:
             title: My timetable
             edit: Edit
             print: Print
+            export: Export in iCalendar
         scheduleEdit:
             title: Edit
             back: Back
