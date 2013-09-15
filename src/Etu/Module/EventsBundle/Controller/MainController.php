@@ -289,6 +289,8 @@ class MainController extends Controller
 			->from('EtuModuleEventsBundle:Answer', 'a')
 			->where('a.user = :id')
 			->setParameter('id', $this->getUser()->getId())
+			->andWhere('a.event = :event')
+			->setParameter('event', $event->getId())
 			->setMaxResults(1)
 			->getQuery()
 			->getOneOrNullResult();
