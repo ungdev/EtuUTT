@@ -175,7 +175,7 @@ class MembershipsController extends Controller
 		$calendr = $this->get('calendr');
 
 		/** @var \CalendR\Event\Collection\Basic $events */
-		$events = $calendr->getEvents(new Range($start, $end));
+		$events = $calendr->getEvents(new Range($start, $end), array('connected' => true));
 
 		/** @var array $json */
 		$json = array();
@@ -278,6 +278,13 @@ class MembershipsController extends Controller
 			->add('category', 'choice', array('choices' => $categories))
 			->add('file', 'file')
 			->add('location', 'textarea')
+			->add('privacy', 'choice', array(
+				'choices' => array(
+					Event::PRIVACY_PUBLIC => 'events.memberships.create.privacy.public',
+					Event::PRIVACY_PRIVATE => 'events.memberships.create.privacy.private',
+				),
+				'required' => true
+			))
 			->add('description', 'redactor')
 			->getForm();
 
@@ -432,6 +439,13 @@ class MembershipsController extends Controller
 			->add('title')
 			->add('category', 'choice', array('choices' => $categories))
 			->add('file', 'file', array('required' => false))
+			->add('privacy', 'choice', array(
+				'choices' => array(
+					Event::PRIVACY_PUBLIC => 'events.memberships.create.privacy.public',
+					Event::PRIVACY_PRIVATE => 'events.memberships.create.privacy.private',
+				),
+				'required' => true
+			))
 			->add('location', 'textarea')
 			->add('description', 'redactor')
 			->getForm();

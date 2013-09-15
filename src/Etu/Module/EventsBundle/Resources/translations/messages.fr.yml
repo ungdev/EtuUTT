@@ -61,6 +61,7 @@ events:
             by: organisé par
             start: Début
             end: Fin
+            on: Le
             location: Lieu
             menu:
                 description: Description
@@ -76,7 +77,15 @@ events:
             create: Créer un évènement
         create:
             back: Retour au calendrier
+            creation: Création d'un évènement
             title: Titre
+            privacy:
+                label: Public visé
+                public: Exterieurs et étudiants
+                private: Etudiants seulement
+                explain:
+                    1: "Exterieurs et étudiants : tout le monde verra l'événement"
+                    2: "Etudiants seulement : seuls les étudiants verront l'événement"
             image:
                 label: Image
                 desc: Va être redimensionné en 200x200 pixels

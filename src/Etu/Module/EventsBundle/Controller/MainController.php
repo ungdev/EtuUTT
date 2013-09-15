@@ -80,7 +80,9 @@ class MainController extends Controller
 		$calendr = $this->get('calendr');
 
 		/** @var \CalendR\Event\Collection\Basic $events */
-		$events = $calendr->getEvents(new Range($start, $end));
+		$events = $calendr->getEvents(new Range($start, $end), array(
+			'connected' => $this->getUserLayer()->isConnected()
+		));
 
 		/** @var array $json */
 		$json = array();
@@ -163,8 +165,15 @@ class MainController extends Controller
 			}
 		}
 
+		if ($event->getBegin() == $event->getEnd() && $event->getBegin()->format('H:i') == '00:00') {
+			$useOn = true;
+		} else {
+			$useOn = false;
+		}
+
 		return array(
 			'event' => $event,
+			'useOn' => $useOn,
 			'userAnswer' => $userAnswer,
 			'answersYesCount' => count($answersYes),
 			'answersProbablyCount' => count($answersProbably),

@@ -138,27 +138,16 @@ $(function() {
 		events: source,
 
 		eventDrop: function(event) {
-			loader.show();
 			calendarManager.persist(event);
 		},
 		eventResize: function(event) {
-			loader.show();
 			calendarManager.persist(event);
 		},
 		select: function(start, end, allDay) {
-			loader.show();
-
 			start = moment(start).format('DD-MM-YYYY--HH-mm');
 			end = moment(end).format('DD-MM-YYYY--HH-mm');
 
 			window.location.href = createUrl+'?s='+start+'&e='+end+'&a='+allDay;
-		},
-		loading: function(bool) {
-			if (bool) {
-				loader.show();
-			} else {
-				loader.hide();
-			}
 		}
 	});
 });

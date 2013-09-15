@@ -60,6 +60,7 @@ events:
             by: Organized by
             start: Start
             end: End
+            on: On
             location: Location
             menu:
                 description: Description
@@ -76,6 +77,10 @@ events:
         create:
             back: Back to the calender
             title: Title
+            privacy:
+                label: Target
+                public: Externals and students
+                private: Only students
             image:
                 label: Logo
                 desc: It will be resized in 200x200 pixels

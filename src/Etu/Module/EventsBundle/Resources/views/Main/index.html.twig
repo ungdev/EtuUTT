@@ -35,13 +35,9 @@
 {% block content %}
 	<ul class="nav nav-tabs page-tabs">
 		{% for availableCategory in availableCategories %}
-		<li>
+		<li {% if availableCategory == currentCategory %}class="active page-tabs-resolved-active"{% endif %}>
 			<a href="{{ path('events_index', {'category': availableCategory}) }}">
-				{% if availableCategory == currentCategory %}
-					<strong>{{ ('events.categories.'~availableCategory)|trans }}</strong>
-				{% else %}
-					{{ ('events.categories.'~availableCategory)|trans }}
-				{% endif %}
+				{{ ('events.categories.'~availableCategory)|trans }}
 			</a>
 		</li>
 		{% endfor %}

@@ -15,7 +15,7 @@ class EventRepository extends EntityRepository implements ProviderInterface
 	 */
 	public function getEvents(\DateTime $begin, \DateTime $end, array $options = array())
 	{
-		return $this->createQueryBuilder('e')
+		$query = $this->createQueryBuilder('e')
 			->select('e, o')
 			->leftJoin('e.orga', 'o')
 			->where('e.begin >= :begin')
@@ -23,8 +23,14 @@ class EventRepository extends EntityRepository implements ProviderInterface
 			->andWhere('e.end < :end')
 			->setParameter('end', $end)
 			->orderBy('e.begin', 'ASC')
-			->addOrderBy('e.end', 'ASC')
-			->getQuery()
+			->addOrderBy('e.end', 'ASC');
+
+		if (! isset($options['connected']) || ! $options['connected']) {
+			$query->andWhere('e.privacy <= :publicPrivacy')
+				->setParameter('publicPrivacy', Event::PRIVACY_PUBLIC);
+		}
+
+		return $query->getQuery()
 			->getResult();
 	}
 }

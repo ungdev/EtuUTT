@@ -96,15 +96,27 @@
 				<div class="span1"></div>
 				<div class="span1">
 					<p>
-						<strong>{{ 'events.main.view.start'|trans }}</strong><br />
-						<strong>{{ 'events.main.view.end'|trans }}</strong><br />
+						{% if useOn %}
+							<strong>{{ 'events.main.view.on'|trans }}</strong>
+						{% else %}
+							<strong>{{ 'events.main.view.start'|trans }}</strong>
+							<br />
+							<strong>{{ 'events.main.view.end'|trans }}</strong>
+						{% endif %}
+						<br />
 						<strong>{{ 'events.main.view.location'|trans }}</strong>
 					</p>
 				</div>
 				<div class="span3">
 					<p>
-						{{ event.begin|date('d/m/Y H:i') }}<br />
-						{{ event.end|date('d/m/Y H:i') }}<br />
+						{% if useOn %}
+							{{ event.begin|date('d/m/Y') }}
+						{% else %}
+							{{ event.begin|date('d/m/Y H:i') }}
+							<br />
+							{{ event.end|date('d/m/Y H:i') }}
+						{% endif %}
+						<br />
 						{{ event.location }}
 					</p>
 				</div>

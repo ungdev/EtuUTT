@@ -79,21 +79,20 @@
 						<i class="icon-chevron-left"></i>
 						{{ 'events.memberships.edit.back'|trans }}
 					</a>
-				</p>
 
-				<hr />
-
-				<p>
-					{% if event.isAllDay %}
-						{% if event.begin|date('d/m/Y') == event.end|date('d/m/Y') %}
-							Le {{ event.begin|date('d/m/Y') }}
+					<span class="pull-right">
+						{{ 'events.memberships.create.creation'|trans }}
+						{% if event.isAllDay %}
+							{% if event.begin|date('d/m/Y') == event.end|date('d/m/Y') %}
+								le {{ event.begin|date('d/m/Y') }}
+							{% else %}
+								entre le {{ event.begin|date('d/m/Y') }} et le {{ event.end|date('d/m/Y') }}
+							{% endif %}
 						{% else %}
-							Entre le {{ event.begin|date('d/m/Y') }} et le {{ event.end|date('d/m/Y') }}
+							le {{ event.begin|date('d/m/Y') }},
+							de {{ event.begin|date('H:i') }} à {{ event.end|date('H:i') }}
 						{% endif %}
-					{% else %}
-					Le {{ event.begin|date('d/m/Y') }},
-						de {{ event.begin|date('H:i') }} à {{ event.end|date('H:i') }}
-					{% endif %}
+					</span>
 				</p>
 
 				<hr />
@@ -113,26 +112,54 @@
 
 					<hr />
 
-					<div class="control-group">
-						<label class="control-label">
-							<strong>{{ 'events.memberships.edit.category'|trans }}</strong>
-						</label>
-						<div class="controls">
-							{{ form_widget(form.category) }}
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="control-group">
+								<label class="control-label">
+									<strong>{{ 'events.memberships.create.privacy.label'|trans }}</strong>
+								</label>
+								<div class="controls">
+									{{ form_widget(form.privacy) }}
+								</div>
+								<span class="help-block">{{ form_errors(form.privacy) }}</span>
+							</div>
 						</div>
-						<span class="help-block">{{ form_errors(form.category) }}</span>
+						<div class="span7">
+							<br />
+							<small class="muted">
+								<em>
+									{{ 'events.memberships.create.privacy.explain.1'|trans }}<br />
+									{{ 'events.memberships.create.privacy.explain.2'|trans }}
+								</em>
+							</small>
+						</div>
 					</div>
 
 					<hr />
 
-					<div class="control-group">
-						<label class="control-label">
-							<strong>{{ 'events.memberships.create.image.label'|trans }}</strong>
-						</label>
-						<div class="controls">
-							{{ form_widget(form.file) }}
+					<div class="row-fluid">
+						<div class="span6">
+							<div class="control-group">
+								<label class="control-label">
+									<strong>{{ 'events.memberships.edit.category'|trans }}</strong>
+								</label>
+								<div class="controls">
+									{{ form_widget(form.category) }}
+								</div>
+								<span class="help-block">{{ form_errors(form.category) }}</span>
+							</div>
 						</div>
-						<span class="help-block">{{ form_errors(form.file) }}</span>
+						<div class="span6">
+							<div class="control-group">
+								<label class="control-label">
+									<strong>{{ 'events.memberships.create.image.label'|trans }}</strong>
+								</label>
+								<div class="controls">
+									{{ form_widget(form.file) }}
+								</div>
+								<span class="help-block">{{ form_errors(form.file) }}</span>
+							</div>
+						</div>
 					</div>
 
 					<hr />
@@ -146,8 +173,6 @@
 						</div>
 						<span class="help-block">{{ form_errors(form.location) }}</span>
 					</div>
-
-					<hr />
 
 					<div class="control-group">
 						<label class="control-label">

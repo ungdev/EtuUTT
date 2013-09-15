@@ -31,6 +31,9 @@ class Event extends AbstractEvent
 	const CATEGORY_NIGHT = 'soiree';
 	const CATEGORY_OTHER = 'autre';
 
+	const PRIVACY_PUBLIC = 100;
+	const PRIVACY_PRIVATE = 200;
+
 	public static $categories = array(
 		self::CATEGORY_CULTURE, self::CATEGORY_SPORT, self::CATEGORY_FORMATION,
 		self::CATEGORY_NIGHT, self::CATEGORY_OTHER
@@ -107,6 +110,14 @@ class Event extends AbstractEvent
 	 * @Assert\Length(min = "15")
 	 */
 	protected $description;
+
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(type="integer")
+	 * @Assert\NotBlank()
+	 */
+	protected $privacy;
 
 	/**
 	 * @var integer
@@ -474,5 +485,24 @@ class Event extends AbstractEvent
 	public function getDeletedAt()
 	{
 		return $this->deletedAt;
+	}
+
+	/**
+	 * @param int $privacy
+	 * @return Event
+	 */
+	public function setPrivacy($privacy)
+	{
+		$this->privacy = $privacy;
+
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getPrivacy()
+	{
+		return $this->privacy;
 	}
 }
