@@ -918,6 +918,10 @@ textarea {
 .notif-new:hover h4 {
   text-decoration: underline;
 }
+.notif-not-link:hover h4 {
+  text-decoration: none !important;
+  cursor: default !important;
+}
 .notif-new .notif-title {
   font-weight: bold;
 }

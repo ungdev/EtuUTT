@@ -1,5 +1,5 @@
 
-<a class="notif{% if notif.isNew(app.user.lastVisitHome) %} notif-new{% endif %}"
+<a class="notif{% if notif.isNew(app.user.lastVisitHome) %} notif-new{% endif %}{% if not notif.firstEntity.link %} notif-not-link{% endif %}"
 	{% if notif.firstEntity.link %}
    href="{{ notif.firstEntity.link }}"
    {% endif %}>
