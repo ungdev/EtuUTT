@@ -83,19 +83,6 @@
 					<a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}" class="pull-right">
 						{{ 'events.memberships.edit.publicView'|trans }}
 					</a>
-
-					<span class="pull-right">
-						{% if event.isAllDay %}
-							{% if event.begin|date('d/m/Y') == event.end|date('d/m/Y') %}
-								Le {{ event.begin|date('d/m/Y') }}
-							{% else %}
-								Entre le {{ event.begin|date('d/m/Y') }} et le {{ event.end|date('d/m/Y') }}
-							{% endif %}
-						{% else %}
-							Le {{ event.begin|date('d/m/Y') }},
-							de {{ event.begin|date('H:i') }} à {{ event.end|date('H:i') }}
-						{% endif %}
-					</span>
 				</p>
 
 				<hr />

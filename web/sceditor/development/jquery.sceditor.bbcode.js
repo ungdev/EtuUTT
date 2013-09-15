@@ -7135,7 +7135,7 @@
 			breakStart: true,
 			isInline: false,
 			skipLastLineBreak: true,
-			format: "[ul]{0}[/ul]",
+			format: "[list]{0}[/list]",
 			html: '<ul>{0}</ul>'
 		},
 		list: {
@@ -7151,7 +7151,7 @@
 			breakStart: true,
 			isInline: false,
 			skipLastLineBreak: true,
-			format: "[ol]{0}[/ol]",
+			format: "[olist]{0}[/olist]",
 			html: '<ol>{0}</ol>'
 		},
 		li: {

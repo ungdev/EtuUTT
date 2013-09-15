@@ -117,7 +117,7 @@ class Event extends AbstractEvent
 	 * @ORM\Column(type="integer")
 	 * @Assert\NotBlank()
 	 */
-	protected $privacy;
+	protected $privacy = self::PRIVACY_PUBLIC;
 
 	/**
 	 * @var integer

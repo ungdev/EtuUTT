@@ -10,6 +10,7 @@ use Etu\Core\CoreBundle\Entity\Subscription;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\User;
 
+use Etu\Module\EventsBundle\Entity\Event;
 use Symfony\Component\HttpFoundation\Response;
 
 // Import @Route() and @Template() annotations
@@ -267,6 +268,8 @@ class MainController extends Controller
 				->leftJoin('e.orga', 'o')
 				->where('e.begin >= :begin')
 				->setParameter('begin', new \DateTime())
+				->andWhere('e.privacy <= :public')
+				->setParameter('public', Event::PRIVACY_PUBLIC)
 				->orderBy('e.begin', 'ASC')
 				->addOrderBy('e.end', 'ASC')
 				->setMaxResults(3)

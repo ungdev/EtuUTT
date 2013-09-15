@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManager;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
+use Etu\Core\UserBundle\Entity\User;
 use Etu\Module\EventsBundle\Entity\Answer;
 use Etu\Module\EventsBundle\Entity\Event;
 
@@ -81,7 +82,7 @@ class MainController extends Controller
 
 		/** @var \CalendR\Event\Collection\Basic $events */
 		$events = $calendr->getEvents(new Range($start, $end), array(
-			'connected' => $this->getUserLayer()->isConnected()
+			'connected' => $this->getUser() instanceof User
 		));
 
 		/** @var array $json */
