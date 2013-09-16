@@ -353,14 +353,14 @@ user:
         days:
             monday: Lundi
             tuesday: Mardi
-            wenesday: Mercredi
+            wednesday: Mercredi
             thursday: Jeudi
             friday: Vendredi
             sathurday: Samedi
         days_lower:
             monday: lundi
             tuesday: mardi
-            wenesday: mercredi
+            wednesday: mercredi
             thursday: jeudi
             friday: vendredi
             sathurday: samedi
