@@ -133,6 +133,7 @@ user:
             notifications: Notifications
             event: Evènements
             daymail: Daymail
+            public: Page publique
         index:
             title: Associatif
             desc_1: Vous faites partie de %count% association|Vous faites partie de %count% associations

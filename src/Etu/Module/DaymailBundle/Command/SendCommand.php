@@ -70,7 +70,7 @@ class SendCommand extends ContainerAwareCommand
 			->getQuery()
 			->getResult();
 
-		if ($daymailParts) {
+		if (count($daymailParts) > 0) {
 			/*
 			 * Create the message
 			 */
@@ -84,15 +84,17 @@ class SendCommand extends ContainerAwareCommand
 				'parts' => $daymailParts
 			));
 
+			$to = 'paul.chabanon@utt.fr';
+
 			$message = \Swift_Message::newInstance($subject)
 				->setFrom(array('bde@utt.fr' => 'BDE UTT'))
-				->setTo(array('titouan@ademis.com'))
+				->setTo($to)
 				->setBody($content, 'text/html');
 
 			$result = $mailer->send($message);
 
 			if ($result > 0) {
-				$output->writeln("Daymail for ".date('d-m-Y')." sent (".count($daymailParts)
+				$output->writeln("Daymail for ".date('d-m-Y')." sent to ".$to." (".count($daymailParts)
 					." part".(count($daymailParts) > 1 ? 's' : '').").\n");
 			} else {
 				$output->writeln("An error occured.\n");

@@ -13,7 +13,7 @@ class Course
 
 	const DAY_MONDAY = 'monday';
 	const DAY_TUESDAY = 'tuesday';
-	const DAY_WENESDAY = 'wenesday';
+	const DAY_WENESDAY = 'wednesday';
 	const DAY_THURSDAY = 'thursday';
 	const DAY_FRIDAY = 'friday';
 	const DAY_SATHURDAY = 'sathurday';

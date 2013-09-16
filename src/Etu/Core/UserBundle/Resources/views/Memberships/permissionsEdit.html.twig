@@ -72,6 +72,14 @@
 							</a>
 						</li>
 					{% endif %}
+
+					{% if etu.modules.isEnabled('assos') %}
+						<li>
+							<a href="{{ path('orgas_view', {'login': membership.organization.login}) }}">
+								{{ 'user.memberships.menu.public'|trans }}
+							</a>
+						</li>
+					{% endif %}
 				</ul>
 
 				<div class="row-fluid">
