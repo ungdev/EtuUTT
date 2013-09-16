@@ -44,7 +44,7 @@ class User implements UserInterface, \Serializable
 	static public $branches = array(
 		'ISI' => 'ISI', 'MTE' => 'MTE', 'SI' => 'SI',
 		'SIT' => 'SIT', 'SM' => 'SM', 'SRT' => 'SRT',
-		'TC' => 'TC'
+		'TC' => 'TC', 'PMOM' => 'PMOM'
 	);
 
 	static public $levels = array(
