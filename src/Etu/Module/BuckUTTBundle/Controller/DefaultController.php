@@ -9,6 +9,7 @@ use Etu\Module\BuckUTTBundle\Soap\SoapManager;
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
@@ -291,6 +292,6 @@ class DefaultController extends Controller
 			'message' => 'buckutt.main.reload.confirm'
 		));
 
-		return $this->redirect($this->generateUrl('buckutt_history'));
+		return new Response('');
 	}
 }
