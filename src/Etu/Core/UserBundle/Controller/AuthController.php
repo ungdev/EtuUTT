@@ -9,6 +9,7 @@ use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Ldap\Model\User;
 use Etu\Core\UserBundle\Ldap\Model\Organization;
 
+use Etu\Module\BuckUTTBundle\Soap\SoapManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -96,6 +97,9 @@ class AuthController extends Controller
 					$this->get('session')->set('user', $user->getId());
 					$this->get('session')->set('user_data', $user);
 
+					// Remove BuckUTT cookie
+					$this->get('session')->remove(SoapManager::cookie_name);
+
 					$this->get('session')->getFlashBag()->set('message', array(
 						'type' => 'success',
 						'message' => 'user.auth.connect.confirm'
@@ -113,6 +117,10 @@ class AuthController extends Controller
 				} elseif ($user instanceof \Etu\Core\UserBundle\Entity\Organization) {
 					$this->get('session')->set('orga', $user->getId());
 					$this->get('session')->set('orga_data', $user);
+
+					// Remove BuckUTT cookie
+					$this->get('session')->remove(SoapManager::cookie_name);
+
 					$this->get('session')->getFlashBag()->set('message', array(
 						'type' => 'success',
 						'message' => 'user.auth.connect.confirm'
@@ -228,6 +236,9 @@ class AuthController extends Controller
 			$this->get('session')->set('user', $user->getId());
 			$this->get('session')->set('user_data', $user);
 
+			// Remove BuckUTT cookie
+			$this->get('session')->remove(SoapManager::cookie_name);
+
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
 				'message' => 'user.auth.connect.confirm'
@@ -238,6 +249,9 @@ class AuthController extends Controller
 			}
 		} elseif ($user instanceof \Etu\Core\UserBundle\Entity\Organization) {
 			$this->get('session')->set('orga', $user->getId());
+
+			// Remove BuckUTT cookie
+			$this->get('session')->remove(SoapManager::cookie_name);
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
