@@ -84,7 +84,7 @@ class SendCommand extends ContainerAwareCommand
 				'parts' => $daymailParts
 			));
 
-			$to = 'paul.chabanon@utt.fr';
+			$to = 'daymail@utt.fr';
 
 			$message = \Swift_Message::newInstance($subject)
 				->setFrom(array('bde@utt.fr' => 'BDE UTT'))
