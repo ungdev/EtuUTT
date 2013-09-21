@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\Course;
+use Etu\Core\UserBundle\Model\SemesterManager;
 use Etu\Core\UserBundle\Schedule\Helper\ScheduleBuilder;
 
 use Sabre\VObject\Component\VCalendar;
@@ -127,7 +128,13 @@ class ScheduleController extends Controller
 
 		$vcalendar = new VCalendar();
 
+		$semesterEnd = SemesterManager::current()->getEnd()->format('Ymd\THis');
+
 		foreach ($courses as $course) {
+			if ($course->getUv() == 'SPJE') {
+				continue;
+			}
+
 			$day = new \DateTime('last '.$course->getDay());
 
 			$start = clone $day;
@@ -138,11 +145,13 @@ class ScheduleController extends Controller
 			$time = explode(':', $course->getEnd());
 			$end->setTime($time[0], $time[1]);
 
+			$summary = ($course->getWeek() != 'T') ? $course->getUv().' ('.$course->getWeek().')' : $course->getUv();
+
 			$vcalendar->add('VEVENT', [
-				'SUMMARY' => $course->getUv().' - '.$course->getType().' - '.$course->getRoom(),
+				'SUMMARY' => $summary.' - '.$course->getType(),
 				'DTSTART' => $start,
 				'DTEND' => $end,
-				'RRULE' => 'FREQ=WEEKLY;INTERVAL=1',
+				'RRULE' => 'FREQ=WEEKLY;INTERVAL=1;UNTIL='.$semesterEnd,
 				'LOCATION' => $course->getRoom(),
 				'CATEGORIES' => $course->getType(),
 			]);

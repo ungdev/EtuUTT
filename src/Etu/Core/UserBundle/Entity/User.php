@@ -5,6 +5,7 @@ namespace Etu\Core\UserBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Etu\Core\UserBundle\Model\BadgesManager;
+use Etu\Core\UserBundle\Model\SemesterManager;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -2436,7 +2437,7 @@ class User implements UserInterface, \Serializable
 			'uvs' => $this->getUvsList(),
 		);
 
-		$this->semestersHistory[self::currentSemester()] = $history;
+		$this->semestersHistory[SemesterManager::current()->getCode()] = $history;
 
 		return $history;
 	}
@@ -2446,18 +2447,7 @@ class User implements UserInterface, \Serializable
 	 */
 	public static function currentSemester()
 	{
-		$dayInYear = date('z');
-
-		$springStart = 31; // January 31
-		$springEnd = 212; // July 31
-
-		if ($dayInYear > $springStart && $dayInYear < $springEnd) {
-			$semester = 'P';
-		} else {
-			$semester = 'A';
-		}
-
-		return $semester.date('Y');
+		return SemesterManager::current()->getCode();
 	}
 
 	/**
