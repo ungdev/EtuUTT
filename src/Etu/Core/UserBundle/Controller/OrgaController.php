@@ -301,6 +301,7 @@ class OrgaController extends Controller
 			if ($member->getRole() == Member::ROLE_PRESIDENT) {
 				$this->getUser()->setPresident($member->getUser());
 				$em->persist($this->getUser());
+				$em->flush();
 			}
 
 			if (is_array($request->get('permissions'))) {

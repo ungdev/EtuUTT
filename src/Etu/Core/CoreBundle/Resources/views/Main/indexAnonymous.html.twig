@@ -9,7 +9,7 @@
 
 		<div class="row-fluid">
 			<div class="span4">
-				<img src="{{ asset('img/home.jpg') }}" />
+				<img src="{{ asset('img/home.jpg') }}" alt="Accueil du site étudiant de l'UTT" />
 			</div>
 			<div class="span8 home-intro">
 				<h3>Bienvenue sur le site étudiant de l'Université de Technologie de Troyes</h3>
@@ -40,7 +40,7 @@
 				{% for event in events %}
 					<div class="span4">
 						<a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}" class="homepage-event">
-							<img src="{{ asset('events/'~event.id~'.png') }}" class="pull-left event-tooltip-image" />
+							<img src="{{ asset('events/'~event.id~'.png') }}" alt="{{ event.title }}" class="pull-left event-tooltip-image" />
 
 							<div class="homepage-event-meta">
 								<h5>{{ event.title }}</h5>
