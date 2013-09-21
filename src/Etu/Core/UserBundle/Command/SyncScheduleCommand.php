@@ -107,10 +107,6 @@ re-download schedules, use --force or -f.
 			$users[$user->getStudentId()] = $user;
 		}
 
-		$output->writeln('Deleteing old schedules ...');
-
-		$em->createQuery('DELETE FROM EtuUserBundle:Course')->execute();
-
 		$output->writeln('Creating schedules ...');
 
 		$bar = new ProgressBar('%fraction% [%bar%] %percent%', '=>', ' ', 80, count($content));
@@ -143,7 +139,11 @@ re-download schedules, use --force or -f.
 
 		$bar->update(count($content));
 
-		$output->writeln('Inserting in database ...');
+		$output->writeln('Deleteing old schedules ...');
+
+		$em->createQuery('DELETE FROM EtuUserBundle:Course')->execute();
+
+		$output->writeln('Inserting new schedules ...');
 		$em->flush();
 
 		$output->writeln("\nDone.\n");
