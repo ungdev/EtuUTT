@@ -306,3 +306,35 @@
 .membership-avatar {
   width: 80px;
 }
+.navbar-etu-membership .navbar-inner {
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+}
+.navbar-etu-membership .nav > li {
+  margin-right: 1px;
+}
+.navbar-etu-membership .nav > li > a {
+  color: #224880 !important;
+  padding: 10px 12px 10px !important;
+}
+.navbar-etu-membership .nav > li > a:hover {
+  background-color: #eee !important;
+}
+.navbar-etu-membership .nav > .active > a,
+.navbar-etu-membership .nav > .active > a:hover {
+  color: #555;
+  background-color: #eee !important;
+  text-decoration: none;
+  background: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}

@@ -237,8 +237,8 @@ class MembershipsController extends Controller
 			->leftJoin('m.user', 'u')
 			->where('m.organization = :orga')
 			->setParameter('orga', $orga->getId())
-			->andWhere('m.role < :role')
-			->setParameter('role', ($membership->getRole() == Member::ROLE_MEMBER) ? Member::ROLE_MEMBER + 1 : $membership->getRole())
+			->andWhere('u.id != :me')
+			->setParameter('me', $this->getUser()->getId())
 			->orderBy('m.role DESC, u.lastName')
 			->getQuery();
 
