@@ -37,6 +37,8 @@ class OrgaController extends Controller
 				->leftJoin('m.user', 'u')
 				->where('m.organization = :orga')
 				->setParameter('orga', $this->getUser()->getId())
+				->orderBy('m.role', 'DESC')
+				->addOrderBy('u.lastName')
 				->getQuery();
 
 			foreach ($members as $member) {
@@ -145,7 +147,8 @@ class OrgaController extends Controller
 			->leftJoin('m.user', 'u')
 			->where('m.organization = :orga')
 			->setParameter('orga', $this->getUser()->getId())
-			->orderBy('u.lastName')
+			->orderBy('m.role', 'DESC')
+			->addOrderBy('u.lastName')
 			->getQuery();
 
 		$members = $this->get('knp_paginator')->paginate($members, $page, 20);
@@ -166,7 +169,7 @@ class OrgaController extends Controller
 
 		$request = $this->getRequest();
 
-		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+		if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
 			/** @var $user User */
 			$user = $em->createQueryBuilder()
 				->select('u')

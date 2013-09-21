@@ -20,7 +20,7 @@ class MainController extends Controller
 	 */
 	public function indexAction($page)
 	{
-		if (! $this->getUserLayer()->isStudent()) {
+		if (! $this->getUserLayer()->isStudent() && ! $this->getUserLayer()->isOrga()) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -38,7 +38,7 @@ class MainController extends Controller
 			->add('personnalMail', null, array('required' => false))
 			->getForm();
 
-		if ($this->getRequest()->query->has('form') && $form->bind($this->getRequest())->isValid()) {
+		if ($this->getRequest()->query->has('form') && $form->submit($this->getRequest())->isValid()) {
 			$search = true;
 
 			/** @var $em EntityManager */
@@ -58,9 +58,22 @@ class MainController extends Controller
 			}
 
 			if ($user->getFullName()) {
-				$users->andWhere('u.fullName LIKE :fullName OR u.surnom LIKE :surnom')
-					->setParameter('fullName', '%'.str_replace(' ', '%', $user->getFullName()).'%')
-					->setParameter('surnom', '%'.str_replace(' ', '%', $user->getFullName()).'%');
+				$where = 'u.login = :login ';
+				$users->setParameter('login', $user->getFullName());
+
+				$where .= 'OR u.surnom = :surnom OR (';
+				$users->setParameter('surnom', '%'.$user->getFullName().'%');
+
+				$terms = explode(' ', $user->getFullName());
+
+				foreach ($terms as $key => $term) {
+					$where .= 'u.fullName LIKE :name_'.$key.' AND ';
+					$users->setParameter('name_'.$key, '%'.$term.'%');
+				}
+
+				$where = substr($where, 0, -5).')';
+
+				$users->andWhere($where);
 			}
 
 			if ($user->getStudentId()) {
@@ -69,8 +82,21 @@ class MainController extends Controller
 			}
 
 			if ($user->getPhoneNumber()) {
-				$users->andWhere('u.phoneNumber = :phone')
-					->setParameter('phone', $user->getPhoneNumber());
+				$phone = $user->getPhoneNumber();
+				$parts = array();
+
+				if (strpos($phone, '.') !== false) {
+					$parts = explode('.', $phone);
+				} elseif (strpos($phone, '-') !== false) {
+					$parts = explode('-', $phone);
+				} elseif (strpos($phone, ' ') !== false) {
+					$parts = explode(' ', $phone);
+				} else {
+					$parts = str_split($phone, 2);
+				}
+
+				$users->andWhere('u.phoneNumber LIKE :phone')
+					->setParameter('phone', implode('%', $parts));
 			}
 
 			if ($user->getUvs()) {
@@ -100,7 +126,12 @@ class MainController extends Controller
 			$query = $users->getQuery();
 			$query->useResultCache(true, 3600*24);
 
-			$users = $this->get('knp_paginator')->paginate($query, $page, 10);
+			try {
+				$users = $this->get('knp_paginator')->paginate($query, $page, 10);
+			} catch (\Exception $e) {
+				var_dump($e);
+				exit;
+			}
 		}
 
 		return array(
