@@ -1,133 +1,118 @@
+#
+# Reusable upstream for HTTP and HTTPS
+#
 upstream phpfcgi {
     server unix:/var/run/php5-fpm.sock;
 }
 
 server {
-    listen 443;
-
-    server_name openutt.utt.fr;
-    root /var/www/web;
-
-    error_log /var/log/nginx/dev.error.log;
-    access_log /var/log/nginx/dev.access.log;
-
-    # strip app.php/ prefix if it is present
-    rewrite ^/app\.php/?(.*)$ /$1 permanent;
-
-    rewrite ^/mail/?$ /mail/index.php last;
-
-    auth_basic             "Restricted Beta access";
-    auth_basic_user_file   /var/www/.htpasswd;
-
-    location /phpmyadmin {
-        root /usr/share/;
-        index index.php index.html index.htm;
-
-        location ~ ^/phpmyadmin/(.+\.php)$ {
-            try_files $uri = 404;
-            root /usr/share/;
-            fastcgi_pass unix:/var/run/php5-fpm.sock;
-            fastcgi_index index.php;
-            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-            include /etc/nginx/fastcgi_params;
-        }
-
-        location ~* ^/phpmyadmin/(.+\.(jpg|jpeg|gif|css|png|js|ico|html|xml|txt))$ {
-            root /usr/share/;
-        }
-    }
-
-    location /api/v1 {
-        index app.php;
-        try_files $uri @api_v1;
-    }
-
-    location @api_v1 {
-        rewrite ^(.*)$ /api/v1/app.php/$1 last;
-    }
-
-    location / {
-        index app.php;
-        try_files $uri @site;
-    }
-
-    location @site {
-        rewrite ^(.*)$ /app.php/$1 last;
-    }
-
-    location ~ \.php($|/) {
-        fastcgi_pass phpfcgi;
-		fastcgi_split_path_info ^(.+\.php)(/.*)$;
-        include fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        fastcgi_param HTTPS on;
-        fastcgi_buffers 8 512k;
-        fastcgi_buffer_size 256k;
-        fastcgi_send_timeout 5m;
-        fastcgi_read_timeout 5m;
-        fastcgi_connect_timeout 5m;
-    }
-}
-
-server {
     listen 80;
 
-    server_name sopenutt.utt.fr;
-    root /var/www/web;
+    server_name etu.utt.fr;
 
-    error_log /var/log/nginx/dev.error.log;
-    access_log /var/log/nginx/dev.access.log;
+    root /var/www/web/;
 
-    # strip app.php/ prefix if it is present
+    access_log /var/log/nginx/access_log;
+    error_log /var/log/nginx/error_log;
+
+    #
+    # Strip Symfony prefixes
+    #
     rewrite ^/app\.php/?(.*)$ /$1 permanent;
 
-    rewrite ^/mail/?$ /mail/index.php last;
+    #
+    # Index file
+    #
+    # Development:
+    #        index index.php app_dev.php;
+    #
+    # Production:
+    #        index index.php app.php;
+    #
+    index index.php app.php;
 
-    auth_basic             "Restricted Beta access";
-    auth_basic_user_file   /var/www/.htpasswd;
-
-    location /phpmyadmin {
-        root /usr/share/;
-        index index.php index.html index.htm;
-
-        location ~ ^/phpmyadmin/(.+\.php)$ {
-            try_files $uri = 404;
-            root /usr/share/;
-            fastcgi_pass unix:/var/run/php5-fpm.sock;
-            fastcgi_index index.php;
-            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-            include /etc/nginx/fastcgi_params;
-        }
-
-        location ~* ^/phpmyadmin/(.+\.(jpg|jpeg|gif|css|png|js|ico|html|xml|txt))$ {
-            root /usr/share/;
-        }
+    #
+    # Match all the assets and return an HTTP cache header to load
+    # pages shortly
+    #
+    location ~* \.(js|css|png|jpg|jpeg|gif|bmp|ico|xml|pdf|ttf|eot|svg|woff|otf)$ {
+        access_log off;
+        log_not_found off;
+        expires 360d;
     }
 
-    location /api/v1 {
+    #
+    # Hide private files from users (.htaccess, .htpasswd, .gitignore, ...):
+    # all files names that start by a dot
+    #
+    location ~ /\. {
+        access_log off;
+        log_not_found off;
+        deny all;
+    }
+
+    #
+    # API rewrite rule
+    #
+    location /api {
         index app.php;
-        try_files $uri @api_v1;
+        try_files $uri @api;
     }
 
-    location @api_v1 {
-        rewrite ^(.*)$ /api/v1/app.php/$1 last;
+    location @api {
+        rewrite ^(.*)$ /api/app.php/$1 last;
     }
 
+    #
+    # Main rewrite rule
+    # Redirect all requests that does not match an existing file to
+    # Symfony.
+    #
     location / {
         index app.php;
         try_files $uri @site;
     }
 
     location @site {
+        #
+        # Main rule
+        #
+        # Development:
+        #        rewrite ^(.*)$ /app_dev.php/$1 last;
+        #
+        # Production:
+        #        rewrite ^(.*)$ /app.php/$1 last;
+        #
         rewrite ^(.*)$ /app.php/$1 last;
     }
 
+    #
+    # Catch all PHP files to pass them threw PHP-FPM.
+    #
+    # The configuration is classic for a Symfony installation,
+    # we just add bigger buffer and timeout values to improve
+    # usability for users and for the development.
+    #
     location ~ \.php($|/) {
-        fastcgi_pass phpfcgi;
-		fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
+
+        set $script $uri;
+        set $path_info "";
+
+        if ($uri ~ "^(.+\.php)($|/)") {
+                set $script $1;
+        }
+
+        if ($uri ~ "^(.+\.php)(/.+)") {
+                set $script $1;
+                set $path_info $2;
+        }
+
+        fastcgi_pass phpfcgi;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_param HTTPS off;
+
         fastcgi_buffers 8 512k;
         fastcgi_buffer_size 256k;
         fastcgi_send_timeout 5m;
@@ -135,3 +120,5 @@ server {
         fastcgi_connect_timeout 5m;
     }
 }
+
+
