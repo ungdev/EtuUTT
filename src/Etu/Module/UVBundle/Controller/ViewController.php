@@ -4,6 +4,7 @@ namespace Etu\Module\UVBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Entity\Notification;
+use Etu\Core\UserBundle\Entity\Course;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Model\BadgesManager;
 use Etu\Module\UVBundle\Entity\Comment;
@@ -149,6 +150,80 @@ class ViewController extends Controller
 			'reviewsCount' => $reviewsCount,
 			'pagination' => $pagination,
 			'commentForm' => $commentForm->createView(),
+		);
+	}
+
+	/**
+	 * @Route("/{slug}-{name}/courses", name="uvs_view_courses")
+	 * @Template()
+	 */
+	public function coursesAction($slug, $name)
+	{
+		if (! $this->getUserLayer()->isUser()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		/** @var EntityManager $em */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var UV $uv */
+		$uv = $em->getRepository('EtuModuleUVBundle:UV')
+			->findOneBy(array('slug' => $slug));
+
+		if (! $uv) {
+			throw $this->createNotFoundException(sprintf('UV for slug %s not found', $slug));
+		}
+
+		if (StringManipulationExtension::slugify($uv->getName()) != $name) {
+			return $this->redirect($this->generateUrl('uvs_view', array(
+				'slug' => $uv->getSlug(), 'name' => StringManipulationExtension::slugify($uv->getName())
+			)), 301);
+		}
+
+		/** @var $results Course[] */
+		$results = $em->createQueryBuilder()
+			->select('c')
+			->from('EtuUserBundle:Course', 'c')
+			->where('c.uv = :uv')
+			->setParameter('uv', strtoupper($slug))
+			->orderBy('c.start')
+			->groupBy('c.day, c.room')
+			->getQuery()
+			->getResult();
+
+		/** @var $courses Course[] */
+		$courses = array();
+
+		$days = array(
+			Course::DAY_MONDAY => 1, Course::DAY_TUESDAY => 2, Course::DAY_WENESDAY => 3,
+			Course::DAY_THURSDAY => 4, Course::DAY_FRIDAY => 5, Course::DAY_SATHURDAY => 6
+		);
+
+		$orderDay = array();
+		$orderHour = array();
+
+		foreach ($results as $course) {
+			$courses[] = $course;
+			$orderDay[] = $days[$course->getDay()];
+			$orderHour[] = $course->getStart();
+		}
+
+		array_multisort(
+			$orderDay, SORT_ASC, SORT_NUMERIC,
+			$orderHour, SORT_ASC, SORT_NUMERIC,
+			$courses
+		);
+
+		/** @var $results Course[] */
+		$results = array();
+
+		foreach ($courses as $course) {
+			$results[$course->getDay()][] = $course;
+		}
+
+		return array(
+			'uv' => $uv,
+			'courses' => $results,
 		);
 	}
 

@@ -280,6 +280,25 @@
 .schedule-days-print .day {
   width: 167px;
 }
+.course-courses ul,
+.course-courses li {
+  margin: 0;
+  padding: 0;
+}
+.course-courses .day {
+  text-align: center;
+  font-weight: bold;
+}
+.course-courses .course {
+  list-style-type: none;
+  padding: 5px;
+  background: #f5f5f5;
+  margin-bottom: 5px;
+}
+.course-courses .course .hours {
+  font-style: italic;
+  color: #999;
+}
 .memberships {
   padding: 8px 0;
   border-right: 1px solid #e5e5e5;

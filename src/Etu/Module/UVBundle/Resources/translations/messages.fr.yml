@@ -32,6 +32,7 @@ uvs:
         view:
             title: Détail d'une UV - %code%
             dontExists: Cette UV n'existe plus
+            viewCourses: Voir les créneaux de cette UV
             credits: Crédits
             cm: Cours magistral
             td: Travaux dirigés
@@ -64,5 +65,7 @@ uvs:
             confirm: Votre annale a bien été envoyée. Merci de votre participation !
         comment:
             confirm: Votre commentaire a bien été envoyée. Merci de votre participation !
+        courses:
+            title: Créneaux de %uv%
 
 

@@ -43,6 +43,16 @@
 			<div class="uv-view-infos-category">
 				<div class="uv-view-infos-row">
 					<div class="uv-view-infos-label">
+						<a href="{{ path('uvs_view_courses', {'slug': uv.slug, 'name': uv.name|slugify}) }}">
+							{{ 'uvs.main.view.viewCourses'|trans }}
+						</a>
+					</div>
+					<div class="uv-view-infos-value"></div>
+				</div>
+			</div>
+			<div class="uv-view-infos-category">
+				<div class="uv-view-infos-row">
+					<div class="uv-view-infos-label">
 						{{ ('uvs.categories.'~uv.category)|trans }}
 					</div>
 					<div class="uv-view-infos-value"></div>
