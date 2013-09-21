@@ -25,6 +25,7 @@ class EtuModuleWikiBundle extends Module
 			->getBlock('base.sidebar.services.title')
 			->add('base.sidebar.services.items.wiki')
 				->setIcon('information.png')
+				->setItemAttribute('class', 'hidden-phone')
 				->setUrl($this->getRouter()->generate('wiki_index'))
 			->end();
 	}

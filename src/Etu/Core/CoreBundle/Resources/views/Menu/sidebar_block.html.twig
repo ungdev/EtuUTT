@@ -2,8 +2,8 @@
 {% if items|count > 0 %}
 <ul class="list-vertical list-vertical-linked sidebar-menu">
 	{% for item in items %}
-		<li {{ item.itemAttributesString }}>
-			<a href="{{ item.url }}" {{ item.linkAttributesString }}>
+		<li {{ item.itemAttributesString|raw }}>
+			<a href="{{ item.url }}" {{ item.linkAttributesString|raw }}>
 				{% if item.hasIcon %}
 					<img src="{{ asset('img/icons/'~item.icon) }}" class="etu-img-icon" />
 				{% else %}

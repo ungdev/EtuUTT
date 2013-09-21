@@ -25,6 +25,7 @@ class EtuModuleCumulBundle extends Module
 			->getBlock('base.sidebar.services.title')
 			->add('base.sidebar.services.items.table')
 				->setIcon('table.png')
+				->setItemAttribute('class', 'hidden-phone')
 				->setUrl($this->router->generate('cumul_index'))
 			->end();
 	}
