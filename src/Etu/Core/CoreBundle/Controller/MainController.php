@@ -33,38 +33,6 @@ class MainController extends Controller
 	}
 
 	/**
-	 * @Route("/duck/6d081884c", name="duck")
-	 * @Template()
-	 */
-	public function duckAction()
-	{
-		if (! $this->getUserLayer()->isStudent()) {
-			return $this->createAccessDeniedResponse();
-		}
-
-		$file = __DIR__.'/../../../../../duck_catched.txt';
-
-		if (in_array($this->getUser()->getLogin(), array('chabanop', 'soulierl'))) {
-			return array(
-				'catched' => false,
-				'ung' => true
-			);
-		}
-
-		if (file_get_contents($file) == 0) {
-			$catched = true;
-			file_put_contents($file, '1:'.$this->getUser()->getLogin());
-		} else {
-			$catched = false;
-		}
-
-		return array(
-			'catched' => $catched,
-			'ung' => false
-		);
-	}
-
-	/**
 	 * @Route("/more/{page}", name="flux_more", options={"expose"=true})
 	 * @Template()
 	 */
