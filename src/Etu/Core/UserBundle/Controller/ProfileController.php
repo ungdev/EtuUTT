@@ -294,10 +294,10 @@ class ProfileController extends Controller
 	}
 
 	/**
-	 * @Route("/user/{login}/schedule", name="user_view_schedule")
+	 * @Route("/user/{login}/schedule/{day}", defaults={"day" = "current"}, name="user_view_schedule")
 	 * @Template()
 	 */
-	public function scheduleAction($login)
+	public function scheduleAction($login, $day = 'current')
 	{
 		if (! $this->getUserLayer()->isConnected()) {
 			return $this->createAccessDeniedResponse();
@@ -334,8 +334,22 @@ class ProfileController extends Controller
 			$builder->addCourse($course);
 		}
 
+		$days = array(
+			Course::DAY_MONDAY, Course::DAY_TUESDAY, Course::DAY_WENESDAY,
+			Course::DAY_THURSDAY, Course::DAY_FRIDAY, Course::DAY_SATHURDAY
+		);
+
+		if (! in_array($day, $days)) {
+			if (date('w') == 0) { // Sunday
+				$day = Course::DAY_MONDAY;
+			} else {
+				$day = $days[date('w') - 1];
+			}
+		}
+
 		return array(
 			'courses' => $builder->build(),
+			'currentDay' => $day,
 			'user' => $user,
 			'from' => $from
 		);
