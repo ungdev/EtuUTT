@@ -63,7 +63,7 @@ class EtuModuleBuckUTTBundle extends Module
 	 */
 	public function getAuthor()
 	{
-		return 'Paul Chabanon et Titouan Galopin';
+		return 'Paul Chabanon';
 	}
 
 	/**

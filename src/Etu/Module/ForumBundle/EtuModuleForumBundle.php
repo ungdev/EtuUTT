@@ -49,7 +49,7 @@ class EtuModuleForumBundle extends Module
 	 */
 	public function getAuthor()
 	{
-		return 'Titouan Galopin';
+		return 'Lucas Soulier';
 	}
 
 	/**
