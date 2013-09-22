@@ -2517,37 +2517,23 @@ class User implements UserInterface, \Serializable
 			$badge = $badge->getBadge();
 		}
 
-		if (count($badges) >= 10) {
-			BadgesManager::userAddBadge($this, 'challenge', 1);
-		}
-		if (count($badges) >= 20) {
-			BadgesManager::userAddBadge($this, 'challenge', 2);
-		}
-		if (count($badges) >= 30) {
-			BadgesManager::userAddBadge($this, 'challenge', 3);
-		}
-		if (count($badges) >= 40) {
-			BadgesManager::userAddBadge($this, 'challenge', 4);
-		}
-		if (count($badges) >= 50) {
-			BadgesManager::userAddBadge($this, 'challenge', 5);
-		}
-		if (count($badges) >= 60) {
-			BadgesManager::userAddBadge($this, 'challenge', 6);
-		}
+		$count = count($badges);
 
 		if ($this->getBranch() == 'TC' && $this->getNiveau() == '1') {
 			BadgesManager::userAddBadge($this, 'tc01');
+			$count++;
 		}
 
 		if ($this->getBranch() == 'TC' && $this->getNiveau() == '6') {
 			BadgesManager::userAddBadge($this, 'tc06');
+			$count++;
 		}
 
 		if (        BadgesManager::userHasBadge($this, 'subscriber')
 				&&  BadgesManager::userHasBadge($this, 'forum_message')
 				&&  BadgesManager::userHasBadge($this, 'profile_completed')) {
-					BadgesManager::userAddBadge($this, 'starter');
+			BadgesManager::userAddBadge($this, 'starter');
+			$count++;
 		}
 
 		/** @var Member[] $memberships */
@@ -2555,20 +2541,43 @@ class User implements UserInterface, \Serializable
 
 		if (count($memberships) > 0) {
 			BadgesManager::userAddBadge($this, 'orga_member', 1);
+			$count++;
 		}
 
 		foreach ($memberships as $member) {
 			if ($member->isFromBureau()) {
 				BadgesManager::userAddBadge($this, 'orga_member', 2);
+				$count++;
 			}
 
 			if ($member->getRole() == Member::ROLE_PRESIDENT) {
 				BadgesManager::userAddBadge($this, 'orga_member', 3);
+				$count++;
 
 				if ($member->getOrganization()->getLogin() == 'bde') {
 					BadgesManager::userAddBadge($this, 'orga_member', 4);
+					$count++;
 				}
 			}
+		}
+
+		if ($count >= 10) {
+			BadgesManager::userAddBadge($this, 'challenge', 1);
+		}
+		if ($count >= 20) {
+			BadgesManager::userAddBadge($this, 'challenge', 2);
+		}
+		if ($count >= 30) {
+			BadgesManager::userAddBadge($this, 'challenge', 3);
+		}
+		if ($count >= 40) {
+			BadgesManager::userAddBadge($this, 'challenge', 4);
+		}
+		if ($count >= 50) {
+			BadgesManager::userAddBadge($this, 'challenge', 5);
+		}
+		if ($count >= 60) {
+			BadgesManager::userAddBadge($this, 'challenge', 6);
 		}
 
 		/*
