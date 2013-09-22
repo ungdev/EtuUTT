@@ -28,6 +28,14 @@ class EtuModuleUVBundle extends Module
 					->setUrl($this->getRouter()->generate('uvs_index'))
 					->setPosition(0)
 				->end();
+
+		$this->getAdminMenuBuilder()
+			->getBlock('base.admin_menu.title')
+				->add('uvs.admin.menu_item')
+					->setIcon('briefcase.png')
+					->setUrl($this->getRouter()->generate('admin_uvs_index'))
+					->setPosition(5)
+				->end();
 	}
 
 	/**

@@ -1,0 +1,70 @@
+{% extends 'EtuCoreBundle:Admin:layout.html.twig' %}
+
+{% block title %}{{ 'uvs.admin.index.title'|trans }}{% endblock %}
+
+{% block content %}
+	<ul class="nav nav-tabs page-tabs">
+		<li>
+			<a href="{{ path('admin_uvs_index') }}">
+				{{ 'uvs.admin.back'|trans }}
+			</a>
+		</li>
+	</ul>
+
+	<div class="padding20-sides">
+		<div class="navigation">
+			{{ knp_pagination_render(pagination) }}
+		</div>
+
+		<hr />
+
+		<table class="table">
+			<thead>
+			<tr>
+				<th>{{ 'uvs.admin.index.review'|trans }}</th>
+				<th>{{ 'uvs.admin.index.uv'|trans }}</th>
+				<th>{{ 'uvs.admin.index.sender'|trans }}</th>
+				<th>{{ 'uvs.admin.index.actions'|trans }}</th>
+			</tr>
+			</thead>
+			<tbody>
+			{% for review in pagination %}
+				<tr class="{% if review.validated %}alert-success{% else %}alert-error{% endif %}">
+					<td>
+						<a href="{{ asset('uploads/uvs/'~review.filename) }}">
+							{{ ('uvs.reviews.'~review.type)|trans }}
+							{{ review.semester }}
+						</a>
+					</td>
+					<td>
+						<a href="{{ path('uvs_view', {'slug': review.uv.slug, 'name': review.uv.name|slugify}) }}">
+							{{ review.uv.code }}
+						</a>
+					</td>
+					<td>
+						{{ review.sender.fullName }}
+					</td>
+					<td>
+						{% if not review.validated %}
+							<a href="{{ path('admin_uvs_review_validate', {'id': review.id}) }}">
+								{{ 'uvs.admin.index.validate'|trans }}</a> -
+						{% else %}
+							<a href="{{ path('admin_uvs_review_unvalidate', {'id': review.id}) }}">
+								{{ 'uvs.admin.index.unvalidate'|trans }}</a> -
+						{% endif %}
+						<a href="{{ path('admin_uvs_review_delete', {'id': review.id}) }}">
+							{{ 'uvs.admin.index.delete'|trans }}
+						</a>
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+
+		<hr />
+
+		<div class="navigation">
+			{{ knp_pagination_render(pagination) }}
+		</div>
+	</div>
+{% endblock %}

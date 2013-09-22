@@ -1,7 +1,7 @@
 <?php
 
-echo file_get_contents(__DIR__.'/maintenance.html');
-exit;
+// echo file_get_contents(__DIR__.'/maintenance.html');
+// exit;
 
 use Symfony\Component\ClassLoader\ApcClassLoader;
 use Symfony\Component\HttpFoundation\Request;

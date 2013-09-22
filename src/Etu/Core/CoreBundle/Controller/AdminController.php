@@ -11,8 +11,6 @@ use Etu\Core\CoreBundle\Framework\Module\ModulesManager;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Core\CoreBundle\Util\Server;
 
-use Tga\AudienceBundle\Stats\Processor;
-
 use Symfony\Component\HttpFoundation\Response;
 
 // Import @Route() and @Template() annotations
@@ -155,52 +153,6 @@ class AdminController extends Controller
 
 		return array(
 			'modules' => $modules,
-		);
-	}
-
-	/**
-	 * @Route("/stats", name="admin_stats")
-	 * @Template()
-	 */
-	public function statsAction()
-	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
-			return $this->createAccessDeniedResponse();
-		}
-
-		/** @var $processor Processor */
-		$processor = $this->get('tga_audience.stats')->getProcessor();
-
-		$uniqueVisitors = array_merge(array(array('Date', 'Visitors')), (array) $processor->getUniqueVisitors());
-		$pagesCalls = array_merge(array(array('Date', 'Calls')), (array) $processor->getPageCalls());
-
-		$platforms = array_merge(array(array('Platform', 'Count')), (array) $processor->getPlatforms());
-		$browsers = array_merge(array(array('Browser', 'Count')), (array) $processor->getBrowsers());
-
-		$externalSources = array_merge(array(array('Source', 'Count')), (array) $processor->getExternalSources());
-
-		$allExternalSources = (array) $processor->getMostUsedExternalSources();
-
-		foreach ($allExternalSources as $key => $value) {
-			if (! is_object($value)) {
-				unset($allExternalSources[$key]);
-			}
-		}
-
-		return array(
-			'uniqueVisitors' => json_encode($uniqueVisitors),
-			'uniqueVisitorsCount' => $processor->getUniqueVisitorsCount(),
-			'pagesCalls' => json_encode($pagesCalls),
-			'pagesCallsCount' => $processor->getPageCallsCount(),
-			'averageVisitedPages' => round($processor->getAverageVisitedPages(), 2),
-			'averageDuration' => round($processor->getAverageDuration(), 2),
-			'averageTimeToLoad' => round($processor->getAverageTimeToLoad(), 2),
-			'platforms' => json_encode($platforms),
-			'browsers' => json_encode($browsers),
-			'mostUsedRoutes' => $processor->getMostUsedRoutes(),
-			'browsersVersions' => $processor->getMostUsedBrowsers(),
-			'externalSources' => json_encode($externalSources),
-			'allExternalSources' => $allExternalSources
 		);
 	}
 

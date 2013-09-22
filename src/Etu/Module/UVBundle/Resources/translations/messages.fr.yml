@@ -68,4 +68,27 @@ uvs:
         courses:
             title: Créneaux de %uv%
 
+    admin:
+        back: Retour
+        menu_item: Gestion des UV
+        index:
+            title: Gérer les UV
+            actions: Actions
+            lastsReviews: Dernières annales
+            review: Annale
+            sender: Auteur
+            uv: UV
+            validate: Valider
+            unvalidate: Dévalider
+            delete: Supprimer
+            reviews: Toutes les annales
+            lastsComments: Derniers commentaires
+            comments: Tous les commentaires
+        validateReview:
+            confirm: Vous avez bien validé cette annale
+        unvalidateReview:
+            confirm: Vous avez bien dévalidé cette annale
+        deleteReview:
+            confirm: Vous avez bien supprimé cette annale
+
 
