@@ -166,7 +166,7 @@
 						<div class="view-icon"><i class="icon-envelope"></i></div>
 						<div class="view-label">{{ 'user.profile.view.mail'|trans }}</div>
 						<div class="view-value">
-							{{ user.mail }}
+							<a href="mailto:{{ user.mail }}">{{ user.mail }}</a>
 						</div>
 					</div>
 				{% endif %}
@@ -202,7 +202,7 @@
 						<div class="view-icon"><i class="icon-envelope"></i></div>
 						<div class="view-label">{{ 'user.profile.view.personnalMail'|trans }}</div>
 						<div class="view-value">
-							{{ user.personnalMail }}
+							<a href="mailto:{{ user.personnalMail }}">{{ user.personnalMail }}</a>
 						</div>
 					</div>
 				{% endif %}
