@@ -277,7 +277,6 @@
 			{% if app.user and not app.user.isOrga %}
 				<script type="text/javascript">
 					window.setInterval(function(){
-						// Find new notifications
 						$.getJSON(Routing.generate('notifs_new'), function(data) {
 							if (typeof data.status != 'undefined' && data.status == 200) {
 								if (data.result.count > 0) {
@@ -289,7 +288,7 @@
 								}
 							}
 						});
-					}, 10 * 1000); // 10 seconds
+					}, 10 * 1000);
 				</script>
 			{% endif %}
 		{% endblock %}
