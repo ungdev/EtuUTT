@@ -4,10 +4,15 @@ assos:
         menu:
             description: Description
             members: Membres
+            orgas: Associations et clubs
+            elus: Elus étudiants
         index:
             title: Les associations
             meta: Découvrez les associations étudiantes de l'UTT !
             president: Président
+        elus:
+            title: Elus étudiants
+            meta: Elus étudiants
         view:
             title: Détail d'une association
             back: Retour à la liste

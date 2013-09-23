@@ -27,6 +27,31 @@ class MainController extends Controller
 			->select('a, p')
 			->from('EtuUserBundle:Organization', 'a')
 			->leftJoin('a.president', 'p')
+			->where('a.name NOT LIKE \'Elus%\'')
+			->orderBy('a.name')
+			->getQuery();
+
+		$orgas = $this->get('knp_paginator')->paginate($query, $page, 10);
+
+		return array(
+			'pagination' => $orgas
+		);
+	}
+
+	/**
+	 * @Route("/elus/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="elus_index")
+	 * @Template()
+	 */
+	public function elusAction($page)
+	{
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		$query = $em->createQueryBuilder()
+			->select('a, p')
+			->from('EtuUserBundle:Organization', 'a')
+			->leftJoin('a.president', 'p')
+			->where('a.name LIKE \'Elus%\'')
 			->orderBy('a.name')
 			->getQuery();
 

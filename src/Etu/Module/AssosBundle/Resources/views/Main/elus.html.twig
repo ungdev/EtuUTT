@@ -4,9 +4,9 @@
 	<link rel="stylesheet" href="{{ asset('css/bundles/assos.css') }}" type="text/css" />
 {% endblock %}
 
-{% block title %}{{ 'assos.main.index.title'|trans }}{% endblock %}
+{% block title %}{{ 'assos.main.elus.title'|trans }}{% endblock %}
 
-{% block meta_desc %}{{ 'assos.main.index.meta'|trans }}{% endblock %}
+{% block meta_desc %}{{ 'assos.main.elus.meta'|trans }}{% endblock %}
 
 {% block main_menu_link_assos %} active{% endblock %}
 
@@ -16,12 +16,12 @@
 
 {% block content %}
 	<ul class="nav nav-tabs page-tabs">
-		<li class="pull-right">
+		<li class="pull-right active page-tabs-resolved-active">
 			<a href="{{ path('elus_index') }}">
 				{{ 'assos.main.menu.elus'|trans }}
 			</a>
 		</li>
-		<li class="pull-right active page-tabs-resolved-active">
+		<li class="pull-right">
 			<a href="{{ path('orgas_index') }}">
 				{{ 'assos.main.menu.orgas'|trans }}
 			</a>
