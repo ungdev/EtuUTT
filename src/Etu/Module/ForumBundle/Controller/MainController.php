@@ -281,6 +281,13 @@ class MainController extends Controller
 				}
 
 				$em->persist($thread);
+				
+				$cviews = $em->getRepository('EtuModuleForumBundle:CategoryView')
+					->findByCategory($category);
+				foreach($cviews as $cview) {
+					$em->remove($cview);
+				}
+				
 				$em->flush();
 
 				$this->giveBadges();
@@ -355,6 +362,11 @@ class MainController extends Controller
 					->findByThread($thread);
 				foreach($views as $view) {
 					$em->remove($view);
+				}
+				$cviews = $em->getRepository('EtuModuleForumBundle:CategoryView')
+					->findByCategory($category);
+				foreach($cviews as $cview) {
+					$em->remove($cview);
 				}
 				$em->flush();
 
