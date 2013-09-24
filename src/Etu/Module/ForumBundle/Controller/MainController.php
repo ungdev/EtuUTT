@@ -696,63 +696,64 @@ class MainController extends Controller
 
 	private function giveBadges()
 	{
+		$user = $this->getUser();
 		$em = $this->getDoctrine()->getManager();
 		$threads = $em->createQueryBuilder()
 			->select('t')
 			->from('EtuModuleForumBundle:Thread', 't')
 			->where('t.author = :user')
-			->setParameter('user', $this->getUser())
+			->setParameter('user', $user)
 			->getQuery()
 			->getResult();
 
 		$nbThreads = count($threads);
 		
 		if($nbThreads >= 1) {
-			BadgesManager::userAddBadge($this->getUser(), 'mysterion', 1);
-			BadgesManager::userPersistBadges($this->getUser());
+			BadgesManager::userAddBadge($user, 'mysterion', 1);
+			BadgesManager::userPersistBadges($user);
 		}
 		if($nbThreads >= 10) {
-			BadgesManager::userAddBadge($this->getUser(), 'mysterion', 2);
-			BadgesManager::userPersistBadges($this->getUser());
+			BadgesManager::userAddBadge($user, 'mysterion', 2);
+			BadgesManager::userPersistBadges($user);
 		}
 		if($nbThreads >= 20) {
-			BadgesManager::userAddBadge($this->getUser(), 'mysterion', 3);
-			BadgesManager::userPersistBadges($this->getUser());
+			BadgesManager::userAddBadge($user, 'mysterion', 3);
+			BadgesManager::userPersistBadges($user);
 		}
 		if($nbThreads >= 40) {
-			BadgesManager::userAddBadge($this->getUser(), 'mysterion', 4);
-			BadgesManager::userPersistBadges($this->getUser());
+			BadgesManager::userAddBadge($user, 'mysterion', 4);
+			BadgesManager::userPersistBadges($user);
 		}
 		
 		$messages = $em->createQueryBuilder()
 			->select('m')
 			->from('EtuModuleForumBundle:Message', 'm')
 			->where('m.author = :user')
-			->setParameter('user', $this->getUser())
+			->setParameter('user', $user)
 			->getQuery()
 			->getResult();
 
 		$nbMessages = count($messages);
 
 		if($nbMessages >= 1) {
-			BadgesManager::userAddBadge($this->getUser(), 'monkey', 1);
-			BadgesManager::userPersistBadges($this->getUser());
+			BadgesManager::userAddBadge($user, 'monkey', 1);
+			BadgesManager::userPersistBadges($user);
 		}
 		if($nbMessages >= 20) {
-			BadgesManager::userAddBadge($this->getUser(), 'monkey', 2);
-			BadgesManager::userPersistBadges($this->getUser());
+			BadgesManager::userAddBadge($user, 'monkey', 2);
+			BadgesManager::userPersistBadges($user);
 		}
 		if($nbMessages >= 50) {
-			BadgesManager::userAddBadge($this->getUser(), 'monkey', 3);
-			BadgesManager::userPersistBadges($this->getUser());
+			BadgesManager::userAddBadge($user, 'monkey', 3);
+			BadgesManager::userPersistBadges($user);
 		}
 		if($nbMessages >= 100) {
-			BadgesManager::userAddBadge($this->getUser(), 'monkey', 4);
-			BadgesManager::userPersistBadges($this->getUser());
+			BadgesManager::userAddBadge($user, 'monkey', 4);
+			BadgesManager::userPersistBadges($user);
 		}
 		if($nbMessages >= 500) {
-			BadgesManager::userAddBadge($this->getUser(), 'monkey', 5);
-			BadgesManager::userPersistBadges($this->getUser());
+			BadgesManager::userAddBadge($user, 'monkey', 5);
+			BadgesManager::userPersistBadges($user);
 		}
 	}
 
