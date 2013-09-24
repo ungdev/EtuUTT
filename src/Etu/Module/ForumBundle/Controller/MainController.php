@@ -14,6 +14,7 @@ use Etu\Module\ForumBundle\Entity\Category;
 use Etu\Module\ForumBundle\Entity\Thread;
 use Etu\Module\ForumBundle\Entity\Message;
 use Etu\Module\ForumBundle\Entity\View;
+use Etu\Module\ForumBundle\Entity\CategoryView;
 use Etu\Module\ForumBundle\Form\ThreadType;
 use Etu\Module\ForumBundle\Form\ThreadTypeNoSticky;
 use Etu\Module\ForumBundle\Form\MessageEditType;
@@ -36,8 +37,10 @@ class MainController extends Controller
 
 		$em = $this->getDoctrine()->getManager();
 		$categories = $em->createQueryBuilder()
-			->select('c')
+			->select('c, v')
 			->from('EtuModuleForumBundle:Category', 'c')
+			->leftJoin('c.categoryViewed', 'v', 'WITH', 'v.user = :user')
+			->setParameter('user', $this->getUser())
 			->where('c.depth <= 1')
 			->orderBy('c.left')
 			->getQuery()
@@ -114,6 +117,24 @@ class MainController extends Controller
 
 		$isSubCategories = false;
 		if(count($subCategories) > 0) $isSubCategories = true;
+		
+		$views = $em->createQueryBuilder()
+			->select('v')
+			->from('EtuModuleForumBundle:CategoryView', 'v')
+			->where('v.category = :category')
+			->setParameter('category', $category)
+			->andWhere('v.user = :user')
+			->setParameter('user', $this->getUser())
+			->getQuery()
+			->getResult();
+
+		if($this->getUser() && count($views) == 0) {
+			$viewed = new CategoryView();
+			$viewed->setUser($this->getUser())
+				->setCategory($category);
+			$em->persist($viewed);
+			$em->flush();
+		}
 
 		return array('category' => $category, 'subCategories' => $subCategories, 'parents' => $parents, 'threads' => $threads, 'noThreads' => $noThreads, 'isSubCategories' => $isSubCategories);
 	}
