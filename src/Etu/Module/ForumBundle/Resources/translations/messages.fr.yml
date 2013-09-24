@@ -12,6 +12,7 @@ forum:
             nbMessages: Messages
             lastMessage: Dernier message
             noMessage: Il n'y a pas de message dans cette catégorie.
+            new: Nouveau
         thread:
             thread: Sujet
             in: Dans
