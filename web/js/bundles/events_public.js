@@ -1,4 +1,3 @@
-
 var calendar = $('#calendar'),
 	loader = $('#loader');
 
@@ -10,7 +9,7 @@ $(function() {
 			right: 'month,agendaWeek,agendaDay'
 		},
 		firstDay: 1,
-		monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Nomvembre','Décembre'],
+		monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
 		monthNamesShort: ['Jan','Fev','Mar','Avr','Mai','Juin','Jui','Aou','Sep','Oct','Nov','Dec'],
 		dayNames: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
 		dayNamesShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],
