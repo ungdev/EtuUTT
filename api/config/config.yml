@@ -1,0 +1,35 @@
+imports:
+    - { resource: '../../app/config/parameters.yml' }
+
+api:
+    title: EtuUTT API
+    version: 1.0-dev
+    status: dev
+    documentation: http://etu.utt.fr/page/api
+
+framework:
+    secret: %secret%
+    dumper:
+        default: json
+    translator:
+        fallback: %locale%
+    router:
+        resource: routing.yml
+
+# Doctrine Configuration
+doctrine:
+    driver:   %database_driver%
+    host:     %database_host%
+    port:     %database_port%
+    dbname:   %database_name%
+    user:     %database_user%
+    password: %database_password%
+    charset:  UTF8
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: %mailer_transport%
+    host:      %mailer_host%
+    username:  %mailer_user%
+    password:  %mailer_password%
+    #spool:     { type: memory }

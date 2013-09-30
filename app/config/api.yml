@@ -1,8 +1,0 @@
-imports:
-    - { resource: config.yml }
-
-api:
-    title: EtuUTT API
-    version: 1.0-dev
-    status: dev
-    documentation: http://etu.utt.fr/page/api
