@@ -1,5 +1,0 @@
-
-api_v1:
-    resource: .
-    type:     api_resource
-    prefix:   /

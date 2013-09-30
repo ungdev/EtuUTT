@@ -2,17 +2,15 @@
 
 namespace Etu\Core\CoreBundle\Api\Resource;
 
-use Etu\Core\CoreBundle\Framework\Api\Definition\Resource;
-use Etu\Core\CoreBundle\Framework\Api\Security\SecurityToken;
+use Etu\Api\Framework\Resource;
+use Etu\Api\Http\Response;
 
-use Etu\Core\CoreBundle\Framework\Api\Security\Token\TokenInterface;
-use Etu\Module\ApiBundle\Entity\ApplicationToken;
-use Etu\Module\ApiBundle\Entity\UserToken;
+use Etu\Api\Security\SecurityToken;
 use Symfony\Component\HttpFoundation\Request;
 
 // Annotations
+use Etu\Api\Annotations as Api;
 use Swagger\Annotations as SWG;
-use Tga\Api\Framework\Annotations as Api;
 
 /**
  * @SWG\Resource(resourcePath="about")
@@ -37,7 +35,7 @@ class AboutResource extends Resource
 	 *
 	 * @Api\Operation(method="GET")
 	 */
-	public function getOperation(Request $request)
+	public function aboutGet(Request $request)
 	{
 		if ($request->server->has('HTTP_X_FORWARDED_FOR')) {
 			$ip = $request->server->get('HTTP_X_FORWARDED_FOR');
@@ -45,35 +43,19 @@ class AboutResource extends Resource
 			$ip = $request->getClientIp();
 		}
 
-		/** @var ApplicationToken $application */
-		$application = $this->getAuthenticationProxy()->getApplicationToken();
-
-		/** @var UserToken $user */
-		$user = $this->getAuthenticationProxy()->getUserToken();
-
-		if ($application instanceof ApplicationToken) {
-			$application = array(
-				'name' => $application->getName(),
-				'token' => $application->getToken(),
-			);
-		} else {
-			$application = 'anonymous';
-		}
-
-		if ($user instanceof UserToken) {
-			$user = array(
-				'name' => $user->getUser()->getFullName(),
-				'token' => $user->getToken(),
-				'ip' => $ip,
-			);
-		} else {
-			$user = 'anonymous';
-		}
-
-		return array(
-			'api' => $this->getConfig()->get('api'),
-			'application' => $application,
-			'user' => $user
+		$accessType = array(
+			SecurityToken::ANONYMOUS => 'anonymous',
+			SecurityToken::CONNECTED => 'connected',
 		);
+
+		return Response::success(array(
+			'api' => $this->getConfig()->get('api'),
+			'access' => array(
+				'application' => $this->getSecurityToken()->getApplication(),
+				'token' => $this->getSecurityToken()->getToken(),
+				'type' => $accessType[$this->getSecurityToken()->getAuthorization()],
+				'ip' => $ip,
+			)
+		));
 	}
 }

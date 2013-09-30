@@ -7,5 +7,5 @@
 
     RewriteCond $1 !^(wiki/)
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(.*)$ etu_dev.php [QSA,L]
+    RewriteRule ^(.*)$ app_dev.php [QSA,L]
 </IfModule>

@@ -34,8 +34,7 @@
 		"tedivm/jshrink": "dev-master",
 		"helios-ag/fm-bbcode-bundle": "6.2",
 		"zircote/swagger-php": "dev-master",
-		"sabre/vobject" : "~3.1",
-		"tga/api-framework": "dev-master"
+		"sabre/vobject" : "~3.1"
 	},
 	"scripts": {
 		"post-install-cmd": [
