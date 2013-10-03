@@ -217,7 +217,11 @@ class Kernel
 			'Swagger\Annotations' => __APP__.'/vendor/zircote/swagger-php/library/'
 		));
 
-		$reader = new CachedReader(new AnnotationReader(), new ApcCache(), $this->debug);
+		if (function_exists('apc_fetch')) {
+			$reader = new CachedReader(new AnnotationReader(), new ApcCache(), $this->debug);
+		} else {
+			$reader = new AnnotationReader();
+		}
 
 		$this->container->set('annotations.reader', $reader);
 
