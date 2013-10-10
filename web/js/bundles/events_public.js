@@ -10,10 +10,10 @@ $(function() {
 			right: 'month,agendaWeek,agendaDay'
 		},
 		firstDay: 1,
-		monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Nomvembre','Décembre'],
-		monthNamesShort: ['Jan','Fev','Mar','Avr','Mai','Juin','Jui','Aou','Sep','Oct','Nov','Dec'],
-		dayNames: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
-		dayNamesShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],
+		monthNames: monthNames,
+		monthNamesShort: monthNamesShort,
+		dayNames: dayNames,
+		dayNamesShort: dayNamesShort,
 		buttonText: {
 			prev: "<span class='fc-text-arrow'>&lsaquo;</span>",
 			next: "<span class='fc-text-arrow'>&rsaquo;</span>",

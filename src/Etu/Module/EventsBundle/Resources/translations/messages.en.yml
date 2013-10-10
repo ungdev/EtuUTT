@@ -22,6 +22,9 @@ events:
         all: All the events
 
     main:
+        menu:
+            month: Month
+            week: Week
         days:
             mon: Monday
             tue: Tuesday
@@ -30,22 +33,40 @@ events:
             fri: Friday
             sat: Saturday
             sun: Sunday
-        menu:
-            month: Month
-            week: Week
+        daysShort:
+            mon: Mon
+            tue: Tue
+            wed: Wed
+            thu: Thu
+            fri: Fri
+            sat: Sat
+            sun: Sun
         months:
-            jan: january
-            feb: february
-            mar: march
-            apr: april
-            may: may
-            jun: june
-            jul: july
-            aug: august
-            sep: september
-            oct: october
-            nov: november
-            dec: december
+            jan: January
+            feb: February
+            mar: March
+            apr: April
+            may: May
+            jun: June
+            jul: July
+            aug: August
+            sep: September
+            oct: October
+            nov: November
+            dec: December
+        monthsShort:
+            jan: Jan
+            feb: Feb
+            mar: Mar
+            apr: Apr
+            may: May
+            jun: June
+            jul: July
+            aug: Aug
+            sep: Sep
+            oct: Oct
+            nov: Nov
+            dec: Dec
         index:
             title: Events
             meta: Discover the student events at UTT !

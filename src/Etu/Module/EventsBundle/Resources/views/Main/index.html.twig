@@ -28,6 +28,53 @@
 	<script src="{{ asset('fullcalendar/fullcalendar/fullcalendar.js') }}" type="text/javascript"></script>
 	<script type="text/javascript">
 		var source = '{{ path('events_find', {'category': currentCategory}) }}';
+
+		var 	monthNames = [
+					'{{ 'events.main.months.jan'|trans }}',
+					'{{ 'events.main.months.feb'|trans }}',
+					'{{ 'events.main.months.mar'|trans }}',
+					'{{ 'events.main.months.apr'|trans }}',
+					'{{ 'events.main.months.may'|trans }}',
+					'{{ 'events.main.months.jun'|trans }}',
+					'{{ 'events.main.months.jul'|trans }}',
+					'{{ 'events.main.months.aug'|trans }}',
+					'{{ 'events.main.months.sep'|trans }}',
+					'{{ 'events.main.months.oct'|trans }}',
+					'{{ 'events.main.months.nov'|trans }}',
+					'{{ 'events.main.months.dec'|trans }}'
+				],
+				monthNamesShort = [
+					'{{ 'events.main.monthsShort.jan'|trans }}',
+					'{{ 'events.main.monthsShort.feb'|trans }}',
+					'{{ 'events.main.monthsShort.mar'|trans }}',
+					'{{ 'events.main.monthsShort.apr'|trans }}',
+					'{{ 'events.main.monthsShort.may'|trans }}',
+					'{{ 'events.main.monthsShort.jun'|trans }}',
+					'{{ 'events.main.monthsShort.jul'|trans }}',
+					'{{ 'events.main.monthsShort.aug'|trans }}',
+					'{{ 'events.main.monthsShort.sep'|trans }}',
+					'{{ 'events.main.monthsShort.oct'|trans }}',
+					'{{ 'events.main.monthsShort.nov'|trans }}',
+					'{{ 'events.main.monthsShort.dec'|trans }}'
+				],
+				dayNames = [
+					'{{ 'events.main.days.sun'|trans }}',
+					'{{ 'events.main.days.mon'|trans }}',
+					'{{ 'events.main.days.tue'|trans }}',
+					'{{ 'events.main.days.wed'|trans }}',
+					'{{ 'events.main.days.thu'|trans }}',
+					'{{ 'events.main.days.fri'|trans }}',
+					'{{ 'events.main.days.sat'|trans }}'
+				],
+				dayNamesShort = [
+					'{{ 'events.main.daysShort.sun'|trans }}',
+					'{{ 'events.main.daysShort.mon'|trans }}',
+					'{{ 'events.main.daysShort.tue'|trans }}',
+					'{{ 'events.main.daysShort.wed'|trans }}',
+					'{{ 'events.main.daysShort.thu'|trans }}',
+					'{{ 'events.main.daysShort.fri'|trans }}',
+					'{{ 'events.main.daysShort.sat'|trans }}'
+				];
 	</script>
 	<script src="{{ asset('js/bundles/events_public.js') }}" type="text/javascript"></script>
 {% endblock %}
@@ -35,11 +82,11 @@
 {% block content %}
 	<ul class="nav nav-tabs page-tabs">
 		{% for availableCategory in availableCategories %}
-		<li {% if availableCategory == currentCategory %}class="active page-tabs-resolved-active"{% endif %}>
-			<a href="{{ path('events_index', {'category': availableCategory}) }}">
-				{{ ('events.categories.'~availableCategory)|trans }}
-			</a>
-		</li>
+			<li {% if availableCategory == currentCategory %}class="active page-tabs-resolved-active"{% endif %}>
+				<a href="{{ path('events_index', {'category': availableCategory}) }}">
+					{{ ('events.categories.'~availableCategory)|trans }}
+				</a>
+			</li>
 		{% endfor %}
 	</ul>
 

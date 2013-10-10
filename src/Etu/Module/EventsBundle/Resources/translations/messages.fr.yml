@@ -23,6 +23,9 @@ events:
         all: Tous les évènements
 
     main:
+        menu:
+            month: Mois
+            week: Semaine
         days:
             mon: Lundi
             tue: Mardi
@@ -31,9 +34,14 @@ events:
             fri: Vendredi
             sat: Samedi
             sun: Dimanche
-        menu:
-            month: Mois
-            week: Semaine
+        daysShort:
+            mon: Lun
+            tue: Mar
+            wed: Mer
+            thu: Jeu
+            fri: Ven
+            sat: Sam
+            sun: Dim
         months:
             jan: Janvier
             feb: Février
@@ -47,6 +55,19 @@ events:
             oct: Octobre
             nov: Novembre
             dec: Décembre
+        monthsShort:
+            jan: Jan
+            feb: Fév
+            mar: Mars
+            apr: Avril
+            may: Mai
+            jun: Juin
+            jul: Juil
+            aug: Août
+            sep: Sept
+            oct: Oct
+            nov: Nov
+            dec: Déc
         index:
             title: Evènements
             meta: Découvrez les évènements étudiants organisés à l'UTT !
