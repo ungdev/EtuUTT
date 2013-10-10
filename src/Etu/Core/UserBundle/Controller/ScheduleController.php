@@ -135,7 +135,13 @@ class ScheduleController extends Controller
 				continue;
 			}
 
-			$day = new \DateTime('last '.$course->getDay());
+			if ($course->getDay() == Course::DAY_SATHURDAY) {
+				$day = 'saturday';
+			} else {
+				$day = $course->getDay();
+			}
+
+			$day = new \DateTime('last '.$day);
 
 			$start = clone $day;
 			$time = explode(':', $course->getStart());
