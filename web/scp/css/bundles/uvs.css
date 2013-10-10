@@ -1,0 +1,179 @@
+.uvs-category {
+  display: block;
+  float: left;
+  width: 90px;
+  height: 60px;
+  padding: 15px 10px 25px 10px;
+  text-align: center;
+  background: #f5f5f5;
+  margin-left: 15px;
+  margin-bottom: 15px;
+}
+.uvs-category:hover {
+  background: #e5e5e5;
+  text-decoration: none;
+}
+.uvs-category p {
+  font-size: 12px;
+  margin: 10px 0 0 0;
+  padding: 0;
+}
+.uvs-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.uvs-list li {
+  list-style-type: none;
+  margin: 0 0 10px 0;
+  padding: 0;
+}
+.uvs-list a {
+  display: block;
+  background: #f5f5f5;
+  padding: 10px 5px;
+}
+.uvs-list a:hover {
+  background: #e5e5e5;
+  text-decoration: none;
+}
+.uvs-list-half {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.uvs-list-half li {
+  list-style-type: none;
+  margin: 0 10px 10px 0;
+  padding: 0;
+  display: block;
+  float: left;
+  width: 48%;
+}
+.uvs-list-half a {
+  display: block;
+  background: #f5f5f5;
+  padding: 5px 10px 10px 10px;
+  overflow: hidden;
+  height: 18px;
+  line-height: 25px;
+}
+.uvs-list-half a:hover {
+  background: #e5e5e5;
+  text-decoration: none;
+}
+.uvs-list-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin: -1px 10px 0 5px !important;
+  line-height: 16px;
+  vertical-align: text-top;
+}
+.uv-view-category {
+  float: right;
+}
+.uv-view {
+  margin-top: 30px;
+}
+.uv-view .uv-view-infos {
+  background: #f5f5f5;
+  float: left;
+  width: 325px;
+  font-size: 12px;
+}
+.uv-view .uv-view-infos .uv-view-infos-category {
+  clear: both;
+}
+.uv-view .uv-view-infos .uv-view-infos-label,
+.uv-view .uv-view-infos .uv-view-infos-value {
+  float: left;
+  padding: 5px;
+  border-top: 1px solid #e5e5e5;
+}
+.uv-view .uv-view-infos .uv-view-infos-label {
+  width: 185px;
+  text-align: right;
+  font-weight: bold;
+}
+.uv-view .uv-view-infos .uv-view-infos-value {
+  width: 120px;
+}
+.uv-view .uv-view-content {
+  margin-left: 370px;
+}
+.uv-view .uv-view-content h4 {
+  margin-top: 30px;
+}
+.uv-view-reviews {
+  float: left;
+  width: 325px;
+}
+.uv-view-comments {
+  margin-left: 370px;
+}
+.uv-view-comments h4 {
+  margin-top: 33px;
+}
+.uv-view-comment {
+  background: #f5f5f5;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.uv-view-comment-avatar {
+  float: left;
+  max-height: 38px;
+}
+.uv-view-comment-author {
+  font-weight: bold;
+  margin-left: 50px;
+}
+.uv-view-comment-date {
+  font-size: 12px;
+  color: #999;
+  margin-left: 50px;
+}
+.uv-view-comment-content {
+  margin-top: 15px;
+}
+.uv-view-reviews-semester {
+  margin-bottom: 15px;
+}
+.uv-view-reviews-reviews-validated,
+.uv-view-reviews-reviews-pending {
+  display: none;
+}
+.uv-view-reviews-reviews-validated a,
+.uv-view-reviews-reviews-pending a {
+  display: block;
+  padding: 5px 10px;
+  text-decoration: none;
+}
+.uv-view-reviews-reviews-validated a:hover,
+.uv-view-reviews-reviews-pending a:hover {
+  text-decoration: underline;
+}
+.uv-view-reviews-reviews-validated small,
+.uv-view-reviews-reviews-pending small {
+  display: block;
+  padding: 5px 10px;
+}
+.uv-view-reviews-semester-first .uv-view-reviews-reviews-validated,
+.uv-view-reviews-semester-first .uv-view-reviews-reviews-pending {
+  display: block !important;
+}
+.uv-view-reviews-count {
+  margin-top: 8px;
+}
+.uv-view-reviews-reviews-validated {
+  color: #468847;
+  background-color: #dff0d8;
+  border-top: 1px solid #d6e9c6;
+  margin-bottom: 5px;
+}
+.uv-view-reviews-reviews-pending {
+  color: #b94a48;
+  background-color: #f2dede;
+  border-top: 1px solid #eed3d7;
+  margin-bottom: 5px;
+}

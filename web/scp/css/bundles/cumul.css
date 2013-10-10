@@ -1,0 +1,71 @@
+.cumul-students {
+  padding-top: 25px;
+  border-right: 1px solid #f5f5f5;
+}
+.cumul-students-warning {
+  text-align: center;
+  padding-right: 20px;
+}
+.cumul-students-count {
+  padding-right: 20px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 15px;
+}
+.cumul-students-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.cumul-students-list li {
+  margin: 0;
+  padding: 7px 10px;
+}
+.cumul-students-list li:hover {
+  background: #eee;
+}
+.cumul-student-color {
+  display: block;
+  float: left;
+  width: 10px;
+  height: 10px;
+  margin-top: 5px;
+  margin-right: 7px;
+}
+.cumul-student-remove {
+  float: right;
+  padding: 0 3px;
+}
+.cumul-student-remove:hover {
+  background: white;
+}
+.cumul-day {
+  border-right: 3px solid #222;
+}
+.student-a {
+  background: #6e97b9;
+}
+.student-b {
+  background: #1691BE;
+}
+.student-c {
+  background: #166BA2;
+}
+.student-d {
+  background: #1B3647;
+}
+.student-e {
+  background: #E9931A;
+}
+.item-not-weekly {
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0.5, rgba(255, 255, 255, 0.1)), color-stop(0.5, transparent), to(transparent)) !important;
+  background-image: -moz-linear-gradient(rgba(255, 255, 255, 0.1) 50%, transparent 50%, transparent) !important;
+  background-image: -o-linear-gradient(rgba(255, 255, 255, 0.1) 50%, transparent 50%, transparent) !important;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.1) 50%, transparent 50%, transparent) !important;
+  -webkit-background-size: 20px 20px !important;
+  -moz-background-size: 20px 20px !important;
+  background-size: 20px 20px !important;
+}
+.schedule .day {
+  border-right: 3px solid #fff;
+}

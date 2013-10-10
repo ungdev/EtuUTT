@@ -2,13 +2,11 @@
 
 namespace Etu\Core\UserBundle\Api\Resource;
 
-use Etu\Api\Framework\Resource;
-use Etu\Api\Http\Response;
-use Etu\Api\Sorting;
+use Etu\Core\CoreBundle\Framework\Api\Definition\Resource;
 
 // Annotations
-use Etu\Api\Annotations as Api;
 use Swagger\Annotations as SWG;
+use Etu\Api\Annotations as Api;
 
 /**
  * @SWG\Resource(resourcePath="users")

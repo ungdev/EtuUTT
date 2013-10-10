@@ -1,0 +1,47 @@
+.trombi-search-box {
+  background: #fafafa;
+  border-bottom: 1px dashed #e5e5e5;
+  padding: 10px 20px;
+}
+.trombi-search-submit {
+  text-align: center;
+  padding: 5px;
+}
+.trombi-search-explainations {
+  text-align: center;
+  margin-top: 40px;
+  font-style: italic;
+}
+.trombi-search-results ul {
+  padding: 0;
+  margin: 20px;
+}
+.trombi-search-results li {
+  display: block;
+  float: left;
+  width: 45%;
+  padding: 0;
+  margin: 2%;
+  list-style-type: none;
+}
+.trombi-search-results-item a {
+  display: block;
+  padding: 10px;
+  border: 1px solid #e5e5e5;
+}
+.trombi-search-results-item a:hover {
+  background: #f5f5f5;
+  text-decoration: none;
+}
+.trombi-search-results-item a h5,
+.trombi-search-results-item a p {
+  margin: 0;
+  margin-left: 105px;
+  padding: 0;
+}
+.trombi-search-results-item img {
+  float: left;
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+}

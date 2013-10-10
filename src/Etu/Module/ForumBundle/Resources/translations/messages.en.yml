@@ -11,6 +11,7 @@ forum:
             nbMessages: Messages
             lastMessage: Last message
             noMessage: There are no messages in this category.
+            new: New
         thread:
             thread: Thread
             in: In

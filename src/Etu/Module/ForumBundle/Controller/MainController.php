@@ -14,6 +14,7 @@ use Etu\Module\ForumBundle\Entity\Category;
 use Etu\Module\ForumBundle\Entity\Thread;
 use Etu\Module\ForumBundle\Entity\Message;
 use Etu\Module\ForumBundle\Entity\View;
+use Etu\Module\ForumBundle\Entity\CategoryView;
 use Etu\Module\ForumBundle\Form\ThreadType;
 use Etu\Module\ForumBundle\Form\ThreadTypeNoSticky;
 use Etu\Module\ForumBundle\Form\MessageEditType;
@@ -36,8 +37,10 @@ class MainController extends Controller
 
 		$em = $this->getDoctrine()->getManager();
 		$categories = $em->createQueryBuilder()
-			->select('c')
+			->select('c, v')
 			->from('EtuModuleForumBundle:Category', 'c')
+			->leftJoin('c.categoryViewed', 'v', 'WITH', 'v.user = :user')
+			->setParameter('user', $this->getUser())
 			->where('c.depth <= 1')
 			->orderBy('c.left')
 			->getQuery()
@@ -81,14 +84,16 @@ class MainController extends Controller
 		$depth = count($parents)+1;
 
 		$subCategories = $em->createQueryBuilder()
-			->select('c')
+			->select('c, v')
 			->from('EtuModuleForumBundle:Category', 'c')
+			->leftJoin('c.categoryViewed', 'v', 'WITH', 'v.user = :user')
 			->where('c.left > :left')
 			->andWhere('c.right < :right')
 			->andWhere('c.depth = :depth')
 			->setParameter('left', $category->getLeft())
 			->setParameter('right', $category->getRight())
 			->setParameter('depth', $depth)
+			->setParameter('user', $this->getUser())
 			->orderBy('c.left')
 			->getQuery()
 			->getResult();
@@ -114,6 +119,24 @@ class MainController extends Controller
 
 		$isSubCategories = false;
 		if(count($subCategories) > 0) $isSubCategories = true;
+		
+		$views = $em->createQueryBuilder()
+			->select('v')
+			->from('EtuModuleForumBundle:CategoryView', 'v')
+			->where('v.category = :category')
+			->setParameter('category', $category)
+			->andWhere('v.user = :user')
+			->setParameter('user', $this->getUser())
+			->getQuery()
+			->getResult();
+
+		if($this->getUser() && count($views) == 0) {
+			$viewed = new CategoryView();
+			$viewed->setUser($this->getUser())
+				->setCategory($category);
+			$em->persist($viewed);
+			$em->flush();
+		}
 
 		return array('category' => $category, 'subCategories' => $subCategories, 'parents' => $parents, 'threads' => $threads, 'noThreads' => $noThreads, 'isSubCategories' => $isSubCategories);
 	}
@@ -258,6 +281,13 @@ class MainController extends Controller
 				}
 
 				$em->persist($thread);
+				
+				$cviews = $em->getRepository('EtuModuleForumBundle:CategoryView')
+					->findByCategory($category);
+				foreach($cviews as $cview) {
+					$em->remove($cview);
+				}
+				
 				$em->flush();
 
 				$this->giveBadges();
@@ -332,6 +362,11 @@ class MainController extends Controller
 					->findByThread($thread);
 				foreach($views as $view) {
 					$em->remove($view);
+				}
+				$cviews = $em->getRepository('EtuModuleForumBundle:CategoryView')
+					->findByCategory($category);
+				foreach($cviews as $cview) {
+					$em->remove($cview);
 				}
 				$em->flush();
 
@@ -696,63 +731,64 @@ class MainController extends Controller
 
 	private function giveBadges()
 	{
+		$user = $this->getUser();
 		$em = $this->getDoctrine()->getManager();
 		$threads = $em->createQueryBuilder()
 			->select('t')
 			->from('EtuModuleForumBundle:Thread', 't')
 			->where('t.author = :user')
-			->setParameter('user', $this->getUser())
+			->setParameter('user', $user)
 			->getQuery()
 			->getResult();
 
 		$nbThreads = count($threads);
 		
 		if($nbThreads >= 1) {
-			BadgesManager::userAddBadge($this->getUser(), 'mysterion', 1);
-			BadgesManager::userPersistBadges($this->getUser());
+			BadgesManager::userAddBadge($user, 'mysterion', 1);
+			BadgesManager::userPersistBadges($user);
 		}
 		if($nbThreads >= 10) {
-			BadgesManager::userAddBadge($this->getUser(), 'mysterion', 2);
-			BadgesManager::userPersistBadges($this->getUser());
+			BadgesManager::userAddBadge($user, 'mysterion', 2);
+			BadgesManager::userPersistBadges($user);
 		}
 		if($nbThreads >= 20) {
-			BadgesManager::userAddBadge($this->getUser(), 'mysterion', 3);
-			BadgesManager::userPersistBadges($this->getUser());
+			BadgesManager::userAddBadge($user, 'mysterion', 3);
+			BadgesManager::userPersistBadges($user);
 		}
 		if($nbThreads >= 40) {
-			BadgesManager::userAddBadge($this->getUser(), 'mysterion', 4);
-			BadgesManager::userPersistBadges($this->getUser());
+			BadgesManager::userAddBadge($user, 'mysterion', 4);
+			BadgesManager::userPersistBadges($user);
 		}
 		
 		$messages = $em->createQueryBuilder()
 			->select('m')
 			->from('EtuModuleForumBundle:Message', 'm')
 			->where('m.author = :user')
-			->setParameter('user', $this->getUser())
+			->setParameter('user', $user)
 			->getQuery()
 			->getResult();
 
 		$nbMessages = count($messages);
 
 		if($nbMessages >= 1) {
-			BadgesManager::userAddBadge($this->getUser(), 'monkey', 1);
-			BadgesManager::userPersistBadges($this->getUser());
+			BadgesManager::userAddBadge($user, 'monkey', 1);
+			BadgesManager::userPersistBadges($user);
 		}
 		if($nbMessages >= 20) {
-			BadgesManager::userAddBadge($this->getUser(), 'monkey', 2);
-			BadgesManager::userPersistBadges($this->getUser());
+			BadgesManager::userAddBadge($user, 'monkey', 2);
+			BadgesManager::userPersistBadges($user);
 		}
 		if($nbMessages >= 50) {
-			BadgesManager::userAddBadge($this->getUser(), 'monkey', 3);
-			BadgesManager::userPersistBadges($this->getUser());
+			BadgesManager::userAddBadge($user, 'monkey', 3);
+			BadgesManager::userPersistBadges($user);
 		}
 		if($nbMessages >= 100) {
-			BadgesManager::userAddBadge($this->getUser(), 'monkey', 4);
-			BadgesManager::userPersistBadges($this->getUser());
+			BadgesManager::userAddBadge($user, 'monkey', 4);
+			BadgesManager::userPersistBadges($user);
 		}
 		if($nbMessages >= 500) {
-			BadgesManager::userAddBadge($this->getUser(), 'monkey', 5);
-			BadgesManager::userPersistBadges($this->getUser());
+			BadgesManager::userAddBadge($user, 'monkey', 5);
+			BadgesManager::userPersistBadges($user);
 		}
 	}
 

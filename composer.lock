@@ -125,16 +125,16 @@
         },
         {
             "name": "doctrine/cache",
-            "version": "v1.1",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "2c9761ff1d13e188d5f7378066c1ce2882d7a336"
+                "reference": "d0e4447707a064a5814b18cb0dcc2f24185f6179"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/2c9761ff1d13e188d5f7378066c1ce2882d7a336",
-                "reference": "2c9761ff1d13e188d5f7378066c1ce2882d7a336",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/d0e4447707a064a5814b18cb0dcc2f24185f6179",
+                "reference": "d0e4447707a064a5814b18cb0dcc2f24185f6179",
                 "shasum": ""
             },
             "require": {
@@ -190,7 +190,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2013-08-07 16:04:25"
+            "time": "2013-09-26 19:23:25"
         },
         {
             "name": "doctrine/collections",
@@ -1308,12 +1308,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpPaginatorBundle.git",
-                "reference": "ce6b7b36d3bed5cb6bfb9645018dd407395fce15"
+                "reference": "769b83d01b3f76b011522599bd48e5e202d94ff4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpPaginatorBundle/zipball/ce6b7b36d3bed5cb6bfb9645018dd407395fce15",
-                "reference": "ce6b7b36d3bed5cb6bfb9645018dd407395fce15",
+                "url": "https://api.github.com/repos/KnpLabs/KnpPaginatorBundle/zipball/769b83d01b3f76b011522599bd48e5e202d94ff4",
+                "reference": "769b83d01b3f76b011522599bd48e5e202d94ff4",
                 "shasum": ""
             },
             "require": {
@@ -1358,7 +1358,7 @@
                 "pagination",
                 "paginator"
             ],
-            "time": "2013-07-30 20:36:09"
+            "time": "2013-09-23 09:04:09"
         },
         {
             "name": "knplabs/knp-time-bundle",
@@ -1492,16 +1492,16 @@
         },
         {
             "name": "mjohnson/decoda",
-            "version": "6.2.2",
+            "version": "6.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/milesj/decoda.git",
-                "reference": "2890ba822dcafc6ad0c5c106700dad905fbb24f3"
+                "reference": "05025d629589831e3b9e07554d16396fcc9e6e1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/milesj/decoda/zipball/2890ba822dcafc6ad0c5c106700dad905fbb24f3",
-                "reference": "2890ba822dcafc6ad0c5c106700dad905fbb24f3",
+                "url": "https://api.github.com/repos/milesj/decoda/zipball/05025d629589831e3b9e07554d16396fcc9e6e1f",
+                "reference": "05025d629589831e3b9e07554d16396fcc9e6e1f",
                 "shasum": ""
             },
             "require": {
@@ -1534,7 +1534,7 @@
                 "markup",
                 "parser"
             ],
-            "time": "2013-08-11 20:00:55"
+            "time": "2013-09-26 04:47:38"
         },
         {
             "name": "monolog/monolog",
@@ -2167,16 +2167,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.3.4",
+            "version": "v2.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "4fb225f4e315c11aa6d8935b1c0ceaf48ba39f1f"
+                "reference": "aa5626cd2a359567c948ebdeeca68d948640302f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/4fb225f4e315c11aa6d8935b1c0ceaf48ba39f1f",
-                "reference": "4fb225f4e315c11aa6d8935b1c0ceaf48ba39f1f",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/aa5626cd2a359567c948ebdeeca68d948640302f",
+                "reference": "aa5626cd2a359567c948ebdeeca68d948640302f",
                 "shasum": ""
             },
             "require": {
@@ -2271,7 +2271,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2013-08-27 08:58:24"
+            "time": "2013-09-27 07:31:40"
         },
         {
             "name": "tedivm/jshrink",

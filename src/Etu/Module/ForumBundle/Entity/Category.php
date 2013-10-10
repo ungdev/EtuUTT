@@ -88,6 +88,11 @@ class Category
 	 */
 	protected $permissions;
 
+	/**
+	 * @ORM\OneToMany(targetEntity="\Etu\Module\ForumBundle\Entity\CategoryView", mappedBy="category")
+	 */
+	protected $categoryViewed;
+
 
 	/**
 	 * Constructor
@@ -294,5 +299,13 @@ class Category
 	public function getPermissions()
 	{
 		return $this->permissions;
+	}
+	
+	/**
+	 * @return CategoryView
+	 */
+	public function getCategoryViewed()
+	{
+		return $this->categoryViewed;
 	}
 }

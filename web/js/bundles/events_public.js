@@ -1,4 +1,3 @@
-
 var calendar = $('#calendar'),
 	loader = $('#loader');
 
