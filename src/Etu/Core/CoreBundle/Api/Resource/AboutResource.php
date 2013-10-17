@@ -3,9 +3,6 @@
 namespace Etu\Core\CoreBundle\Api\Resource;
 
 use Etu\Core\CoreBundle\Framework\Api\Definition\Resource;
-use Etu\Core\CoreBundle\Framework\Api\Security\SecurityToken;
-use Etu\Core\CoreBundle\Framework\Api\Security\Token\TokenInterface;
-
 use Etu\Module\ApiBundle\Entity\ApplicationToken;
 use Etu\Module\ApiBundle\Entity\UserToken;
 

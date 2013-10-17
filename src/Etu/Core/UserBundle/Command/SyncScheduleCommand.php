@@ -23,7 +23,6 @@ class SyncScheduleCommand extends ContainerAwareCommand
 		$this
 			->setName('etu:users:sync-schedule')
 			->setDescription('Synchronize officials schedules with database schedules.')
-			->addOption('force', 'f', InputOption::VALUE_NONE, 'Force to re-downlaod files')
 		;
 	}
 
@@ -41,9 +40,6 @@ class SyncScheduleCommand extends ContainerAwareCommand
 	Welcome to the EtuUTT schedules manager
 
 This command helps you to synchronise database\'s with officials schedules.
-
-By default, the command will use cached version of schedules. If you want to
-re-download schedules, use --force or -f.
 ');
 
 		$output->writeln("\nGetting officials schedules ...");
@@ -57,41 +53,27 @@ re-download schedules, use --force or -f.
 
 		$scheduleApi = new ScheduleApi();
 
-		$content = array();
-		$readingFromCacheWritten = false;
+		$output->writeln('Requesting CRI API ('.CriBrowser::ROOT_URL.') ...');
 
-		if ($input->getOption('force')) {
-			$output->writeln('Requesting CRI API ('.CriBrowser::ROOT_URL.') ...');
-		} else {
-			$output->writeln('Reading from cache ...');
-		}
+		$pageContent = $scheduleApi->findPage(1);
+		$content = $pageContent['courses'];
 
-		$bar = new ProgressBar('%fraction% [%bar%] %percent%', '=>', ' ', 80, 445);
-		$bar->update(0);
+		$bar = new ProgressBar('%fraction% [%bar%] %percent%', '=>', ' ', 80, $pageContent['paging']->totalPages);
+		$bar->update(1);
 
-		for ($page = 1; true; $page++) {
-			if (! file_exists($tempDirectory.'/schedules/page-'.$page.'.temp') || $input->getOption('force')) {
-				// Requesting CRI API
+		for ($page = 2; true; $page++) {
+			$pageContent = $scheduleApi->findPage($page);
+			$courses = $pageContent['courses'];
 
-				$pageContent = $scheduleApi->findPage($page);
-				$readingFromCacheWritten = false;
-
-				file_put_contents($tempDirectory.'/schedules/page-'.$page.'.temp', serialize($pageContent));
-			} else {
-				$pageContent = unserialize(file_get_contents($tempDirectory.'/schedules/page-'.$page.'.temp'));
-			}
-
-			if (empty($pageContent)) {
+			if (empty($courses)) {
 				break;
 			}
 
 			/** @var $content Course[] */
-			$content = array_merge($content, $pageContent);
+			$content = array_merge($content, $courses);
 
 			$bar->update($page);
 		}
-
-		$bar->update(445);
 
 		$output->writeln('Loading users from database ...');
 

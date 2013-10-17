@@ -75,7 +75,7 @@ class UsersSearchResource extends Resource
 		));
 
 		if ($orderBy === false) {
-			return Response::error(Response::NOT_ACCEPTABLE, 'Invalid sort expression');
+			return $this->getResponseBuilder()->createErrorResponse(500, 'Invalid sort expression');
 		}
 
 		if (empty($orderBy)) {
