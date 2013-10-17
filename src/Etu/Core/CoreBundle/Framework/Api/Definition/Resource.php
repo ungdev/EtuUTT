@@ -3,7 +3,7 @@
 namespace Etu\Core\CoreBundle\Framework\Api\Definition;
 
 use Etu\Core\CoreBundle\Framework\Api\Security\AuthenticationProxy;
-use Etu\Api\Framework\Resource as BaseResource;
+use Tga\Api\Framework\HttpKernel\Definition\Resource as BaseResource;
 
 class Resource extends BaseResource
 {

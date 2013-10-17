@@ -18,7 +18,7 @@ require __DIR__.'/../../api/bootstrap.php';
 // Boot the Kernel, handle the request and terminate the proccess
 use Symfony\Component\HttpFoundation\Request;
 
-$kernel = new ApiKernel('prod', false);
+$kernel = new ApiKernel('dev', true);
 
 $kernel
 	->boot()

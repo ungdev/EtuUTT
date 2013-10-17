@@ -8,6 +8,7 @@
 /app/bootstrap.php.cache
 /app/config/parameters.yml
 /app/cache/*
+/api/cache/*
 /app/logs/*
 /build/
 /vendor/
@@ -18,6 +19,7 @@
 objects/*
 temp/*
 *.php~
+composer.lock
 
 # Compiled source #
 ###################

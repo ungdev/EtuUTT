@@ -6,7 +6,7 @@ use Etu\Core\CoreBundle\Framework\Api\Definition\Resource;
 
 // Annotations
 use Swagger\Annotations as SWG;
-use Etu\Api\Annotations as Api;
+use Tga\Api\Framework\Annotations as Api;
 
 /**
  * @SWG\Resource(resourcePath="users")

@@ -1,12 +1,13 @@
 <?php
 
-define('__API__', __DIR__);
-define('__APP__', __API__.'/..');
+/**
+ * This file is the bootstrap file: it load the kernel, handle the request using it and terminate the
+ * process. You should NOT use it directly, you should use the index.php file that include it, to
+ * avoid access to your code.
+ */
 
-require __APP__ . '/vendor/autoload.php';
+define('__API__', dirname(__DIR__));
 
-$kernel = new \Etu\Api\Kernel(true);
-$kernel->boot();
-
-$kernel->handle(\Symfony\Component\HttpFoundation\Request::createFromGlobals())
-	->send();
+// Load dependencies
+require __DIR__.'/../vendor/autoload.php';
+require 'ApiKernel.php';
