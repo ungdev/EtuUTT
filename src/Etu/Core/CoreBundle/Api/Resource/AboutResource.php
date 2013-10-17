@@ -3,26 +3,17 @@
 namespace Etu\Core\CoreBundle\Api\Resource;
 
 use Etu\Core\CoreBundle\Framework\Api\Definition\Resource;
-<<<<<<< HEAD
-use Etu\Module\ApiBundle\Entity\ApplicationToken;
-use Etu\Module\ApiBundle\Entity\UserToken;
-
-=======
 use Etu\Core\CoreBundle\Framework\Api\Security\SecurityToken;
-
 use Etu\Core\CoreBundle\Framework\Api\Security\Token\TokenInterface;
+
 use Etu\Module\ApiBundle\Entity\ApplicationToken;
 use Etu\Module\ApiBundle\Entity\UserToken;
->>>>>>> 10.1
+
 use Symfony\Component\HttpFoundation\Request;
 
 // Annotations
 use Swagger\Annotations as SWG;
-<<<<<<< HEAD
-use Etu\Api\Annotations as Api;
-=======
 use Tga\Api\Framework\Annotations as Api;
->>>>>>> 10.1
 
 /**
  * @SWG\Resource(resourcePath="about")
