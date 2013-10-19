@@ -5,7 +5,6 @@
     #    RewriteBase /
     #</IfModule>
 
-    RewriteCond $1 !^(wiki/|api/)
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(.*)$ etu_dev.php [QSA,L]
+    RewriteRule ^(.*)$ app.php [QSA,L]
 </IfModule>

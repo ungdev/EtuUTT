@@ -1,7 +1,10 @@
 
 parameters:
     response_format_listener.class: Etu\Core\CoreBundle\Framework\Api\Listener\ResponseFormatListener
-    security_proxy.class: Etu\Core\CoreBundle\Framework\Api\Security\AuthenticationProxy
+
+    security.authentication_proxy.class: Etu\Core\CoreBundle\Framework\Api\Security\AuthenticationProxy
+    security.authorization_proxy.class: Etu\Core\CoreBundle\Framework\Api\Security\AuthorizationProxy
+    security.exceptions_listener.class: Etu\Core\CoreBundle\Framework\Api\Listener\InvalidTokenListener
 
 services:
     response_format_listener:
@@ -9,8 +12,17 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
-    security_proxy:
-        class: %security_proxy.class%
-        arguments: [@doctrine]
+    security.authentication_proxy:
+        class: %security.authentication_proxy.class%
+        arguments: [@doctrine, @cache]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    security.authorization_proxy:
+        class: %security.authorization_proxy.class%
+        arguments: [@security.authentication_proxy]
+
+    security.exceptions_listener:
+        class: %security.exceptions_listener.class%
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }

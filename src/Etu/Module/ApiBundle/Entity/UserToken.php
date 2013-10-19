@@ -24,6 +24,14 @@ class UserToken implements UserTokenInterface
 	protected $id;
 
 	/**
+	 * @var ApplicationToken $application
+	 *
+	 * @ORM\ManyToOne(targetEntity="\Etu\Module\ApiBundle\Entity\ApplicationToken")
+	 * @ORM\JoinColumn()
+	 */
+	protected $application;
+
+	/**
 	 * @var User $user
 	 *
 	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
@@ -171,7 +179,7 @@ class UserToken implements UserTokenInterface
      * @param \Etu\Core\UserBundle\Entity\User $user
      * @return UserToken
      */
-    public function setUser(\Etu\Core\UserBundle\Entity\User $user = null)
+    public function setUser($user = null)
     {
         $this->user = $user;
 
@@ -186,5 +194,28 @@ class UserToken implements UserTokenInterface
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set application
+     *
+     * @param \Etu\Module\ApiBundle\Entity\ApplicationToken $application
+     * @return UserToken
+     */
+    public function setApplication($application = null)
+    {
+        $this->application = $application;
+
+        return $this;
+    }
+
+    /**
+     * Get application
+     *
+     * @return \Etu\Module\ApiBundle\Entity\ApplicationToken
+     */
+    public function getApplication()
+    {
+        return $this->application;
     }
 }

@@ -3,14 +3,12 @@
 namespace Etu\Core\UserBundle\Api\Resource;
 
 use Etu\Core\CoreBundle\Framework\Api\Definition\Resource;
+use Etu\Core\CoreBundle\Framework\Api\Util\SortingExpression;
 
 // Annotations
-use Swagger\Annotations as SWG;
 use Tga\Api\Framework\Annotations as Api;
 
 /**
- * @SWG\Resource(resourcePath="users")
- *
  * @Api\Resource(
  *      "/users/search/{term}/{sortExpression}/{page}",
  *      defaults={"sortExpression"="lastname:asc,firstname:asc", "page"=1}
@@ -19,58 +17,14 @@ use Tga\Api\Framework\Annotations as Api;
 class UsersSearchResource extends Resource
 {
 	/**
-	 * @SWG\Api(
-	 *      path="/users/search/{term}/{sortExpression}/{page}",
-	 *      description="Operations about users",
-	 *      @SWG\Operations(
-	 *          @SWG\Operation(
-	 *              httpMethod="GET",
-	 *              summary="Search users",
-	 *              notes="Return a paginated list of all the users using a sorting expression matching given contraints",
-	 *              responseClass="User",
-	 *              nickname="findUsers",
-	 *
-	 *              @SWG\Parameters(
-	 *                  @SWG\Parameter(
-	 *                      name="term",
-	 *                      description="Term to search",
-	 *                      paramType="path",
-	 *                      required="true",
-	 *                      allowMultiple="false",
-	 *                      dataType="string"
-	 *                  )
-	 *              ),
-	 *              @SWG\Parameters(
-	 *                  @SWG\Parameter(
-	 *                      name="sortExpression",
-	 *                      description="Expression to sort users. See documentation about SortingExpressions.",
-	 *                      paramType="path",
-	 *                      required="false",
-	 *                      allowMultiple="false",
-	 *                      defaultValue="lastname:asc,firstname:asc",
-	 *                      dataType="string"
-	 *                  )
-	 *              ),
-	 *              @SWG\Parameters(
-	 *                  @SWG\Parameter(
-	 *                      name="page",
-	 *                      description="Page number",
-	 *                      paramType="path",
-	 *                      required="false",
-	 *                      allowMultiple="false",
-	 *                      defaultValue="1",
-	 *                      dataType="int"
-	 *                  )
-	 *              )
-	 *          )
-	 *      )
-	 * )
-	 *
 	 * @Api\Operation(method="GET")
 	 */
 	public function getOperation($term, $sortExpression, $page)
 	{
-		$orderBy = Sorting\Expression::getOrderBy($sortExpression, array(
+		$this->getAuthorizationProxy()->needAppToken();
+		$this->getAuthorizationProxy()->needUserToken();
+
+		$orderBy = SortingExpression::getOrderBy($sortExpression, array(
 			'firstname', 'lastname', 'fullname', 'level'
 		));
 
@@ -85,45 +39,40 @@ class UsersSearchResource extends Resource
 
 		$term = '%'.trim(str_replace(' ', '%', $term), '%').'%';
 
-		if ($this->getCache()->contains('etuutt_api_users_search_'.$term.'_'.$sortExpression.'_'.$page)) {
-			$cache = $this->getCache()->fetch('etuutt_api_users_search_'.$term.'_'.$sortExpression.'_'.$page);
-			$count = $cache['count'];
-			$users = $cache['users'];
-		} else {
-			$count = $this->getDoctrine()->createQueryBuilder()
-				->select('COUNT(*) AS count')
-				->from('etu_users', 'u')
-				->where('u.fullName LIKE :term')
-				->setParameter('term', $term)
-				->execute()
-				->fetch();
+		$count = $this->getDoctrine()->createQueryBuilder()
+			->select('COUNT(*) AS count')
+			->from('etu_users', 'u')
+			->where('u.login LIKE :term')
+			->orWhere('u.fullName LIKE :term')
+			->setParameter('term', $term)
+			->execute()
+			->fetch();
 
-			$results = $this->getDoctrine()->createQueryBuilder()
-				->select('
-					u.id, u.login, u.studentId, u.mail, u.firstName, u.lastName, u.fullName, u.formation,
+		$results = $this->getDoctrine()->createQueryBuilder()
+			->select('
+					u.login, u.studentId, u.mail, u.firstName, u.lastName, u.fullName, u.formation,
 					u.niveau AS level, u.branch, u.filiere AS speciality, u.isStudent, u.avatar AS picture,
 					u.website, u.facebook, u.twitter, u.linkedin, u.viadeo
 				')
-				->from('etu_users', 'u')
-				->where('u.fullName LIKE :term')
-				->setParameter('term', $term)
-				->setFirstResult(($page - 1) * 20)
-				->setMaxResults(20)
-				->execute()
-				->fetchAll();
+			->from('etu_users', 'u')
+			->where('u.login LIKE :term')
+			->orWhere('u.fullName LIKE :term')
+			->setParameter('term', $term)
+			->setFirstResult(($page - 1) * 20)
+			->setMaxResults(20)
+			->execute()
+			->fetchAll();
 
-			$users = array();
+		$users = array();
 
-			foreach ($results as $user) {
-				$users[$user['login']] = $user;
-				$users[$user['login']]['isStudent'] = (bool) $user['isStudent'];
-				$users[$user['login']]['formation'] = ($user['formation'] == 'Nc') ? null : $user['formation'];
-			}
+		foreach ($results as $user) {
+			$users[$user['login']] = $user;
+			$users[$user['login']]['isStudent'] = (bool) $user['isStudent'];
+			$users[$user['login']]['formation'] = ($user['formation'] == 'Nc') ? null : $user['formation'];
 
-			$this->getCache()->save('etuutt_api_users_search_'.$term.'_'.$sortExpression.'_'.$page, array(
-				'count' => $count,
-				'users' => $users,
-			), 3600);
+			$users[$user['login']]['resources'] = array(
+				'view' => 'https://etu.utt.fr/api/users/galopint'
+			);
 		}
 
 		$totalItems = (int) $count['count'];
