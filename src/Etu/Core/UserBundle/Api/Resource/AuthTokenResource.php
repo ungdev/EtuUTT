@@ -10,7 +10,7 @@ use Goutte\Client;
 use Tga\Api\Framework\Annotations as Api;
 
 /**
- * @Api\Resource("/user/token")
+ * @Api\Resource("/auth/token")
  */
 class UserTokenResource extends Resource
 {

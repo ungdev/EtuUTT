@@ -3,20 +3,20 @@
 namespace Etu\Core\UserBundle\Api\Resource;
 
 use Etu\Core\CoreBundle\Framework\Api\Definition\Resource;
+use Etu\Core\CoreBundle\Framework\Api\Model\User;
 
 // Annotations
-use Etu\Core\CoreBundle\Framework\Api\Model\User;
 use Tga\Api\Framework\Annotations as Api;
 
 /**
- * @Api\Resource("/user/me")
+ * @Api\Resource("/users/{login}", requirements={"login" = "[a-z0-9_-]+"})
  */
-class UserMeResource extends Resource
+class UserViewResource extends Resource
 {
 	/**
 	 * @Api\Operation(method="GET")
 	 */
-	public function getOperation()
+	public function getOperation($login)
 	{
 		$this->getAuthorizationProxy()->needAppToken();
 		$this->getAuthorizationProxy()->needUserToken();

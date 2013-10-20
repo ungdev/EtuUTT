@@ -20,10 +20,8 @@ class ResponseFormatListener
 		$query = $event->getRequest()->query;
 		$headers = $event->getRequest()->headers;
 
-		if ($query->has('format')) {
-			if ($query->get('format') == 'xml') {
-				$responseBuilder->setDumper($container->get('response.dumper.xml'));
-			}
+		if ($query->has('format') && $query->get('format') == 'xml') {
+			$responseBuilder->setDumper($container->get('response.dumper.xml'));
 		} else {
 			if ($headers->has('Accept')) {
 				if ($headers->get('Accept') == 'application/xml') {

@@ -6,8 +6,9 @@ class User
 {
 	/**
 	 * @param $data
+	 * @param $currentPrivacy
 	 */
-	public function __construct($data)
+	public function __construct($data, $currentPrivacy = \Etu\Core\UserBundle\Entity\User::PRIVACY_PUBLIC)
 	{
 		foreach ($data as $key => $value) {
 			if (in_array($key, array(
@@ -22,6 +23,54 @@ class User
 				$value = unserialize($value);
 			}
 
+			$data[$key] = $value;
+		}
+
+		if (isset($data['formation'])) {
+			$data['formation'] = ($data['formation'] == 'Nc') ? null : $data['formation'];
+		}
+
+		/*
+		 * Privacy
+		 */
+		$privacy = array(
+			'phoneNumber'   => 'phoneNumberPrivacy',
+			'sex'           => 'sexPrivacy',
+			'nationality'   => 'nationalityPrivacy',
+			'adress'        => 'adressPrivacy',
+			'postalCode'    => 'postalCodePrivacy',
+			'city'          => 'cityPrivacy',
+			'country'       => 'countryPrivacy',
+			'birthday'      => 'birthdayPrivacy',
+			'personnalMail' => 'personnalMailPrivacy',
+		);
+
+		$birthday = \DateTime::createFromFormat('Y-m-d', $data['birthday']);
+
+		if ($birthday) {
+			$data['age'] = $birthday->diff(new \DateTime())->y;
+		} else {
+			$data['age'] = null;
+		}
+
+		if (! $data['birthdayDisplayOnlyAge'] &&
+			$data['birthdayPrivacy'] >= \Etu\Core\UserBundle\Entity\User::PRIVACY_PRIVATE) {
+			$data['age'] = null;
+		}
+
+		foreach ($data as $key => $value) {
+			if (isset($privacy[$key])) {
+				if (! isset($data[$privacy[$key]])) {
+					$data[$key] = null;
+				} else {
+					if ($data[$privacy[$key]] > $currentPrivacy) {
+						$data[$key] = null;
+					}
+				}
+			}
+		}
+
+		foreach ($data as $key => $value) {
 			$this->$key = $value;
 		}
 	}
