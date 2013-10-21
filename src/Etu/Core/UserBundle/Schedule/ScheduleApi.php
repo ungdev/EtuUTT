@@ -24,23 +24,6 @@ class ScheduleApi
 	}
 
 	/**
-	 * @param integer $studentId
-	 * @return bool
-	 */
-	public function findScheduleByStudentId($studentId)
-	{
-		$result = json_decode($this->browser->request(array('etu_id' => $studentId)));
-
-		$courses = array();
-
-		foreach ($result->content as $values) {
-			$courses[] = new Course($values);
-		}
-
-		return $courses;
-	}
-
-	/**
 	 * @param integer $page
 	 * @return bool
 	 */
@@ -50,10 +33,13 @@ class ScheduleApi
 
 		$courses = array();
 
-		foreach ($result->content as $values) {
+		foreach ($result->body->courses as $values) {
 			$courses[] = new Course($values);
 		}
 
-		return $courses;
+		return array(
+			'paging' => $result->body->paging,
+			'courses' => $courses,
+		);
 	}
 }

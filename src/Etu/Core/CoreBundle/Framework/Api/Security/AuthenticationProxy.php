@@ -6,16 +6,16 @@ use Etu\Core\CoreBundle\Framework\Api\Security\ApplicationToken\AnonymousApplica
 use Etu\Core\CoreBundle\Framework\Api\Security\ApplicationToken\ApplicationTokenInterface;
 use Etu\Core\CoreBundle\Framework\Api\Security\UserToken\AnonymousUserToken;
 use Etu\Core\CoreBundle\Framework\Api\Security\UserToken\UserTokenInterface;
-
-use Doctrine\DBAL\Connection;
-
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Module\ApiBundle\Entity\ApplicationToken;
 use Etu\Module\ApiBundle\Entity\UserToken;
-use Symfony\Component\HttpFoundation\Request;
+
 use Tga\Api\Component\HttpFoundation\Response;
-use Tga\Api\Component\HttpFoundation\ResponseBuilder;
 use Tga\Api\Framework\HttpKernel\Event\KernelRequestEvent;
+use Tga\Api\Component\Cache\CacheManipulator;
+
+use Doctrine\DBAL\Connection;
+use Symfony\Component\HttpFoundation\Request;
 
 class AuthenticationProxy
 {
@@ -36,14 +36,18 @@ class AuthenticationProxy
 
 	/**
 	 * @param Connection $doctrine
+	 * @param CacheManipulator $cache
 	 */
-	public function __construct(Connection $doctrine)
+	public function __construct(Connection $doctrine, CacheManipulator $cache)
 	{
 		$this->doctrine = $doctrine;
 		$this->applicationToken = new AnonymousApplicationToken();
 		$this->userToken = new AnonymousUserToken();
 	}
 
+	/**
+	 * @param KernelRequestEvent $event
+	 */
 	public function onKernelRequest(KernelRequestEvent $event)
 	{
 		if ($applicationTokenString = $this->findApplicationTokenString($event->getRequest())) {
@@ -52,27 +56,6 @@ class AuthenticationProxy
 
 		if ($userTokenString = $this->findUserTokenString($event->getRequest())) {
 			$this->fetchUserToken($userTokenString);
-		}
-
-		/** @var ResponseBuilder $responseBuidler */
-		$responseBuidler = $event->getKernel()->getContainer()->get('response_builder');
-
-		if ($this->applicationToken instanceof AnonymousApplicationToken) {
-			$response = $responseBuidler->createErrorResponse(
-				Response::HTTP_UNAUTHORIZED, 'Invalid application token'
-			);
-
-			$response->dumpData();
-			$event->setResponse($response);
-		}
-
-		if ($userTokenString && $this->userToken instanceof AnonymousUserToken) {
-			$response = $responseBuidler->createErrorResponse(
-				Response::HTTP_UNAUTHORIZED, 'Invalid or expired user token'
-			);
-
-			$response->dumpData();
-			$event->setResponse($response);
 		}
 	}
 
@@ -150,6 +133,11 @@ class AuthenticationProxy
 				$token->setToken($tokenData['token']);
 				$token->setCreatedAt(\DateTime::createFromFormat('d-m-Y H:i:s', $tokenData['createdAt']));
 
+				$reflection = new \ReflectionObject($token);
+				$property = $reflection->getProperty('id');
+				$property->setAccessible(true);
+				$property->setValue($token, (int) $tokenData['id']);
+
 				if (function_exists('apc_fetch')) {
 					$cacheDriver->save('etu_api_tokens_applications_'.$tokenString, $token, 3600);
 				}
@@ -184,7 +172,6 @@ class AuthenticationProxy
 				->from('etu_api_tokens_users', 't')
 				->leftJoin('t', 'etu_users', 'u', 't.user_id = u.id')
 				->where('t.token = :token')
-				->andWhere('t.expireAt < NOW()')
 				->setParameter('token', $tokenString)
 				->setMaxResults(1)
 				->execute()
@@ -204,9 +191,15 @@ class AuthenticationProxy
 				$user->setFullName($tokenData['user_name']);
 
 				$token = new UserToken();
-				$token->setUser();
+				$token->setUser($user);
+				$token->setApplication($this->applicationToken);
 				$token->setToken($tokenData['token']);
 				$token->setCreatedAt(\DateTime::createFromFormat('d-m-Y H:i:s', $tokenData['createdAt']));
+
+				$reflection = new \ReflectionObject($token);
+				$property = $reflection->getProperty('id');
+				$property->setAccessible(true);
+				$property->setValue($token, (int) $tokenData['id']);
 
 				if (function_exists('apc_fetch')) {
 					$cacheDriver->save('etu_api_tokens_users_'.$tokenString, $token, 3600);

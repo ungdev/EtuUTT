@@ -3,6 +3,8 @@
 namespace Etu\Core\CoreBundle\Framework\Api\Definition;
 
 use Etu\Core\CoreBundle\Framework\Api\Security\AuthenticationProxy;
+use Etu\Core\CoreBundle\Framework\Api\Security\AuthorizationProxy;
+
 use Tga\Api\Framework\HttpKernel\Definition\Resource as BaseResource;
 
 class Resource extends BaseResource
@@ -20,6 +22,14 @@ class Resource extends BaseResource
 	 */
 	public function getAuthenticationProxy()
 	{
-		return $this->get('security_proxy');
+		return $this->get('security.authentication_proxy');
+	}
+
+	/**
+	 * @return AuthorizationProxy
+	 */
+	public function getAuthorizationProxy()
+	{
+		return $this->get('security.authorization_proxy');
 	}
 }

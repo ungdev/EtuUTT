@@ -42,7 +42,6 @@ class SoapManager
 
     public function __call($name, $arguments)
     {
-        xdebug_disable();
         try{
             $rtn = call_user_func_array(array($this->client, $name), $arguments);
         }
@@ -55,7 +54,6 @@ class SoapManager
             $rtn = call_user_func_array(array($this->client, $name), $arguments);
             //*/
         }
-        xdebug_enable();
 
         if($this->firstUse){
             self::$cookies[$this->wsdlName] = $this->client->_cookies["PHPSESSID"][0];

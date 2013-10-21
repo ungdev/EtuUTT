@@ -5,6 +5,7 @@ namespace Etu\Module\UploadBundle\Controller;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 
 // Import annotations
+use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -55,7 +56,7 @@ class MainController extends Controller
 
 		$request = $this->getRequest();
 
-		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+		if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
 
 			/** @var $file \Symfony\Component\HttpFoundation\File\UploadedFile */
 			$file = $form->getData()['file'];
@@ -81,10 +82,10 @@ class MainController extends Controller
 				return $this->redirect($this->generateUrl('upload_index'));
 			}
 
-			$name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+			$name = StringManipulationExtension::slugify(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
 			$extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-			if (! file_exists($directory.'/'.$name.'.'.$extension)) {
+			if (file_exists($directory.'/'.$name.'.'.$extension)) {
 				$name .= '-'.substr(md5(uniqid(true)), 0, 4);
 			}
 

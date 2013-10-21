@@ -1,6 +1,6 @@
 <?php
 
-namespace Etu\Core\CoreBundle\Framework\Api\Sorting;
+namespace Etu\Core\CoreBundle\Framework\Api\Util;
 
 /**
  * A class to understand URL formatted sort by expressions

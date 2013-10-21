@@ -11,16 +11,17 @@ use Tga\Api\Framework\Annotations as Api;
 
 /**
  * @Api\Resource(
- *      "/users/search/{term}/{sortExpression}/{page}",
+ *      "/users/{sortExpression}/{page}",
+ *      requirements={"sortExpression"="([a-z]+:(asc|desc),?)+", "page"="\d+"},
  *      defaults={"sortExpression"="lastname:asc,firstname:asc", "page"=1}
  * )
  */
-class UsersSearchResource extends Resource
+class UsersListResource extends Resource
 {
 	/**
 	 * @Api\Operation(method="GET")
 	 */
-	public function getOperation($term, $sortExpression, $page)
+	public function getOperation($sortExpression, $page)
 	{
 		$this->getAuthorizationProxy()->needAppToken();
 		$this->getAuthorizationProxy()->needUserToken();
@@ -38,14 +39,9 @@ class UsersSearchResource extends Resource
 			$orderBy['firstname'] = 'ASC';
 		}
 
-		$term = '%'.trim(str_replace(' ', '%', $term), '%').'%';
-
 		$count = $this->getDoctrine()->createQueryBuilder()
 			->select('COUNT(*) AS count')
 			->from('etu_users', 'u')
-			->where('u.login LIKE :term')
-			->orWhere('u.fullName LIKE :term')
-			->setParameter('term', $term)
 			->execute()
 			->fetch();
 
@@ -61,9 +57,6 @@ class UsersSearchResource extends Resource
 				u.linkedin, u.viadeo, u.keepActive AS isExternal, u.semestersHistory
 			')
 			->from('etu_users', 'u')
-			->where('u.login LIKE :term')
-			->orWhere('u.fullName LIKE :term')
-			->setParameter('term', $term)
 			->setFirstResult(($page - 1) * 20)
 			->setMaxResults(20)
 			->execute()
@@ -83,16 +76,14 @@ class UsersSearchResource extends Resource
 		$next = false;
 
 		if ($page > 1) {
-			$previous = $this->generateUrl('users_search', array(
-				'term' => $term,
+			$previous = $this->generateUrl('users_list', array(
 				'sortExpression' => $sortExpression,
 				'page' => $page - 1,
 			));
 		}
 
 		if ($page < $totalPages) {
-			$next = $this->generateUrl('users_search', array(
-				'term' => $term,
+			$next = $this->generateUrl('users_list', array(
 				'sortExpression' => $sortExpression,
 				'page' => $page + 1,
 			));

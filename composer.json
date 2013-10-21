@@ -30,11 +30,11 @@
 		"knplabs/knp-time-bundle": "dev-master",
 		"knplabs/knp-paginator-bundle": "dev-master",
 		"frequence-web/calendr-bundle": "1.*",
-		"guzzle/guzzle": "~3.7",
 		"tedivm/jshrink": "dev-master",
 		"helios-ag/fm-bbcode-bundle": "6.2",
-		"zircote/swagger-php": "dev-master",
 		"sabre/vobject" : "~3.1",
+
+		"fabpot/goutte": "1.0.*",
 		"tga/api-framework": "dev-master"
 	},
 	"scripts": {
