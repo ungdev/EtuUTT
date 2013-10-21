@@ -236,6 +236,9 @@
 					<div class="control-group">
 						<div class="hidden">{{ form_label(form.body, 'bugs.bugs.view.comment_body'|trans) }}</div>
 						<div>{{ form_widget(form.body, {'attr': {'class': 'bugs-view-comment-textarea redactor'}}) }}</div>
+						<p class="text-error">
+							{{ form_errors(form.body) }}
+						</p>
 					</div>
 					<div class="control-group">
 						{{ form_rest(form) }}

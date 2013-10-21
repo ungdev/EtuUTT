@@ -132,35 +132,37 @@ class BugsController extends Controller
 
 		$request = $this->getRequest();
 
-		if ($request->getMethod() == 'POST' && $form->submit($request)->isValid() && $this->getUser()->hasPermission('bugs.add')) {
-			$em->persist($comment);
-			$em->flush();
+		if ($request->getMethod() == 'POST') {
+			if ($form->submit($request)->isValid() && $this->getUser()->hasPermission('bugs.add')) {
+				$em->persist($comment);
+				$em->flush();
 
-			// Send notifications to subscribers
-			$notif = new Notification();
+				// Send notifications to subscribers
+				$notif = new Notification();
 
-			$notif
-				->setModule($this->getCurrentBundle()->getIdentifier())
-				->setHelper('bugs_new_comment')
-				->setAuthorId($this->getUser()->getId())
-				->setEntityType('issue')
-				->setEntityId($bug->getId())
-				->addEntity($comment);
+				$notif
+					->setModule($this->getCurrentBundle()->getIdentifier())
+					->setHelper('bugs_new_comment')
+					->setAuthorId($this->getUser()->getId())
+					->setEntityType('issue')
+					->setEntityId($bug->getId())
+					->addEntity($comment);
 
-			$this->getNotificationsSender()->send($notif);
+				$this->getNotificationsSender()->send($notif);
 
-			// Subscribe automatically the user
-			$this->getSubscriptionsManager()->subscribe($this->getUser(), 'issue', $bug->getId());
+				// Subscribe automatically the user
+				$this->getSubscriptionsManager()->subscribe($this->getUser(), 'issue', $bug->getId());
 
-			$this->get('session')->getFlashBag()->set('message', array(
-				'type' => 'success',
-				'message' => 'bugs.bugs.view.comment_confirm'
-			));
+				$this->get('session')->getFlashBag()->set('message', array(
+					'type' => 'success',
+					'message' => 'bugs.bugs.view.comment_confirm'
+				));
 
-			return $this->redirect($this->generateUrl('bugs_view', array(
-				'id' => $bug->getId(),
-				'slug' => StringManipulationExtension::slugify($bug->getTitle()),
-			)));
+				return $this->redirect($this->generateUrl('bugs_view', array(
+					'id' => $bug->getId(),
+					'slug' => StringManipulationExtension::slugify($bug->getTitle()),
+				)));
+			}
 		}
 
 		$updateForm = $this->createFormBuilder($bug)
