@@ -1,4 +1,19 @@
 @import url('//fonts.googleapis.com/css?family=Source+Sans+Pro');
+@-webkit-viewport {
+  width: device-width;
+}
+@-moz-viewport {
+  width: device-width;
+}
+@-ms-viewport {
+  width: device-width;
+}
+@-o-viewport {
+  width: device-width;
+}
+@viewport {
+  width: device-width;
+}
 /* Import the headings police */
 /* Disable outline border on visited links on Firefox */
 a,

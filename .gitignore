@@ -5,20 +5,16 @@
 /web/bundles/
 /web/mail/config/db.inc.php
 /web/mail/config/main.inc.php
-/app/bootstrap.php.cache
 /app/config/parameters.yml
 /app/cache/*
-/api/cache/*
 /app/logs/*
+/app/check.php
 /app/SymfonyRequirements.php
 /build/
 /vendor/
-/web/api/v1/vendor/
 /bin/
 /composer.phar
 .idea/
-objects/*
-temp/*
 *.php~
 composer.lock
 
