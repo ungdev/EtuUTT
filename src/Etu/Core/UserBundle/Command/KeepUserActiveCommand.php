@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\ORM\EntityManager;
 
-class SetUserAdminCommand extends ContainerAwareCommand
+class KeepUserActiveCommand extends ContainerAwareCommand
 {
 	/**
 	 * Configure the command
@@ -18,8 +18,8 @@ class SetUserAdminCommand extends ContainerAwareCommand
 	protected function configure()
 	{
 		$this
-			->setName('etu:users:set-admin')
-			->setDescription('Promote given user as global admin')
+			->setName('etu:users:keep-active')
+			->setDescription('Keep given user as external user (defining a password)')
 		;
 	}
 
@@ -36,7 +36,7 @@ class SetUserAdminCommand extends ContainerAwareCommand
 		$output->writeln('
 	Welcome to the EtuUTT users manager
 
-This command will help you to promote given user as global admin.
+This command will help you to keep a user as an external user and to define a password for this user.
 ');
 
 		$user = null;
@@ -54,11 +54,26 @@ This command will help you to promote given user as global admin.
 			}
 		}
 
-		$user->setIsAdmin(true);
+		$password = null;
+		$confirm = null;
+
+		while (! $password || $confirm != $password) {
+			$password = $dialog->askHiddenResponse($output, 'Password: ', false);
+			$confirm = $dialog->askHiddenResponse($output, 'Confirm password: ', false);
+
+			if ($confirm != $password) {
+				$output->writeln("Password and its confirmation are different. Please retry.\n");
+			}
+		}
+
+		$password = $this->getContainer()->get('etu.user.crypting')->encrypt($password);
+
+		$user->setPassword($password);
+		$user->setKeepActive(true);
 
 		$em->persist($user);
 		$em->flush();
 
-		$output->writeln("The user ".$user->getLogin()." has been promoted as global admin.\n");
+		$output->writeln("The user ".$user->getLogin()." has been kept as external.\n");
 	}
 }
