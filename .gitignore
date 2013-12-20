@@ -6,6 +6,7 @@
 /web/mail/config/db.inc.php
 /web/mail/config/main.inc.php
 /app/config/parameters.yml
+/api/cache/*
 /app/cache/*
 /doc/api/cache/*
 /app/logs/*
