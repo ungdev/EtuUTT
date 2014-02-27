@@ -224,8 +224,10 @@ class BadgesManager
 			->getResult();
 
 		foreach ($usersBadges as $userBadge) {
-			self::$usersBadges[$userBadge->getUser()->getId().
-				$userBadge->getBadge()->getSerie().$userBadge->getBadge()->getLevel()] = $userBadge;
+            if ($userBadge->getUser()) {
+                self::$usersBadges[$userBadge->getUser()->getId().
+                    $userBadge->getBadge()->getSerie().$userBadge->getBadge()->getLevel()] = $userBadge;
+            }
 		}
 
 		self::$initializedUsers = true;
