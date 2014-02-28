@@ -9,7 +9,6 @@ use CalendR\Event\AbstractEvent;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
-use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Core\UserBundle\Entity\Organization;
 
 use Imagine\Gd\Image;
