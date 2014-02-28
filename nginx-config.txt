@@ -52,18 +52,6 @@ server {
     }
 
     #
-    # API rewrite rule
-    #
-    location /api {
-        index app.php;
-        try_files $uri @api;
-    }
-
-    location @api {
-        rewrite ^(.*)$ /api/app.php/$1 last;
-    }
-
-    #
     # Main rewrite rule
     # Redirect all requests that does not match an existing file to
     # Symfony.

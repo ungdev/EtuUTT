@@ -5,7 +5,7 @@
 	"description": "EtuUTT",
 	"autoload": {
 		"psr-0": {
-			"": ["src/", "api/src/"]
+			"": ["src/"]
 		}
 	},
 	"require": {
