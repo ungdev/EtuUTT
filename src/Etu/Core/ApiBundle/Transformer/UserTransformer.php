@@ -27,13 +27,14 @@ class UserTransformer extends AbstractTransformer
             'level' => $user->getNiveau(),
             'speciality' => $user->getFiliere(),
             'avatar' => $user->getAvatar(),
-            'isStudent' => $user->getIsStudent(),
             'surname' => $user->getSurnom(),
             'website' => $user->getWebsite(),
             'facebook' => $user->getFacebook(),
             'twitter' => $user->getTwitter(),
             'linkedin' => $user->getLinkedin(),
-            'viadeo' => $user->getViadeo()
+            'viadeo' => $user->getViadeo(),
+            'isStudent' => $user->getIsStudent(),
+            'bdeMember' => $user->hasActiveMembership(),
         ];
     }
 }

@@ -551,20 +551,28 @@ class User implements UserInterface, \Serializable
 	 */
 	protected $deletedAt;
 
-	/**
-	 * @var Member[] $memberships
-	 *
-	 * @ORM\OneToMany(targetEntity="\Etu\Core\UserBundle\Entity\Member", mappedBy="user")
-	 * @ORM\JoinColumn()
-	 */
-	protected $memberships;
+    /**
+     * @var Member[] $memberships
+     *
+     * @ORM\OneToMany(targetEntity="\Etu\Core\UserBundle\Entity\Member", mappedBy="user")
+     * @ORM\JoinColumn()
+     */
+    protected $memberships;
 
-	/**
-	 * @var boolean
-	 *
-	 * @ORM\Column(type="boolean")
-	 */
-	protected $firstLogin = false;
+    /**
+     * @var UserBde[] $bdeMemberships
+     *
+     * @ORM\OneToMany(targetEntity="UserBde", mappedBy="user")
+     * @ORM\JoinColumn()
+     */
+    protected $bdeMemberships;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $firstLogin = false;
 
 	/**
 	 * Temporary variable to store uploaded file during photo update
@@ -2685,4 +2693,46 @@ class User implements UserInterface, \Serializable
 	{
 		return $this->firstLogin;
 	}
+
+    /**
+     * @param \Etu\Core\UserBundle\Entity\UserBde[] $bdeMemberships
+     * @return $this
+     */
+    public function setBdeMemberships($bdeMemberships)
+    {
+        $this->bdeMemberships = $bdeMemberships;
+        return $this;
+    }
+
+    /**
+     * @return \Etu\Core\UserBundle\Entity\UserBde[]
+     */
+    public function getBdeMemberships()
+    {
+        return $this->bdeMemberships;
+    }
+
+    /**
+     * @return UserBde
+     */
+    public function getActiveMembership()
+    {
+        $now = new \DateTime();
+
+        foreach ($this->getBdeMemberships() as $membership) {
+            if ($membership->getStart() < $now && $membership->getEnd() > $now) {
+                return $membership;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasActiveMembership()
+    {
+        return is_object($this->getActiveMembership());
+    }
 }

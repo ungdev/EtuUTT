@@ -29,8 +29,9 @@ class ReadController extends ApiController
 
         /** @var $users QueryBuilder */
         $query = $em->createQueryBuilder()
-            ->select('u')
+            ->select('u, m')
             ->from('EtuUserBundle:User', 'u')
+            ->leftJoin('u.bdeMemberships', 'm')
             ->orderBy('u.lastName');
 
         if ($request->query->has('login')) {
@@ -63,9 +64,9 @@ class ReadController extends ApiController
                 ->setParameter('speciality', $request->query->get('speciality'));
         }
 
-        if ($request->query->has('isStudent')) {
-            $query->andWhere('u.isStudent = :isStudent')
-                ->setParameter('isStudent', (bool) $request->query->get('isStudent'));
+        if ($request->query->has('is_student')) {
+            $query->andWhere('u.isStudent = :is_student')
+                ->setParameter('is_student', (bool) $request->query->get('is_student'));
         }
 
         /** @var SlidingPagination $pagination */
