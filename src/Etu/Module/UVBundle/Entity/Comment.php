@@ -3,14 +3,9 @@
 namespace Etu\Module\UVBundle\Entity;
 
 use Etu\Core\UserBundle\Entity\User;
-use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
-
 use Doctrine\ORM\Mapping as ORM;
-
 use Gedmo\Mapping\Annotation as Gedmo;
-
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 
 /**

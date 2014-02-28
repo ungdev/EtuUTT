@@ -62,6 +62,7 @@ class AppKernel extends EtuKernel
 	        // EtuUTT
             new Etu\Core\CoreBundle\EtuCoreBundle(),
             new Etu\Core\UserBundle\EtuUserBundle(),
+            new Etu\Core\ApiBundle\EtuCoreApiBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

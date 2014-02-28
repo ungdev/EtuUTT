@@ -32,10 +32,7 @@
 		"frequence-web/calendr-bundle": "1.*",
 		"tedivm/jshrink": "dev-master",
 		"helios-ag/fm-bbcode-bundle": "6.2",
-		"sabre/vobject" : "~3.1",
-
-		"fabpot/goutte": "1.0.*",
-		"tga/api-framework": "dev-master"
+		"sabre/vobject" : "~3.1"
 	},
 	"scripts": {
 		"post-install-cmd": [
@@ -56,7 +53,7 @@
 	"config": {
 		"bin-dir": "bin"
 	},
-	"minimum-stability": "dev",
+	"minimum-stability": "alpha",
 	"extra": {
 		"symfony-app-dir": "app",
 		"symfony-web-dir": "web",

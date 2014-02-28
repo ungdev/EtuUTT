@@ -2,6 +2,7 @@
 
 namespace Etu\Core\CoreBundle\Framework\Routing;
 
+use Etu\Core\CoreBundle\Framework\Definition\Module;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\Routing\RouteCollection;
@@ -45,11 +46,14 @@ class ModulesRoutingLoader implements LoaderInterface
 
 		$routes = new RouteCollection();
 
+        /** @var $module Module */
 		foreach ($this->kernel->getModulesDefinitions() as $module) {
-			$routing = $module->getRouting();
-			$loader = $this->resolver->resolve($routing['resource'], $routing['type']);
+            $routing = $module->getRouting();
+            $loader = $this->resolver->resolve($routing['resource'], $routing['type']);
 
-			$routes->addCollection($loader->load($routing['resource'], $routing['type']));
+            if ($loader) {
+                $routes->addCollection($loader->load($routing['resource'], $routing['type']));
+            }
 		}
 
 		return $routes;

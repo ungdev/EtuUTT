@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\User;
-use Symfony\Component\HttpFoundation\Response;
 
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -126,12 +125,7 @@ class MainController extends Controller
 			$query = $users->getQuery();
 			$query->useResultCache(true, 3600*24);
 
-			try {
-				$users = $this->get('knp_paginator')->paginate($query, $page, 10);
-			} catch (\Exception $e) {
-				var_dump($e);
-				exit;
-			}
+            $users = $this->get('knp_paginator')->paginate($query, $page, 10);
 		}
 
 		return array(

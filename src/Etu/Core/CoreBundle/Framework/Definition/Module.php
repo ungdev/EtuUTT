@@ -97,18 +97,31 @@ abstract class Module extends Bundle
 		return array();
 	}
 
-	/**
-	 * Module author
-	 *
-	 * @return string
-	 */
-	public function getRouting()
-	{
-		return array(
-			'type' => 'annotation',
-			'resource' => '@'.$this->getName().'/Controller/',
-		);
-	}
+    /**
+     * Module author
+     *
+     * @return string
+     */
+    public function getRouting()
+    {
+        return array(
+            'type' => 'annotation',
+            'resource' => '@'.$this->getName().'/Controller/',
+        );
+    }
+
+    /**
+     * Module author
+     *
+     * @return string
+     */
+    public function getApiRouting()
+    {
+        return array(
+            'type' => 'annotation',
+            'resource' => '@'.$this->getName().'/Api/',
+        );
+    }
 
 	/**
 	 * @return \Etu\Core\CoreBundle\Menu\Sidebar\SidebarBuilder

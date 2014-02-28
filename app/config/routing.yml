@@ -11,6 +11,12 @@ etu_user:
     type:     annotation
     prefix:   /
 
+# Load the API routes
+etu_core_api:
+    resource: "@EtuCoreApiBundle/Controller/"
+    type:     annotation
+    prefix:   /api
+
 # Load FOS Routing
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
