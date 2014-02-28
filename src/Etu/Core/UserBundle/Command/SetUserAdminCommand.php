@@ -34,7 +34,7 @@ class SetUserAdminCommand extends ContainerAwareCommand
 		$dialog = $this->getHelperSet()->get('dialog');
 
 		$output->writeln('
-	Welcome to the EtuUTT users manager
+	Welcome to the EtuUTT users grant tool
 
 This command will help you to promote given user as global admin.
 ');

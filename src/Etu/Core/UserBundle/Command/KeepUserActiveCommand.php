@@ -66,13 +66,17 @@ This command will help you to keep a user as an external user and to define a pa
 			}
 		}
 
+		var_dump($password);
+
 		$password = $this->getContainer()->get('etu.user.crypting')->encrypt($password);
 
 		$user->setPassword($password);
 		$user->setKeepActive(true);
 
+		var_dump($user->getPassword());
+
 		$em->persist($user);
-		$em->flush();
+		//$em->flush();
 
 		$output->writeln("The user ".$user->getLogin()." has been kept as external.\n");
 	}

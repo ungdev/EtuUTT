@@ -28,7 +28,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<link rel="stylesheet" href="{{ asset('css/responsive.css') }}" type="text/css" />
 		{% endif %}
-
+		
 		{% block stylesheets %}{% endblock %}
 	</head>
 	<body class="bg-soft-grey">
@@ -303,19 +303,6 @@
 
 			ga('create', 'UA-43851564-1', 'utt.fr');
 			ga('send', 'pageview');
-
-			/**
-			 * IE mobile 10 bug fix
-			 */
-			if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
-				var msViewportStyle = document.createElement("style")
-				msViewportStyle.appendChild(
-						document.createTextNode(
-								"@-ms-viewport{width:auto!important}"
-						)
-				)
-				document.getElementsByTagName("head")[0].appendChild(msViewportStyle)
-			}
 		</script>
 	</body>
 </html>

@@ -13,6 +13,11 @@ class EtuModuleForumBundle extends Module
 	{
 		return true;
 	}
+	
+	/**
+	 * At module boot, update the sidebar
+	 */
+
 
 	/**
 	 * @return bool

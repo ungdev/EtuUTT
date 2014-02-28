@@ -1,0 +1,28 @@
+
+body {
+	font-size: 1.5em;
+	font-weight: 300;
+}
+
+.text {
+	display: none;
+}
+.center {
+	text-align: center;
+	width: 600px;
+	margin: 0 auto;
+	margin-top: 150px;
+}
+.title {
+	margin-bottom: 30px;
+}
+.desc {
+	margin-bottom: 40px;
+}
+
+@media screen and (max-width: 775px) {
+	.center {
+		width: 90%;
+		margin-top: 30px;
+	}
+}

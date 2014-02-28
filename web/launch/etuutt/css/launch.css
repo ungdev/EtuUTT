@@ -1,0 +1,108 @@
+
+h1 {
+	font-size: 80px;
+}
+h2 {
+	font-size: 2.2em;
+	color: white;
+	line-height: 1.3;
+	font-weight: 300;
+}
+hr {
+	border: 0;
+	border-top: 1px dashed #c9c7c0;
+}
+
+.container {
+	text-align: center;
+	margin-top: 100px;
+}
+.row-fluid {
+	margin-bottom: 20px;
+}
+.span3 {
+	color: white;
+	font-weight: 300;
+	padding-top: 20px;
+	padding-bottom: 30px;
+}
+.date-element {
+	-webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+	-moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+	-o-transition: border linear 0.2s, box-shadow linear 0.2s;
+	transition: border linear 0.2s, box-shadow linear 0.2s;
+	font-size: 35px;
+	padding-bottom: 55px;
+}
+.date-element:hover {
+	border-color: #888;
+	outline: 0;
+	outline: thin dotted \9;
+	box-shadow: 0 0 8px #888;
+}
+.days {
+	background: #E9931A;
+}
+.hours {
+	background: #1691BE;
+}
+.minutes {
+	background: #166BA2;
+}
+.seconds {
+	background: #1B3647;
+}
+
+.row-social {
+	margin-top: 130px;
+	margin-bottom: 40px;
+}
+
+.testing {
+	padding-top: 5px;
+}
+.testing-loading {
+	background: url('../img/loader.gif') no-repeat 98% 50%;
+}
+
+.sharer {
+	display: inline-block;
+	width: 32px;
+	height: 32px;
+	margin: 0 10px;
+}
+#twitterShare {
+	background: url('../img/twitter.png') top;
+}
+#facebookShare {
+	background: url('../img/facebook.png') top;
+}
+#mailShare {
+	background: url('../img/mail.png') top;
+}
+#twitterShare:hover, #facebookShare:hover, #googlePlusShare:hover, #mailShare:hover {
+	background-position: bottom;
+}
+
+@media screen and (max-width: 1230px) {
+	.container {
+		text-align: center;
+		margin-top: 50px;
+	}
+	.row-social {
+		margin-top: 90px;
+		margin-bottom: 30px;
+	}
+}
+
+@media screen and (max-width: 1000px) {
+	.container {
+		text-align: center;
+		margin-top: 40px;
+		width: 90%;
+	}
+	.row-social {
+		margin-top: 70px;
+		margin-bottom: 20px;
+	}
+}

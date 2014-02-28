@@ -2,6 +2,22 @@
 
 {% block title %}{{ 'user.profile.view.title'|trans }}{% endblock %}
 
+{% block stylesheets %}
+	{% if user.login == 'richardb' %}
+	<style>
+		.bg-soft-grey {
+			background: url('/img/back_etuutt.jpg') #950014 !important;
+		}
+		.page-container, .footer {
+			background: none !important;
+		}
+		.page-title, .footer, .footer a {
+			color: #a6843c !important;
+		}
+	</style>
+	{% endif %}
+{% endblock %}
+
 {% block titleIcon %}
 	<img src="{{ asset('img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
