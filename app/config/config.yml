@@ -100,7 +100,7 @@ fm_bbcode:
 etu_core:
     domain: etu.utt.fr
     translation:
-        languages: ['en', 'fr', 'es', 'cn']
+        languages: ['en', 'fr', 'de']
 
 etu_user:
     ldap:

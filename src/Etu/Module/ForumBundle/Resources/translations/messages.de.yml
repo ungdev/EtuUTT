@@ -1,0 +1,58 @@
+forum:
+    meta: Die Foren der UTT Studentenwebseite
+
+    main:
+        index:
+            meta: Die Foren der UTT Studentenwebseite : kommen Sie diskutieren !
+            noMessage: Keine Nachricht
+            forum: Forum
+            category: Kategorie
+            nbThreads: Thema
+            nbMessages: Nachricht
+            lastMessage: Letzte Nachricht
+            noMessage: Keine Nachricht in dieser Kategorie.
+        thread:
+            thread: Thema
+            in: In
+            by: Von
+            date: Datum
+            datePrefix: Am
+            dateHour: Um
+            dateFormat: d/m/Y
+            messages: Nachricht
+            lastMessage: Letzte Nachricht
+            post: Ein neues Thema herstellen
+            answer: Antworten
+            read: Lesen
+            sticky: Angepint
+            locked: Abgeblockt
+            edit: Editieren
+            new: Nicht gelesen
+        post:
+            title: Thema herstellen
+            threadTitle: Titel des Themas
+            content: Nachricht
+            sticky: Angepint ?
+            yes: Ja
+            no: Nein
+        answer:
+            title: Antworten
+        edit:
+            title: Nachricht editieren
+        mod:
+            title: Mdorierungsschild
+            lock: Abblocken
+            unlock: Klären
+            remove: Löschen
+            removeThreadWarning: Achtung, wenn Sie diese Nachricht löschen, wird das Thema auch gelöscht. Wollen Sie das wirklich ?
+            removeThread: Thema wirklich löschen ?
+            removeMessage: Nachricht wirklich löschen ?
+            back: Zurück
+            locked: Thema wurde blockiert
+            unlocked: Thema wurde geklärt
+            moderation: Moderieren
+            move: Bewegen
+            where: Wohin bewegen ?
+
+    notifs:
+            threadCreated: %author% hat in %title% geantwortet

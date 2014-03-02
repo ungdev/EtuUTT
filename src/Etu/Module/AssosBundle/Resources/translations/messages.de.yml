@@ -1,0 +1,30 @@
+
+assos:
+    main:
+        menu:
+            description: Beschreibung
+            members: Mitglieder
+        index:
+            title: Die Vereine
+            meta: Entdeckt die Studentenvereine der UTT !
+            president: Vorsitzender
+        view:
+            title: Detail eines Vereins
+            back: Zurück zur Liste
+            name: Name
+            president: Vorsitzender
+            contactMail: E-mail Adresse
+            contactPhone: Telefonnummer
+            description: Beschreibung
+            website: Internet Seite
+        members:
+            title: Mitglieder eines Vereins
+            back: Zurück zur Liste
+            name: Name
+            president: Vorsitzender
+            contactMail: E-mail Adresse
+            contactPhone: Telefonnummer
+            description: Beschreibung
+            website: Internet Seite
+            office: Büro
+            members: Mitglieder

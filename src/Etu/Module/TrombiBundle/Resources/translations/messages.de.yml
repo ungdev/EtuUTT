@@ -1,0 +1,20 @@
+trombi:
+    main:
+        index:
+            title: Jahrbuch
+            uncomplete_profile:
+                title: Ihr Profil ist unvollständig
+                desc: Ihr Profil muss vollständig sein (privat oder öffentlich) um das Jahrbuch benutzen zu können
+                link: Mein Account
+            search_title: Einen Studenten suchen
+            search: Suchen
+            more: Mehr Kriterien
+            name: Name, Vorname oder Spitzname
+            studentId: Studentennummer
+            uv: UVs (von Kommas getrennt)
+            phone: Telefonnummer
+            personnalMail: Private E-mailadresse
+            branche: Abteilung
+            explainations: Suchen Sie dank dieses Formulars
+            no_results: Kein Ergebnis
+            count: %count% Ergebnis|%count% Ergebnisse

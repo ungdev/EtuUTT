@@ -1,0 +1,89 @@
+
+buckutt:
+    main:
+        menu:
+            history: Verlauf
+            reload: Nachladen
+            admin: Verwalten
+            logout: Abmelden
+
+        unknownError: Unbekannter Fehler - Bitte buckutt@utt.fr kontaktieren
+
+        connect:
+            ask: BuckUTT PIN Code eingeben
+            explainations:
+                1: |
+                    BuckUTT ist das Benutztersystem um Ihre Einkäufe im "Foyer", im BDE oder während Parties
+                    zu bezahlen. Sie brauchen dazu nur Ihre Studentenkarte ("carte étu"),die sie mit Hilfe
+                    Ihrer Kreditkarte hier aufladen können oder Sie kommen im Laufe des Tages zum BDE.
+                2: |
+                    Auf dieser Benutzeroberfläche können Sie auch Ihre letzten Einkäufe und Aufladungen verfolgen.
+                3: |
+                    Zu Beginn, melden Sie sich mit dem PIN Code an, der Ihnen per E-Mail zugeschikt wurde
+                    (wenn Sie diesen vergessen haben, keine Panik ! Sie können, mit Hilfe des Links, der
+                    sich unter diesem Formular befindet, einen neuen PIN Code aufrufen).
+            warnings:
+                1: Ihr BuckUTT PIN Code ist vertraulich, geben Sie diesen nicht weiter !
+                2: |
+                    Aus Sicherheitsgründen wird Ihr Konto nach 3 Fehlschlägen gesperrt. Sie müssen dann zum
+                    BDE kommen um diese Sperrung wieder aufzuheben.
+            notStudent: |
+                Ihr Konto ist kein UTT Konto. Da BuckUTT nur für UTT Studenten zugänglich ist, können Sie
+                nicht an BuckUTT gelangen.
+            connect: Anmelden
+            invalidPin: PIN Code fehlgeschlagen
+            lostPin: Habe meinen PIN Code verloren !
+            cantSendMail: E-Mail kann nicht verschickt werden. Bitte buckutt@utt.fr kontaktieren
+            newPinSent: Ein neuer PIN Code wurde Ihen per E-Mail geschickt.
+        index:
+            title: BuckUTT
+            main_title: Mein BuckUTT Konto verwalten
+            credit: Kredit
+            reload: Aufladen
+            noActionFound: Keine Aktion wurde gefunden
+
+        admin:
+            changePin:
+                title: Mein PIN Code ändern
+                constraint: Der neue PIN Code muss 4 Ziffern enthalten, nicht mehr, nicht weniger.
+                change: Ändern
+                security: |
+                    Aus Sicherheitsgründen kann Ihr neuer PIN Code kein Vierling (z.B.: 0000,
+                    1111, etc), 1234 oder 4321 sein. Vermeiden Sie Ihr Geburtsdatum und selbstverständliche
+                    Ziffernreihenfolgen.
+                label:
+                    old: Alter PIN Code
+                    new: Neuer PIN Code
+                    confirm: Beschtätigung
+                results:
+                    confirm: Ihr PIN Code wurde erfolgreich geändert.
+                    fillAllFields: Sie müssen alle Felder ausfüllen
+                    newDifferents: Die zwei neuen PIN Codes sind nicht identisch
+                    invalids: Die PIN Codes müssen positive Ganzzahlen sein mit 4 Ziffern.
+                    newInvalid: Neuer PIN Code ist inkorrekt
+                    oldInvalid: Alter PIN Code ist inkorrekt
+
+            block:
+                title: Mein Konto sperren
+                explaination: |
+                    Wenn Ihre Studentenkarte verloren geht oder gestohlen wird, können Sie Ihr Konto
+                    sperren lassen um zu vermeiden, dass jemand anderes Ihr BuckUTT Konto benutzt.
+                warning: |
+                    Sie können Ihr Konto nicht selbst wieder auf machen ! Sie müssen zum BDE kommen
+                    um die Sperrung aufzuheben.
+                label:
+                    pin: PIN Code
+                block: Mein Konto sperren
+                confirm: Ihr Konto ist jetzt gesperrt
+
+        reload:
+            explainations:
+                1: Sie haben %credit% € auf Ihr Konto.
+                2: Sie möchten %amount% € auf Ihr Konto aufladen.
+                3: Ihr Aktivsaldo wird dann von %amount_total% € sein.
+            infos: |
+                Der Höchstbetrag von Ihr BuckUTT Konto ist %max_amount% €.
+                Sie können höchstens %possible_amount% € aufladen.
+            choose: Wählen Sie die Summe die Sie aufladen möchten
+            reload: Aufladen
+            confirm: Ihr Konto wurde erfolgreich aufgeladen

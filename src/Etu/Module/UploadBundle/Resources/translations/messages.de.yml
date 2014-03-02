@@ -1,0 +1,19 @@
+upload:
+    upload_link: Ein Bild senden
+
+    main:
+        index:
+            title: Bilder senden
+            send: Ein Bild senden (jpg, png, gif, bmp, 2 MB maximum) :
+            send_submit: Senden
+            adress: Die Adresse wiederholen
+            remove: Das Bild löschen
+            no_image_yet: Sie haben noch kein Bild gesendet
+            confirm: Sie haben ein Bild erfolgreich gesendet
+            error_type: Die Datei die Sie gesendet haben scheint kein Bild zu sein (jpg, png, gif, bmp)
+            error_size: Die Datei die Sie gesendet haben scheint zu sperrig zu sein (maximum 2MB)
+        remove:
+            question: Wollen Sie wirklich <strong>%name%</strong> vom Server löschen ?
+            yes: Ja, löschen
+            no: Nein, abbrechen
+            confirm: Sie haben dieses Bild erfolgreich gelöscht

@@ -1,0 +1,12 @@
+cumul:
+    main:
+        index:
+            title: Stundenplanhäufung
+            explainations: |
+                Dank dieser Seite können Sie ganz leicht bis zu 5 Stundenpläne von unterschiedlichen UTT Studenten
+                vergleichen .<br /> Dafür, addieren Sie die gewünschten Studenten in die linke Kolonne.
+            placeholder: Vorname Nachname
+            add: Student addieren
+            week: Woche
+            warning: Sie können nur 5 Stundenpläne auf ein mal häufen
+            warning_phones: Die Stundenplanhäufung kann auf einer so kleinen Bildauflösung nicht geladen werden

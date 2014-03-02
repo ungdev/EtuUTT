@@ -1,0 +1,362 @@
+
+user:
+    notifs:
+        newBadge: Sie haben den Pin %badge% gewonnen !
+
+    privacy:
+        public: Öffentlich
+        private: Privat
+        publicMore: Nur die Mitglieder der Studentenseite können Ihre Pins sehen
+        privateMore: Nur ich kann meine Pins sehen
+
+    denied: Sie dürfen diese Seite nicht sehen
+
+    admin:
+        userAvatar:
+            title: Foto ändern
+            back: Zurück zum Profil
+            file: Bild
+            submit: Ändern
+        userCreate:
+            title: Einen User herstellen
+            confirm: User wurde erfolgreich hergestellt
+            login: Login
+            password: Passwort
+            website: Webseite (Öffentlich)
+            facebook: Facebook (Öffentlich)
+            twitter: Twitter (Öffentlich)
+            linkedin: LinkedIn (Öffentlich)
+            viadeo: Viadeo (Öffentlich)
+            name: Name
+            studentId: Studentennummer
+            mail: E-mail
+            personnalMail: Persönliche E-mail
+            formation: Ausbildung
+            phoneNumber: Telefonnummer
+            sex: Geschlecht
+            nationality: Nationalität
+            adress: Addresse
+            postalCode: Postleitzahl
+            city: Stadt
+            country: Land
+            birthday: Geburtsdatum
+            birthday_only_age_label: Alter zeigen
+            birthday_only_age_desc: Nur das Alter auf dem Profil zeigen (wenn Geburtsdatum privat ist)
+            back: Zurück
+            submit: Herstellen
+        userDelete:
+            title: User löschen
+            question: User %username% wirklich löschen ?
+            yes: Ja, löschen
+            no: Nein, abbrechen
+            confirm: User wurde erfolgreich gelöscht
+            back: Zurück zum Profil
+        userEdit:
+            title: User ändern
+            avatar: Foto ändern
+            birthday: Geburtsdatum
+            birthday_only_age_label: Alter zeigen
+            birthday_only_age_desc: Nur das Alter auf dem Profil zeigen (wenn Geburtsdatum privat ist)
+            confirm: Userprofil wurde erfolgreich geändert
+            back: Zurück zum Profil
+        userPermissions:
+            title: Erlaubnisse ändern
+            back: Zurück zum Profil
+            confirm: Erlaubnisse wurder erfolgreich geändert
+            submit: Ändern
+        userIndex:
+            title: User
+            search_title: Student suchen
+            search: Suchen
+            create: User herstellen
+            more: Mehr Kriterien
+            name: Name
+            studentId: Studentennummer
+            uv: Kurse (von Kommas getrennt)
+            phone: Telefonnummer
+            personnalMail: Persönliche E-mailaddresse
+            branche: Abteilung
+            explainations: Suchen Sie dank diesem Formulars
+            no_results: Kein Ergebnis
+            count: %count% Ergebnis|%count% Ergebnisse
+        userReadOnly:
+            confirm_set: User kann jetzt die Seite sehen.
+            confirm_unset: User hat jetzt kompleten Zugang.
+        oragsIndex:
+            title: Vereine
+            create: Zugang herstellen
+            no_results: Kein Verein hat zeitlich Zugang zur Seite
+            count: %count% Ergebnis|%count% Ergebnisse
+            question: Wollen Sie wirklich den Zugang des Vereins "%orga%" zu der Studentenseite löschen ?
+            yes: Ja, löschen
+            no: Nein, abbrechen
+        orgasCreate:
+            title: Vereinzugang herstellen
+            back: Zurück
+            login: CAS Identität
+            name: Name
+            descriptionShort: Kurze Beschreibung
+            submit: Herstellen
+            confirm: Zugang wurde hergestellt
+        orgasDelete:
+            confirm: Zugang wurde gelöscht
+
+    auth:
+        connect:
+            title: Verbindung
+            meta: Verbindung zur Studentenseite herstellen, als UTT Mitglied oder Besucher
+            desc: "Bitte wählen Sie eine Registrierungsmethode für die EtuUTT Seite :"
+            cas: UTT Account benutzen
+            external: Besucher Account benutzen
+            confirm: Sie sind eingelogt
+            error: Die Verbindung ist fehlgeschlagen, Ihre Accountdaten scheinen inkorrekt
+            orga_exists_ldap: Dieser Verein existiert aber er muss eine Erlaubniss von der UNG haben um sich zu verbinden
+            betaAssos: |
+                Die Verbindung ist zeitlich nicht möglich. Diese Betaversion ist nur
+                für Vereine.
+        connectExternal:
+            title: Verbindung eines Besuchers
+            meta: Sich als Besucher verbinden
+            desc: Verbinden Sie sich dank dem Login und Password die Ihnen von der UNG gegeben wurde :
+            identifier: Login
+            password: Password
+            submit: Verbindung
+            change: Verbindungsmethode ändern
+        disconnect:
+            confirm: Sie sind eingelogt
+
+    memberships:
+        menu:
+            position: Meine Situation
+            orga: Verein
+            permissions: Rechte
+            notifications: Mitteilung
+            event: Events
+            daymail: Daymail
+        index:
+            title: Verein
+            desc_1: Sie sind Mitglied des Vereins %count% |Sie sind Mitglied des Vereins %count%
+            desc_2: |
+                Dank dieser Seite können Sie Administrationsaktionen auf den Vereinen unternehmen.
+                Sie können zum Beispiel ein Daymail senden, die Beschreibung des Vereins ändern
+                oder Mitteilungen senden.
+            desc_3: |
+                Um solche Aktionen zu unternehmen, wählen Sie zuerst ein Verein auf der linken Seite.
+            desc_no_orga: |
+                Sie sind Mitglied von keinem Verein, deswegen können Sie keine Aktion durchführen.
+        orga:
+            position: In %orga%, sind Sie
+            since: Sie sind Mitglied seit dem %date%.
+            permissions: Sie haben die folgenden Rechte :
+            no_permission: Sie haben keine Rechte in diesem Verein
+        desc:
+            title: Verein
+            confirm: Verein erfolgreich verändert
+        permissionsEdit:
+            confirm: Mitglied erfolgreich geändert
+        notification:
+            desc: |
+                Dank dieser Seite können Sie eine Mitteilung an alle Mitglieder senden.
+                Die Mitteilung kann maximum 140 Karaktere enthalten. Sie können einen Link einarbeiten.
+            link:
+                label: Link
+            content:
+                label: Mitteilung
+                desc: Mitteilung (140 Karaktere maximum)
+            submit: Mitteilung als %orga% senden
+            confirm: Mitteilung wurde erfolgreich an den Mitgliedern gesendet
+
+    orga:
+        role:
+            40: Präsident
+            39: Vizepräsident
+            30: Kassenwart
+            29: Vizekassenwart
+            20: Sekretär
+            19: Vizesekretär
+            10: Mitglied
+        avatar:
+            title: Logo ändern
+            file: Bild
+            confirm: Logo wurde geändert
+            back: Zurück
+            submit: Senden
+        index:
+            title: Verein
+            submit: Ändern
+            confirm: Vereinaccount wurde geändert
+            president_not_found: Präsident wurde nicht gefunden
+            name:
+                label: Name
+                desc: Offizieller Vereinsname
+            president:
+                label: Präsident
+                desc: Präsident des Vereins
+            contactMail:
+                label: E-mail adresse
+                desc: E-mail adresse des Vereins
+            contactPhone:
+                label: Telefonnummer
+                desc: Telefonnummer des Vereins
+            description:
+                label: Beschreibung
+                desc: Beschreibung des Vereins
+            descriptionShort:
+                label: Kurze Beschreibung
+                desc: Kurze Version der Beschreibung (Funktion an der UTT)
+            website:
+                label: Internetseite
+                desc: Offizielle Internetseite des Vereins
+            logo:
+                edit: Logo ändern
+                desc: Logo des Vereins
+        members:
+            title: Mitglied
+            count: %count% Mitglied des Vereins |%count% Mitglied des Vereins
+            add_member_btn: Mitglied addieren
+            add_member_user: User
+            add_member_role: Rolle
+            error_user_not_fount: User wurde nicht gefunden
+            confirm_add: Mitglied wurde hinzugefügt
+            error_exists: Mitglied ist schon registriert
+        memberEdit:
+            title: Mitglied ändern
+            back: Zurück zur Liste
+            role: Rolle
+            submit: Ändern
+            delete: Mitglied löschen
+            confirm: Mitglied wurde geändert
+        memberDelete:
+            title: Mitglied löschen
+            back: Zurück
+            question: Mitglied %username% wirklich des Vereins löschen ?
+            yes: Ja, löschen
+            no: Nein, abbrechen
+            confirm: Mitglied wurde gelöscht
+
+    profile:
+        menu:
+            profile: Profil
+            organizations: Verein
+            schedule: Stundenplan
+            badges: Pins
+        profile:
+            title: Mein Profil
+            edit: Ändern
+            completed: Ihr Profil ist vollständig. Danke !
+            completion: Ihr Profil ist nicht vollständig. Vollständig ausfüllen um einen Pin zu gewinnen !
+            viewPublic: Mein Öffentliches Profil sehen
+            informations: Meine Informationen
+            unknown: Unbekannt
+            name: Name
+            mail: E-mail Adresse
+            sex: Geschlecht
+            personnalMail: Persönliche E-mail Adresse
+            phoneNumber: Telefonnummer
+            adress: Adresse
+            birthday: Geburtsdatum
+            age: %age% Jahre
+            trombi: Jahrbuch
+            surname: Spitzname
+            jadis: Früher
+            passions: Hobbies
+            badges: Pins
+            no_badge: %firstName% hat zeitlich keinen Pin
+        profileAvatar:
+            title: Mein Foto
+            file: Bild
+            confirm: Foto wurde geändert
+            back: Zurück zum Account
+            edit: Ändern
+        profileEdit:
+            title: Infos ändern
+            confirm: Infos wurden geändert
+            back: Zurück zum Account
+            avatar: Foto ändern
+            edit: Ändern
+            website: Webseite (Öffentlich)
+            facebook: Facebook (Öffentlich)
+            twitter: Twitter (Öffentlich)
+            linkedin: LinkedIn (Öffentlich)
+            viadeo: Viadeo (Öffentlich)
+            name: Name
+            studentId: Studentennummer
+            mail: E-mail Adresse
+            personnalMail: Persönliche E-mail Adresse
+            formation: Ausbildung
+            phoneNumber: Telefonnummer
+            sex: Geschlecht
+            nationality: Nationalität
+            adress: Adresse
+            postalCode: Postleitzahl
+            city: Stadt
+            country: Land
+            birthday: Geburtsdatum
+            birthdayOnlyAge:
+                label: Alter anzeigen
+                desc: Nur das Alter auf dem Profil zeigen (wenn Geburtsdatum privat ist)
+            no_badge: Zeitlich keinen Pin. Mitmachen um welche zu gewinnen !
+        trombiEdit:
+            title: Mein Jahrbuch
+            confirm: Jahrbuch wurde geändert
+            back: Zurück zum Account
+            surname: Spitzname
+            jadis: Früher
+            passions: Hobbies
+            edit: Ändern
+        view:
+            title: Einzelheiten eines Profils
+            back_search: Zurück zur Suche
+            back_profile: Mein Account
+            back_trombi: Jahrbuch
+            back_admin: Administration
+            admin: Verwalten
+            admin_edit: Ändern
+            admin_delete: Löschen
+            admin_permissions: Recht ändern
+            admin_disable_readonly: Readonly deaktivieren
+            admin_enable_readonly: Readonly aktivieren
+            website: Webseite
+            facebook: Facebook
+            twitter: Twitter
+            linkedin: LinkedIn
+            viadeo: Viadeo
+            name: Name
+            studentId: Studentennummer
+            mail: E-mail Adresse
+            uvs: Aktuelle Kurse
+            phoneNumber: Telefonnummer
+            personnalMail: Persönliche E-mail Adresse
+            formation: Ausbildung
+            sex: Geschlecht
+            nationality: Nationalität
+            adress: Adresse
+            birthday: Geburtsdatum
+            age_display: %age% Jahre
+            surname: Spitzname
+            jadis: Früher
+            passions: Hobbies
+            last_badges: Letzte Pins
+        organizations:
+            is_in: "%name% ist Mitglied in %count% Verein(e) :"
+            not_asso: %name% ist Mitglied in keinem Verein
+        badges:
+            by: "Pins von %name% gewonnen"
+
+    schedule:
+        days:
+            monday: Montag
+            tuesday: Dienstag
+            wenesday: Mittwoch
+            thursday: Donnerstag
+            friday: Freitag
+            sathurday: Samstag
+        schedule:
+            title: Mein Stundenplan
+            edit: Ändern
+            print: Drucken
+        scheduleEdit:
+            title: Ändern
+            back: Zurück
+        schedulePrint:
+            title: Stundenplan drucken

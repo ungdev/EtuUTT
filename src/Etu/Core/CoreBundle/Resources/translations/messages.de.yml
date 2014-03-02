@@ -1,0 +1,110 @@
+
+core:
+    admin:
+        index:
+            title: Kontrolltafel
+            server_status: Stand des Webservers
+            load: Last
+            disk: Disk
+            processes: Verfahren
+        modules:
+            title: Module
+            name: Name
+            author: Autor
+            description: Beschreibung
+            is_not_ready: Dises Modul ist nicht bereit um benutzt zu werden
+            needed_by: Gebraucht von %needed_by%
+            need: Braucht %need%
+            enable_disable: Aktivieren/Deaktivieren
+            confirm: Sie haben das Modul erfolgreich verändert
+        pageCreate:
+            title: Eine Seite herstellen
+            name: Titel
+            content: Inhalt
+            submit: Herstellen
+            confirm: Sie haben die Seite erfolgreich hergestellt
+        pageDelete:
+            title: Eine Seite löschen
+            question: Sind Sie sicher die Seite "%title%" löschen zu wollen ?
+            yes: Ja, löschen
+            no: Nein, abbrechen
+            confirm: Sie haben die Seite erfolgreich gelöscht
+        pageEdit:
+            title: Eine Seite ändern
+            name: Titel
+            content: Inhalt
+            submit: Ändern
+            confirm: Sie haben die Seite erfolgreich geändert
+        pages:
+            title: Statische Seiten
+            name: Name
+            actions: Aktionen
+            create: Eine Seite herstellen
+            edit: Ändern
+            delete: Löschen
+            no_page: Kein Seite für den Moment
+        stats:
+            title: Statistiken
+            mobile: Nur die Hauptstatistiken sind par Handy zugänglich.
+            general: Hauptstatistiken
+            current_month: Statistiken des aktuellen Monates
+            unique_visitors_count: Zahl der Einzelbesuche
+            pages_calls_count: Zahl der Seitenladungen
+            average_visited_pages: Durchschnittszahl der besuchten Seiten seit der Ersten
+            average_duration: Durchschnittsdauer eines Besuches
+            average_time_to_load: Durchschnittsdauer der Generierung einer Seite
+            unique_visitors: Zahl der Einzelbesucher dieses Monates
+            pages_calls: Zahl der Seitenladungen dieses Monates
+            browsers: Browser
+            visitors: Besucher
+            plaftorms: Betriebssysteme
+            most_used_browsers_versions: Meist benutzte Browserversionen
+            browser_name: Name
+            browser_count: Zahl der Ladungen
+            browser_percentage: Prozente
+            most_used_routes: Meist benutzte Wege
+            route_name: Name
+            route_count: Zahl der Ladungen
+            route_percentage: Prozente
+            no_info: Keine Informazion verfügbar
+            traffic_sources: Verkehrsquelle
+            visitors_sources: Besucherquelle
+            source_domain: Domänsname
+            source_count: Zahl der Ladungen
+            source_percentage: Prozente
+            most_common_sources: Bedeutendsten Besucherquellen
+
+    main:
+        index:
+            title: Mein Fluss
+            new_notifs: Neue Mitteilung(en)
+            no_notif_message: Sie haben keine Mitteilung !
+            no_notif_description: Melden Sie sich an EtuUTT elemente an um zu folgen was Sie an der UTT interessiert !
+            learn_more: Mehr davon wissen
+            loading: Ladung ...
+            logo: Der Fluss kann keine Elemente mehr anzeigen
+            top: Zurück nach oben
+        indexAnonymous:
+            title: Empfang
+            welcome: Willkommen auf der Seite der Studenten der Technischen Universität von Troyes
+            desc: |
+                Der Informatikverrein der UTT, der UTT Net Group (UNG) ist stolz Ihnen diese Webseite zu
+                präsentieren, die für und von Studenten hergestellt wurde.<br />
+                Diese Webseite verbindet die Gmeinschaft der UTT Studenten und bietet ihnen zusätzliche Dienste
+                an <br /> um ihnen die Integration und das Studentenleben zu erleichtern.<br />
+                <strong>Gute Besichtigung !</strong>
+            events: Demnächst an der UTT
+            date: Am %date%
+            allEvents: Alle Events
+        changeLocale:
+            confirm: Sie haben die Sprache erfolgreich geändert
+
+
+    subscriptions:
+        button:
+            follower: Sie sind an dieser an dieser Seite aboniert
+            unfollow: das Abonnement abbestellen
+            follow: Sich abonieren
+        api:
+            confirm_follow: Sie sind jetzt an dieses Item aboniert
+            confirm_unfollow: Sie haben sich erfolgreich von diesem Item abbestellt

@@ -1,0 +1,110 @@
+
+# Global strings: title, logo, footer, etc.
+# Used in base.html.twig
+base:
+    title: UTT Studenten Webseite
+    description: Webseite kreiert und geführt von den Studenten der Technischen Universität von Troyes, UTT
+    meta: |
+        Die UTT Studenten Webseite verbindet die Gemeinschaft der "UTTiens", Studenten der UTT, und bietet
+        mehrfache Dienste um deren Leben zu vereinfachen.
+
+    # Logo
+    logo:
+        alt: Logo der Webseite
+        title: UTT Studenten Webseite
+
+    # Header menu
+    menu:
+        home: Startseite
+        events: Veranstaltungen
+        forums: Foren
+        associations: Vereine
+        search: Suche
+        more: Mehr
+        connexion: Anmelden
+
+    # User account box
+    user:
+        # Users types
+        types:
+            student: Student
+            orga: Verein
+            external: Gast
+
+        # User menu
+        menu:
+            flux: Mein news Feed
+            account: Mein Account
+            buckutt: BuckUTT
+            dailymail: Mein daymail
+            emails: E-mails
+            table: Mein Stundenplan
+            logout: Abmelden
+            help: Hilfe
+            admin: Administration
+            members: Mitglieder
+            pages: Statische Seiten
+            orgas: Meine Vereine
+
+        # Sex
+        sex:
+            male: Männlein
+            female: Weiblein
+
+    # Sidebar
+    sidebar:
+        services:
+            title: Dienste
+            items:
+                uvs: Kurse
+                trombi: Das Jahrbuch
+                table: Stundenplan Kumulierung
+                wiki: Wiki der Vereine
+        etu:
+            title: EtuUTT
+            items:
+                team: Das Team
+
+    # Admin
+    admin_menu:
+        title: Allgemeine Administration
+        items:
+            dashboard: Dashboard
+            modules: Module
+            pages: Statische Seiten
+            users: User
+            orgas: Vereine
+            stats: Statistiken
+            logger: Logs
+
+    # Logo
+    page_icon:
+        alt: Icon der Seite
+        title: Icon der Seite
+
+    # Footer
+    footer:
+        # Links
+        legalities: Nutzungsbedingungen
+        help_us: Uns helfen
+        developers: Entwickler
+        change_locale: Sprache wechseln
+        desktop_version: Komputer Version
+        mobile_version: Handy Version
+
+        # Authors and version
+        text: "Entwickelt von UNG<br />Angetrieben von Symfony 2"
+        1col_text: "Entwickelt von UNG - Angetrieben von Symfony 2"
+        mobile_text: "Entwickelt von UNG"
+        version: Version
+
+# Errors pages:
+error:
+    404:
+        title: Hum ... 404 !
+        subtitle: D'oh !
+        content: Sorry, die gesuchte Seite scheint unauffindbar !
+    other:
+        title: Hum ... Fehler !
+        subtitle: Hum ...
+        content: Ein Fehler ist auf dem Server entstanden ...

@@ -1,0 +1,127 @@
+wiki:
+    levels:
+        connected: Alle Studenten
+        asso_member: Alle Mitglieder des Vereins
+        asso_admin: Alle Vorstandsmitglieder
+        admin: Die Leiter der EtuUTT Webseite (Sie haben dieses nicht)
+
+    menu:
+        index: Empfang
+        read: Lesen
+        edit: Ändern
+        delete: Löschen
+        permissions: Rechte
+
+    main:
+        index:
+            title: Wiki der Vereine
+        edit:
+            title: Empfang ändern
+            submit: Ändern
+            revisions: Korrekturen
+            content: Inhalt
+            by: von
+            comment: Beschreiben Sie was Sie geändert haben
+            confirm: Empfang des Wikis wurde erfolgreich geändert
+        revision:
+            title: Eine Korrektur sehen
+            revisions: Korrekturen
+            by: von
+            submit: Korrektur aufheben
+            confirm: Korrektur wurde erfolgreich aufgehoben
+
+    orga:
+        index:
+            title: Wiki von %name%
+            confirm: Seite wurde erfolgreich geändert
+            create: Herstellen
+            create_page: Seite
+            create_category: Kategorie
+            edit: Ändern
+        edit:
+            title: Empfang ändern
+            submit: Ändern
+            content: Inhalt
+            revisions: Korrekturen
+            by: von
+            comment: Beschreiben Sie was Sie geändert haben
+            confirm: Empfang des Wikis wurde erfolgreich geändert
+        revision:
+            title: Eine Korrektur sehen
+            revisions: Korrekturen
+            by: von
+            submit: Korrektur aufheben
+            confirm: Korrektur wurde erfolgreich aufgehoben
+        permissions:
+            toEdit: Wer kann diese Seite ändern ?
+            toEditPermissions: Wer kann die Erleubnisse dieser Seite ändern ?
+            title: Erlaubnisse ändern
+            submit: Ändern
+            confirm: Erlaubnisse dieser Seite wurden erfolgreich geändert
+        tree:
+            title: Suchbaum ändern
+            edit: Ändern %category%
+            remove: Löschen %category%
+            count_pages:
+                one: %count% Seite
+                many: %count% Seiten
+        edit_category:
+            title: Kategorie ändern
+            submit: Ändern
+            name: Name der Kategorie
+            where: Wo soll diese Kategorie hergestellt werden ?
+            confirm: Kategorie wurde erfolgreich geändert
+        delete_category:
+            title: Kategorie löschen
+            question: |
+                Wollen Sie wirklich "%categoryName%" und
+                alle entsprechende Kategorien und Seiten löschen ?
+            yes: Ja, löschen
+            no: Nein, abbrechen
+            confirm: Kategorie wurde erfolgreich gelöscht
+
+
+    page:
+        view:
+            title: Seite lesen
+        create:
+            title: Seite herstellen
+            submit: Herstellen
+            name: Name der Seite
+            content: Inhalt
+            where: Wo soll diese Seite hergestellt werden ?
+            confirm: Seite wurde erfolgreich hergestellt
+        create_category:
+            title: Kategorie herstellen
+            submit: Herstellen
+            name: Name der Kategorie
+            where: Wo soll diese Kategorie hergestellt werden ?
+            confirm: Kategorie wurde erfolgreich hergestellt
+        edit:
+            title: Seite ändern
+            revisions: Korrekturen
+            submit: Ändern
+            name: Name der Seite
+            content: Inhalt
+            where: Wo soll diese Seite hin ?
+            comment: Beschreiben Sie was Sie geändert haben
+            confirm: Seite wurde erfolgreich geändert
+        revision:
+            title: Eine Korrektur sehen
+            revisions: Korrekturen
+            by: von
+            submit: Korrektur aufheben
+            confirm: Korrektur wurde erfolgreich aufgehoben
+        permissions:
+            title: Erlaubnisse ändern
+            submit: Ändern
+            confirm: Erlaubnisse dieser Seite wurden erfolgreich geändert
+            toView: Wer kann diese Seite sehen ?
+            toEdit: Wer kann diese Seite ändern ?
+            toEditPermissions: Wer kann die Erlaubnisse dieser Seite ändern ?
+        delete:
+            title: Eine Seite löschen
+            question: Wollen Sie wirklich "%pageName%" löschen ?
+            yes: Ja, löschen
+            no: Nein, abbrechen
+            confirm: Seite wurde erfolgreich gelöscht
