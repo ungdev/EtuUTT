@@ -38,7 +38,7 @@ class SidebarBuilder
 			->addBlock('base.sidebar.etu.title')
 				->add('base.sidebar.etu.items.team')
 					->setIcon('users.png')
-					->setUrl($router->generate('page_view', array('slug' => 'l-equipe')))
+					->setUrl($router->generate('contributors'))
 				->end()
 			->end()
 		;

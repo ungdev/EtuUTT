@@ -19,6 +19,8 @@ class MainController extends Controller
 	 */
 	public function indexAction()
 	{
-		return [];
+		return [
+            'is_admin' => in_array($this->getUser()->getLogin(), $this->container->getParameter('etu.argentique.authorized_admin'))
+        ];
 	}
 }

@@ -4,6 +4,12 @@
     <link rel="stylesheet" href="{{ asset('css/bundles/argentique.css') }}" type="text/css" />
 {% endblock %}
 
+{% block javascripts %}
+    {% if is_admin %}
+        <script src="{{ asset('js/common.js') }}" type="text/javascript"></script>
+    {% endif %}
+{% endblock %}
+
 {% block title %}{{ 'argentique.main.index.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
@@ -11,5 +17,7 @@
 {% endblock %}
 
 {% block content %}
+    {% if is_admin %}
 
+    {% endif %}
 {% endblock %}

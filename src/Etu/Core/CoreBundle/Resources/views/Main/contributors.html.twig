@@ -1,15 +1,64 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block title %}{{ page.title }}{% endblock %}
-
-{% block meta_desc %}{{ page.title }}{% endblock %}
+{% block title %}L'équipe EtuUTT{% endblock %}
 
 {% block titleIcon %}
 	<img src="{{ asset('img/titles/page.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
-	<div class="padding20-all">
-		{{ page.content|raw }}
+	<div class="padding20-all align-center">
+		<p>
+            Le site étudiant de l'UTT existe grâce à qelques personnes qui ont bien voulu s'investir dans un projet<br />
+            de grande ampleur et d'y consacrer du temps. Merci à eux !
+		</p>
+
+        <hr />
+
+        <div class="row-fluid">
+            <div class="span4">
+                <img src="https://etu.utt.fr/photos/galopint.png" style="width: 100px;" />
+                <p>
+                    <strong>Titouan Galopin</strong><br />
+                    Principal développeur
+                </p>
+            </div>
+            <div class="span4">
+                <img src="https://etu.utt.fr/photos/soulierl.jpg" style="width: 100px;" />
+                <p>
+                    <strong>Lucas Soulier</strong><br />
+                    Développeur Forum
+                </p>
+            </div>
+            <div class="span4">
+                <img src="https://etu.utt.fr/photos/chabanop.jpg" style="width: 100px;" />
+                <p>
+                    <strong>Paul Chabanon</strong><br />
+                    Développeur Module BuckUTT
+                </p>
+            </div>
+        </div>
+
+        <br />
+        <br />
+
+        <div class="row-fluid">
+            <div class="span2"></div>
+            <div class="span4">
+                <img src="https://etu.utt.fr/photos/prouxale.png" style="width: 100px;" />
+                <p>
+                    <strong>Alexander Proux</strong><br />
+                    Tranducteur Anglais
+                </p>
+            </div>
+            <div class="span4">
+                <img src="https://etu.utt.fr/photos/schultzn.jpg" style="width: 100px;" />
+                <p>
+                    <strong>Noemie SCHULTZ</strong><br />
+                    Tranductrice Allemand
+                </p>
+            </div>
+            <div class="span2"></div>
+        </div>
 	</div>
 {% endblock %}
