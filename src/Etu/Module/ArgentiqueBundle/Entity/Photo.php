@@ -35,14 +35,7 @@ class Photo
      *
      * @ORM\Column(type="string", length=50)
      */
-    protected $filename;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=200)
-     */
-    protected $description;
+    protected $file;
 
     /**
      * @var \DateTime $date
@@ -77,49 +70,11 @@ class Photo
     }
 
     /**
-     * Set filename
-     *
-     * @param string $filename
-     * @return Photo
-     */
-    public function setFilename($filename)
-    {
-        $this->filename = $filename;
-
-        return $this;
-    }
-
-    /**
-     * Get filename
-     *
      * @return string
      */
-    public function getFilename()
+    public function getFile()
     {
-        return $this->filename;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Photo
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
+        return $this->file;
     }
 
     /**

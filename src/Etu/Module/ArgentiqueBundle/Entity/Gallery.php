@@ -2,14 +2,16 @@
 
 namespace Etu\Module\ArgentiqueBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="etu_argentique_galleries")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
+ * @Gedmo\Tree(type="nested")
  */
 class Gallery
 {
@@ -23,11 +25,45 @@ class Gallery
     protected $id;
 
     /**
+     * @var Gallery $parent
+     *
+     * @Gedmo\TreeParent
+     * @ORM\ManyToOne(targetEntity="Gallery", inversedBy="children")
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
+    protected $parent;
+
+    /**
      * @var integer
      *
+     * @Gedmo\TreeLeft
      * @ORM\Column(type="integer")
      */
-    protected $event;
+    protected $left;
+
+    /**
+     * @var integer
+     *
+     * @Gedmo\TreeRight
+     * @ORM\Column(type="integer")
+     */
+    protected $right;
+
+    /**
+     * @var integer
+     *
+     * @Gedmo\TreeLevel
+     * @ORM\Column(type="integer")
+     */
+    protected $level;
+
+    /**
+     * @var integer
+     *
+     * @Gedmo\TreeRoot
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $root;
 
     /**
      * @var string
@@ -42,6 +78,13 @@ class Gallery
      * @ORM\Column(type="string", length=50)
      */
     protected $slug;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text")
+     */
+    protected $description;
 
     /**
      * @var \DateTime $createdAt
@@ -65,12 +108,22 @@ class Gallery
      * @ORM\JoinColumn()
      */
     protected $photos;
+
+    /**
+     * @var Gallery[] $children
+     *
+     * @ORM\OneToMany(targetEntity="Gallery", mappedBy="parent")
+     * @ORM\JoinColumn()
+     * @ORM\OrderBy({"name" = "ASC"})
+     */
+    protected $children;
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->photos = new ArrayCollection();
+        $this->children = new ArrayCollection();
     }
 
     /**
@@ -84,26 +137,95 @@ class Gallery
     }
 
     /**
-     * Set event
+     * Set left
      *
-     * @param integer $event
+     * @param integer $left
      * @return Gallery
      */
-    public function setEvent($event)
+    public function setLeft($left)
     {
-        $this->event = $event;
+        $this->left = $left;
 
         return $this;
     }
 
     /**
-     * Get event
+     * Get left
      *
      * @return integer
      */
-    public function getEvent()
+    public function getLeft()
     {
-        return $this->event;
+        return $this->left;
+    }
+
+    /**
+     * Set right
+     *
+     * @param integer $right
+     * @return Gallery
+     */
+    public function setRight($right)
+    {
+        $this->right = $right;
+
+        return $this;
+    }
+
+    /**
+     * Get right
+     *
+     * @return integer
+     */
+    public function getRight()
+    {
+        return $this->right;
+    }
+
+    /**
+     * Set level
+     *
+     * @param integer $level
+     * @return Gallery
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    /**
+     * Get level
+     *
+     * @return integer
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    /**
+     * Set root
+     *
+     * @param integer $root
+     * @return Gallery
+     */
+    public function setRoot($root)
+    {
+        $this->root = $root;
+
+        return $this;
+    }
+
+    /**
+     * Get root
+     *
+     * @return integer
+     */
+    public function getRoot()
+    {
+        return $this->root;
     }
 
     /**
@@ -153,6 +275,29 @@ class Gallery
     }
 
     /**
+     * Set description
+     *
+     * @param string $description
+     * @return Gallery
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
      * Set createdAt
      *
      * @param \DateTime $createdAt
@@ -199,6 +344,29 @@ class Gallery
     }
 
     /**
+     * Set parent
+     *
+     * @param Gallery $parent
+     * @return Gallery
+     */
+    public function setParent(Gallery $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return Gallery
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
      * Add photos
      *
      * @param Photo $photos
@@ -224,10 +392,43 @@ class Gallery
     /**
      * Get photos
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getPhotos()
     {
         return $this->photos;
+    }
+
+    /**
+     * Add children
+     *
+     * @param Gallery $children
+     * @return Gallery
+     */
+    public function addChildren(Gallery $children)
+    {
+        $this->children[] = $children;
+
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param Gallery $children
+     */
+    public function removeChildren(Gallery $children)
+    {
+        $this->children->removeElement($children);
+    }
+
+    /**
+     * Get children
+     *
+     * @return Collection
+     */
+    public function getChildren()
+    {
+        return $this->children;
     }
 }

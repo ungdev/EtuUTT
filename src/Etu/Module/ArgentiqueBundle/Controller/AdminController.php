@@ -2,6 +2,7 @@
 
 namespace Etu\Module\ArgentiqueBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -14,16 +15,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 class AdminController extends Controller
 {
-    private static $authorized = ['admin', 'argentiq'];
-
 	/**
 	 * @Route("", name="argentique_admin_index")
 	 * @Template()
 	 */
 	public function indexAction()
 	{
-		if (! $this->getUser()->getIsOrga() || ! in_array($this->getUser()->getLogin(), self::$authorized)) {
+		if (! in_array($this->getUser()->getLogin(), $this->container->getParameter('etu.argentique.authorized_admin'))) {
             throw new AccessDeniedHttpException('Only Argentique is authorized');
         }
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        return [];
 	}
 }

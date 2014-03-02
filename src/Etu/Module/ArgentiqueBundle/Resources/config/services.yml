@@ -1,4 +1,5 @@
 
-parameters: ~
+parameters:
+    etu.argentique.authorized_admin: [ admin, argentiq ]
 
 services: ~
