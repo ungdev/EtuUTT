@@ -145,9 +145,9 @@ class DefaultController extends Controller
 				$amount = $data['amount']*100;
 
 				$param = '';
-				$param .=' normal_return_url=http://'.$this->container->getParameter('etu.domain').'/buckutt/reload/2';
-				$param .=' cancel_return_url=http://'.$this->container->getParameter('etu.domain').'/buckutt/reload';
-				$param .=' automatic_response_url=http://'.$this->container->getParameter('etu.domain').'/buckutt/sherlocks/return';
+				$param .=' normal_return_url=https://'.$this->container->getParameter('etu.domain').'/buckutt/reload/2';
+				$param .=' cancel_return_url=https://'.$this->container->getParameter('etu.domain').'/buckutt/reload';
+				$param .=' automatic_response_url=https://'.$this->container->getParameter('etu.domain').'/buckutt/sherlocks/return';
 				$param .=' language=fr';
 				$param .=' payment_means=CB,2,VISA,2,MASTERCARD,2';
 				$param .=' header_flag=yes';
