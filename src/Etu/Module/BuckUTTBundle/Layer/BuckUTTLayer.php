@@ -29,6 +29,15 @@ class BuckUTTLayer
 		$client = $this->builder->createManager('SBUY');
 		return number_format($client->getCredit() / 100, 2);
 	}
+	
+	/**
+	 * @return int
+	 */
+	public function getSessionStatus()
+	{
+		$client = $this->builder->createManager('SBUY');
+		return $client->getSessionStatus();
+	}
 
 	/**
 	 * @return float

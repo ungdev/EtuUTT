@@ -8,7 +8,7 @@ class SoapManager
     private $client;
     private $wsdlName;
     private $firstUse = false;
-    private $login = '';
+    private $idetu = 0;
     private $pin = 0;
     private static $cookies = array();// our session cookie for buckutt server
     private static $session = null;//our session from symfony
@@ -34,10 +34,10 @@ class SoapManager
         }
     }
 
-    public function _login($login, $pin){
-        $this->login = $login;
+    public function _login($idetu, $pin){
+        $this->idetu = $idetu;
         $this->pin = (int)$pin;
-        return $this->login($this->login, 1, $this->pin, 'etu.utt.fr');
+        return $this->login($this->idetu, 2, $this->pin, 'etu.utt.fr');
     }
 
     public function __call($name, $arguments)
@@ -49,7 +49,7 @@ class SoapManager
         catch(\SoapFault $e){
             // We are disconnected
             //*
-            if($this->_login($this->login, $this->pin) != 1)
+            if($this->_login($this->idetu, $this->pin) != 1)
                 return false;
 
             $rtn = call_user_func_array(array($this->client, $name), $arguments);
