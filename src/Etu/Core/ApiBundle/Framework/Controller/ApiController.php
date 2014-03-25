@@ -18,7 +18,15 @@ abstract class ApiController extends Controller
             'response' => $data
         ];
 
-        $format = $this->getRequest()->query->get('_format');
+        $request = $this->getRequest();
+
+        $format = 'json';
+
+        if ($request->query->has('format')) {
+            $format = $request->query->get('format');
+        } else if ($request->headers->has('format')) {
+            $format = $request->headers->get('format');
+        }
 
         if (! in_array($format, ['xml', 'json'])) {
             $format = 'json';

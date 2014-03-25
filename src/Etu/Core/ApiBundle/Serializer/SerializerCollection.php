@@ -2,10 +2,9 @@
 
 namespace Etu\Core\ApiBundle\Serializer;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-
-use Tga\Api\Common\Collection\ArrayCollection;
 
 class SerializerCollection
 {
@@ -51,7 +50,7 @@ class SerializerCollection
      */
     public function getEncoders()
     {
-        return $this->encoders->all();
+        return $this->encoders->toArray();
     }
 
     /**
@@ -59,7 +58,7 @@ class SerializerCollection
      */
     public function getNormalizers()
     {
-        return $this->normalizers->all();
+        return $this->normalizers->toArray();
     }
 
     /**

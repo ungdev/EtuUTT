@@ -26,6 +26,7 @@ class SecurityListener
     /**
      * @param GetResponseEvent $event
      * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     * @return bool
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
@@ -33,11 +34,10 @@ class SecurityListener
             $token = $event->getRequest()->headers->get('etu-utt-token', false);
 
             if (! $token) {
-                $token = $event->getRequest()->query->get('token', false);
-            }
-
-            if (! $token) {
                 $event->setResponse(new Response('Authentication required', 401));
+                $event->stopPropagation();
+
+                return false;
             }
 
             $access = $this->doctrine->getManager()
@@ -46,6 +46,9 @@ class SecurityListener
 
             if (! $access) {
                 $event->setResponse(new Response('Invalid token', 403));
+                $event->stopPropagation();
+
+                return false;
             }
 
             $event->getRequest()->attributes->set('access', $access);

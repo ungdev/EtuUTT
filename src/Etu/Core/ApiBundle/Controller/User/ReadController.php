@@ -38,7 +38,7 @@ class ReadController extends ApiController
         $query = (new UserListMapper())->mapQuery($query, $request->query);
 
         /** @var SlidingPagination $pagination */
-        $pagination = $this->get('knp_paginator')->paginate($query, $page, 50);
+        $pagination = $this->get('knp_paginator')->paginate($query, $page, 30);
 
         $previous = false;
         $next = false;
