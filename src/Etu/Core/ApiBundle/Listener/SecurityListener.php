@@ -3,7 +3,9 @@
 namespace Etu\Core\ApiBundle\Listener;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class SecurityListener
@@ -35,7 +37,7 @@ class SecurityListener
             }
 
             if (! $token) {
-                throw new AccessDeniedHttpException();
+                $event->setResponse(new Response('Authentication required', 401));
             }
 
             $access = $this->doctrine->getManager()
@@ -43,7 +45,7 @@ class SecurityListener
                 ->findOneByToken($token);
 
             if (! $access) {
-                throw new AccessDeniedHttpException();
+                $event->setResponse(new Response('Invalid token', 403));
             }
 
             $event->getRequest()->attributes->set('access', $access);

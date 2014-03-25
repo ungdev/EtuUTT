@@ -39,7 +39,7 @@ class Gallery
      * @Gedmo\TreeLeft
      * @ORM\Column(type="integer")
      */
-    protected $left;
+    protected $treeLeft;
 
     /**
      * @var integer
@@ -47,7 +47,7 @@ class Gallery
      * @Gedmo\TreeRight
      * @ORM\Column(type="integer")
      */
-    protected $right;
+    protected $treeRight;
 
     /**
      * @var integer
@@ -55,7 +55,7 @@ class Gallery
      * @Gedmo\TreeLevel
      * @ORM\Column(type="integer")
      */
-    protected $level;
+    protected $treeLevvel;
 
     /**
      * @var integer
@@ -63,7 +63,7 @@ class Gallery
      * @Gedmo\TreeRoot
      * @ORM\Column(type="integer", nullable=true)
      */
-    protected $root;
+    protected $treeRoot;
 
     /**
      * @var string
@@ -137,95 +137,75 @@ class Gallery
     }
 
     /**
-     * Set left
-     *
-     * @param integer $left
-     * @return Gallery
+     * @param int $treeLeft
+     * @return $this
      */
-    public function setLeft($left)
+    public function setTreeLeft($treeLeft)
     {
-        $this->left = $left;
-
+        $this->treeLeft = $treeLeft;
         return $this;
     }
 
     /**
-     * Get left
-     *
-     * @return integer
+     * @return int
      */
-    public function getLeft()
+    public function getTreeLeft()
     {
-        return $this->left;
+        return $this->treeLeft;
     }
 
     /**
-     * Set right
-     *
-     * @param integer $right
-     * @return Gallery
+     * @param int $treeLevvel
+     * @return $this
      */
-    public function setRight($right)
+    public function setTreeLevvel($treeLevvel)
     {
-        $this->right = $right;
-
+        $this->treeLevvel = $treeLevvel;
         return $this;
     }
 
     /**
-     * Get right
-     *
-     * @return integer
+     * @return int
      */
-    public function getRight()
+    public function getTreeLevvel()
     {
-        return $this->right;
+        return $this->treeLevvel;
     }
 
     /**
-     * Set level
-     *
-     * @param integer $level
-     * @return Gallery
+     * @param int $treeRight
+     * @return $this
      */
-    public function setLevel($level)
+    public function setTreeRight($treeRight)
     {
-        $this->level = $level;
-
+        $this->treeRight = $treeRight;
         return $this;
     }
 
     /**
-     * Get level
-     *
-     * @return integer
+     * @return int
      */
-    public function getLevel()
+    public function getTreeRight()
     {
-        return $this->level;
+        return $this->treeRight;
     }
 
     /**
-     * Set root
-     *
-     * @param integer $root
-     * @return Gallery
+     * @param int $treeRoot
+     * @return $this
      */
-    public function setRoot($root)
+    public function setTreeRoot($treeRoot)
     {
-        $this->root = $root;
-
+        $this->treeRoot = $treeRoot;
         return $this;
     }
 
     /**
-     * Get root
-     *
-     * @return integer
+     * @return int
      */
-    public function getRoot()
+    public function getTreeRoot()
     {
-        return $this->root;
+        return $this->treeRoot;
     }
 
     /**

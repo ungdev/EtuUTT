@@ -2,6 +2,11 @@
 argentique:
     sidebar:
         service: Gallerie photos (Argentique)
+
     main:
         index:
             title: Argentique
+
+    admin:
+        manage:
+            title: Gérer les galleries

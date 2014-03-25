@@ -5,6 +5,7 @@ namespace Etu\Core\ApiBundle\Controller\User;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Etu\Core\ApiBundle\Framework\Controller\ApiController;
+use Etu\Core\ApiBundle\Query\UserListMapper;
 use Etu\Core\ApiBundle\Transformer\UserTransformer;
 use Knp\Component\Pager\Pagination\SlidingPagination;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,47 +28,14 @@ class ReadController extends ApiController
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        /** @var $users QueryBuilder */
+        /** @var $query QueryBuilder */
         $query = $em->createQueryBuilder()
             ->select('u, m')
             ->from('EtuUserBundle:User', 'u')
             ->leftJoin('u.bdeMemberships', 'm')
             ->orderBy('u.lastName');
 
-        if ($request->query->has('login')) {
-            $query->andWhere('u.login = :login')
-                ->setParameter('login', $request->query->get('login'));
-        }
-
-        if ($request->query->has('firstname')) {
-            $query->andWhere('u.firstName LIKE :firstname')
-                ->setParameter('firstname', '%'.$request->query->get('firstname').'%');
-        }
-
-        if ($request->query->has('lastname')) {
-            $query->andWhere('u.lastName LIKE :lastname')
-                ->setParameter('lastname', '%'.$request->query->get('lastname').'%');
-        }
-
-        if ($request->query->has('branch')) {
-            $query->andWhere('u.branch = :branch')
-                ->setParameter('branch', $request->query->get('branch'));
-        }
-
-        if ($request->query->has('level')) {
-            $query->andWhere('u.niveau = :level')
-                ->setParameter('level', $request->query->get('level'));
-        }
-
-        if ($request->query->has('speciality')) {
-            $query->andWhere('u.filiere = :speciality')
-                ->setParameter('speciality', $request->query->get('speciality'));
-        }
-
-        if ($request->query->has('is_student')) {
-            $query->andWhere('u.isStudent = :is_student')
-                ->setParameter('is_student', (bool) $request->query->get('is_student'));
-        }
+        $query = (new UserListMapper())->mapQuery($query, $request->query);
 
         /** @var SlidingPagination $pagination */
         $pagination = $this->get('knp_paginator')->paginate($query, $page, 50);
@@ -92,18 +60,7 @@ class ReadController extends ApiController
                 'previous' => $previous,
                 'next' => $next,
             ],
-            'users' => $this->transform($pagination->getItems())
+            'users' => (new UserTransformer())->transform($pagination->getItems())
         ]);
-    }
-
-    /**
-     * @param $input
-     * @return array
-     * @throws \InvalidArgumentException
-     */
-    private function transform($input)
-    {
-        $transformer = new UserTransformer();
-        return $transformer->transform($input);
     }
 }

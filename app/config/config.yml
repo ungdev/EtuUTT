@@ -78,7 +78,7 @@ stof_doctrine_extensions:
     orm:
         default:
             # Extensions activated
-            tree:           false
+            tree:           true
             timestampable:  true
             blameable:      false
             sluggable:      false

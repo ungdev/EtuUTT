@@ -1,0 +1,56 @@
+#dropbox {
+  background: #e5e5e5;
+  min-height: 120px;
+  margin: 10px;
+  color: #333;
+  text-align: center;
+  -moz-transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+#dropbox .message {
+  display: block;
+  font-size: 11px;
+  text-align: center;
+  padding-top: 40px;
+}
+#dropbox .message i {
+  color: #555555;
+  font-size: 10px;
+}
+#dropbox .preview {
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  margin: 20px;
+  text-align: center;
+  opacity: 0.5;
+}
+#dropbox .preview .thumb {
+  width: 150px;
+  height: 150px;
+  display: block;
+  background-position: 50% 50%;
+  background-size: cover;
+}
+#dropbox .preview.done {
+  opacity: 1;
+}
+#dropbox .progress-holder {
+  height: 12px;
+  width: 100%;
+  margin: 5px 0 10px 0;
+}
+#dropbox .progress-bar {
+  background-color: #2586d0;
+  height: 100%;
+  width: 0;
+  -moz-transition: 0.25s;
+  -webkit-transition: 0.25s;
+  -o-transition: 0.25s;
+  transition: 0.25s;
+}
+#dropbox .preview.done .progress {
+  width: 100% !important;
+}
