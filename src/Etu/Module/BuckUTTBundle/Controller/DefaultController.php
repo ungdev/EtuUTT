@@ -29,6 +29,9 @@ class DefaultController extends Controller
 
 		/** @var BuckUTTLayer $buckutt */
 		$buckutt = $this->get('etu.buckutt.layer');
+		if (! $buckutt->getSessionStatus()) {
+			return $this->redirect($this->generateUrl('buckutt_connect', array('action' => 'disconnect')));
+		}
 
 		return array(
 			'credit' => $buckutt->getUserCredit(),
@@ -51,7 +54,7 @@ class DefaultController extends Controller
 			return $this->redirect($this->generateUrl('buckutt_history'));
 		} elseif ($action == 'lostPin'){
 			$SADMIN = new SoapManager('SADMIN', $this->get('session'));
-			$state = $SADMIN->resetKey($this->getUser()->getLogin(), $this->getUser()->getMail());
+			$state = $SADMIN->resetKey($this->getUser()->getStudentId(), 2, $this->getUser()->getMail());
 
 			if ($state == 0){
 				$this->get('session')->getFlashBag()->set('message', array(
@@ -75,11 +78,11 @@ class DefaultController extends Controller
 			$SBUY = new SoapManager('SBUY', $this->get('session'));
 			$SADMIN = new SoapManager('SADMIN', $this->get('session'));
 
-			$login = $this->getUser()->getLogin();
+			$idetu = $this->getUser()->getStudentId();
 			$data = $form->getData();
 			$pin = (int)$data['pin'];
 
-			if ($SADMIN->_login($login, $pin) == 1 && $SBUY->_login($login, $pin) == 1) {
+			if ($SADMIN->_login($idetu, $pin) == 1 && $SBUY->_login($idetu, $pin) == 1) {
 				return $this->redirect($this->generateUrl('buckutt_history'));
 			} else {
 				$this->get('session')->getFlashBag()->set('message', array(
@@ -111,12 +114,17 @@ class DefaultController extends Controller
 		}
 
 		if (!$this->get('session')->get(SoapManager::cookie_name)) {
-			return $this->redirect($this->generateUrl('buckutt_connect'));
+			return $this->redirect($this->generateUrl('buckutt_connect', array('action' => 'disconnect')));
 		}
 
 		define('MAX_AMOUNT', 10000);
 
 		$clientSBUY = new SoapManager('SBUY', $this->get('session'));
+
+		if (! $clientSBUY->getSessionStatus()) {
+			return $this->redirect($this->generateUrl('buckutt_connect'));
+		}
+
 		$credit = $clientSBUY->getCredit();
 		$possible_amount = MAX_AMOUNT - $credit;
 
@@ -194,6 +202,10 @@ class DefaultController extends Controller
 			$newPin2 = (int)$data['newpin2'];
 
 			$SADMIN = new SoapManager('SADMIN', $this->get('session'));
+			if (! $SADMIN->getSessionStatus()) {
+				return $this->redirect($this->generateUrl('buckutt_connect', array('action' => 'disconnect')));
+			}
+
 			$state = $SADMIN->changeKeySecure($oldPin, $newPin, $newPin2);
 
 			if ($state == 1){
@@ -243,6 +255,10 @@ class DefaultController extends Controller
 			$data = $formBlock->getData();
 			$pin = (int)$data['pin'];
 			$SADMIN = new SoapManager('SADMIN', $this->get('session'));
+			if (! $SADMIN->getSessionStatus()) {
+				return $this->redirect($this->generateUrl('buckutt_connect', array('action' => 'disconnect')));
+			}
+
 			$state = $SADMIN->blockMe($pin);
 
 			if ($state == 1){
