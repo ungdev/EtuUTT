@@ -5,12 +5,12 @@ namespace Etu\Module\ArgentiqueBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Photo
+ * Collection
  *
- * @ORM\Table(name="atu_argentique_photos")
+ * @ORM\Table(name="atu_argentique_collections")
  * @ORM\Entity
  */
-class Photo
+class Collection
 {
     /**
      * @var integer
@@ -29,14 +29,6 @@ class Photo
     private $flickrId;
 
     /**
-     * @var PhotoSet $photoSet
-     *
-     * @ORM\ManyToOne(targetEntity="PhotoSet", inversedBy="photos")
-     * @ORM\JoinColumn()
-     */
-    private $photoSet;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=100)
@@ -46,16 +38,32 @@ class Photo
     /**
      * @var string
      *
-     * @ORM\Column(name="icon", type="string", length=100)
+     * @ORM\Column(name="icon", type="string", length=100, nullable=true)
      */
     private $icon;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="file", type="string", length=100)
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
-    private $file;
+    private $description;
+
+    /**
+     * @var PhotoSet[] $sets
+     *
+     * @ORM\OneToMany(targetEntity="PhotoSet", mappedBy="collection", cascade={"persist"})
+     * @ORM\JoinColumn()
+     */
+    private $sets;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->sets = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -89,7 +97,7 @@ class Photo
      * Set title
      *
      * @param string $title
-     * @return Photo
+     * @return Collection
      */
     public function setTitle($title)
     {
@@ -112,7 +120,7 @@ class Photo
      * Set icon
      *
      * @param string $icon
-     * @return Photo
+     * @return Collection
      */
     public function setIcon($icon)
     {
@@ -132,48 +140,71 @@ class Photo
     }
 
     /**
-     * Set file
+     * Set description
      *
-     * @param string $file
-     * @return Photo
+     * @param string $description
+     * @return Collection
      */
-    public function setFile($file)
+    public function setDescription($description)
     {
-        $this->file = $file;
+        $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get file
+     * Get description
      *
      * @return string
      */
-    public function getFile()
+    public function getDescription()
     {
-        return $this->file;
+        return $this->description;
     }
 
     /**
-     * Set photoSet
+     * Add sets
      *
-     * @param \Etu\Module\ArgentiqueBundle\Entity\PhotoSet $photoSet
-     * @return Photo
+     * @param \Etu\Module\ArgentiqueBundle\Entity\PhotoSet $sets
+     * @return Collection
      */
-    public function setPhotoSet(\Etu\Module\ArgentiqueBundle\Entity\PhotoSet $photoSet = null)
+    public function addSet(\Etu\Module\ArgentiqueBundle\Entity\PhotoSet $sets)
     {
-        $this->photoSet = $photoSet;
+        $this->sets[] = $sets;
 
         return $this;
     }
 
     /**
-     * Get photoSet
+     * Remove sets
      *
-     * @return \Etu\Module\ArgentiqueBundle\Entity\PhotoSet
+     * @param \Etu\Module\ArgentiqueBundle\Entity\PhotoSet $sets
      */
-    public function getPhotoSet()
+    public function removeSet(\Etu\Module\ArgentiqueBundle\Entity\PhotoSet $sets)
     {
-        return $this->photoSet;
+        $this->sets->removeElement($sets);
+    }
+
+    /**
+     * Get sets
+     *
+     * @return \Doctrine\Common\Collections\Collection|PhotoSet[]
+     */
+    public function getSets()
+    {
+        return $this->sets;
+    }
+
+    /**
+     * Set sets
+     *
+     * @param $sets PhotoSet[]
+     * @return $this
+     */
+    public function setSets(array $sets)
+    {
+        $this->sets = $sets;
+
+        return $this;
     }
 }

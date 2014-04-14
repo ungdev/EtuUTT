@@ -12,7 +12,6 @@ Users
         filiere         speciality
         isStudent       is_student
         bdeMember       bde_member
-    Image
     Badges
     Courses
     Organizations
@@ -20,7 +19,6 @@ Users
 Organizations
     Read
     List
-    Image
     President
 
 Endpoints

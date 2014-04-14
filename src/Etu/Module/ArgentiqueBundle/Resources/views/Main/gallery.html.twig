@@ -1,0 +1,110 @@
+{% extends '::page-1col.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/bundles/argentique.css') }}" type="text/css" />
+{% endblock %}
+
+{% block javascripts %}
+    {% if is_admin %}
+        <script type="text/javascript">var gallery = { id: {{ gallery.id }} };</script>
+        <script src="{{ asset('filedrop/src/jquery.filedrop.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/bundles/argentique.js') }}" type="text/javascript"></script>
+    {% endif %}
+{% endblock %}
+
+{% block title %}{{ gallery.name }}{% endblock %}
+
+{% block titleIcon %}
+    <img src="{{ asset('img/titles/argentique.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% macro display_tree(galleries, current) %}
+    {% for gallery in galleries %}
+        <li>
+            {% if current and current.id == gallery.id %}
+                <span class="root-gallery">
+                    {{ gallery.name }}
+                </span>
+            {% else %}
+                <a href="{{ path('argentique_gallery', {'id': gallery.id, 'slug': gallery.slug}) }}" class="link-gallery">
+                    {{ gallery.name }}
+                </a>
+            {% endif %}
+
+            {% if gallery.__children %}
+                <ul>
+                    {{ _self.display_tree(gallery.__children, current) }}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+{% endmacro %}
+
+{% block content %}
+    {% if is_admin %}
+    <ul class="nav nav-tabs page-tabs">
+        <li class="pull-right">
+            <a href="{{ path('argentique_admin_manage') }}">
+                {{ 'argentique.main.index.manage_galleries'|trans }}
+            </a>
+        </li>
+    </ul>
+
+    <div class="padding20-sides argentique-gallery">
+    {% else %}
+    <div class="padding20-all argentique-gallery">
+    {% endif %}
+        <div class="row-fluid">
+            <div class="span4 galleries">
+                {{ _self.display_tree(galleries, gallery) }}
+            </div>
+            <div class="span8 gallery-content">
+                {% if is_admin %}
+                    <div id="dropbox">
+                        <span class="message">{{ 'argentique.main.index.drop_here'|trans }}</span>
+                    </div>
+
+                    <p class="send-dropbox-holder align-center">
+                        <br />
+                        <button class="btn btn-primary send-dropbox" disabled="disabled">Ajouter</button>
+                        <button class="btn btn-default cancel-dropbox" disabled="disabled">Annuler</button>
+                    </p>
+
+                    <hr />
+                {% endif %}
+
+                <p class="align-center">
+                    {{ gallery.description }}
+                </p>
+
+                <hr />
+
+                {% if gallery.children|length > 0 %}
+                    {% for child in gallery.children %}
+                        <a href="{{ path('argentique_gallery', {'id': child.id, 'slug': child.slug}) }}" class="gallery-item gallery-sub">
+                            <div class="sub-images">
+                                <img src="{{ asset('img/photos.png') }}" />
+                            </div>
+                            <div class="sub-name">
+                                {{ child.name }}
+                            </div>
+                        </a>
+                    {% endfor %}
+
+                    <br />
+                    <br />
+                {% endif %}
+
+                {% for photo in gallery.photos %}
+                    <a href="#" class="gallery-item gallery-photo">
+                        <img src="{{ asset('argentique/'~ photo.file ~'_thumb.jpg') }}" />
+                    </a>
+                {% else %}
+                    <p>
+                        Pas de photos dans cette galerie pour le moment !
+                    </p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

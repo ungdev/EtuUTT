@@ -18,13 +18,20 @@
 {% endblock %}
 
 {% block content %}
-    {% if is_admin %}
-        <div id="dropbox">
-            <div class="actions">
-                <a href=""></a>
-            </div>
-
-            <span class="message">Drop images here to upload. <br /><i>(they will only be visible to you)</i></span>
-        </div>
-    {% endif %}
+    <div class="padding20-all argentique-index">
+        {% for collection in collections %}
+            <a href="{{ path('argentique_gallery', { 'id': collection.id, 'slug': collection.title|slugify }) }}" class="gallery-item gallery-sub">
+                <div class="sub-images">
+                    <img src="{{ asset('img/photos.png') }}" />
+                </div>
+                <div class="sub-name">
+                    {{ collection.title }}
+                </div>
+            </a>
+        {% else %}
+            <p>
+                Pas de collection pour le moment !
+            </p>
+        {% endfor %}
+    </div>
 {% endblock %}

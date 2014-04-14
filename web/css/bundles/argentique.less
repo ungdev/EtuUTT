@@ -1,66 +1,377 @@
 
-#dropbox {
-	background: #e5e5e5;
-	min-height: 120px;
-	margin: 10px;
-	color: #333;
+.argentique-admin-sync {
+	.starting, .importing, .ending, .no_photo {
+		padding: 25px;
+		text-align: center;
+	}
+
+	.logs {
+		text-align: left;
+		overflow-y: auto;
+		height: 500px;
+
+		ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+		}
+
+		li {
+			list-style-type: none;
+			padding: 5px 10px;
+			margin: 0;
+		}
+	}
+	.log-error {
+		background: #f2dede;
+	}
+	.log-success {
+		background: #dff0d8;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ...............................
+.argentique-index {
 	text-align: center;
 
-	-moz-transition: 0.5s;
-	-webkit-transition: 0.5s;
-	-o-transition: 0.5s;
-	transition: 0.5s;
-
-	.message {
-		display: block;
-		font-size: 11px;
-		text-align: center;
-		padding-top: 40px;
-
-		i {
-			color: #555555;
-			font-size: 10px;
-		}
-	}
-
-	.preview {
+	.gallery-item {
 		display: inline-block;
-		width: 150px;
-		height: 150px;
-		margin: 20px;
-		text-align: center;
-		opacity: 0.5;
+		padding: 10px;
+		background: #f5f5f5;
+		color: #333;
+		text-decoration: none;
+		margin: 10px;
+		width: 170px;
+		vertical-align: middle;
 
-		.thumb {
-			width: 150px;
-			height: 150px;
+		&:hover {
+			color: #333;
+			text-decoration: none;
+			background: #e5e5e5;
+		}
+		&:active {
+			-webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+			box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+		}
+	}
+}
+
+.argentique-gallery {
+	.galleries {
+		ul {
+			margin: 0 0 0 20px;
+			padding: 0;
+			list-style-type: none;
+		}
+		li {
+			margin: 5px 0;
+			padding: 0;
+			list-style-type: none;
+		}
+		.root-gallery {
 			display: block;
-			background-position: 50% 50%;
-			background-size: cover;
+			padding: 5px 10px;
+			font-weight: bold;
 		}
-		&.done {
-			opacity: 1;
+		.link-gallery {
+			display: block;
+			padding: 5px 10px;
+			background: #f5f5f5;
+
+			&:hover {
+				text-decoration: none;
+				background: #e5e5e5;
+			}
 		}
 	}
 
-	.progress-holder {
-		height: 12px;
+	#dropbox {
+		background: #e5e5e5;
+		min-height: 100px;
+		color: #333;
+		text-align: center;
+		padding-bottom: 20px;
+
+		-moz-transition: 0.5s;
+		-webkit-transition: 0.5s;
+		-o-transition: 0.5s;
+		transition: 0.5s;
+
+		.message {
+			display: block;
+			font-size: 11px;
+			text-align: center;
+			padding-top: 50px;
+
+			i {
+				color: #555555;
+				font-size: 10px;
+			}
+		}
+
+		.preview {
+			display: inline-block;
+			width: 150px;
+			margin: 20px 15px -10px 15px;
+			text-align: center;
+			opacity: 0.5;
+
+			.thumb {
+				width: 150px;
+				height: 150px;
+				display: block;
+				background-position: 50% 50%;
+				background-size: cover;
+			}
+			&.done {
+				opacity: 1;
+			}
+		}
+
+		.progress-holder {
+			height: 12px;
+			width: 100%;
+		}
+
+		.progress-bar {
+			background-color: #2586d0;
+			height: 100%;
+			width: 0;
+
+			-moz-transition:0.25s;
+			-webkit-transition:0.25s;
+			-o-transition:0.25s;
+			transition:0.25s;
+		}
+
+		.preview.done .progress{
+			width:100% !important;
+		}
+
+		.description-input {
+			border-radius: 0;
+			-webkit-border-radius: 0;
+			width: 139px;
+			padding: 5px;
+			font-size: 12px;
+		}
+	}
+
+	.gallery-content {
+		text-align: center;
+
+		.gallery-item {
+			display: inline-block;
+			padding: 10px;
+			background: #f5f5f5;
+			color: #333;
+			text-decoration: none;
+			margin: 5px;
+			vertical-align: middle;
+
+			&:hover {
+				color: #333;
+				text-decoration: none;
+				background: #e5e5e5;
+			}
+			&:active {
+				-webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+				box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+			}
+			&.gallery-sub {
+				width: 170px;
+			}
+		}
+	}
+}
+
+.galleries-tree {
+	ul.jqtree-tree {
+		margin-left: 0;
+	}
+
+	ul.jqtree-tree,
+	ul.jqtree-tree ul.jqtree_common {
+		list-style: none outside;
+		margin-bottom: 0;
+		padding: 0;
+	}
+
+	ul.jqtree-tree ul.jqtree_common {
+		display: block;
+		margin-left: 40px;
+		margin-right: 0;
+	}
+	ul.jqtree-tree li.jqtree-closed > ul.jqtree_common {
+		display: none;
+	}
+
+	ul.jqtree-tree li.jqtree_common {
+		clear: both;
+		list-style-type: none;
+	}
+	ul.jqtree-tree .jqtree-toggler {
+		display: block;
+		position: absolute;
+		left: -1.5em;
+		top: 30%;
+		*top: 0;  /* fix for ie7 */
+		font-size: 12px;
+		line-height: 12px;
+		font-family: arial;  /* fix for ie9 */
+		border-bottom: none;
+		color: #333;
+		cursor: pointer;
+		text-decoration: none;
+	}
+
+	ul.jqtree-tree .jqtree-element {
+		cursor: move;
+		background: #f3f3f3;
+		padding: 5px 10px;
+		margin-bottom: 5px;
+	}
+
+	ul.jqtree-tree .jqtree-title {
+		color: #1C4257;
+		vertical-align: middle;
+	}
+
+	ul.jqtree-tree li.jqtree-folder.jqtree-closed {
+		margin-bottom: 1px;
+	}
+
+	ul.jqtree-tree li.jqtree-folder .jqtree-title {
+		margin-left: 0;
+	}
+
+	span.jqtree-dragging {
+		color: #fff;
+		background: #000;
+		opacity: 0.6;
+		cursor: move;
+		padding: 2px 8px;
+	}
+
+	ul.jqtree-tree li.jqtree-ghost {
+		position: relative;
+		z-index: 10;
+		margin-right: 10px;
+	}
+
+	ul.jqtree-tree li.jqtree-ghost span {
+		display: block;
+	}
+
+	ul.jqtree-tree li.jqtree-ghost span.jqtree-circle {
+		height: 8px;
+		width: 8px;
+		position: absolute;
+		top: -4px;
+		left: 2px;
+	}
+
+	ul.jqtree-tree li.jqtree-ghost span.jqtree-line {
+		background-color: #333;
+		height: 2px;
+		padding: 0;
+		position: absolute;
+		top: -1px;
+		left: 10px;
 		width: 100%;
-		margin: 5px 0 10px 0;
 	}
 
-	.progress-bar {
-		background-color: #2586d0;
-		height: 100%;
-		width: 0;
-
-		-moz-transition:0.25s;
-		-webkit-transition:0.25s;
-		-o-transition:0.25s;
-		transition:0.25s;
+	ul.jqtree-tree li.jqtree-ghost.jqtree-inside {
+		margin-left: 48px;
 	}
 
-	.preview.done .progress{
-		width:100% !important;
+	ul.jqtree-tree span.jqtree-border {
+		position: absolute;
+		display: block;
+		left: -2px;
+		top: 0;
+		border: solid 2px #333;
+		margin: 0;
+		-webkit-box-sizing: content-box;
+		-moz-box-sizing: content-box;
+		box-sizing: content-box;
+	}
+
+	ul.jqtree-tree .jqtree-element {
+		width: 100%; /* todo: why is this in here? */
+		*width: auto; /* ie7 fix; issue 41 */
+		position: relative;
+	}
+
+	ul.jqtree-tree li.jqtree-selected > .jqtree-element,
+	ul.jqtree-tree li.jqtree-selected > .jqtree-element:hover {
+		background: #ffffcc;
+	}
+
+	ul.jqtree-tree .jqtree-moving > .jqtree-element .jqtree-title {
+		outline: dashed 1px #333;
+	}
+
+	.edit, .remove, .add {
+		float: right;
+		display: block;
+		padding: 5px 10px;
+		margin-top: -5px;
+		color: #333;
+
+		&:hover {
+			background: #e5e5e5;
+			text-decoration: none;
+		}
+	}
+}
+
+.gallery-input-box {
+	padding: 1% !important;
+	text-align: center;
+
+	.gallery-input-name, .gallery-input-desc {
+		width: 99% !important;
+	}
+}
+
+.gallery-remove-box {
+	padding: 1% !important;
+	text-align: center;
+}
+
+.gallery-box-btn {
+	display: inline-block;
+	border: 1px solid #dfdfdf;
+	text-decoration: none;
+	padding: 5px 20px;
+	color: #333;
+	font-size: 12px;
+	font-weight: bold;
+	margin-right: 10px;
+
+	&:hover {
+		text-decoration: none;
+	}
+	&:active {
+		-webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+		box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
 	}
 }

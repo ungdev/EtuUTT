@@ -96,6 +96,9 @@ fm_bbcode:
             filters: [ default, block, text, code, image, list, table, quote, video, url ]
             hooks: [ clickable, emoticon ]
 
+# API Doc
+nelmio_api_doc: ~
+
 # EtuUTT
 etu_core:
     domain: etu.utt.fr

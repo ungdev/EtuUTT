@@ -12,6 +12,7 @@
 /app/logs/*
 /app/check.php
 /app/SymfonyRequirements.php
+/src/Etu/Module/LoggerBundle/Resources/objects/errors
 /build/
 /vendor/
 /bin/

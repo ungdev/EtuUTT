@@ -17,6 +17,10 @@ etu_core_api:
     type:     annotation
     prefix:   /api
 
+etu_core_api_doc:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc
+
 # Load FOS Routing
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

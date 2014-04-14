@@ -3,10 +3,25 @@ argentique:
     sidebar:
         service: Gallerie photos (Argentique)
 
+    error:
+        no_collection: Aucun classeur n'a été trouvé pour l'import
+
     main:
         index:
             title: Argentique
+            public: Page publique
+            manage_galleries: Gérer les galleries
+            drop_here: Faites glissez ici les images que vous voulez envoyer
+
+        gallery:
+            upload_here: Ajouter des images ici
 
     admin:
-        manage:
+        synchronize:
             title: Gérer les galleries
+            starting: La synchronisation démarre ...
+            ending: La synchronisation se termine ...
+            importing: Importation en cours ...
+            photos: photos
+            no_photo: Aucune photo n'a besoin d'être importée
+            no_photo_back: Retour à la gallerie

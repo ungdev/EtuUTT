@@ -1,56 +1,86 @@
 
+var uploadHere = $('.upload-here'),
+    loader = $('#loader'),
+    dropbox = $('#dropbox'),
+    message = $('.message', dropbox),
+    sendDropbox = {
+        container: $('.send-dropbox-holder'),
+        send: $('.send-dropbox'),
+        cancel: $('.cancel-dropbox')
+    };
+
+uploadHere.click(function() {
+    dropbox.toggle();
+    $(this).parent().toggleClass('active').toggleClass('page-tabs-resolved-active');
+    sendDropbox.container.toggle();
+    return false;
+});
+
+sendDropbox.send.click(function() {
+    loader.show();
+
+    $.getJSON(Routing.generate('argentique_admin_upload_save', { id: gallery.id }), function() {
+        location.reload();
+    });
+
+    return false;
+});
+
+sendDropbox.cancel.click(function() {
+    loader.show();
+
+    $.getJSON(Routing.generate('argentique_admin_upload_cancel'), function() {
+        location.reload();
+    });
+
+    return false;
+});
+
 $(function(){
-    var dropbox = $('#dropbox'),
-        message = $('.message', dropbox);
-
     dropbox.filedrop({
-        // The name of the $_FILES entry:
-        paramname:'pic',
-
-        maxfiles: 5,
-        maxfilesize: 2,
+        paramname: 'photo',
+        maxfiles: 99,
+        maxfilesize: 5,
         url: Routing.generate('argentique_admin_upload'),
 
-        uploadFinished:function(i, file, response){
+        uploadFinished:function(i, file){
             $.data(file).addClass('done');
-            // response is the JSON object that post_file.php returns
         },
 
         error: function(err, file) {
             switch(err) {
                 case 'BrowserNotSupported':
-                    showMessage('Your browser does not support HTML5 file uploads!');
+                    alert('Ce navigateur n\'est pas supporte');
                     break;
                 case 'TooManyFiles':
-                    alert('Too many files! Please select 5 at most! (configurable)');
+                    alert('Vous ne pouvez pas ajouter autant de fichiers à la fois');
                     break;
                 case 'FileTooLarge':
-                    alert(file.name+' is too large! Please upload files up to 2mb (configurable).');
+                    alert(file.name+' est trop grosse ! Les images ne peuvent pas faire plus de 5 MB chacune.');
                     break;
                 default:
                     break;
             }
         },
 
-        // Called before each upload is started
         beforeEach: function(file){
-            if(!file.type.match(/^image\//)){
-                alert('Only images are allowed!');
-
-                // Returning false will cause the
-                // file to be rejected
+            if (!file.type.match(/^image\//)){
+                alert('Seules les images sont autorisées');
                 return false;
             }
         },
 
-        uploadStarted:function(i, file, len){
+        uploadStarted:function(i, file){
             createImage(file);
         },
 
         progressUpdated: function(i, file, progress) {
             $.data(file).find('.progress-bar').width(progress + '%');
-        }
+        },
 
+        afterAll: function() {
+            sendDropbox.container.find('button').attr('disabled', false);
+        }
     });
 
     var template =
@@ -97,9 +127,4 @@ $(function(){
 
         $.data(file,preview);
     }
-
-    function showMessage(msg){
-        message.html(msg);
-    }
-
 });
