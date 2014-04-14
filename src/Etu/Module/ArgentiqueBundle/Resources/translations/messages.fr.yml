@@ -12,9 +12,14 @@ argentique:
             public: Page publique
             manage_galleries: Gérer les galleries
             drop_here: Faites glissez ici les images que vous voulez envoyer
+            synchronize: Synchroniser avec Flickr
+            lasts: Dernières photos
 
-        gallery:
-            upload_here: Ajouter des images ici
+        synchronizing:
+            title: Importation en cours
+            explainations: |
+                Les photos Argentique ne sont pas disponibles pour le moment car elles sont en cours d'importation.
+                Revenez dans quelques minutes !
 
     admin:
         synchronize:

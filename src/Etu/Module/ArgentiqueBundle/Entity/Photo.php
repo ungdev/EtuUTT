@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Photo
  *
- * @ORM\Table(name="atu_argentique_photos")
+ * @ORM\Table(name="etu_argentique_photos")
  * @ORM\Entity
  */
 class Photo
@@ -56,6 +56,21 @@ class Photo
      * @ORM\Column(name="file", type="string", length=100)
      */
     private $file;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $createdAt;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
 
     /**
      * Get id

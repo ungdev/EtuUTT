@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Collection
  *
- * @ORM\Table(name="atu_argentique_collections")
+ * @ORM\Table(name="etu_argentique_collections")
  * @ORM\Entity
  */
 class Collection
@@ -38,13 +38,6 @@ class Collection
     /**
      * @var string
      *
-     * @ORM\Column(name="icon", type="string", length=100, nullable=true)
-     */
-    private $icon;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
@@ -58,11 +51,35 @@ class Collection
     private $sets;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $createdAt;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->sets = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->createdAt = new \DateTime();
+    }
+
+    /**
+     * Get sets
+     *
+     * @return \Doctrine\Common\Collections\Collection|PhotoSet[]
+     */
+    public function getIcon()
+    {
+        foreach ($this->sets as $set) {
+            foreach ($set->getPhotos() as $photo) {
+                return $photo;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -114,29 +131,6 @@ class Collection
     public function getTitle()
     {
         return $this->title;
-    }
-
-    /**
-     * Set icon
-     *
-     * @param string $icon
-     * @return Collection
-     */
-    public function setIcon($icon)
-    {
-        $this->icon = $icon;
-
-        return $this;
-    }
-
-    /**
-     * Get icon
-     *
-     * @return string
-     */
-    public function getIcon()
-    {
-        return $this->icon;
     }
 
     /**

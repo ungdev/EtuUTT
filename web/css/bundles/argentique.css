@@ -26,290 +26,43 @@
 .argentique-admin-sync .log-success {
   background: #dff0d8;
 }
-.argentique-index {
-  text-align: center;
-}
-.argentique-index .gallery-item {
-  display: inline-block;
-  padding: 10px;
-  background: #f5f5f5;
-  color: #333;
-  text-decoration: none;
-  margin: 10px;
-  width: 170px;
-  vertical-align: middle;
-}
-.argentique-index .gallery-item:hover {
-  color: #333;
-  text-decoration: none;
-  background: #e5e5e5;
-}
-.argentique-index .gallery-item:active {
-  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-}
-.argentique-gallery .galleries ul {
-  margin: 0 0 0 20px;
+.argentique-galleries ul {
+  margin: 0 0 0 10px;
   padding: 0;
   list-style-type: none;
 }
-.argentique-gallery .galleries li {
+.argentique-galleries li {
   margin: 5px 0;
   padding: 0;
   list-style-type: none;
 }
-.argentique-gallery .galleries .root-gallery {
+.argentique-galleries a {
   display: block;
   padding: 5px 10px;
-  font-weight: bold;
 }
-.argentique-gallery .galleries .link-gallery {
-  display: block;
-  padding: 5px 10px;
-  background: #f5f5f5;
-}
-.argentique-gallery .galleries .link-gallery:hover {
+.argentique-galleries a:hover {
+  background: #ededed;
   text-decoration: none;
-  background: #e5e5e5;
 }
-.argentique-gallery #dropbox {
-  background: #e5e5e5;
-  min-height: 100px;
-  color: #333;
-  text-align: center;
-  padding-bottom: 20px;
-  -moz-transition: 0.5s;
-  -webkit-transition: 0.5s;
-  -o-transition: 0.5s;
-  transition: 0.5s;
-}
-.argentique-gallery #dropbox .message {
-  display: block;
-  font-size: 11px;
-  text-align: center;
-  padding-top: 50px;
-}
-.argentique-gallery #dropbox .message i {
-  color: #555555;
-  font-size: 10px;
-}
-.argentique-gallery #dropbox .preview {
-  display: inline-block;
-  width: 150px;
-  margin: 20px 15px -10px 15px;
-  text-align: center;
-  opacity: 0.5;
-}
-.argentique-gallery #dropbox .preview .thumb {
-  width: 150px;
-  height: 150px;
-  display: block;
-  background-position: 50% 50%;
-  background-size: cover;
-}
-.argentique-gallery #dropbox .preview.done {
-  opacity: 1;
-}
-.argentique-gallery #dropbox .progress-holder {
-  height: 12px;
-  width: 100%;
-}
-.argentique-gallery #dropbox .progress-bar {
-  background-color: #2586d0;
-  height: 100%;
-  width: 0;
-  -moz-transition: 0.25s;
-  -webkit-transition: 0.25s;
-  -o-transition: 0.25s;
-  transition: 0.25s;
-}
-.argentique-gallery #dropbox .preview.done .progress {
-  width: 100% !important;
-}
-.argentique-gallery #dropbox .description-input {
-  border-radius: 0;
-  -webkit-border-radius: 0;
-  width: 139px;
-  padding: 5px;
-  font-size: 12px;
-}
-.argentique-gallery .gallery-content {
-  text-align: center;
-}
-.argentique-gallery .gallery-content .gallery-item {
-  display: inline-block;
-  padding: 10px;
-  background: #f5f5f5;
-  color: #333;
-  text-decoration: none;
-  margin: 5px;
-  vertical-align: middle;
-}
-.argentique-gallery .gallery-content .gallery-item:hover {
-  color: #333;
-  text-decoration: none;
-  background: #e5e5e5;
-}
-.argentique-gallery .gallery-content .gallery-item:active {
+.argentique-galleries a:active {
   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
-.argentique-gallery .gallery-content .gallery-item.gallery-sub {
-  width: 170px;
-}
-.galleries-tree ul.jqtree-tree {
-  margin-left: 0;
-}
-.galleries-tree ul.jqtree-tree,
-.galleries-tree ul.jqtree-tree ul.jqtree_common {
-  list-style: none outside;
-  margin-bottom: 0;
-  padding: 0;
-}
-.galleries-tree ul.jqtree-tree ul.jqtree_common {
-  display: block;
-  margin-left: 40px;
-  margin-right: 0;
-}
-.galleries-tree ul.jqtree-tree li.jqtree-closed > ul.jqtree_common {
-  display: none;
-}
-.galleries-tree ul.jqtree-tree li.jqtree_common {
-  clear: both;
-  list-style-type: none;
-}
-.galleries-tree ul.jqtree-tree .jqtree-toggler {
-  display: block;
-  position: absolute;
-  left: -1.5em;
-  top: 30%;
-  *top: 0;
-  /* fix for ie7 */
-  font-size: 12px;
-  line-height: 12px;
-  font-family: arial;
-  /* fix for ie9 */
-  border-bottom: none;
-  color: #333;
-  cursor: pointer;
-  text-decoration: none;
-}
-.galleries-tree ul.jqtree-tree .jqtree-element {
-  cursor: move;
-  background: #f3f3f3;
-  padding: 5px 10px;
-  margin-bottom: 5px;
-}
-.galleries-tree ul.jqtree-tree .jqtree-title {
-  color: #1C4257;
-  vertical-align: middle;
-}
-.galleries-tree ul.jqtree-tree li.jqtree-folder.jqtree-closed {
-  margin-bottom: 1px;
-}
-.galleries-tree ul.jqtree-tree li.jqtree-folder .jqtree-title {
-  margin-left: 0;
-}
-.galleries-tree span.jqtree-dragging {
-  color: #fff;
-  background: #000;
-  opacity: 0.6;
-  cursor: move;
-  padding: 2px 8px;
-}
-.galleries-tree ul.jqtree-tree li.jqtree-ghost {
-  position: relative;
-  z-index: 10;
-  margin-right: 10px;
-}
-.galleries-tree ul.jqtree-tree li.jqtree-ghost span {
-  display: block;
-}
-.galleries-tree ul.jqtree-tree li.jqtree-ghost span.jqtree-circle {
-  height: 8px;
-  width: 8px;
-  position: absolute;
-  top: -4px;
-  left: 2px;
-}
-.galleries-tree ul.jqtree-tree li.jqtree-ghost span.jqtree-line {
-  background-color: #333;
-  height: 2px;
-  padding: 0;
-  position: absolute;
-  top: -1px;
-  left: 10px;
-  width: 100%;
-}
-.galleries-tree ul.jqtree-tree li.jqtree-ghost.jqtree-inside {
-  margin-left: 48px;
-}
-.galleries-tree ul.jqtree-tree span.jqtree-border {
-  position: absolute;
-  display: block;
-  left: -2px;
-  top: 0;
-  border: solid 2px #333;
-  margin: 0;
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-}
-.galleries-tree ul.jqtree-tree .jqtree-element {
-  width: 100%;
-  /* todo: why is this in here? */
-  *width: auto;
-  /* ie7 fix; issue 41 */
-  position: relative;
-}
-.galleries-tree ul.jqtree-tree li.jqtree-selected > .jqtree-element,
-.galleries-tree ul.jqtree-tree li.jqtree-selected > .jqtree-element:hover {
-  background: #ffffcc;
-}
-.galleries-tree ul.jqtree-tree .jqtree-moving > .jqtree-element .jqtree-title {
-  outline: dashed 1px #333;
-}
-.galleries-tree .edit,
-.galleries-tree .remove,
-.galleries-tree .add {
-  float: right;
-  display: block;
-  padding: 5px 10px;
-  margin-top: -5px;
-  color: #333;
-}
-.galleries-tree .edit:hover,
-.galleries-tree .remove:hover,
-.galleries-tree .add:hover {
-  background: #e5e5e5;
-  text-decoration: none;
-}
-.gallery-input-box {
-  padding: 1% !important;
-  text-align: center;
-}
-.gallery-input-box .gallery-input-name,
-.gallery-input-box .gallery-input-desc {
-  width: 99% !important;
-}
-.gallery-remove-box {
-  padding: 1% !important;
-  text-align: center;
-}
-.gallery-box-btn {
+.argentique-photo {
   display: inline-block;
-  border: 1px solid #dfdfdf;
-  text-decoration: none;
-  padding: 5px 20px;
-  color: #333;
-  font-size: 12px;
-  font-weight: bold;
-  margin-right: 10px;
+  width: 110px;
+  height: 110px;
+  padding: 5px;
+  text-align: center;
+  background: #f5f5f5;
+  margin: 10px;
+  vertical-align: middle;
+  line-height: 110px;
 }
-.gallery-box-btn:hover {
-  text-decoration: none;
+.argentique-photo:hover {
+  background: #e5e5e5;
 }
-.gallery-box-btn:active {
+.argentique-photo:active {
   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }

@@ -134,7 +134,6 @@ class AdminController extends Controller
 
             $collection->setTitle($apiCollection['title']);
             $collection->setDescription($apiCollection['description']);
-            $collection->setIcon($apiCollection['iconlarge']);
 
             // Disable remove for this collection
             $removes['collections'][$collection->getFlickrId()] = false;

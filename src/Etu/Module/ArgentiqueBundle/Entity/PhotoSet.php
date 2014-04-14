@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * PhotoSet
  *
- * @ORM\Table(name="atu_argentique_photos_sets")
+ * @ORM\Table(name="etu_argentique_photos_sets")
  * @ORM\Entity
  */
 class PhotoSet
@@ -66,6 +66,13 @@ class PhotoSet
     private $photos;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $createdAt;
+
+    /**
      * @var Photo[]
      */
     public $importingPhotos = [];
@@ -76,6 +83,7 @@ class PhotoSet
     public function __construct()
     {
         $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     /**

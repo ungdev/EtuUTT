@@ -49,9 +49,9 @@
                 </ul>
             </div>
             <div class="span8">
-                <h4>{{ 'argentique.main.index.lasts'|trans }}</h4>
+                <h4>{{ set.title }}</h4>
 
-                {% for photo in photos %}
+                {% for photo in set.photos %}
                     <a href="{{ asset('argentique/' ~ photo.file) }}" target="_blank" class="swipebox argentique-photo"
                             title="{{ photo.title }}">
                         <img src="{{ asset('argentique/' ~ photo.icon) }}" />
