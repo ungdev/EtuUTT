@@ -13,20 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Collection
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
      * @var string
      *
-     * @ORM\Column(name="flickrId", type="string", length=100)
+     * @ORM\Column(type="string", length=50)
+     * @ORM\Id
      */
-    private $flickrId;
+    private $id;
 
     /**
      * @var string
@@ -45,7 +37,7 @@ class Collection
     /**
      * @var PhotoSet[] $sets
      *
-     * @ORM\OneToMany(targetEntity="PhotoSet", mappedBy="collection", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="PhotoSet", mappedBy="collection", cascade={"persist", "remove"})
      * @ORM\JoinColumn()
      */
     private $sets;
@@ -60,8 +52,9 @@ class Collection
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct($id)
     {
+        $this->id = $id;
         $this->sets = new \Doctrine\Common\Collections\ArrayCollection();
         $this->createdAt = new \DateTime();
     }
@@ -90,24 +83,6 @@ class Collection
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param string $flickrId
-     * @return $this
-     */
-    public function setFlickrId($flickrId)
-    {
-        $this->flickrId = $flickrId;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFlickrId()
-    {
-        return $this->flickrId;
     }
 
     /**

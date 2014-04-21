@@ -38,10 +38,6 @@ class AdminController extends Controller
         // Authenticate if needed
         $this->createFlickrAccess();
 
-        file_put_contents(
-            $this->getKernel()->getBundle('EtuModuleArgentiqueBundle')->getPath() . '/Resources/config/synchronizing.bool', '1'
-        );
-
         return [];
     }
 
@@ -58,197 +54,299 @@ class AdminController extends Controller
             throw new AccessDeniedHttpException('You are not an argentique administrator');
         }
 
-        /*
-         * Find what we currently have in the database
-         */
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        /** @var Collection[] $collections */
-        $collections = $em->getRepository('EtuModuleArgentiqueBundle:Collection')
-            ->createQueryBuilder('c')
-            ->select('c, s')
-            ->leftJoin('c.sets', 's')
-            ->getQuery()
-            ->getResult();
-
-        // To find which collection to remove, we store it by default as true
-        $removes = [
-            'collections' => [],
-            'sets' => [],
-            'photos' => [],
-        ];
-
-        foreach ($collections as $key => $collection) {
-            unset($collections[$key]);
-
-            $removes['collections'][$collection->getFlickrId()] = $collection;
-
-            $sets = $collection->getSets()->toArray();
-
-            /** @var $set PhotoSet */
-            foreach ($sets as $keySet => $set) {
-                unset($sets[$keySet]);
-                $sets[$set->getFlickrId()] = $set;
-
-                $removes['sets'][$set->getFlickrId()] = $removes;
-            }
-
-            $collection->setSets($sets);
-
-            $collections[$collection->getFlickrId()] = $collection;
-        }
-
-        /*
-         * Compare it with the Flickr information. We recognize insert, update or remove using the flickr identifier.
-         */
+        /** @var FLickr $flickr */
         $flickr = $this->createFlickrAccess();
 
+
+        /* ************************************************************************
+         *  Collections
+         * ************************************************************************/
+
+        /** @var Collection[] $dbCollections */
+        $dbCollections = $em->getRepository('EtuModuleArgentiqueBundle:Collection')->findAll();
+
+        /** @var array $apiCollections */
         $apiCollections = $flickr->call('flickr.collections.getTree')['collections'];
 
+        // If there is no collections in API, remove all the entities in local
         if (empty($apiCollections)) {
+            $em->createQueryBuilder()
+                ->delete('EtuModuleArgentiqueBundle:Collection')
+                ->getQuery()
+                ->execute();
+
+            $em->createQueryBuilder()
+                ->delete('EtuModuleArgentiqueBundle:PhotoSet')
+                ->getQuery()
+                ->execute();
+
+            $photos = $em->getRepository('EtuModuleArgentiqueBundle:Photo')->findAll();
+
+            foreach ($photos as $photo) {
+                $em->remove($photo);
+            }
+
+            $em->flush();
+
             $this->get('session')->getFlashBag()->set('message', array(
                 'type' => 'error',
                 'message' => 'argentique.error.no_collection'
             ));
 
-            return $this->redirect($this->generateUrl('argentique_admin_index'));
+            return $this->redirect($this->generateUrl('argentique_index'));
+        } else {
+            $apiCollections = $apiCollections['collection'];
         }
 
-        $apiCollections = $apiCollections['collection'];
+        // Map API and local collections
+        foreach ($dbCollections as $key => $dbCollection) {
+            unset($dbCollections[$key]);
+            $dbCollections[$dbCollection->getId()] = $dbCollection;
+        }
 
-        /** @var Collection[] $imported */
-        $imported = [];
+        foreach ($apiCollections as $key => $apiCollection) {
+            unset($apiCollections[$key]);
+            $apiCollections[$apiCollection['id']] = $apiCollection;
+        }
 
-        foreach ($apiCollections as $apiCollection) {
-            // Insert
-            if (! isset($collections[$apiCollection['id']])) {
-                $collection = new Collection();
-                $collection->setFlickrId($apiCollection['id']);
+        // Apply modifications
+        $toAdd = array_diff(array_keys($apiCollections), array_keys($dbCollections));
+        $toRemove = array_diff(array_keys($dbCollections), array_keys($apiCollections));
+        $toUpdate = [];
+
+        foreach (array_keys($dbCollections) as $id) {
+            if (! in_array($id, $toRemove)) {
+                $toUpdate[] = $id;
             }
+        }
 
-            // Update
-            else {
-                $collection = $collections[$apiCollection['id']];
-            }
+        /** @var Collection[] $newCollections */
+        $newCollections = [];
 
-            $collection->setTitle($apiCollection['title']);
-            $collection->setDescription($apiCollection['description']);
+        // Add
+        foreach ($toAdd as $add) {
+            $api = $apiCollections[$add];
 
-            // Disable remove for this collection
-            $removes['collections'][$collection->getFlickrId()] = false;
-
-            if (isset($apiCollection['set'])) {
-                foreach ($apiCollection['set'] as $apiSet) {
-                    // Insert
-                    if (! isset($collection->getSets()[$apiSet['id']])) {
-                        $set = new PhotoSet();
-                        $set->setFlickrId($apiSet['id']);
-                        $set->setCollection($collection);
-                    }
-
-                    // Update
-                    else {
-                        $set = $collection->getSets()[$apiSet['id']];
-                        $set->setCollection($collection);
-                    }
-
-                    $set->setTitle($apiSet['title']);
-                    $set->setDescription($apiSet['description']);
-
-                    // Disable remove for this collection
-                    $removes['sets'][$set->getFlickrId()] = false;
-
-                    $collection->addSet($set);
-
-                    $em->persist($set);
-                }
-            }
+            $collection = new Collection($api['id']);
+            $collection->setTitle($api['title']);
+            $collection->setDescription($api['description']);
 
             $em->persist($collection);
 
-            $imported[] = $collection;
+            $newCollections[$collection->getId()] = $collection;
         }
 
         $em->flush();
 
-        /** @var Photo[] $existings */
-        $existings = $em->getRepository('EtuModuleArgentiqueBundle:Photo')->findAll();
+        // Update
+        foreach ($toUpdate as $update) {
+            $api = $apiCollections[$update];
 
-        foreach ($existings as $key => $existing) {
-            unset($existings[$key]);
-            $existings[$existing->getFlickrId()] = $existing;
+            $collection = $dbCollections[$update];
+            $collection->setTitle($api['title']);
+            $collection->setDescription($api['description']);
 
-            $removes['photos'][$existing->getFlickrId()] = $existing;
+            $em->persist($collection);
+
+            $newCollections[$collection->getId()] = $collection;
         }
 
-        $importingPhotos = [];
+        $em->flush();
 
-        foreach ($imported as $collection) {
-            foreach ($collection->getSets() as $set) {
-                $apiPhotos = $flickr->call('flickr.photosets.getPhotos', ['photoset_id' => $set->getFlickrId()]);
+        // Remove
+        foreach ($toRemove as $remove) {
+            $em->remove($dbCollections[$remove]);
+        }
 
-                foreach ($apiPhotos['photoset']['photo'] as $apiPhoto) {
-                    // Insert
-                    if (! isset($existings[$apiPhoto['id']])) {
-                        $photo = new Photo();
-                        $photo->setFlickrId($apiPhoto['id']);
-                        $photo->setTitle($apiPhoto['title']);
+        $em->flush();
 
-                        $importingPhotos[$apiPhoto['id']] = $apiPhoto;
-                    }
 
-                    // Update
-                    else {
-                        $photo = $existings[$apiPhoto['id']];
-                    }
+        /* ************************************************************************
+         *  PhotoSets
+         * ************************************************************************/
 
-                    $photo->setPhotoSet($set);
+        /** @var PhotoSet[] $dbSets */
+        $dbSets = $em->getRepository('EtuModuleArgentiqueBundle:PhotoSet')->findAll();
 
-                    $set->importingPhotos[$apiPhoto['id']] = $photo;
+        /** @var array $apiSets */
+        $apiSets = [];
 
-                    // Disable remove for this photo
-                    $removes['photos'][$photo->getFlickrId()] = false;
+        foreach ($apiCollections as $collection) {
+            if (isset($collection['set']) && is_array($collection['set'])) {
+                $sets = $collection['set'];
+
+                foreach ($sets as &$set) {
+                    $set['collection'] = $collection['id'];
+                }
+
+                $apiSets = array_merge($apiSets, $sets);
+            }
+        }
+
+        // Map API and local sets
+        foreach ($dbSets as $key => $dbSet) {
+            unset($dbSets[$key]);
+            $dbSets[$dbSet->getId()] = $dbSet;
+        }
+
+        foreach ($apiSets as $key => $apiSet) {
+            unset($apiSets[$key]);
+            $apiSets[$apiSet['id']] = $apiSet;
+        }
+
+        // Apply modifications
+        $toAdd = array_diff(array_keys($apiSets), array_keys($dbSets));
+        $toRemove = array_diff(array_keys($dbSets), array_keys($apiSets));
+        $toUpdate = [];
+
+        foreach (array_keys($dbSets) as $id) {
+            if (! in_array($id, $toRemove)) {
+                $toUpdate[] = $id;
+            }
+        }
+
+        /** @var PhotoSet[] $newSets */
+        $newSets = [];
+
+        // Add
+        foreach ($toAdd as $add) {
+            $api = $apiSets[$add];
+
+            $set = new PhotoSet($api['id']);
+            $set->setTitle($api['title']);
+            $set->setDescription($api['description']);
+            $set->setCollection($newCollections[$api['collection']]);
+
+            $em->persist($set);
+
+            $newSets[$set->getId()] = $set;
+        }
+
+        $em->flush();
+
+        // Update
+        foreach ($toUpdate as $update) {
+            $api = $apiSets[$update];
+
+            $set = $dbSets[$update];
+            $set->setTitle($api['title']);
+            $set->setDescription($api['description']);
+            $set->setCollection($newCollections[$api['collection']]);
+
+            $em->persist($set);
+
+            $newSets[$set->getId()] = $set;
+        }
+
+        $em->flush();
+
+        // Remove
+        foreach ($toRemove as $remove) {
+            $em->remove($dbSets[$remove]);
+        }
+
+        $em->flush();
+
+
+        /* ************************************************************************
+         *  Photos
+         * ************************************************************************/
+
+        /** @var Photo[] $dbPhotos */
+        $dbPhotos = $em->getRepository('EtuModuleArgentiqueBundle:Photo')->findAll();
+
+        /** @var array $apiPhotos */
+        $apiPhotos = [];
+
+        foreach ($newSets as $set) {
+            $api = $flickr->call('flickr.photosets.getPhotos', [ 'photoset_id' => $set->getId() ]);
+
+            if (isset($api['photoset']) && isset($api['photoset']['photo'])) {
+                foreach ($api['photoset']['photo'] as $photo) {
+                    $photo['set'] = $set->getId();
+                    $apiPhotos[] = $photo;
                 }
             }
         }
 
-        foreach ($removes['collections'] as $entity) {
-            if ($entity) {
-                $em->remove($entity);
+        // Map API and local photos
+        foreach ($dbPhotos as $key => $dbPhoto) {
+            unset($dbPhotos[$key]);
+            $dbPhotos[$dbPhoto->getId()] = $dbPhoto;
+        }
+
+        foreach ($apiPhotos as $key => $apiPhoto) {
+            unset($apiPhotos[$key]);
+            $apiPhotos[$apiPhoto['id']] = $apiPhoto;
+        }
+
+        // Apply modifications
+        $toAdd = array_diff(array_keys($apiPhotos), array_keys($dbPhotos));
+        $toRemove = array_diff(array_keys($dbPhotos), array_keys($apiPhotos));
+        $toUpdate = [];
+
+        foreach (array_keys($dbPhotos) as $id) {
+            if (! in_array($id, $toRemove)) {
+                $toUpdate[] = $id;
             }
+        }
+
+        /** @var Photo[] $newPhotos */
+        $newPhotos = [];
+
+        // Add
+        foreach ($toAdd as $add) {
+            $api = $apiPhotos[$add];
+
+            $photo = new Photo($api['id']);
+            $photo->setTitle($api['title']);
+            $photo->setReady(false);
+            $photo->setPhotoSet($newSets[$api['set']]);
+
+            $em->persist($photo);
+
+            $newPhotos[$photo->getId()] = $photo;
         }
 
         $em->flush();
 
-        foreach ($removes['sets'] as $entity) {
-            if ($entity) {
-                $em->remove($entity);
-            }
+        // Update
+        foreach ($toUpdate as $update) {
+            $api = $apiPhotos[$update];
+
+            $photo = $dbPhotos[$update];
+            $photo->setTitle($api['title']);
+            $photo->setPhotoSet($newSets[$api['set']]);
+
+            $em->persist($photo);
+
+            $newPhotos[$photo->getId()] = $photo;
         }
 
         $em->flush();
 
-        $uploadDir = $this->getKernel()->getRootDir() . '/../web/argentique';
-
-        /** @var $entity Photo */
-        foreach ($removes['photos'] as $entity) {
-            if ($entity) {
-                @unlink($uploadDir.'/'.$entity->getIcon());
-                @unlink($uploadDir.'/'.$entity->getFile());
-
-                $em->remove($entity);
-            }
+        // Remove
+        foreach ($toRemove as $remove) {
+            $em->remove($dbPhotos[$remove]);
         }
 
         $em->flush();
 
-        $this->get('session')->set('argentique_sync_collections', $imported);
-        $this->get('session')->set('argentique_sync_photos', $importingPhotos);
+        // Return photos to import
+        $toImport = [];
+
+        foreach ($newPhotos as $photo) {
+            if (! $photo->getReady()) {
+                $toImport[] = $photo->getId();
+            }
+        }
 
         $response = new Response(json_encode([
-            'count' => count($importingPhotos),
-            'photos' => array_values($importingPhotos)
+            'count' => count($toImport),
+            'photos' => $toImport
         ]), 200);
 
         $response->headers->set('Content-Type', 'application/json');
@@ -269,14 +367,12 @@ class AdminController extends Controller
             throw new AccessDeniedHttpException('You are not an argentique administrator');
         }
 
-        file_put_contents(
-            $this->getKernel()->getBundle('EtuModuleArgentiqueBundle')->getPath() . '/Resources/config/synchronizing.bool', '0'
-        );
+        $this->get('session')->getFlashBag()->set('message', array(
+            'type' => 'success',
+            'message' => 'argentique.admin.synchronize.success'
+        ));
 
-        $response = new Response(json_encode([ 'status' => 'ok' ]), 200);
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
+        return $this->redirect($this->generateUrl('argentique_index'));
     }
 
     /**
@@ -298,52 +394,40 @@ class AdminController extends Controller
         // Flickr
         $flickr = $this->createFlickrAccess();
 
-        $apiPhotos = $this->get('session')->get('argentique_sync_photos');
-        $apiPhoto = $apiPhotos[$photoId];
-
-        $sizes = $flickr->call('flickr.photos.getSizes', ['photo_id' => $apiPhoto['id']]);
-
-        $uploadDir = $this->getKernel()->getRootDir() . '/../web/argentique';
-
-        // Thumbnail
-        file_put_contents($uploadDir.'/'.$apiPhoto['id'].'_'.$apiPhoto['secret'].'_t.jpg', file_get_contents($sizes['sizes']['size'][2]['source']));
-
-        // Original
-        file_put_contents($uploadDir.'/'.$apiPhoto['id'].'_'.$apiPhoto['secret'].'_o.jpg', file_get_contents($sizes['sizes']['size'][9]['source']));
-
-        /** @var Collection[] $collections */
-        $collections = $this->get('session')->get('argentique_sync_collections');
-
-        $photo = false;
-        $photoSet = false;
-
-        foreach ($collections as $collection) {
-            foreach ($collection->getSets() as $set) {
-                if (isset($set->importingPhotos[$apiPhoto['id']])) {
-                    $photo = $set->importingPhotos[$apiPhoto['id']];
-                    $photoSet = $set;
-                }
-            }
-        }
+        // Get database photo
+        /** @var Photo $photo */
+        $photo = $em->getRepository('EtuModuleArgentiqueBundle:Photo')->find($photoId);
 
         if ($photo) {
-            $set = $em->getRepository('EtuModuleArgentiqueBundle:PhotoSet')->find($photoSet->getId());
+            // Sizes
+            $sizes = $flickr->call('flickr.photos.getSizes', ['photo_id' => $photo->getId()]);
 
-            $entity = new Photo();
-            $entity->setTitle($photo->getTitle());
-            $entity->setFlickrId($photo->getFlickrId());
-            $entity->setIcon($apiPhoto['id'].'_'.$apiPhoto['secret'].'_t.jpg');
-            $entity->setFile($apiPhoto['id'].'_'.$apiPhoto['secret'].'_o.jpg');
-            $entity->setPhotoSet($set);
+            // Download the photo
+            $uploadDir = $this->getKernel()->getRootDir() . '/../web/argentique';
 
-            $em->persist($entity);
+            // Thumbnail
+            file_put_contents($uploadDir.'/'.$photo->getId().'_t.jpg', file_get_contents($sizes['sizes']['size'][2]['source']));
+
+            // Original
+            file_put_contents($uploadDir.'/'.$photo->getId().'_o.jpg', file_get_contents($sizes['sizes']['size'][9]['source']));
+
+            $photo->setFile($photo->getId().'_o.jpg');
+            $photo->setIcon($photo->getId().'_t.jpg');
+            $photo->setReady(true);
+
+            $em->persist($photo);
             $em->flush();
-        }
 
-        $response = new Response(json_encode([
-            'title' => $photo->getTitle(),
-            'icon' => $photo->getIcon(),
-        ]), 200);
+            $response = new Response(json_encode([
+                'title' => $photo->getTitle(),
+                'icon' => $photo->getIcon(),
+            ]));
+        } else {
+            $response = new Response(json_encode([
+                'title' => 'Not found',
+                'icon' => 'Not found',
+            ]));
+        }
 
         $response->headers->set('Content-Type', 'application/json');
 

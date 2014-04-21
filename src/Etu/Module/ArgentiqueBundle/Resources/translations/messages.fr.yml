@@ -30,3 +30,4 @@ argentique:
             photos: photos
             no_photo: Aucune photo n'a besoin d'être importée
             no_photo_back: Retour à la gallerie
+            success: La synchronisation est terminée !

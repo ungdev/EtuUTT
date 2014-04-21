@@ -20,14 +20,6 @@
 
 {% block content %}
     <div class="padding20-all argentique-index">
-        {% if is_admin %}
-            <p class="align-right">
-                <a href="{{ path('argentique_admin_synchronize') }}" class="btn btn-primary">
-                    {{ 'argentique.main.index.synchronize'|trans }}
-                </a>
-            </p>
-        {% endif %}
-
         <div class="row-fluid">
             <div class="span4 argentique-galleries">
                 <ul>
@@ -47,6 +39,16 @@
                         </li>
                     {% endfor %}
                 </ul>
+
+                {% if is_admin %}
+                    <br />
+
+                    <p class="align-right">
+                        <a href="{{ path('argentique_admin_synchronize') }}" class="btn btn-primary">
+                            {{ 'argentique.main.index.synchronize'|trans }}
+                        </a>
+                    </p>
+                {% endif %}
             </div>
             <div class="span8">
                 <h4>{{ 'argentique.main.index.lasts'|trans }}</h4>

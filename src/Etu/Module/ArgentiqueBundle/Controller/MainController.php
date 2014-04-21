@@ -8,7 +8,6 @@ use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\ArgentiqueBundle\Entity\Collection;
 use Etu\Module\ArgentiqueBundle\Entity\Photo;
 use Etu\Module\ArgentiqueBundle\Entity\PhotoSet;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -29,14 +28,6 @@ class MainController extends Controller
             return $this->createAccessDeniedResponse();
         }
 
-        $sync = (bool) file_get_contents(
-            $this->getKernel()->getBundle('EtuModuleArgentiqueBundle')->getPath() . '/Resources/config/synchronizing.bool'
-        );
-
-        if ($sync) {
-            return $this->render('EtuModuleArgentiqueBundle:Main:synchronizing.html.twig');
-        }
-
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
@@ -53,7 +44,7 @@ class MainController extends Controller
             ->select('p')
             ->from('EtuModuleArgentiqueBundle:Photo', 'p')
             ->orderBy('p.createdAt', 'DESC')
-            ->setMaxResults(50)
+            ->setMaxResults(20)
             ->getQuery()
             ->getResult();
 
@@ -97,7 +88,7 @@ class MainController extends Controller
             ->getOneOrNullResult();
 
         if (! $set) {
-            return $this->createNotFoundException();
+            throw $this->createNotFoundException();
         }
 
         return [

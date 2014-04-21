@@ -15,18 +15,10 @@ class PhotoSet
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="string", length=50)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="flickrId", type="string", length=100)
-     */
-    private $flickrId;
 
     /**
      * @var Collection $collection
@@ -60,7 +52,7 @@ class PhotoSet
     /**
      * @var Photo[] $photos
      *
-     * @ORM\OneToMany(targetEntity="Photo", mappedBy="photoSet", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Photo", mappedBy="photoSet", cascade={"persist", "remove"})
      * @ORM\JoinColumn()
      */
     private $photos;
@@ -80,8 +72,9 @@ class PhotoSet
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct($id)
     {
+        $this->id = $id;
         $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
         $this->createdAt = new \DateTime();
     }
@@ -94,24 +87,6 @@ class PhotoSet
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param string $flickrId
-     * @return $this
-     */
-    public function setFlickrId($flickrId)
-    {
-        $this->flickrId = $flickrId;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFlickrId()
-    {
-        return $this->flickrId;
     }
 
     /**

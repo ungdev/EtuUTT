@@ -9,24 +9,17 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="etu_argentique_photos")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class Photo
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="string", length=50)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="flickrId", type="string", length=100)
-     */
-    private $flickrId;
 
     /**
      * @var PhotoSet $photoSet
@@ -39,23 +32,30 @@ class Photo
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=100)
+     * @ORM\Column(type="string", length=100)
      */
     private $title;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="icon", type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $icon;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="file", type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $file;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $ready = false;
 
     /**
      * @var \DateTime
@@ -67,9 +67,26 @@ class Photo
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct($id)
     {
+        $this->id = $id;
         $this->createdAt = new \DateTime();
+    }
+
+    /**
+     * @ORM\PreRemove
+     */
+    public function preRemove()
+    {
+        $directory = __DIR__ . '/../../../../../web/argentique';
+
+        if (file_exists($directory . '/' . $this->getFile())) {
+            @unlink($directory . '/' . $this->getFile());
+        }
+
+        if (file_exists($directory . '/' . $this->getIcon())) {
+            @unlink($directory . '/' . $this->getIcon());
+        }
     }
 
     /**
@@ -80,24 +97,6 @@ class Photo
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param string $flickrId
-     * @return $this
-     */
-    public function setFlickrId($flickrId)
-    {
-        $this->flickrId = $flickrId;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFlickrId()
-    {
-        return $this->flickrId;
     }
 
     /**
@@ -167,6 +166,42 @@ class Photo
     public function getFile()
     {
         return $this->file;
+    }
+
+    /**
+     * @param boolean $ready
+     * @return $this
+     */
+    public function setReady($ready)
+    {
+        $this->ready = $ready;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getReady()
+    {
+        return $this->ready;
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     * @return $this
+     */
+    public function setCreatedAt(\DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
 
     /**
