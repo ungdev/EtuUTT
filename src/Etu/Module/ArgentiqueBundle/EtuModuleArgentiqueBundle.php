@@ -13,7 +13,7 @@ class EtuModuleArgentiqueBundle extends Module
      */
     public function mustBoot()
     {
-        return $this->getSessionLayer()->isStudent();
+        return $this->getSessionLayer()->isStudent() || $this->getSessionLayer()->isOrga();
     }
 
     /**

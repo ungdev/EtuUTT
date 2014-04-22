@@ -5,7 +5,6 @@ namespace Etu\Core\ApiBundle\Controller\User;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Etu\Core\ApiBundle\Framework\Controller\ApiController;
-use Etu\Core\ApiBundle\Query\UserListMapper;
 use Etu\Core\ApiBundle\Transformer\UserTransformer;
 use Etu\Core\UserBundle\Entity\User;
 use Knp\Component\Pager\Pagination\SlidingPagination;
@@ -40,7 +39,6 @@ class ReadController extends ApiController
      *
      * @Route("", name="api_user_list")
      * @Method("GET")
-     * @Template()
      */
     public function listAction(Request $request)
     {
@@ -56,7 +54,7 @@ class ReadController extends ApiController
             ->leftJoin('u.bdeMemberships', 'm')
             ->orderBy('u.lastName');
 
-        $query = (new UserListMapper())->mapQuery($query, $request->query);
+        $query = $this->get('etu.api_mapper.user')->map($query, $request->query);
 
         /** @var SlidingPagination $pagination */
         $pagination = $this->get('knp_paginator')->paginate($query, $page, 30);
@@ -81,7 +79,7 @@ class ReadController extends ApiController
                 'previous' => $previous,
                 'next' => $next,
             ],
-            'data' => (new UserTransformer($this->get('router')))->transform($pagination->getItems())
+            'data' => $this->get('etu.api_transformer.user')->transform($pagination->getItems())
         ]);
     }
 
@@ -95,12 +93,11 @@ class ReadController extends ApiController
      *
      * @Route("/{login}", name="api_user_view")
      * @Method("GET")
-     * @Template()
      */
     public function viewAction(User $user)
     {
         return $this->format([
-            'data' => (new UserTransformer($this->get('router')))->transform($user)
+            'data' => $this->get('etu.api_transformer.user')->transform($user)
         ]);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Etu\Core\ApiBundle\Query;
+namespace Etu\Core\ApiBundle\Mapper;
 
 use Doctrine\ORM\QueryBuilder;
 use Etu\Core\ApiBundle\Framework\Query\QueryMapper;
@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 
 class UserListMapper extends QueryMapper
 {
-    public function mapQuery(QueryBuilder $query, ParameterBag $request)
+    public function map(QueryBuilder $query, ParameterBag $request)
     {
         if ($request->has('firstname')) {
             $query->andWhere('u.firstName LIKE :firstname')
@@ -40,12 +40,9 @@ class UserListMapper extends QueryMapper
                 ->setParameter('is_student', (bool) $request->get('is_student'));
         }
 
-        if ($request->has('bde_member')) {
-            if ($request->get('bde_member') == '1') {
-                $query->andWhere('m.end > NOW()');
-            } else {
-                $query->andWhere('m.end < NOW()');
-            }
+        if ($request->has('bde_member') && $request->get('bde_member') == '1') {
+            $query->andWhere('m.end > :now')
+                ->setParameter('now', new \DateTime('now'));
         }
 
         return $query;

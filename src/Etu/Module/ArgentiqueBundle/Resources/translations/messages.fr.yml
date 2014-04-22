@@ -1,7 +1,7 @@
 
 argentique:
     sidebar:
-        service: Gallerie photos (Argentique)
+        service: Galerie photos (Argentique)
 
     error:
         no_collection: Aucun classeur n'a été trouvé pour l'import

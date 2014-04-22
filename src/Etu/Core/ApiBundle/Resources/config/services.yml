@@ -14,6 +14,10 @@ parameters:
 
     etu.api_security.class: Etu\Core\ApiBundle\Listener\SecurityListener
 
+    etu.api_mapper.user.class: Etu\Core\ApiBundle\Mapper\UserListMapper
+
+    etu.api_transformer.user.class: Etu\Core\ApiBundle\Transformer\UserTransformer
+
 services:
     # Serializer collection
     etu.serializer.collection:
@@ -56,8 +60,18 @@ services:
         factory_service: etu.serializer.builder
         factory_method: createSerializer
 
+    # Security
     etu.api_security:
         class: %etu.api_security.class%
-        arguments: [@doctrine]
+        arguments: [ @doctrine ]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    # Mappers
+    etu.api_mapper.user:
+        class: %etu.api_mapper.user.class%
+
+    # Transformers
+    etu.api_transformer.user:
+        class: %etu.api_transformer.user.class%
+        arguments: [ @router ]

@@ -3,24 +3,26 @@
 ##########
 
 /web/bundles/
-/web/mail/config/db.inc.php
-/web/mail/config/main.inc.php
+/web/argentique/
+/web/photos/
+/web/temp/
 /app/config/parameters.yml
-/api/cache/*
 /app/cache/*
-/doc/api/cache/*
 /app/logs/*
 /app/check.php
+/app/bootstrap.php.cache
 /app/SymfonyRequirements.php
 /src/Etu/Module/LoggerBundle/Resources/objects/errors
-/build/
 /vendor/
 /bin/
 /composer.phar
-.idea/
 *.php~
 composer.lock
 
+# IDE #
+#######
+
+.idea/
 # Compiled source #
 ###################
 

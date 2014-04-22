@@ -11,7 +11,6 @@ class MainController extends ApiController
 {
     /**
      * @Route("")
-     * @Template()
      */
     public function aboutAction()
     {

@@ -12,5 +12,5 @@ abstract class QueryMapper
      * @param ParameterBag $request
      * @return QueryBuilder
      */
-    abstract public function mapQuery(QueryBuilder $query, ParameterBag $request);
+    abstract public function map(QueryBuilder $query, ParameterBag $request);
 }
