@@ -6,8 +6,12 @@
 /web/app.php
 /web/etu_dev.php
 /web/argentique/
+/web/logos/
 /web/photos/
+/web/uploads/
+/web/events/
 /web/temp/
+/web/config.php
 /app/config/parameters.yml
 /app/cache/*
 /app/logs/*
