@@ -36,13 +36,6 @@ Si vous utilisez PHP 5.5, activez l'utilisation de OpCache dans php.ini.
 
 	sudo apt-get install mysql-server mysql-client
 
-### Varnish
-
-Varnish est un accélérateur HTTP : il s'interpose entre le client et le serveur web pour mettre en place
-un système de cache très puissant et efficace.
-
-	sudo apt-get install varnish
-
 ### Composer
 
 Composer est le gestionnaire de paquet de PHP utilisé par Symfony. Il permet de mettre à jour les
@@ -56,8 +49,8 @@ Pour l'installer, passons par curl :
 Composer est désormais accessible depuis n'importe où sur le système en utilisant `composer`.
 Pour mettre à jour les dépendances d'EtuUTT, exécutez :
 
-	vm:/var/www$ sudo composer self-update			// Met à jour Composer lui-même
-	vm:/var/www$ sudo composer update				// Met à jour les dépendances d'EtuUTT
+	sudo composer self-update			// Met à jour Composer lui-même
+	sudo composer update				// Met à jour les dépendances d'EtuUTT
 
 ### PHPUnit
 
