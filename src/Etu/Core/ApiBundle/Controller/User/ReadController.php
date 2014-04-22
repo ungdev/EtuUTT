@@ -5,7 +5,6 @@ namespace Etu\Core\ApiBundle\Controller\User;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Etu\Core\ApiBundle\Framework\Controller\ApiController;
-use Etu\Core\ApiBundle\Transformer\UserTransformer;
 use Etu\Core\UserBundle\Entity\User;
 use Knp\Component\Pager\Pagination\SlidingPagination;
 use Symfony\Component\HttpFoundation\Request;
