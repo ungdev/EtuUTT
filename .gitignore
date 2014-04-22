@@ -3,6 +3,8 @@
 ##########
 
 /web/bundles/
+/web/app.php
+/web/etu_dev.php
 /web/argentique/
 /web/photos/
 /web/temp/
