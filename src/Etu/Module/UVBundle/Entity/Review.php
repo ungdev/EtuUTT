@@ -129,7 +129,7 @@ class Review
 	{
 		$semesters = array();
 
-		for ($i = date('Y') - 5; $i <= date('Y'); $i++) {
+		for ($i = date('Y'); $i >= date('Y') - 15; $i--) {
 			$semesters['P'.$i] = 'P'.$i;
 			$semesters['A'.$i] = 'A'.$i;
 		}
