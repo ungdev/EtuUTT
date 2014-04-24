@@ -23,7 +23,11 @@
 {% block content %}
 	<ul class="nav nav-tabs page-tabs">
 		<li>
-			<a href="{{ path('orgas_index') }}">
+            {% if isElus %}
+			<a href="{{ path('elus_index') }}">
+            {% else %}
+            <a href="{{ path('orgas_index') }}">
+            {% endif %}
 				<i class="icon-chevron-left"></i>
 				{{ 'assos.main.view.back'|trans }}
 			</a>
