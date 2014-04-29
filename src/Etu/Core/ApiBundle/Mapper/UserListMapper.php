@@ -20,6 +20,12 @@ class UserListMapper extends QueryMapper
                 ->setParameter('lastname', '%'.$request->get('lastname').'%');
         }
 
+        if ($request->has('name')) {
+            $query->andWhere('u.firstName LIKE :firstname OR u.lastName LIKE :lastname')
+                ->setParameter('firstname', '%'.$request->get('name').'%')
+                ->setParameter('lastname', '%'.$request->get('name').'%');
+        }
+
         if ($request->has('branch')) {
             $query->andWhere('u.branch = :branch')
                 ->setParameter('branch', $request->get('branch'));

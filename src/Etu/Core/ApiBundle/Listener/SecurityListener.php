@@ -34,7 +34,11 @@ class SecurityListener
             $token = $event->getRequest()->headers->get('etu-utt-token', false);
 
             if (! $token) {
-                $event->setResponse(new Response('Authentication required', 401));
+                $token = $event->getRequest()->query->get('token', false);
+            }
+
+            if (! $token) {
+                $event->setResponse(new Response('Authentication required', 403));
                 $event->stopPropagation();
 
                 return false;
