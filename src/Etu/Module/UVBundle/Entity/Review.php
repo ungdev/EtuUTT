@@ -19,12 +19,18 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class Review
 {
-	const TYPE_PARTIEL = 'partiel';
+    const TYPE_PARTIEL = 'partiel';
+    const TYPE_PARTIEL_1 = 'partiel_1';
+    const TYPE_PARTIEL_2 = 'partiel_2';
+    const TYPE_DM = 'dm';
 	const TYPE_MIDTERM = 'midterm';
 	const TYPE_FINAL = 'final';
 
 	public static $types = array(
-		self::TYPE_PARTIEL => 'uvs.reviews.partiel',
+        self::TYPE_PARTIEL => 'uvs.reviews.partiel',
+        self::TYPE_PARTIEL_1 => 'uvs.reviews.partiel_1',
+        self::TYPE_PARTIEL_2 => 'uvs.reviews.partiel_2',
+        self::TYPE_DM => 'uvs.reviews.dm',
 		self::TYPE_MIDTERM => 'uvs.reviews.midterm',
 		self::TYPE_FINAL => 'uvs.reviews.final',
 	);
@@ -169,8 +175,14 @@ class Review
 		if ($this->type == self::TYPE_FINAL) {
 			$name = 'final';
 		} elseif ($this->type == self::TYPE_MIDTERM) {
-			$name = 'median';
-		} else {
+            $name = 'median';
+        } elseif ($this->type == self::TYPE_PARTIEL_1) {
+            $name = 'partiel-1';
+        } elseif ($this->type == self::TYPE_PARTIEL_2) {
+            $name = 'partiel-2';
+        } elseif ($this->type == self::TYPE_DM) {
+            $name = 'dm';
+        } else {
 			$name = 'partiel';
 		}
 
