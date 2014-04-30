@@ -31,7 +31,7 @@ class AppKernel extends EtuKernel
             new Symfony\Bundle\TwigBundle\TwigBundle(), // Tempalting engine
             new Symfony\Bundle\MonologBundle\MonologBundle(), // Logger library
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(), // Mailing library
-	        // new Symfony\Bundle\AsseticBundle\AsseticBundle(), // Assets management
+	        new Symfony\Bundle\AsseticBundle\AsseticBundle(), // Assets management
 
 	        // Doctrine
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(), // Doctrine ORM

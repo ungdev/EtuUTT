@@ -1,3 +1,4 @@
+{% spaceless %}
 {% set message = false %}
 
 {% if app.session.flashBag.has('message') %}
@@ -15,19 +16,30 @@
 
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.min.css" type="text/css" />
 
-        <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}" type="text/css" />
-		<link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" />
-        <link rel="stylesheet" href="{{ asset('fontawesome/css/font-awesome.min.css') }}" type="text/css" />
-		<link rel="stylesheet" href="{{ asset('tipsy/src/tipsy.css') }}" type="text/css" />
-		<link rel="stylesheet" href="{{ asset('sceditor/development/themes/default.css') }}" type="text/css" media="all" />
-		<link rel="stylesheet" href="{{ asset('facebox/src/facebox.css') }}" type="text/css" />
-		<link rel="stylesheet" href="{{ asset('css/boot.css') }}" type="text/css" />
+        {% stylesheets
+            'bootstrap/css/bootstrap.min.css'
+            'bootstrap/css/bootstrap-responsive.min.css'
+            'fontawesome/css/font-awesome.min.css'
+            'tipsy/src/tipsy.css'
+            'sceditor/development/themes/default.css'
+            'facebox/src/facebox.css'
+            'css/jquery-impromptu.css'
+            'swipebox/src/css/swipebox.min.css'
+            'css/boot.less'
+            filter='cssrewrite'
+            output='min/etuut.css'
+        %}
+            <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+        {% endstylesheets %}
 
 		<link href="{{ asset('img/favicon.png') }}" rel="icon" type="image/gif" />
 
 		{% if not app.request.cookies.has('disable_responsive') %}
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-		<link rel="stylesheet" href="{{ asset('css/responsive.css') }}" type="text/css" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+            {% stylesheets 'css/responsive.css' filter='cssrewrite' output='min/responsive.css' %}
+                <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+            {% endstylesheets %}
 		{% endif %}
 
 		{% block stylesheets %}{% endblock %}
@@ -256,21 +268,27 @@
 
 		<script type="text/javascript">
 			{% if app.user %}
-			var _t = '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08';
+			    var _t = '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08';
 			{% else %}
-			var _t = '';
+			    var _t = '';
 			{% endif %}
 		</script>
 
-		<script src="{{ asset('bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
-		<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-		<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-		<script src="{{ asset('facebox/src/facebox.js') }}" type="text/javascript"></script>
-		<script src="{{ asset('sceditor/development/jquery.sceditor.bbcode.js') }}" type="text/javascript"></script>
-		<script src="{{ asset('sceditor/languages/fr.js') }}" type="text/javascript"></script>
-		<script src="{{ asset('tipsy/src/jquery.tipsy.js') }}" type="text/javascript"></script>
-		<script src="{{ asset('js/moment.min.js') }}" type="text/javascript"></script>
-		<script src="{{ asset('js/common.js') }}" type="text/javascript"></script>
+        <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+        {% javascripts
+            'bootstrap/js/bootstrap.min.js'
+            'bundles/fosjsrouting/js/router.js'
+            'facebox/src/facebox.js'
+            'sceditor/development/jquery.sceditor.bbcode.js'
+            'sceditor/languages/fr.js'
+            'tipsy/src/jquery.tipsy.js'
+            'js/moment.min.js'
+            'js/common.js'
+            output='min/etuut.js'
+        %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
 
 		{% block js_libs %}{% endblock %}
 
@@ -307,3 +325,4 @@
 		</script>
 	</body>
 </html>
+{% endspaceless %}

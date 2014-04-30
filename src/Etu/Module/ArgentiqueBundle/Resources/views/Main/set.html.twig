@@ -1,10 +1,5 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/bundles/argentique.css') }}" type="text/css" />
-    <link rel="stylesheet" href="{{ asset('swipebox/src/css/swipebox.min.css') }}" type="text/css" />
-{% endblock %}
-
 {% block javascripts %}
     {% if is_admin %}
         <script src="{{ asset('swipebox/src/js/jquery.swipebox.min.js') }}" type="text/javascript"></script>
