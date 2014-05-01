@@ -60,7 +60,7 @@ class MainController extends Controller
 				$where = 'u.login = :login ';
 				$users->setParameter('login', $user->getFullName());
 
-				$where .= 'OR u.surnom = :surnom OR (';
+				$where .= 'OR u.surnom LIKE :surnom OR (';
 				$users->setParameter('surnom', '%'.$user->getFullName().'%');
 
 				$terms = explode(' ', $user->getFullName());

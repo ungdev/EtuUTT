@@ -1,9 +1,5 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block stylesheets %}
-	<link rel="stylesheet" href="{{ asset('css/bundles/assos.css') }}" type="text/css" />
-{% endblock %}
-
 {% block title %}{{ 'assos.main.view.title'|trans }}{% endblock %}
 
 {% block meta_desc %}{{ orga.descriptionShort }}{% endblock %}
@@ -23,7 +19,11 @@
 {% block content %}
 	<ul class="nav nav-tabs page-tabs">
 		<li>
-			<a href="{{ path('orgas_index') }}">
+            {% if isElus %}
+			<a href="{{ path('elus_index') }}">
+            {% else %}
+            <a href="{{ path('orgas_index') }}">
+            {% endif %}
 				<i class="icon-chevron-left"></i>
 				{{ 'assos.main.view.back'|trans }}
 			</a>

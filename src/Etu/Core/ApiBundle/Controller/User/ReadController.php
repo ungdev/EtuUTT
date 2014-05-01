@@ -36,7 +36,7 @@ class ReadController extends ApiController
      *   }
      * )
      *
-     * @Route("", name="api_user_list")
+     * @Route("", name="api_user_list", options={"expose"=true})
      * @Method("GET")
      */
     public function listAction(Request $request)

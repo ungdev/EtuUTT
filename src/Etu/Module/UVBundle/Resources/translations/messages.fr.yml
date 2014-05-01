@@ -15,6 +15,9 @@ uvs:
 
     reviews:
         partiel: Partiel
+        partiel_1: Partiel 1
+        partiel_2: Partiel 2
+        dm: Devoir Maison
         midterm: Médian
         final: Final
 

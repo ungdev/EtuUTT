@@ -8,9 +8,9 @@
 		<meta name="description" content="{{ 'upload.main.index.title'|trans }}" />
 
 		<link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}" type="text/css" />
-		<link rel="stylesheet" href="{{ asset('css/bundles/upload.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('min/etuutt.css') }}" type="text/css" />
 	</head>
-	<body>
+	<body class="upload-page">
 		{% set message = false %}
 
 		{% if app.session.flashBag.has('message') %}

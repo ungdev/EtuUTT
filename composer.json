@@ -23,11 +23,11 @@
 		"sensio/generator-bundle": "2.3.*",
 		"incenteev/composer-parameter-handler": "~2.0",
 
-		"avalanche123/imagine-bundle": "v2.1",
-		"friendsofsymfony/jsrouting-bundle": "~1.1",
-		"doctrine/doctrine-fixtures-bundle": "dev-master",
-		"stof/doctrine-extensions-bundle": "~1.1@dev",
-		"knplabs/knp-time-bundle": "dev-master",
+		"avalanche123/imagine-bundle": "2.1.*",
+		"friendsofsymfony/jsrouting-bundle": "1.5.*",
+		"doctrine/doctrine-fixtures-bundle": "2.2.*",
+		"stof/doctrine-extensions-bundle": "1.1.*",
+		"knplabs/knp-time-bundle": "1.3.*",
 		"knplabs/knp-paginator-bundle": "dev-master",
 		"frequence-web/calendr-bundle": "1.*",
 		"tedivm/jshrink": "dev-master",
@@ -35,7 +35,9 @@
         "sabre/vobject" : "~3.1",
         "fzaninotto/faker": "~1.3",
         "nelmio/api-doc-bundle": "2.5.*",
-        "dopiaza/dpzflickr": "1.2.*"
+        "dopiaza/dpzflickr": "1.2.*",
+        "elao/web-profiler-extra-bundle" : "~2.3@dev",
+        "willdurand/js-translation-bundle": "2.1.*"
 	},
 	"scripts": {
 		"post-install-cmd": [
@@ -56,7 +58,7 @@
 	"config": {
 		"bin-dir": "bin"
 	},
-	"minimum-stability": "alpha",
+	"minimum-stability": "stable",
 	"extra": {
 		"symfony-app-dir": "app",
 		"symfony-web-dir": "web",

@@ -78,8 +78,15 @@ class MainController extends Controller
 			throw $this->createNotFoundException('Orga not found');
 		}
 
+        $isElus = false;
+
+        if (strpos($orga->getName(), 'Elus') !== false) {
+            $isElus = true;
+        }
+
 		return array(
-			'orga' => $orga
+			'orga' => $orga,
+            'isElus' => $isElus
 		);
 	}
 

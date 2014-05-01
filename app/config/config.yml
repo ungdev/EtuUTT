@@ -51,6 +51,17 @@ doctrine:
                 class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
                 enabled: true
 
+# Assetic Configuration
+assetic:
+    debug: "%kernel.debug%"
+    use_controller: false
+    bundles: [ ]
+    filters:
+        less:
+            node: /usr/bin/node
+            node_paths: [ /usr/local/lib/node_modules ]
+            apply_to: "\.less"
+        cssrewrite: ~
 
 # Swiftmailer Configuration
 swiftmailer:

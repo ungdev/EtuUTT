@@ -284,10 +284,10 @@ $(function() {
 		usersAutocomplete.autocomplete({
 			minLength: 3,
 			source: function(request, response) {
-				$.getJSON('/api/users/search/' + request.term,
-					{ format: 'json', token: _t },
+				$.getJSON(Routing.generate('api_user_list'),
+					{ name: request.term, token: _t },
 					function(data) {
-						var users = data.body.users;
+						var users = data.response.data;
 
 						response($.map(users, function( item ) {
 							return {
@@ -305,10 +305,10 @@ $(function() {
 				return $("<li style=\"margin-bottom: 3px;\">")
 					.append(
 						"<a>" +
-							"<img src=\"/photos/"+ item.user.picture +"\" style=\"float: left; max-height: 25px; max-width: 25px; margin-right: 5px;\" />" +
+							"<img src=\" "+ item.user.image.custom + "\" style=\"float: left; max-height: 25px; max-width: 25px; margin-right: 5px;\" />" +
 							"<span style=\"display: block; float: left; margin-top: 0;\">" + item.label + "</span>" +
 							"<div style=\"clear: both;\"></div>" +
-							"</a>"
+                        "</a>"
 					)
 					.appendTo(ul);
 			};
