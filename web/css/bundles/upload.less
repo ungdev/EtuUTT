@@ -7,43 +7,42 @@
 .upload-form {
 	text-align: center;
 }
-.upload-list, .upload-list td {
-	border-collapse: collapse;
-}
-.upload-list td {
-	width: 20%;
+
+.upload-image-container {
+	display: inline-block;
+	vertical-align: top;
+	width: 215px;
 	text-align: center;
-}
-.upload-list-images td {
-	padding: 20px 0 5px 0;
-}
-.upload-list-labels, .upload-list-images {
-	background: #fff;
-}
-.upload-list-images td {
-	border: 1px solid #e5e5e5;
-	border-bottom: 0;
-}
-.upload-list-labels td {
-	border: 1px solid #e5e5e5;
-	border-top: 0;
-}
-.upload-list img {
-	max-width: 90%;
-}
-.upload-list-padding {
-	border: 0;
-}
-.upload-list-padding td {
-	height: 10px;
-}
-.upload-list-url {
-	position: absolute;
-	margin-left: -75px;
-	width: 275px;
-}
-.upload-list-url-right {
-	margin-left: -150px;
+
+	.upload-image {
+		display: inline-block;
+		width: 150px;
+		height: 150px;
+		background-size: cover;
+		background-position: center;
+
+		a {
+			display: block;
+			float: right;
+			padding: 5px 7px;
+			background: rgba(255, 255, 255, 0.2);
+
+			&:hover {
+				text-decoration: none;
+				background: rgba(255, 255, 255, 0.5);
+			}
+		}
+	}
+
+	.upload-label input {
+		background: transparent;
+		border: 0;
+		box-shadow: none;
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		font-size: 11px;
+		width: 200px;
+	}
 }
 
 .upload-remove {

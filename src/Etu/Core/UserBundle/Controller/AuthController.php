@@ -95,9 +95,6 @@ class AuthController extends Controller
 				if ($user instanceof \Etu\Core\UserBundle\Entity\User) {
                     $this->createSession(Session::TYPE_USER, $user);
 
-                    $this->get('session')->set('user', $user->getId());
-                    $this->get('session')->set('user_data', $user);
-
 					// Remove BuckUTT cookie
 					$this->get('session')->remove(SoapManager::cookie_name);
 
@@ -237,9 +234,6 @@ class AuthController extends Controller
 		if ($user instanceof \Etu\Core\UserBundle\Entity\User) {
             $this->createSession(Session::TYPE_USER, $user);
 
-            $this->get('session')->set('user', $user->getId());
-            $this->get('session')->set('user_data', $user);
-
 			// Remove BuckUTT cookie
 			$this->get('session')->remove(SoapManager::cookie_name);
 
@@ -253,8 +247,6 @@ class AuthController extends Controller
 			}
 		} elseif ($user instanceof \Etu\Core\UserBundle\Entity\Organization) {
             $this->createSession(Session::TYPE_ORGA, $user);
-
-			$this->get('session')->set('orga', $user->getId());
 
 			// Remove BuckUTT cookie
 			$this->get('session')->remove(SoapManager::cookie_name);
@@ -309,9 +301,6 @@ class AuthController extends Controller
 
 			if ($result) {
                 $this->createSession(Session::TYPE_USER, $result);
-
-                $this->get('session')->set('user', $result->getId());
-                $this->get('session')->set('user_data', $result);
 
 				$this->get('session')->getFlashBag()->set('message', array(
 					'type' => 'success',
@@ -397,11 +386,6 @@ class AuthController extends Controller
 	 */
 	private function initializeCAS()
 	{
-		/*
-		 * Redirect to CAS server if not logged in
-		 */
-		require __DIR__.'/../Resources/lib/phpCAS/CAS.php';
-
 		\phpCAS::client(
 			$this->container->getParameter('etu.cas.version'),
 			$this->container->getParameter('etu.cas.host'),

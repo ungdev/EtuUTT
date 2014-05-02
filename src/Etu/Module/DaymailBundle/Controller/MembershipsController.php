@@ -3,7 +3,6 @@
 namespace Etu\Module\DaymailBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\Member;
 use Etu\Module\DaymailBundle\Entity\DaymailPart;
@@ -133,6 +132,8 @@ class MembershipsController extends Controller
 		$request = $this->getRequest();
 
 		if ($request->getMethod() == 'POST' && $form->submit($request)->isValid() && $canEdit) {
+            $daymailPart->setBody($this->get('etu_daymail.body_parser')->parse($daymailPart->getBody()));
+
 			$em->persist($daymailPart);
 			$em->flush();
 

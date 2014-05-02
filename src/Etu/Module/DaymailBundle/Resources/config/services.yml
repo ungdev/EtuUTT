@@ -1,4 +1,8 @@
 
-parameters: ~
+parameters:
+    etu_daymail.body_parser.class: Etu\Module\DaymailBundle\BodyParser\BodyParser
 
-services: ~
+services:
+    etu_daymail.body_parser:
+        class: %etu_daymail.body_parser.class%
+        arguments: [ @kernel ]

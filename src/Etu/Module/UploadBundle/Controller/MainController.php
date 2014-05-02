@@ -30,23 +30,13 @@ class MainController extends Controller
 		$iterator = new \DirectoryIterator($directory);
 		$images = array();
 
-		$i = 0;
-		$j = 0;
-
 		/** @var $file \SplFileInfo */
 		foreach ($iterator as $file) {
 			if ($file->isFile() && in_array($file->getExtension(), array('png', 'jpg', 'jpeg', 'gif', 'bmp'))) {
-				if ($i == 5) {
-					$i = 0;
-					$j++;
-				}
-
-				$images[$j][] = array(
+				$images[] = array(
 					'id' => substr(md5($file->getBasename()), 0, 10),
 					'name' => $file->getBasename()
 				);
-
-				$i++;
 			}
 		}
 
