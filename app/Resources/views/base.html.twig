@@ -56,7 +56,7 @@
 					<h1 class="seo-title">{{ block('title') }} - {{ 'base.title'|trans }}</h1>
 
 					<a href="{{ path('homepage') }}">
-						<img src="{{ asset('img/logo.jpg') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="logo" />
+						<img src="{{ asset('img/logo.jpg') }}?endbeta" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="logo" />
 					</a>
 				</div>
 
@@ -273,8 +273,6 @@
 			{% endif %}
 		</script>
 
-        <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-
         {% javascripts
             'bootstrap/js/bootstrap.min.js'
             'bundles/fosjsrouting/js/router.js'
@@ -288,6 +286,8 @@
         %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
+
+        <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
 
 		{% block js_libs %}{% endblock %}
 

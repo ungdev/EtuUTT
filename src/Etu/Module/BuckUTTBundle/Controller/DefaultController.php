@@ -303,11 +303,6 @@ class DefaultController extends Controller
 		$clientSBUY = new SoapManager('SBUY', $this->get('session'));
 		$clientSBUY->transactionDecode(base64_encode($_POST['DATA']));
 
-		$this->get('session')->getFlashBag()->set('message', array(
-			'type' => 'success',
-			'message' => 'buckutt.main.reload.confirm'
-		));
-
 		return new Response('');
 	}
 }
