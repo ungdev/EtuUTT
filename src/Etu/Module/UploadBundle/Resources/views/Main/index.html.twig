@@ -40,6 +40,22 @@
 
 	<hr />
 
+    {% if images|length > 0 %}
+        {% for image in images %}
+            <div class="upload-image-container">
+                <div class="upload-image" style="background-image: url('{{ asset('uploads/'~app.user.login~'/'~image.name) }}');">
+                    <a href="{{ path('upload_remove', {'id': image.id}) }}" title="{{ 'upload.main.index.remove'|trans }}">
+                        <i class="icon-remove"></i>
+                    </a>
+                </div>
+                <div class="upload-label">
+                    <input type="text" value="http://{{ etu.domain ~ asset('uploads/' ~ app.user.login ~ '/' ~ image.name) }}" />
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {#
 	<table class="upload-list">
 		{% if images|length > 0 %}
 			<tr>
@@ -86,4 +102,5 @@
 			</tr>
 		{% endfor %}
 	</table>
+    #}
 {% endblock %}

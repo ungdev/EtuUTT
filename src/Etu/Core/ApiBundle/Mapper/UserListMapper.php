@@ -21,9 +21,10 @@ class UserListMapper extends QueryMapper
         }
 
         if ($request->has('name')) {
-            $query->andWhere('u.firstName LIKE :firstname OR u.lastName LIKE :lastname')
-                ->setParameter('firstname', '%'.$request->get('name').'%')
-                ->setParameter('lastname', '%'.$request->get('name').'%');
+            $term = str_replace(' ', '%', trim($request->get('name')));
+
+            $query->andWhere('u.firstName LIKE :term OR u.lastName LIKE :term OR u.fullName LIKE :term')
+                ->setParameter('term', '%'.$term.'%');
         }
 
         if ($request->has('branch')) {

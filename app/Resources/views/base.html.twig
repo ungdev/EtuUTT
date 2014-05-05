@@ -1,4 +1,3 @@
-{% spaceless %}
 {% set message = false %}
 
 {% if app.session.flashBag.has('message') %}
@@ -27,7 +26,7 @@
             'swipebox/src/css/swipebox.min.css'
             'css/boot.less'
             filter='cssrewrite'
-            output='min/etuut.css'
+            output='min/etuutt.css'
         %}
             <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
         {% endstylesheets %}
@@ -37,7 +36,7 @@
 		{% if not app.request.cookies.has('disable_responsive') %}
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-            {% stylesheets 'css/responsive.css' filter='cssrewrite' output='min/responsive.css' %}
+            {% stylesheets 'css/responsive.less' filter='cssrewrite' output='min/responsive.css' %}
                 <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
             {% endstylesheets %}
 		{% endif %}
@@ -57,7 +56,7 @@
 					<h1 class="seo-title">{{ block('title') }} - {{ 'base.title'|trans }}</h1>
 
 					<a href="{{ path('homepage') }}">
-						<img src="{{ asset('img/logo.jpg') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="logo" />
+						<img src="{{ asset('img/logo.jpg') }}?endbeta" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="logo" />
 					</a>
 				</div>
 
@@ -274,8 +273,6 @@
 			{% endif %}
 		</script>
 
-        <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-
         {% javascripts
             'bootstrap/js/bootstrap.min.js'
             'bundles/fosjsrouting/js/router.js'
@@ -285,32 +282,16 @@
             'tipsy/src/jquery.tipsy.js'
             'js/moment.min.js'
             'js/common.js'
-            output='min/etuut.js'
+            output='min/etuutt.js'
         %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
+        <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
 		{% block js_libs %}{% endblock %}
 
-		{% block checkout_notifications %}
-			{% if app.user and not app.user.isOrga %}
-				<script type="text/javascript">
-					window.setInterval(function(){
-						$.getJSON(Routing.generate('notifs_new'), function(data) {
-							if (typeof data.status != 'undefined' && data.status == 200) {
-								if (data.result.count > 0) {
-									$('#head-menu-home-pins').text(data.result.count).show();
-									setCountTitle(data.result.count);
-								} else {
-									$('#head-menu-home-pins').hide();
-									removeCountTitle();
-								}
-							}
-						});
-					}, 5 * 60 * 1000); // 5 minutes
-				</script>
-			{% endif %}
-		{% endblock %}
+		{% block checkout_notifications %}{% endblock %}
 
 		{% block javascripts %}{% endblock %}
 
@@ -325,4 +306,3 @@
 		</script>
 	</body>
 </html>
-{% endspaceless %}

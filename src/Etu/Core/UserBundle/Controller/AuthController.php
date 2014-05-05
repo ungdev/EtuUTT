@@ -2,16 +2,15 @@
 
 namespace Etu\Core\UserBundle\Controller;
 
+use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManager;
+use Etu\Core\UserBundle\Entity\Session;
 use Etu\Core\UserBundle\Ldap\LdapManager;
 use Etu\Core\UserBundle\Sync\Iterator\Element\ElementToImport;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Ldap\Model\User;
 use Etu\Core\UserBundle\Ldap\Model\Organization;
-
 use Etu\Module\BuckUTTBundle\Soap\SoapManager;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -94,8 +93,7 @@ class AuthController extends Controller
 				}
 
 				if ($user instanceof \Etu\Core\UserBundle\Entity\User) {
-					$this->get('session')->set('user', $user->getId());
-					$this->get('session')->set('user_data', $user);
+                    $this->createSession(Session::TYPE_USER, $user);
 
 					// Remove BuckUTT cookie
 					$this->get('session')->remove(SoapManager::cookie_name);
@@ -115,8 +113,7 @@ class AuthController extends Controller
 						return $this->redirect($this->generateUrl('homepage'));
 					}
 				} elseif ($user instanceof \Etu\Core\UserBundle\Entity\Organization) {
-					$this->get('session')->set('orga', $user->getId());
-					$this->get('session')->set('orga_data', $user);
+                    $this->createSession(Session::TYPE_ORGA, $user);
 
 					// Remove BuckUTT cookie
 					$this->get('session')->remove(SoapManager::cookie_name);
@@ -232,9 +229,10 @@ class AuthController extends Controller
 			}
 		}
 
+
+        // Create the session
 		if ($user instanceof \Etu\Core\UserBundle\Entity\User) {
-			$this->get('session')->set('user', $user->getId());
-			$this->get('session')->set('user_data', $user);
+            $this->createSession(Session::TYPE_USER, $user);
 
 			// Remove BuckUTT cookie
 			$this->get('session')->remove(SoapManager::cookie_name);
@@ -248,7 +246,7 @@ class AuthController extends Controller
 				$this->get('session')->set('_locale', $user->getLanguage());
 			}
 		} elseif ($user instanceof \Etu\Core\UserBundle\Entity\Organization) {
-			$this->get('session')->set('orga', $user->getId());
+            $this->createSession(Session::TYPE_ORGA, $user);
 
 			// Remove BuckUTT cookie
 			$this->get('session')->remove(SoapManager::cookie_name);
@@ -302,8 +300,7 @@ class AuthController extends Controller
 			));
 
 			if ($result) {
-				$this->get('session')->set('user', $result->getId());
-				$this->get('session')->set('user_data', $result);
+                $this->createSession(Session::TYPE_USER, $result);
 
 				$this->get('session')->getFlashBag()->set('message', array(
 					'type' => 'success',
@@ -343,6 +340,28 @@ class AuthController extends Controller
 			return $this->redirect($this->generateUrl('homepage'));
 		}
 
+        if ($this->getUserLayer()->isConnected()) {
+            /** @var EntityManager $em */
+            $em = $this->getDoctrine()->getManager();
+
+            $query = $em->createQueryBuilder()
+                ->delete()
+                ->from('EtuUserBundle:Session', 's')
+                ->where('s.entityType = :type')
+                ->andWhere('s.entityId = :id')
+                ->setParameter('id', $this->getUser()->getId());
+
+            if ($this->getUserLayer()->isOrga()) {
+                $query->setParameter('type', Session::TYPE_ORGA);
+            } else {
+                $query->setParameter('type', Session::TYPE_USER);
+            }
+
+            $query->getQuery()->execute();
+        }
+
+        setcookie(md5('etuutt-session-cookie-name'), '', time() - 10, '/');
+
 		$this->get('session')->set('orga', null);
 		$this->get('session')->set('user', null);
 		$this->get('session')->clear();
@@ -367,11 +386,6 @@ class AuthController extends Controller
 	 */
 	private function initializeCAS()
 	{
-		/*
-		 * Redirect to CAS server if not logged in
-		 */
-		require __DIR__.'/../Resources/lib/phpCAS/CAS.php';
-
 		\phpCAS::client(
 			$this->container->getParameter('etu.cas.version'),
 			$this->container->getParameter('etu.cas.host'),
@@ -380,4 +394,22 @@ class AuthController extends Controller
 			$this->container->getParameter('etu.cas.change_session_id')
 		);
 	}
+
+    /**
+     * @param $type
+     * @param User|Organization $user
+     */
+    private function createSession($type, $user)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $session = new Session($type, $user->getId());
+        $session->createName($_SERVER);
+
+        $em->persist($session);
+        $em->flush();
+
+        setcookie(md5('etuutt-session-cookie-name'), $session->getToken(), $session->getExpireAt()->format('U'), '/');
+    }
 }
