@@ -60,14 +60,14 @@ class ScheduleBuilder
 			if ($course->getWeek() == 'T') {
 				$this->courses[$course->getDay()][$course->getStart()] = array(
 					'type' => 'course',
-					'size' => $this->getBlockSize($course),
+					'size' => self::getBlockSize($course),
 					'course' => $course,
 				);
 			} else {
 				if (! isset($this->courses[$course->getDay()][$course->getStart()]['courses'])) {
 					$this->courses[$course->getDay()][$course->getStart()] = array(
 						'type' => 'course_half',
-						'size' => $this->getBlockSize($course),
+						'size' => self::getBlockSize($course),
 						'courses' => new CourseHalf(),
 					);
 				}
@@ -77,7 +77,7 @@ class ScheduleBuilder
 		} else {
 			$this->courses[$course->getDay()][$course->getStart()] = array(
 				'type' => 'course',
-				'size' => $this->getBlockSize($course),
+				'size' => self::getBlockSize($course),
 				'course' => $course,
 			);
 		}
@@ -86,7 +86,7 @@ class ScheduleBuilder
 	}
 
 	/**
-	 * @return \Etu\Core\UserBundle\Entity\Course[]
+	 * @return array
 	 */
 	public function build()
 	{
@@ -119,7 +119,7 @@ class ScheduleBuilder
 	 * @param Course $course
 	 * @return int
 	 */
-	private function getBlockSize(Course $course)
+	public static function getBlockSize(Course $course)
 	{
 		$partsStart = explode(':', $course->getStart());
 		$partsEnd = explode(':', $course->getEnd());
