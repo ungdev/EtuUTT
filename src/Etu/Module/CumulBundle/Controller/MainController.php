@@ -3,13 +3,14 @@
 namespace Etu\Module\CumulBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\Course;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Schedule\Helper\ScheduleBuilder;
+use Etu\Module\CumulBundle\Schedule\ScheduleComparator;
 
 // Import annotations
-use Etu\Module\CumulBundle\Schedule\ScheduleComparator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -25,86 +26,82 @@ class MainController extends Controller
 			return $this->createAccessDeniedResponse();
 		}
 
-		if (! isset($_GET['q']) || empty($_GET['q'])) {
-			return $this->redirect(
-				$this->generateUrl('cumul_index').'?q='.$this->getUser()->getLogin()
-			);
-		}
-
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
 
+        $root = $this->generateUrl('homepage', [], UrlGeneratorInterface::ABSOLUTE_URL);
+
         $allLogins = $em->getRepository('EtuUserBundle:User')
             ->createQueryBuilder('u')
-            ->select('u.login, u.fullName')
+            ->select('u.login, u.fullName, u.avatar')
             ->where('u.isStudent = 1')
             ->getQuery()
             ->getScalarResult();
 
-		$request = $this->getRequest();
+        foreach ($allLogins as $key => $allLogin) {
+            unset($allLogins[$key]);
 
-		if ($request->getMethod() == 'POST') {
-
-			/** @var $user User */
-			$user = $em->getRepository('EtuUserBundle:User')->findOneByFullName($request->get('login'));
-
-			$q = $_GET['q'];
-
-			if ($user) {
-				$q .= ':'.$user->getLogin();
-			}
-
-			return $this->redirect(
-				$this->generateUrl('cumul_index').'?q='.$q
-			);
-		}
-
-        $logins = explode(':', $_GET['q']);
-
-		$query = $em->createQueryBuilder()
-			->select('c, u')
-			->from('EtuUserBundle:Course', 'c')
-			->leftJoin('c.user', 'u');
-
-		foreach ($logins as $key => $login) {
-			$query->orWhere('u.login = :login'.$key)
-				->setParameter('login'.$key, $login);
-		}
-
-		/** @var $courses Course[] */
-		$courses = $query->getQuery()->getResult();
-
-		/** @var $builders ScheduleBuilder[] */
-		$builders = array();
-
-		/** @var $users User[] */
-		$users = array();
-
-		foreach ($courses as $course) {
-			if (! isset($builders[$course->getUser()->getLogin()])) {
-				$builders[$course->getUser()->getLogin()] = new ScheduleBuilder();
-			}
-
-			$builders[$course->getUser()->getLogin()]->addCourse($course);
-			$users[$course->getUser()->getLogin()] = $course->getUser();
-		}
-
-        foreach ($logins as $login) {
-            if (! isset($users[$login])) {
-                $builders[$login] = new ScheduleBuilder();
-                $users[$login] = $em->getRepository('EtuUserBundle:User')->findOneByLogin($login);
-            }
+            $allLogins[$allLogin['login']] = [
+                'value' => $allLogin['login'],
+                'label' => $allLogin['fullName'],
+                'avatar' => $root . 'photos/'.$allLogin['avatar'],
+            ];
         }
 
-        $comparator = new ScheduleComparator($builders);
+        $logins = (isset($_GET['q'])) ? explode(':', $_GET['q']) : [];
 
-		return array(
-			'courses' => $courses,
-            'comparison' => $comparator->compare(),
-			'users' => $users,
-			'countUsers' => count($users),
-			'colSize' => round(14 / count($users), 2),
-            'allLogins' => json_encode($allLogins)
-		);
+        if (! empty($logins)) {
+            $query = $em->createQueryBuilder()
+                ->select('c, u')
+                ->from('EtuUserBundle:Course', 'c')
+                ->leftJoin('c.user', 'u');
+
+            foreach ($logins as $key => $login) {
+                $query->orWhere('u.login = :login'.$key)
+                    ->setParameter('login'.$key, $login);
+            }
+
+            /** @var $courses Course[] */
+            $courses = $query->getQuery()->getResult();
+
+            /** @var $builders ScheduleBuilder[] */
+            $builders = array();
+
+            /** @var $users User[] */
+            $users = array();
+
+            foreach ($courses as $course) {
+                if (! isset($builders[$course->getUser()->getLogin()])) {
+                    $builders[$course->getUser()->getLogin()] = new ScheduleBuilder();
+                }
+
+                $builders[$course->getUser()->getLogin()]->addCourse($course);
+                $users[$course->getUser()->getLogin()] = $course->getUser();
+            }
+
+            foreach ($logins as $login) {
+                if (! isset($users[$login])) {
+                    $builders[$login] = new ScheduleBuilder();
+                    $users[$login] = $em->getRepository('EtuUserBundle:User')->findOneByLogin($login);
+                }
+            }
+
+            $comparator = new ScheduleComparator($builders);
+
+            return [
+                'comparating' => true,
+                'courses' => $courses,
+                'comparison' => $comparator->compare(),
+                'users' => $users,
+                'countUsers' => count($users),
+                'colSize' => round(14 / count($users), 2),
+                'allLogins' => json_encode($allLogins)
+            ];
+        } else {
+            return [
+                'comparating' => false,
+                'allLogins' => json_encode($allLogins),
+            ];
+        }
 	}
 }
