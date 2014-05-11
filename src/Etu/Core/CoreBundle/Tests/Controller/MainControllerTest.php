@@ -46,38 +46,11 @@ class MainControllerTest extends WebTestCase
 		$client = static::createClient();
 		$client->getContainer()->get('security.context')->setToken(new AnonymousToken());
 
-		$pages = array(
-			'developpeurs' => 'Développeurs',
-			'nous-aider' => 'Nous aider',
-			'mentions-legales' => 'Mentions légales',
-			'l-equipe' => 'L\'équipe',
-		);
-
-		foreach ($pages as $slug => $name) {
-			$crawler = $client->request('GET', '/page/'.$slug);
-			$this->assertGreaterThan(0, $crawler->filter('h2:contains("'.$name.'")')->count());
-		}
+        $crawler = $client->request('GET', '/page/developpeurs');
+        $this->assertGreaterThan(0, $crawler->filter('h2:contains("Développeurs")')->count());
 	}
 
-	public function testChangeLocaleFromFrench()
-	{
-		$client = static::createClient();
-		$client->getContainer()->get('session')->set('_locale', 'fr');
-		$client->getContainer()->get('security.context')->setToken(new AnonymousToken());
-
-		$client->followRedirects(true);
-
-		$crawler = $client->request('GET', '/');
-
-		$this->assertGreaterThan(0, $crawler->filter('title:contains("Site étudiant de l\'UTT")')->count());
-
-		$link = $crawler->selectLink('English')->link();
-		$crawler = $client->click($link);
-
-		$this->assertGreaterThan(0, $crawler->filter('title:contains("student website")')->count());
-	}
-
-	public function testChangeLocaleFromEnglish()
+	public function testChangeLocaleEnglish()
 	{
 		$client = static::createClient();
 		$client->getContainer()->get('session')->set('_locale', 'en');
@@ -88,10 +61,5 @@ class MainControllerTest extends WebTestCase
 		$crawler = $client->request('GET', '/');
 
 		$this->assertGreaterThan(0, $crawler->filter('title:contains("student website")')->count());
-
-		$link = $crawler->selectLink('Français')->link();
-		$crawler = $client->click($link);
-
-		$this->assertGreaterThan(0, $crawler->filter('title:contains("Site étudiant de l\'UTT")')->count());
 	}
 }

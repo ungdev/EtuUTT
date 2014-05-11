@@ -24,14 +24,6 @@ class AdminControllerTest extends WebTestCase
 		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
 	}
 
-	public function testRestrictionStats()
-	{
-		$client = static::createClient();
-
-		$client->request('GET', '/admin/stats');
-		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
-	}
-
 	public function testRestrictionPages()
 	{
 		$client = static::createClient();

@@ -54,6 +54,7 @@ class ProfileControllerTest extends WebTestCase
 		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
 
 		$crawler = $client->request('GET', '/user/profile');
+
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Mon profil")')->count());
 	}
 
@@ -64,16 +65,6 @@ class ProfileControllerTest extends WebTestCase
 
 		$crawler = $client->request('GET', '/user/profile/edit');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier mes informations")')->count());
-	}
-
-	public function testProfileAvatar()
-	{
-		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
-
-		$crawler = $client->request('GET', '/user/profile/avatar');
-
-		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Ma photo")')->count());
 	}
 
 	public function testTrombiEdit()

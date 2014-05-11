@@ -16,14 +16,6 @@ class MainControllerTest extends WebTestCase
 		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
 	}
 
-	public function testRestrictionSearchJson()
-	{
-		$client = static::createClient();
-
-		$client->request('GET', '/trombi/search');
-		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
-	}
-
 	public function testIndex()
 	{
 		$client = static::createClient();

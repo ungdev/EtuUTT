@@ -2519,7 +2519,11 @@ class User implements UserInterface, \Serializable
 	 */
 	public function getBadgesList()
 	{
-		$badges = $this->badges->toArray();
+        if ($this->testingContext) {
+            return [];
+        }
+
+		$badges = ($this->badges) ? $this->badges->toArray() : [];
 
 		foreach ($badges as &$badge) {
 			$badge = $badge->getBadge();
@@ -2593,8 +2597,8 @@ class User implements UserInterface, \Serializable
 		 */
 		$list = array();
 
-		foreach (BadgesManager::findBadgesList() as $serie => $badges) {
-			foreach ($badges as $level => $badge) {
+		foreach ((array) BadgesManager::findBadgesList() as $serie => $badges) {
+			foreach ((array) $badges as $level => $badge) {
 				if ($badge->getCountLevels() > 1) {
 					$list[$serie][$level] = array(
 						'owned' => false,
@@ -2609,8 +2613,10 @@ class User implements UserInterface, \Serializable
 			}
 		}
 
+        $badges = ($this->badges) ? $this->badges->toArray() : [];
+
 		/** @var $userBadge UserBadge */
-		foreach ($this->badges->toArray() as $userBadge) {
+		foreach ($badges as $userBadge) {
 			$badge = $userBadge->getBadge();
 
 			if ($badge->getCountLevels() > 1) {

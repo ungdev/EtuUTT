@@ -11,8 +11,6 @@ use Etu\Core\CoreBundle\Framework\Module\ModulesManager;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Core\CoreBundle\Util\Server;
 
-use Symfony\Component\HttpFoundation\Response;
-
 // Import @Route() and @Template() annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

@@ -2,6 +2,8 @@
 
 namespace Etu\Module\AssosBundle\Test\Controller;
 
+use Etu\Core\CoreBundle\Framework\Tests\MockUser;
+use Etu\Core\UserBundle\Security\Authentication\UserToken;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class MainControllerTest extends WebTestCase
@@ -19,14 +21,24 @@ class MainControllerTest extends WebTestCase
 		$client = static::createClient();
 
 		$crawler = $client->request('GET', '/orgas/orga');
-		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Détail d\'une assocation")')->count());
+		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Détail d\'une association")')->count());
 	}
 
-	public function testMembers()
-	{
-		$client = static::createClient();
+    public function testRestrictMembers()
+    {
+        $client = static::createClient();
 
-		$crawler = $client->request('GET', '/orgas/orga/members');
-		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Membres d\'une assocation")')->count());
-	}
+        $client->request('GET', '/orgas/orga/members');
+        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+    }
+
+    public function testMembers()
+    {
+        $client = static::createClient();
+        $client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+
+        $crawler = $client->request('GET', '/orgas/orga/members');
+
+        $this->assertGreaterThan(0, $crawler->filter('h2:contains("Membres d\'une assocation")')->count());
+    }
 }
