@@ -8,3 +8,4 @@ cumul:
         index:
             title: Cumul d'emploi du temps
             other: Autre
+            warning_phones: Votre résolution est trop petite pour utiliser le cumul d'emploi du temps
