@@ -297,7 +297,13 @@ $(function() {
 							}
 						}));
 					});
-			}
+			},
+            select: function( event, ui ) {
+                var input = $(event.target);
+
+                input.attr('data-login', ui.item.user.login);
+                input.attr('data-name', ui.item.user.fullName);
+            }
 		});
 
 		if (usersAutocomplete.data("ui-autocomplete")) {

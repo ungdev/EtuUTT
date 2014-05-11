@@ -7,185 +7,332 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script type="text/javascript">var logins = {{ allLogins|raw }};</script>
+    <script type="text/javascript">var logins = {{ logins|raw }}, root = '{{ path('cumul_index') }}';</script>
 	<script type="text/javascript" src="{{ asset('js/bundles/cumul.js') }}"></script>
 {% endblock %}
 
 {% block content %}
 	<div class="padding20-all">
-        {% if not comparating %}
-            <div class="align-center">
-                <p>
-                    Bienvenue sur le comparateur d'emplois du temps.
-                </p>
-                <p>
-                    Cet outil vous permet de comparer les emplois du temps d'autant d'étudiants que vous le
-                    souhaitez. Il vous indiquera alors quels moments de la semaine sont les plus libres pour le groupe
-                    demandez.
-                </p>
-            </div>
+        <div class="comparison-generator-file overlay">
+            <div class="subpage">
+                <ul class="nav nav-tabs" id="myTab">
+                    <li class="active">
+                        <a href="#textarea" data-toggle="tab">Liste textuelle</a>
+                    </li>
+                    <li>
+                        <a href="#file" data-toggle="tab">Envoyer un fichier</a>
+                    </li>
+                </ul>
 
-            <div class="comparison-generator">
-                <div class="row-fluid">
-                    <div class="span4 generator-add">
-                        <h4>Ajouter des étudiants</h4>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="textarea">
+                        <form method="post" action="{{ path('cumul_import', {'type': 'textarea'}) }}">
+                            <label for="list">
+                                <strong>Liste</strong>
+                            </label>
+                            <textarea placeholder="Copiez ici votre liste" id="list" name="import-textarea"></textarea>
 
-                        <ul class="nav nav-tabs">
-                            <li class="active">
-                                <a href="#unique" data-toggle="tab">
-                                    Individuellement
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#multiple" data-toggle="tab">
-                                    Par lots
-                                </a>
-                            </li>
-                        </ul>
+                            <br />
+                            <br />
 
-                        <div class="tab-content">
-                            <div class="tab-pane fade active in" id="unique">
-                                <div class="align-center">
-                                    <input type="text" class="generator-unique-input" placeholder="Nom, prénom, login" />
-                                    <input type="hidden" class="generator-unique-hidden" value="" />
+                            <strong>Séparateur</strong>
 
-                                    <br />
+                            <div class="gen-file-separator">
+                                <div class="separator-row">
+                                    <div class="separator-radio">
+                                        <input type="radio" name="separator-textarea" checked="checked" value="new-line" id="separator-new-line">
+                                    </div>
+                                    <div class="separator-label">
+                                        <label for="separator-new-line">Nouvelle ligne</label>
+                                    </div>
+                                    <div class="separator-char"></div>
+                                </div>
 
-                                    <a href="javascript:void(0)" class="btn btn-default generator-unique-add-button">
-                                        Ajouter
-                                    </a>
+                                <div class="separator-row">
+                                    <div class="separator-radio">
+                                        <input type="radio" name="separator-textarea" value="char" id="separator-char">
+                                    </div>
+                                    <div class="separator-label">
+                                        <label for="separator-char">Caractère :</label>
+                                    </div>
+                                    <div class="separator-char">
+                                        <input type="text" name="separator-char" class="char input-small">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="multiple">
-                                <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</p>
+
+                            <br />
+
+                            <label for="datatype">
+                                <strong>Cette liste est composée de ...</strong>
+                            </label>
+                            <select id="datatype" name="import-data-type">
+                                <option value="fullName">Noms / Prénoms</option>
+                                <option value="login">Identifiants</option>
+                                <option value="studentId">Numéros étudiants</option>
+                            </select>
+
+                            <hr />
+
+                            <div class="alert alert-block">
+                                <strong>Attention</strong> : cette liste va écraser la comparaison que vous effectuez actuellement.
                             </div>
+
+                            <input type="submit" class="btn btn-primary" value="Importer">
+                            <a href="#" onclick="$('.overlay').hide(); return false;" class="btn">Annuler</a>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="file">
+                        <div class="tab-pane active" id="file">
+                            <form method="post" action="{{ path('cumul_import', {'type': 'file'}) }}" enctype="multipart/form-data">
+                                <label for="file">
+                                    <strong>Fichier</strong>
+                                </label>
+                                <input type="file" id="file" name="import-file" />
+
+                                <br />
+                                <br />
+
+                                <strong>Séparateur</strong>
+
+                                <div class="gen-file-separator">
+                                    <div class="separator-row">
+                                        <div class="separator-radio">
+                                            <input type="radio" name="separator-file" checked="checked" value="new-line" id="separator-file-new-line">
+                                        </div>
+                                        <div class="separator-label">
+                                            <label for="separator-file-new-line">Nouvelle ligne</label>
+                                        </div>
+                                        <div class="separator-char"></div>
+                                    </div>
+
+                                    <div class="separator-row">
+                                        <div class="separator-radio">
+                                            <input type="radio" name="separator-file" value="char" id="separator-file-char">
+                                        </div>
+                                        <div class="separator-label">
+                                            <label for="separator-file-char">Caractère :</label>
+                                        </div>
+                                        <div class="separator-char">
+                                            <input type="text" name="separator-char" class="char input-small">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br />
+
+                                <label for="datatype">
+                                    <strong>Cette liste est composée de ...</strong>
+                                </label>
+                                <select id="datatype" name="import-data-type">
+                                    <option value="fullName">Noms / Prénoms</option>
+                                    <option value="login">Identifiants</option>
+                                    <option value="studentId">Numéros étudiants</option>
+                                </select>
+
+                                <hr />
+
+                                <div class="alert alert-block">
+                                    <strong>Attention</strong> : cette liste va écraser la comparaison que vous effectuez actuellement.
+                                </div>
+
+                                <input type="submit" class="btn btn-primary" value="Importer">
+                                <a href="#" onclick="$('.overlay').hide(); return false;" class="btn">Annuler</a>
+                            </form>
                         </div>
                     </div>
-                    <div class="span8 generator-list">
-
-                    </div>
-                </div>
-
-                <br />
-
-                <div class="generator-build align-center">
-                    <a href="#" class="btn btn-primary">
-                        Générer la comparaison
-                    </a>
                 </div>
             </div>
-        {% else %}
-            <div class="align-center">
-                <p>
-                    Vous comparez actuellement les emplois du temps de <strong>{{ countUsers }} étudiants</strong>.
-                </p>
-                <p>
-                    Les nombres affichés correspondent au nombre d'étudiants disponibles parmi la liste demandée à chaque heure.
-                </p>
-                <p>
-                    <a href="" class="btn btn-default">Modifier les emplois du temps à comparer</a>
-                </p>
-            </div>
+        </div>
 
-            <br />
-            <hr />
-            <br />
-
-            <div class="row-fluid schedule schedule-days">
-                <div class="span2 day hidden-phone">
-                    {{ 'user.schedule.days.monday'|trans }}
-                </div>
-                <div class="span2 day hidden-phone">
-                    {{ 'user.schedule.days.tuesday'|trans }}
-                </div>
-                <div class="span2 day hidden-phone">
-                    {{ 'user.schedule.days.wednesday'|trans }}
-                </div>
-                <div class="span2 day hidden-phone">
-                    {{ 'user.schedule.days.thursday'|trans }}
-                </div>
-                <div class="span2 day hidden-phone">
-                    {{ 'user.schedule.days.friday'|trans }}
-                </div>
-                <div class="span2 day hidden-phone">
-                    {{ 'user.schedule.days.sathurday'|trans }}
-                </div>
-                <div class="span12 day schedule-days-choose visible-phone">
-                    <div class="dropdown">
-                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="icon-calendar"></i>
-                            {{ 'user.schedule.days.monday'|trans }}
-                            <span class="caret"></span>
+        <div class="comparison-generator-actions">
+            <div class="btn-group">
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                    Actions sur la liste
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu">
+                    <li class="dropdown-submenu">
+                        <a tabindex="-1" href="#">
+                            Ajouter tous les étudiants d'une branche
                         </a>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                            <li>
-                                <a href="{{ path('user_schedule', {'day': 'monday'}) }}">
-                                    {{ 'user.schedule.days.monday'|trans }}
+                        <ul class="dropdown-menu">
+                            {% for branch, branchLevels in addBranchs %}
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">
+                                    {{ branch }}
                                 </a>
+                                <ul class="dropdown-menu pull-left">
+                                    <li>
+                                        {% for level, branchLogins in branchLevels %}
+                                            <a tabindex="-1" href="?q={{ branchLogins|join(':') }}">
+                                                {% if level == 'all' %}
+                                                    Tous les {{ branch }}
+                                                {% else %}
+                                                    {{ branch ~ level }}
+                                                {% endif %}
+
+                                                (+ {{ branchLogins|length - countUsers }})
+                                            </a>
+                                        {% endfor %}
+                                    </li>
+                                </ul>
                             </li>
-                            <li>
-                                <a href="{{ path('user_schedule', {'day': 'tuesday'}) }}">
-                                    {{ 'user.schedule.days.tuesday'|trans }}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path('user_schedule', {'day': 'wednesday'}) }}">
-                                    {{ 'user.schedule.days.wednesday'|trans }}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path('user_schedule', {'day': 'thursday'}) }}">
-                                    {{ 'user.schedule.days.thursday'|trans }}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path('user_schedule', {'day': 'friday'}) }}">
-                                    {{ 'user.schedule.days.friday'|trans }}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path('user_schedule', {'day': 'sathurday'}) }}">
-                                    {{ 'user.schedule.days.sathurday'|trans }}
-                                </a>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a tabindex="-1" href="#" class="import-file-btn">Importer une liste ou un fichier</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li{% if countUsers <= 1 %} class="disabled"{% endif %}>
+                        <a tabindex="-1" href="{{ path('cumul_index') }}?q={{ app.user.login }}">
+                            Supprimer tous les étudiants (- {{ countUsers }})
+                        </a>
+                    </li>
+                    <li class="dropdown-submenu{% if countUsers <= 1 %} disabled{% endif %}">
+                        <a tabindex="-1" href="#">
+                            Supprimer par branche
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li{% if countUsers <= 1 %} class="disabled"{% endif %}>
+                                {% for branch, branchLogins in removeUrlsBranchs %}
+                                    <a tabindex="-1" href="?q={{ branchLogins|join(':') }}">
+                                        {{ branch }} (- {{ countUsers - branchLogins|length }})
+                                    </a>
+                                {% endfor %}
                             </li>
                         </ul>
-                    </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <h4>
+            Comparaison de {{ countUsers }} emplois du temps
+        </h4>
+
+        <br />
+
+        <div class="comparison-generator">
+            {% for user in users %}
+                <div class="comparison-generator-user">
+                    <img src="{{ asset('photos/' ~ user.avatar) }}" />
+                    {{ user.fullName|limit(18) }}
+
+                    {% if countUsers > 1 %}
+                        <a href="?q={{ removeUrlsLogins[user.login]|join(':') }}">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="comparison-generator-add">
+            <div class="input-append">
+                <input id="generator-unique-input" class="user-autocomplete" type="text" placeholder="Nom, prénom, login, numéro étudiant">
+                <button class="generator-unique-add-button btn" type="button">Ajouter</button>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row-fluid schedule schedule-days">
+            <div class="span2 day hidden-phone">
+                {{ 'user.schedule.days.monday'|trans }}
+            </div>
+            <div class="span2 day hidden-phone">
+                {{ 'user.schedule.days.tuesday'|trans }}
+            </div>
+            <div class="span2 day hidden-phone">
+                {{ 'user.schedule.days.wednesday'|trans }}
+            </div>
+            <div class="span2 day hidden-phone">
+                {{ 'user.schedule.days.thursday'|trans }}
+            </div>
+            <div class="span2 day hidden-phone">
+                {{ 'user.schedule.days.friday'|trans }}
+            </div>
+            <div class="span2 day hidden-phone">
+                {{ 'user.schedule.days.sathurday'|trans }}
+            </div>
+            <div class="span12 day schedule-days-choose visible-phone">
+                <div class="dropdown">
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="icon-calendar"></i>
+                        {{ 'user.schedule.days.monday'|trans }}
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <li>
+                            <a href="{{ path('user_schedule', {'day': 'monday'}) }}">
+                                {{ 'user.schedule.days.monday'|trans }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('user_schedule', {'day': 'tuesday'}) }}">
+                                {{ 'user.schedule.days.tuesday'|trans }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('user_schedule', {'day': 'wednesday'}) }}">
+                                {{ 'user.schedule.days.wednesday'|trans }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('user_schedule', {'day': 'thursday'}) }}">
+                                {{ 'user.schedule.days.thursday'|trans }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('user_schedule', {'day': 'friday'}) }}">
+                                {{ 'user.schedule.days.friday'|trans }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('user_schedule', {'day': 'sathurday'}) }}">
+                                {{ 'user.schedule.days.sathurday'|trans }}
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
+        </div>
 
-            <div class="clear"></div>
+        <div class="clear"></div>
 
-            <div class="schedule-hours">
-                <div class="hour">08:00</div>
-                <div class="hour">09:00</div>
-                <div class="hour">10:00</div>
-                <div class="hour">11:00</div>
-                <div class="hour">12:00</div>
-                <div class="hour">13:00</div>
-                <div class="hour">14:00</div>
-                <div class="hour">15:00</div>
-                <div class="hour">16:00</div>
-                <div class="hour">17:00</div>
-                <div class="hour">18:00</div>
-                <div class="hour">19:00</div>
-                <div class="hour">20:00</div>
-            </div>
-            <div class="row-fluid schedule">
-                {% for day, hours in comparison %}
-                    <div class="span2 schedule-col schedule-col-{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
-                        {% for hour, avUsers in hours %}
-                            <div class="item item-void item1 tip {% if loop.index == 1 %} item-first{% endif %}"
-                                 style="background: #547b9d; color: #ffffff; opacity: {{ avUsers|length / countUsers }};"
-                                 title="{% for user in avUsers[0:5] %}
+        <div class="schedule-hours">
+            <div class="hour">08:00</div>
+            <div class="hour">09:00</div>
+            <div class="hour">10:00</div>
+            <div class="hour">11:00</div>
+            <div class="hour">12:00</div>
+            <div class="hour">13:00</div>
+            <div class="hour">14:00</div>
+            <div class="hour">15:00</div>
+            <div class="hour">16:00</div>
+            <div class="hour">17:00</div>
+            <div class="hour">18:00</div>
+            <div class="hour">19:00</div>
+            <div class="hour">20:00</div>
+        </div>
+        <div class="row-fluid schedule">
+            {% for day, hours in comparison %}
+                <div class="span2 schedule-col schedule-col-{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
+                    {% for hour, avUsers in hours %}
+                        <div class="item item-void item1 tip {% if loop.index == 1 %} item-first{% endif %}"
+                             style="background: #547b9d; color: #ffffff; opacity: {{ avUsers|length / countUsers }};"
+                             title="{% for user in avUsers[0:5] %}
                                 {{ users[user].fullName }}<br />
                                 {% if avUsers|length > 5 and loop.index == 5 %}et {{ avUsers|length - 5 }} autres{% endif %}
                              {% endfor %}">
-                                {{ avUsers|length }}
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
+                            {{ avUsers|length }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
 	</div>
 {% endblock %}
