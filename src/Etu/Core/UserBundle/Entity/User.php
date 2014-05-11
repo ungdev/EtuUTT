@@ -2545,7 +2545,7 @@ class User implements UserInterface, \Serializable
 		}
 
 		/** @var Member[] $memberships */
-		$memberships = $this->getMemberships()->toArray();
+		$memberships = ($this->getMemberships()) ? $this->getMemberships()->toArray() : [];
 
 		if (count($memberships) > 0) {
 			BadgesManager::userAddBadge($this, 'orga_member', 1);

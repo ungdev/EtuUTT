@@ -1,13 +1,10 @@
 
 cumul:
     main:
+        errors:
+            invalid_logins: L'identifiant "%items%" n'a pas été trouvé, il a été retiré|Les identifiants "%items%" n'ont pas été trouvés, ils ont été retirés
+            invalid_names: Le nom "%items%" n'a pas été trouvé, il a été retiré|Les noms "%items%" n'ont pas été trouvés, ils ont été retirés
+            invalid_ids: Le numéro étudiant "%items%" n'a pas été trouvé, il a été retiré|Les numéros étudiants "%items%" n'ont pas été trouvés, ils ont été retirés
         index:
             title: Cumul d'emploi du temps
-            explainations: |
-                Cette page vous permet de comparer facilement les emplois du temps de plusieurs étudiants
-                (jusqu'à 5).<br />Pour cela, ajoutez les étudiants souahités dans la colonne de gauche.
-            placeholder: Prénom Nom
-            add: Ajouter l'étudiant
-            week: Semaine
-            warning: Vous ne pouvez cumuler que 5 emplois du temps en même temps
-            warning_phones: Le cumul d'emploi du temps ne peut pas être utilisé sur une si petite résolution
+            other: Autre

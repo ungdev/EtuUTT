@@ -57,7 +57,11 @@ class MainController extends Controller
 
             $this->get('session')->getFlashBag()->set('message', array(
                 'type' => 'error',
-                'message' => 'Les logins "'. implode('", "', array_diff($logins, $found)) .'" ont été retirés car ils n\'existent pas.'
+                'message' => $this->get('translator')->transChoice(
+                        'cumul.main.errors.invalid_logins',
+                        count(array_diff($logins, $found)),
+                        ['%items%' => implode('", "', array_diff($logins, $found))]
+                    )
             ));
 
             return $this->redirect($this->generateUrl('cumul_index') . '?q=' . implode(':', $found));
@@ -134,7 +138,7 @@ class MainController extends Controller
 
         foreach ($branchs as $branch => $l) {
             if (empty($branch)) {
-                $branch = 'Autre';
+                $branch = $this->get('translator')->trans('cumul.main.index.other');
             }
 
             $others = $branchs;
@@ -263,10 +267,34 @@ class MainController extends Controller
             ->getQuery()
             ->getArrayResult();
 
-        if (count($dataItems) != count($users)) {
+        if (count($dataItems) > count($users)) {
+            $dbItems = [];
+
+            foreach ($users as $user) {
+                if ($dataType == 'fullName') {
+                    $dbItems[] = $user->getFullName();
+                } elseif ($dataType == 'studentId') {
+                    $dbItems[] = $user->getStudentId();
+                } else {
+                    $dbItems[] = $user->getLogin();
+                }
+            }
+
+            $errorType = 'cumul.main.errors.invalid_logins';
+
+            if ($dataType == 'fullName') {
+                $errorType = 'cumul.main.errors.invalid_names';
+            } elseif ($dataType == 'studentId') {
+                $errorType = 'cumul.main.errors.invalid_ids';
+            }
+
             $this->get('session')->getFlashBag()->set('message', array(
                 'type' => 'error',
-                'message' => (count($dataItems) - count($users)) . ' éléments n\'ont pas pu être ajoutés car ils étaient invalides.'
+                'message' => $this->get('translator')->transChoice(
+                        $errorType,
+                        count(array_diff($dataItems, $dbItems)),
+                        ['%items%' => implode('", "', array_diff($dataItems, $dbItems))]
+                    )
             ));
         }
 
