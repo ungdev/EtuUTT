@@ -8,3 +8,10 @@ le code de l'ancienne version.
 
 > **Note :** EtuUTT utilise Symfony 2.3 (LTS).
 
+
+
+Master:
+[![Build Status](https://travis-ci.org/ungdev/site-etu.svg?branch=master)](https://travis-ci.org/ungdev/site-etu)
+
+Stable:
+[![Build Status](https://travis-ci.org/ungdev/site-etu.svg?branch=stable)](https://travis-ci.org/ungdev/site-etu)
