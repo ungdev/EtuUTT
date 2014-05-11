@@ -152,43 +152,13 @@
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu">
-                    <li class="dropdown-submenu">
-                        <a tabindex="-1" href="#">
-                            Ajouter tous les étudiants d'une branche
-                        </a>
-                        <ul class="dropdown-menu">
-                            {% for branch, branchLevels in addBranchs %}
-                            <li class="dropdown-submenu">
-                                <a tabindex="-1" href="#">
-                                    {{ branch }}
-                                </a>
-                                <ul class="dropdown-menu pull-left">
-                                    <li>
-                                        {% for level, branchLogins in branchLevels %}
-                                            <a tabindex="-1" href="?q={{ branchLogins|join(':') }}">
-                                                {% if level == 'all' %}
-                                                    Tous les {{ branch }}
-                                                {% else %}
-                                                    {{ branch ~ level }}
-                                                {% endif %}
-
-                                                (+ {{ branchLogins|length - countUsers }})
-                                            </a>
-                                        {% endfor %}
-                                    </li>
-                                </ul>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                    <li class="divider"></li>
                     <li>
                         <a tabindex="-1" href="#" class="import-file-btn">Importer une liste ou un fichier</a>
                     </li>
                     <li class="divider"></li>
                     <li{% if countUsers <= 1 %} class="disabled"{% endif %}>
                         <a tabindex="-1" href="{{ path('cumul_index') }}?q={{ app.user.login }}">
-                            Supprimer tous les étudiants (- {{ countUsers }})
+                            Supprimer tous les étudiants ({{ countUsers }})
                         </a>
                     </li>
                     <li class="dropdown-submenu{% if countUsers <= 1 %} disabled{% endif %}">
@@ -199,10 +169,40 @@
                             <li{% if countUsers <= 1 %} class="disabled"{% endif %}>
                                 {% for branch, branchLogins in removeUrlsBranchs %}
                                     <a tabindex="-1" href="?q={{ branchLogins|join(':') }}">
-                                        {{ branch }} (- {{ countUsers - branchLogins|length }})
+                                        {{ branch }} ({{ countUsers - branchLogins|length }})
                                     </a>
                                 {% endfor %}
                             </li>
+                        </ul>
+                    </li>
+                    <li class="divider"></li>
+                    <li class="dropdown-submenu">
+                        <a tabindex="-1" href="#">
+                            Ajouter tous les étudiants d'une branche
+                        </a>
+                        <ul class="dropdown-menu">
+                            {% for branch, branchLevels in addBranchs %}
+                                <li class="dropdown-submenu">
+                                    <a tabindex="-1" href="#">
+                                        {{ branch }}
+                                    </a>
+                                    <ul class="dropdown-menu pull-left">
+                                        <li>
+                                            {% for level, branchLogins in branchLevels %}
+                                                <a tabindex="-1" href="?q={{ branchLogins|join(':') }}">
+                                                    {% if level == 'all' %}
+                                                        Tous les {{ branch }}
+                                                    {% else %}
+                                                        {{ branch ~ level }}
+                                                    {% endif %}
+
+                                                    ({{ branchLogins|length - countUsers }})
+                                                </a>
+                                            {% endfor %}
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </li>
                 </ul>
@@ -324,10 +324,11 @@
                     {% for hour, avUsers in hours %}
                         <div class="item item-void item1 tip {% if loop.index == 1 %} item-first{% endif %}"
                              style="background: #547b9d; color: #ffffff; opacity: {{ avUsers|length / countUsers }};"
-                             title="{% for user in avUsers[0:5] %}
+                             title="<strong>Disponible(s) :</strong><br />{% for user in avUsers[0:5] %}
                                 {{ users[user].fullName }}<br />
                                 {% if avUsers|length > 5 and loop.index == 5 %}et {{ avUsers|length - 5 }} autres{% endif %}
-                             {% endfor %}">
+                            {% else %}Personne
+                            {% endfor %}">
                             {{ avUsers|length }}
                         </div>
                     {% endfor %}
