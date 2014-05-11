@@ -8,7 +8,7 @@ php:
 before_script:
   - composer update
 
-script: phpunit --coverage-text
+script: phpunit -c app
 
 notifications:
   email:
