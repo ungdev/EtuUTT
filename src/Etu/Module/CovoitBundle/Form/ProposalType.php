@@ -29,13 +29,6 @@ class ProposalType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('type', 'choice', [
-                    'label' => 'covoit.proposal.type.label',
-                    'choices' => [
-                        Covoit::TYPE_SEARCHING => 'covoit.proposal.type.searching',
-                        Covoit::TYPE_FINDING => 'covoit.proposal.type.finding',
-                    ]]
-                )
             ->add('phoneNumber', null, ['label' => 'covoit.proposal.phone.label'])
             ->add('notes', 'textarea', ['required' => false, 'label' => 'covoit.proposal.notes.label'])
             ->add('capacity', 'integer', ['label' => 'covoit.proposal.capacity.label'])

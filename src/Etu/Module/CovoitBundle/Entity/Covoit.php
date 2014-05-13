@@ -4,6 +4,7 @@ namespace Etu\Module\CovoitBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Covoit
@@ -14,16 +15,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Covoit
 {
-    /*
-     * Have a car to share
-     */
-    const TYPE_FINDING = 1;
-
-    /*
-     * Search a car to share
-     */
-    const TYPE_SEARCHING = 2;
-
     /**
      * @var integer
      *
@@ -42,23 +33,18 @@ class Covoit
     private $author;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(type="smallint")
-     */
-    private $type = self::TYPE_FINDING;
-
-    /**
      * @var string
      *
      * @ORM\Column(type="string", length=100)
+     *
+     * @Assert\NotBlank()
      */
     private $phoneNumber;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $notes;
 
@@ -66,15 +52,102 @@ class Covoit
      * @var integer
      *
      * @ORM\Column(type="smallint")
+     *
+     * @Assert\NotBlank()
+     * @Assert\GreaterThan(0)
      */
     private $capacity = 3;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $isFull = false;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="decimal", scale=2, precision=10)
+     *
+     * @Assert\NotBlank()
+     */
+    private $price;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
+     *
+     * @Assert\NotBlank()
+     * @Assert\Date()
      */
     private $date;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $blablacarUrl;
+
+    /**
+     * @var \Etu\Core\CoreBundle\Entity\City
+     *
+     * @ORM\ManyToOne(targetEntity="\Etu\Core\CoreBundle\Entity\City")
+     * @ORM\JoinColumn()
+     * @ORM\OrderBy("name")
+     *
+     * @Assert\NotBlank()
+     */
+    private $startCity;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text")
+     *
+     * @Assert\NotBlank()
+     */
+    private $startAdress;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=50)
+     *
+     * @Assert\NotBlank()
+     */
+    private $startHour;
+
+    /**
+     * @var \Etu\Core\CoreBundle\Entity\City
+     *
+     * @ORM\ManyToOne(targetEntity="\Etu\Core\CoreBundle\Entity\City")
+     * @ORM\JoinColumn()
+     * @ORM\OrderBy("name")
+     *
+     * @Assert\NotBlank()
+     */
+    private $endCity;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text")
+     *
+     * @Assert\NotBlank()
+     */
+    private $endAdress;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=50)
+     *
+     * @Assert\NotBlank()
+     */
+    private $endHour;
 
     /**
      * @var \DateTime
@@ -95,49 +168,34 @@ class Covoit
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $deletedAt;
 
     /**
-     * @var CovoitStep[]
+     * @var CovoitSubscription[]
      *
-     * @ORM\OneToMany(targetEntity="Etu\Module\CovoitBundle\Entity\CovoitStep", mappedBy="covoit")
+     * @ORM\OneToMany(targetEntity="Etu\Module\CovoitBundle\Entity\CovoitSubscription", mappedBy="covoit")
      * @ORM\JoinColumn()
      */
-    private $steps;
+    private $subscriptions;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->subscriptions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set type
-     *
-     * @param integer $type
-     * @return Covoit
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return integer 
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
     /**
@@ -149,14 +207,14 @@ class Covoit
     public function setPhoneNumber($phoneNumber)
     {
         $this->phoneNumber = $phoneNumber;
-    
+
         return $this;
     }
 
     /**
      * Get phoneNumber
      *
-     * @return string 
+     * @return string
      */
     public function getPhoneNumber()
     {
@@ -172,14 +230,14 @@ class Covoit
     public function setNotes($notes)
     {
         $this->notes = $notes;
-    
+
         return $this;
     }
 
     /**
      * Get notes
      *
-     * @return string 
+     * @return string
      */
     public function getNotes()
     {
@@ -195,14 +253,14 @@ class Covoit
     public function setCapacity($capacity)
     {
         $this->capacity = $capacity;
-    
+
         return $this;
     }
 
     /**
      * Get capacity
      *
-     * @return integer 
+     * @return integer
      */
     public function getCapacity()
     {
@@ -210,19 +268,187 @@ class Covoit
     }
 
     /**
+     * Set isFull
+     *
+     * @param boolean $isFull
+     * @return Covoit
+     */
+    public function setIsFull($isFull)
+    {
+        $this->isFull = $isFull;
+
+        return $this;
+    }
+
+    /**
+     * Get isFull
+     *
+     * @return boolean
+     */
+    public function getIsFull()
+    {
+        return $this->isFull;
+    }
+
+    /**
+     * Set price
+     *
+     * @param string $price
+     * @return Covoit
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return string
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set date
+     *
      * @param \DateTime $date
+     * @return Covoit
      */
     public function setDate($date)
     {
         $this->date = $date;
+
+        return $this;
     }
 
     /**
+     * Get date
+     *
      * @return \DateTime
      */
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set blablacarUrl
+     *
+     * @param string $blablacarUrl
+     * @return Covoit
+     */
+    public function setBlablacarUrl($blablacarUrl)
+    {
+        $this->blablacarUrl = $blablacarUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get blablacarUrl
+     *
+     * @return string
+     */
+    public function getBlablacarUrl()
+    {
+        return $this->blablacarUrl;
+    }
+
+    /**
+     * Set startAdress
+     *
+     * @param string $startAdress
+     * @return Covoit
+     */
+    public function setStartAdress($startAdress)
+    {
+        $this->startAdress = $startAdress;
+
+        return $this;
+    }
+
+    /**
+     * Get startAdress
+     *
+     * @return string
+     */
+    public function getStartAdress()
+    {
+        return $this->startAdress;
+    }
+
+    /**
+     * Set startHour
+     *
+     * @param string $startHour
+     * @return Covoit
+     */
+    public function setStartHour($startHour)
+    {
+        $this->startHour = $startHour;
+
+        return $this;
+    }
+
+    /**
+     * Get startHour
+     *
+     * @return string
+     */
+    public function getStartHour()
+    {
+        return $this->startHour;
+    }
+
+    /**
+     * Set endAdress
+     *
+     * @param string $endAdress
+     * @return Covoit
+     */
+    public function setEndAdress($endAdress)
+    {
+        $this->endAdress = $endAdress;
+
+        return $this;
+    }
+
+    /**
+     * Get endAdress
+     *
+     * @return string
+     */
+    public function getEndAdress()
+    {
+        return $this->endAdress;
+    }
+
+    /**
+     * Set endHour
+     *
+     * @param string $endHour
+     * @return Covoit
+     */
+    public function setEndHour($endHour)
+    {
+        $this->endHour = $endHour;
+
+        return $this;
+    }
+
+    /**
+     * Get endHour
+     *
+     * @return string
+     */
+    public function getEndHour()
+    {
+        return $this->endHour;
     }
 
     /**
@@ -234,14 +460,14 @@ class Covoit
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -257,14 +483,14 @@ class Covoit
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -280,14 +506,14 @@ class Covoit
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
-    
+
         return $this;
     }
 
     /**
      * Get deletedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDeletedAt()
     {
@@ -303,57 +529,96 @@ class Covoit
     public function setAuthor(\Etu\Core\UserBundle\Entity\User $author = null)
     {
         $this->author = $author;
-    
+
         return $this;
     }
 
     /**
      * Get author
      *
-     * @return \Etu\Core\UserBundle\Entity\User 
+     * @return \Etu\Core\UserBundle\Entity\User
      */
     public function getAuthor()
     {
         return $this->author;
     }
+
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->steps = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    /**
-     * Add steps
+     * Set startCity
      *
-     * @param \Etu\Module\CovoitBundle\Entity\CovoitStep $steps
+     * @param \Etu\Core\CoreBundle\Entity\City $startCity
      * @return Covoit
      */
-    public function addStep(\Etu\Module\CovoitBundle\Entity\CovoitStep $steps)
+    public function setStartCity(\Etu\Core\CoreBundle\Entity\City $startCity = null)
     {
-        $this->steps[] = $steps;
-    
+        $this->startCity = $startCity;
+
         return $this;
     }
 
     /**
-     * Remove steps
+     * Get startCity
      *
-     * @param \Etu\Module\CovoitBundle\Entity\CovoitStep $steps
+     * @return \Etu\Core\CoreBundle\Entity\City
      */
-    public function removeStep(\Etu\Module\CovoitBundle\Entity\CovoitStep $steps)
+    public function getStartCity()
     {
-        $this->steps->removeElement($steps);
+        return $this->startCity;
     }
 
     /**
-     * Get steps
+     * Set endCity
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @param \Etu\Core\CoreBundle\Entity\City $endCity
+     * @return Covoit
      */
-    public function getSteps()
+    public function setEndCity(\Etu\Core\CoreBundle\Entity\City $endCity = null)
     {
-        return $this->steps;
+        $this->endCity = $endCity;
+
+        return $this;
+    }
+
+    /**
+     * Get endCity
+     *
+     * @return \Etu\Core\CoreBundle\Entity\City
+     */
+    public function getEndCity()
+    {
+        return $this->endCity;
+    }
+
+    /**
+     * Add subscriptions
+     *
+     * @param \Etu\Module\CovoitBundle\Entity\CovoitSubscription $subscriptions
+     * @return Covoit
+     */
+    public function addSubscription(\Etu\Module\CovoitBundle\Entity\CovoitSubscription $subscriptions)
+    {
+        $this->subscriptions[] = $subscriptions;
+
+        return $this;
+    }
+
+    /**
+     * Remove subscriptions
+     *
+     * @param \Etu\Module\CovoitBundle\Entity\CovoitSubscription $subscriptions
+     */
+    public function removeSubscription(\Etu\Module\CovoitBundle\Entity\CovoitSubscription $subscriptions)
+    {
+        $this->subscriptions->removeElement($subscriptions);
+    }
+
+    /**
+     * Get subscriptions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSubscriptions()
+    {
+        return $this->subscriptions;
     }
 }

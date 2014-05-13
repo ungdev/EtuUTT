@@ -209,16 +209,22 @@ subscriptions.unfollow.click(function() {
 });
 
 $('.date-picker').datepicker({
-	dateFormat: 'dd/mm/yy',
-	changeMonth: true,
-	changeYear: true
-});
-
-$('.birthday-picker').datepicker({
+    firstDay: 1,
 	dateFormat: 'dd/mm/yy',
 	changeMonth: true,
 	changeYear: true,
-	yearRange: "-100:-10"
+    dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
+    monthNamesShort: [ "Jan", "Fev", "Mar", "Avr", "Mai", "Juin", "Juil", "Aou", "Sep", "Oct", "Nov", "Dec" ]
+});
+
+$('.birthday-picker').datepicker({
+    firstDay: 1,
+	dateFormat: 'dd/mm/yy',
+	changeMonth: true,
+	changeYear: true,
+	yearRange: "-100:-10",
+    dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
+    monthNamesShort: [ "Jan", "Fev", "Mar", "Avr", "Mai", "Juin", "Juil", "Aou", "Sep", "Oct", "Nov", "Dec" ]
 });
 
 

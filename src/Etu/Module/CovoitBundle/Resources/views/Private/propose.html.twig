@@ -10,48 +10,72 @@
     <ul class="nav nav-tabs page-tabs">
         <li class="pull-right active page-tabs-resolved-active">
             <a href="{{ path('covoiturage_my_propose') }}">
-                Proposer
+                {{ 'covoit.menu.propose'|trans }}
             </a>
         </li>
         <li class="pull-right">
             <a href="{{ path('covoiturage_my_index') }}">
-                Mes covoiturages
+                {{ 'covoit.menu.my'|trans }}
             </a>
         </li>
         <li class="pull-right">
             <a href="{{ path('covoiturage_index') }}">
-                Rechecher
+                {{ 'covoit.menu.search'|trans }}
             </a>
         </li>
     </ul>
 
-    <div class="padding20-sides">
-        <h4>Proposer un covoiturage</h4>
-
+    <div class="padding20-sides covoit-propose">
         <form method="post">
+            <h4>{{ 'covoit.proposal.titles.details'|trans }}</h4>
+
             <div class="row-fluid">
-                <div class="span6">
-                    {{ form_row(form.type) }}
-                    {{ form_row(form.phoneNumber) }}
-                </div>
-                <div class="span6">
-                    {{ form_row(form.capacity) }}
+                <div class="span5">
                     {{ form_row(form.date) }}
+                    {{ form_row(form.phoneNumber) }}
+                    {{ form_row(form.capacity) }}
+                    {{ form_row(form.price) }}
+                </div>
+                <div class="span7">
+                    {{ form_row(form.notes) }}
+                    {{ form_row(form.blablacarUrl) }}
                 </div>
             </div>
 
-            {{ form_row(form.notes) }}
+            <hr />
 
-            <h5>Etapes du voyage</h5>
+            <h4>{{ 'covoit.proposal.titles.start'|trans }}</h4>
 
-            <div class="covoit-steps-inputs hidden">
-                {{ form_row(form.steps) }}
+            <div class="row-fluid">
+                <div class="span5">
+                    {{ form_row(form.startCity) }}
+                    {{ form_row(form.startHour) }}
+                </div>
+                <div class="span7">
+                    {{ form_row(form.startAdress) }}
+                </div>
+            </div>
+
+            <hr />
+
+            <h4>{{ 'covoit.proposal.titles.end'|trans }}</h4>
+
+            <div class="row-fluid">
+                <div class="span5">
+                    {{ form_row(form.endCity) }}
+                    {{ form_row(form.endHour) }}
+                </div>
+                <div class="span7">
+                    {{ form_row(form.endAdress) }}
+                </div>
             </div>
 
             {{ form_rest(form) }}
 
+            <hr />
+
             <p class="align-center">
-                <input type="submit" class="btn" value="Proposer ce covoiturage" />
+                <input type="submit" class="btn" value="{{ 'covoit.proposal.submit'|trans }}" />
             </p>
         </form>
     </div>

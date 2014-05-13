@@ -1,9 +1,21 @@
 
 covoit:
+    menu:
+        search: Rechercher
+        propose: Proposer
+        my: Mes covoiturages
+
     index:
         title: Covoiturage
 
+    messages:
+        created: Votre proposition a bien été créée
+
     proposal:
+        titles:
+            details: Détailes
+            start: Départ
+            end: Arrivée
         type:
             label: Type de proposition
             searching: Je recherche quelqu'un ayant une voiture
@@ -11,20 +23,27 @@ covoit:
         phone:
             label: Numéro de téléphone
         notes:
-            label: Détails quant au voyage (description de la voiture, place pour la valise, ...)
+            label: Détails quant au voyage (description de la voiture, place pour la valise, ...) (optionnel)
         capacity:
             label: Capacité de votre véhicule (en vous excluant)
         date:
             label: Date
-        steps:
-            label: Etapes du voyage
-
-    proposal_step:
-        city:
-            label: Aux alentours de ...
-        adress:
-            label: Adresse précise du point de rendez-vous
-        hour:
-            label: Heure approximative d'arrivée à cette étape
         price:
-            label: Prix pour le voyage entre cette étape et l'étape précédente (ignorez pour la première étape)
+            label: Prix (par place)
+        blablacarUrl:
+            label: URL de l'annonce BlaBlaCar (optionnel)
+        start:
+            city:
+                label: Ville (ou grande ville la plus proche)
+            adress:
+                label: Adresse précise du point de rendez-vous
+            hour:
+                label: Heure de départ
+        end:
+            city:
+                label: Ville (ou grande ville la plus proche)
+            adress:
+                label: Adresse précise du point d'arrivée
+            hour:
+                label: Heure approximative d'arrivée
+        submit: Proposer ce covoiturage

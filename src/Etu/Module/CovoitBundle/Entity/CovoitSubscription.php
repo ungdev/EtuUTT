@@ -24,12 +24,12 @@ class CovoitSubscription
     private $id;
 
     /**
-     * @var CovoitStep
+     * @var Covoit
      *
-     * @ORM\ManyToOne(targetEntity="CovoitStep", inversedBy="sbuscriptions")
+     * @ORM\ManyToOne(targetEntity="Covoit", inversedBy="subscriptions")
      * @ORM\JoinColumn()
      */
-    private $step;
+    private $covoit;
 
     /**
      * @var \Etu\Core\UserBundle\Entity\User
@@ -47,13 +47,6 @@ class CovoitSubscription
     private $phoneNumber;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(type="boolean")
-     */
-    private $asDriver;
-
-    /**
      * @var \DateTime
      *
      * @Gedmo\Timestampable(on="create")
@@ -64,18 +57,41 @@ class CovoitSubscription
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $deletedAt;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set phoneNumber
+     *
+     * @param string $phoneNumber
+     * @return CovoitSubscription
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get phoneNumber
+     *
+     * @return string
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
     }
 
     /**
@@ -87,14 +103,14 @@ class CovoitSubscription
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -110,14 +126,14 @@ class CovoitSubscription
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
-    
+
         return $this;
     }
 
     /**
      * Get deletedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDeletedAt()
     {
@@ -125,26 +141,26 @@ class CovoitSubscription
     }
 
     /**
-     * Set step
+     * Set covoit
      *
-     * @param \Etu\Module\CovoitBundle\Entity\CovoitStep $step
+     * @param \Etu\Module\CovoitBundle\Entity\Covoit $covoit
      * @return CovoitSubscription
      */
-    public function setStep(\Etu\Module\CovoitBundle\Entity\CovoitStep $step = null)
+    public function setCovoit(\Etu\Module\CovoitBundle\Entity\Covoit $covoit = null)
     {
-        $this->step = $step;
-    
+        $this->covoit = $covoit;
+
         return $this;
     }
 
     /**
-     * Get step
+     * Get covoit
      *
-     * @return \Etu\Module\CovoitBundle\Entity\CovoitStep 
+     * @return \Etu\Module\CovoitBundle\Entity\Covoit
      */
-    public function getStep()
+    public function getCovoit()
     {
-        return $this->step;
+        return $this->covoit;
     }
 
     /**
@@ -156,49 +172,17 @@ class CovoitSubscription
     public function setUser(\Etu\Core\UserBundle\Entity\User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return \Etu\Core\UserBundle\Entity\User 
+     * @return \Etu\Core\UserBundle\Entity\User
      */
     public function getUser()
     {
         return $this->user;
-    }
-
-    /**
-     * @param string $phoneNumber
-     */
-    public function setPhoneNumber($phoneNumber)
-    {
-        $this->phoneNumber = $phoneNumber;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPhoneNumber()
-    {
-        return $this->phoneNumber;
-    }
-
-    /**
-     * @param boolean $asDriver
-     */
-    public function setAsDriver($asDriver)
-    {
-        $this->asDriver = $asDriver;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getAsDriver()
-    {
-        return $this->asDriver;
     }
 }

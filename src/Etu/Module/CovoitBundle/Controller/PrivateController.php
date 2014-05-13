@@ -5,12 +5,11 @@ namespace Etu\Module\CovoitBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\CovoitBundle\Entity\Covoit;
+use Symfony\Component\HttpFoundation\Request;
 
 // Import annotations
-use Etu\Module\CovoitBundle\Model\Proposal;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/carpooling/my-proposals")
@@ -52,17 +51,36 @@ class PrivateController extends Controller
      */
     public function proposeAction(Request $request)
     {
-        $proposal = new Proposal();
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $proposal = new Covoit();
+        $proposal->setAuthor($this->getUser());
+        $proposal->setStartCity($em->getRepository('EtuCoreBundle:City')->find(749)); // Troyes
+        $proposal->setEndCity($em->getRepository('EtuCoreBundle:City')->find(826)); // Paris
 
         if ($this->getUser()->getPhoneNumber()) {
-            $proposal->phoneNumber = $this->getUser()->getPhoneNumber();
+            $proposal->setPhoneNumber($this->getUser()->getPhoneNumber());
         }
 
         $form = $this->createForm($this->get('covoit.form.proposal'), $proposal);
 
         if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
-            var_dump($proposal);
-            exit;
+            $proposal->setStartHour($proposal->getStartHour()->format('H:i'));
+            $proposal->setEndHour($proposal->getEndHour()->format('H:i'));
+
+            $em->persist($proposal);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->set('message', array(
+                'type' => 'success',
+                'message' => 'covoit.messages.created'
+            ));
+
+            return $this->redirect($this->generateUrl('covoiturage_view', [
+                'id' => $proposal->getId(),
+                'slug' => $proposal->getStartCity()->getSlug() . '-' . $proposal->getEndCity()->getSlug()
+            ]));
         }
 
         return [

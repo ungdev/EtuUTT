@@ -65,14 +65,14 @@ class CovoitMessage
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $deletedAt;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -88,14 +88,14 @@ class CovoitMessage
     public function setText($text)
     {
         $this->text = $text;
-    
+
         return $this;
     }
 
     /**
      * Get text
      *
-     * @return string 
+     * @return string
      */
     public function getText()
     {
@@ -111,14 +111,14 @@ class CovoitMessage
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -134,14 +134,14 @@ class CovoitMessage
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -157,14 +157,14 @@ class CovoitMessage
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
-    
+
         return $this;
     }
 
     /**
      * Get deletedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDeletedAt()
     {
@@ -180,14 +180,14 @@ class CovoitMessage
     public function setCovoit(\Etu\Module\CovoitBundle\Entity\Covoit $covoit = null)
     {
         $this->covoit = $covoit;
-    
+
         return $this;
     }
 
     /**
      * Get covoit
      *
-     * @return \Etu\Module\CovoitBundle\Entity\Covoit 
+     * @return \Etu\Module\CovoitBundle\Entity\Covoit
      */
     public function getCovoit()
     {
@@ -203,14 +203,14 @@ class CovoitMessage
     public function setAuthor(\Etu\Core\UserBundle\Entity\User $author = null)
     {
         $this->author = $author;
-    
+
         return $this;
     }
 
     /**
      * Get author
      *
-     * @return \Etu\Core\UserBundle\Entity\User 
+     * @return \Etu\Core\UserBundle\Entity\User
      */
     public function getAuthor()
     {
