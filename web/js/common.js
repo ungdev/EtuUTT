@@ -18,7 +18,8 @@ var facebox = $('a[rel*=facebox]'),
 	userbox = {
 		box: $('.userbox'),
 		link: $('.userbox-link'),
-		menu: $('.userbox-menu')
+		menu: $('.userbox-menu'),
+        avatar: $('.userbox-avatar-link')
 	},
 	menu = {
 		head: {
@@ -56,6 +57,11 @@ function removeCountTitle() {
 		document.title =title;
 	}
 }
+
+userbox.avatar.click(function() {
+    userbox.link.click();
+    return false;
+});
 
 userbox.link.click(function() {
 	userbox.box.toggleClass('userbox-clicked');
@@ -217,7 +223,7 @@ $('.birthday-picker').datepicker({
 
 
 $(function() {
-	facebox.facebox();
+    facebox.facebox();
 
 	tip.tipsy({
 		gravity: 's',

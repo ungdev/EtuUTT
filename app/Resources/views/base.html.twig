@@ -122,12 +122,16 @@
 				</nav>
 
 				<div class="pull-right userbox">
-					{% if app.user %}
-						{% if app.user.isOrga %}
-							<img src="{{ asset('logos/'~app.user.logo) }}" id="top-bar-avatar" alt="{{ app.user.fullName }}" title="{{ app.user.fullName }}" class="pull-left avatar" />
-						{% else %}
-							<img src="{{ asset('photos/'~app.user.avatar) }}" id="top-bar-avatar" alt="{{ app.user.fullName }}" title="{{ app.user.fullName }}" class="pull-left avatar" />
-						{% endif %}
+                {% if app.user %}
+                    <a href="#" class="userbox-avatar-link">
+                        {% if app.user.isOrga %}
+                            <img src="{{ asset('logos/'~app.user.logo) }}" id="top-bar-avatar" alt="{{ app.user.fullName }}"
+                                 title="{{ app.user.fullName }}" class="pull-left avatar" />
+                        {% else %}
+                            <img src="{{ asset('photos/'~app.user.avatar) }}" id="top-bar-avatar" alt="{{ app.user.fullName }}"
+                                 title="{{ app.user.fullName }}" class="pull-left avatar" />
+                        {% endif %}
+                    </a>
 
 					<a href="#" class="userbox-link">
 						<i class="icon-chevron-down userbox-link-icon"></i>
