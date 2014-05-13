@@ -1,0 +1,9 @@
+
+covoit:
+    proposal:
+        date:
+            past: La date du covoiturage ne peut être passée
+
+    proposal_step:
+        price:
+            not_numeric: Le prix doit être un nombre

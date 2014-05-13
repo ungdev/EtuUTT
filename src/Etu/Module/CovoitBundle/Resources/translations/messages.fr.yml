@@ -2,3 +2,29 @@
 covoit:
     index:
         title: Covoiturage
+
+    proposal:
+        type:
+            label: Type de proposition
+            searching: Je recherche quelqu'un ayant une voiture
+            finding: J'ai une voiture et je cherche à la partager
+        phone:
+            label: Numéro de téléphone
+        notes:
+            label: Détails quant au voyage (description de la voiture, place pour la valise, ...)
+        capacity:
+            label: Capacité de votre véhicule (en vous excluant)
+        date:
+            label: Date
+        steps:
+            label: Etapes du voyage
+
+    proposal_step:
+        city:
+            label: Aux alentours de ...
+        adress:
+            label: Adresse précise du point de rendez-vous
+        hour:
+            label: Heure approximative d'arrivée à cette étape
+        price:
+            label: Prix pour le voyage entre cette étape et l'étape précédente (ignorez pour la première étape)

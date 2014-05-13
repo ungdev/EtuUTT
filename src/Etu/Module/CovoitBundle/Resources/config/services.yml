@@ -1,4 +1,12 @@
 
-parameters: ~
+parameters:
+    covoit.form.proposal.class: Etu\Module\CovoitBundle\Form\ProposalType
+    covoit.form.proposal_step.class: Etu\Module\CovoitBundle\Form\ProposalStepType
 
-services: ~
+services:
+    covoit.form.proposal:
+        class: %covoit.form.proposal.class%
+        arguments: [ @covoit.form.proposal_step ]
+
+    covoit.form.proposal_step:
+        class: %covoit.form.proposal_step.class%

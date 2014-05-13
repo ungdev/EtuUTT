@@ -9,20 +9,32 @@
 {% block content %}
     <ul class="nav nav-tabs page-tabs">
         <li class="pull-right">
+            <a href="{{ path('covoiturage_my_propose') }}">
+                Proposer
+            </a>
+        </li>
+        <li class="pull-right active page-tabs-resolved-active">
             <a href="{{ path('covoiturage_my_index') }}">
                 Mes covoiturages
             </a>
         </li>
-        <li class="pull-right active page-tabs-resolved-active">
+        <li class="pull-right">
             <a href="{{ path('covoiturage_index') }}">
-                Rechecher un covoiturage
+                Rechecher
             </a>
         </li>
     </ul>
 
     <div class="padding20-sides">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut beatae corporis cupiditate debitis delectus
-        dignissimos dolor eaque earum explicabo inventore iure labore libero molestias necessitatibus nulla perspiciatis
-        quam, quas vitae!
+        <h4>Mes covoiturages</h4>
+
+        {% for covoit in covoits %}
+
+        {% else %}
+           <p>
+               Vous n'avez participé à aucun covoiturage pour le moment !
+               <a href="{{ path('covoiturage_my_propose') }}">Proposez-en un !</a>
+           </p>
+        {% endfor %}
     </div>
 {% endblock %}

@@ -1,0 +1,58 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'covoit.index.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+    <img src="{{ asset('img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+    <ul class="nav nav-tabs page-tabs">
+        <li class="pull-right active page-tabs-resolved-active">
+            <a href="{{ path('covoiturage_my_propose') }}">
+                Proposer
+            </a>
+        </li>
+        <li class="pull-right">
+            <a href="{{ path('covoiturage_my_index') }}">
+                Mes covoiturages
+            </a>
+        </li>
+        <li class="pull-right">
+            <a href="{{ path('covoiturage_index') }}">
+                Rechecher
+            </a>
+        </li>
+    </ul>
+
+    <div class="padding20-sides">
+        <h4>Proposer un covoiturage</h4>
+
+        <form method="post">
+            <div class="row-fluid">
+                <div class="span6">
+                    {{ form_row(form.type) }}
+                    {{ form_row(form.phoneNumber) }}
+                </div>
+                <div class="span6">
+                    {{ form_row(form.capacity) }}
+                    {{ form_row(form.date) }}
+                </div>
+            </div>
+
+            {{ form_row(form.notes) }}
+
+            <h5>Etapes du voyage</h5>
+
+            <div class="covoit-steps-inputs hidden">
+                {{ form_row(form.steps) }}
+            </div>
+
+            {{ form_rest(form) }}
+
+            <p class="align-center">
+                <input type="submit" class="btn" value="Proposer ce covoiturage" />
+            </p>
+        </form>
+    </div>
+{% endblock %}
