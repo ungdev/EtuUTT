@@ -72,7 +72,7 @@ This command will help you to keep a user as an external user and to define a pa
 		$user->setKeepActive(true);
 
 		$em->persist($user);
-		//$em->flush();
+		$em->flush();
 
 		$output->writeln("The user ".$user->getLogin()." has been kept as external.\n");
 	}

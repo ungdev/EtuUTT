@@ -80,7 +80,9 @@ class Synchronizer
 		foreach ($toRemoveFromDb as $key => $login) {
 			unset($toRemoveFromDb[$key]);
 
-			$toRemoveFromDb[$login] = $dbUsers[$login];
+            if (! $dbUsers[$login]->getKeepActive()) {
+                $toRemoveFromDb[$login] = $dbUsers[$login];
+            }
 		}
 
 		foreach ($toUpdate as $login => $dbUser) {
