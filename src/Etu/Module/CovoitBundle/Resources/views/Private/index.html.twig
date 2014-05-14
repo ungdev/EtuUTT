@@ -6,35 +6,123 @@
     <img src="{{ asset('img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
+{% block stylesheets %}
+<script type='text/javascript'>var maps = [];</script>
+{% endblock %}
+
+{% block javascripts %}
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    <script type='text/javascript'>
+        google.load('visualization', '1', {'packages': ['geochart']});
+        google.setOnLoadCallback(drawMaps);
+
+        function drawMaps() {
+            var map, chart;
+
+            for (var i = 0; i < maps.length; i++) {
+                map = maps[i];
+
+                chart = new google.visualization.GeoChart(document.getElementById(map.id));
+                chart.draw(google.visualization.arrayToDataTable(map.data), {
+                    region: 'FR',
+                    displayMode: 'markers',
+                    colorAxis: {colors: ['green']},
+                    legend: 'none',
+                    sizeAxis: {
+                        minValue: 1,
+                        maxValue: 2
+                    },
+                    tooltip: {
+                        trigger: 'none'
+                    }
+                });
+            }
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
     <ul class="nav nav-tabs page-tabs">
         <li class="pull-right">
             <a href="{{ path('covoiturage_my_propose') }}">
-                Proposer
+                {{ 'covoit.menu.propose'|trans }}
             </a>
         </li>
         <li class="pull-right active page-tabs-resolved-active">
             <a href="{{ path('covoiturage_my_index') }}">
-                Mes covoiturages
+                {{ 'covoit.menu.my'|trans }}
             </a>
         </li>
         <li class="pull-right">
             <a href="{{ path('covoiturage_index') }}">
-                Rechecher
+                {{ 'covoit.menu.search'|trans }}
             </a>
         </li>
     </ul>
 
     <div class="padding20-sides">
-        <h4>Mes covoiturages</h4>
+        <h4>{{ 'covoit.private_index.title'|trans }}</h4>
 
-        {% for covoit in covoits %}
+        {% for covoit in pagination %}
+            <script type='text/javascript'>
+                maps.push({
+                    id: 'map-{{ covoit.id }}',
+                    data: [
+                        ['City',   'Position'],
+                        ['{{ covoit.startCity.name }}',  1],
+                        ['{{ covoit.endCity.name }}',    1]
+                    ]
+                });
+            </script>
+            <a href="" class="covoit-list-item{% if today > covoit.date %} covoit-list-item-done{% endif %}">
+                <div id="map-{{ covoit.id }}" class="item-map" style="width: 140px; height: 89px;"></div>
 
+                <div class="item-subscriptions">
+                    <span class="item-subscriptions-count">{{ covoit.subscriptions|length }}</span>
+                    <br />
+                    {{ 'covoit.private_index.subscriptions'|transchoice(covoit.subscriptions|length) }}
+                </div>
+
+                <div class="item-price">
+                    <span class="item-price-count">{{ covoit.price }} €</span>
+                    <br />
+                    {{ 'covoit.private_index.per_place'|trans }}
+                </div>
+
+                <div class="item-member-type">
+                    {% if covoit.author.id == app.user.id %}
+                        Créateur
+                    {% else %}
+                        Inscrit
+                    {% endif %}
+                </div>
+
+                <div class="item-infos">
+                    <h5>
+                        {{ 'covoit.private_index.from_to'|trans({
+                            '%startCity%': covoit.startCity.name,
+                            '%endCity%': covoit.endCity.name
+                        }) }}
+                    </h5>
+                    <em>
+                        {{ 'covoit.private_index.date'|trans({
+                            '%date%': covoit.date|date('d/m/Y'),
+                            '%hour%': covoit.startHour|date('H:i')
+                        }) }}
+                    </em>
+                </div>
+            </a>
         {% else %}
            <p>
-               Vous n'avez participé à aucun covoiturage pour le moment !
-               <a href="{{ path('covoiturage_my_propose') }}">Proposez-en un !</a>
+                {{ 'covoit.private_index.no_covoit.text'|trans }}
+               <a href="{{ path('covoiturage_my_propose') }}">
+                   {{ 'covoit.private_index.no_covoit.link'|trans }}
+               </a>
            </p>
         {% endfor %}
+
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </div>
 {% endblock %}

@@ -23,25 +23,30 @@ class PrivateController extends Controller
      */
     public function indexAction($page = 1)
     {
+        if (! $this->getUserLayer()->isUser()) {
+            return $this->createAccessDeniedResponse();
+        }
+
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         $query = $em->createQueryBuilder()
-            ->select('c, cs, sub')
+            ->select('c, cs, ca')
             ->from('EtuModuleCovoitBundle:Covoit', 'c')
-            ->leftJoin('c.steps', 'cs')
-            ->leftJoin('cs.sbuscriptions', 'sub')
+            ->leftJoin('c.author', 'ca')
+            ->leftJoin('c.subscriptions', 'cs')
             ->where('c.author = :user')
-            ->orWhere('sub.user = :user')
+            ->orWhere('cs.user = :user')
             ->setParameter('user', $this->getUser()->getId())
-            ->orderBy('c.createdAt', 'DESC')
+            ->orderBy('c.date', 'DESC')
             ->getQuery();
 
         /** @var Covoit[] $covoits */
         $covoits = $this->get('knp_paginator')->paginate($query, $page, 40);
 
         return [
-            'covoits' => $covoits,
+            'pagination' => $covoits,
+            'today' => new \DateTime()
         ];
     }
 
@@ -51,6 +56,10 @@ class PrivateController extends Controller
      */
     public function proposeAction(Request $request)
     {
+        if (! $this->getUserLayer()->isUser()) {
+            return $this->createAccessDeniedResponse();
+        }
+
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 

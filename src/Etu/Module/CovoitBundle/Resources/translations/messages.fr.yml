@@ -11,6 +11,16 @@ covoit:
     messages:
         created: Votre proposition a bien été créée
 
+    private_index:
+        title: Mes covoiturages
+        from_to: De %startCity% à %endCity%
+        date: Le %date% à %hour%
+        subscriptions: none_or_one: inscription|some: inscriptions
+        per_place: par place
+        no_covoit:
+            text: Vous n'avez participé à aucun covoiturage pour le moment !
+            link: Proposez-en un !
+
     proposal:
         titles:
             details: Détailes
