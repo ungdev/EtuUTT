@@ -1,6 +1,6 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block title %}{{ 'covoit.index.title'|trans }}{% endblock %}
+{% block title %}{{ 'covoit.private_index.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
     <img src="{{ asset('img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -61,8 +61,6 @@
     </ul>
 
     <div class="padding20-sides">
-        <h4>{{ 'covoit.private_index.title'|trans }}</h4>
-
         {% for covoit in pagination %}
             <script type='text/javascript'>
                 maps.push({
@@ -74,7 +72,8 @@
                     ]
                 });
             </script>
-            <a href="" class="covoit-list-item{% if today > covoit.date %} covoit-list-item-done{% endif %}">
+            <a href="{{ path('covoiturage_view', {'id': covoit.id, 'slug': covoit.startCity.slug ~ '-' ~ covoit.endCity.slug }) }}"
+               class="covoit-list-item{% if today > covoit.date %} covoit-list-item-done{% endif %}">
                 <div id="map-{{ covoit.id }}" class="item-map" style="width: 140px; height: 89px;"></div>
 
                 <div class="item-subscriptions">
@@ -91,9 +90,9 @@
 
                 <div class="item-member-type">
                     {% if covoit.author.id == app.user.id %}
-                        Créateur
+                        {{ 'covoit.private_index.creator'|trans }}
                     {% else %}
-                        Inscrit
+                        {{ 'covoit.private_index.subscribed'|trans }}
                     {% endif %}
                 </div>
 

@@ -1,0 +1,33 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'covoit.public_view.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+    <img src="{{ asset('img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+    <ul class="nav nav-tabs page-tabs">
+        <li class="pull-right">
+            <a href="{{ path('covoiturage_my_propose') }}">
+                {{ 'covoit.menu.propose'|trans }}
+            </a>
+        </li>
+        <li class="pull-right">
+            <a href="{{ path('covoiturage_my_index') }}">
+                {{ 'covoit.menu.my'|trans }}
+            </a>
+        </li>
+        <li class="pull-right">
+            <a href="{{ path('covoiturage_index') }}">
+                {{ 'covoit.menu.search'|trans }}
+            </a>
+        </li>
+    </ul>
+
+    <div class="padding20-sides">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut beatae corporis cupiditate debitis delectus
+        dignissimos dolor eaque earum explicabo inventore iure labore libero molestias necessitatibus nulla perspiciatis
+        quam, quas vitae!
+    </div>
+{% endblock %}
