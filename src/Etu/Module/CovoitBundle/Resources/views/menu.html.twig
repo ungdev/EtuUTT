@@ -1,0 +1,17 @@
+<ul class="nav nav-tabs page-tabs">
+    <li class="pull-right{% if active == 'propose' %} active page-tabs-resolved-active{% endif %}">
+        <a href="{{ path('covoiturage_my_propose') }}">
+            {{ 'covoit.menu.propose'|trans }}
+        </a>
+    </li>
+    <li class="pull-right{% if active == 'private' %} active page-tabs-resolved-active{% endif %}">
+        <a href="{{ path('covoiturage_my_index') }}">
+            {{ 'covoit.menu.my'|trans }}
+        </a>
+    </li>
+    <li class="pull-right{% if active == 'search' %} active page-tabs-resolved-active{% endif %}">
+        <a href="{{ path('covoiturage_index') }}">
+            {{ 'covoit.menu.search'|trans }}
+        </a>
+    </li>
+</ul>

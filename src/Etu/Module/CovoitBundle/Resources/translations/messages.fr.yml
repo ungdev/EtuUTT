@@ -10,6 +10,7 @@ covoit:
 
     messages:
         created: Votre proposition a bien été créée
+        message_sent: Votre message a bien été envoyé
 
     public_view:
         title: Détails d'un covoiturage
@@ -29,7 +30,7 @@ covoit:
     proposal:
         title: Proposer un covoiturage
         titles:
-            details: Détailes
+            details: Détails
             start: Départ
             end: Arrivée
         type:

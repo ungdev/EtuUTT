@@ -42,23 +42,7 @@
 {% endblock %}
 
 {% block content %}
-    <ul class="nav nav-tabs page-tabs">
-        <li class="pull-right">
-            <a href="{{ path('covoiturage_my_propose') }}">
-                {{ 'covoit.menu.propose'|trans }}
-            </a>
-        </li>
-        <li class="pull-right active page-tabs-resolved-active">
-            <a href="{{ path('covoiturage_my_index') }}">
-                {{ 'covoit.menu.my'|trans }}
-            </a>
-        </li>
-        <li class="pull-right">
-            <a href="{{ path('covoiturage_index') }}">
-                {{ 'covoit.menu.search'|trans }}
-            </a>
-        </li>
-    </ul>
+    {% include 'EtuModuleCovoitBundle::menu.html.twig' with {'active': 'private'} %}
 
     <div class="padding20-sides">
         {% for covoit in pagination %}

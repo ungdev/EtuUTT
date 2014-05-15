@@ -7,18 +7,7 @@
 {% endblock %}
 
 {% block content %}
-    <ul class="nav nav-tabs page-tabs">
-        <li class="pull-right">
-            <a href="{{ path('covoiturage_my_index') }}">
-                Mes covoiturages
-            </a>
-        </li>
-        <li class="pull-right active page-tabs-resolved-active">
-            <a href="{{ path('covoiturage_index') }}">
-                Rechecher un covoiturage
-            </a>
-        </li>
-    </ul>
+    {% include 'EtuModuleCovoitBundle::menu.html.twig' with {'active': 'search'} %}
 
     <div class="padding20-sides">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut beatae corporis cupiditate debitis delectus

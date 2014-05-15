@@ -72,7 +72,7 @@ class PrivateController extends Controller
             $proposal->setPhoneNumber($this->getUser()->getPhoneNumber());
         }
 
-        $form = $this->createForm($this->get('covoit.form.proposal'), $proposal);
+        $form = $this->createForm($this->get('etu.covoit.form.proposal'), $proposal);
 
         if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
             $proposal->setStartHour($proposal->getStartHour()->format('H:i'));
