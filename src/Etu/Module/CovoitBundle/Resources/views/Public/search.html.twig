@@ -1,16 +1,17 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block title %}{{ 'covoit.private_index.title'|trans }}{% endblock %}
+{% block title %}{{ 'covoit.search.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
     <img src="{{ asset('img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block stylesheets %}
-<script type='text/javascript'>var maps = [];</script>
+    <script type='text/javascript'>var maps = [];</script>
 {% endblock %}
 
 {% block javascripts %}
+    <script type='text/javascript' src='{{ asset('js/bundles/covoit.js') }}'></script>
     <script type='text/javascript' src='https://www.google.com/jsapi'></script>
     <script type='text/javascript'>
         google.load('visualization', '1', {'packages': ['geochart']});
@@ -42,7 +43,9 @@
 {% endblock %}
 
 {% block content %}
-    {% include 'EtuModuleCovoitBundle::menu.html.twig' with {'active': 'private'} %}
+    {% include 'EtuModuleCovoitBundle::menu.html.twig' with {'active': 'search'} %}
+
+    {% include 'EtuModuleCovoitBundle:Public:searchForm.html.twig' with {'form': searchForm} %}
 
     <div class="padding20-sides">
         {% for covoit in pagination %}
@@ -72,14 +75,6 @@
                     {{ 'covoit.private_index.per_place'|trans }}
                 </div>
 
-                <div class="item-member-type">
-                    {% if covoit.author.id == app.user.id %}
-                        {{ 'covoit.private_index.creator'|trans }}
-                    {% else %}
-                        {{ 'covoit.private_index.subscribed'|trans }}
-                    {% endif %}
-                </div>
-
                 <div class="item-infos">
                     <h5>
                         {{ 'covoit.private_index.from_to'|trans({
@@ -91,17 +86,17 @@
                         {{ 'covoit.private_index.date'|trans({
                             '%date%': covoit.date|date('d/m/Y'),
                             '%hour%': covoit.startHour|date('H:i')
+                        }) }},
+                        {{ 'covoit.private_index.by'|trans({
+                            '%name%': covoit.author.fullName
                         }) }}
                     </em>
                 </div>
             </a>
         {% else %}
             <p class="muted trombi-search-explainations">
-                {{ 'covoit.private_index.no_covoit.text'|trans }}
-               <a href="{{ path('covoiturage_my_propose') }}">
-                   {{ 'covoit.private_index.no_covoit.link'|trans }}
-               </a>
-           </p>
+                {{ 'covoit.search.no_covoit'|trans }}
+            </p>
         {% endfor %}
 
         <div class="navigation">

@@ -6,12 +6,101 @@
     <img src="{{ asset('img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
+{% block stylesheets %}
+    <script type='text/javascript'>var maps = [];</script>
+{% endblock %}
+
+{% block javascripts %}
+    <script type='text/javascript' src='{{ asset('js/bundles/covoit.js') }}'></script>
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    <script type='text/javascript'>
+        google.load('visualization', '1', {'packages': ['geochart']});
+        google.setOnLoadCallback(drawMaps);
+
+        function drawMaps() {
+            var map, chart;
+
+            for (var i = 0; i < maps.length; i++) {
+                map = maps[i];
+
+                chart = new google.visualization.GeoChart(document.getElementById(map.id));
+                chart.draw(google.visualization.arrayToDataTable(map.data), {
+                    region: 'FR',
+                    displayMode: 'markers',
+                    colorAxis: {colors: ['green']},
+                    legend: 'none',
+                    sizeAxis: {
+                        minValue: 1,
+                        maxValue: 2
+                    },
+                    tooltip: {
+                        trigger: 'none'
+                    }
+                });
+            }
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
     {% include 'EtuModuleCovoitBundle::menu.html.twig' with {'active': 'search'} %}
 
+    {% include 'EtuModuleCovoitBundle:Public:searchForm.html.twig' with {'form': searchForm} %}
+
     <div class="padding20-sides">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut beatae corporis cupiditate debitis delectus
-        dignissimos dolor eaque earum explicabo inventore iure labore libero molestias necessitatibus nulla perspiciatis
-        quam, quas vitae!
+        {% for covoit in pagination %}
+            <script type='text/javascript'>
+                maps.push({
+                    id: 'map-{{ covoit.id }}',
+                    data: [
+                        ['City',   'Position'],
+                        ['{{ covoit.startCity.name }}',  1],
+                        ['{{ covoit.endCity.name }}',    1]
+                    ]
+                });
+            </script>
+            <a href="{{ path('covoiturage_view', {'id': covoit.id, 'slug': covoit.startCity.slug ~ '-' ~ covoit.endCity.slug }) }}"
+               class="covoit-list-item{% if today > covoit.date %} covoit-list-item-done{% endif %}">
+                <div id="map-{{ covoit.id }}" class="item-map" style="width: 140px; height: 89px;"></div>
+
+                <div class="item-subscriptions">
+                    <span class="item-subscriptions-count">{{ covoit.capacity - (covoit.subscriptions|length) }}</span>
+                    <br />
+                    {{ 'covoit.private_index.subscriptions_left'|transchoice(covoit.capacity - (covoit.subscriptions|length))|raw }}
+                </div>
+
+                <div class="item-price">
+                    <span class="item-price-count">{{ covoit.price }} €</span>
+                    <br />
+                    {{ 'covoit.private_index.per_place'|trans }}
+                </div>
+
+                <div class="item-infos">
+                    <h5>
+                        {{ 'covoit.private_index.from_to'|trans({
+                            '%startCity%': covoit.startCity.name,
+                            '%endCity%': covoit.endCity.name
+                        }) }}
+                    </h5>
+                    <em>
+                        {{ 'covoit.private_index.date'|trans({
+                            '%date%': covoit.date|date('d/m/Y'),
+                            '%hour%': covoit.startHour|date('H:i')
+                        }) }}
+                    </em>
+                </div>
+            </a>
+        {% else %}
+            <p class="muted trombi-search-explainations">
+                {{ 'covoit.index.no_covoit.text'|trans }}
+                <a href="{{ path('covoiturage_my_propose') }}">
+                    {{ 'covoit.index.no_covoit.link'|trans }}
+                </a>
+            </p>
+        {% endfor %}
+
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </div>
 {% endblock %}

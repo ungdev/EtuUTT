@@ -8,7 +8,8 @@ var facebox = $('a[rel*=facebox]'),
 	overlay = $('#overlay'),
 	more = $('#more'),
 	page = $('body'),
-	sceditor = $('.redactor'),
+    sceditor = $('.redactor'),
+    sceditorLimited = $('.redactor-limited'),
 	redactorHtml = $('.redactor-html'),
 	usersAutocomplete = $('.user-autocomplete'),
 	changeLocale = {
@@ -243,53 +244,99 @@ $(function() {
 		opacity: 0.5
 	});
 
-	// Load CKEditor
-	sceditor.sceditor({
-		plugins: "bbcode",
-		style: "/sceditor/minified/jquery.sceditor.default.min.css",
-		emoticonsRoot: '/',
-		toolbar:
-			"source|bold,italic,underline,strike,subscript,superscript|left,center,right,justify" +
-			"|font,size,removeformat|bulletlist,orderedlist" +
-			"|table|quote|link,unlink|image,youtube|maximize",
-		emoticons: {
-			dropdown: {
-				">:(": "emoticons/angry.png",
-				":aw:": "emoticons/aw.png",
-				"8)": "emoticons/cool.png",
-				":D": "emoticons/ecstatic.png",
-				">:D": "emoticons/furious.png",
-				":O": "emoticons/gah.png",
-				":)": "emoticons/happy.png",
-				"<3": "emoticons/heart.png",
-				":/": "emoticons/hm.png",
-				":3": "emoticons/kiss.png",
-				":|": "emoticons/meh.png",
-				":x": "emoticons/mmf.png",
-				":(": "emoticons/sad.png",
-				":P": "emoticons/tongue.png",
-				":o": "emoticons/what.png",
-				";)": "emoticons/wink.png"
-			},
-			hidden: {
-				">:[": "emoticons/angry.png",
-				"8]": "emoticons/cool.png",
-				"D:": "emoticons/gah.png",
-				":]": "emoticons/happy.png",
-				":\\": "emoticons/hm.png",
-				"-.-": "emoticons/meh.png",
-				"-_-": "emoticons/meh.png",
-				":X": "emoticons/mmf.png",
-				":[": "emoticons/sad.png",
-				":\'(": "emoticons/sad.png",
-				":\'[": "emoticons/sad.png",
-				":p": "emoticons/tongue.png",
-				":?": "emoticons/what.png",
-				";]": "emoticons/wink.png",
-				";D": "emoticons/wink.png"
-			}
-		}
-	});
+    // Load SCeditor
+    sceditor.sceditor({
+        plugins: "bbcode",
+        style: "/sceditor/minified/jquery.sceditor.default.min.css",
+        emoticonsRoot: '/',
+        toolbar:
+            "source|bold,italic,underline,strike,subscript,superscript|left,center,right,justify" +
+                "|font,size,removeformat|bulletlist,orderedlist" +
+                "|table|quote|link,unlink|image,youtube|maximize",
+        emoticons: {
+            dropdown: {
+                ">:(": "emoticons/angry.png",
+                ":aw:": "emoticons/aw.png",
+                "8)": "emoticons/cool.png",
+                ":D": "emoticons/ecstatic.png",
+                ">:D": "emoticons/furious.png",
+                ":O": "emoticons/gah.png",
+                ":)": "emoticons/happy.png",
+                "<3": "emoticons/heart.png",
+                ":/": "emoticons/hm.png",
+                ":3": "emoticons/kiss.png",
+                ":|": "emoticons/meh.png",
+                ":x": "emoticons/mmf.png",
+                ":(": "emoticons/sad.png",
+                ":P": "emoticons/tongue.png",
+                ":o": "emoticons/what.png",
+                ";)": "emoticons/wink.png"
+            },
+            hidden: {
+                ">:[": "emoticons/angry.png",
+                "8]": "emoticons/cool.png",
+                "D:": "emoticons/gah.png",
+                ":]": "emoticons/happy.png",
+                ":\\": "emoticons/hm.png",
+                "-.-": "emoticons/meh.png",
+                "-_-": "emoticons/meh.png",
+                ":X": "emoticons/mmf.png",
+                ":[": "emoticons/sad.png",
+                ":\'(": "emoticons/sad.png",
+                ":\'[": "emoticons/sad.png",
+                ":p": "emoticons/tongue.png",
+                ":?": "emoticons/what.png",
+                ";]": "emoticons/wink.png",
+                ";D": "emoticons/wink.png"
+            }
+        }
+    });
+
+    // Load SCeditor limited
+    sceditorLimited.sceditor({
+        plugins: "bbcode",
+        style: "/sceditor/minified/jquery.sceditor.default.min.css",
+        emoticonsRoot: '/',
+        toolbar:
+            "source|bold,italic,underline,strike|left,center,right,justify|link,unlink|maximize",
+        emoticons: {
+            dropdown: {
+                ">:(": "emoticons/angry.png",
+                ":aw:": "emoticons/aw.png",
+                "8)": "emoticons/cool.png",
+                ":D": "emoticons/ecstatic.png",
+                ">:D": "emoticons/furious.png",
+                ":O": "emoticons/gah.png",
+                ":)": "emoticons/happy.png",
+                "<3": "emoticons/heart.png",
+                ":/": "emoticons/hm.png",
+                ":3": "emoticons/kiss.png",
+                ":|": "emoticons/meh.png",
+                ":x": "emoticons/mmf.png",
+                ":(": "emoticons/sad.png",
+                ":P": "emoticons/tongue.png",
+                ":o": "emoticons/what.png",
+                ";)": "emoticons/wink.png"
+            },
+            hidden: {
+                ">:[": "emoticons/angry.png",
+                "8]": "emoticons/cool.png",
+                "D:": "emoticons/gah.png",
+                ":]": "emoticons/happy.png",
+                ":\\": "emoticons/hm.png",
+                "-.-": "emoticons/meh.png",
+                "-_-": "emoticons/meh.png",
+                ":X": "emoticons/mmf.png",
+                ":[": "emoticons/sad.png",
+                ":\'(": "emoticons/sad.png",
+                ":\'[": "emoticons/sad.png",
+                ":p": "emoticons/tongue.png",
+                ":?": "emoticons/what.png",
+                ";]": "emoticons/wink.png",
+                ";D": "emoticons/wink.png"
+            }
+        }
+    });
 
 	// Users autocomplete
 	if (usersAutocomplete) {

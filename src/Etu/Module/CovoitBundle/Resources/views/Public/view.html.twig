@@ -6,12 +6,187 @@
     <img src="{{ asset('img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
+{% block sidebar %}
+    {{ render_subscribe_button('covoit', covoit.id) }}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    <script type='text/javascript'>
+        google.load('visualization', '1', {'packages': ['geochart']});
+        google.setOnLoadCallback(drawMap);
+
+        function drawMap() {
+            chart = new google.visualization.GeoChart(document.getElementById(map.id));
+            chart.draw(google.visualization.arrayToDataTable([
+                ['City',   'Position'],
+                ['{{ covoit.startCity.name }}',  1],
+                ['{{ covoit.endCity.name }}',    1]
+            ]), {
+                region: 'FR',
+                displayMode: 'markers',
+                colorAxis: {colors: ['green']},
+                legend: 'none',
+                sizeAxis: {
+                    minValue: 1,
+                    maxValue: 2
+                },
+                tooltip: {
+                    trigger: 'none'
+                }
+            });
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
     {% include 'EtuModuleCovoitBundle::menu.html.twig' with {'active': 'none'} %}
 
-    <div class="padding20-sides">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut beatae corporis cupiditate debitis delectus
-        dignissimos dolor eaque earum explicabo inventore iure labore libero molestias necessitatibus nulla perspiciatis
-        quam, quas vitae!
+    <div class="padding20-sides covoit-view">
+        <h4>
+            {{ 'covoit.public_view.from_to'|trans({
+                '%name%': covoit.author.fullName,
+                '%startCity%': covoit.startCity.name,
+                '%endCity%': covoit.endCity.name
+            }) }}
+        </h4>
+
+        <hr />
+
+        <div class="row-fluid">
+            <div class="span4">
+                <div id="map" class="covoit-map"></div>
+            </div>
+            <div class="span8">
+                <div class="info-row">
+                    <div class="info-label">
+                        {{ 'covoit.public_view.startHour.label'|trans }}
+                    </div>
+                    <div class="info-value">
+                        {{ 'covoit.public_view.startHour.value.start'|trans({
+                            '%date%': covoit.date|date('d/m/Y'),
+                            '%startHour%': covoit.startHour|date('H\\\hi')
+                        }) }}<br />
+                        {{ 'covoit.public_view.startHour.value.end'|trans({
+                            '%endHour%': covoit.endHour|date('H\\\hi'),
+                            '%endCity%': covoit.endCity.name
+                        }) }}
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <div class="info-label">
+                        {{ 'covoit.public_view.startAdress'|trans }}
+                    </div>
+                    <div class="info-value">
+                        {{ covoit.startAdress }}<br />
+                        <strong>{{ covoit.startCity.name }}</strong>
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <div class="info-label">
+                        {{ 'covoit.public_view.price'|trans }}
+                    </div>
+                    <div class="info-value">
+                        {{ covoit.price }} €
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <div class="info-label">
+                        {{ 'covoit.public_view.places_left.label'|trans }}
+                    </div>
+                    <div class="info-value">
+                        {{ 'covoit.public_view.places_left.value'|trans({
+                            '%placesLeft%': (covoit.capacity - (covoit.subscriptions|length)),
+                            '%capacity%': covoit.capacity
+                        }) }}
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <div class="info-value">
+                        <a href="{{ covoit.blablacarUrl }}">
+                            {{ 'covoit.public_view.blablacar'|trans }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if covoit.notes %}
+            <h5>
+                {{ 'covoit.public_view.notes'|trans({
+                    '%name%': covoit.author.fullName
+                }) }}
+            </h5>
+
+            <div class="covoit-notes">
+                {{ covoit.notes|bbcode_filter('default_filter') }}
+            </div>
+        {% endif %}
+
+        <hr />
+
+        <h4>{{ 'covoit.public_view.comments'|trans }}</h4>
+
+        {% for message in covoit.messages %}
+            <div class="etu-comment" id="{{ message.id }}">
+                <div class="etu-comment-avatar">
+                    <a href="{{ path('user_view', {'login': message.author.login}) }}">
+                        <img src="{{ asset('photos/' ~ message.author.avatar) }}"
+                             alt="{{ message.author.getFullName() }}"
+                             title="{{ message.author.getFullName() }}"/>
+                    </a>
+                </div>
+                <div class="etu-comment-infos">
+                    <div class="etu-comment-date">
+                        <small>
+                            <a href="#{{ message.id }}">#{{ message.id }}</a> -
+                            <a href="{{ path('user_view', {'login': message.author.login}) }}">
+                                {{ message.author.fullName }}
+                            </a>
+                        </small>
+                        <small class="pull-right">
+                            {% if app.user.id == message.author.id or app.user.isAdmin %}
+                                <a href="{{ path('covoiturage_my_edit_message', {'id': message.id}) }}" class="btn btn-small">
+                                    <i class="icon-edit"></i>
+                                    {{ 'forum.main.thread.edit'|trans }}
+                                </a>
+                            {% endif %}
+
+                            {{ time_diff(message.createdAt)|ucfirst }}
+                        </small>
+                    </div>
+                    <div class="etu-comment-body">
+                        {{ message.text|bbcode_filter('default_filter') }}
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+            </div>
+        {% else %}
+            <p>
+                {{ 'covoit.public_view.no_comment'|trans }}
+            </p>
+        {% endfor %}
+
+        <br />
+
+        <form method="post" action="">
+            {{ form_widget(messageForm.text) }}
+            {{ form_errors(messageForm.text) }}
+
+            {{ form_rest(messageForm) }}
+
+            <br />
+
+            <p>
+                <input type="submit" class="btn btn-default" value="{{ 'covoit.public_view.comment'|trans }}" />
+            </p>
+        </form>
     </div>
 {% endblock %}

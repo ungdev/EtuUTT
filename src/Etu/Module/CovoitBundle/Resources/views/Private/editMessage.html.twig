@@ -1,0 +1,30 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'covoit.private_edit_message.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+    <img src="{{ asset('img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+    {% include 'EtuModuleCovoitBundle::menu.html.twig' with {'active': 'none'} %}
+
+    <div class="padding20-sides covoit-edit-message">
+        <form method="post" action="">
+            {{ form_widget(form.text) }}
+            {{ form_errors(form.text) }}
+
+            {{ form_rest(form) }}
+
+            <br />
+
+            <p>
+                <input type="submit" class="btn btn-primary" value="{{ 'covoit.private_edit_message.submit'|trans }}" />
+                <a href="{{ path('covoiturage_view', {'id': covoitMessage.covoit.id, 'slug': covoitMessage.covoit.startCity.slug ~ '-' ~ covoitMessage.covoit.endCity.slug }) }}"
+                   class="btn btn-default">
+                    {{ 'covoit.private_edit_message.cancel'|trans }}
+                </a>
+            </p>
+        </form>
+    </div>
+{% endblock %}

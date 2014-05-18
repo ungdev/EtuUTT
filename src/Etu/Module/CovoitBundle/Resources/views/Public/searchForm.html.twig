@@ -1,0 +1,43 @@
+<div class="covoit-search-form">
+    <form method="get" action="{{ path('covoiturage_search') }}">
+        {{ form_errors(form) }}
+
+        <div class="row-fluid">
+            <div class="span4">
+                <div>
+                    {{ form_row(form.startCity) }}
+                </div>
+
+                <div>
+                    {{ form_row(form.endCity) }}
+                </div>
+
+                <div>
+                    {{ form_row(form.date) }}
+                </div>
+
+                <div>
+                    {{ form_widget(form.dateBeforeAfter) }}
+                    {{ form_label(form.dateBeforeAfter) }}
+                    <br />
+                    {{ form_errors(form.dateBeforeAfter) }}
+                </div>
+            </div>
+            <div class="span4">
+                {{ form_row(form.priceMax) }}
+                {{ form_row(form.hourMin) }}
+                {{ form_row(form.hourMax) }}
+            </div>
+            <div class="span4">
+                {{ form_row(form.keywords) }}
+                {{ form_row(form.placesLeft) }}
+            </div>
+        </div>
+
+        {{ form_rest(form) }}
+
+        <div class="align-center">
+            <input type="submit" value="{{ 'covoit.search.submit'|trans }}" class="btn btn-default" />
+        </div>
+    </form>
+</div>

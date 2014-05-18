@@ -5,6 +5,7 @@ namespace Etu\Module\CovoitBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\ExecutionContextInterface;
 
 /**
  * Covoit
@@ -12,6 +13,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="etu_covoits")
  * @ORM\Entity
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
+ *
+ * @Assert\Callback(methods={"isBlaBlaCarUrlValid"})
  */
 class Covoit
 {
@@ -181,11 +184,34 @@ class Covoit
     private $subscriptions;
 
     /**
+     * @var CovoitMessage[]
+     *
+     * @ORM\OneToMany(targetEntity="Etu\Module\CovoitBundle\Entity\CovoitMessage", mappedBy="covoit")
+     * @ORM\JoinColumn()
+     */
+    private $messages;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->subscriptions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->messages = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * @param ExecutionContextInterface $context
+     */
+    public function isBlaBlaCarUrlValid(ExecutionContextInterface $context)
+    {
+        if (strpos($this->blablacarUrl, 'http') === false) {
+            $this->blablacarUrl = 'http://' . $this->blablacarUrl;
+        }
+
+        if (! in_array(parse_url($this->blablacarUrl, PHP_URL_HOST), ['www.covoiturage.fr', 'covoiturage.fr'])) {
+            $context->addViolationAt('blablacarUrl', 'Cette URL n\'est pas une URL BlaBlaCar valide', array(), null);
+        }
     }
 
     /**
@@ -620,5 +646,38 @@ class Covoit
     public function getSubscriptions()
     {
         return $this->subscriptions;
+    }
+
+    /**
+     * Add messages
+     *
+     * @param \Etu\Module\CovoitBundle\Entity\CovoitMessage $messages
+     * @return Covoit
+     */
+    public function addMessage(\Etu\Module\CovoitBundle\Entity\CovoitMessage $messages)
+    {
+        $this->messages[] = $messages;
+    
+        return $this;
+    }
+
+    /**
+     * Remove messages
+     *
+     * @param \Etu\Module\CovoitBundle\Entity\CovoitMessage $messages
+     */
+    public function removeMessage(\Etu\Module\CovoitBundle\Entity\CovoitMessage $messages)
+    {
+        $this->messages->removeElement($messages);
+    }
+
+    /**
+     * Get messages
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMessages()
+    {
+        return $this->messages;
     }
 }

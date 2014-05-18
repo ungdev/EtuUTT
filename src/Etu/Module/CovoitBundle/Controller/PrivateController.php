@@ -5,6 +5,7 @@ namespace Etu\Module\CovoitBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\CovoitBundle\Entity\Covoit;
+use Etu\Module\CovoitBundle\Entity\CovoitMessage;
 use Symfony\Component\HttpFoundation\Request;
 
 // Import annotations
@@ -42,7 +43,7 @@ class PrivateController extends Controller
             ->getQuery();
 
         /** @var Covoit[] $covoits */
-        $covoits = $this->get('knp_paginator')->paginate($query, $page, 40);
+        $covoits = $this->get('knp_paginator')->paginate($query, $page, 30);
 
         return [
             'pagination' => $covoits,
@@ -94,6 +95,41 @@ class PrivateController extends Controller
 
         return [
             'form' => $form->createView()
+        ];
+    }
+    /**
+     * @Route("/edit/message/{id}", defaults={"id" = 1}, requirements={"id" = "\d+"}, name="covoiturage_my_edit_message")
+     * @Template()
+     */
+    public function editMessageAction(Request $request, CovoitMessage $message)
+    {
+        if (! $this->getUserLayer()->isUser()) {
+            return $this->createAccessDeniedResponse();
+        }
+
+        $form = $this->createForm($this->get('etu.covoit.form.message'), $message);
+
+        if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
+            /** @var EntityManager $em */
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($message);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->set('message', array(
+                'type' => 'success',
+                'message' => 'covoit.messages.message_edited'
+            ));
+
+            return $this->redirect($this->generateUrl('covoiturage_view', [
+                'id' => $message->getCovoit()->getId(),
+                'slug' => $message->getCovoit()->getStartCity()->getSlug() . '-' . $message->getCovoit()->getEndCity()->getSlug()
+            ]));
+        }
+
+        return [
+            'form' => $form->createView(),
+            'covoitMessage' => $message
         ];
     }
 }

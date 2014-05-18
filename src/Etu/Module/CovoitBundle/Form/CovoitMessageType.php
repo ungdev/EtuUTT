@@ -15,7 +15,7 @@ class CovoitMessageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('text', 'redactor')
+            ->add('text', 'redactor_limited')
         ;
     }
 

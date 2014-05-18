@@ -17,7 +17,7 @@ class CovoitType extends AbstractType
     {
         $builder
             ->add('phoneNumber', null, ['label' => 'covoit.proposal.phone.label'])
-            ->add('notes', null, ['label' => 'covoit.proposal.notes.label'])
+            ->add('notes', 'redactor_limited', ['label' => 'covoit.proposal.notes.label'])
             ->add('capacity', null, ['label' => 'covoit.proposal.capacity.label'])
             ->add('date', 'date_picker', ['label' => 'covoit.proposal.date.label'])
             ->add('price', null, ['label' => 'covoit.proposal.price.label'])
@@ -30,7 +30,7 @@ class CovoitType extends AbstractType
                 },
             ])
             ->add('startAdress', 'textarea', ['label' => 'covoit.proposal.start.adress.label'])
-            ->add('startHour', 'time', ['label' => 'covoit.proposal.start.hour.label'])
+            ->add('startHour', 'time', ['label' => 'covoit.proposal.start.hour.label', 'minutes' => range(0, 55, 5)])
             ->add('endCity', 'entity', [
                 'label' => 'covoit.proposal.end.city.label',
                 'class' => 'EtuCoreBundle:City',
@@ -39,7 +39,7 @@ class CovoitType extends AbstractType
                     },
             ])
             ->add('endAdress', 'textarea', ['label' => 'covoit.proposal.end.adress.label'])
-            ->add('endHour', 'time', ['label' => 'covoit.proposal.end.hour.label'])
+            ->add('endHour', 'time', ['label' => 'covoit.proposal.end.hour.label', 'minutes' => range(0, 55, 5)])
         ;
     }
 

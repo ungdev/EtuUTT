@@ -10,6 +10,39 @@
 	}
 }
 
+.covoit-search-form {
+	background: #fafafa;
+	border-top: 1px dashed #e5e5e5;
+	border-bottom: 1px dashed #e5e5e5;
+	padding: 10px 20px 5px 20px;
+
+	#etu_module_covoitbundle_search_hourMax_hour, #etu_module_covoitbundle_search_hourMax_minute,
+	#etu_module_covoitbundle_search_hourMin_hour, #etu_module_covoitbundle_search_hourMin_minute {
+		width: 100px;
+	}
+
+	#etu_module_covoitbundle_search_dateBeforeAfter {
+		float: left;
+		margin-right: 8px;
+	}
+
+	.price-max-slider {
+		margin: 13px 0 18px 0;
+	}
+	.price-max-value-box {
+		display: inline-block;
+		margin-left: 20px;
+		color: #f6931f;
+		font-weight: bold;
+	}
+	.price-max-remove {
+		display: inline-block;
+		margin-left: 10px;
+		font-size: 11px;
+		position: absolute;
+	}
+}
+
 .covoit-list-item {
 	display: block;
 	margin: 10px 0;
@@ -57,11 +90,51 @@
 	.item-subscriptions, .item-price {
 		float: right;
 		width: 110px;
-		padding-top: 25px;
 		text-align: center;
 
 		.item-subscriptions-count, .item-price-count {
 			font-size: 24px;
 		}
+	}
+
+	.item-subscriptions {
+		padding-top: 15px;
+	}
+	.item-price {
+		padding-top: 25px;
+	}
+}
+
+.covoit-view {
+	.covoit-map {
+		width: 100%;
+		height: 190px;
+	}
+
+	.info-row {
+		clear: both;
+		margin-top: 15px;
+
+		.info-label {
+			float: left;
+			width: 175px;
+			text-align: right;
+			padding-right: 25px;
+			color: #999;
+			font-style: italic;
+		}
+		.info-value {
+			margin-left: 200px;
+		}
+	}
+
+	#etu_module_covoitbundle_covoitmessage_text {
+		height: 200px;
+	}
+}
+
+.covoit-edit-message {
+	#etu_module_covoitbundle_covoitmessage_text {
+		height: 250px;
 	}
 }

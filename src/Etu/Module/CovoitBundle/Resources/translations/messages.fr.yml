@@ -2,27 +2,62 @@
 covoit:
     menu:
         search: Rechercher
-        propose: Proposer
         my: Mes covoiturages
+        alerts: Mes alertes
 
     index:
         title: Covoiturage
+        no_covoit:
+            text: Aucun covoiturage pour le moment !
+            link: Proposez-en un !
+
+    search:
+        title: Rechercher un covoiturage
+        places_left: Nombre minimal de place restantes
+        date: Date
+        date_before_after: Inclure la veille et le lendemain
+        price_max: Prix maximal
+        hour_min: Heure minimale de départ
+        hour_max: Heure maximale de départ
+        keywords: Mots-clés
+        start_city: Ville de départ
+        end_city: Ville d'arrivée
+        submit: Rechercher
+        no_covoit: Aucun covoiturage n'a été trouvé
 
     messages:
         created: Votre proposition a bien été créée
         message_sent: Votre message a bien été envoyé
+        message_edited: Votre message a bien été modifié
 
     public_view:
         title: Détails d'un covoiturage
+        from_to: %name% propose un covoiturage de %startCity% à %endCity%
+        startHour:
+            label: Heure de départ
+            value:
+                start: Le %date% à %startHour%
+                end: (pour une arrivée vers %endHour% à %endCity%)
+        startAdress: Adresse de départ
+        price: Prix (par place)
+        places_left:
+            label: Places disponibles
+            value: %placesLeft% / %capacity%
+        blablacar: Voir sur BlaBlaCar
+        notes: Remarques de %name%
+        comments: Commentaires
+        no_comment: Aucun commentaire pour le moment
+        comment: Ajouter le commentaire
 
     private_index:
         title: Mes covoiturages
         from_to: De %startCity% à %endCity%
         date: Le %date% à %hour%
-        subscriptions: none_or_one: inscription|some: inscriptions
+        subscriptions_left: none_or_one: place<br />restante|some: places<br />restantes
         per_place: par place
         creator: Créateur
         subscribed: Inscrit
+        by: par %name%
         no_covoit:
             text: Vous n'avez participé à aucun covoiturage pour le moment !
             link: Proposez-en un !
@@ -33,10 +68,6 @@ covoit:
             details: Détails
             start: Départ
             end: Arrivée
-        type:
-            label: Type de proposition
-            searching: Je recherche quelqu'un ayant une voiture
-            finding: J'ai une voiture et je cherche à la partager
         phone:
             label: Numéro de téléphone
         notes:
@@ -64,3 +95,8 @@ covoit:
             hour:
                 label: Heure approximative d'arrivée
         submit: Proposer ce covoiturage
+
+    private_edit_message:
+        title: Modifier un message
+        submit: Modifier le message
+        cancel: Annuler
