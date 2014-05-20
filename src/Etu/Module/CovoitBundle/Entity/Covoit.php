@@ -3,6 +3,7 @@
 namespace Etu\Module\CovoitBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Etu\Core\UserBundle\Entity\User;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\ExecutionContextInterface;
@@ -178,7 +179,7 @@ class Covoit
     /**
      * @var CovoitSubscription[]
      *
-     * @ORM\OneToMany(targetEntity="Etu\Module\CovoitBundle\Entity\CovoitSubscription", mappedBy="covoit")
+     * @ORM\OneToMany(targetEntity="Etu\Module\CovoitBundle\Entity\CovoitSubscription", mappedBy="covoit", cascade={"persist", "remove"})
      * @ORM\JoinColumn()
      */
     private $subscriptions;
@@ -186,7 +187,7 @@ class Covoit
     /**
      * @var CovoitMessage[]
      *
-     * @ORM\OneToMany(targetEntity="Etu\Module\CovoitBundle\Entity\CovoitMessage", mappedBy="covoit")
+     * @ORM\OneToMany(targetEntity="Etu\Module\CovoitBundle\Entity\CovoitMessage", mappedBy="covoit", cascade={"persist", "remove"})
      * @ORM\JoinColumn()
      */
     private $messages;
@@ -646,6 +647,25 @@ class Covoit
     public function getSubscriptions()
     {
         return $this->subscriptions;
+    }
+
+    /**
+     * @param User $user
+     * @return bool
+     */
+    public function hasUser(User $user)
+    {
+        if ($this->author->getId() == $user->getId()) {
+            return true;
+        }
+
+        foreach ($this->subscriptions as $subscription) {
+            if ($subscription->getUser()->getId() == $user->getId()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

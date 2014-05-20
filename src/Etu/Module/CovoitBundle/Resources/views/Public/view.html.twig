@@ -45,6 +45,14 @@
     {% include 'EtuModuleCovoitBundle::menu.html.twig' with {'active': 'none'} %}
 
     <div class="padding20-sides covoit-view">
+        {% if covoit.author.id == app.user.id %}
+            <span class="pull-right">
+                <a href="{{ path('covoiturage_my_edit', {'id': covoit.id}) }}" class="btn btn-default">
+                    {{ 'covoit.public_view.edit'|trans }}
+                </a>
+            </span>
+        {% endif %}
+
         <h4>
             {{ 'covoit.public_view.from_to'|trans({
                 '%name%': covoit.author.fullName,
@@ -62,16 +70,27 @@
             <div class="span8">
                 <div class="info-row">
                     <div class="info-label">
+                        {{ 'covoit.public_view.creator'|trans }}
+                    </div>
+                    <div class="info-value">
+                        <a href="{{ path('user_view', {'login': covoit.author.login}) }}">
+                            {{ covoit.author.fullName }}
+                        </a>
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <div class="info-label">
                         {{ 'covoit.public_view.startHour.label'|trans }}
                     </div>
                     <div class="info-value">
                         {{ 'covoit.public_view.startHour.value.start'|trans({
-                            '%date%': covoit.date|date('d/m/Y'),
-                            '%startHour%': covoit.startHour|date('H\\\hi')
+                        '%date%': covoit.date|date('d/m/Y'),
+                        '%startHour%': covoit.startHour|date('H\\\hi')
                         }) }}<br />
                         {{ 'covoit.public_view.startHour.value.end'|trans({
-                            '%endHour%': covoit.endHour|date('H\\\hi'),
-                            '%endCity%': covoit.endCity.name
+                        '%endHour%': covoit.endHour|date('H\\\hi'),
+                        '%endCity%': covoit.endCity.name
                         }) }}
                     </div>
                 </div>
@@ -126,6 +145,31 @@
 
             <div class="covoit-notes">
                 {{ covoit.notes|bbcode_filter('default_filter') }}
+            </div>
+        {% endif %}
+
+        {% if covoit.subscriptions|length > 0 %}
+            <br />
+            <h5>{{ 'covoit.public_view.subscriptions'|trans }}</h5>
+
+            <ul>
+                {% for subscription in covoit.subscriptions %}
+                   <li>
+                       <a href="{{ path('user_view', {'login': subscription.user.login}) }}">
+                           {{ subscription.user.fullName }}
+                       </a>
+                   </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if not covoit.hasUser(app.user) %}
+            <hr />
+
+            <div class="align-center">
+                <a href="{{ path('covoiturage_my_subscribe', {'id': covoit.id}) }}" class="btn btn-large btn-primary">
+                    {{ 'covoit.public_view.subscribe'|trans }}
+                </a>
             </div>
         {% endif %}
 

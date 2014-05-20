@@ -3,17 +3,20 @@
 namespace Etu\Module\CovoitBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\CovoitBundle\Entity\Covoit;
 use Etu\Module\CovoitBundle\Entity\CovoitMessage;
+use Etu\Module\CovoitBundle\Entity\CovoitSubscription;
 use Symfony\Component\HttpFoundation\Request;
 
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
- * @Route("/carpooling/my-proposals")
+ * @Route("/covoiturage/private")
  * @Template()
  */
 class PrivateController extends Controller
@@ -82,21 +85,100 @@ class PrivateController extends Controller
             $em->persist($proposal);
             $em->flush();
 
+            // Add current user as subscriber
+            $this->getSubscriptionsManager()->subscribe($this->getUser(), 'covoit', $proposal->getId());
+
             $this->get('session')->getFlashBag()->set('message', array(
-                'type' => 'success',
-                'message' => 'covoit.messages.created'
-            ));
+                    'type' => 'success',
+                    'message' => 'covoit.messages.created'
+                ));
 
             return $this->redirect($this->generateUrl('covoiturage_view', [
-                'id' => $proposal->getId(),
-                'slug' => $proposal->getStartCity()->getSlug() . '-' . $proposal->getEndCity()->getSlug()
-            ]));
+                        'id' => $proposal->getId(),
+                        'slug' => $proposal->getStartCity()->getSlug() . '-' . $proposal->getEndCity()->getSlug()
+                    ]));
         }
 
         return [
             'form' => $form->createView()
         ];
     }
+
+    /**
+     * @Route("/{id}/edit", name="covoiturage_my_edit")
+     * @Template()
+     */
+    public function editAction(Request $request, $id)
+    {
+        if (! $this->getUserLayer()->isUser()) {
+            return $this->createAccessDeniedResponse();
+        }
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var Covoit $covoit */
+        $covoit = $em->createQueryBuilder()
+            ->select('c, cs, ca')
+            ->from('EtuModuleCovoitBundle:Covoit', 'c')
+            ->leftJoin('c.author', 'ca')
+            ->leftJoin('c.subscriptions', 'cs')
+            ->where('c.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if (! $covoit) {
+            throw $this->createNotFoundException();
+        }
+
+        if ($covoit->getAuthor()->getId() != $this->getUser()->getId()) {
+            throw new AccessDeniedHttpException();
+        }
+
+        $covoit->setStartHour(\DateTime::createFromFormat('H:i', $covoit->getStartHour()));
+        $covoit->setEndHour(\DateTime::createFromFormat('H:i', $covoit->getEndHour()));
+
+        $form = $this->createForm($this->get('etu.covoit.form.proposal'), $covoit);
+
+        if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
+            $covoit->setStartHour($covoit->getStartHour()->format('H:i'));
+            $covoit->setEndHour($covoit->getEndHour()->format('H:i'));
+
+            $em->persist($covoit);
+            $em->flush();
+
+            // Send notifications to subscribers
+            $notif = new Notification();
+
+            $notif
+                ->setModule($this->getCurrentBundle()->getIdentifier())
+                ->setHelper('covoit_edited')
+                ->setAuthorId($this->getUser()->getId())
+                ->setEntityType('covoit')
+                ->setEntityId($covoit->getId())
+                ->addEntity($covoit);
+
+            $this->getNotificationsSender()->send($notif);
+
+            // Flash message
+            $this->get('session')->getFlashBag()->set('message', array(
+                'type' => 'success',
+                'message' => 'covoit.messages.edited'
+            ));
+
+            return $this->redirect($this->generateUrl('covoiturage_view', [
+                    'id' => $covoit->getId(),
+                    'slug' => $covoit->getStartCity()->getSlug() . '-' . $covoit->getEndCity()->getSlug()
+                ]));
+        }
+
+        return [
+            'form' => $form->createView(),
+            'covoit' => $covoit,
+        ];
+    }
+
     /**
      * @Route("/edit/message/{id}", defaults={"id" = 1}, requirements={"id" = "\d+"}, name="covoiturage_my_edit_message")
      * @Template()
@@ -105,6 +187,10 @@ class PrivateController extends Controller
     {
         if (! $this->getUserLayer()->isUser()) {
             return $this->createAccessDeniedResponse();
+        }
+
+        if ($message->getAuthor()->getId() != $this->getUser()->getId()) {
+            throw new AccessDeniedHttpException();
         }
 
         $form = $this->createForm($this->get('etu.covoit.form.message'), $message);
@@ -131,5 +217,67 @@ class PrivateController extends Controller
             'form' => $form->createView(),
             'covoitMessage' => $message
         ];
+    }
+
+    /**
+     * @Route("/{id}/subscribe", name="covoiturage_my_subscribe")
+     */
+    public function subscribeAction($id)
+    {
+        if (! $this->getUserLayer()->isUser()) {
+            return $this->createAccessDeniedResponse();
+        }
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var Covoit $covoit */
+        $covoit = $em->createQueryBuilder()
+            ->select('c, s, u')
+            ->from('EtuModuleCovoitBundle:Covoit', 'c')
+            ->leftJoin('c.subscriptions', 's')
+            ->leftJoin('s.user', 'u')
+            ->where('c.id = :id')
+            ->setParameter('id', (int) $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if (! $covoit) {
+            throw $this->createNotFoundException();
+        }
+
+        if ($covoit->hasUser($this->getUser())) {
+            $this->get('session')->getFlashBag()->set('message', array(
+                'type' => 'error',
+                'message' => 'covoit.messages.already_subscribed'
+            ));
+        } else {
+            $subscription = new CovoitSubscription();
+            $subscription->setCovoit($covoit);
+            $subscription->setUser($this->getUser());
+
+            if ($this->getUser()->getPhoneNumber()) {
+                $subscription->setPhoneNumber($this->getUser()->getPhoneNumber());
+            }
+
+            $covoit->addSubscription($subscription);
+
+            $em->persist($subscription);
+            $em->persist($covoit);
+            $em->flush();
+
+            // Add current user as subscriber
+            $this->getSubscriptionsManager()->subscribe($this->getUser(), 'covoit', $covoit->getId());
+
+            $this->get('session')->getFlashBag()->set('message', array(
+                'type' => 'success',
+                'message' => 'covoit.messages.subscribed'
+            ));
+        }
+
+        return $this->redirect($this->generateUrl('covoiturage_view', [
+            'id' => $covoit->getId(),
+            'slug' => $covoit->getStartCity()->getSlug() . '-' . $covoit->getEndCity()->getSlug()
+        ]));
     }
 }

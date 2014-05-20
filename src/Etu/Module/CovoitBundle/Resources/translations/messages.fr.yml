@@ -1,9 +1,16 @@
 
 covoit:
     menu:
-        search: Rechercher
+        home: Les derniers
         my: Mes covoiturages
         alerts: Mes alertes
+
+    messages:
+        created: Votre proposition a bien été créée
+        message_sent: Votre message a bien été envoyé
+        message_edited: Votre message a bien été modifié
+        already_subscribed: Vous êtes déjà inscrit à ce covoiturage
+        subscribed: Vous avez bien réservé une place dans ce covoiturage
 
     index:
         title: Covoiturage
@@ -25,14 +32,11 @@ covoit:
         submit: Rechercher
         no_covoit: Aucun covoiturage n'a été trouvé
 
-    messages:
-        created: Votre proposition a bien été créée
-        message_sent: Votre message a bien été envoyé
-        message_edited: Votre message a bien été modifié
-
     public_view:
         title: Détails d'un covoiturage
+        edit: Modifier
         from_to: %name% propose un covoiturage de %startCity% à %endCity%
+        creator: Créateur
         startHour:
             label: Heure de départ
             value:
@@ -44,7 +48,9 @@ covoit:
             label: Places disponibles
             value: %placesLeft% / %capacity%
         blablacar: Voir sur BlaBlaCar
+        subscribe: Réserver une place
         notes: Remarques de %name%
+        subscriptions: Personnes inscrites
         comments: Commentaires
         no_comment: Aucun commentaire pour le moment
         comment: Ajouter le commentaire
@@ -95,6 +101,11 @@ covoit:
             hour:
                 label: Heure approximative d'arrivée
         submit: Proposer ce covoiturage
+
+    private_edit:
+        title: Modifier un covoiturage
+        submit: Modifier
+        cancel: Annuler
 
     private_edit_message:
         title: Modifier un message

@@ -39,13 +39,39 @@
                 });
             }
         }
+
+        var searchSpoiler = {
+            link: $('.covoit-search-spoiler-link'),
+            icon: $('.covoit-search-spoiler-link i'),
+            box: $('.covoit-search-spoiler-hidden')
+        };
+
+        searchSpoiler.link.click(function() {
+            searchSpoiler.box.toggle();
+
+            if (searchSpoiler.icon.hasClass('fa-caret-right')) {
+                searchSpoiler.icon.removeClass('fa-caret-right').addClass('fa-caret-down');
+            } else {
+                searchSpoiler.icon.removeClass('fa-caret-down').addClass('fa-caret-right');
+            }
+
+            return false;
+        });
     </script>
 {% endblock %}
 
 {% block content %}
-    {% include 'EtuModuleCovoitBundle::menu.html.twig' with {'active': 'search'} %}
+    {% include 'EtuModuleCovoitBundle::menu.html.twig' with {'active': 'home'} %}
 
-    {% include 'EtuModuleCovoitBundle:Public:searchForm.html.twig' with {'form': searchForm} %}
+    <div class="covoit-search-spoiler">
+        <a href="javascript:void(0)" class="covoit-search-spoiler-link">
+            <i class="fa fa-caret-right"></i> Rechercher un covoiturage
+        </a>
+
+        <div class="covoit-search-spoiler-hidden">
+            {% include 'EtuModuleCovoitBundle:Public:searchForm.html.twig' with {'form': searchForm} %}
+        </div>
+    </div>
 
     <div class="padding20-sides">
         {% for covoit in pagination %}

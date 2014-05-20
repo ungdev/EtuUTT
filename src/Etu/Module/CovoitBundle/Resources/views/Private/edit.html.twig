@@ -1,0 +1,70 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'covoit.private_edit.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+    <img src="{{ asset('img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+    {% include 'EtuModuleCovoitBundle::menu.html.twig' with {'active': 'none'} %}
+
+    <div class="padding20-sides covoit-propose">
+        <form method="post">
+            <h4>{{ 'covoit.proposal.titles.details'|trans }}</h4>
+
+            <div class="row-fluid">
+                <div class="span5">
+                    {{ form_row(form.date) }}
+                    {{ form_row(form.phoneNumber) }}
+                    {{ form_row(form.capacity) }}
+                    {{ form_row(form.price) }}
+                </div>
+                <div class="span7">
+                    {{ form_row(form.notes) }}
+                    {{ form_row(form.blablacarUrl) }}
+                </div>
+            </div>
+
+            <hr />
+
+            <h4>{{ 'covoit.proposal.titles.start'|trans }}</h4>
+
+            <div class="row-fluid">
+                <div class="span5">
+                    {{ form_row(form.startCity) }}
+                    {{ form_row(form.startHour) }}
+                </div>
+                <div class="span7">
+                    {{ form_row(form.startAdress) }}
+                </div>
+            </div>
+
+            <hr />
+
+            <h4>{{ 'covoit.proposal.titles.end'|trans }}</h4>
+
+            <div class="row-fluid">
+                <div class="span5">
+                    {{ form_row(form.endCity) }}
+                    {{ form_row(form.endHour) }}
+                </div>
+                <div class="span7">
+                    {{ form_row(form.endAdress) }}
+                </div>
+            </div>
+
+            {{ form_rest(form) }}
+
+            <hr />
+
+            <p class="align-center">
+                <input type="submit" class="btn btn-primary" value="{{ 'covoit.private_edit.submit'|trans }}" />
+                <a href="{{ path('covoiturage_view', {'id': covoit.id, 'slug': covoit.startCity.slug ~ '-' ~ covoit.endCity.slug }) }}"
+                   class="btn btn-default">
+                    {{ 'covoit.private_edit.cancel'|trans }}
+               </a>
+            </p>
+        </form>
+    </div>
+{% endblock %}
