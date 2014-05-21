@@ -16,18 +16,20 @@ class CovoitAlertType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('startDate', 'date_picker')
-            ->add('endDate', 'date_picker')
-            ->add('priceMax')
+            ->add('startDate', 'date_picker', ['label' => 'covoit.alerts.label.startDate', 'required' => false])
+            ->add('endDate', 'date_picker', ['label' => 'covoit.alerts.label.endDate', 'required' => false])
+            ->add('priceMax', null, ['label' => 'covoit.alerts.label.priceMax', 'required' => false])
             ->add('startCity', 'entity', [
-                'label' => 'covoit.proposal.start.city.label',
+                'label' => 'covoit.alerts.label.startCity',
+                'required' => false,
                 'class' => 'EtuCoreBundle:City',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('c')->orderBy('c.name', 'ASC');
                 },
             ])
             ->add('endCity', 'entity', [
-                'label' => 'covoit.proposal.end.city.label',
+                'label' => 'covoit.alerts.label.endCity',
+                'required' => false,
                 'class' => 'EtuCoreBundle:City',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('c')->orderBy('c.name', 'ASC');

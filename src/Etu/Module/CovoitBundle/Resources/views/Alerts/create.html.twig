@@ -1,0 +1,45 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'covoit.alerts.create.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+    <img src="{{ asset('img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block javascripts %}
+    <script type='text/javascript' src='{{ asset('js/bundles/covoit_alerts.js') }}'></script>
+{% endblock %}
+
+{% block content %}
+    {% include 'EtuModuleCovoitBundle::menu.html.twig' with {'active': 'none'} %}
+
+    <div class="padding20-sides">
+        <form method="post">
+            <h4>Créer une alerte pour les covoiturages ...</h4>
+
+            <p>
+                <em class="muted"><small>Laisez un champ vide pour ne pas inclure la condition</small></em>
+            </p>
+
+            <div class="row-fluid">
+                <div class="span6">
+                    {{ form_row(form.startCity) }}
+                    {{ form_row(form.endCity) }}
+                    {{ form_row(form.priceMax) }}
+                </div>
+                <div class="span6">
+                    {{ form_row(form.startDate) }}
+                    {{ form_row(form.endDate) }}
+                </div>
+            </div>
+
+            {{ form_rest(form) }}
+
+            <hr />
+
+            <p class="align-center">
+                <input type="submit" class="btn" value="{{ 'covoit.alerts.create.submit'|trans }}" />
+            </p>
+        </form>
+    </div>
+{% endblock %}

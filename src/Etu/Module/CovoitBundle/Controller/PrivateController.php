@@ -56,36 +56,6 @@ class PrivateController extends Controller
     }
 
     /**
-     * @Route("/alerts/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="covoiturage_my_alerts")
-     * @Template()
-     */
-    public function alertsAction($page = 1)
-    {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
-
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        $query = $em->createQueryBuilder()
-            ->select('a, u')
-            ->from('EtuModuleCovoitBundle:CovoitAlert', 'a')
-            ->leftJoin('a.user', 'u')
-            ->where('u.id = :user')
-            ->setParameter('user', $this->getUser()->getId())
-            ->orderBy('a.createdAt', 'DESC')
-            ->getQuery();
-
-        /** @var CovoitAlert[] $alerts */
-        $alerts = $this->get('knp_paginator')->paginate($query, $page, 30);
-
-        return [
-            'pagination' => $alerts,
-        ];
-    }
-
-    /**
      * @Route("/propose", name="covoiturage_my_propose")
      * @Template()
      */

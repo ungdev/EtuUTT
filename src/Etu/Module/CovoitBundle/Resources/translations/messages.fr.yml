@@ -11,6 +11,8 @@ covoit:
         message_edited: Votre message a bien été modifié
         already_subscribed: Vous êtes déjà inscrit à ce covoiturage
         subscribed: Vous avez bien réservé une place dans ce covoiturage
+        alert_created: Votre alerte a bien été crée
+        alert_edited: Votre alerte a bien été modifiée
 
     index:
         title: Covoiturage
@@ -117,3 +119,15 @@ covoit:
         title: Modifier un message
         submit: Modifier le message
         cancel: Annuler
+
+    alerts:
+        label:
+            startDate: Ayant lieu entre le ...
+            endDate: et le ...
+            priceMax: Dont le prix est inférieur à ...
+            startCity: Partant de ...
+            endCity: Arrivant à ...
+
+        create:
+            title: Créer une alerte
+            submit: Créer
