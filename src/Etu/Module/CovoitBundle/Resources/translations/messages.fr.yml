@@ -68,6 +68,12 @@ covoit:
             text: Vous n'avez participé à aucun covoiturage pour le moment !
             link: Proposez-en un !
 
+    private_alerts:
+        title: Mes alertes
+        create: Créer une alerte
+        no_alert:
+            text: Vous n'avez configuré aucun alerte pour le moment.
+
     proposal:
         title: Proposer un covoiturage
         titles:

@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\CovoitBundle\Entity\Covoit;
+use Etu\Module\CovoitBundle\Entity\CovoitAlert;
 use Etu\Module\CovoitBundle\Entity\CovoitMessage;
 use Etu\Module\CovoitBundle\Entity\CovoitSubscription;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,6 +52,36 @@ class PrivateController extends Controller
         return [
             'pagination' => $covoits,
             'today' => new \DateTime()
+        ];
+    }
+
+    /**
+     * @Route("/alerts/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="covoiturage_my_alerts")
+     * @Template()
+     */
+    public function alertsAction($page = 1)
+    {
+        if (! $this->getUserLayer()->isUser()) {
+            return $this->createAccessDeniedResponse();
+        }
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $em->createQueryBuilder()
+            ->select('a, u')
+            ->from('EtuModuleCovoitBundle:CovoitAlert', 'a')
+            ->leftJoin('a.user', 'u')
+            ->where('u.id = :user')
+            ->setParameter('user', $this->getUser()->getId())
+            ->orderBy('a.createdAt', 'DESC')
+            ->getQuery();
+
+        /** @var CovoitAlert[] $alerts */
+        $alerts = $this->get('knp_paginator')->paginate($query, $page, 30);
+
+        return [
+            'pagination' => $alerts,
         ];
     }
 

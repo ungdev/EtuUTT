@@ -1,0 +1,35 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'covoit.private_alerts.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+    <img src="{{ asset('img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block javascripts %}
+    <script type='text/javascript' src='{{ asset('js/bundles/covoit_alerts.js') }}'></script>
+{% endblock %}
+
+{% block content %}
+    {% include 'EtuModuleCovoitBundle::menu.html.twig' with {'active': 'alerts'} %}
+
+    <div class="padding20-sides">
+        <p class="align-right">
+            <a href="javascript:void(0)" class="alert-create btn btn-default">
+                {{ 'covoit.private_alerts.create'|trans }}
+            </a>
+        </p>
+
+        {% for alert in pagination %}
+            {{ alert.startCity.name }}
+        {% else %}
+            <p class="muted trombi-search-explainations no-alert">
+                {{ 'covoit.private_alerts.no_alert.text'|trans }}
+            </p>
+        {% endfor %}
+
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+{% endblock %}
