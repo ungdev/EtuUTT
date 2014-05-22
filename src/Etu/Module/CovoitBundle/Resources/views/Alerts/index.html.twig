@@ -13,15 +13,48 @@
 {% block content %}
     {% include 'EtuModuleCovoitBundle::menu.html.twig' with {'active': 'alerts'} %}
 
-    <div class="padding20-sides">
+    <div class="padding20-sides covoit-alerts">
         <p class="align-right">
             <a href="{{ path('covoiturage_my_alerts_create') }}" class="alert-create btn btn-default">
+                <i class="fa fa-plus"></i>
                 {{ 'covoit.private_alerts.create'|trans }}
             </a>
         </p>
 
+        <p>
+            {{ 'covoit.alerts.index.currently'|trans }}
+        </p>
+
         {% for alert in pagination %}
-            {{ alert.startCity.name }}
+            {% set parts = [] %}
+
+            {% if alert.startCity %}
+                {% set parts = parts|merge([ ('covoit.alerts.index.startCity'|trans({'%startCity%': alert.startCity.name})) ]) %}
+            {% endif %}
+
+            {% if alert.endCity %}
+                {% set parts = parts|merge([ ('covoit.alerts.index.endCity'|trans({'%endCity%': alert.endCity.name})) ]) %}
+            {% endif %}
+
+            {% if alert.startDate and not alert.endDate %}
+                {% set parts = parts|merge(['le ' ~ (alert.startDate|date('d/m/Y'))]) %}
+            {% elseif alert.startDate and alert.endDate %}
+                {% set parts = parts|merge(['entre le ' ~ (alert.startDate|date('d/m/Y')) ~ ' et le ' ~ (alert.endDate|date('d/m/Y'))]) %}
+            {% elseif not alert.startDate and alert.endDate %}
+                {% set parts = parts|merge(['avant le ' ~ (alert.endDate|date('d/m/Y'))]) %}
+            {% endif %}
+
+            {% if alert.priceMax %}
+                {% set parts = parts|merge(['coutant au maximum ' ~ alert.priceMax ~ ' €']) %}
+            {% endif %}
+
+            <ul>
+                <li>
+                    <a href="{{ path('covoiturage_my_alerts_edit', {'id': alert.id}) }}" class="covoit-alert-list-item">
+                        {{ parts|join(', ')|ucfirst }}
+                    </a>
+                </li>
+            </ul>
         {% else %}
             <p class="muted trombi-search-explainations no-alert">
                 {{ 'covoit.private_alerts.no_alert.text'|trans }}

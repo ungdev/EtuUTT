@@ -62,8 +62,6 @@ class CovoitAlert
      * @ORM\ManyToOne(targetEntity="\Etu\Core\CoreBundle\Entity\City")
      * @ORM\JoinColumn()
      * @ORM\OrderBy("name")
-     *
-     * @Assert\NotBlank()
      */
     private $startCity;
 
@@ -73,8 +71,6 @@ class CovoitAlert
      * @ORM\ManyToOne(targetEntity="\Etu\Core\CoreBundle\Entity\City")
      * @ORM\JoinColumn()
      * @ORM\OrderBy("name")
-     *
-     * @Assert\NotBlank()
      */
     private $endCity;
 

@@ -15,10 +15,14 @@
 
     <div class="padding20-sides">
         <form method="post">
-            <h4>Créer une alerte pour les covoiturages ...</h4>
+            <h4>{{ 'covoit.alerts.create.subtitle'|trans }}</h4>
 
             <p>
-                <em class="muted"><small>Laisez un champ vide pour ne pas inclure la condition</small></em>
+                <em class="muted">
+                    <small>
+                        {{ 'covoit.alerts.create.explainations'|trans }}
+                    </small>
+                </em>
             </p>
 
             <div class="row-fluid">
@@ -28,6 +32,10 @@
                     {{ form_row(form.priceMax) }}
                 </div>
                 <div class="span6">
+                    <p>
+                        <em class="muted"><small>{{ 'covoit.alerts.create.precise_date'|trans }}</small></em>
+                    </p>
+
                     {{ form_row(form.startDate) }}
                     {{ form_row(form.endDate) }}
                 </div>

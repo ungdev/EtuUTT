@@ -1,6 +1,6 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block title %}{{ 'covoit.alerts.create.title'|trans }}{% endblock %}
+{% block title %}{{ 'covoit.alerts.edit.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
     <img src="{{ asset('img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -15,21 +15,29 @@
 
     <div class="padding20-sides">
         <form method="post">
-            <h4>{{ 'covoit.proposal.titles.details'|trans }}</h4>
+            <h4>{{ 'covoit.alerts.edit.subtitle'|trans }}</h4>
 
             <p>
-                <em class="muted"><small>Laisez un champ vide pour ne pas inclure la condition</small></em>
+                <em class="muted">
+                    <small>
+                        {{ 'covoit.alerts.create.explainations'|trans }}
+                    </small>
+                </em>
             </p>
 
             <div class="row-fluid">
                 <div class="span6">
-                    {{ form_row(form.startDate) }}
-                    {{ form_row(form.endDate) }}
-                </div>
-                <div class="span6">
                     {{ form_row(form.startCity) }}
                     {{ form_row(form.endCity) }}
                     {{ form_row(form.priceMax) }}
+                </div>
+                <div class="span6">
+                    <p>
+                        <em class="muted"><small>{{ 'covoit.alerts.create.precise_date'|trans }}</small></em>
+                    </p>
+
+                    {{ form_row(form.startDate) }}
+                    {{ form_row(form.endDate) }}
                 </div>
             </div>
 
@@ -38,7 +46,10 @@
             <hr />
 
             <p class="align-center">
-                <input type="submit" class="btn" value="{{ 'covoit.alerts.create.submit'|trans }}" />
+                <input type="submit" class="btn btn-primary" value="{{ 'covoit.alerts.edit.submit'|trans }}" />
+                <a href="{{ path('covoiturage_my_alerts') }}" class="btn btn-default">
+                    {{ 'covoit.alerts.edit.cancel'|trans }}
+                </a>
             </p>
         </form>
     </div>

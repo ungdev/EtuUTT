@@ -44,7 +44,7 @@ class AlertsController extends Controller
             ->orderBy('a.createdAt', 'DESC')
             ->getQuery();
 
-        /** @var Covoit[] $covoits */
+        /** @var CovoitAlert[] $covoits */
         $covoits = $this->get('knp_paginator')->paginate($query, $page, 30);
 
         return [
@@ -71,7 +71,7 @@ class AlertsController extends Controller
 
         $form = $this->createForm($this->get('etu.covoit.form.alert'), $alert);
 
-        if ($request->getMethod() == 'POST' && $form->submit($alert)->isValid()) {
+        if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
             $em->persist($alert);
             $em->flush($alert);
 

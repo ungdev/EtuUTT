@@ -45,6 +45,13 @@
     {% include 'EtuModuleCovoitBundle::menu.html.twig' with {'active': 'private'} %}
 
     <div class="padding20-sides">
+        <p class="align-right">
+            <a href="{{ path('covoiturage_my_propose') }}" class="alert-create btn btn-default">
+                <i class="fa fa-plus"></i>
+                {{ 'covoit.proposal.title'|trans }}
+            </a>
+        </p>
+
         {% for covoit in pagination %}
             <script type='text/javascript'>
                 maps.push({

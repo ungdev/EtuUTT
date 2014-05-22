@@ -128,6 +128,22 @@ covoit:
             startCity: Partant de ...
             endCity: Arrivant à ...
 
+        index:
+            currently: Vous êtes actuellement alerté pour les covoiurages ...
+            startCity: partant de %startCity%
+            endCity: allant à %endCity%
+            datePrecise: le %date%
+            dateEnd: avant le %date%
+            dateBoth: entre le %startDate% et le %endDate%
+
         create:
             title: Créer une alerte
+            subtitle: Créer une alerte pour les covoiturages ...
+            explainations: Laisez un champ vide pour ne pas inclure la condition
+            precise_date: Ne renseignez que le champ "Ayant lieu entre le ..." pour indiquer une date précise
             submit: Créer
+
+        edit:
+            title: Modifier une alerte
+            submit: Modifier
+            cancel: Annuler
