@@ -47,7 +47,7 @@ class PrivateController extends Controller
             ->getQuery();
 
         /** @var Covoit[] $covoits */
-        $covoits = $this->get('knp_paginator')->paginate($query, $page, 30);
+        $covoits = $this->get('knp_paginator')->paginate($query, $page, 20);
 
         return [
             'pagination' => $covoits,
@@ -269,9 +269,11 @@ class PrivateController extends Controller
 
         /** @var Covoit $covoit */
         $covoit = $em->createQueryBuilder()
-            ->select('c, s, u')
+            ->select('c, s, u, sc, ec')
             ->from('EtuModuleCovoitBundle:Covoit', 'c')
             ->leftJoin('c.subscriptions', 's')
+            ->leftJoin('c.startCity', 'sc')
+            ->leftJoin('c.endCity', 'ec')
             ->leftJoin('s.user', 'u')
             ->where('c.id = :id')
             ->setParameter('id', (int) $id)
@@ -282,7 +284,12 @@ class PrivateController extends Controller
             throw $this->createNotFoundException();
         }
 
-        if ($covoit->hasUser($this->getUser())) {
+        if (! $this->getUser()->getPhoneNumber()) {
+            $this->get('session')->getFlashBag()->set('message', array(
+                'type' => 'error',
+                'message' => 'covoit.messages.required_phone'
+            ));
+        } elseif ($covoit->hasUser($this->getUser())) {
             $this->get('session')->getFlashBag()->set('message', array(
                 'type' => 'error',
                 'message' => 'covoit.messages.already_subscribed'
@@ -291,16 +298,26 @@ class PrivateController extends Controller
             $subscription = new CovoitSubscription();
             $subscription->setCovoit($covoit);
             $subscription->setUser($this->getUser());
-
-            if ($this->getUser()->getPhoneNumber()) {
-                $subscription->setPhoneNumber($this->getUser()->getPhoneNumber());
-            }
+            $subscription->setPhoneNumber($this->getUser()->getPhoneNumber());
 
             $covoit->addSubscription($subscription);
 
             $em->persist($subscription);
             $em->persist($covoit);
             $em->flush();
+
+            // Notify followers
+            $notif = new Notification();
+
+            $notif
+                ->setModule($this->getCurrentBundle()->getIdentifier())
+                ->setHelper('covoit_subscription')
+                ->setAuthorId($this->getUser()->getId())
+                ->setEntityType('covoit')
+                ->setEntityId($covoit->getId())
+                ->addEntity($subscription);
+
+            $this->getNotificationsSender()->send($notif);
 
             // Add current user as subscriber
             $this->getSubscriptionsManager()->subscribe($this->getUser(), 'covoit', $covoit->getId());

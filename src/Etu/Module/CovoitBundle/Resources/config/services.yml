@@ -12,6 +12,7 @@ parameters:
     etu.covoit.notifs.new_message.class: Etu\Module\CovoitBundle\Notification\Helper\NewMessageHelper
     etu.covoit.notifs.edited.class: Etu\Module\CovoitBundle\Notification\Helper\EditedHelper
     etu.covoit.notifs.alert.class: Etu\Module\CovoitBundle\Notification\Helper\AlertHelper
+    etu.covoit.notifs.subscription.class: Etu\Module\CovoitBundle\Notification\Helper\SubscriptionHelper
 
 services:
 
@@ -52,6 +53,12 @@ services:
 
     etu.covoit.notifs.alert:
         class: %etu.covoit.notifs.alert.class%
+        arguments: [@twig]
+        tags:
+            - { name: etu.notifs_helper }
+
+    etu.covoit.notifs.subscription:
+        class: %etu.covoit.notifs.subscription.class%
         arguments: [@twig]
         tags:
             - { name: etu.notifs_helper }

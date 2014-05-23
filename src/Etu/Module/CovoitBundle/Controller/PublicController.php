@@ -38,14 +38,11 @@ class PublicController extends Controller
             ->from('EtuModuleCovoitBundle:Covoit', 'c')
             ->leftJoin('c.author', 'ca')
             ->leftJoin('c.subscriptions', 'cs')
-            ->where('c.author = :user')
-            ->orWhere('cs.user = :user')
-            ->setParameter('user', $this->getUser()->getId())
             ->orderBy('c.date', 'DESC')
             ->getQuery();
 
         /** @var Covoit[] $covoits */
-        $covoits = $this->get('knp_paginator')->paginate($query, $page, 30);
+        $covoits = $this->get('knp_paginator')->paginate($query, $page, 20);
 
         $search = new Search();
         $search->startCity = $em->getRepository('EtuCoreBundle:City')->find(749);
@@ -82,7 +79,7 @@ class PublicController extends Controller
             // Search covoits
             $query = $this->get('etu.covoit.query_mapper.search')->map($em->createQueryBuilder(), $search)->getQuery();
 
-            $pagination = $this->get('knp_paginator')->paginate($query, $page, 30);
+            $pagination = $this->get('knp_paginator')->paginate($query, $page, 20);
         }
 
         return [

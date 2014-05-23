@@ -3,12 +3,13 @@ covoit:
     menu:
         home: Les derniers
         my: Mes covoiturages
-        alerts: Mes alerte
+        alerts: Mes alertes
 
     notifs:
         edited: Le covoiturage %start% - %end% de %author% le %date% a été modifié
         alert: Le covoiturage %start% - %end% de %author% le %date% pourrait vous intéresser
         new_message: %author% a posté un message sur le covoiturage %start% - %end% du %date%
+        subscription: %name% a réservé une place du covoiturage %start% - %end% le %date%
 
     messages:
         created: Votre proposition a bien été créée
@@ -20,6 +21,7 @@ covoit:
         alert_created: Votre alerte a bien été crée
         alert_edited: Votre alerte a bien été modifiée
         alert_deleted: Votre alerte a bien été supprimée
+        required_phone: Vous devez indiquer un numéro de téléphone dans votre trombinoscope pour réserver un covoiturage
 
     index:
         title: Covoiturage
