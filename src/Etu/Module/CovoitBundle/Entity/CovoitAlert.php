@@ -98,6 +98,36 @@ class CovoitAlert
     private $deletedAt;
 
     /**
+     * @return string
+     */
+    function __toString()
+    {
+        $parts = [];
+
+        if ($this->getStartCity()) {
+            $parts[] = 'startCity: ' . $this->getStartCity()->getName();
+        }
+
+        if ($this->getEndCity()) {
+            $parts[] = 'endCity: ' . $this->getEndCity()->getName();
+        }
+
+        if ($this->getStartDate()) {
+            $parts[] = 'startDate: ' . $this->getStartDate()->format('d/m/Y');
+        }
+
+        if ($this->getEndDate()) {
+            $parts[] = 'endDate: ' . $this->getEndDate()->format('d/m/Y');
+        }
+
+        if ($this->getPriceMax()) {
+            $parts[] = 'priceMax: ' . $this->getPriceMax();
+        }
+
+        return implode(', ', $parts);
+    }
+
+    /**
      * Get id
      *
      * @return integer 

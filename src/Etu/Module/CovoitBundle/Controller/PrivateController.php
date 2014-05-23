@@ -83,6 +83,8 @@ class PrivateController extends Controller
             $proposal->setStartHour($proposal->getStartHour()->format('H:i'));
             $proposal->setEndHour($proposal->getEndHour()->format('H:i'));
 
+            $this->get('etu.covoit.notifs_dispatcher')->dispatch($proposal);
+
             $em->persist($proposal);
             $em->flush();
 
@@ -90,14 +92,14 @@ class PrivateController extends Controller
             $this->getSubscriptionsManager()->subscribe($this->getUser(), 'covoit', $proposal->getId());
 
             $this->get('session')->getFlashBag()->set('message', array(
-                    'type' => 'success',
-                    'message' => 'covoit.messages.created'
-                ));
+                'type' => 'success',
+                'message' => 'covoit.messages.created'
+            ));
 
             return $this->redirect($this->generateUrl('covoiturage_view', [
-                        'id' => $proposal->getId(),
-                        'slug' => $proposal->getStartCity()->getSlug() . '-' . $proposal->getEndCity()->getSlug()
-                    ]));
+                'id' => $proposal->getId(),
+                'slug' => $proposal->getStartCity()->getSlug() . '-' . $proposal->getEndCity()->getSlug()
+            ]));
         }
 
         return [

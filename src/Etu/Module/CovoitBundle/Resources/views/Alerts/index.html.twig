@@ -37,15 +37,15 @@
             {% endif %}
 
             {% if alert.startDate and not alert.endDate %}
-                {% set parts = parts|merge(['le ' ~ (alert.startDate|date('d/m/Y'))]) %}
+                {% set parts = parts|merge([ ('covoit.alerts.index.datePrecise'|trans({'%date%': alert.startDate|date('d/m/Y')})) ]) %}
             {% elseif alert.startDate and alert.endDate %}
-                {% set parts = parts|merge(['entre le ' ~ (alert.startDate|date('d/m/Y')) ~ ' et le ' ~ (alert.endDate|date('d/m/Y'))]) %}
+                {% set parts = parts|merge([ ('covoit.alerts.index.dateBoth'|trans({'%startDate%': alert.startDate|date('d/m/Y'), '%endDate%': alert.endDate|date('d/m/Y')})) ]) %}
             {% elseif not alert.startDate and alert.endDate %}
-                {% set parts = parts|merge(['avant le ' ~ (alert.endDate|date('d/m/Y'))]) %}
+                {% set parts = parts|merge([ ('covoit.alerts.index.dateEnd'|trans({'%date%': alert.endDate|date('d/m/Y')})) ]) %}
             {% endif %}
 
             {% if alert.priceMax %}
-                {% set parts = parts|merge(['coutant au maximum ' ~ alert.priceMax ~ ' €']) %}
+                {% set parts = parts|merge([ ('covoit.alerts.index.priceMax'|trans({'%price%': alert.priceMax})) ]) %}
             {% endif %}
 
             <ul>

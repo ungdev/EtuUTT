@@ -13,6 +13,7 @@ covoit:
         subscribed: Vous avez bien réservé une place dans ce covoiturage
         alert_created: Votre alerte a bien été crée
         alert_edited: Votre alerte a bien été modifiée
+        alert_deleted: Votre alerte a bien été supprimée
 
     index:
         title: Covoiturage
@@ -135,6 +136,7 @@ covoit:
             datePrecise: le %date%
             dateEnd: avant le %date%
             dateBoth: entre le %startDate% et le %endDate%
+            priceMax: coutant au maximum %price% €
 
         create:
             title: Créer une alerte
@@ -145,5 +147,7 @@ covoit:
 
         edit:
             title: Modifier une alerte
+            subtitle: Etre alerté pour les covoiturages ...
             submit: Modifier
             cancel: Annuler
+            delete: Supprimer

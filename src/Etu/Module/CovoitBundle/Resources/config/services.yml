@@ -7,6 +7,8 @@ parameters:
 
     etu.covoit.query_mapper.search.class: Etu\Module\CovoitBundle\QueryMapper\SearchMapper
 
+    etu.covoit.notifs_dispatcher.class: Etu\Module\CovoitBundle\Alerts\NotificationsDispatcher
+
     etu.covoit.notifs.new_message.class: Etu\Module\CovoitBundle\Notification\Helper\NewMessageHelper
     etu.covoit.notifs.edited.class: Etu\Module\CovoitBundle\Notification\Helper\EditedHelper
 
@@ -28,6 +30,11 @@ services:
     # Searh query mapper
     etu.covoit.query_mapper.search:
         class: %etu.covoit.query_mapper.search.class%
+
+    # Notifications dispatcher
+    etu.covoit.notifs_dispatcher:
+        class: %etu.covoit.notifs_dispatcher.class%
+        arguments: [@doctrine, @etu.notifs.sender]
 
     # Notifications helper
     etu.covoit.notifs.new_message:

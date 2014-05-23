@@ -202,16 +202,44 @@ class Covoit
     }
 
     /**
+     * @return string
+     */
+    function __toString()
+    {
+        $parts = [];
+
+        if ($this->getStartCity()) {
+            $parts[] = 'startCity: ' . $this->getStartCity()->getName();
+        }
+
+        if ($this->getEndCity()) {
+            $parts[] = 'endCity: ' . $this->getEndCity()->getName();
+        }
+
+        if ($this->getDate()) {
+            $parts[] = 'date: ' . $this->getDate()->format('d/m/Y');
+        }
+
+        if ($this->getPrice()) {
+            $parts[] = 'price: ' . $this->getPrice();
+        }
+
+        return implode(', ', $parts);
+    }
+
+    /**
      * @param ExecutionContextInterface $context
      */
     public function isBlaBlaCarUrlValid(ExecutionContextInterface $context)
     {
-        if (strpos($this->blablacarUrl, 'http') === false) {
-            $this->blablacarUrl = 'http://' . $this->blablacarUrl;
-        }
+        if (! empty($this->blablacarUrl)) {
+            if (strpos($this->blablacarUrl, 'http') === false) {
+                $this->blablacarUrl = 'http://' . $this->blablacarUrl;
+            }
 
-        if (! in_array(parse_url($this->blablacarUrl, PHP_URL_HOST), ['www.covoiturage.fr', 'covoiturage.fr'])) {
-            $context->addViolationAt('blablacarUrl', 'Cette URL n\'est pas une URL BlaBlaCar valide', array(), null);
+            if (! in_array(parse_url($this->blablacarUrl, PHP_URL_HOST), ['www.covoiturage.fr', 'covoiturage.fr'])) {
+                $context->addViolationAt('blablacarUrl', 'Cette URL n\'est pas une URL BlaBlaCar valide', array(), null);
+            }
         }
     }
 
