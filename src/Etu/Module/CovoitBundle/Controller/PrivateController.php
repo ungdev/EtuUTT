@@ -83,13 +83,14 @@ class PrivateController extends Controller
             $proposal->setStartHour($proposal->getStartHour()->format('H:i'));
             $proposal->setEndHour($proposal->getEndHour()->format('H:i'));
 
-            $this->get('etu.covoit.notifs_dispatcher')->dispatch($proposal);
-
             $em->persist($proposal);
             $em->flush();
 
             // Add current user as subscriber
             $this->getSubscriptionsManager()->subscribe($this->getUser(), 'covoit', $proposal->getId());
+
+            // Dispatch the covoit for alerts
+            $this->get('etu.covoit.notifs_dispatcher')->dispatch($proposal);
 
             $this->get('session')->getFlashBag()->set('message', array(
                 'type' => 'success',
@@ -139,6 +140,8 @@ class PrivateController extends Controller
             throw new AccessDeniedHttpException();
         }
 
+        $old = clone $covoit;
+
         $covoit->setStartHour(\DateTime::createFromFormat('H:i', $covoit->getStartHour()));
         $covoit->setEndHour(\DateTime::createFromFormat('H:i', $covoit->getEndHour()));
 
@@ -151,18 +154,48 @@ class PrivateController extends Controller
             $em->persist($covoit);
             $em->flush();
 
-            // Send notifications to subscribers
-            $notif = new Notification();
+            // Send notifications to subscribers only if the covoit was edited
+            $edited = false;
 
-            $notif
-                ->setModule($this->getCurrentBundle()->getIdentifier())
-                ->setHelper('covoit_edited')
-                ->setAuthorId($this->getUser()->getId())
-                ->setEntityType('covoit')
-                ->setEntityId($covoit->getId())
-                ->addEntity($covoit);
+            if ($old->getStartCity()->getId() != $covoit->getStartCity()->getId()) {
+                $edited = true;
+            } elseif ($old->getEndCity()->getId() != $covoit->getEndCity()->getId()) {
+                $edited = true;
+            } elseif ($old->getBlablacarUrl() != $covoit->getBlablacarUrl()) {
+                $edited = true;
+            } elseif ($old->getCapacity() != $covoit->getCapacity()) {
+                $edited = true;
+            } elseif ($old->getDate() != $covoit->getDate()) {
+                $edited = true;
+            } elseif ($old->getStartAdress() != $covoit->getStartAdress()) {
+                $edited = true;
+            } elseif ($old->getStartHour() != $covoit->getStartHour()) {
+                $edited = true;
+            } elseif ($old->getEndAdress() != $covoit->getEndAdress()) {
+                $edited = true;
+            } elseif ($old->getEndHour() != $covoit->getEndHour()) {
+                $edited = true;
+            } elseif ($old->getNotes() != $covoit->getNotes()) {
+                $edited = true;
+            } elseif ($old->getPhoneNumber() != $covoit->getPhoneNumber()) {
+                $edited = true;
+            } elseif ($old->getPrice() != $covoit->getPrice()) {
+                $edited = true;
+            }
 
-            $this->getNotificationsSender()->send($notif);
+            if ($edited) {
+                $notif = new Notification();
+
+                $notif
+                    ->setModule($this->getCurrentBundle()->getIdentifier())
+                    ->setHelper('covoit_edited')
+                    ->setAuthorId($this->getUser()->getId())
+                    ->setEntityType('covoit')
+                    ->setEntityId($covoit->getId())
+                    ->addEntity($covoit);
+
+                $this->getNotificationsSender()->send($notif);
+            }
 
             // Flash message
             $this->get('session')->getFlashBag()->set('message', array(
@@ -171,9 +204,9 @@ class PrivateController extends Controller
             ));
 
             return $this->redirect($this->generateUrl('covoiturage_view', [
-                    'id' => $covoit->getId(),
-                    'slug' => $covoit->getStartCity()->getSlug() . '-' . $covoit->getEndCity()->getSlug()
-                ]));
+                'id' => $covoit->getId(),
+                'slug' => $covoit->getStartCity()->getSlug() . '-' . $covoit->getEndCity()->getSlug()
+            ]));
         }
 
         return [

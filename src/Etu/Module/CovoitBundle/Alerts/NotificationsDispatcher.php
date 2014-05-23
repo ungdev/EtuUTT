@@ -52,10 +52,11 @@ class NotificationsDispatcher
          */
         /** @var CovoitAlert[] $alerts */
         $alerts = $em->createQueryBuilder()
-            ->select('a, s, e')
+            ->select('a, s, e, u')
             ->from('EtuModuleCovoitBundle:CovoitAlert', 'a')
             ->leftJoin('a.startCity', 's')
             ->leftJoin('a.endCity', 'e')
+            ->leftJoin('a.user', 'u')
             ->where('a.startCity = :startCiy OR a.startCity IS NULL')
             ->andWhere('a.endCity = :endCity OR a.endCity IS NULL')
             ->andWhere('a.priceMax <= :price OR a.priceMax IS NULL')
@@ -67,14 +68,22 @@ class NotificationsDispatcher
             ->getQuery()
             ->getResult();
 
+        // Notifications - Send only one notification per user, even if covoit match several alerts
+        $notifications = [];
+
         foreach ($alerts as $alert) {
             if ($this->match($alert, $covoit)) {
                 $notif = $this->createNotification($covoit);
                 $notif->setEntityId($alert->getId());
                 $notif->setAuthorId($covoit->getAuthor()->getId());
 
-                $this->sender->send($notif);
+                $notifications[$alert->getUser()->getId()] = $notif;
             }
+        }
+
+        // Send the notifications
+        foreach ($notifications as $notification) {
+            $this->sender->send($notification);
         }
     }
 
