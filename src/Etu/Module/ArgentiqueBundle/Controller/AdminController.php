@@ -394,6 +394,9 @@ class AdminController extends Controller
         // Flickr
         $flickr = $this->createFlickrAccess();
 
+        // Imagine
+        $imagine = new \Imagine\Gd\Imagine();
+
         // Get database photo
         /** @var Photo $photo */
         $photo = $em->getRepository('EtuModuleArgentiqueBundle:Photo')->find($photoId);
@@ -409,7 +412,20 @@ class AdminController extends Controller
             file_put_contents($uploadDir.'/'.$photo->getId().'_t.jpg', file_get_contents($sizes['sizes']['size'][2]['source']));
 
             // Original
-            file_put_contents($uploadDir.'/'.$photo->getId().'_o.jpg', file_get_contents($sizes['sizes']['size'][9]['source']));
+            $image = $imagine->open($sizes['sizes']['size'][9]['source']);
+
+            $width = $image->getSize()->getWidth();
+            $height = $image->getSize()->getHeight();
+
+            if ($width > $height) {
+                $box = new \Imagine\Image\Box(1500, 1500 * ($height / $width));
+            } elseif ($width < $height) {
+                $box = new \Imagine\Image\Box(1500 * ($width / $height), 1500);
+            } else {
+                $box = new \Imagine\Image\Box(1500, 1500);
+            }
+
+            $image->resize($box)->save($uploadDir.'/'.$photo->getId().'_o.jpg');
 
             $photo->setFile($photo->getId().'_o.jpg');
             $photo->setIcon($photo->getId().'_t.jpg');
