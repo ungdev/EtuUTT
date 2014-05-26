@@ -256,6 +256,53 @@ class PrivateController extends Controller
     }
 
     /**
+     * @Route("/{id}/cancel/{confirm}", defaults={"confirm" = false}, name="covoiturage_my_cancel")
+     * @Template()
+     */
+    public function cancelAction(Covoit $covoit, $confirm)
+    {
+        if (! $this->getUserLayer()->isUser()) {
+            return $this->createAccessDeniedResponse();
+        }
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        if ($covoit->getAuthor()->getId() != $this->getUser()->getId()) {
+            throw new AccessDeniedHttpException();
+        }
+
+        if ($confirm) {
+            $em->remove($covoit);
+            $em->flush();
+
+            $notif = new Notification();
+
+            $notif
+                ->setModule($this->getCurrentBundle()->getIdentifier())
+                ->setHelper('covoit_canceled')
+                ->setAuthorId($this->getUser()->getId())
+                ->setEntityType('covoit')
+                ->setEntityId($covoit->getId())
+                ->addEntity($covoit);
+
+            $this->getNotificationsSender()->send($notif);
+
+            // Flash message
+            $this->get('session')->getFlashBag()->set('message', array(
+                'type' => 'success',
+                'message' => 'covoit.messages.canceled'
+            ));
+
+            return $this->redirect($this->generateUrl('covoiturage_my_index'));
+        }
+
+        return [
+            'covoit' => $covoit,
+        ];
+    }
+
+    /**
      * @Route("/{id}/subscribe", name="covoiturage_my_subscribe")
      */
     public function subscribeAction($id)

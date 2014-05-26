@@ -1,0 +1,28 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'covoit.private_edit.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+    <img src="{{ asset('img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+    {% include 'EtuModuleCovoitBundle::menu.html.twig' with {'active': 'none'} %}
+
+    <div class="padding20-sides covoit-propose">
+        <p class="align-center">
+            Voulez-vous vraiment annuler le covoiturage
+            {{ covoit.startCity.name }} <i class="fa fa-angle-right"></i> {{ covoit.endCity.name }}
+            du {{ covoit.ate|format_date }} ?
+        </p>
+
+        <p class="align-center">
+            <a href="{{ path('covoiturage_my_cancel', {'id': covoit.id, 'confirm': 'confirm'}) }}">
+                Oui, le supprimer
+            </a>
+            <a href="{{ path('covoiturage_my_edit', {'id': covoit.id}) }}">
+                Non, annuler
+            </a>
+        </p>
+    </div>
+{% endblock %}

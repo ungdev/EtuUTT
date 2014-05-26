@@ -11,6 +11,10 @@
 
     <div class="padding20-sides covoit-propose">
         <form method="post">
+            <a href="{{ path('covoiturage_my_cancel', {'id': alert.id}) }}" class="btn btn-danger pull-right">
+                {{ 'covoit.alerts.edit.delete'|trans }}
+            </a>
+
             <h4>{{ 'covoit.proposal.titles.details'|trans }}</h4>
 
             <div class="row-fluid">
