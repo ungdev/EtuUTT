@@ -10,7 +10,7 @@
         {{ 'covoit.notifs.subscription'|trans({
             '%start%': highlight_notif_data(covoit.startCity.name),
             '%end%': highlight_notif_data(covoit.endCity.name),
-            '%date%': highlight_notif_data(covoit.date|date('d/m/Y')),
+            '%date%': highlight_notif_data(covoit.date|format_date),
             '%name%': highlight_notif_data(covoit.author.fullName)
         })|raw }}
     </h4>

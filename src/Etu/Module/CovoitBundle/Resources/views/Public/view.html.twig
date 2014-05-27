@@ -50,6 +50,9 @@
                 <a href="{{ path('covoiturage_my_edit', {'id': covoit.id}) }}" class="btn btn-default">
                     {{ 'covoit.public_view.edit'|trans }}
                 </a>
+                <a href="{{ path('covoiturage_my_cancel', {'id': covoit.id}) }}" class="btn btn-danger">
+                    {{ 'covoit.alerts.edit.cancel'|trans }}
+                </a>
             </span>
         {% endif %}
 
@@ -85,12 +88,12 @@
                     </div>
                     <div class="info-value">
                         {{ 'covoit.public_view.startHour.value.start'|trans({
-                        '%date%': covoit.date|date('d/m/Y'),
-                        '%startHour%': covoit.startHour|date('H\\\hi')
+                            '%date%': covoit.date|date('d/m/Y'),
+                            '%startHour%': covoit.startHour|date('H\\\hi')
                         }) }}<br />
                         {{ 'covoit.public_view.startHour.value.end'|trans({
-                        '%endHour%': covoit.endHour|date('H\\\hi'),
-                        '%endCity%': covoit.endCity.name
+                            '%endHour%': covoit.endHour|date('H\\\hi'),
+                            '%endCity%': covoit.endCity.name
                         }) }}
                     </div>
                 </div>
@@ -102,6 +105,16 @@
                     <div class="info-value">
                         {{ covoit.startAdress }}<br />
                         <strong>{{ covoit.startCity.name }}</strong>
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <div class="info-label">
+                        {{ 'covoit.public_view.endAdress'|trans }}
+                    </div>
+                    <div class="info-value">
+                        {{ covoit.endAdress }}<br />
+                        <strong>{{ covoit.endCity.name }}</strong>
                     </div>
                 </div>
 
@@ -158,6 +171,13 @@
                        <a href="{{ path('user_view', {'login': subscription.user.login}) }}">
                            {{ subscription.user.fullName }}
                        </a>
+
+                       {% if subscription.user.id == app.user.id and not covoit.hasCancelationExpired %}
+                           -
+                           <a href="{{ path('covoiturage_my_subscribe', {'id': subscription.id}) }}">
+                                {{ 'covoit.public_view.cancel'|trans }}
+                           </a>
+                       {% endif %}
                    </li>
                 {% endfor %}
             </ul>
