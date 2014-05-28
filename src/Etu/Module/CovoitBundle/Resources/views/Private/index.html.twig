@@ -67,48 +67,43 @@
                class="covoit-list-item{% if today > covoit.date %} covoit-list-item-done{% endif %}">
                 <div id="map-{{ covoit.id }}" class="item-map" style="width: 140px; height: 89px;"></div>
 
-                <div class="item-subscriptions">
-                    <span class="item-subscriptions-count">{{ covoit.capacity - (covoit.subscriptions|length) }}</span>
+                <div class="item-block item-subscriptions">
+                    <span class="item-block-info">{{ covoit.capacity - (covoit.subscriptions|length) }}</span>
                     <br />
                     {{ 'covoit.private_index.subscriptions_left'|transchoice(covoit.capacity - (covoit.subscriptions|length))|raw }}
                 </div>
 
-                <div class="item-price">
-                    <span class="item-price-count">{{ covoit.price }} €</span>
+                <div class="item-block item-price">
+                    <span class="item-block-info">
+                        {{ covoit.price }} €
+                    </span>
                     <br />
                     {{ 'covoit.private_index.per_place'|trans }}
                 </div>
 
-                <div class="item-member-type">
-                    {% if covoit.author.id == app.user.id %}
-                        {{ 'covoit.private_index.creator'|trans }}
-                    {% else %}
-                        {{ 'covoit.private_index.subscribed'|trans }}
-                    {% endif %}
+                <div class="item-block item-date">
+                    <span class="item-block-info">
+                        {{ covoit.date|format_date }}
+                    </span>
+                    <br />
+                    {{ covoit.startHour|format_time(null, null, null, constant('IntlDateFormatter::SHORT')) }}
                 </div>
 
                 <div class="item-infos">
                     <h5>
-                        {{ 'covoit.private_index.from_to'|trans({
-                            '%startCity%': covoit.startCity.name,
-                            '%endCity%': covoit.endCity.name
-                        }) }}
+                        {{ covoit.startCity.name }} <i class="fa fa-angle-right"></i>
+                        {{ covoit.endCity.name }}
                     </h5>
-                    <em>
-                        {{ 'covoit.private_index.date'|trans({
-                            '%date%': covoit.date|date('d/m/Y'),
-                            '%hour%': covoit.startHour|date('H:i')
-                        }) }}
-                    </em>
+                    <span>{{ covoit.author.fullName }}</span>
                 </div>
             </a>
         {% else %}
             <p class="muted trombi-search-explainations">
                 {{ 'covoit.private_index.no_covoit.text'|trans }}
-               <a href="{{ path('covoiturage_my_propose') }}">
-                   {{ 'covoit.private_index.no_covoit.link'|trans }}
-               </a>
-           </p>
+                <a href="{{ path('covoiturage_my_propose') }}">
+                    {{ 'covoit.private_index.no_covoit.link'|trans }}
+                </a>
+            </p>
         {% endfor %}
 
         <div class="navigation">

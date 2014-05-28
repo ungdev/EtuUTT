@@ -55,6 +55,9 @@ class AppKernel extends EtuKernel
 	        // BBCode
 	        new FM\BbcodeBundle\FMBbcodeBundle(),
 
+            // Date and times translations
+            new Sonata\IntlBundle\SonataIntlBundle(),
+
 	        // API documentation
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
 

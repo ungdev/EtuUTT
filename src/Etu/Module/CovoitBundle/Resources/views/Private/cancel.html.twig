@@ -1,0 +1,34 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'covoit.private_delete.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+    <img src="{{ asset('img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+    {% include 'EtuModuleCovoitBundle::menu.html.twig' with {'active': 'none'} %}
+
+    <div class="padding20-sides covoit-propose">
+        <br />
+
+        <p class="align-center">
+            {{ 'covoit.private_delete.question'|trans({
+                '%start%': covoit.startCity.name,
+                '%end%': covoit.endCity.name,
+                '%date%': covoit.date|format_date
+            })|raw }}
+        </p>
+
+        <br />
+
+        <p class="align-center">
+            <a href="{{ path('covoiturage_my_cancel', {'id': covoit.id, 'confirm': 'confirm'}) }}" class="btn btn-primary">
+                Oui, le supprimer
+            </a>
+            <a href="{{ path('covoiturage_view', {'id': covoit.id, 'slug': covoit.startCity.slug ~ '-' ~ covoit.endCity.slug }) }}" class="btn btn-default">
+                Non, annuler
+            </a>
+        </p>
+    </div>
+{% endblock %}

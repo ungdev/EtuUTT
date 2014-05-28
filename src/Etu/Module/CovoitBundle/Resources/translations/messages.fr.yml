@@ -6,6 +6,7 @@ covoit:
         alerts: Mes alertes
 
     notifs:
+        canceled: Le covoiturage %start% - %end% de %author% le %date% a été annulé par son créateur
         edited: Le covoiturage %start% - %end% de %author% le %date% a été modifié
         alert: Le covoiturage %start% - %end% de %author% le %date% pourrait vous intéresser
         new_message: %author% a posté un message sur le covoiturage %start% - %end% du %date%
@@ -14,10 +15,12 @@ covoit:
     messages:
         created: Votre proposition a bien été créée
         edited: Votre covoiturage a bien été modifié
+        canceled: Votre covoiturage a bien été annulé
         message_sent: Votre message a bien été envoyé
         message_edited: Votre message a bien été modifié
         already_subscribed: Vous êtes déjà inscrit à ce covoiturage
         subscribed: Vous avez bien réservé une place dans ce covoiturage
+        unsubscribed: Vous avez bien annulé votre réservation dans ce covoiturage
         alert_created: Votre alerte a bien été crée
         alert_edited: Votre alerte a bien été modifiée
         alert_deleted: Votre alerte a bien été supprimée
@@ -54,6 +57,7 @@ covoit:
                 start: Le %date% à %startHour%
                 end: (pour une arrivée vers %endHour% à %endCity%)
         startAdress: Adresse de départ
+        endAdress: Adresse d'arrivée
         price: Prix (par place)
         places_left:
             label: Places disponibles
@@ -65,11 +69,10 @@ covoit:
         comments: Commentaires
         no_comment: Aucun commentaire pour le moment
         comment: Ajouter le commentaire
+        cancel: Annuler ma réservation
 
     private_index:
         title: Mes covoiturages
-        from_to: De %startCity% à %endCity%
-        date: Le %date% à %hour%
         subscriptions_left: none_or_one: place<br />restante|some: places<br />restantes
         per_place: par place
         creator: Créateur
@@ -121,8 +124,15 @@ covoit:
 
     private_edit:
         title: Modifier un covoiturage
+        delete: Annuler ce covoiturage
         submit: Modifier
         cancel: Annuler
+
+    private_delete:
+        title: Annuler un covoiturage
+        question: Voulez-vous vraiment supprimer le covoiturage %start% <i class="fa fa-angle-right"></i> %end% du %date% ?<br />Cette action est irréversible.
+        yes: Oui, le supprimer
+        no: Non, annuler
 
     private_edit_message:
         title: Modifier un message

@@ -392,6 +392,19 @@ class Covoit
     }
 
     /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function hasCancelationExpired()
+    {
+        $expirationDate = clone $this->date;
+        $expirationDate->modify('-2 days');
+
+        return new \DateTime() > $expirationDate;
+    }
+
+    /**
      * Set blablacarUrl
      *
      * @param string $blablacarUrl

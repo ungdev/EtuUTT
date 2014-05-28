@@ -36,7 +36,8 @@
         "fzaninotto/faker": "~1.3",
         "nelmio/api-doc-bundle": "2.5.*",
         "dopiaza/dpzflickr": "1.2.*",
-        "jasig/phpcas": "dev-master"
+        "jasig/phpcas": "dev-master",
+        "sonata-project/intl-bundle": "2.2.*"
 	},
 	"scripts": {
 		"post-install-cmd": [

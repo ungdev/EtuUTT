@@ -256,6 +256,72 @@ class PrivateController extends Controller
     }
 
     /**
+     * @Route("/{id}/cancel/{confirm}", defaults={"confirm" = false}, name="covoiturage_my_cancel")
+     * @Template()
+     */
+    public function cancelAction($id, $confirm)
+    {
+        if (! $this->getUserLayer()->isUser()) {
+            return $this->createAccessDeniedResponse();
+        }
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var Covoit $covoit */
+        $covoit = $em->createQueryBuilder()
+            ->select('c, s, e, a')
+            ->from('EtuModuleCovoitBundle:Covoit', 'c')
+            ->leftJoin('c.author', 'a')
+            ->leftJoin('c.startCity', 's')
+            ->leftJoin('c.endCity', 'e')
+            ->where('c.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if (! $covoit) {
+            throw $this->createNotFoundException('Covoit not found');
+        }
+
+        if ($covoit->getAuthor()->getId() != $this->getUser()->getId()) {
+            throw new AccessDeniedHttpException();
+        }
+
+        if ($confirm) {
+            $covoit->getStartCity();
+            $covoit->getEndCity();
+
+            $em->remove($covoit);
+            $em->flush();
+
+            $notif = new Notification();
+
+            $notif
+                ->setModule($this->getCurrentBundle()->getIdentifier())
+                ->setHelper('covoit_canceled')
+                ->setAuthorId($this->getUser()->getId())
+                ->setEntityType('covoit')
+                ->setEntityId($covoit->getId())
+                ->addEntity($covoit);
+
+            $this->getNotificationsSender()->send($notif);
+
+            // Flash message
+            $this->get('session')->getFlashBag()->set('message', array(
+                'type' => 'success',
+                'message' => 'covoit.messages.canceled'
+            ));
+
+            return $this->redirect($this->generateUrl('covoiturage_my_index'));
+        }
+
+        return [
+            'covoit' => $covoit,
+        ];
+    }
+
+    /**
      * @Route("/{id}/subscribe", name="covoiturage_my_subscribe")
      */
     public function subscribeAction($id)
@@ -286,14 +352,14 @@ class PrivateController extends Controller
 
         if (! $this->getUser()->getPhoneNumber()) {
             $this->get('session')->getFlashBag()->set('message', array(
-                'type' => 'error',
-                'message' => 'covoit.messages.required_phone'
-            ));
+                    'type' => 'error',
+                    'message' => 'covoit.messages.required_phone'
+                ));
         } elseif ($covoit->hasUser($this->getUser())) {
             $this->get('session')->getFlashBag()->set('message', array(
-                'type' => 'error',
-                'message' => 'covoit.messages.already_subscribed'
-            ));
+                    'type' => 'error',
+                    'message' => 'covoit.messages.already_subscribed'
+                ));
         } else {
             $subscription = new CovoitSubscription();
             $subscription->setCovoit($covoit);
@@ -323,14 +389,40 @@ class PrivateController extends Controller
             $this->getSubscriptionsManager()->subscribe($this->getUser(), 'covoit', $covoit->getId());
 
             $this->get('session')->getFlashBag()->set('message', array(
-                'type' => 'success',
-                'message' => 'covoit.messages.subscribed'
-            ));
+                    'type' => 'success',
+                    'message' => 'covoit.messages.subscribed'
+                ));
         }
 
         return $this->redirect($this->generateUrl('covoiturage_view', [
-            'id' => $covoit->getId(),
-            'slug' => $covoit->getStartCity()->getSlug() . '-' . $covoit->getEndCity()->getSlug()
+                    'id' => $covoit->getId(),
+                    'slug' => $covoit->getStartCity()->getSlug() . '-' . $covoit->getEndCity()->getSlug()
+                ]));
+    }
+
+    /**
+     * @Route("/{id}/unsubscribe", name="covoiturage_my_subscribe")
+     */
+    public function unsubscribeAction(CovoitSubscription $subscription)
+    {
+        if (! $this->getUserLayer()->isUser()) {
+            return $this->createAccessDeniedResponse();
+        }
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($subscription);
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->set('message', array(
+            'type' => 'success',
+            'message' => 'covoit.messages.unsubscribed'
+        ));
+
+        return $this->redirect($this->generateUrl('covoiturage_view', [
+            'id' => $subscription->getCovoit()->getId(),
+            'slug' => $subscription->getCovoit()->getStartCity()->getSlug() . '-' . $subscription->getCovoit()->getEndCity()->getSlug()
         ]));
     }
 }
