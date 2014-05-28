@@ -227,21 +227,19 @@
 	}
 
 	.covoit-list-item {
-		.item-infos {
-			padding: 10px;
-			margin-left: 150px;
+		.item-infos h5 {
+			font-size: 20px;
 		}
-
-		.item-member-type {
-			width: 100px;
+		.item-date {
+			padding: 28px 5px;
 		}
-
-		.item-subscriptions, .item-price {
-			width: 100px;
-
-			.item-subscriptions-count, .item-price-count {
-				font-size: 20px;
-			}
+		.item-price {
+			padding: 28px 5px;
+			width: 90px;
+		}
+		.item-subscriptions {
+			padding: 16px 5px;
+			width: 70px;
 		}
 	}
 }
@@ -465,13 +463,30 @@
     }
 
 	.covoit-list-item {
+		min-height: 0;
+		clear: both;
+
 		.item-map {
 			display: none;
+		}
+		.item-subscriptions {
+			display: none;
+		}
+		.item-date {
+			padding: 5px;
+
+			.item-block-info {
+				font-size: 16px;
+			}
 		}
 
 		.item-infos {
 			padding: 10px;
 			margin-left: 0;
+
+			span {
+				display: none;
+			}
 		}
 	}
 }
