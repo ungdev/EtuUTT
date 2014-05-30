@@ -11,28 +11,30 @@ etu_user:
     type:     annotation
     prefix:   /
 
-# Load the API routes
-etu_core_api:
-    resource: "@EtuCoreApiBundle/Controller/"
-    type:     annotation
-    prefix:   /api
-
-etu_core_api_doc:
-    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
-    prefix:   /api/doc
-
 # Load FOS Routing
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
-
-# API
-api_user_search:
-    pattern:  /api/users/search/{term}
-    options:
-        expose: true
 
 # Load modules routes
 etu_modules:
     resource: .
     type:     modules
     prefix:   /
+
+
+# Old user search
+api_user_search:
+    pattern:  /api/users/search/{term}
+    options:
+        expose: true
+
+# API doc
+etu_core_api_doc:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc
+
+# Load API from modules
+etu_api:
+    resource: .
+    type:     api
+    prefix:   /api

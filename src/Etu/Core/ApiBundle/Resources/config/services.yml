@@ -12,11 +12,9 @@ parameters:
     etu.serializer.builder.class: Etu\Core\ApiBundle\Serializer\SerializerBuilder
     etu.serializer.class: Symfony\Component\Serializer\Serializer
 
-    etu.api_security.class: Etu\Core\ApiBundle\Listener\SecurityListener
+    etu.api.routing_loader.class: Etu\Core\ApiBundle\Framework\Routing\ApiResourcesRoutingLoader
 
-    etu.api_mapper.user.class: Etu\Core\ApiBundle\Mapper\UserListMapper
-
-    etu.api_transformer.user.class: Etu\Core\ApiBundle\Transformer\UserTransformer
+    etu.api.security.class: Etu\Core\ApiBundle\Listener\SecurityListener
 
 services:
     # Serializer collection
@@ -60,18 +58,16 @@ services:
         factory_service: etu.serializer.builder
         factory_method: createSerializer
 
+    # Routing loader
+    etu.api.routing_loader:
+        class: %etu.api.routing_loader.class%
+        arguments: [@kernel]
+        tags:
+            - { name: routing.loader }
+
     # Security
-    etu.api_security:
-        class: %etu.api_security.class%
-        arguments: [ @doctrine ]
+    etu.api.security:
+        class: %etu.api.security.class%
+        arguments: [ @doctrine, @etu.serializer ]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-
-    # Mappers
-    etu.api_mapper.user:
-        class: %etu.api_mapper.user.class%
-
-    # Transformers
-    etu.api_transformer.user:
-        class: %etu.api_transformer.user.class%
-        arguments: [ @router ]

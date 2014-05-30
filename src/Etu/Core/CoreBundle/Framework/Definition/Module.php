@@ -119,7 +119,7 @@ abstract class Module extends Bundle
     {
         return array(
             'type' => 'annotation',
-            'resource' => '@'.$this->getName().'/Api/',
+            'resource' => '@'.$this->getName().'/Api/Resource/',
         );
     }
 

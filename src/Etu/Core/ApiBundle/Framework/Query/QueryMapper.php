@@ -5,12 +5,12 @@ namespace Etu\Core\ApiBundle\Framework\Query;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
-abstract class QueryMapper
+interface QueryMapper
 {
     /**
      * @param QueryBuilder $query
      * @param ParameterBag $request
      * @return QueryBuilder
      */
-    abstract public function map(QueryBuilder $query, ParameterBag $request);
+    public function map(QueryBuilder $query, ParameterBag $request);
 }

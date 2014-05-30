@@ -10,6 +10,11 @@ parameters:
 
     etu.notifs.new_badge.class: Etu\Core\UserBundle\Notification\Helper\NewBadgeHelper
 
+    etu.api.user.transformer.class: Etu\Core\UserBundle\Api\Transformer\UserTransformer
+    etu.api.orga.transformer.class: Etu\Core\UserBundle\Api\Transformer\OrgaTransformer
+    etu.api.user.mapper.class: Etu\Core\UserBundle\Api\QueryMapper\UserListMapper
+    etu.api.orga.mapper.class: Etu\Core\UserBundle\Api\QueryMapper\OrgaListMapper
+
 services:
 
     # Users authentication
@@ -58,3 +63,18 @@ services:
         arguments: [@twig]
         tags:
             - { name: etu.notifs_helper }
+
+    # API
+    etu.api.user.transformer:
+        class: %etu.api.user.transformer.class%
+        arguments: [@router]
+
+    etu.api.orga.transformer:
+        class: %etu.api.orga.transformer.class%
+        arguments: [@router, @etu.api.user.transformer]
+
+    etu.api.user.mapper:
+        class: %etu.api.user.mapper.class%
+
+    etu.api.orga.mapper:
+        class: %etu.api.orga.mapper.class%

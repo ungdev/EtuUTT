@@ -3,9 +3,7 @@
 namespace Etu\Core\ApiBundle\Controller;
 
 use Etu\Core\ApiBundle\Framework\Controller\ApiController;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class MainController extends ApiController
 {
