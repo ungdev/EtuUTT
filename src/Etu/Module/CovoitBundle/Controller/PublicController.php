@@ -38,6 +38,7 @@ class PublicController extends Controller
             ->from('EtuModuleCovoitBundle:Covoit', 'c')
             ->leftJoin('c.author', 'ca')
             ->leftJoin('c.subscriptions', 'cs')
+            ->where('c.date > CURRENT_DATE()')
             ->orderBy('c.date', 'DESC')
             ->getQuery();
 

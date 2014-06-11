@@ -43,6 +43,7 @@ covoit:
         keywords: Mots-clés
         start_city: Ville de départ
         end_city: Ville d'arrivée
+        olds: Inclure les anciens covoiturages
         submit: Rechercher
         no_covoit: Aucun covoiturage n'a été trouvé
 

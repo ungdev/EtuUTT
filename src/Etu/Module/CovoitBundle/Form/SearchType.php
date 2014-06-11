@@ -38,6 +38,7 @@ class SearchType extends AbstractType
             ->add('hourMin', 'time', ['label' => 'covoit.search.hour_min', 'minutes' => range(0, 55, 5), 'required' => false])
             ->add('hourMax', 'time', ['label' => 'covoit.search.hour_max', 'minutes' => range(0, 55, 5), 'required' => false])
             ->add('keywords', 'text', ['label' => 'covoit.search.keywords', 'required' => false])
+            ->add('olds', 'checkbox', ['label' => 'covoit.search.olds', 'required' => false])
         ;
     }
 

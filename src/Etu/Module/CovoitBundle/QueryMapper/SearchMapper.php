@@ -18,6 +18,10 @@ class SearchMapper
             ->from('EtuModuleCovoitBundle:Covoit', 'c')
             ->leftJoin('c.subscriptions', 's');
 
+        if (! $search->olds) {
+            $qb->andWhere('c.date > CURRENT_DATE()');
+        }
+
         if ($search->startCity) {
             $qb->andWhere('c.startCity = :startCity')
                 ->setParameter('startCity', $search->startCity->getId());
