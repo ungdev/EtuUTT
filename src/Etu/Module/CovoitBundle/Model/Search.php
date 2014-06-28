@@ -60,4 +60,10 @@ class Search
      * @Assert\Type(type="string")
      */
     public $keywords;
+
+    /**
+     * @var boolean
+     * @Assert\Type(type="boolean")
+     */
+    public $olds;
 }
