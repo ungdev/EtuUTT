@@ -7,7 +7,6 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 use Etu\Core\CoreBundle\Entity\City;
-use Etu\Core\CoreBundle\Entity\Page;
 
 class LoadCitiesData extends AbstractFixture implements OrderedFixtureInterface
 {
