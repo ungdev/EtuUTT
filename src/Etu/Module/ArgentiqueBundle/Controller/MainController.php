@@ -3,7 +3,6 @@
 namespace Etu\Module\ArgentiqueBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use DPZ\Flickr;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\ArgentiqueBundle\Entity\Collection;
 use Etu\Module\ArgentiqueBundle\Entity\Photo;
