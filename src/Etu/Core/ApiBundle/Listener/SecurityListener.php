@@ -90,7 +90,9 @@ class SecurityListener
         $request = $this->request;
         $format = 'json';
 
-        if ($request->query->has('format')) {
+        if ($request->headers->has('Accept')) {
+            $format = $request->query->get('Accept');
+        } elseif ($request->query->has('format')) {
             $format = $request->query->get('format');
         } else if ($request->headers->has('format')) {
             $format = $request->headers->get('format');

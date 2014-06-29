@@ -1,0 +1,150 @@
+{% extends '::developpers.html.twig' %}
+
+{% block content %}
+    <div class="padding20-all">
+        <ul class="breadcrumb">
+            <li><a href="{{ path('doc_index') }}">Documentation Développeurs</a> <span class="divider">/</span></li>
+            <li class="active">REST API <span class="divider">/</span></li>
+            <li class="active">Utilisation</li>
+        </ul>
+
+        {% if app.request.locale != 'fr' %}
+            <div class="alert alert-warning">
+                The EtuUTT developpers documentation is not available in your language.
+                For the moment, it exists only in French.
+            </div>
+        {% endif %}
+
+        <h3>Utilisation</h3>
+
+        <hr />
+
+        <p>
+            <a href="{{ path('doc_rest_installation') }}">
+                <i class="icon-chevron-left"></i> Chapitre précédent : Installation et configuration
+            </a>
+            <a href="{{ path('nelmio_api_doc_index') }}" target="_blank" class="pull-right">
+                Chapitre suivant : Référence des points d'entrée <i class="icon-chevron-right"></i>
+            </a>
+        </p>
+
+        <hr />
+
+        <p>
+            Une fois votre client créé avec les bons headers, vous pouvez accéder à l'API.
+        </p>
+
+        <p>
+            Bien qu'actuellement l'API n'existe en lecture seule et qu'elle soit très limitée, dans l'avenir, elle est
+            vouée à grandir. Il est donc important de définir dès maintenant des conventions.
+            Ce chapitre traite de ces différentes conventions.
+        </p>
+
+
+        <br />
+
+        <h5>Méthodes HTTP</h5>
+
+        <p>
+            EtuUTT API se base activement sur HTTP. Cela implique donc que pour effectuer des actions sur des données,
+            vous devez respecter les méthodes appropriées :
+        </p>
+
+        <table class="table" style="width: 250px; margin: 0 auto;">
+            <tr>
+                <td style="text-align: right;"><code>GET</code></td>
+                <td>Lire une ressource</td>
+            </tr>
+            <tr>
+                <td style="text-align: right;"><code>PUT</code></td>
+                <td>Créer une ressource</td>
+            </tr>
+            <tr>
+                <td style="text-align: right;"><code>POST</code></td>
+                <td>Modifier une ressource</td>
+            </tr>
+            <tr>
+                <td style="text-align: right;"><code>DELETE</code></td>
+                <td>Supprimer une ressource</td>
+            </tr>
+        </table>
+
+
+        <br />
+
+        <h5>Format de retour</h5>
+
+        <p>
+            Que ce soit en JSON ou en XML, toutes les données renvoyées par EtuUTT API sont basées sur le même format :
+        </p>
+
+        <pre>http:
+    status: [int: status code]
+    message: [string: error message]
+
+response:
+    [array: data]</pre>
+
+        <p>
+            Vous pouvez donc vous baser soit sur le code HTTP de réponse, soit sur la clé <code>http.status</code> du
+            contenu de la réponse pour déterminer si une erreur a eu lieu.
+        </p>
+
+        <p>
+            De la même manière, toutes les listes de ressources de l'API sont basées sur le format suivant :
+        </p>
+
+        <pre>http:
+    status: [int: status code]
+    message: [string: error message]
+
+response:
+    pagination:
+        currentPage: [int]
+        totalPages: [int]
+        totalItems: [int]
+        perPage: [int]
+        previous: [url: previous page]
+        next: [url: next page]
+
+    data:
+        [array: list elements]</pre>
+
+
+        <br />
+
+        <h5>Référence de documentation et Sandbox</h5>
+
+        <p>
+            La référence de l'API est disponible sur la
+            <a href="{{ path('nelmio_api_doc_index') }}" target="_blank">documentation générée d'EtuUTT API</a>.
+        </p>
+
+        <p>
+            Vous trouverez dans cette documentation la liste des URL disponibles, les filtres possibles sur les listes,
+            et surtout une sandbox vous permettant de tester en live l'API.
+        </p>
+
+
+        <br />
+
+        <h5>Problèmes et retours d'utilisation</h5>
+
+        <p>
+            Si vous avez un quelconque problème en utilisant cette API, veuillez contacter
+            <a href="{{ path('orgas_view', {'login': 'ung'}) }}">l'UTT Net Group</a>
+            (<a href="mailto:ung@utt.fr">ung@utt.fr</a>) ou passer en salle associative.
+        </p>
+
+        <hr />
+
+        <p>
+            <a href="{{ path('doc_rest_installation') }}">
+                <i class="icon-chevron-left"></i> Chapitre précédent : Installation et configuration
+            </a>
+            <a href="{{ path('nelmio_api_doc_index') }}" target="_blank" class="pull-right">
+                Chapitre suivant : Référence des points d'entrée <i class="icon-chevron-right"></i>
+            </a>
+        </p>
+    </div>
+{% endblock %}

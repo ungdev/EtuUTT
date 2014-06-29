@@ -41,7 +41,6 @@ class PrivateController extends Controller
             ->leftJoin('c.author', 'ca')
             ->leftJoin('c.subscriptions', 'cs')
             ->where('c.author = :user')
-            ->andWhere('c.date > NOW()')
             ->orWhere('cs.user = :user')
             ->setParameter('user', $this->getUser()->getId())
             ->orderBy('c.date', 'DESC')
