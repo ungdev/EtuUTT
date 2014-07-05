@@ -3,7 +3,7 @@
 {% block title %}{{ 'user.orga.members.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+	<img src="{{ asset('src/img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
@@ -40,7 +40,7 @@
 			{% for member in pagination %}
 				<li class="asso-members-item">
 					<a href="{{ path('orga_admin_members_edit', {'login': member.user.login}) }}">
-						<img src="{{ asset('photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
+						<img src="{{ asset('uploads/photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
 						<h5>{{ member.user.fullName }}</h5>
 						<p>
 							{{ ('user.orga.role.'~member.role)|trans }}

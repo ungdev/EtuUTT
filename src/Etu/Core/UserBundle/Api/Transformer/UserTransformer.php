@@ -49,8 +49,8 @@ class UserTransformer extends AbstractTransformer
             'isStudent' => $user->getIsStudent(),
             'bdeMember' => $user->hasActiveMembership(),
             'image' => [
-                'official' => $root . 'photos/'.$user->getLogin().'_official.jpg',
-                'custom' => $root . 'photos/'.$user->getAvatar(),
+                'official' => $root . 'uploads/photos/'.$user->getLogin().'_official.jpg',
+                'custom' => $root . 'uploads/photos/'.$user->getAvatar(),
             ],
         ];
     }

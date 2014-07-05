@@ -2,7 +2,7 @@
 
 {% block javascripts %}
     {% if is_admin %}
-        <script src="{{ asset('swipebox/src/js/jquery.swipebox.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('bower_components/swipebox/src/js/jquery.swipebox.min.js') }}" type="text/javascript"></script>
         <script type="text/javascript"> $( '.swipebox' ).swipebox({ hideBarsDelay : 0 }); </script>
     {% endif %}
 {% endblock %}
@@ -10,7 +10,7 @@
 {% block title %}{{ 'argentique.main.index.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-    <img src="{{ asset('img/titles/argentique.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('src/img/titles/argentique.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}

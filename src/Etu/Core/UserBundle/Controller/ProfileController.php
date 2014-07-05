@@ -150,7 +150,7 @@ class ProfileController extends Controller
 			return array(
 				'result' => 'success',
 				'data' => json_encode(array(
-					'filename' => '/photos/'.$file
+					'filename' => '/uploads/photos/'.$file
 				))
 			);
 		}

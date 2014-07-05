@@ -15,28 +15,25 @@
 
         <link rel="stylesheet" href="//code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.min.css" type="text/css" />
 
-        {% stylesheets
-            'bootstrap/css/bootstrap.min.css'
-            'bootstrap/css/bootstrap-responsive.min.css'
-            'fontawesome/css/font-awesome.min.css'
-            'tipsy/src/tipsy.css'
-            'sceditor/development/themes/default.css'
-            'facebox/src/facebox.css'
-            'css/jquery-impromptu.css'
-            'swipebox/src/css/swipebox.min.css'
-            'css/developpers.less'
+            {% stylesheets
+                'bower_components/bootstrap/docs/assets/css/bootstrap.css'
+                'bower_components/bootstrap/docs/assets/css/bootstrap-responsive.css'
+                'bower_components/fontawesome/css/font-awesome.min.css'
+                'bower_components/jquery-impromptu/dist/jquery-impromptu.min.css'
+                'src/css/developpers.less'
+
             filter='cssrewrite'
             output='min/etuutt_developpers.css'
         %}
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
         {% endstylesheets %}
 
-        <link href="{{ asset('img/favicon.png') }}" rel="icon" type="image/gif" />
+        <link href="{{ asset('src/img/favicon.png') }}" rel="icon" type="image/gif" />
 
         {% if not app.request.cookies.has('disable_responsive') %}
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-            {% stylesheets 'css/responsive.less' filter='cssrewrite' output='min/responsive.css' %}
+            {% stylesheets 'src/css/responsive.less' filter='cssrewrite' output='min/responsive.css' %}
             <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
             {% endstylesheets %}
         {% endif %}
@@ -46,7 +43,7 @@
     <body class="bg-soft-grey">
         <div id="loader" class="overlay">
             <div class="loader">
-                <img src="{{ asset('img/loader-big.gif') }}" />
+                <img src="{{ asset('src/img/loader-big.gif') }}" />
             </div>
         </div>
 
@@ -56,7 +53,7 @@
                     <h1 class="seo-title">{{ block('title') }} - {{ 'base.title'|trans }}</h1>
 
                     <a href="{{ path('homepage') }}">
-                        <img src="{{ asset('img/logo_devs.jpg') }}?endbeta" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="logo" />
+                        <img src="{{ asset('src/img/logo_devs.jpg') }}?endbeta" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="logo" />
                     </a>
                 </div>
 
@@ -82,19 +79,19 @@
             <ul class="list-vertical list-vertical-linked overlay-menu">
                 <li class="first">
                     <a href="{{ path('change_locale', {'lang': 'fr'}) }}">
-                        <img src="{{ asset('img/lang/fr.png') }}" />
+                        <img src="{{ asset('src/img/lang/fr.png') }}" />
                         Français
                     </a>
                 </li>
                 <li>
                     <a href="{{ path('change_locale', {'lang': 'en'}) }}">
-                        <img src="{{ asset('img/lang/en.png') }}" />
+                        <img src="{{ asset('src/img/lang/en.png') }}" />
                         English
                     </a>
                 </li>
                 <li>
                     <a href="{{ path('change_locale', {'lang': 'de'}) }}">
-                        <img src="{{ asset('img/lang/de.png') }}" />
+                        <img src="{{ asset('src/img/lang/de.png') }}" />
                         Deutsh
                     </a>
                 </li>
@@ -153,15 +150,11 @@
         </script>
 
         {% javascripts
-            'js/lib/jquery.ui.touch-punch.min.js'
-            'bootstrap/js/bootstrap.min.js'
+            'bower_components/bootstrap/docs/assets/js/bootstrap.min.js'
+            'bower_components/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js'
             'bundles/fosjsrouting/js/router.js'
-            'facebox/src/facebox.js'
-            'sceditor/development/jquery.sceditor.bbcode.js'
-            'sceditor/languages/fr.js'
-            'tipsy/src/jquery.tipsy.js'
-            'js/moment.min.js'
-            'js/common.js'
+            'src/js/common.js'
+
             output='min/etuutt.js'
         %}
         <script type="text/javascript" src="{{ asset_url }}"></script>

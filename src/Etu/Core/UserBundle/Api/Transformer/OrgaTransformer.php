@@ -45,7 +45,7 @@ class OrgaTransformer extends AbstractTransformer
             'description' => $orga->getDescription(),
             'descriptionShort' => $orga->getDescriptionShort(),
             'website' => $orga->getWebsite(),
-            'image' => $root . 'photos/' . $orga->getAvatar(),
+            'image' => $root . 'uploads/logos/' . $orga->getAvatar(),
             'president' => ($orga->getPresident()) ? $this->userTransformer->transform($orga->getPresident()) : null,
         ];
     }

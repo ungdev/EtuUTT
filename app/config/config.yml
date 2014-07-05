@@ -57,10 +57,9 @@ assetic:
     use_controller: false
     bundles: [ ]
     filters:
-        less:
-            node: /usr/bin/node
-            node_paths: [ '/usr/local/lib/node_modules', '/usr/lib/node_modules' ]
-            apply_to: "\.less"
+        lessphp:
+            file: %kernel.root_dir%/../vendor/oyejorge/less.php/lessc.inc.php
+            apply_to: "\.less$"
         cssrewrite: ~
 
 # Swiftmailer Configuration
@@ -100,6 +99,8 @@ stof_doctrine_extensions:
 
 ## FMBbcode
 fm_bbcode:
+    emoticon:
+        path: /src/img/emoticons
     filter_sets:
         default_filter:
             locale: %locale%

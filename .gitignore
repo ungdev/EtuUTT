@@ -2,16 +2,6 @@
 # EtuUTT #
 ##########
 
-/web/bundles/
-/web/app.php
-/web/etu_dev.php
-/web/argentique/
-/web/logos/
-/web/photos/
-/web/uploads/
-/web/events/
-/web/temp/
-/web/config.php
 /app/config/parameters.yml
 /app/cache/*
 /app/logs/*
@@ -19,6 +9,15 @@
 /app/bootstrap.php.cache
 /app/SymfonyRequirements.php
 /src/Etu/Module/LoggerBundle/Resources/objects/errors
+
+/web/bower_components/
+/web/min/
+/web/bundles/
+/web/uploads/
+/web/app.php
+/web/etu_dev.php
+/web/config.php
+
 /vendor/
 /bin/
 /composer.phar

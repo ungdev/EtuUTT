@@ -3,7 +3,7 @@
 {% block title %}{{ 'user.profile.view.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+	<img src="{{ asset('src/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
@@ -64,7 +64,7 @@
 		<div class="row-fluid">
 			<div class="span3">
 				<div class="align-center">
-					<img src="{{ asset('photos/'~user.avatar) }}" class="view-avatar"
+					<img src="{{ asset('uploads/photos/'~user.avatar) }}" class="view-avatar"
 						 alt="{{ user.fullName }}" title="{{ user.fullName }}" />
 
 					<hr />
@@ -153,7 +153,7 @@
 						{% for level, userBadge in serie %}
 							{% if userBadge.owned %}
 								<li>
-									<img src="{{ asset('img/badges/'~userBadge.badge.picture~'.png') }}" class="tip"
+									<img src="{{ asset('src/img/badges/'~userBadge.badge.picture~'.png') }}" class="tip"
 										 title="<strong style='font-size: 13px;'>{{ userBadge.badge.name }}</strong><br />{{ userBadge.badge.description }}" />
 								</li>
 							{% endif %}

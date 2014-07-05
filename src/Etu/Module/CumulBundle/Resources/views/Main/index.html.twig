@@ -3,12 +3,12 @@
 {% block title %}{{ 'cumul.main.index.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+	<img src="{{ asset('src/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block javascripts %}
     <script type="text/javascript">var logins = {{ logins|raw }}, root = '{{ path('cumul_index') }}';</script>
-	<script type="text/javascript" src="{{ asset('js/bundles/cumul.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('src/js/bundles/cumul.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -225,7 +225,7 @@
             <div class="comparison-generator">
                 {% for user in users %}
                     <div class="comparison-generator-user">
-                        <img src="{{ asset('photos/' ~ user.avatar) }}" />
+                        <img src="{{ asset('uploads/photos/' ~ user.avatar) }}" />
                         {{ user.fullName|limit(18) }}
 
                         {% if countUsers > 1 %}
