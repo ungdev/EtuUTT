@@ -26,7 +26,7 @@
             'src/css/sceditor.less'
             'src/css/boot.less'
 
-            filter='cssrewrite'
+            filter='cssrewrite,?minifier_css'
             output='min/etuutt.css'
         %}
             <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
@@ -290,6 +290,7 @@
             'bundles/fosjsrouting/js/router.js'
             'src/js/common.js'
 
+            filter='?minifier_js'
             output='min/etuutt.js'
         %}
             <script type="text/javascript" src="{{ asset_url }}"></script>

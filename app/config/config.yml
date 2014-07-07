@@ -51,16 +51,23 @@ doctrine:
                 class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
                 enabled: true
 
+# Minifier Assetic filters names
+minifier:
+    filter:
+        name:
+            css: minifier_css
+            js: minifier_js
+
 # Assetic Configuration
 assetic:
     debug: "%kernel.debug%"
     use_controller: false
     bundles: [ ]
     filters:
+        cssrewrite: ~
         lessphp:
             file: %kernel.root_dir%/../vendor/oyejorge/less.php/lessc.inc.php
             apply_to: "\.less$"
-        cssrewrite: ~
 
 # Swiftmailer Configuration
 swiftmailer:

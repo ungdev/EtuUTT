@@ -38,28 +38,16 @@ class AppKernel extends EtuKernel
 	        new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(), // Fixtures are data which are used during testing
 	        new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(), // Doctrine extensions
 
-	        // Sensio extra
-	        // Add annotations for controllers (@Template, @Cache, ...) and some useful other features
+	        // Libraies
 	        new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-
-	        // Knp libraries
 	        new Knp\Bundle\TimeBundle\KnpTimeBundle(), // Time library to display pretty dates
 	        new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(), // Useful paginator
-
-	        // FOS libraries
 	        new FOS\JsRoutingBundle\FOSJsRoutingBundle(), // Generate routes from Javascript
-
-	        // CalendR
 	        new FrequenceWeb\Bundle\CalendRBundle\FrequenceWebCalendRBundle(), // Calendar and events library
-
-	        // BBCode
 	        new FM\BbcodeBundle\FMBbcodeBundle(),
-
-            // Date and times translations
             new Sonata\IntlBundle\SonataIntlBundle(),
-
-	        // API documentation
-            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(), // API documentation
+            new Minifier\MinifierBundle(),
 
 	        // EtuUTT
             new Etu\Core\CoreBundle\EtuCoreBundle(),
@@ -68,6 +56,7 @@ class AppKernel extends EtuKernel
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
+            $bundles[] = new Elao\WebProfilerExtraBundle\WebProfilerExtraBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
