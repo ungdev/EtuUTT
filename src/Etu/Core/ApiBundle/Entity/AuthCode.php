@@ -41,20 +41,4 @@ class Client
      * @ORM\Column(name="auto_approve", type="boolean")
      */
     private $autoApprove = false;
-
-    /**
-     * @var ClientEndpoint[] $client
-     *
-     * @ORM\ManyToOne(targetEntity="ClientEndpoint", mappedBy="client", cascade={"persist", "remove"})
-     * @ORM\JoinColumn()
-     */
-    private $endpoints;
-
-    /**
-     * @var Session[] $client
-     *
-     * @ORM\ManyToOne(targetEntity="Session", mappedBy="client", cascade={"persist", "remove"})
-     * @ORM\JoinColumn()
-     */
-    private $sessions;
 }
