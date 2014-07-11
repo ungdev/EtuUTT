@@ -115,15 +115,8 @@ fm_bbcode:
             filters: [ default, block, text, code, image, list, table, quote, video, url ]
             hooks: [ clickable, emoticon ]
 
-# API
+# API Doc
 nelmio_api_doc: ~
-
-fos_oauth_server:
-    db_driver: orm
-    client_class:        Etu\Core\ApiBundle\Entity\Client
-    access_token_class:  Etu\Core\ApiBundle\Entity\AccessToken
-    refresh_token_class: Etu\Core\ApiBundle\Entity\RefreshToken
-    auth_code_class:     Etu\Core\ApiBundle\Entity\AuthCode
 
 # EtuUTT
 etu_core:

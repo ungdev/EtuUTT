@@ -28,13 +28,7 @@ api_user_search:
     options:
         expose: true
 
-# API
-fos_oauth_server_token:
-    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
-
-fos_oauth_server_authorize:
-    resource: "@FOSOAuthServerBundle/Resources/config/routing/authorize.xml"
-
+# API doc
 etu_core_api_doc:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /doc/api/reference
@@ -44,6 +38,7 @@ etu_core_doc:
     type:     annotation
     prefix:   /doc/api
 
+# Load API from modules
 etu_api:
     resource: .
     type:     api
