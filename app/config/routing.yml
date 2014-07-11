@@ -36,7 +36,7 @@ etu_core_api_doc:
 etu_core_doc:
     resource: "@EtuCoreApiBundle/Controller/"
     type:     annotation
-    prefix:   /doc/api
+    prefix:   /api
 
 # Load API from modules
 etu_api:
