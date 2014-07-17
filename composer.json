@@ -40,8 +40,7 @@
         "jasig/phpcas": "dev-master",
         "sonata-project/intl-bundle": "2.2.*",
         "elao/web-profiler-extra-bundle" : "~2.3@dev",
-        "bshaffer/oauth2-server-php": "1.4.*",
-        "bshaffer/oauth2-server-httpfoundation-bridge": "1.*"
+        "bshaffer/oauth2-server-php": "1.4.*"
 	},
 	"scripts": {
 		"post-install-cmd": [

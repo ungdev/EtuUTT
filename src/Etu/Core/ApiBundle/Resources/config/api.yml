@@ -64,10 +64,3 @@ services:
         arguments: [@kernel]
         tags:
             - { name: routing.loader }
-
-    # Security
-    etu.api.security:
-        class: %etu.api.security.class%
-        arguments: [ @doctrine, @etu.serializer ]
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

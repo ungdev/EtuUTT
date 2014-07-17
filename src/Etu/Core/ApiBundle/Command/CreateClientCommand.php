@@ -2,10 +2,10 @@
 
 namespace Etu\Core\ApiBundle\Command;
 
+use Doctrine\ORM\EntityManager;
+use Etu\Core\ApiBundle\Entity\OauthClient;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class CreateClientCommand extends ContainerAwareCommand
@@ -15,37 +15,27 @@ class CreateClientCommand extends ContainerAwareCommand
         $this
             ->setName('oauth:create-client')
             ->setDescription('Create a OAuth2 client')
-            ->addArgument('identifier', InputArgument::REQUIRED, 'The client identifier')
-            ->addArgument('redirect_uri', InputArgument::REQUIRED, 'The client redirect uris (comma separated)')
-            ->addArgument('grant_types', InputArgument::OPTIONAL, 'Grant types to restrict the client to (comma separated)')
-            ->addArgument('scopes', InputArgument::OPTIONAL, 'Scopes to restrict the client to (comma separated)')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $container = $this->getApplication()->getKernel()->getContainer();
-        $clientManager = $container->get('oauth2.client_manager');
+        /** @var EntityManager $em */
+        $em = $this->getContainer()->get('doctrine')->getManager();
 
-        try {
-            $client = $clientManager->createClient(
-                $input->getArgument('identifier'),
-                explode(',', $input->getArgument('redirect_uri')),
-                explode(',', $input->getArgument('grant_types')),
-                explode(',', $input->getArgument('scopes'))
-            );
-        }
-        catch(\Doctrine\DBAL\DBALException $e)
-        {
-            $output->writeln('<fg=red>Unable to create client ' . $input->getArgument('identifier') . '</fg=red>');
-            return;
-        }
-        catch(\Etu\Core\ApiBundle\Exception\ScopeNotFoundException $e)
-        {
-            $output->writeln('<fg=red>Scope not found, please create it first</fg=red>');
-            return;
-        }
+        $dialog = $this->getHelperSet()->get('dialog');
 
-        $output->writeln('<fg=green>Client ' . $input->getArgument('identifier') . ' created with secret ' . $client->getClientSecret() . '</fg=green>');
+        $client = new OauthClient();
+        $client->setClientId($dialog->ask($output, 'Identifier: '));
+        $client->setName($dialog->ask($output, 'Name: '));
+        $client->setUserId($dialog->ask($output, 'Owner ID: '));
+        $client->setRedirectUri($dialog->ask($output, 'Redirect URL: '));
+
+        $client->setClientSecret(md5(uniqid(time(), true)));
+
+        $em->persist($client);
+        $em->flush();
+
+        $output->writeln('<fg=green>Client ' . $client->getClientId() . ' created with secret ' . $client->getClientSecret() . '</fg=green>');
     }
 }

@@ -2,10 +2,10 @@
 
 namespace Etu\Core\ApiBundle\Command;
 
+use Doctrine\ORM\EntityManager;
+use Etu\Core\ApiBundle\Entity\OauthScope;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class CreateScopeCommand extends ContainerAwareCommand
@@ -14,26 +14,25 @@ class CreateScopeCommand extends ContainerAwareCommand
     {
         $this
             ->setName('oauth:create-scope')
-            ->setDescription('Create a scope for use in OAuth2')
-            ->addArgument('scope', InputArgument::REQUIRED, 'The scope key/name')
-            ->addArgument('description', InputArgument::REQUIRED, 'The scope description used on authorization screen')
+            ->setDescription('Create a OAuth2 scope')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $container = $this->getApplication()->getKernel()->getContainer();
-        $scopeManager = $container->get('oauth2.scope_manager');
+        /** @var EntityManager $em */
+        $em = $this->getContainer()->get('doctrine')->getManager();
 
-        try {
-            $scopeManager->createScope($input->getArgument('scope'), $input->getArgument('description'));
-        }
-        catch(\Doctrine\DBAL\DBALException $e)
-        {
-            $output->writeln('<fg=red>Unable to create scope ' . $input->getArgument('scope') . '</fg=red>');
-            return;
-        }
+        $dialog = $this->getHelperSet()->get('dialog');
 
-        $output->writeln('<fg=green>Scope ' . $input->getArgument('scope') . ' created</fg=green>');
+        $scope = new OauthScope();
+        $scope->setScope($dialog->ask($output, 'Name: '));
+        $scope->setDescription($dialog->ask($output, 'Description: '));
+        $scope->setIsDefault(false);
+
+        $em->persist($scope);
+        $em->flush();
+
+        $output->writeln('<fg=green>Scope ' . $scope->getScope() . ' created</fg=green>');
     }
 }
