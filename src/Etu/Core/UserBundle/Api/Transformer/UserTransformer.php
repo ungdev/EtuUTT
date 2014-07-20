@@ -43,7 +43,7 @@ class UserTransformer extends AbstractTransformer
             'surname' => $user->getSurnom(),
             'jadis' => $user->getJadis(),
             'passions' => $user->getPassions(),
-            'birthday' => ($user->getBirthdayPrivacy() == User::PRIVACY_PUBLIC && $user->getBirthday()? $user->getBirthday()->format(\DateTime::ISO8601) : null,
+            'birthday' => ($user->getBirthdayPrivacy() == User::PRIVACY_PUBLIC && $user->getBirthday()) ? $user->getBirthday()->format(\DateTime::ISO8601) : null,
             'website' => $user->getWebsite(),
             'facebook' => $user->getFacebook(),
             'twitter' => $user->getTwitter(),
