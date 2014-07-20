@@ -34,6 +34,13 @@ class OauthScope
     /**
      * @var integer
      *
+     * @ORM\Column(name="weight", type="smallint", nullable=true)
+     */
+    private $weight = 0;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -114,5 +121,23 @@ class OauthScope
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @param int $weight
+     * @return $this
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWeight()
+    {
+        return $this->weight;
     }
 }

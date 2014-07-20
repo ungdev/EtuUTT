@@ -14,7 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class DocController extends Controller
 {
     /**
-     * @Route("", name="doc_index")
+     * @Route("", name="devs_doc_index")
      * @Template()
      */
     public function indexAction()
@@ -23,7 +23,7 @@ class DocController extends Controller
     }
 
     /**
-     * @Route("/rest/installation", name="doc_rest_installation")
+     * @Route("/rest/installation", name="devs_doc_rest_installation")
      * @Template()
      */
     public function restInstallationAction()
@@ -32,7 +32,7 @@ class DocController extends Controller
     }
 
     /**
-     * @Route("/rest/usage", name="doc_rest_usage")
+     * @Route("/rest/usage", name="devs_doc_rest_usage")
      * @Template()
      */
     public function restUsageAction()
@@ -41,7 +41,7 @@ class DocController extends Controller
     }
 
     /**
-     * @Route("/library/phputt", name="doc_lib_phputt")
+     * @Route("/library/phputt", name="devs_doc_lib_phputt")
      * @Template()
      */
     public function libPhputtAction()

@@ -3,7 +3,7 @@
 namespace Etu\Core\ApiBundle\Framework\Controller;
 
 use Etu\Core\ApiBundle\Framework\Model\Token;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 abstract class ApiController extends Controller

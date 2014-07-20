@@ -8,38 +8,29 @@
             L'application <strong>{{ client.name }}</strong> souhaite accéder à vos informations
         </h4>
 
-        <br />
-        <br />
+        <div class="align-center">
+            <div class="api-auth-app">
+                <div class="api-auth-app-image">
+                    <img src="https://fbcdn-photos-c-a.akamaihd.net/hphotos-ak-xpa1/t39.2081-0/p128x128/851578_455087414601994_1601110696_n.png" />
+                </div>
+                <div class="api-auth-app-infos">
+                    <p>
+                        <strong>{{ client.name }}</strong><br />
+                        <em><small class="muted">Gérée par {{ user.fullName }}</small></em>
+                    </p>
 
-        <div class="row-fluid">
-            <div class="span4"></div>
-            <div class="span6">
-                <div class="row-fluid">
-                    <div class="span4">
-                        <img src="https://fbcdn-photos-c-a.akamaihd.net/hphotos-ak-xpa1/t39.2081-0/p128x128/851578_455087414601994_1601110696_n.png" />
-                    </div>
-                    <div class="span8">
-                        <p>
-                            <strong>{{ client.name }}</strong><br />
-                            <em>Gérée par {{ user.fullName }}</em>
-                        </p>
+                    <p class="muted">
+                        Souhaite être capable :
+                    </p>
 
-                        <p>
-                            Souhaite accéder à:
-                        </p>
-
-                        <ul>
-                            <li>Vos informations publiques</li>
-                        </ul>
-                    </div>
+                    <ul>
+                        {% for scope in scopes %}
+                            <li>{{ scope.description }}</li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
-            <div class="span2"></div>
         </div>
-
-        <br />
-        <br />
-        <br />
 
         <div class="align-center">
             <p>

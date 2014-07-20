@@ -1,0 +1,49 @@
+{% extends '::developpers.html.twig' %}
+
+{% block content %}
+    <div class="dev-heading">
+        <h3>Bienvenue sur l'espace<br />développeurs d'EtuUTT</h3>
+    </div>
+
+    <div class="padding20-all">
+        {% if app.request.locale != 'fr' %}
+            <div class="alert alert-warning">
+                The EtuUTT developpers panel is not available in your language.
+                For the moment, it exists only in French.
+            </div>
+        {% endif %}
+
+        <p>
+            Cet espace réservé aux développeurs vous permet de créer et gérer vos accès à l'API EtuUTT, de télécharger
+            les librairies mises à dispositions pas l'UNG et de consulter la documentation pour développeurs.
+        </p>
+
+        <hr />
+
+        <div class="row-fluid">
+            <div class="span7">
+                <h4>Mes applications</h4>
+
+                <ul class="nav nav-list">
+                    {% for client in clients %}
+                        <li>
+                            <a href="">
+                                <img src="https://fbcdn-photos-c-a.akamaihd.net/hphotos-ak-xpa1/t39.2081-0/p128x128/851578_455087414601994_1601110696_n.png" style="display: inline; vertical-align: text-top; height: 16px; margin-right: 10px;" />
+                                {{ client.name }}
+                                <small class="muted">(client_id: {{ client.clientId }})</small>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="span5">
+                <h4>Liens utiles</h4>
+
+                <ul class="nav nav-list">
+                    <li><a href="{{ path('devs_doc_index') }}">Documentation</a></li>
+                    <li><a href="{{ path('nelmio_api_doc_index') }}">Référence des URL de l'API</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

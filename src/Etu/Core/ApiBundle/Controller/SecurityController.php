@@ -3,17 +3,17 @@
 namespace Etu\Core\ApiBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Etu\Core\ApiBundle\Framework\Controller\ApiController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/oauth")
  */
-class SecurityController extends Controller
+class SecurityController extends ApiController
 {
     /**
      * To access private user data, you need his/her authorization. This endpoint is an HTML page that ask the current
@@ -72,6 +72,10 @@ class SecurityController extends Controller
      */
     public function authorizeAction(Request $sfRequest)
     {
+        if (! $this->getUserLayer()->isUser()) {
+            return $this->createAccessDeniedResponse();
+        }
+
         $server = $this->get('oauth.server');
 
         $request = \OAuth2\Request::createFromGlobals();
@@ -105,17 +109,66 @@ class SecurityController extends Controller
 
         $user = $em->getRepository('EtuUserBundle:User')->find($client->getUserId());
 
+        $scopesNames = explode(' ', $sfRequest->query->get('scope', 'public'));
+
+        $qb = $em->createQueryBuilder();
+
+        $scopes = $qb->select('s')
+            ->from('EtuCoreApiBundle:OauthScope', 's')
+            ->where($qb->expr()->in('s.scope', $scopesNames))
+            ->orderBy('s.weight', 'ASC')
+            ->getQuery()
+            ->getResult();
+
         return [
             'client' => $client,
             'user' => $user,
+            'scopes' => $scopes,
             'form' => $form->createView()
         ];
     }
 
     /**
+     * Create an `access_token` to use the API.
+     *
+     * There are three methods to create an `access_token`:
+     *
+     * - `authorization_code`
+     * - `refresh_token`
+     * - `client_credentials`
+     *
+     * These methods are called the **the grant types**. The required parameters of the endpoint depends on the chosen
+     * grant type.
+     *
      * @ApiDoc(
      *   section = "OAuth",
-     *   description = "Create a OAuth access token using given grant_type"
+     *   description = "Create a OAuth access token using given grant_type",
+     *   parameters = {
+     *      {
+     *          "name" = "grant_type",
+     *          "required" = true,
+     *          "dataType" = "string",
+     *          "description" = "The grant type to use to create the access_token."
+     *      },
+     *      {
+     *          "name" = "scope",
+     *          "required" = false,
+     *          "dataType" = "string",
+     *          "description" = "List of the scopes you need for the token, separated by spaces, for instance: `public private_user_account`. If not provided, grant only access to public scope."
+     *      },
+     *      {
+     *          "name" = "code",
+     *          "required" = false,
+     *          "dataType" = "string",
+     *          "description" = "The authorization_code generated with /api/oauth/authorize. Required if grant_type == 'authorization_code'."
+     *      },
+     *      {
+     *          "name" = "refresh_token",
+     *          "required" = false,
+     *          "dataType" = "string",
+     *          "description" = "The refresh_token provided on the first access_token retrieval. Required if grant_type == 'refresh_token'."
+     *      }
+     *   }
      * )
      *
      * @Route("/token", name="oauth_token")
