@@ -4,28 +4,19 @@ namespace Etu\Core\UserBundle\Api\Transformer;
 
 use Etu\Core\ApiBundle\Framework\Transformer\AbstractTransformer;
 use Etu\Core\UserBundle\Entity\Organization;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\Router;
 
 class OrgaTransformer extends AbstractTransformer
 {
-    /**
-     * @var \Symfony\Component\Routing\Router
-     */
-    protected $router;
-
     /**
      * @var UserTransformer
      */
     protected $userTransformer;
 
     /**
-     * @param Router $router
      * @param UserTransformer $userTransformer
      */
-    public function __construct(Router $router, UserTransformer $userTransformer)
+    public function __construct(UserTransformer $userTransformer)
     {
-        $this->router = $router;
         $this->userTransformer = $userTransformer;
     }
 
@@ -35,8 +26,6 @@ class OrgaTransformer extends AbstractTransformer
      */
     public function transformUnique($orga)
     {
-        $root = $this->router->generate('homepage', [], UrlGeneratorInterface::ABSOLUTE_URL);
-
         return [
             'login' => $orga->getLogin(),
             'name' => $orga->getName(),
@@ -45,7 +34,7 @@ class OrgaTransformer extends AbstractTransformer
             'description' => $orga->getDescription(),
             'descriptionShort' => $orga->getDescriptionShort(),
             'website' => $orga->getWebsite(),
-            'image' => $root . 'uploads/logos/' . $orga->getAvatar(),
+            'image' =>  '/uploads/logos/' . $orga->getAvatar(),
             'president' => ($orga->getPresident()) ? $this->userTransformer->transform($orga->getPresident()) : null,
         ];
     }

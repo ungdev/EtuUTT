@@ -3,6 +3,8 @@
 namespace Etu\Core\ApiBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -14,16 +16,58 @@ use Symfony\Component\HttpFoundation\Request;
 class SecurityController extends Controller
 {
     /**
-     * @Route("/token", name="oauth_token")
-     */
-    public function tokenAction()
-    {
-        $this->get('oauth.server')->handleTokenRequest(\OAuth2\Request::createFromGlobals())->send();
-        exit;
-    }
-
-    /**
+     * To access private user data, you need his/her authorization. This endpoint is an HTML page that ask the current
+     * logged user if (s)he wants to accept your application. If (s)he doesn't, (s)he is redirected to EtuUTT. I f(s)he
+     * does, (s)he is redirected to your application URL with the parameter `code`.
+     *
+     * Let's take a small example:
+     *
+     * Your application "MyApp" (reidrect URL: http://myapp.com) wants to access private data of the current user.
+     * To do so, you need to redirect user to this page:
+     *
+     * `/api/oauth/authorize?response_type=code&client_id=<your_client_id>&scope=public%20private_user_account&state=xyz`
+     *
+     * If the user accept the application, he will be redirected to `http://myapp.com/?code=<authorization_code>`.
+     *
+     * And using this code (in the parameter `code`), you are now able to get an `access_token` using `/api/oauth/token`.
+     *
+     *
+     * If an error occured on the page and the client_id is provided, the user will be redirect to:
+     * `http://myapp.com/?error=<error_type>&error_description=<error_description>` so you can handle the problem.
+     *
+     * @ApiDoc(
+     *   section = "OAuth",
+     *   description = "Display the authorization page for user to allow a given application",
+     *   parameters = {
+     *      {
+     *          "name" = "client_id",
+     *          "required" = true,
+     *          "dataType" = "string",
+     *          "description" = "Your client ID (given in your developper panel)"
+     *      },
+     *      {
+     *          "name" = "scope",
+     *          "required" = false,
+     *          "dataType" = "string",
+     *          "description" = "List of the scopes you need for the token, separated by spaces, for instance: `public private_user_account`. If not provided, grant only access to public scope."
+     *      },
+     *      {
+     *          "name" = "response_type",
+     *          "required" = true,
+     *          "dataType" = "string",
+     *          "description" = "Must be `code` (only authorization_code is supported for the moment)"
+     *      },
+     *      {
+     *          "name" = "state",
+     *          "required" = true,
+     *          "dataType" = "string",
+     *          "description" = "Must be `xyz` (only authorization_code is supported for the moment)"
+     *      }
+     *   }
+     * )
+     *
      * @Route("/authorize", name="oauth_authorize")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function authorizeAction(Request $sfRequest)
@@ -34,8 +78,7 @@ class SecurityController extends Controller
         $response = new \OAuth2\Response();
 
         if (! $server->validateAuthorizeRequest($request, $response)) {
-            $response->send();
-            exit;
+            return $this->get('etu.response_handler')->handle($sfRequest, $response);
         }
 
         /** @var EntityManager $em */
@@ -57,6 +100,7 @@ class SecurityController extends Controller
 
             $server->handleAuthorizeRequest($request, $response, isset($formData['accept']), $this->getUser()->getId());
             $response->send();
+            exit;
         }
 
         $user = $em->getRepository('EtuUserBundle:User')->find($client->getUserId());
@@ -66,5 +110,20 @@ class SecurityController extends Controller
             'user' => $user,
             'form' => $form->createView()
         ];
+    }
+
+    /**
+     * @ApiDoc(
+     *   section = "OAuth",
+     *   description = "Create a OAuth access token using given grant_type"
+     * )
+     *
+     * @Route("/token", name="oauth_token")
+     * @Method("POST")
+     */
+    public function tokenAction()
+    {
+        $response = $this->get('oauth.server')->handleTokenRequest(\OAuth2\Request::createFromGlobals());
+        return $this->get('etu.response_handler')->handle($this->getRequest(), $response);
     }
 }

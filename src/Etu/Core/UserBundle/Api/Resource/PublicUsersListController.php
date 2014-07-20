@@ -8,21 +8,17 @@ use Etu\Core\ApiBundle\Framework\Controller\ApiController;
 use Etu\Core\UserBundle\Entity\User;
 use Knp\Component\Pager\Pagination\SlidingPagination;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-/**
- * @Route("/users")
- */
-class UserReadController extends ApiController
+class PublicUsersListController extends ApiController
 {
     /**
      * @ApiDoc(
-     *   resource = true,
-     *   description = "List of the users.",
-     *   filters={
+     *   section = "User - Public data",
+     *   description = "List of the users (scope: public)",
+     *   filters = {
      *      { "name"="firstname",       "dataType"="string"     },
      *      { "name"="lastname",        "dataType"="string"     },
      *      { "name"="branch",          "dataType"="string"     },
@@ -33,7 +29,7 @@ class UserReadController extends ApiController
      *   }
      * )
      *
-     * @Route("", name="api_users_list", options={"expose"=true})
+     * @Route("/public/users", name="api_public_users_list", options={"expose"=true})
      * @Method("GET")
      */
     public function listAction(Request $request)
@@ -59,11 +55,11 @@ class UserReadController extends ApiController
         $next = false;
 
         if ($page > 1) {
-            $previous = $this->generateUrl('api_users_list', ['page' => $page - 1], UrlGeneratorInterface::ABSOLUTE_URL);
+            $previous = $this->generateUrl('api_public_users_list', ['page' => $page - 1]);
         }
 
         if ($page < $pagination->getPaginationData()['pageCount']) {
-            $next = $this->generateUrl('api_users_list', ['page' => $page + 1], UrlGeneratorInterface::ABSOLUTE_URL);
+            $next = $this->generateUrl('api_public_users_list', ['page' => $page + 1]);
         }
 
         return $this->format([
@@ -81,13 +77,14 @@ class UserReadController extends ApiController
 
     /**
      * @ApiDoc(
-     *   description = "View a single user",
+     *   description = "View a single user (scope: public)",
+     *   section = "User - Public data",
      *   parameters={
      *      { "name"="login", "dataType"="string", "required"=true, "description"="User login" }
      *   }
      * )
      *
-     * @Route("/{login}", name="api_users_view")
+     * @Route("/public/users/{login}", name="api_public_users_view")
      * @Method("GET")
      */
     public function viewAction(User $user)
@@ -95,5 +92,47 @@ class UserReadController extends ApiController
         return $this->format([
             'data' => $this->get('etu.api.user.transformer')->transform($user)
         ]);
+    }
+
+    /**
+     * @ApiDoc(
+     *   section = "User - Public data",
+     *   description = "Use /api/public/users instead. List of the users (scope: public)",
+     *   deprecated = true,
+     *   filters={
+     *      { "name"="firstname",       "dataType"="string"     },
+     *      { "name"="lastname",        "dataType"="string"     },
+     *      { "name"="branch",          "dataType"="string"     },
+     *      { "name"="level",           "dataType"="string"     },
+     *      { "name"="speciality",      "dataType"="string"     },
+     *      { "name"="is_student",      "dataType"="boolean"    },
+     *      { "name"="bde_member",      "dataType"="boolean"    }
+     *   }
+     * )
+     *
+     * @Route("/users", name="api_users_list", options={"expose"=true})
+     * @Method("GET")
+     */
+    public function listDeprecatedAction(Request $request)
+    {
+        return $this->listAction($request);
+    }
+
+    /**
+     * @ApiDoc(
+     *   section = "User - Public data",
+     *   description = "Use /api/public/users/{login} instead. View a single user (scope: public)",
+     *   deprecated = true,
+     *   parameters={
+     *      { "name"="login", "dataType"="string", "required"=true, "description"="User login" }
+     *   }
+     * )
+     *
+     * @Route("/users/{login}", name="api_users_view")
+     * @Method("GET")
+     */
+    public function viewDeprecatedAction(User $user)
+    {
+        return $this->viewAction($user);
     }
 }

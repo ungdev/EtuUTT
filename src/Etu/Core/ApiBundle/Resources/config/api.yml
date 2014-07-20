@@ -12,6 +12,11 @@ parameters:
     etu.serializer.builder.class: Etu\Core\ApiBundle\Serializer\SerializerBuilder
     etu.serializer.class: Symfony\Component\Serializer\Serializer
 
+    etu.formatter.class: Etu\Core\ApiBundle\Formatter\DataFormatter
+    etu.response_handler.class: Etu\Core\ApiBundle\Oauth\ResponseHandler
+
+    etu.exception_listener.class: Etu\Core\ApiBundle\Listener\ExceptionListener
+
     etu.api.routing_loader.class: Etu\Core\ApiBundle\Framework\Routing\ApiResourcesRoutingLoader
 
     etu.api.security.class: Etu\Core\ApiBundle\Listener\SecurityListener
@@ -57,6 +62,23 @@ services:
         class: %etu.serializer.class%
         factory_service: etu.serializer.builder
         factory_method: createSerializer
+
+    # Data formatter
+    etu.formatter:
+        class: %etu.formatter.class%
+        arguments: [ @etu.serializer ]
+
+    # Response handler
+    etu.response_handler:
+        class: %etu.response_handler.class%
+        arguments: [ @etu.formatter ]
+
+    # Exception listener
+    etu.exception_listener:
+        class: %etu.exception_listener.class%
+        arguments: [ @etu.formatter ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
 
     # Routing loader
     etu.api.routing_loader:

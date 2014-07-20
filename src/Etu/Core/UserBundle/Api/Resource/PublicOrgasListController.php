@@ -8,26 +8,22 @@ use Etu\Core\ApiBundle\Framework\Controller\ApiController;
 use Etu\Core\UserBundle\Entity\Organization;
 use Knp\Component\Pager\Pagination\SlidingPagination;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-/**
- * @Route("/orgas")
- */
-class OrgaReadController extends ApiController
+class PublicOrgasListController extends ApiController
 {
     /**
      * @ApiDoc(
-     *   resource = true,
-     *   description = "List of the orgas.",
+     *   section = "Organization - Public data",
+     *   description = "List of the orgas (scope: public)",
      *   filters={
      *      { "name"="name", "dataType"="string" }
      *   }
      * )
      *
-     * @Route("", name="api_orgas_list", options={"expose"=true})
+     * @Route("/public/orgas", name="api_public_orgas_list", options={"expose"=true})
      * @Method("GET")
      */
     public function listAction(Request $request)
@@ -53,11 +49,11 @@ class OrgaReadController extends ApiController
         $next = false;
 
         if ($page > 1) {
-            $previous = $this->generateUrl('api_orgas_list', ['page' => $page - 1], UrlGeneratorInterface::ABSOLUTE_URL);
+            $previous = $this->generateUrl('api_public_orgas_list', ['page' => $page - 1]);
         }
 
         if ($page < $pagination->getPaginationData()['pageCount']) {
-            $next = $this->generateUrl('api_orgas_list', ['page' => $page + 1], UrlGeneratorInterface::ABSOLUTE_URL);
+            $next = $this->generateUrl('api_public_orgas_list', ['page' => $page + 1]);
         }
 
         return $this->format([
@@ -75,13 +71,14 @@ class OrgaReadController extends ApiController
 
     /**
      * @ApiDoc(
-     *   description = "View a single organisation",
+     *   section = "Organization - Public data",
+     *   description = "View a single organisation (scope: public)",
      *   parameters={
      *      { "name"="login", "dataType"="string", "required"=true, "description"="User login" }
      *   }
      * )
      *
-     * @Route("/{login}", name="api_orgas_view")
+     * @Route("/public/orgas/{login}", name="api_public_orgas_view")
      * @Method("GET")
      */
     public function viewAction(Organization $orga)
@@ -89,5 +86,41 @@ class OrgaReadController extends ApiController
         return $this->format([
             'data' => $this->get('etu.api.orga.transformer')->transform($orga)
         ]);
+    }
+
+    /**
+     * @ApiDoc(
+     *   section = "Organization - Public data",
+     *   description = "Use /api/public/orgas instead. List of the orgas (scope: public)",
+     *   deprecated = true,
+     *   filters={
+     *      { "name"="name", "dataType"="string" }
+     *   }
+     * )
+     *
+     * @Route("/orgas", name="api_orgas_list", options={"expose"=true})
+     * @Method("GET")
+     */
+    public function listDeprecatedAction(Request $request)
+    {
+        return $this->listAction($request);
+    }
+
+    /**
+     * @ApiDoc(
+     *   section = "Organization - Public data",
+     *   description = "Use /api/public/orgas/{login} instead. View a single organisation (scope: public)",
+     *   deprecated = true,
+     *   parameters={
+     *      { "name"="login", "dataType"="string", "required"=true, "description"="User login" }
+     *   }
+     * )
+     *
+     * @Route("/orgas/{login}", name="api_orgas_view")
+     * @Method("GET")
+     */
+    public function viewDeprecatedAction(Organization $orga)
+    {
+        return $this->viewAction($orga);
     }
 }

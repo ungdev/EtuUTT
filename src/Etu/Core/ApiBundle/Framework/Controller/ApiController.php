@@ -2,44 +2,36 @@
 
 namespace Etu\Core\ApiBundle\Framework\Controller;
 
+use Etu\Core\ApiBundle\Framework\Model\Token;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\Serializer;
 
 abstract class ApiController extends Controller
 {
+    /**
+     * @param array $data
+     * @param int $status
+     * @param string $message
+     * @return Response
+     */
     protected function format($data = array(), $status = 200, $message = null)
     {
-        $data = [
-            'http' => [
-                'status' => $status,
-                'message' => ($message) ? $message : Response::$statusTexts[$status]
-            ],
-            'response' => $data
-        ];
+        return $this->get('etu.formatter')->format($this->getRequest(), $data, $status, $message);
+    }
 
-        $request = $this->getRequest();
-
-        $format = 'json';
-
-        if ($request->query->has('format')) {
-            $format = $request->query->get('format');
-        } else if ($request->headers->has('format')) {
-            $format = $request->headers->get('format');
+    /**
+     * @return Token
+     */
+    protected function getAccessToken()
+    {
+        if (! $this->getRequest()->attributes->get('_token')) {
+            return false;
         }
 
-        if (! in_array($format, ['xml', 'json'])) {
-            $format = 'json';
+        if (! is_array($this->getRequest()->attributes->get('_token'))) {
+            return false;
         }
 
-        /** @var Serializer $serializer */
-        $serializer = $this->get('etu.serializer');
-
-        $options = ($format == 'json') ? ['json_encode_options' => JSON_PRETTY_PRINT] : [];
-
-        $response = new Response($serializer->encode($data, $format, $options), $status);
-        $response->headers->set('Content-Type', 'text/'.$format);
-
-        return $response;
+        return new Token($this->getRequest()->attributes->get('_token'));
     }
 }
