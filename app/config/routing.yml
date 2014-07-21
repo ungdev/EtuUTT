@@ -31,7 +31,7 @@ api_user_search:
 # API doc
 etu_core_api_doc:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
-    prefix:   /doc/api/reference
+    prefix:   /api/doc/reference
 
 etu_core_doc:
     resource: "@EtuCoreApiBundle/Controller/"

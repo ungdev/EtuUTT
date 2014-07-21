@@ -1,17 +1,15 @@
 {% extends '::developpers.html.twig' %}
 
 {% block content %}
-    <div class="dev-heading">
-        <h3>Bienvenue sur la documentation<br />développeurs d'EtuUTT</h3>
-    </div>
-
     <div class="padding20-all">
         {% if app.request.locale != 'fr' %}
             <div class="alert alert-warning">
-                The EtuUTT developpers documentation is not available in your language.
+                The EtuUTT developpers panel is not available in your language.
                 For the moment, it exists only in French.
             </div>
         {% endif %}
+
+        <h4>Documentation</h4>
 
         <p>
             Cette documentation a pour vocation de décrire l'API et les librairies mis à disposition par EtuUTT. Ces outils
@@ -25,21 +23,33 @@
 
         <hr />
 
-        <h4>Documentation</h4>
-
         <div class="row-fluid">
-            <div class="span6">
+            <div class="span7">
                 <ul class="nav nav-list">
-                    <li class="nav-header">REST API</li>
-                    <li><a href="{{ path('doc_rest_installation') }}">Installation et configuration</a></li>
-                    <li><a href="{{ path('doc_rest_usage') }}">Utilisation</a></li>
+                    <li class="nav-header">I. Introduction</li>
+                    <li><a href="">1. Fonctionnement général</a></li>
+                    <li><a href="">2. OAuth: qu'est-ce que c'est ?</a></li>
+                    <li><a href="">3. Conventions REST et organisation</a></li>
+
+                    <li class="nav-header">II. Obtenir un accès à l'API</li>
+                    <li><a href="">1. Créer son application</a></li>
+                    <li><a href="">2. Les types d'authentification</a></li>
+                    <li><a href="">3. Obtenir un token d'accès</a></li>
+
+                    <li class="nav-header">III. Utiliser l'API</li>
+                    <li><a href="">1. Accéder aux données publiques</a></li>
+                    <li><a href="">2. Utiliser les scopes pour accéder aux données privées</a></li>
+                    <li><a href="">3. Rafraichir un token d'accès</a></li>
+
+                    <li class="nav-header">IV. Liens complémentaires</li>
                     <li><a href="{{ path('nelmio_api_doc_index') }}" target="_blank">Référence des points d'entrée</a></li>
+                    <li><a href="http://en.wikipedia.org/wiki/OAuth" target="_blank">OAuth sur Wikipédia (en)</a></li>
                 </ul>
             </div>
-            <div class="span6">
+            <div class="span5">
                 <ul class="nav nav-list">
                     <li class="nav-header">Librairies</li>
-                    <li><a href="{{ path('doc_lib_phputt') }}">PHP-UTT <small class="muted">(Gestion utilisateur)</small></a></li>
+                    <li><a href="{{ path('devs_doc_lib_phputt') }}">PHP-UTT <small class="muted">(Gestion utilisateur)</small></a></li>
                 </ul>
             </div>
         </div>

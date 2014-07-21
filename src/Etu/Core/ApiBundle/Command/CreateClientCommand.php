@@ -26,12 +26,12 @@ class CreateClientCommand extends ContainerAwareCommand
         $dialog = $this->getHelperSet()->get('dialog');
 
         $client = new OauthClient();
-        $client->setClientId($dialog->ask($output, 'Identifier: '));
         $client->setName($dialog->ask($output, 'Name: '));
         $client->setUserId($dialog->ask($output, 'Owner ID: '));
         $client->setRedirectUri($dialog->ask($output, 'Redirect URL: '));
 
-        $client->setClientSecret(md5(uniqid(time(), true)));
+        $client->generateClientId();
+        $client->generateClientSecret();
 
         $em->persist($client);
         $em->flush();

@@ -3,6 +3,11 @@
 namespace Etu\Core\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Imagine\Gd\Image;
+use Imagine\Gd\Imagine;
+use Imagine\Image\Box;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * OauthClients
@@ -71,12 +76,57 @@ class OauthClient
     private $name;
 
     /**
-     * @var string
+     * @var UploadedFile
      *
-     * @ORM\Column(type="string", length=80)
+     * @Assert\Image(maxSize = "2M", minWidth = 150, minHeight = 150)
      */
-    private $image = 'default';
+    public $file;
 
+    public $scopesList = [];
+
+
+    /**
+     * Upload the photo
+     *
+     * @return boolean
+     */
+    public function upload()
+    {
+        if (null === $this->file) {
+            return false;
+        }
+
+        /*
+         * Upload and resize
+         */
+        $imagine = new Imagine();
+
+        // Create the logo thumbnail in a 200x200 box
+        $thumbnail = $imagine->open($this->file->getPathname())
+            ->thumbnail(new Box(200, 200), Image::THUMBNAIL_OUTBOUND);
+
+        // Save the result
+        $thumbnail->save(__DIR__ . '/../../../../../web/uploads/apps/' . $this->getClientId().'.jpeg');
+    }
+
+    public function generateClientId()
+    {
+        return $this->clientId = mt_rand(100000000, 2100000000) * 25;
+    }
+
+    public function generateClientSecret()
+    {
+        return $this->clientSecret = md5(uniqid(time(), true));
+    }
+
+    /**
+     * @return string
+     */
+    public function injectScopesList()
+    {
+        $this->scopesList[] = 'public';
+        return $this->scope = implode(' ', $this->scopesList);
+    }
 
     /**
      * @return int

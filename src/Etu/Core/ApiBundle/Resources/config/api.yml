@@ -21,6 +21,9 @@ parameters:
 
     etu.api.security.class: Etu\Core\ApiBundle\Listener\SecurityListener
 
+    etu.api.form.scopes.class: Etu\Core\ApiBundle\Form\ScopesType
+    etu.api.form.client.class: Etu\Core\ApiBundle\Form\ClientType
+
 services:
     # Serializer collection
     etu.serializer.collection:
@@ -86,3 +89,15 @@ services:
         arguments: [@kernel]
         tags:
             - { name: routing.loader }
+
+
+    # Form
+    etu.api.form.scopes:
+        class: %etu.api.form.scopes.class%
+        arguments: [ @doctrine.orm.entity_manager ]
+        tags:
+            - { name: form.type, alias: scopes }
+
+    etu.api.form.client:
+        class: %etu.api.form.client.class%
+
