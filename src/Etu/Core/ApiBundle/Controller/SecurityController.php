@@ -3,6 +3,7 @@
 namespace Etu\Core\ApiBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Etu\Core\ApiBundle\Entity\StatLogin;
 use Etu\Core\ApiBundle\Framework\Controller\ApiController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -101,6 +102,9 @@ class SecurityController extends ApiController
 
         if ($sfRequest->getMethod() == 'POST' && $form->submit($sfRequest)->isValid()) {
             $formData = $sfRequest->request->get('form', []);
+
+            $em->persist(new StatLogin($client, $this->getUser()));
+            $em->flush();
 
             $server->handleAuthorizeRequest($request, $response, isset($formData['accept']), $this->getUser()->getId());
             $response->send();

@@ -10,6 +10,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class OauthScope
 {
+    public static $descDev = [
+        'public' => 'De lire les données publiques',
+        'private_user_account' => 'De lire les données privées du compte de l\'utilisateur connecté',
+        'private_user_schedule' => 'De lire l\'emploi du temps de l\'utilisateur connecté',
+        'private_user_organizations' => 'De lire les données associatives de l\'utilisateur connecté',
+    ];
+
     /**
      * @var string
      *

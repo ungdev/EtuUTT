@@ -257,6 +257,16 @@ class OauthClient
     }
 
     /**
+     * Get scopes
+     *
+     * @return array
+     */
+    public function getScopeList()
+    {
+        return explode(' ', $this->scope);
+    }
+
+    /**
      * Set userId
      *
      * @param string $userId
