@@ -125,7 +125,15 @@ class OauthClient
     public function injectScopesList()
     {
         $this->scopesList[] = 'public';
-        return $this->scope = implode(' ', $this->scopesList);
+        return $this->scope = implode(' ', array_unique($this->scopesList));
+    }
+
+    /**
+     * @return string
+     */
+    public function deductScopesList()
+    {
+        return $this->scopesList = explode(' ', $this->scope);
     }
 
     /**

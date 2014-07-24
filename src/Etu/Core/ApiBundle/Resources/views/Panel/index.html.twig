@@ -27,7 +27,7 @@
                 <ul class="nav nav-list">
                     {% for client in clients %}
                         <li>
-                            <a href="">
+                            <a href="{{ path('devs_panel_manage_app', { 'id': client.clientId }) }}">
                                 <img src="{{ asset('uploads/apps/' ~ client.clientId ~ '.jpeg') }}" class="api-app-image-icon" />
                                 {{ client.name }}
                                 <small class="muted">(client_id: {{ client.clientId }})</small>
