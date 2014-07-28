@@ -17,7 +17,7 @@ class ClientType extends AbstractType
         $builder
             ->add('name', 'text', [ 'label' => 'Nom', 'required' => true ])
             ->add('redirectUri', 'url', [ 'label' => 'URL de redirection', 'required' => true ])
-            ->add('file', 'file', [ 'label' => 'Image', 'required' => true ])
+            ->add('file', 'file', [ 'label' => 'Image', 'required' => false ])
             ->add('scopesList', 'scopes', [ 'label' => 'Votre application doit être capable ...', 'required' => true ])
         ;
     }

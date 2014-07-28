@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Validator\Constraints\EqualTo;
 
 /**
  * @Route("/panel")
@@ -190,8 +191,65 @@ class PanelController extends Controller
             return $this->redirect($this->generateUrl('devs_panel_manage_app', [ 'id' => $id ]));
         }
 
+        /** @var OauthClient[] $clients */
+        $clients = $em->getRepository('EtuCoreApiBundle:OauthClient')->findBy([ 'userId' => $this->getUser()->getId() ]);
+
         return [
             'client' => $client,
+            'clients' => $clients,
+            'form' => $form->createView()
+        ];
+    }
+
+    /**
+     * @Route("/app/manage/{id}/remove", name="devs_panel_remove_app")
+     * @Template()
+     */
+    public function removeAppAction(Request $request, $id)
+    {
+        if (! $this->getUserLayer()->isUser()) {
+            return $this->createAccessDeniedResponse();
+        }
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $client = $em->getRepository('EtuCoreApiBundle:OauthClient')->findOneBy([ 'clientId' => $id ]);
+
+        if (! $client) {
+            throw $this->createNotFoundException();
+        }
+
+        if ($client->getUserId() != $this->getUser()->getId()) {
+            throw new AccessDeniedHttpException();
+        }
+
+        $form = $this->createFormBuilder()
+            ->add('client_id', 'text', [
+                'required' => true,
+                'label' => 'Par sécurité, vous devez entrer le Client ID de cette application pour pouvoir la supprimer :',
+                'constraints' => new EqualTo([ 'value' => (string) $client->getClientId(), 'message' => 'Ce Client ID n\'est pas correct'])
+            ])
+            ->getForm();
+
+        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
+            $em->remove($client);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->set('message', array(
+                'type' => 'success',
+                'message' => 'L\' application ' . $client->getName() . ' a bien été supprimée'
+            ));
+
+            return $this->redirect($this->generateUrl('devs_panel_index'));
+        }
+
+        /** @var OauthClient[] $clients */
+        $clients = $em->getRepository('EtuCoreApiBundle:OauthClient')->findBy([ 'userId' => $this->getUser()->getId() ]);
+
+        return [
+            'client' => $client,
+            'clients' => $clients,
             'form' => $form->createView()
         ];
     }

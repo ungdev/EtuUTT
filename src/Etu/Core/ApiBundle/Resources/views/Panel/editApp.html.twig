@@ -1,0 +1,88 @@
+{% extends '::developpers.html.twig' %}
+
+{% block content %}
+    <div class="padding20-all">
+        {% if app.request.locale != 'fr' %}
+            <div class="alert alert-warning">
+                The EtuUTT developpers panel is not available in your language.
+                For the moment, it exists only in French.
+            </div>
+        {% endif %}
+
+        <div class="row-fluid">
+            <div class="span4">
+                <ul class="nav nav-list">
+                    <li class="nav-header">
+                        {{ client.name }}
+                    </li>
+                    <li>
+                        <a href="{{ path('devs_panel_manage_app', { 'id': client.clientId }) }}">Application</a>
+                    </li>
+                    <li class="active">
+                        <a href="{{ path('devs_panel_edit_app', { 'id': client.clientId }) }}">Paramètres</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('devs_panel_remove_app', { 'id': client.clientId }) }}">Supprimer</a>
+                    </li>
+
+                    {% if clients|length > 1 %}
+                        <li class="nav-header">
+                            Mes applications
+                        </li>
+
+                        {% for other in clients if other.clientId != client.clientId %}
+                            <li>
+                                <a href="{{ path('devs_panel_manage_app', { 'id': other.clientId }) }}">
+                                    {{ other.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div class="span8">
+                <h4>{{ client.name }} <small>(Client ID: {{ client.clientId }})</small></h4>
+
+                <hr />
+
+                <form method="post" {{ form_enctype(form) }}>
+                    {{ form_errors(form) }}
+
+                    {{ form_row(form.name) }}
+
+                    <hr />
+
+                    {{ form_row(form.redirectUri) }}
+
+                    <hr />
+
+                    <div class="row-fluid">
+                        <div class="span3">
+                            <img src="{{ asset('uploads/apps/' ~ client.clientId ~ '.jpeg') }}" />
+                        </div>
+                        <div class="span9">
+                            {{ form_row(form.file) }}
+
+                            <p>
+                                <small class="muted">(ne choisissez pas de fichier pour laisser l'image actuelle)</small>
+                            </p>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    {{ form_row(form.scopesList) }}
+
+                    <hr />
+
+                    {{ form_rest(form) }}
+
+                    <p class="align-center">
+                        <input type="submit" value="Modifier" class="btn btn-primary" />
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

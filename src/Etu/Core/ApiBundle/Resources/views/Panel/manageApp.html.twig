@@ -16,16 +16,16 @@
                         {{ client.name }}
                     </li>
                     <li class="active">
-                        <a href="#">Application</a>
+                        <a href="{{ path('devs_panel_manage_app', { 'id': client.clientId }) }}">Application</a>
                     </li>
                     <li>
-                        <a href="#">Paramètres</a>
+                        <a href="{{ path('devs_panel_edit_app', { 'id': client.clientId }) }}">Paramètres</a>
                     </li>
                     <li>
-                        <a href="#">Suppression</a>
+                        <a href="{{ path('devs_panel_remove_app', { 'id': client.clientId }) }}">Supprimer</a>
                     </li>
 
-                    {% if clients|length > 0 %}
+                    {% if clients|length > 1 %}
                         <li class="nav-header">
                             Mes applications
                         </li>
@@ -42,7 +42,7 @@
             </div>
 
             <div class="span8">
-                <h4>{{ client.name }}</h4>
+                <h4>{{ client.name }} <small>(Client ID: {{ client.clientId }})</small></h4>
 
                 <hr />
 
@@ -84,6 +84,14 @@
                         <div class="scope">{{ scopesDescs[scope.scope] }}</div>
                     {% endfor %}
                 </div>
+
+                <p>
+                    <small>
+                        <strong>Remarque</strong> : si vous modifiez les droits de votre application, les tokens
+                        générés avant cette modification auront toujours les anciens droits. Il vous faudra alors gérer
+                        les deux versions dans votre applciation.
+                    </small>
+                </p>
 
                 <hr />
 
