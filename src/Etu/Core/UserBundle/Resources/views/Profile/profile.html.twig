@@ -202,59 +202,75 @@
 				</p>
 			</div>
 
-			<div class="span6 block">
-				<div class="block-title">{{ 'user.profile.profile.trombi'|trans }}</div>
+			<div class="span6">
+                <div class="block">
+                    <div class="block-title">{{ 'user.profile.profile.trombi'|trans }}</div>
 
-				<div class="subblock subblock-first">
-					<div class="profile-infos-label hidden-for-phones">
-						{{ 'user.profile.profile.surname'|trans }}
-					</div>
-					<div class="profile-infos-value">
-						{% if app.user.surnom %}
-							{{ app.user.surnom }}
-							<i class="icon-globe tip" title="{{ 'user.privacy.public'|trans }}"></i>
-						{% else %}
-							<em class="muted">{{ 'user.profile.profile.unknown'|trans }}</em>
-						{% endif %}
-					</div>
-					<div class="clear"></div>
-				</div>
+                    <div class="subblock subblock-first">
+                        <div class="profile-infos-label hidden-for-phones">
+                            {{ 'user.profile.profile.surname'|trans }}
+                        </div>
+                        <div class="profile-infos-value">
+                            {% if app.user.surnom %}
+                                {{ app.user.surnom }}
+                                <i class="icon-globe tip" title="{{ 'user.privacy.public'|trans }}"></i>
+                            {% else %}
+                                <em class="muted">{{ 'user.profile.profile.unknown'|trans }}</em>
+                            {% endif %}
+                        </div>
+                        <div class="clear"></div>
+                    </div>
 
-				<div class="subblock">
-					<div class="profile-infos-label hidden-for-phones">
-						{{ 'user.profile.profile.jadis'|trans }}
-					</div>
-					<div class="profile-infos-value">
-						{% if app.user.jadis %}
-							{{ app.user.jadis|limit(100) }}
-							<i class="icon-globe tip" title="{{ 'user.privacy.public'|trans }}"></i>
-						{% else %}
-							<em class="muted">{{ 'user.profile.profile.unknown'|trans }}</em>
-						{% endif %}
-					</div>
-					<div class="clear"></div>
-				</div>
+                    <div class="subblock">
+                        <div class="profile-infos-label hidden-for-phones">
+                            {{ 'user.profile.profile.jadis'|trans }}
+                        </div>
+                        <div class="profile-infos-value">
+                            {% if app.user.jadis %}
+                                {{ app.user.jadis|limit(100) }}
+                                <i class="icon-globe tip" title="{{ 'user.privacy.public'|trans }}"></i>
+                            {% else %}
+                                <em class="muted">{{ 'user.profile.profile.unknown'|trans }}</em>
+                            {% endif %}
+                        </div>
+                        <div class="clear"></div>
+                    </div>
 
-				<div class="subblock">
-					<div class="profile-infos-label hidden-for-phones">
-						{{ 'user.profile.profile.passions'|trans }}
-					</div>
-					<div class="profile-infos-value">
-						{% if app.user.passions %}
-							{{ app.user.passions|limit(100) }}
-							<i class="icon-globe tip" title="{{ 'user.privacy.public'|trans }}"></i>
-						{% else %}
-							<em class="muted">{{ 'user.profile.profile.unknown'|trans }}</em>
-						{% endif %}
-					</div>
-					<div class="clear"></div>
-				</div>
+                    <div class="subblock">
+                        <div class="profile-infos-label hidden-for-phones">
+                            {{ 'user.profile.profile.passions'|trans }}
+                        </div>
+                        <div class="profile-infos-value">
+                            {% if app.user.passions %}
+                                {{ app.user.passions|limit(100) }}
+                                <i class="icon-globe tip" title="{{ 'user.privacy.public'|trans }}"></i>
+                            {% else %}
+                                <em class="muted">{{ 'user.profile.profile.unknown'|trans }}</em>
+                            {% endif %}
+                        </div>
+                        <div class="clear"></div>
+                    </div>
 
-				<p class="profile-block-action">
-					<a href="{{ path('user_trombi_edit') }}" class="btn">
-						{{ 'user.profile.profile.edit'|trans }}
-					</a>
-				</p>
+                    <p class="profile-block-action">
+                        <a href="{{ path('user_trombi_edit') }}" class="btn">
+                            {{ 'user.profile.profile.edit'|trans }}
+                        </a>
+                    </p>
+                </div>
+
+                {% if hasApps %}
+                    <div class="block">
+                        <div class="block-title">{{ 'user.profile.profile.apps'|trans }}</div>
+
+                        <ul>
+                            {% for client in apps %}
+                                <li>
+                                    {{ client.name }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
 			</div>
 		</div>
 
