@@ -5,6 +5,7 @@ namespace Etu\Core\UserBundle\Api\Resource;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Etu\Core\ApiBundle\Framework\Controller\ApiController;
+use Etu\Core\ApiBundle\Framework\Embed\EmbedBag;
 use Etu\Core\UserBundle\Entity\Organization;
 use Knp\Component\Pager\Pagination\SlidingPagination;
 use Symfony\Component\HttpFoundation\Request;
@@ -56,6 +57,8 @@ class PublicOrgasListController extends ApiController
             $next = $this->generateUrl('api_public_orgas_list', ['page' => $page + 1]);
         }
 
+        $embedBag = EmbedBag::createFromRequest($request);
+
         return $this->format([
             'pagination' => [
                 'currentPage' => $pagination->getCurrentPageNumber(),
@@ -65,7 +68,8 @@ class PublicOrgasListController extends ApiController
                 'previous' => $previous,
                 'next' => $next,
             ],
-            'data' => $this->get('etu.api.orga.transformer')->transform($pagination->getItems())
+            'embed' => $embedBag->getMap([ 'members' ]),
+            'data' => $this->get('etu.api.orga.transformer')->transform($pagination->getItems(), $embedBag)
         ]);
     }
 
@@ -74,7 +78,7 @@ class PublicOrgasListController extends ApiController
      *   section = "Organization - Public data",
      *   description = "View a single organisation (scope: public)",
      *   parameters={
-     *      { "name"="login", "dataType"="string", "required"=true, "description"="User login" }
+     *      { "name"="login", "dataType"="string", "required"=true, "description"="Organization login" }
      *   }
      * )
      *
@@ -84,7 +88,27 @@ class PublicOrgasListController extends ApiController
     public function viewAction(Organization $orga)
     {
         return $this->format([
-            'data' => $this->get('etu.api.orga.transformer')->transform($orga)
+            'embed' => [ 'members' => true ],
+            'data' => $this->get('etu.api.orga.transformer')->transform($orga, new EmbedBag([ 'members' ]))
+        ]);
+    }
+
+    /**
+     * @ApiDoc(
+     *   section = "Organization - Public data",
+     *   description = "List of a given organization members (scope: public)",
+     *   parameters={
+     *      { "name"="login", "dataType"="string", "required"=true, "description"="Organization login" }
+     *   }
+     * )
+     *
+     * @Route("/public/orgas/{login}/members", name="api_public_orgas_members")
+     * @Method("GET")
+     */
+    public function membersAction(Organization $orga)
+    {
+        return $this->format([
+            'data' => $this->get('etu.api.orga_member.transformer')->transform($orga->getMemberships()->toArray(), new EmbedBag([ 'user' ]))
         ]);
     }
 

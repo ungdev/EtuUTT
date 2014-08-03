@@ -49,9 +49,7 @@ class DataFormatter
             $format = 'json';
         }
 
-        $options = ($format == 'json') ? ['json_encode_options' => JSON_PRETTY_PRINT] : [];
-
-        $response = new Response($this->serializer->encode($data, $format, $options), $status);
+        $response = new Response($this->serializer->encode($data, $format), $status);
         $response->headers->set('Content-Type', 'text/'.$format);
 
         return $response;

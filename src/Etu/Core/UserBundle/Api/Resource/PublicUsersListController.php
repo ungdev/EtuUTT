@@ -5,6 +5,7 @@ namespace Etu\Core\UserBundle\Api\Resource;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Etu\Core\ApiBundle\Framework\Controller\ApiController;
+use Etu\Core\ApiBundle\Framework\Embed\EmbedBag;
 use Etu\Core\UserBundle\Entity\User;
 use Knp\Component\Pager\Pagination\SlidingPagination;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,6 +27,9 @@ class PublicUsersListController extends ApiController
      *      { "name"="speciality",      "dataType"="string"     },
      *      { "name"="is_student",      "dataType"="boolean"    },
      *      { "name"="bde_member",      "dataType"="boolean"    }
+     *   },
+     *   parameters={
+     *      { "name"="embed", "dataType"="string", "description"="Embed foreign entities in the users data (available: badges)" }
      *   }
      * )
      *
@@ -62,6 +66,8 @@ class PublicUsersListController extends ApiController
             $next = $this->generateUrl('api_public_users_list', ['page' => $page + 1]);
         }
 
+        $embedBag = EmbedBag::createFromRequest($request);
+
         return $this->format([
             'pagination' => [
                 'currentPage' => $pagination->getCurrentPageNumber(),
@@ -71,7 +77,8 @@ class PublicUsersListController extends ApiController
                 'previous' => $previous,
                 'next' => $next,
             ],
-            'data' => $this->get('etu.api.user.transformer')->transform($pagination->getItems())
+            'embed' => $embedBag->getMap([ 'badges' ]),
+            'data' => $this->get('etu.api.user.transformer')->transform($pagination->getItems(), $embedBag)
         ]);
     }
 
@@ -90,7 +97,33 @@ class PublicUsersListController extends ApiController
     public function viewAction(User $user)
     {
         return $this->format([
-            'data' => $this->get('etu.api.user.transformer')->transform($user)
+            'embed' => [ 'badges' => true ],
+            'data' => $this->get('etu.api.user.transformer')->transform($user, new EmbedBag([ 'badges' ]))
+        ]);
+    }
+
+    /**
+     * @ApiDoc(
+     *   description = "Badges list of a given user (scope: public)",
+     *   section = "User - Public data",
+     *   parameters={
+     *      { "name"="login", "dataType"="string", "required"=true, "description"="User login" }
+     *   }
+     * )
+     *
+     * @Route("/public/users/{login}/badges", name="api_public_users_badges")
+     * @Method("GET")
+     */
+    public function badgesAction(User $user)
+    {
+        $badges = [];
+
+        foreach ($user->getBadges() as $userBadge) {
+            $badges[] = $userBadge->getBadge();
+        }
+
+        return $this->format([
+            'data' => $this->get('etu.api.badge.transformer')->transform($badges)
         ]);
     }
 

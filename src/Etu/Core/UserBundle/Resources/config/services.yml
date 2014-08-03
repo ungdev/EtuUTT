@@ -11,9 +11,12 @@ parameters:
     etu.notifs.new_badge.class: Etu\Core\UserBundle\Notification\Helper\NewBadgeHelper
 
     etu.api.user.transformer.class: Etu\Core\UserBundle\Api\Transformer\UserTransformer
+    etu.api.badge.transformer.class: Etu\Core\UserBundle\Api\Transformer\BadgeTransformer
     etu.api.course.transformer.class: Etu\Core\UserBundle\Api\Transformer\CourseTransformer
     etu.api.user.private_transformer.class: Etu\Core\UserBundle\Api\Transformer\UserPrivateTransformer
     etu.api.orga.transformer.class: Etu\Core\UserBundle\Api\Transformer\OrgaTransformer
+    etu.api.orga_member.transformer.class: Etu\Core\UserBundle\Api\Transformer\OrgaMemberTransformer
+
     etu.api.user.mapper.class: Etu\Core\UserBundle\Api\QueryMapper\UserListMapper
     etu.api.orga.mapper.class: Etu\Core\UserBundle\Api\QueryMapper\OrgaListMapper
 
@@ -67,18 +70,26 @@ services:
             - { name: etu.notifs_helper }
 
     # API
-    etu.api.user.transformer:
-        class: %etu.api.user.transformer.class%
-
-    etu.api.user.private_transformer:
-        class: %etu.api.user.private_transformer.class%
+    etu.api.badge.transformer:
+        class: %etu.api.badge.transformer.class%
 
     etu.api.course.transformer:
         class: %etu.api.course.transformer.class%
 
+    etu.api.user.transformer:
+        class: %etu.api.user.transformer.class%
+        arguments: [ @etu.api.badge.transformer ]
+
+    etu.api.user.private_transformer:
+        class: %etu.api.user.private_transformer.class%
+
+    etu.api.orga_member.transformer:
+        class: %etu.api.orga_member.transformer.class%
+        arguments: [ @etu.api.user.transformer ]
+
     etu.api.orga.transformer:
         class: %etu.api.orga.transformer.class%
-        arguments: [@etu.api.user.transformer]
+        arguments: [ @etu.api.user.transformer, @etu.api.orga_member.transformer ]
 
     etu.api.user.mapper:
         class: %etu.api.user.mapper.class%
