@@ -1,0 +1,94 @@
+{% extends '::developpers.html.twig' %}
+
+{% block content %}
+    <div class="padding20-all">
+        {% if app.request.locale != 'fr' %}
+            <div class="alert alert-warning">
+                The EtuUTT developpers panel is not available in your language.
+                For the moment, it exists only in French.
+            </div>
+        {% endif %}
+
+        <div class="row-fluid">
+            <div class="span4">
+                <ul class="nav nav-list">
+                    <li class="nav-header">
+                        {{ client.name }}
+                    </li>
+                    <li>
+                        <a href="{{ path('devs_panel_manage_app', { 'id': client.clientId }) }}">Application</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('devs_panel_edit_app', { 'id': client.clientId }) }}">Paramètres</a>
+                    </li>
+                    <li class="active">
+                        <a href="{{ path('devs_panel_remove_app', { 'id': client.clientId }) }}">Supprimer</a>
+                    </li>
+
+                    {% if clients|length > 1 %}
+                        <li class="nav-header">
+                            Mes applications
+                        </li>
+
+                        {% for other in clients if other.clientId != client.clientId %}
+                            <li>
+                                <a href="{{ path('devs_panel_manage_app', { 'id': other.clientId }) }}">
+                                    {{ other.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div class="span8">
+                <h4>{{ client.name }} <small>(Client ID: {{ client.clientId }})</small></h4>
+
+                <hr />
+
+                <p>
+                    Voulez-vous vraiment supprimer cette application ? Cette suppression est définitive.
+                </p>
+
+                <p class="alert alert-danger">
+                    <strong>Attention :</strong><br />
+                    Une fois supprimée, toutes les demandes d'autorisation vers votre application lanceront une erreur 404.
+                    Veillez bien à ce que tous les utilisateurs de votre application aient arrêté de l'utiliser.
+                </p>
+
+                <hr />
+
+                <form method="post" action="">
+                    {{ form_row(form.client_id) }}
+
+                    {{ form_rest(form) }}
+
+                    <p>
+                        <br />
+                        <input type="submit" value="Supprimer cette application" class="btn btn-primary" id="form_submit" />
+                        <a href="{{ path('devs_panel_manage_app', { 'id': client.clientId }) }}" class="btn btn-default">Annuler cette suppression</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        var form = {
+            clientId: $('#form_client_id'),
+            submit: $('#form_submit')
+        };
+
+        form.submit.attr('disabled', true);
+
+        form.clientId.on('input', function() {
+            if ($(this).val() == '{{ client.clientId }}') {
+                form.submit.attr('disabled', false);
+            } else {
+                form.submit.attr('disabled', true);
+            }
+        });
+    </script>
+{% endblock %}

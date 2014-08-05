@@ -262,6 +262,7 @@ user:
             birthday: Date de naissance
             age: %age% ans
             trombi: Trombinoscope
+            apps: Applications autorisées à accéder à vos données
             surname: Surnom
             jadis: Jadis
             passions: Passions

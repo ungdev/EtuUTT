@@ -26,6 +26,19 @@ class Member
 
 	const ROLE_MEMBER = 10;
 
+    public static $roles = [
+        self::ROLE_PRESIDENT        => 'president',
+        self::ROLE_V_PRESIDENT      => 'vice_president',
+
+        self::ROLE_TREASURER        => 'treasurer',
+        self::ROLE_V_TREASURER      => 'vice_treasurer',
+
+        self::ROLE_SECRETARY        => 'secretary',
+        self::ROLE_V_SECRETARY      => 'vice_secretary',
+
+        self::ROLE_MEMBER           => 'member',
+    ];
+
     /**
      * @var integer
      *
@@ -38,7 +51,7 @@ class Member
 	/**
 	 * @var User $president
 	 *
-	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
+	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User", inversedBy="memberships")
 	 * @ORM\JoinColumn()
 	 */
 	protected $user;
@@ -46,7 +59,7 @@ class Member
 	/**
 	 * @var Organization $organization
 	 *
-	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\Organization")
+	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\Organization", inversedBy="")
 	 * @ORM\JoinColumn()
 	 */
 	protected $organization;

@@ -1,0 +1,54 @@
+
+parameters:
+    oauth.storage.connection.class: Doctrine\DBAL\Driver\PDOConnection
+    oauth.storage.class: OAuth2\Storage\Pdo
+
+    oauth.grant_type.client_credentials.class: OAuth2\GrantType\ClientCredentials
+    oauth.grant_type.refresh_token.class: OAuth2\GrantType\RefreshToken
+    oauth.grant_type.authorization_code.class: OAuth2\GrantType\AuthorizationCode
+
+    oauth.scopes_manager.class: OAuth2\Scope
+
+    oauth.server.class: OAuth2\Server
+
+services:
+    oauth.storage.connection:
+        class: %oauth.storage.connection.class%
+        factory_service: doctrine.dbal.default_connection
+        factory_method: getWrappedConnection
+
+    oauth.storage:
+        class: %oauth.storage.class%
+        arguments: [ @oauth.storage.connection ]
+
+    oauth.grant_type.client_credentials:
+        class: %oauth.grant_type.client_credentials.class%
+        arguments: [ @oauth.storage ]
+
+    oauth.grant_type.refresh_token:
+        class: %oauth.grant_type.refresh_token.class%
+        arguments: [ @oauth.storage, { always_issue_new_refresh_token: true, refresh_token_lifetime: 2592000 } ]
+
+    oauth.grant_type.authorization_code:
+        class: %oauth.grant_type.authorization_code.class%
+        arguments: [ @oauth.storage ]
+
+    oauth.scopes_manager:
+        class: %oauth.scopes_manager.class%
+        arguments: [ @oauth.storage ]
+
+    oauth.server:
+        class: %oauth.server.class%
+        arguments: [ @oauth.storage, { always_issue_new_refresh_token: true, refresh_token_lifetime: 2592000 } ]
+        calls:
+            - [ setScopeUtil, [ @oauth.scopes_manager ] ]
+            - [ addGrantType, [ @oauth.grant_type.client_credentials ] ]
+            - [ addGrantType, [ @oauth.grant_type.refresh_token ] ]
+            - [ addGrantType, [ @oauth.grant_type.authorization_code ] ]
+
+    # Security
+    etu.api.security:
+        class: %etu.api.security.class%
+        arguments: [ @oauth.server, @annotation_reader, @etu.response_handler ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

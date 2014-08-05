@@ -116,7 +116,13 @@ fm_bbcode:
             hooks: [ clickable, emoticon ]
 
 # API Doc
-nelmio_api_doc: ~
+nelmio_api_doc:
+    name: EtuUTT API endpoints reference
+    sandbox:
+        authentication:
+            name: access_token
+            delivery: query
+            custom_endpoint: true
 
 # EtuUTT
 etu_core:

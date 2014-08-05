@@ -1,0 +1,86 @@
+{% extends '::developpers.html.twig' %}
+
+{% block content %}
+    <div class="padding20-all">
+        {% if app.request.locale != 'fr' %}
+            <div class="alert alert-warning">
+                The EtuUTT developpers panel is not available in your language.
+                For the moment, it exists only in French.
+            </div>
+        {% endif %}
+
+        <h4>Créer une application API EtuUTT</h4>
+
+        <hr />
+
+        <form method="post" {{ form_enctype(form) }}>
+            <div class="row-fluid">
+                <div class="span6">
+                    {{ form_row(form.name) }}
+                </div>
+                <div class="span6 hidden-for-phones">
+                    <div class="well">
+                        <strong>Nom de l'application</strong><br /><br />
+                        Ce nom est utilisé à plusieurs endroits d'EtuUTT pour faire référence à votre application.
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row-fluid">
+                <div class="span6">
+                    {{ form_row(form.redirectUri) }}
+                </div>
+                <div class="span6 hidden-for-phones">
+                    <div class="well">
+                        <strong>URL de redirection</strong><br /><br />
+                        URL vers laquelle l'utilisateur sera redirigé lorsqu'il aura accepté votre application à accéder
+                        à ses données. C'est sur cette URL que vous recevrez l'<code>authorization_code</code>.
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row-fluid">
+                <div class="span6">
+                    {{ form_row(form.file) }}
+                </div>
+                <div class="span6 hidden-for-phones">
+                    <div class="well">
+                        <strong>Image de l'application</strong><br /><br />
+                        Cette image est une icône carrée (elle sera coupée si nécessaire) utilisée pour agrémenter
+                        la page d'autorisation d'EtuUTT vis-à-vis de votre application.<br />
+                        Elle doit mesurer au minimum 150x150 pixels et doit peser moins de 2 Mo.
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row-fluid">
+                <div class="span6">
+                    {{ form_row(form.scopesList) }}
+                </div>
+                <div class="span6 hidden-for-phones">
+                    <div class="well">
+                        <strong>Accès de l'application</strong><br /><br />
+                        Selon ce que vous voulez faire avec votre application, vous aurez besoin de différents accès à
+                        l'API. Essayez de limiter le nombre d'accès demandés au strict nécessaire pour ne pas effrayer
+                        les utilisateurs.
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <p class="align-center">
+                <input type="submit" value="Créer" class="btn btn-primary" />
+                <a href="{{ path('devs_panel_index') }}" class="btn btn-default">Annuler</a>
+            </p>
+
+            {{ form_rest(form) }}
+        </form>
+    </div>
+{% endblock %}

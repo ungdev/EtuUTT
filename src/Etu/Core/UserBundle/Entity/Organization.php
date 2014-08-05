@@ -2,6 +2,7 @@
 
 namespace Etu\Core\UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -135,6 +136,14 @@ class Organization implements UserInterface, \Serializable
 	 */
 	protected $deletedAt;
 
+    /**
+     * @var Member[] $memberships
+     *
+     * @ORM\OneToMany(targetEntity="\Etu\Core\UserBundle\Entity\Member", mappedBy="organization")
+     * @ORM\JoinColumn()
+     */
+    protected $memberships;
+
 	/**
 	 * Temporary variable to store uploaded file during photo update
 	 *
@@ -226,11 +235,11 @@ class Organization implements UserInterface, \Serializable
 	}
 
 	/**
-	 * @return array
+	 * @return Member[]|ArrayCollection
 	 */
 	public function getMemberships()
 	{
-		return array();
+		return $this->memberships;
 	}
 
 	/**

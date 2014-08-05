@@ -1,0 +1,52 @@
+{% extends '::oauth.html.twig' %}
+
+{% block content %}
+    <div class="padding20-all">
+        <br />
+
+        <h4 class="align-center">
+            L'application <strong>{{ client.name }}</strong> souhaite accéder à vos informations
+        </h4>
+
+        <div class="align-center">
+            <div class="api-auth-app">
+                <div class="api-auth-app-image">
+                    <img src="{{ asset('uploads/apps/' ~ client.clientId ~ '.jpeg') }}" />
+                </div>
+                <div class="api-auth-app-infos">
+                    <p>
+                        <strong>{{ client.name }}</strong><br />
+                        <em><small class="muted">Gérée par {{ user.fullName }}</small></em>
+                    </p>
+
+                    <p class="muted">
+                        Souhaite être capable :
+                    </p>
+
+                    <ul>
+                        {% for scope in scopes %}
+                            <li>{{ scope.description }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="align-center">
+            <p>
+                Acceptez-vous de donner ces informations à l'application <strong>{{ client.name }}</strong> ?
+            </p>
+
+            <form method="post">
+                {{ form_errors(form) }}
+
+                <p>
+                    {{ form_widget(form.accept) }}
+                    {{ form_widget(form.cancel) }}
+                </p>
+
+                {{ form_rest(form) }}
+            </form>
+        </div>
+    </div>
+{% endblock %}

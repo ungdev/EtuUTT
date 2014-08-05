@@ -39,7 +39,9 @@
         "dopiaza/dpzflickr": "1.2.*",
         "jasig/phpcas": "dev-master",
         "sonata-project/intl-bundle": "2.2.*",
-        "elao/web-profiler-extra-bundle" : "~2.3@dev"
+        "elao/web-profiler-extra-bundle" : "~2.3@dev",
+        "bshaffer/oauth2-server-php": "1.4.*",
+        "league/fractal": "0.8.*"
 	},
 	"scripts": {
 		"post-install-cmd": [

@@ -12,9 +12,17 @@ parameters:
     etu.serializer.builder.class: Etu\Core\ApiBundle\Serializer\SerializerBuilder
     etu.serializer.class: Symfony\Component\Serializer\Serializer
 
+    etu.formatter.class: Etu\Core\ApiBundle\Formatter\DataFormatter
+    etu.response_handler.class: Etu\Core\ApiBundle\Oauth\ResponseHandler
+
+    etu.exception_listener.class: Etu\Core\ApiBundle\Listener\ExceptionListener
+
     etu.api.routing_loader.class: Etu\Core\ApiBundle\Framework\Routing\ApiResourcesRoutingLoader
 
     etu.api.security.class: Etu\Core\ApiBundle\Listener\SecurityListener
+
+    etu.api.form.scopes.class: Etu\Core\ApiBundle\Form\ScopesType
+    etu.api.form.client.class: Etu\Core\ApiBundle\Form\ClientType
 
 services:
     # Serializer collection
@@ -58,6 +66,23 @@ services:
         factory_service: etu.serializer.builder
         factory_method: createSerializer
 
+    # Data formatter
+    etu.formatter:
+        class: %etu.formatter.class%
+        arguments: [ @etu.serializer ]
+
+    # Response handler
+    etu.response_handler:
+        class: %etu.response_handler.class%
+        arguments: [ @etu.formatter ]
+
+    # Exception listener
+    etu.exception_listener:
+        class: %etu.exception_listener.class%
+        arguments: [ @etu.formatter ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
     # Routing loader
     etu.api.routing_loader:
         class: %etu.api.routing_loader.class%
@@ -65,9 +90,14 @@ services:
         tags:
             - { name: routing.loader }
 
-    # Security
-    etu.api.security:
-        class: %etu.api.security.class%
-        arguments: [ @doctrine, @etu.serializer ]
+
+    # Form
+    etu.api.form.scopes:
+        class: %etu.api.form.scopes.class%
+        arguments: [ @doctrine.orm.entity_manager ]
         tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+            - { name: form.type, alias: scopes }
+
+    etu.api.form.client:
+        class: %etu.api.form.client.class%
+
