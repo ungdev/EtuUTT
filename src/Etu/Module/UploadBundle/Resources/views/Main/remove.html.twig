@@ -3,7 +3,7 @@
 
 {% block body %}
 	<div class="upload-remove">
-		<img class="upload-remove-image" src="{{ asset('uploads/'~app.user.login~'/'~image.name) }}" alt="{{ image.name }}" title="{{ image.name }}" />
+		<img class="upload-remove-image" src="{{ asset('uploads/users_files/'~app.user.login~'/'~image.name) }}" alt="{{ image.name }}" title="{{ image.name }}" />
 		<hr />
 		<p>
 			{{ 'upload.main.remove.question'|trans({'%name%': image.name})|raw }}

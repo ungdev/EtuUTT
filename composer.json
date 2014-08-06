@@ -44,18 +44,22 @@
 	},
 	"scripts": {
 		"post-install-cmd": [
+            "Etu\\Core\\CoreBundle\\Composer\\InstallationHandler::displayHeader",
 			"Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
 			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
 			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
 			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Etu\\Core\\CoreBundle\\Composer\\InstallationHandler::installEtuUTT"
 		],
 		"post-update-cmd": [
+            "Etu\\Core\\CoreBundle\\Composer\\InstallationHandler::displayHeader",
 			"Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
 			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
 			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
 			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Etu\\Core\\CoreBundle\\Composer\\InstallationHandler::installEtuUTT"
 		]
 	},
 	"config": {
