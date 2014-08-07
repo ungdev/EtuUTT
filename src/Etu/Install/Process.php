@@ -57,7 +57,7 @@ class Process
 
     public static function createDatabase()
     {
-        passthru('php app/console doctrine:schema:create --env=dev');
+        passthru('php app/console doctrine:schema:update --force --env=dev');
     }
 
     public static function installBower($rootDir)
