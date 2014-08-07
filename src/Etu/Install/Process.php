@@ -63,10 +63,10 @@ class Process
     public static function insertBasicData()
     {
         echo "Inserting badges ...\n";
-        passthru('php app/console etu:badges:import --force --env=dev');
+        passthru('php app/console etu:badges:import --env=dev');
 
         echo "Inserting cities ...\n";
-        passthru('php app/console etu:cities:import --force --env=dev');
+        passthru('php app/console etu:cities:import --env=dev');
     }
 
     public static function installBower($rootDir)
