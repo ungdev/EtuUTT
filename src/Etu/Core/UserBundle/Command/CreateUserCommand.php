@@ -33,12 +33,6 @@ class CreateUserCommand extends ContainerAwareCommand
 	{
 		$dialog = $this->getHelperSet()->get('dialog');
 
-		$output->writeln('
-	Welcome to the EtuUTT users manager
-
-This command helps you to create a user (which be accessible using external connexion).
-');
-
 		/** @var EntityManager $em */
 		$em = $this->getContainer()->get('doctrine')->getManager();
 

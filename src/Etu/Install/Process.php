@@ -60,6 +60,15 @@ class Process
         passthru('php app/console doctrine:schema:update --force --env=dev');
     }
 
+    public static function insertBasicData()
+    {
+        echo "Inserting badges ...\n";
+        passthru('php app/console etu:badges:import --force --env=dev');
+
+        echo "Inserting cities ...\n";
+        passthru('php app/console etu:cities:import --force --env=dev');
+    }
+
     public static function installBower($rootDir)
     {
         chdir($rootDir . '/web');
@@ -71,6 +80,11 @@ class Process
     {
         passthru('php app/console assets:install web --env=dev');
         passthru('php app/console assetic:dump --env=dev');
+    }
+
+    public static function createFisrtUser()
+    {
+        passthru('php app/console etu:users:create --env=dev');
     }
 
 

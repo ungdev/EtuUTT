@@ -118,6 +118,16 @@ echo "\n    --------------------------------\n\n";
 \Etu\Install\Process::createDatabase();
 
 
+echo "\n\n    > Inserting basic data ...";
+echo "\n    --------------------------------\n\n";
+\Etu\Install\Process::insertBasicData();
+
+
+echo "\n\n    > Creating first user ...";
+echo "\n    --------------------------------\n\n";
+\Etu\Install\Process::createFisrtUser();
+
+
 echo "\n\n    > Installing assets ...";
 echo "\n    --------------------------------\n\n";
 \Etu\Install\Process::installBower(__DIR__ . '/..');
