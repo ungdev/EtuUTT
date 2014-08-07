@@ -1,0 +1,129 @@
+#!/usr/bin/env php
+<?php
+
+include __DIR__ . '/../src/Etu/Install/Requirement/RequirementsCollection.php';
+include __DIR__ . '/../src/Etu/Install/Requirement/Requirement.php';
+include __DIR__ . '/../src/Etu/Install/Process.php';
+
+echo "\n";
+echo " ********************************\n";
+echo " *                              *\n";
+echo " *  EtuUTT requirements check   *\n";
+echo " *  and installation manager    *\n";
+echo " *                              *\n";
+echo " ********************************\n\n";
+
+echo " Welcome into the installation manager of EtuUTT\n";
+echo " This manager will guide you into the installation of EtuUTT and its dependencies.\n";
+echo " It will also configure parameters asking you some informations.\n\n\n";
+
+
+/*
+ |--------------------------------------------------------------------------
+ | Check requirements
+ |--------------------------------------------------------------------------
+ |
+ | Check all the requirements of EtuUTT are available.
+ | Stop the installation if it's not the case.
+ |
+ */
+
+echo " Checking requirements ...\n";
+echo " --------------------------------\n";
+
+$requirements = new \Etu\Install\Requirement\RequirementCollection();
+
+$requirements
+    ->add(new \Etu\Install\Requirement\Requirement(
+            version_compare(PHP_VERSION, '5.3.3', '>='),
+            'PHP version must be at least 5.3.3 ('. PHP_VERSION .' installed)'
+        ));
+
+$requirements
+    ->add(new \Etu\Install\Requirement\Requirement(
+            version_compare(PHP_VERSION, '5.3.16', '!='),
+            'PHP version must not be 5.3.16 as Symfony won\'t work properly with it ('. PHP_VERSION .' installed)'
+        ));
+
+// Composer
+$composerResult = shell_exec('composer --version');
+
+$requirements
+    ->add(new \Etu\Install\Requirement\Requirement(
+            ! empty($composerResult),
+            'Composer must be installed'
+        ));
+
+// Composer
+$bowerResult = shell_exec('bower --version');
+
+$requirements
+    ->add(new \Etu\Install\Requirement\Requirement(
+            ! empty($bowerResult),
+            'Bower must be installed'
+        ));
+
+$requirements->display();
+
+if (! $requirements->isFulfilled()) {
+    echo "\n Your system is not ready to install EtuUTT.\n";
+    echo " Check the documentation to install required packages.\n";
+    exit;
+}
+
+
+/*
+ |--------------------------------------------------------------------------
+ | Begin install - ask confirmation
+ |--------------------------------------------------------------------------
+ */
+
+echo "\n\n Installation ...\n";
+echo " --------------------------------\n";
+
+chdir(__DIR__ . '/..');
+$outputFile = __DIR__ . '/cache/install.tmp';
+
+echo "\n The installation is ready to begin. Should we start now? [Y/n] ";
+
+$answer = trim(fgets(fopen('php://stdin', 'r')));
+
+if ($answer == 'n') {
+    echo "\n";
+    exit;
+}
+
+echo "\n\n    > Installing framework dependencies ...";
+echo "\n    --------------------------------\n\n";
+\Etu\Install\Process::installDependencies();
+
+
+echo "\n\n    > Configuring application ...";
+echo "\n    --------------------------------\n\n";
+\Etu\Install\Process::configureApplication();
+
+
+echo "\n\n    > Clearing cache ...";
+echo "\n    --------------------------------\n\n";
+\Etu\Install\Process::clearCache();
+
+
+echo "\n\n    > Building distribution files ...";
+echo "\n    --------------------------------\n\n";
+\Etu\Install\Process::buildDefaultFiles(__DIR__ . '/..');
+
+
+echo "\n\n    > Changing permissions ...";
+echo "\n    --------------------------------\n\n";
+\Etu\Install\Process::changePermissions(__DIR__ . '/..');
+
+
+echo "\n\n    > Creating database ...";
+echo "\n    --------------------------------\n\n";
+\Etu\Install\Process::createDatabase();
+
+
+echo "\n\n    > Installing assets ...";
+echo "\n    --------------------------------\n\n";
+\Etu\Install\Process::installBower(__DIR__ . '/..');
+\Etu\Install\Process::assticDump();

@@ -43,24 +43,21 @@
         "bshaffer/oauth2-server-php": "1.4.*"
 	},
 	"scripts": {
-		"post-install-cmd": [
-            "Etu\\Core\\CoreBundle\\Composer\\InstallationHandler::displayHeader",
-			"Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Etu\\Core\\CoreBundle\\Composer\\InstallationHandler::installEtuUTT"
-		],
+        "post-install-cmd": [
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+        ],
 		"post-update-cmd": [
-            "Etu\\Core\\CoreBundle\\Composer\\InstallationHandler::displayHeader",
 			"Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
 			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
 			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Etu\\Core\\CoreBundle\\Composer\\InstallationHandler::installEtuUTT"
-		]
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+		],
+        "etu-build-params": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters"
+        ]
 	},
 	"config": {
 		"bin-dir": "bin"

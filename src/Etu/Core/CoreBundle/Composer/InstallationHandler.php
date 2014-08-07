@@ -62,6 +62,13 @@ class InstallationHandler
             chmod($item, 0777);
         }
 
+        // Logs
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($appDir . '/logs'));
+
+        foreach($iterator as $item) {
+            chmod($item, 0777);
+        }
+
         // Uploads
         $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($webDir . '/uploads'));
 
