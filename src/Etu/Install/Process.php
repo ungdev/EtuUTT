@@ -67,8 +67,9 @@ class Process
         chdir($rootDir);
     }
 
-    public static function assticDump()
+    public static function installAssets()
     {
+        passthru('php app/console assets:install web --env=dev');
         passthru('php app/console assetic:dump --env=dev');
     }
 

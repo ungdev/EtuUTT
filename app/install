@@ -121,4 +121,4 @@ echo "\n    --------------------------------\n\n";
 echo "\n\n    > Installing assets ...";
 echo "\n    --------------------------------\n\n";
 \Etu\Install\Process::installBower(__DIR__ . '/..');
-\Etu\Install\Process::assticDump();
+\Etu\Install\Process::installAssets();
