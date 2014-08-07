@@ -50,11 +50,6 @@ class Process
         echo "Done\n";
     }
 
-    public static function configureApplication()
-    {
-        passthru('composer run-script etu-build-params');
-    }
-
     public static function clearCache()
     {
         passthru('php app/console cache:clear --env=dev');

@@ -98,11 +98,6 @@ echo "\n    --------------------------------\n\n";
 \Etu\Install\Process::installDependencies();
 
 
-echo "\n\n    > Configuring application ...";
-echo "\n    --------------------------------\n\n";
-\Etu\Install\Process::configureApplication();
-
-
 echo "\n\n    > Clearing cache ...";
 echo "\n    --------------------------------\n\n";
 \Etu\Install\Process::clearCache();
