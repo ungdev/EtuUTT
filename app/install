@@ -35,14 +35,8 @@ $requirements = new \Etu\Install\Requirement\RequirementCollection();
 
 $requirements
     ->add(new \Etu\Install\Requirement\Requirement(
-            version_compare(PHP_VERSION, '5.3.3', '>='),
-            'PHP version must be at least 5.3.3 ('. PHP_VERSION .' installed)'
-        ));
-
-$requirements
-    ->add(new \Etu\Install\Requirement\Requirement(
-            version_compare(PHP_VERSION, '5.3.16', '!='),
-            'PHP version must not be 5.3.16 as Symfony won\'t work properly with it ('. PHP_VERSION .' installed)'
+            version_compare(PHP_VERSION, '5.4.0', '>='),
+            'PHP version must be at least 5.4.0 ('. PHP_VERSION .' installed)'
         ));
 
 // Composer
@@ -93,19 +87,26 @@ if ($answer == 'n') {
     exit;
 }
 
+echo "\n\n    > Building configuration";
+echo "\n    --------------------------------\n\n";
+$config = \Etu\Install\Process::askConfig();
+
+
 echo "\n\n    > Installing framework dependencies ...";
 echo "\n    --------------------------------\n\n";
 \Etu\Install\Process::installDependencies();
+\Etu\Install\Process::requireDependencies(__DIR__ . '/..');
+
+
+echo "\n\n    > Building distribution files ...";
+echo "\n    --------------------------------\n\n";
+\Etu\Install\Process::buildConfig($config, __DIR__ . '/..');
+\Etu\Install\Process::buildDefaultFiles(__DIR__ . '/..');
 
 
 echo "\n\n    > Clearing cache ...";
 echo "\n    --------------------------------\n\n";
 \Etu\Install\Process::clearCache();
-
-
-echo "\n\n    > Building distribution files ...";
-echo "\n    --------------------------------\n\n";
-\Etu\Install\Process::buildDefaultFiles(__DIR__ . '/..');
 
 
 echo "\n\n    > Changing permissions ...";
@@ -118,14 +119,10 @@ echo "\n    --------------------------------\n\n";
 \Etu\Install\Process::createDatabase();
 
 
-echo "\n\n    > Inserting basic data ...";
+echo "\n\n    > Inserting initial data ...";
 echo "\n    --------------------------------\n\n";
 \Etu\Install\Process::insertBasicData();
-
-
-echo "\n\n    > Creating first user ...";
-echo "\n    --------------------------------\n\n";
-\Etu\Install\Process::createFisrtUser();
+\Etu\Install\Process::createFisrtUser($config);
 
 
 echo "\n\n    > Installing assets ...";
