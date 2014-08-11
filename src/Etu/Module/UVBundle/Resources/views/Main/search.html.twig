@@ -3,7 +3,7 @@
 {% block title %}{{ 'uvs.main.search.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('img/titles/uvs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+	<img src="{{ asset('src/img/titles/uvs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
@@ -22,7 +22,7 @@
 			{% for uv in pagination %}
 				<li>
 					<a href="{{ path('uvs_view', {'slug': uv.slug, 'name': uv.name|slugify}) }}">
-						<img src="{{ asset('img/uvs/'~uv.category~'.png') }}"
+						<img src="{{ asset('src/img/uvs/'~uv.category~'.png') }}"
 							 class="uvs-list-icon"
 							 alt="({{ uv.category|upper }})"
 							 title="{{ uv.category|upper }}" />

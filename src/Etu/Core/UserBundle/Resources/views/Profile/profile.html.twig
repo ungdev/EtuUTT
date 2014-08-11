@@ -3,7 +3,7 @@
 {% block title %}{{ 'user.profile.profile.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+	<img src="{{ asset('src/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
@@ -202,59 +202,75 @@
 				</p>
 			</div>
 
-			<div class="span6 block">
-				<div class="block-title">{{ 'user.profile.profile.trombi'|trans }}</div>
+			<div class="span6">
+                <div class="block">
+                    <div class="block-title">{{ 'user.profile.profile.trombi'|trans }}</div>
 
-				<div class="subblock subblock-first">
-					<div class="profile-infos-label hidden-for-phones">
-						{{ 'user.profile.profile.surname'|trans }}
-					</div>
-					<div class="profile-infos-value">
-						{% if app.user.surnom %}
-							{{ app.user.surnom }}
-							<i class="icon-globe tip" title="{{ 'user.privacy.public'|trans }}"></i>
-						{% else %}
-							<em class="muted">{{ 'user.profile.profile.unknown'|trans }}</em>
-						{% endif %}
-					</div>
-					<div class="clear"></div>
-				</div>
+                    <div class="subblock subblock-first">
+                        <div class="profile-infos-label hidden-for-phones">
+                            {{ 'user.profile.profile.surname'|trans }}
+                        </div>
+                        <div class="profile-infos-value">
+                            {% if app.user.surnom %}
+                                {{ app.user.surnom }}
+                                <i class="icon-globe tip" title="{{ 'user.privacy.public'|trans }}"></i>
+                            {% else %}
+                                <em class="muted">{{ 'user.profile.profile.unknown'|trans }}</em>
+                            {% endif %}
+                        </div>
+                        <div class="clear"></div>
+                    </div>
 
-				<div class="subblock">
-					<div class="profile-infos-label hidden-for-phones">
-						{{ 'user.profile.profile.jadis'|trans }}
-					</div>
-					<div class="profile-infos-value">
-						{% if app.user.jadis %}
-							{{ app.user.jadis|limit(100) }}
-							<i class="icon-globe tip" title="{{ 'user.privacy.public'|trans }}"></i>
-						{% else %}
-							<em class="muted">{{ 'user.profile.profile.unknown'|trans }}</em>
-						{% endif %}
-					</div>
-					<div class="clear"></div>
-				</div>
+                    <div class="subblock">
+                        <div class="profile-infos-label hidden-for-phones">
+                            {{ 'user.profile.profile.jadis'|trans }}
+                        </div>
+                        <div class="profile-infos-value">
+                            {% if app.user.jadis %}
+                                {{ app.user.jadis|limit(100) }}
+                                <i class="icon-globe tip" title="{{ 'user.privacy.public'|trans }}"></i>
+                            {% else %}
+                                <em class="muted">{{ 'user.profile.profile.unknown'|trans }}</em>
+                            {% endif %}
+                        </div>
+                        <div class="clear"></div>
+                    </div>
 
-				<div class="subblock">
-					<div class="profile-infos-label hidden-for-phones">
-						{{ 'user.profile.profile.passions'|trans }}
-					</div>
-					<div class="profile-infos-value">
-						{% if app.user.passions %}
-							{{ app.user.passions|limit(100) }}
-							<i class="icon-globe tip" title="{{ 'user.privacy.public'|trans }}"></i>
-						{% else %}
-							<em class="muted">{{ 'user.profile.profile.unknown'|trans }}</em>
-						{% endif %}
-					</div>
-					<div class="clear"></div>
-				</div>
+                    <div class="subblock">
+                        <div class="profile-infos-label hidden-for-phones">
+                            {{ 'user.profile.profile.passions'|trans }}
+                        </div>
+                        <div class="profile-infos-value">
+                            {% if app.user.passions %}
+                                {{ app.user.passions|limit(100) }}
+                                <i class="icon-globe tip" title="{{ 'user.privacy.public'|trans }}"></i>
+                            {% else %}
+                                <em class="muted">{{ 'user.profile.profile.unknown'|trans }}</em>
+                            {% endif %}
+                        </div>
+                        <div class="clear"></div>
+                    </div>
 
-				<p class="profile-block-action">
-					<a href="{{ path('user_trombi_edit') }}" class="btn">
-						{{ 'user.profile.profile.edit'|trans }}
-					</a>
-				</p>
+                    <p class="profile-block-action">
+                        <a href="{{ path('user_trombi_edit') }}" class="btn">
+                            {{ 'user.profile.profile.edit'|trans }}
+                        </a>
+                    </p>
+                </div>
+
+                {% if hasApps %}
+                    <div class="block">
+                        <div class="block-title">{{ 'user.profile.profile.apps'|trans }}</div>
+
+                        <ul>
+                            {% for client in apps %}
+                                <li>
+                                    {{ client.name }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
 			</div>
 		</div>
 
@@ -267,7 +283,7 @@
                         {% for level, userBadge in serie %}
                             {% if userBadge.owned %}
                                 <li>
-                                    <img src="{{ asset('img/badges/'~userBadge.badge.picture~'.png') }}" class="tip"
+                                    <img src="{{ asset('src/img/badges/'~userBadge.badge.picture~'.png') }}" class="tip"
                                          title="<strong style='font-size: 13px;'>{{ userBadge.badge.name }}</strong><br />{{ userBadge.badge.description }}" />
                                 </li>
                             {% endif %}
@@ -282,7 +298,7 @@
                         {% for level, userBadge in serie %}
                             {% if not userBadge.owned %}
                                 <li>
-                                    <img src="{{ asset('img/badges/riddle_00.png') }}" class="tip not-owned"
+                                    <img src="{{ asset('src/img/badges/riddle_00.png') }}" class="tip not-owned"
                                          title="<strong style='font-size: 13px;'>{{ userBadge.badge.name }}</strong>" />
                                 </li>
                             {% endif %}

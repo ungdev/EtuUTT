@@ -3,11 +3,11 @@
 {% block title %}{{ 'core.admin.pageCreate.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+	<img src="{{ asset('src/img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block javascripts %}
-	<script src="{{ asset('ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
+	<script src="{{ asset('bower_components/ace/lib/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
 	<script>
 		$(function() {
 			var editor = ace.edit('form_content_editor');

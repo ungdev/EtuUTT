@@ -3,7 +3,7 @@
 	{% if notif.firstEntity.link %}
    href="{{ notif.firstEntity.link }}"
    {% endif %}>
-	<img src="{{ asset('img/icons-big/orga_message.png') }}" />
+	<img src="{{ asset('src/img/icons-big/orga_message.png') }}" />
 
 	<h4 class="notif-title">
 		{{ highlight_notif_data(notif.firstEntity.orga_name) }} : {{ notif.firstEntity.content }}

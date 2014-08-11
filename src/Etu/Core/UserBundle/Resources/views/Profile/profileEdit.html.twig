@@ -3,11 +3,11 @@
 {% block title %}{{ 'user.profile.profileEdit.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+	<img src="{{ asset('src/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block javascripts %}
-	<script src="{{ asset('js/bundles/user.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('src/js/bundles/user.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block content %}
@@ -39,7 +39,7 @@
 						<div class="profileEdit-avatar-actions">
 							<i class="icon-pencil"></i>
 						</div>
-						<img src="{{ asset('photos/'~app.user.avatar) }}" class="profileEdit-avatar"
+						<img src="{{ asset('uploads/photos/'~app.user.avatar) }}" class="profileEdit-avatar"
 							 alt="{{ app.user.fullName }}" id="avatar-image" />
 					</a>
 				</div>

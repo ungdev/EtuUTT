@@ -3,7 +3,7 @@
 {% block title %}{{ membership.organization.name }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+	<img src="{{ asset('src/img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
@@ -95,7 +95,7 @@
 
 				<div class="row-fluid">
 					<div class="span2">
-						<img src="{{ asset('photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
+						<img src="{{ asset('uploads/photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
 					</div>
 					<div class="span10">
 						<p>

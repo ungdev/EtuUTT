@@ -51,17 +51,23 @@ doctrine:
                 class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
                 enabled: true
 
+# Minifier Assetic filters names
+minifier:
+    filter:
+        name:
+            css: minifier_css
+            js: minifier_js
+
 # Assetic Configuration
 assetic:
     debug: "%kernel.debug%"
     use_controller: false
     bundles: [ ]
     filters:
-        less:
-            node: /usr/bin/node
-            node_paths: [ '/usr/local/lib/node_modules', '/usr/lib/node_modules' ]
-            apply_to: "\.less"
         cssrewrite: ~
+        lessphp:
+            file: %kernel.root_dir%/../vendor/oyejorge/less.php/lessc.inc.php
+            apply_to: "\.less$"
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -100,6 +106,8 @@ stof_doctrine_extensions:
 
 ## FMBbcode
 fm_bbcode:
+    emoticon:
+        path: /src/img/emoticons
     filter_sets:
         default_filter:
             locale: %locale%
@@ -108,7 +116,13 @@ fm_bbcode:
             hooks: [ clickable, emoticon ]
 
 # API Doc
-nelmio_api_doc: ~
+nelmio_api_doc:
+    name: EtuUTT API endpoints reference
+    sandbox:
+        authentication:
+            name: access_token
+            delivery: query
+            custom_endpoint: true
 
 # EtuUTT
 etu_core:

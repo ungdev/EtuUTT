@@ -21,7 +21,7 @@ class MainController extends Controller
 			return $this->createAccessDeniedResponse();
 		}
 
-		$directory = $this->getKernel()->getRootDir().'/../web/uploads/'.$this->getUser()->getLogin();
+		$directory = $this->getKernel()->getRootDir().'/../web/uploads/users_files/'.$this->getUser()->getLogin();
 
 		if (! file_exists($directory)) {
 			mkdir($directory, 0777, true);
@@ -107,7 +107,7 @@ class MainController extends Controller
 			return $this->createAccessDeniedResponse();
 		}
 
-		$directory = $this->getKernel()->getRootDir().'/../web/uploads/'.$this->getUser()->getLogin();
+		$directory = $this->getKernel()->getRootDir().'/../web/uploads/users_files/'.$this->getUser()->getLogin();
 
 		if (! file_exists($directory)) {
 			mkdir($directory, 0777, true);

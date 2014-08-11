@@ -406,7 +406,7 @@ class AdminController extends Controller
             $sizes = $flickr->call('flickr.photos.getSizes', ['photo_id' => $photo->getId()]);
 
             // Download the photo
-            $uploadDir = $this->getKernel()->getRootDir() . '/../web/argentique';
+            $uploadDir = $this->getKernel()->getRootDir() . '/../web/uploads/argentique';
 
             // Thumbnail
             file_put_contents($uploadDir.'/'.$photo->getId().'_t.jpg', file_get_contents($sizes['sizes']['size'][2]['source']));

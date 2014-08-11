@@ -3,7 +3,7 @@
 {% block title %}{{ 'user.admin.userIndex.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+	<img src="{{ asset('src/img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
@@ -114,7 +114,7 @@
 				{% for user in pagination %}
 					<li class="trombi-search-results-item">
 						<a href="{{ path('user_view', {'login': user.login}) }}?from=admin">
-							<img src="{{ asset('photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
+							<img src="{{ asset('uploads/photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
 							<h5>{{ user.fullName }}</h5>
 							<p>
 								{{ user.branch~user.niveau }} {{ user.filiere }} ({{ user.formation }})<br />

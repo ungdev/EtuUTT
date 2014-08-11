@@ -681,7 +681,7 @@ class User implements UserInterface, \Serializable
 		$image->paste($thumbnail, $pastePoint);
 
 		// Save the result
-		$image->save(__DIR__ . '/../../../../../web/photos/'.$this->getLogin().'.png');
+		$image->save(__DIR__ . '/../../../../../web/uploads/photos/'.$this->getLogin().'.png');
 
 		$this->avatar = $this->getLogin().'.png';
 

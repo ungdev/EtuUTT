@@ -198,13 +198,13 @@ class Event extends AbstractEvent
 		// Paste the thumbnail in the transparent image
 		$image->paste($thumbnail, $pastePoint);
 
-		if (! file_exists(__DIR__ . '/../../../../../web/events/')) {
-			mkdir(__DIR__ . '/../../../../../web/events/', 0777, true);
+		if (! file_exists(__DIR__ . '/../../../../../web/uploads/events/')) {
+			mkdir(__DIR__ . '/../../../../../web/uploads/events/', 0777, true);
 		}
 
 		// Save the result
 		$image->save(
-			__DIR__ . '/../../../../../web/events/'.$this->getId().'.png'
+			__DIR__ . '/../../../../../web/uploads/events/'.$this->getId().'.png'
 		);
 
 		return true;

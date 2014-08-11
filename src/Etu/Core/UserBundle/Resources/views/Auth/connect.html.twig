@@ -9,7 +9,7 @@
 		<div class="container page-container">
 
 			<h2 class="page-title source-sans-pro">
-				<img src="{{ asset('img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+				<img src="{{ asset('src/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 
 				{{ block('title') }}
 			</h2>
@@ -28,13 +28,13 @@
 					<ul class="connect-choices">
 						<li>
 							<a href="{{ path('user_connect_cas') }}">
-								<img src="{{ asset('img/connect/cas.png') }}" /><br />
+								<img src="{{ asset('src/img/connect/cas.png') }}" /><br />
 								{{ 'user.auth.connect.cas'|trans }}
 							</a>
 						</li>
 						<li>
 							<a href="{{ path('user_connect_external') }}">
-								<img src="{{ asset('img/connect/external.png') }}" /><br />
+								<img src="{{ asset('src/img/connect/external.png') }}" /><br />
 								{{ 'user.auth.connect.external'|trans }}
 							</a>
 						</li>

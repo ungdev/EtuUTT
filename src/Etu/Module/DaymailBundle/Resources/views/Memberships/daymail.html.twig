@@ -3,19 +3,19 @@
 {% block title %}{{ membership.organization.name }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+	<img src="{{ asset('src/img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block stylesheets %}
-	<link rel="stylesheet" href="{{ asset('redactor-js/redactor/redactor.css') }}" type="text/css" />
+	<link rel="stylesheet" href="{{ asset('redactor/redactor/redactor.css') }}" type="text/css" />
 {% endblock %}
 
 {% block javascripts %}
-	<script type="text/javascript" src="{{ asset('redactor-js/redactor/redactor.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('redactor/redactor/redactor.min.js') }}"></script>
 
 	<script type="text/javascript">
 		// HTML redactor
-		redactorHtml.redactor({
+        $('.redactor-html').redactor({
 			fixed: true,
 			lang: 'fr',
 			buttons: [
@@ -32,7 +32,7 @@
 			var url = '{{ path('memberships_orga_daymail_preview', {'login': orga.login, 'day': currentDay|date('d-m-Y')}) }}';
 
 			$.facebox(
-				'<p style="text-align:center;"><br /><img src="{{ asset('img/loader-big.gif') }}" /><br /><br /></p>'
+				'<p style="text-align:center;"><br /><img src="{{ asset('src/img/loader-big.gif') }}" /><br /><br /></p>'
 			);
 
 			$.get(url, function(data) {

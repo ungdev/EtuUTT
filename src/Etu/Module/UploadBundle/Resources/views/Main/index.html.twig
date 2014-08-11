@@ -43,64 +43,15 @@
     {% if images|length > 0 %}
         {% for image in images %}
             <div class="upload-image-container">
-                <div class="upload-image" style="background-image: url('{{ asset('uploads/'~app.user.login~'/'~image.name) }}');">
+                <div class="upload-image" style="background-image: url('{{ asset('uploads/users_files/'~app.user.login~'/'~image.name) }}');">
                     <a href="{{ path('upload_remove', {'id': image.id}) }}" title="{{ 'upload.main.index.remove'|trans }}">
                         <i class="icon-remove"></i>
                     </a>
                 </div>
                 <div class="upload-label">
-                    <input type="text" value="http://{{ etu.domain ~ asset('uploads/' ~ app.user.login ~ '/' ~ image.name) }}" />
+                    <input type="text" value="http://{{ etu.domain ~ asset('uploads/users_files/' ~ app.user.login ~ '/' ~ image.name) }}" />
                 </div>
             </div>
         {% endfor %}
     {% endif %}
-
-    {#
-	<table class="upload-list">
-		{% if images|length > 0 %}
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-		{% endif %}
-
-		{% for line in images %}
-			<tr class="upload-list-images">
-				{% for image in line %}
-					<td>
-						<img src="{{ asset('uploads/'~app.user.login~'/'~image.name) }}" alt="{{ image.name }}" title="{{ image.name }}" />
-					</td>
-				{% endfor %}
-			</tr>
-			<tr class="upload-list-labels">
-				{% for image in line %}
-					<td>
-						<a href="#" class="upload-list-url-link" id="{{ image.id }}" title="{{ 'upload.main.index.adress'|trans }}">
-							<i class="icon-edit"></i>
-						</a>
-						<a href="{{ path('upload_remove', {'id': image.id}) }}" title="{{ 'upload.main.index.remove'|trans }}">
-							<i class="icon-remove"></i>
-						</a>
-						<br />
-						<input type="text" class="upload-list-url{% if loop.index > 3 %} upload-list-url-right{% endif %}" id="{{ image.id }}-input" value="http://{{ etu.domain~asset('uploads/'~app.user.login~'/'~image.name) }}" />
-					</td>
-				{% endfor %}
-			</tr>
-			<tr class="upload-list-padding">
-				{% for image in line %}
-					<td></td>
-				{% endfor %}
-			</tr>
-		{% else %}
-			<tr>
-				<td>
-					{{ 'upload.main.index.no_image_yet'|trans }}
-				</td>
-			</tr>
-		{% endfor %}
-	</table>
-    #}
 {% endblock %}

@@ -39,7 +39,7 @@
 	</script>
 	{% endif %}
 	{% if not app.user.getFirstLogin() %}
-		<script type="text/javascript" src="{{ asset('js/lib/jquery-impromptu.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('bower_components/jquery-impromptu/dist/jquery-impromptu.min.js') }}"></script>
 		<script type="text/javascript">
 		var tourSubmitFunc = function(e,v,m,f){
 					if(v === -1){
@@ -161,11 +161,11 @@
 		</div>
 
 		<div class="flux-loading" id="flux-loader">
-			<img src="{{ asset('img/loader.gif') }}" alt="{{ 'core.main.index.loading'|trans }}" title="{{ 'core.main.index.loading'|trans }}"/>
+			<img src="{{ asset('src/img/loader.gif') }}" alt="{{ 'core.main.index.loading'|trans }}" title="{{ 'core.main.index.loading'|trans }}"/>
 		</div>
 
 		<div class="flux-end" id="flux-end">
-			<img src="{{ asset('img/logo-shadow.png') }}" alt="{{ 'core.main.index.logo'|trans }}" title="{{ 'core.main.index.logo'|trans }}"/>
+			<img src="{{ asset('src/img/logo-shadow.png') }}" alt="{{ 'core.main.index.logo'|trans }}" title="{{ 'core.main.index.logo'|trans }}"/>
 		</div>
 	{% endif %}
 {% endblock %}

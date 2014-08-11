@@ -6,7 +6,7 @@
 
 			<h2 class="page-title source-sans-pro">
 				{% block titleIcon %}
-					<img src="{{ asset('img/titles/flux.png') }}" alt="{{ 'base.page_icon.alt'|trans }}" title="{{ 'base.page_icon.alt'|trans }}" class="page-title-icon" />
+					<img src="{{ asset('src/img/titles/flux.png') }}" alt="{{ 'base.page_icon.alt'|trans }}" title="{{ 'base.page_icon.alt'|trans }}" class="page-title-icon" />
 				{% endblock %}
 
 				{{ block('title') }}
@@ -36,7 +36,7 @@
 			<a href="{{ path('page_view', {'slug': 'nous-aider'}) }}" class="footer-link">
 				{{ 'base.footer.help_us'|trans }}
 			</a>
-			<a href="{{ path('doc_index') }}" class="footer-link">
+			<a href="{{ path('devs_panel_index') }}" class="footer-link">
 				{{ 'base.footer.developers'|trans }}
 			</a>
 			{% if app.request.cookies.has('disable_responsive') %}
