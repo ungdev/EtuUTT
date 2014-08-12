@@ -5,44 +5,12 @@ namespace Etu\Core\UserBundle\Command;
 use Doctrine\ORM\EntityManager;
 use Etu\Core\UserBundle\Command\Util\ProgressBar;
 use Etu\Core\UserBundle\Entity\User;
-use Etu\Core\UserBundle\Sync\Synchronizer;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ImportAdmisCommand extends ContainerAwareCommand
 {
-<<<<<<< HEAD
-	/**
-	 * Configure the command
-	 */
-	protected function configure()
-	{
-		$this
-			->setName('etu:users:import-admis')
-			->setDescription('Import new temp users')
-		;
-	}
-
-	/**
-	 * @param \Symfony\Component\Console\Input\InputInterface $input
-	 * @param \Symfony\Component\Console\Output\OutputInterface $output
-	 * @return void
-	 * @throws \RuntimeException
-	 */
-	protected function execute(InputInterface $input, OutputInterface $output)
-	{
-		$container = $this->getContainer();
-
-		$output->writeln("\nFinding users differences ...");
-        $output->writeln('----------------------------------------');
-
-        $pdo = new \PDO('mysql:host=10.5.10.4;dbname=host_integration', 'host_integration', '3DeP72');
-        $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-
-=======
     /**
      * Configure the command
      */
@@ -78,7 +46,6 @@ class ImportAdmisCommand extends ContainerAwareCommand
         $output->writeln("\nFinding users differences ...");
         $output->writeln('----------------------------------------');
 
->>>>>>> c545399... Add command to import new students
         /** @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine')->getManager();
 
@@ -154,10 +121,5 @@ class ImportAdmisCommand extends ContainerAwareCommand
         }
 
         $output->write("\nDone");
-<<<<<<< HEAD
 	}
 }
-=======
-    }
-}
->>>>>>> c545399... Add command to import new students
