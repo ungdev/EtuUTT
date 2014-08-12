@@ -85,41 +85,43 @@ class ImportAdmisCommand extends ContainerAwareCommand
         $output->writeln(sprintf('%s users to import', count($toImport)));
         $output->writeln("\nImporting users ...");
 
-        $bar = new ProgressBar('%fraction% [%bar%] %percent%', '=>', ' ', 80, count($toImport));
-        $bar->update(0);
-        $i = 1;
+        if (count($toImport) > 0) {
+            $bar = new ProgressBar('%fraction% [%bar%] %percent%', '=>', ' ', 80, count($toImport));
+            $bar->update(0);
+            $i = 1;
 
-        foreach($toImport as $loginToImport) {
-            $import = $importedRegistry[$loginToImport];
+            foreach($toImport as $loginToImport) {
+                $import = $importedRegistry[$loginToImport];
 
-            $user = new User();
-            $user->setLogin($import->login);
-            $user->setPassword($this->getContainer()->get('etu.user.crypting')->encrypt($import->password));
-            $user->setFullName($import->prenom . ' ' . $import->nom);
-            $user->setSex(($import->sexe == 'M') ? User::SEX_MALE : User::SEX_FEMALE);
-            $user->setSexPrivacy(User::PRIVACY_PRIVATE);
-            $user->setCity(ucfirst(strtolower($import->ville)));
-            $user->setCityPrivacy(User::PRIVACY_PRIVATE);
-            $user->setPostalCode($import->codePostal);
-            $user->setPostalCodePrivacy(User::PRIVACY_PRIVATE);
-            $user->setCountry(ucfirst(strtolower($import->pays)));
-            $user->setCountryPrivacy(User::PRIVACY_PRIVATE);
-            $user->setPersonnalMail($import->email);
-            $user->setPersonnalMailPrivacy(User::PRIVACY_PRIVATE);
-            $user->setBranch($import->branche);
-            $user->setFiliere($import->specialite);
-            $user->setNiveau(intval($import->niveau));
-            $user->setFormation('Inconnue');
-            $user->setLanguage('fr');
-            $user->setKeepActive(false);
+                $user = new User();
+                $user->setLogin($import->login);
+                $user->setPassword($this->getContainer()->get('etu.user.crypting')->encrypt($import->password));
+                $user->setFullName($import->prenom . ' ' . $import->nom);
+                $user->setSex(($import->sexe == 'M') ? User::SEX_MALE : User::SEX_FEMALE);
+                $user->setSexPrivacy(User::PRIVACY_PRIVATE);
+                $user->setCity(ucfirst(strtolower($import->ville)));
+                $user->setCityPrivacy(User::PRIVACY_PRIVATE);
+                $user->setPostalCode($import->codePostal);
+                $user->setPostalCodePrivacy(User::PRIVACY_PRIVATE);
+                $user->setCountry(ucfirst(strtolower($import->pays)));
+                $user->setCountryPrivacy(User::PRIVACY_PRIVATE);
+                $user->setPersonnalMail($import->email);
+                $user->setPersonnalMailPrivacy(User::PRIVACY_PRIVATE);
+                $user->setBranch($import->branche);
+                $user->setFiliere($import->specialite);
+                $user->setNiveau(intval($import->niveau));
+                $user->setFormation('Inconnue');
+                $user->setLanguage('fr');
+                $user->setKeepActive(false);
 
-            $em->persist($user);
-            $em->flush();
+                $em->persist($user);
+                $em->flush();
 
-            $bar->update($i);
-            $i++;
+                $bar->update($i);
+                $i++;
+            }
         }
 
-        $output->write("\nDone");
+        $output->write("\nDone\n");
 	}
 }
