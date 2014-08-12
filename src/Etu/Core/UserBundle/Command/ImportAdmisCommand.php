@@ -14,6 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ImportAdmisCommand extends ContainerAwareCommand
 {
+<<<<<<< HEAD
 	/**
 	 * Configure the command
 	 */
@@ -41,6 +42,43 @@ class ImportAdmisCommand extends ContainerAwareCommand
         $pdo = new \PDO('mysql:host=10.5.10.4;dbname=host_integration', 'host_integration', '3DeP72');
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
+=======
+    /**
+     * Configure the command
+     */
+    protected function configure()
+    {
+        $this
+            ->setName('etu:users:import-admis')
+            ->setDescription('Import new temp users')
+        ;
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @return void
+     * @throws \RuntimeException
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $output->writeln("\nConnecting to database ...");
+        $output->writeln('----------------------------------------');
+
+        $dialog = $this->getHelperSet()->get('dialog');
+
+        $host = $dialog->ask($output, 'Host: ');
+        $name = $dialog->ask($output, 'Name: ');
+        $user = $dialog->ask($output, 'User: ');
+        $pass = $dialog->ask($output, 'Pass: ');
+
+        $pdo = new \PDO('mysql:host=' . $host . ';dbname=' . $name, $user, $pass);
+        $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+
+        $output->writeln("\nFinding users differences ...");
+        $output->writeln('----------------------------------------');
+
+>>>>>>> c545399... Add command to import new students
         /** @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine')->getManager();
 
@@ -116,5 +154,10 @@ class ImportAdmisCommand extends ContainerAwareCommand
         }
 
         $output->write("\nDone");
+<<<<<<< HEAD
 	}
 }
+=======
+    }
+}
+>>>>>>> c545399... Add command to import new students
