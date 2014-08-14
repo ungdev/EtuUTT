@@ -84,7 +84,7 @@ class Process
 
             $dbPass = self::prompt();
 
-            if (! empty($password)) {
+            if (! empty($dbPass)) {
                 $config['database']['pass'] = $dbPass;
             }
 
