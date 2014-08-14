@@ -78,15 +78,19 @@ class Session
             $ip = $_SERVER['REMOTE_ADDR'];
         }
 
-        $browser = get_browser();
+        if (function_exists('get_browser')) {
+            $browser = get_browser();
 
-        $name = [];
-        $name[] = $browser->browser;
-        $name[] = $browser->version;
-        $name[] = $browser->platform;
-        $name[] = '('. gethostbyaddr($ip) .')';
+            $name = [];
+            $name[] = $browser->browser;
+            $name[] = $browser->version;
+            $name[] = $browser->platform;
+            $name[] = '('. gethostbyaddr($ip) .')';
 
-        $this->name = implode(' ', $name);
+            $this->name = implode(' ', $name);
+        } else {
+            $this->name = $ip . ' (' . gethostbyaddr($ip) . ')';
+        }
     }
 
     /**
