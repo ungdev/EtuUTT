@@ -78,9 +78,9 @@ class Session
             $ip = $_SERVER['REMOTE_ADDR'];
         }
 
-        if (function_exists('get_browser')) {
-            $browser = get_browser();
+        $browser = @get_browser();
 
+        if (is_object($browser)) {
             $name = [];
             $name[] = $browser->browser;
             $name[] = $browser->version;
