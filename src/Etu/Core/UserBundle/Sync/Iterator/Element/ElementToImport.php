@@ -76,14 +76,14 @@ class ElementToImport
 
 		$avatar = $this->element->getLogin().'.jpg';
 
-		if (! file_exists($webDirectory.'/photos/'.$this->element->getLogin().'.jpg')) {
+		if (! file_exists($webDirectory.'/uploads/photos/'.$this->element->getLogin().'.jpg')) {
 			// Resize photo
 			try {
 				$image = $imagine->open('http://local-sig.utt.fr/Pub/trombi/individu/'.$this->element->getStudentId().'.jpg');
 
 				$image->copy()
 					->thumbnail(new Box(200, 200), Image::THUMBNAIL_OUTBOUND)
-					->save($webDirectory.'/photos/'.$this->element->getLogin().'.jpg');
+					->save($webDirectory.'/uploads/photos/'.$this->element->getLogin().'.jpg');
 			} catch (\Exception $e) {
 				$avatar = 'default-avatar.png';
 			}

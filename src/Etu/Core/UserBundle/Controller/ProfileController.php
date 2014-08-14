@@ -4,6 +4,7 @@ namespace Etu\Core\UserBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 
+use Etu\Core\ApiBundle\Entity\OauthClient;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\Course;
 use Etu\Core\UserBundle\Entity\Member;
@@ -29,7 +30,38 @@ class ProfileController extends Controller
 			return $this->createAccessDeniedResponse();
 		}
 
-		return array();
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $appsIds = $em->createQueryBuilder()
+            ->select('t.clientId')
+            ->from('EtuCoreApiBundle:OauthRefreshToken', 't')
+            ->where('t.userId = :user')
+            ->setParameter('user', $this->getUser()->getId())
+            ->getQuery()
+            ->getScalarResult();
+
+        foreach ($appsIds as &$appsId) {
+            $appsId = $appsId['clientId'];
+        }
+
+        /** @var OauthClient[] $apps */
+        $apps = array();
+
+        if (! empty($appsIds)) {
+            $qb = $em->createQueryBuilder();
+
+            $apps = $qb->select('c')
+                ->from('EtuCoreApiBundle:OauthClient', 'c')
+                ->where($qb->expr()->in('c.clientId', $appsIds))
+                ->getQuery()
+                ->getResult();
+        }
+
+		return array(
+            'hasApps' => ! empty($appsIds),
+            'apps' => $apps,
+        );
 	}
 
 	/**
@@ -150,7 +182,7 @@ class ProfileController extends Controller
 			return array(
 				'result' => 'success',
 				'data' => json_encode(array(
-					'filename' => '/photos/'.$file
+					'filename' => '/uploads/photos/'.$file
 				))
 			);
 		}

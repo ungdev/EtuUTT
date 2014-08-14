@@ -1,0 +1,55 @@
+{% extends '::developpers.html.twig' %}
+
+{% block content %}
+    <div class="dev-heading">
+        <h3>Bienvenue sur l'espace<br />développeurs d'EtuUTT</h3>
+    </div>
+
+    <div class="padding20-all">
+        {% if app.request.locale != 'fr' %}
+            <div class="alert alert-warning">
+                The EtuUTT developpers panel is not available in your language.
+                For the moment, it exists only in French.
+            </div>
+        {% endif %}
+
+        <p>
+            Cet espace réservé aux développeurs vous permet de créer et gérer vos accès à l'API EtuUTT, de télécharger
+            les librairies mises à dispositions par l'UNG et de consulter la documentation pour développeurs.
+        </p>
+
+        <hr />
+
+        <div class="row-fluid">
+            <div class="span7">
+                <h4>Mes applications</h4>
+
+                <ul class="nav nav-list">
+                    {% for client in clients %}
+                        <li>
+                            <a href="{{ path('devs_panel_manage_app', { 'id': client.clientId }) }}">
+                                <img src="{{ asset('uploads/apps/' ~ client.clientId ~ '.jpeg') }}" class="api-app-image-icon" />
+                                {{ client.name }}
+                                <small class="muted">(client_id: {{ client.clientId }})</small>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li>Aucune application</li>
+                    {% endfor %}
+                </ul>
+
+                <p>
+                    <br />
+                    <a href="{{ path('devs_panel_create_app') }}" class="btn btn-small">Créer une application</a>
+                </p>
+            </div>
+            <div class="span5">
+                <h4>Documentation</h4>
+
+                <a href="http://etuutt.readthedocs.org/fr/latest/" class="btn btn-default">
+                    Documentation pour développeurs
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

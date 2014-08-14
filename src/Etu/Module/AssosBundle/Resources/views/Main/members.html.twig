@@ -3,7 +3,7 @@
 {% block title %}{{ 'assos.main.members.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('img/titles/assos.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+	<img src="{{ asset('src/img/titles/assos.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block sidebar %}
@@ -86,7 +86,7 @@
 					{% for member in office %}
 						<li class="asso-members-item asso-members-item-office">
 							<a href="{{ path('user_view', {'login': member.user.login}) }}">
-								<img src="{{ asset('photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
+								<img src="{{ asset('uploads/photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
 								<h5>{{ member.user.fullName }}</h5>
 								<p>
 									{{ ('user.orga.role.'~member.role)|trans }}<br />
@@ -109,7 +109,7 @@
 					{% for member in members %}
 						<li class="asso-members-item asso-members-item-member">
 							<a href="{{ path('user_view', {'login': member.user.login}) }}">
-								<img src="{{ asset('photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
+								<img src="{{ asset('uploads/photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
 								<h5>{{ member.user.fullName }}</h5>
 								<p>
 									{{ member.user.branch~member.user.niveau }} {{ member.user.filiere }}

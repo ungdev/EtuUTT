@@ -1,0 +1,123 @@
+{% extends '::developpers.html.twig' %}
+
+{% block content %}
+    <div class="padding20-all">
+        {% if app.request.locale != 'fr' %}
+            <div class="alert alert-warning">
+                The EtuUTT developpers panel is not available in your language.
+                For the moment, it exists only in French.
+            </div>
+        {% endif %}
+
+        <div class="row-fluid">
+            <div class="span4">
+                <ul class="nav nav-list">
+                    <li class="nav-header">
+                        {{ client.name }}
+                    </li>
+                    <li class="active">
+                        <a href="{{ path('devs_panel_manage_app', { 'id': client.clientId }) }}">Application</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('devs_panel_edit_app', { 'id': client.clientId }) }}">Paramètres</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('devs_panel_remove_app', { 'id': client.clientId }) }}">Supprimer</a>
+                    </li>
+
+                    {% if clients|length > 1 %}
+                        <li class="nav-header">
+                            Mes applications
+                        </li>
+
+                        {% for other in clients if other.clientId != client.clientId %}
+                            <li>
+                                <a href="{{ path('devs_panel_manage_app', { 'id': other.clientId }) }}">
+                                    {{ other.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div class="span8">
+                <h4>{{ client.name }} <small>(Client ID: {{ client.clientId }})</small></h4>
+
+                <hr />
+
+                <div class="row-fluid">
+                    <div class="span3">
+                        <img src="{{ asset('uploads/apps/' ~ client.clientId ~ '.jpeg') }}" />
+                    </div>
+                    <div class="span9">
+                        <br />
+
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <strong>Client ID</strong>
+                            </div>
+                            <div class="span8">
+                                <code>{{ client.clientId }}</code>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <strong>Client Secret</strong>
+                            </div>
+                            <div class="span8">
+                                <code>{{ client.clientSecret }}</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <p>
+                    <strong>Votre application à la possibilité ...</strong>
+                </p>
+
+                <div id="etu_api_client_scopesList">
+                    {% for scope in scopes %}
+                        <div class="scope">{{ scopesDescs[scope.scope] }}</div>
+                    {% endfor %}
+                </div>
+
+                <p>
+                    <small>
+                        <strong>Remarque</strong> : si vous modifiez les droits de votre application, les tokens
+                        générés avant cette modification auront toujours les anciens droits. Il vous faudra alors gérer
+                        les deux versions dans votre applciation.
+                    </small>
+                </p>
+
+                <hr />
+
+                <p>
+                    <strong>Statistiques d'autorisation</strong>
+                </p>
+
+                <div id="stats"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var chart = new google.visualization.ColumnChart(document.getElementById('stats'));
+
+            chart.draw(
+                google.visualization.arrayToDataTable([ ['Jour', 'Authentifications'], {{ stats|raw }}]),
+                { title: 'Nombre d\'autorisation par jour pour le mois actuel' }
+            );
+        }
+    </script>
+{% endblock %}

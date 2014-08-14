@@ -2,37 +2,38 @@
 
 namespace Etu\Core\ApiBundle\Listener;
 
-use Doctrine\Bundle\DoctrineBundle\Registry;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Doctrine\Common\Annotations\Reader;
+use Etu\Core\ApiBundle\Oauth\ResponseHandler;
+use OAuth2\Server as OAuthServer;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\Serializer\Serializer;
 
 class SecurityListener
 {
     /**
-     * @var Registry
+     * @var OAuthServer
      */
-    protected $doctrine;
+    protected $server;
 
     /**
-     * @var Request
+     * @var Reader
      */
-    protected $request;
+    protected $reader;
 
     /**
-     * @var Serializer
+     * @var ResponseHandler
      */
-    protected $serializer;
+    protected $responseHandler;
 
     /**
-     * @param Registry $doctrine
-     * @param Serializer $serializer
+     * @param OAuthServer $server
+     * @param Reader $reader
+     * @param ResponseHandler $responseHandler
      */
-    public function __construct(Registry $doctrine, Serializer $serializer)
+    public function __construct(OAuthServer $server, Reader $reader, ResponseHandler $responseHandler)
     {
-        $this->doctrine = $doctrine;
-        $this->serializer = $serializer;
+        $this->server = $server;
+        $this->reader = $reader;
+        $this->responseHandler = $responseHandler;
     }
 
     /**
@@ -42,74 +43,26 @@ class SecurityListener
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
-        $this->request = $event->getRequest();
+        if (strpos($event->getRequest()->attributes->get('_controller'), 'Api\\Resource') !== false) {
+            $controller = explode('::', $event->getRequest()->attributes->get('_controller'));
 
-        if (strpos($this->request->attributes->get('_controller'), 'Api\\Resource') !== false) {
-            $token = $this->request->headers->get('etu-utt-token', false);
+            $reflection = new \ReflectionMethod($controller[0], $controller[1]);
 
-            if (! $token) {
-                $token = $this->request->query->get('token', false);
+            $scopeAnnotation = $this->reader->getMethodAnnotation($reflection, 'Etu\\Core\\ApiBundle\\Framework\\Annotation\\Scope');
+
+            if ($scopeAnnotation) {
+                $scope = $scopeAnnotation->value;
+            } else {
+                $scope = null;
             }
 
-            if (! $token) {
-                $event->setResponse($this->createAccessDeniedResponse(403, 'Authentication required, no token provided'));
-                $event->stopPropagation();
+            $request = \OAuth2\Request::createFromGlobals();
 
-                return false;
+            if (! $this->server->verifyResourceRequest($request, null, $scope)) {
+                $event->setResponse($this->responseHandler->handle($event->getRequest(), $this->server->getResponse()));
+            } else {
+                $event->getRequest()->attributes->set('_token', $this->server->getAccessTokenData($request));
             }
-
-            $access = $this->doctrine->getManager()
-                ->getRepository('EtuCoreApiBundle:Access')
-                ->findOneByToken($token);
-
-            if (! $access) {
-                $event->setResponse($this->createAccessDeniedResponse(403, 'Authentication failed, invalid token'));
-                $event->stopPropagation();
-
-                return false;
-            }
-
-            $event->getRequest()->attributes->set('access', $access);
         }
-    }
-
-    /**
-     * @param $status
-     * @param bool $message
-     * @return Response
-     */
-    private function createAccessDeniedResponse($status, $message = false)
-    {
-        $data = [
-            'http' => [
-                'status' => $status,
-                'message' => ($message) ? $message : Response::$statusTexts[$status]
-            ]
-        ];
-
-        $request = $this->request;
-        $format = 'json';
-
-        if ($request->headers->has('Accept')) {
-            $format = $request->query->get('Accept');
-        } elseif ($request->query->has('format')) {
-            $format = $request->query->get('format');
-        } else if ($request->headers->has('format')) {
-            $format = $request->headers->get('format');
-        }
-
-        if (! in_array($format, ['xml', 'json'])) {
-            $format = 'json';
-        }
-
-        /** @var Serializer $serializer */
-        $serializer = $this->serializer;
-
-        $options = ($format == 'json') ? ['json_encode_options' => JSON_PRETTY_PRINT] : [];
-
-        $response = new Response($serializer->encode($data, $format, $options), $status);
-        $response->headers->set('Content-Type', 'text/'.$format);
-
-        return $response;
     }
 }

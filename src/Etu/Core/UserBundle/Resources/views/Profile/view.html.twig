@@ -6,7 +6,7 @@
 	{% if user.login == 'richardb' %}
 	<style>
 		.bg-soft-grey {
-			background: url('/img/back_etuutt.jpg') #950014 !important;
+			background: url('/src/img/back_etuutt.jpg') #950014 !important;
 		}
 		.page-container, .footer {
 			background: none !important;
@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+	<img src="{{ asset('src/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
@@ -79,7 +79,7 @@
 		<div class="row-fluid">
 			<div class="span3">
 				<div class="align-center">
-					<img src="{{ asset('photos/'~user.avatar) }}" class="view-avatar"
+					<img src="{{ asset('uploads/photos/'~user.avatar) }}" class="view-avatar"
 						 alt="{{ user.fullName }}" title="{{ user.fullName }}" />
 
 					<hr />
@@ -346,7 +346,7 @@
 			<ul class="badges-list badges-list-big">
 			{% for badge in user.lastBadges %}
 				<li>
-					<img src="{{ asset('img/badges/'~badge.picture~'.png') }}" class="tip"
+					<img src="{{ asset('src/img/badges/'~badge.picture~'.png') }}" class="tip"
 						 title="<strong style='font-size: 13px;'>{{ badge.name }}</strong><br />{{ badge.description }}" />
 				</li>
 			{% endfor %}

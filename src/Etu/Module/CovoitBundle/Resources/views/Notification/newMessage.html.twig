@@ -4,7 +4,7 @@
 
 <a href="{{ path('covoiturage_view', {'id': covoit.id, 'slug': covoit.startCity.slug ~ '-' ~ covoit.endCity.slug }) }}"
    class="notif{% if notif.isSuper %} super-notif{% elseif notif.isNew(app.user.lastVisitHome) %} notif-new{% endif %}">
-    <img src="{{ asset('img/icons-big/covoit.png') }}" />
+    <img src="{{ asset('src/img/icons-big/covoit.png') }}" />
 
     <h4 class="notif-title">
         {{ 'covoit.notifs.new_message'|trans({

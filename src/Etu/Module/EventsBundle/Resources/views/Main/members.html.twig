@@ -3,7 +3,7 @@
 {% block title %}{{ 'events.main.subscribers.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('img/titles/events.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+	<img src="{{ asset('src/img/titles/events.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block sidebar %}
@@ -41,7 +41,7 @@
 		<h3>{{ event.title }}</h3>
 
 		<div class="event-view-orga-logo">
-			<img src="{{ asset('events/'~event.id~'.png') }}" alt="{{ event.title }}" title="{{ event.title }}" />
+			<img src="{{ asset('uploads/events/'~event.id~'.png') }}" alt="{{ event.title }}" title="{{ event.title }}" />
 		</div>
 
 		<div class="event-view-infos">
