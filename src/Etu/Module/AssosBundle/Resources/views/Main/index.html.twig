@@ -31,7 +31,7 @@
 
 		{% for key, orga in pagination %}
 			<a href="{{ path('orgas_view', {'login': orga.login}) }}" class="asso{% if key == 0 %} asso-first{% endif %}">
-				<img src="{{ asset('logos/'~orga.logo) }}" alt="{{ orga.name }}" title="{{ orga.name }}" class="asso-logo" />
+				<img src="{{ asset('uploads/logos/'~orga.logo) }}" alt="{{ orga.name }}" title="{{ orga.name }}" class="asso-logo" />
 
 				<h5 class="asso-name asso-info">
 					{{ orga.name }}
