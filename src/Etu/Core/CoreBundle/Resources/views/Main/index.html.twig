@@ -5,39 +5,6 @@
 {% block main_menu_link_homepage %} active{% endblock %}
 
 {% block javascripts %}
-	{% if notifs|length == 25 %}
-	<script type="text/javascript">
-		// Inifinite scroll
-		var page = 1,
-			requesting = false,
-			loader = $('#flux-loader'),
-			end = $('#flux-end'),
-			flux = $('#flux-notifs');
-
-		$(window).scroll(function () {
-			if ($(window).height() + $(window).scrollTop() == $(document).height() && ! requesting) {
-				page++;
-				loader.show();
-				requesting = true;
-
-				$.ajax({
-					type: 'GET',
-					url: Routing.generate('flux_more', {page: page}),
-					success: function(html) {
-						if (html != 'no_more') {
-							loader.hide();
-							requesting = false;
-							flux.append(html);
-						} else {
-							loader.hide();
-							end.show();
-						}
-					}
-				});
-			}
-		});
-	</script>
-	{% endif %}
 	{% if not app.user.getFirstLogin() %}
 		<script type="text/javascript" src="{{ asset('bower_components/jquery-impromptu/dist/jquery-impromptu.min.js') }}"></script>
 		<script type="text/javascript">
@@ -132,80 +99,145 @@
 {% endblock %}
 
 {% block content %}
-    <div class="home-blocks">
-        <div class="home-block home-block-events">
-            <h4>Evénements</h4>
+    <div class="padding20-all">
 
-            <ul>
-                <li>
-                    <div class="date">
-                        <span>18</span><br />
-                        <span>août</span>
-                    </div>
-                    <h5>
-                        <a href="">
-                            Deviens Chef d'équipe ou parrainne un nouveau pour l'inté !
+        <div class="row-fluid home-blocks">
+            <div class="span6">
+                <div class="home-block home-block-course">
+                    <h4>Vos prochains cours aujourd'hui</h4>
+
+                    {% if nextCourses|length == 0 %}
+                        <div class="course-full">
+                            Vous n'avez plus de cours aujourd'hui.
+                        </div>
+                    {% else %}
+                        {% for course in nextCourses %}
+                            {% if course|length == 1 %}
+                                <div class="course-full">
+                                    <p>
+                                        <strong>{{ course[0].uv }}</strong> - {{ course[0].type }}<br />
+                                        <small class="muted">(à {{ course[0].start }} en {{ course[0].room }})</small>
+                                    </p>
+                                </div>
+                            {% else %}
+                                <div class="row-fluid">
+                                    <div class="span6">
+                                        <div class="course-half">
+                                            <p>
+                                                <strong>{{ course[0].uv }}</strong> - {{ course[0].type }}<br />
+                                                <small class="muted">
+                                                    (à {{ course[0].start }} en {{ course[0].room }}, sem. {{ course[0].week }})
+                                                </small>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="span6">
+                                        <div class="course-half">
+                                            <p>
+                                                <strong>{{ course[1].uv }}</strong> - {{ course[1].type }}<br />
+                                                <small class="muted">
+                                                    (à {{ course[1].start }} en {{ course[1].room }}, sem. {{ course[1].week }})
+                                                </small>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+                    <p class="more-link">
+                        <a href="{{ path('user_schedule') }}">
+                            Voir mon emploi du temps complet
                         </a>
-                    </h5>
-                </li>
-                <li>
-                    <div class="date">
-                        <span>24</span><br />
-                        <span>sept.</span>
-                    </div>
-                    <h5>
-                        <a href="">
-                            Deviens Chef d'équipe ou parrainne un nouveau pour l'inté !
+                    </p>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="home-block home-block-events">
+                    <h4>Trombinoscope</h4>
+
+                    <p>
+                        Rechercher rapidement sur le trombinoscope :
+                    </p>
+
+                    <form method="get" class="form-inline" action="{{ path('trombi_index') }}">
+                        {{ form_widget(trombiForm.fullName, { 'attr': { 'placeholder': 'Nom, prénom ou surnom ...' } } ) }}
+                        {{ form_rest(trombiForm) }}
+
+                        <button type="submit" class="btn">{{ 'trombi.main.index.search'|trans }}</button>
+                    </form>
+
+                    <p class="more-link">
+                        <a href="{{ path('trombi_index') }}">
+                            Aller sur le trombinoscope
                         </a>
-                    </h5>
-                </li>
-            </ul>
+                    </p>
+                </div>
+            </div>
         </div>
-    </div>
 
+        <div class="row-fluid home-blocks">
+            <div class="span6">
+                <div class="home-block home-block-events">
+                    <h4>Prochains événements</h4>
 
+                    <ul>
+                        <li>
+                            <div class="date">
+                                <span class="day">18</span><br />
+                                <span class="month">août</span>
+                            </div>
+                            <h5>
+                                <a href="">
+                                    Deviens Chef d'équipe ou parrainne un nouveau pour l'inté !
+                                </a>
+                            </h5>
+                        </li>
+                        <li>
+                            <div class="date">
+                                <span class="day">24</span><br />
+                                <span class="month">sept.</span>
+                            </div>
+                            <h5>
+                                <a href="">
+                                    Deviens Chef d'équipe ou parrainne un nouveau pour l'inté !
+                                </a>
+                            </h5>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="home-block home-block-photos">
+                    <h4>Dernières photos Argentique</h4>
 
-    <div style="
-    background: white;
-" class="row-fluid">
-
-        <div class="span6" style="
-    background: white;
-    border: 1px solid #f5f5f5;
-    box-shadow: 0px 0px 10px 0px #e5e5e5;
-
-    padding: 0 10px;
-">
-            <h4>Evénements</h4>
-
-            <ul style="
-    list-style-type: none;  padding: 0;  margin: 0;
-">
-                <li style="
-    list-style-type: none;
-    padding: 10px 0 0 0;
-    margin: 10px 0;
-    border-top: 1px solid #f5f5f5;
-">
-                    <div style="
-    /* width: 60px; */
-    display: inline-block;
-    vertical-align: top;
-">
-                        <span>24</span><br>
-                        <span>sept.</span>
-                    </div>
-                    <h5 style="
-    margin-left: 70px;
-    margin-bottom: 0;
-    padding: 0;
-    margin-top: 0;
-    display: inline-block;
-    vertical-align: top;
-"><a href="">Deviens Chef d'équipe ou parrainne un nouveau pour l'inté enre!</a></h5>
-
-                </li>
-            </ul>
+                    <ul>
+                        <li>
+                            <div class="date">
+                                <span>18</span><br />
+                                <span>août</span>
+                            </div>
+                            <h5>
+                                <a href="">
+                                    Deviens Chef d'équipe ou parrainne un nouveau pour l'inté !
+                                </a>
+                            </h5>
+                        </li>
+                        <li>
+                            <div class="date">
+                                <span>24</span><br />
+                                <span>sept.</span>
+                            </div>
+                            <h5>
+                                <a href="">
+                                    Deviens Chef d'équipe ou parrainne un nouveau pour l'inté !
+                                </a>
+                            </h5>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

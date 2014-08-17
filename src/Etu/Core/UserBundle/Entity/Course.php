@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * User course
  *
  * @ORM\Table(name="etu_users_courses")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Etu\Core\UserBundle\Entity\Repository\CourseRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Course
@@ -115,13 +115,31 @@ class Course
 	 */
 	protected $deletedAt;
 
-	/**
-	 * Constructor
- 	 */
-	public function __construct()
-	{
-		$this->room = 'NC';
-	}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->room = 'NC';
+    }
+
+    /**
+     * Constructor
+     */
+    public static function getTodayConstant()
+    {
+        $map = [
+            1 => self::DAY_MONDAY,
+            2 => self::DAY_TUESDAY,
+            3 => self::DAY_WENESDAY,
+            4 => self::DAY_THURSDAY,
+            5 => self::DAY_FRIDAY,
+            6 => self::DAY_SATHURDAY,
+            0 => self::DAY_SUNDAY,
+        ];
+
+        return $map[(int) date('w')];
+    }
 
 	/**
 	 * @param string $end
@@ -141,6 +159,14 @@ class Course
 	{
 		return $this->end;
 	}
+
+    /**
+     * @return integer
+     */
+    public function getEndAsInt()
+    {
+        return (int) str_replace(':', '', $this->end);
+    }
 
 	/**
 	 * @return int
@@ -188,24 +214,32 @@ class Course
 		return $this->day;
 	}
 
-	/**
-	 * @param string $start
-	 * @return Course
-	 */
-	public function setStart($start)
-	{
-		$this->start = $start;
+    /**
+     * @param string $start
+     * @return Course
+     */
+    public function setStart($start)
+    {
+        $this->start = $start;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getStart()
-	{
-		return $this->start;
-	}
+    /**
+     * @return string
+     */
+    public function getStart()
+    {
+        return $this->start;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getStartAsInt()
+    {
+        return (int) str_replace(':', '', $this->start);
+    }
 
 	/**
 	 * @param string $week

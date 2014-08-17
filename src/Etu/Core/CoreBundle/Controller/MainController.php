@@ -270,6 +270,48 @@ class MainController extends Controller
         /** @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
 
+        $user = $this->getUser();
+
+        // Get next courses (one if every week, two if per week)
+        $nextCourses = $em->getRepository('EtuUserBundle:Course')->getUserNextCourses($user);
+
+        // Generate trombi form
+        $trombiFrom = $this->createFormBuilder()
+            ->add('fullName', 'text', array('required' => false))
+            ->add('studentId', 'hidden', array('required' => false))
+            ->add('phoneNumber', 'hidden', array('required' => false))
+            ->add('uvs', 'hidden', array('required' => false))
+            ->add('branch', 'hidden', array('required' => false))
+            ->add('niveau', 'hidden', array('required' => false))
+            ->add('personnalMail', 'hidden', array('required' => false))
+            ->getForm();
+
+        $view = $this->render('EtuCoreBundle:Main:index.html.twig', array(
+            'firstLogin' => $user->getFirstLogin(),
+            'nextCourses' => $nextCourses,
+            'trombiForm' => $trombiFrom->createView()
+        ));
+
+        $user->setLastVisitHome(new \DateTime());
+
+        if (! $user->getFirstLogin()) {
+            $user->setFirstLogin(true);
+        }
+
+        $em->persist($user);
+
+        if (! $user->testingContext) {
+            $em->flush();
+        }
+
+        return $view;
+    }
+
+    private function oldIndexUser()
+    {
+        /** @var $em EntityManager */
+        $em = $this->getDoctrine()->getManager();
+
         // Load only notifications we should display, ie. notifications sent from
         // currently enabled modules
 
@@ -331,9 +373,9 @@ class MainController extends Controller
         $user = $this->getUser();
 
         $view = $this->render('EtuCoreBundle:Main:index.html.twig', array(
-            'notifs' => $notifications,
-            'firstLogin' => $user->getFirstLogin()
-        ));
+                'notifs' => $notifications,
+                'firstLogin' => $user->getFirstLogin()
+            ));
         $user->setLastVisitHome(new \DateTime());
 
         if (!$user->getFirstLogin()) {
