@@ -250,52 +250,27 @@ databsse, it will only update them.
 	 */
 	protected function areEquals(UV $registryUV, UV $databaseUV)
 	{
-		$equals = true;
-
-		if ($registryUV->getCategory() != $databaseUV->getCategory()) {
-			$equals = false;
+		$values = array(
+			'Category',
+			'Name',
+			'Cm',
+			'Td',
+			'Tp',
+			'The',
+			'Automne',
+			'Printemps',
+			'Credits',
+			'Objectifs',
+			'Programme'
+		);
+		
+		foreach ($values as $value) {
+			$value = 'get' . $value;
+			if ($registryUV->$value() !== $databaseUV->$value()) {
+				return false;
+			}
 		}
-
-		if ($registryUV->getName() != $databaseUV->getName()) {
-			$equals = false;
-		}
-
-		if ($registryUV->getCm() != $databaseUV->getCm()) {
-			$equals = false;
-		}
-
-		if ($registryUV->getTd() != $databaseUV->getTd()) {
-			$equals = false;
-		}
-
-		if ($registryUV->getTp() != $databaseUV->getTp()) {
-			$equals = false;
-		}
-
-		if ($registryUV->getThe() != $databaseUV->getThe()) {
-			$equals = false;
-		}
-
-		if ($registryUV->getAutomne() != $databaseUV->getAutomne()) {
-			$equals = false;
-		}
-
-		if ($registryUV->getPrintemps() != $databaseUV->getPrintemps()) {
-			$equals = false;
-		}
-
-		if ($registryUV->getCredits() != $databaseUV->getCredits()) {
-			$equals = false;
-		}
-
-		if ($registryUV->getObjectifs() != $databaseUV->getObjectifs()) {
-			$equals = false;
-		}
-
-		if ($registryUV->getProgramme() != $databaseUV->getProgramme()) {
-			$equals = false;
-		}
-
-		return $equals;
+		
+		return true;
 	}
 }
