@@ -342,19 +342,24 @@ $(function() {
 		usersAutocomplete.autocomplete({
 			minLength: 3,
 			source: function(request, response) {
-				$.getJSON(Routing.generate('api_user_list'),
-					{ name: request.term, token: _t },
-					function(data) {
-						var users = data.response.data;
+				$.getJSON(
+                    Routing.generate('user_ajax_search'),
+                    {
+                        term: request.term
+                    },
+					function(data)
+                    {
+						var users = data.response.users;
 
-						response($.map(users, function( item ) {
+						response($.map(users, function(item) {
 							return {
-								label: item.firstName+' '+item.lastName,
-								value: item.firstName+' '+item.lastName,
+								label: item.firstName + ' ' + item.lastName,
+								value: item.firstName + ' ' + item.lastName,
 								user: item
 							}
 						}));
-					});
+					}
+                );
 			},
             select: function( event, ui ) {
                 var input = $(event.target);
@@ -366,10 +371,20 @@ $(function() {
 
 		if (usersAutocomplete.data("ui-autocomplete")) {
 			usersAutocomplete.data("ui-autocomplete")._renderItem = function(ul, item) {
+                var imageLink, link;
+
+                for (var i = 0; i < item.user._links.length; i++) {
+                    link = item.user._links[i];
+
+                    if (link.rel == 'user.image') {
+                        imageLink = link;
+                    }
+                }
+    
 				return $("<li style=\"margin-bottom: 3px;\">")
 					.append(
 						"<a>" +
-							"<img src=\" "+ item.user.image.custom + "\" style=\"float: left; max-height: 25px; max-width: 25px; margin-right: 5px;\" />" +
+							"<img src=\" "+ imageLink.uri + "\" style=\"float: left; max-height: 25px; max-width: 25px; margin-right: 5px;\" />" +
 							"<span style=\"display: block; float: left; margin-top: 0;\">" + item.label + "</span>" +
 							"<div style=\"clear: both;\"></div>" +
                         "</a>"

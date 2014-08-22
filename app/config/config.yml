@@ -24,7 +24,7 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
-    cache:            false
+    cache:            %kernel.debug%
 
 # Doctrine Configuration
 doctrine:
@@ -107,7 +107,7 @@ stof_doctrine_extensions:
 ## FMBbcode
 fm_bbcode:
     emoticon:
-        path: /src/img/emoticons
+        path: /src/img/emoticons/
     filter_sets:
         default_filter:
             locale: %locale%

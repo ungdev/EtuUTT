@@ -13,3 +13,6 @@ parameters:
 
     locale:            fr
     secret:            YourSecretHere
+
+    argentique_client_id:       ID
+    argentique_client_secret:   Secret
