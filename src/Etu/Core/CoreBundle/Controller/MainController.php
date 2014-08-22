@@ -8,9 +8,12 @@ use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Entity\Page;
 use Etu\Core\CoreBundle\Entity\Subscription;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
+use Etu\Core\CoreBundle\Framework\Module\ModulesManager;
+use Etu\Core\CoreBundle\Home\HomeBuilder;
 use Etu\Core\UserBundle\Entity\User;
 
 use Etu\Module\EventsBundle\Entity\Event;
+use Etu\Module\UVBundle\Entity\Review;
 use Symfony\Component\HttpFoundation\Response;
 
 // Import @Route() and @Template() annotations
@@ -270,10 +273,13 @@ class MainController extends Controller
         /** @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
 
-        $user = $this->getUser();
+        /** @var ModulesManager $modulesManager */
+        $modulesManager = $this->get('etu.core.modules_manager');
 
-        // Get next courses (one if every week, two if per week)
-        $nextCourses = $em->getRepository('EtuUserBundle:Course')->getUserNextCourses($user);
+        /** @var HomeBuilder $homeBuilder */
+        $homeBuilder = $this->get('etu.core.home_builder');
+
+        $user = $this->getUser();
 
         // Generate trombi form
         $trombiFrom = $this->createFormBuilder()
@@ -286,10 +292,29 @@ class MainController extends Controller
             ->add('personnalMail', 'hidden', array('required' => false))
             ->getForm();
 
+        // Get next courses (one if every week, two if per week)
+        $nextCourses = $em->getRepository('EtuUserBundle:Course')->getUserNextCourses($user);
+
+        // Get last reviews of user courses
+        $reviews = [];
+
+        if ($modulesManager->getModuleByIdentifier('uv')->isEnabled()) {
+            $reviews = $homeBuilder->getUvReviews($this->getUser());
+        }
+
+        // Next events
+        $events = [];
+
+        if ($modulesManager->getModuleByIdentifier('events')->isEnabled()) {
+            $events = $homeBuilder->getEvents();
+        }
+
         $view = $this->render('EtuCoreBundle:Main:index.html.twig', array(
             'firstLogin' => $user->getFirstLogin(),
             'nextCourses' => $nextCourses,
-            'trombiForm' => $trombiFrom->createView()
+            'trombiForm' => $trombiFrom->createView(),
+            'reviews' => $reviews,
+            'events' => $events,
         ));
 
         $user->setLastVisitHome(new \DateTime());

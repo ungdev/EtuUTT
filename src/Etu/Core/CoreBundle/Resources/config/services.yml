@@ -43,6 +43,8 @@ parameters:
     etu.form.date_picker_type.class: Etu\Core\CoreBundle\Form\DatePickerType
     etu.form.birthday_picker_type.class: Etu\Core\CoreBundle\Form\BirthdayPickerType
 
+    etu.core.home_builder.class: Etu\Core\CoreBundle\Home\HomeBuilder
+
 services:
 
     # Modules manager
@@ -199,4 +201,10 @@ services:
         class: %etu.form.birthday_picker_type.class%
         tags:
             - { name: form.type, alias: birthday_picker }
+
+
+    # Home builder
+    etu.core.home_builder:
+        class: %etu.core.home_builder.class%
+        arguments: [ @doctrine.orm.entity_manager ]
 

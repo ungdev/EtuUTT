@@ -2,7 +2,6 @@
 
 namespace Etu\Module\UVBundle\Entity;
 
-use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Core\UserBundle\Entity\User;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -13,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Etu\Module\UVBundle\Entity\Repository\ReviewRepository")
  * @ORM\Table(name="etu_uvs_reviews")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
@@ -236,6 +235,16 @@ class Review
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getTypeTransKey()
+    {
+        return self::$types[$this->type];
     }
 
     /**
