@@ -456,8 +456,8 @@ class AdminController extends Controller
     private function createFlickrAccess()
     {
         @$flickr = new Flickr(
-            '03073c12e007751f01ee16ac5488c764',
-            '838160e0782e8718',
+            $this->container->getParameter('argentique_client_id'),
+            $this->container->getParameter('argentique_client_secret'),
             $this->generateUrl('argentique_admin_synchronize', [], UrlGeneratorInterface::ABSOLUTE_URL)
         );
 
