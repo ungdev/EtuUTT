@@ -33,7 +33,7 @@ buckutt:
             connect: Connexion
             invalidPin: Code PIN incorrect
             lostPin: J'ai perdu mon code PIN
-            cantSendMail: Impossible d\'envoyer un mail. Merci de contacter buckutt@utt.fr
+            cantSendMail: Impossible d'envoyer un mail. Merci de contacter buckutt@utt.fr
             newPinSent: Un nouveau code vous a été envoyé par mail
 
         index:
