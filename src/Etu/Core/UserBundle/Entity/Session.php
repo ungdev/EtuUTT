@@ -78,12 +78,18 @@ class Session
             $ip = $_SERVER['REMOTE_ADDR'];
         }
 
-        $browser = get_browser();
+        $browser = @get_browser();
 
         $name = [];
-        $name[] = $browser->browser;
-        $name[] = $browser->version;
-        $name[] = $browser->platform;
+
+        if ($browser) {
+            $name[] = $browser->browser;
+            $name[] = $browser->version;
+            $name[] = $browser->platform;
+        } else {
+            $name[] = 'Unknown browser';
+        }
+
         $name[] = '('. gethostbyaddr($ip) .')';
 
         $this->name = implode(' ', $name);
