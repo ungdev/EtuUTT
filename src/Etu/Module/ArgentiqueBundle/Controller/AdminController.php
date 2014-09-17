@@ -69,10 +69,10 @@ class AdminController extends Controller
         $dbCollections = $em->getRepository('EtuModuleArgentiqueBundle:Collection')->findAll();
 
         /** @var array $apiCollections */
-        $apiCollections = $flickr->call('flickr.collections.getTree')['collections'];
+        $apiCollections = $flickr->call('flickr.collections.getTree');
 
         // If there is no collections in API, remove all the entities in local
-        if (empty($apiCollections)) {
+        if (empty($apiCollections) || ! isset($apiCollections['collections']) || ! isset($apiCollections['collections']['collection'])) {
             $em->createQueryBuilder()
                 ->delete('EtuModuleArgentiqueBundle:Collection')
                 ->getQuery()
@@ -91,14 +91,16 @@ class AdminController extends Controller
 
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', array(
-                'type' => 'error',
-                'message' => 'argentique.error.no_collection'
-            ));
+            $response = new Response(json_encode([
+                'step' => 1,
+                'error' => $apiCollections
+            ]), 500);
 
-            return $this->redirect($this->generateUrl('argentique_index'));
+            $response->headers->set('Content-Type', 'application/json');
+
+            return $response;
         } else {
-            $apiCollections = $apiCollections['collection'];
+            $apiCollections = $apiCollections['collections']['collection'];
         }
 
         // Map API and local collections
@@ -269,6 +271,15 @@ class AdminController extends Controller
                     $photo['set'] = $set->getId();
                     $apiPhotos[] = $photo;
                 }
+            } else {
+                $response = new Response(json_encode([
+                    'step' => 2,
+                    'error' => $api
+                ]), 500);
+
+                $response->headers->set('Content-Type', 'application/json');
+
+                return $response;
             }
         }
 
@@ -404,6 +415,16 @@ class AdminController extends Controller
         if ($photo) {
             // Sizes
             $sizes = $flickr->call('flickr.photos.getSizes', ['photo_id' => $photo->getId()]);
+
+            if (empty($sizes) || ! isset($sizes['sizes']['size'])) {
+                $response = new Response(json_encode([
+                    'error' => $sizes
+                ]), 500);
+
+                $response->headers->set('Content-Type', 'application/json');
+
+                return $response;
+            }
 
             // Download the photo
             $uploadDir = $this->getKernel()->getRootDir() . '/../web/uploads/argentique';
