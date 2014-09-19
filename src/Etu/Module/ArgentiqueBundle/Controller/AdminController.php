@@ -257,7 +257,6 @@ class AdminController extends Controller
          *  Photos
          * ************************************************************************/
 
-        /** @var Photo[] $dbPhotos */
         $dbPhotos = $em->getRepository('EtuModuleArgentiqueBundle:Photo')->findAll();
 
         /** @var array $apiPhotos */
