@@ -43,6 +43,7 @@ class MainController extends Controller
             ->select('p')
             ->from('EtuModuleArgentiqueBundle:Photo', 'p')
             ->orderBy('p.createdAt', 'DESC')
+            ->where('p.ready = 1')
             ->setMaxResults(20)
             ->getQuery()
             ->getResult();
@@ -82,6 +83,7 @@ class MainController extends Controller
             ->leftJoin('s.photos', 'p')
             ->addOrderBy('p.createdAt', 'DESC')
             ->where('s.id = :id')
+            ->andWhere('p.ready = 1')
             ->setParameter('id', $id)
             ->getQuery()
             ->getOneOrNullResult();
