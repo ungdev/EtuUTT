@@ -35,6 +35,7 @@ class MainController extends Controller
             ->select('c, s')
             ->from('EtuModuleArgentiqueBundle:Collection', 'c')
             ->leftJoin('c.sets', 's')
+            ->orderBy('c.title')
             ->getQuery()
             ->getResult();
 
@@ -73,6 +74,7 @@ class MainController extends Controller
             ->select('c, s')
             ->from('EtuModuleArgentiqueBundle:Collection', 'c')
             ->leftJoin('c.sets', 's')
+            ->orderBy('c.title')
             ->getQuery()
             ->getResult();
 
@@ -85,6 +87,7 @@ class MainController extends Controller
             ->where('s.id = :id')
             ->andWhere('p.ready = 1')
             ->setParameter('id', $id)
+            ->orderBy('s.createdAt', 'DESC')
             ->getQuery()
             ->getOneOrNullResult();
 
