@@ -3,7 +3,38 @@
 {% block title %}{{ membership.organization.name }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('src/img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        var remove = {
+            phone: $('#remove-phone'),
+            phoneInput: $('#form_contactPhone'),
+            website: $('#remove-website'),
+            websiteInput: $('#form_website')
+        };
+
+        remove.phone.click(function() {
+            remove.phoneInput.val('');
+            $(this).remove();
+
+            $.get($(this).attr('data-href'));
+
+            return false;
+        });
+
+        remove.website.click(function() {
+            remove.websiteInput.val('');
+            $(this).remove();
+
+            $.get($(this).attr('data-href'));
+
+            return false;
+        });
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -107,6 +138,13 @@
 						<label class="control-label">{{ 'user.orga.index.contactPhone.label'|trans }}</label>
 						<div class="controls">
 							{{ form_widget(form.contactPhone) }}
+
+                            {% if membership.organization.contactPhone is not null %}
+                                <a href="#" data-href="{{ path('orga_remove_phone', { 'login': membership.organization.login }) }}"
+                                   id="remove-phone" class="btn btn-link">
+                                    {{ 'user.memberships.desc.remove'|trans }}
+                                </a>
+                            {% endif %}
 						</div>
 						<span class="help-block">{{ form_errors(form.contactPhone) }}</span>
 					</div>
@@ -114,6 +152,13 @@
 						<label class="control-label">{{ 'user.orga.index.website.label'|trans }}</label>
 						<div class="controls">
 							{{ form_widget(form.website) }}
+
+                            {% if membership.organization.website is not null %}
+                                <a href="#" data-href="{{ path('orga_remove_website', { 'login': membership.organization.login }) }}"
+                                   id="remove-website" class="btn btn-link">
+                                    {{ 'user.memberships.desc.remove'|trans }}
+                                </a>
+                            {% endif %}
 						</div>
 						<span class="help-block">{{ form_errors(form.website) }}</span>
 					</div>

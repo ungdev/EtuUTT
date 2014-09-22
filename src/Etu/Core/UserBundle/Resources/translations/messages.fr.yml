@@ -156,6 +156,7 @@ user:
         desc:
             title: Association
             confirm: Vous avez bien modifié le compte associatif
+            remove: Effacer
         permissionsEdit:
             confirm: Vous avez bien modifié ce membre
         notification:

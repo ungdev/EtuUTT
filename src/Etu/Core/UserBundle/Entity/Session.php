@@ -80,17 +80,19 @@ class Session
 
         $browser = @get_browser();
 
-        if (is_object($browser)) {
-            $name = [];
+        $name = [];
+
+        if ($browser) {
             $name[] = $browser->browser;
             $name[] = $browser->version;
             $name[] = $browser->platform;
-            $name[] = '('. gethostbyaddr($ip) .')';
-
-            $this->name = implode(' ', $name);
         } else {
-            $this->name = $ip . ' (' . gethostbyaddr($ip) . ')';
+            $name[] = 'Unknown browser';
         }
+
+        $name[] = '('. gethostbyaddr($ip) .')';
+        
+        $this->name = implode(' ', $name);
     }
 
     /**

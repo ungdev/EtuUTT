@@ -1,5 +1,5 @@
 
 parameters:
-    etu.argentique.authorized_admin: [ admin, galopint, argentiq ]
+    etu.argentique.authorized_admin: [ admin, galopint, tgalopin, argentiq ]
 
 services: ~
