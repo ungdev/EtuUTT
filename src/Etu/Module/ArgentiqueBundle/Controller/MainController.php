@@ -35,7 +35,7 @@ class MainController extends Controller
             ->select('c, s')
             ->from('EtuModuleArgentiqueBundle:Collection', 'c')
             ->leftJoin('c.sets', 's')
-            ->orderBy('c.title')
+            ->orderBy('c.createdAt', 'DESC')
             ->getQuery()
             ->getResult();
 
@@ -74,7 +74,7 @@ class MainController extends Controller
             ->select('c, s')
             ->from('EtuModuleArgentiqueBundle:Collection', 'c')
             ->leftJoin('c.sets', 's')
-            ->orderBy('c.title')
+            ->orderBy('c.createdAt', 'DESC')
             ->getQuery()
             ->getResult();
 
