@@ -91,7 +91,7 @@ class Session
         }
 
         $name[] = '('. gethostbyaddr($ip) .')';
-        
+
         $this->name = implode(' ', $name);
     }
 
