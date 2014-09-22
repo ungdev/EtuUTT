@@ -10,7 +10,7 @@ argentique:
         index:
             title: Argentique
             public: Page publique
-            manage_galleries: Gérer les galleries
+            manage_galleries: Gérer les galeries
             drop_here: Faites glissez ici les images que vous voulez envoyer
             synchronize: Synchroniser avec Flickr
             lasts: Dernières photos
@@ -23,11 +23,11 @@ argentique:
 
     admin:
         synchronize:
-            title: Gérer les galleries
+            title: Gérer les galeries
             starting: La synchronisation démarre ...
             ending: La synchronisation se termine ...
             importing: Importation en cours ...
             photos: photos
             no_photo: Aucune photo n'a besoin d'être importée
-            no_photo_back: Retour à la gallerie
+            no_photo_back: Retour à la galerie
             success: La synchronisation est terminée !
