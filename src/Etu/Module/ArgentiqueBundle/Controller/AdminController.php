@@ -432,32 +432,40 @@ class AdminController extends Controller
             file_put_contents($uploadDir.'/'.$photo->getId().'_t.jpg', file_get_contents($sizes['sizes']['size'][2]['source']));
 
             // Original
-            $image = $imagine->open($sizes['sizes']['size'][9]['source']);
+            try {
+                $image = $imagine->open($sizes['sizes']['size'][9]['source']);
 
-            $width = $image->getSize()->getWidth();
-            $height = $image->getSize()->getHeight();
+                $width = $image->getSize()->getWidth();
+                $height = $image->getSize()->getHeight();
 
-            if ($width > $height) {
-                $box = new \Imagine\Image\Box(1500, 1500 * ($height / $width));
-            } elseif ($width < $height) {
-                $box = new \Imagine\Image\Box(1500 * ($width / $height), 1500);
-            } else {
-                $box = new \Imagine\Image\Box(1500, 1500);
+                if ($width > $height) {
+                    $box = new \Imagine\Image\Box(1500, 1500 * ($height / $width));
+                } elseif ($width < $height) {
+                    $box = new \Imagine\Image\Box(1500 * ($width / $height), 1500);
+                } else {
+                    $box = new \Imagine\Image\Box(1500, 1500);
+                }
+
+                $image->resize($box)->save($uploadDir.'/'.$photo->getId().'_o.jpg');
+
+                $photo->setFile($photo->getId().'_o.jpg');
+                $photo->setIcon($photo->getId().'_t.jpg');
+                $photo->setReady(true);
+
+                $em->persist($photo);
+                $em->flush();
+
+                $response = new Response(json_encode([
+                    'title' => $photo->getTitle(),
+                    'icon' => $photo->getIcon(),
+                ]));
+            } catch (\Exception $e) {
+
+                $response = new Response(json_encode([
+                    'error' => $e->getMessage(),
+                    'exception' => $e,
+                ]));
             }
-
-            $image->resize($box)->save($uploadDir.'/'.$photo->getId().'_o.jpg');
-
-            $photo->setFile($photo->getId().'_o.jpg');
-            $photo->setIcon($photo->getId().'_t.jpg');
-            $photo->setReady(true);
-
-            $em->persist($photo);
-            $em->flush();
-
-            $response = new Response(json_encode([
-                'title' => $photo->getTitle(),
-                'icon' => $photo->getIcon(),
-            ]));
         } else {
             $response = new Response(json_encode([
                 'title' => 'Not found',
