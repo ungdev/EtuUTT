@@ -100,142 +100,14 @@
 
 {% block content %}
     <div class="padding20-all">
-
         <div class="row-fluid home-blocks">
-            <div class="span6">
-                <div class="home-block home-block-course">
-                    <h4>Vos prochains cours aujourd'hui</h4>
+            {% for block in blocks %}
+                {% if loop.index % 2 == 1 %}
+                    </div><div class="row-fluid home-blocks">
+                {% endif %}
 
-                    {% if nextCourses|length == 0 %}
-                        <div class="course-full">
-                            Vous n'avez plus de cours aujourd'hui.
-                        </div>
-                    {% else %}
-                        {% for course in nextCourses %}
-                            {% if course|length == 1 %}
-                                <div class="course-full">
-                                    <p>
-                                        <strong>{{ course[0].uv }}</strong> - {{ course[0].type }}<br />
-                                        <small class="muted">(à {{ course[0].start }} en {{ course[0].room }})</small>
-                                    </p>
-                                </div>
-                            {% else %}
-                                <div class="row-fluid">
-                                    <div class="span6">
-                                        <div class="course-half">
-                                            <p>
-                                                <strong>{{ course[0].uv }}</strong> - {{ course[0].type }}<br />
-                                                <small class="muted">
-                                                    (à {{ course[0].start }} en {{ course[0].room }}, sem. {{ course[0].week }})
-                                                </small>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="span6">
-                                        <div class="course-half">
-                                            <p>
-                                                <strong>{{ course[1].uv }}</strong> - {{ course[1].type }}<br />
-                                                <small class="muted">
-                                                    (à {{ course[1].start }} en {{ course[1].room }}, sem. {{ course[1].week }})
-                                                </small>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-
-                    <p class="more-link">
-                        <a href="{{ path('user_schedule') }}">
-                            Voir mon emploi du temps complet
-                        </a>
-                    </p>
-                </div>
-            </div>
-            <div class="span6">
-                <div class="home-block home-block-events">
-                    <h4>Trombinoscope</h4>
-
-                    <p>
-                        Rechercher rapidement sur le trombinoscope :
-                    </p>
-
-                    <form method="get" class="form-inline" action="{{ path('trombi_index') }}">
-                        {{ form_widget(trombiForm.fullName, { 'attr': { 'placeholder': 'Nom, prénom ou surnom ...' } } ) }}
-                        {{ form_rest(trombiForm) }}
-
-                        <button type="submit" class="btn">{{ 'trombi.main.index.search'|trans }}</button>
-                    </form>
-
-                    <p class="more-link">
-                        <a href="{{ path('trombi_index') }}">
-                            Aller sur le trombinoscope
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="row-fluid home-blocks">
-            {% if events|length > 0 %}
-                <div class="span6">
-                    <div class="home-block home-block-events">
-                        <h4>Prochains événements</h4>
-
-                        <ul>
-                            {% for event in events %}
-                                <li>
-                                    <div class="date">
-                                    <span class="day">
-                                        {{ event.begin|date('d/m') }}
-                                    </span>
-                                    </div>
-                                    <h5>
-                                        <a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}">
-                                            {{ event.title }}
-                                        </a>
-                                    </h5>
-                                </li>
-                            {% endfor %}
-                        </ul>
-
-                        <p class="more-link">
-                            <a href="{{ path('events_index') }}">
-                                Tous les événements
-                            </a>
-                        </p>
-                    </div>
-                </div>
-            {% endif %}
-
-            {% if reviews|length > 0 %}
-                <div class="span6">
-                    <div class="home-block home-block-photos">
-                        <h4>Dernières annales de vos UVs</h4>
-
-                        <ul>
-                            {% for review in reviews %}
-                                <li>
-                                    <h5>
-                                        <a href="">
-                                            {{ review.uv.typeTransKey|trans }}
-                                            de
-                                            {{ review.uv.code }}
-                                        </a>
-                                    </h5>
-                                </li>
-                            {% endfor %}
-                        </ul>
-
-                        <p class="more-link">
-                            <a href="{{ path('uvs_index') }}">
-                                Mes UVs
-                            </a>
-                        </p>
-                    </div>
-                </div>
-            {% endif %}
+                {% include block.template with block.context %}
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

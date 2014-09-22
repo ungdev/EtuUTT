@@ -1,0 +1,25 @@
+<div class="span6">
+    <div class="home-block home-block-photos">
+        <h4>Dernières annales de vos UVs</h4>
+
+        <ul>
+            {% for review in reviews %}
+                <li>
+                    <h5>
+                        <a href="">
+                            {{ review.uv.typeTransKey|trans }}
+                            de
+                            {{ review.uv.code }}
+                        </a>
+                    </h5>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <p class="more-link">
+            <a href="{{ path('uvs_index') }}">
+                Mes UVs
+            </a>
+        </p>
+    </div>
+</div>

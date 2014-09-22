@@ -3,7 +3,9 @@
 namespace Etu\Core\CoreBundle\Home;
 
 use Doctrine\ORM\EntityManager;
+use Etu\Core\UserBundle\Entity\User;
 use Etu\Module\EventsBundle\Entity\Event;
+use Symfony\Component\Security\Core\SecurityContext;
 
 class HomeBuilder
 {
@@ -13,22 +15,38 @@ class HomeBuilder
     protected $manager;
 
     /**
-     * @param EntityManager $manager
+     * @var User
      */
-    public function __construct(EntityManager $manager)
+    protected $user;
+
+    /**
+     * @param EntityManager $manager
+     * @param SecurityContext $context
+     */
+    public function __construct(EntityManager $manager, SecurityContext $context)
     {
         $this->manager = $manager;
+        $this->user = $context->getToken()->getUser();
     }
 
     /**
-     * @param $user
      * @return array
      */
-    public function getUvReviews($user)
+    public function getNextCourses()
+    {
+        return $this->manager
+            ->getRepository('EtuUserBundle:Course')
+            ->getUserNextCourses($this->user);
+    }
+
+    /**
+     * @return array
+     */
+    public function getUvReviews()
     {
         $query = $this->manager
             ->getRepository('EtuModuleUVBundle:Review')
-            ->createQbReviewOf($user->getUvsList())
+            ->createQbReviewOf($this->user->getUvsList())
             ->orderBy('r.createdAt', 'DESC')
             ->setMaxResults(5)
             ->getQuery();
@@ -49,8 +67,6 @@ class HomeBuilder
             ->leftJoin('e.orga', 'o')
             ->where('e.begin >= :begin')
             ->setParameter('begin', new \DateTime())
-            ->andWhere('e.privacy <= :public')
-            ->setParameter('public', Event::PRIVACY_PUBLIC)
             ->orderBy('e.begin', 'ASC')
             ->addOrderBy('e.end', 'ASC')
             ->setMaxResults(3)

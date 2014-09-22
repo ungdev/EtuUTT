@@ -1,0 +1,51 @@
+<div class="span6">
+    <div class="home-block home-block-course">
+        <h4>Vos prochains cours aujourd'hui</h4>
+
+        {% if nextCourses|length == 0 %}
+            <div class="course-full">
+                Vous n'avez plus de cours aujourd'hui.
+            </div>
+        {% else %}
+            {% for course in nextCourses %}
+                {% if course|length == 1 %}
+                    <div class="course-full">
+                        <p>
+                            <strong>{{ course[0].uv }}</strong> - {{ course[0].type }}<br />
+                            <small class="muted">(à {{ course[0].start }} en {{ course[0].room }})</small>
+                        </p>
+                    </div>
+                {% else %}
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="course-half">
+                                <p>
+                                    <strong>{{ course[0].uv }}</strong> - {{ course[0].type }}<br />
+                                    <small class="muted">
+                                        (à {{ course[0].start }} en {{ course[0].room }}, sem. {{ course[0].week }})
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="span6">
+                            <div class="course-half">
+                                <p>
+                                    <strong>{{ course[1].uv }}</strong> - {{ course[1].type }}<br />
+                                    <small class="muted">
+                                        (à {{ course[1].start }} en {{ course[1].room }}, sem. {{ course[1].week }})
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        <p class="more-link">
+            <a href="{{ path('user_schedule') }}">
+                Voir mon emploi du temps complet
+            </a>
+        </p>
+    </div>
+</div>

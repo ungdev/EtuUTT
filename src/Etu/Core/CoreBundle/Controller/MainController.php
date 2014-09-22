@@ -10,6 +10,7 @@ use Etu\Core\CoreBundle\Entity\Subscription;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Framework\Module\ModulesManager;
 use Etu\Core\CoreBundle\Home\HomeBuilder;
+use Etu\Core\CoreBundle\Home\HomeRenderer;
 use Etu\Core\UserBundle\Entity\User;
 
 use Etu\Module\EventsBundle\Entity\Event;
@@ -273,49 +274,16 @@ class MainController extends Controller
         /** @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
 
-        /** @var ModulesManager $modulesManager */
-        $modulesManager = $this->get('etu.core.modules_manager');
+        /** @var HomeRenderer $homeRenderer */
+        $homeRenderer = $this->get('etu.core.home_renderer');
 
-        /** @var HomeBuilder $homeBuilder */
-        $homeBuilder = $this->get('etu.core.home_builder');
-
+        /** @var User $user */
         $user = $this->getUser();
 
-        // Generate trombi form
-        $trombiFrom = $this->createFormBuilder()
-            ->add('fullName', 'text', array('required' => false))
-            ->add('studentId', 'hidden', array('required' => false))
-            ->add('phoneNumber', 'hidden', array('required' => false))
-            ->add('uvs', 'hidden', array('required' => false))
-            ->add('branch', 'hidden', array('required' => false))
-            ->add('niveau', 'hidden', array('required' => false))
-            ->add('personnalMail', 'hidden', array('required' => false))
-            ->getForm();
-
-        // Get next courses (one if every week, two if per week)
-        $nextCourses = $em->getRepository('EtuUserBundle:Course')->getUserNextCourses($user);
-
-        // Get last reviews of user courses
-        $reviews = [];
-
-        if ($modulesManager->getModuleByIdentifier('uv')->isEnabled()) {
-            $reviews = $homeBuilder->getUvReviews($this->getUser());
-        }
-
-        // Next events
-        $events = [];
-
-        if ($modulesManager->getModuleByIdentifier('events')->isEnabled()) {
-            $events = $homeBuilder->getEvents();
-        }
-
-        $view = $this->render('EtuCoreBundle:Main:index.html.twig', array(
-            'firstLogin' => $user->getFirstLogin(),
-            'nextCourses' => $nextCourses,
-            'trombiForm' => $trombiFrom->createView(),
-            'reviews' => $reviews,
-            'events' => $events,
-        ));
+        $view = $this->render('EtuCoreBundle:Main:index.html.twig', [
+            'blocks' => $homeRenderer->renderBlocks(),
+            'firstLogin' => $user->getFirstLogin()
+        ]);
 
         $user->setLastVisitHome(new \DateTime());
 
