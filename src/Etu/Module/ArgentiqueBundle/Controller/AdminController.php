@@ -459,12 +459,18 @@ class AdminController extends Controller
                     'title' => $photo->getTitle(),
                     'icon' => $photo->getIcon(),
                 ]));
-            } catch (\Exception $e) {
-
+            } catch (\Imagine\Exception\InvalidArgumentException $e) {
                 $response = new Response(json_encode([
-                    'error' => $e->getMessage(),
-                    'exception' => $e,
-                ]));
+                        'error' => $e->getMessage(),
+                        'argument' => $sizes['sizes']['size'][9]['source'],
+                        'sizes' => $sizes['sizes'],
+                        'exception' => $e,
+                    ]));
+            } catch (\Exception $e) {
+                $response = new Response(json_encode([
+                        'error' => $e->getMessage(),
+                        'exception' => $e,
+                    ]));
             }
         } else {
             $response = new Response(json_encode([
