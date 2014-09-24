@@ -41,7 +41,7 @@ class HomeRenderer
 
     public function createCoursesBlock()
     {
-        $this->blocks[] = [
+        return [
             'template' => 'EtuCoreBundle:Main/index_blocks:courses.html.twig',
             'context' => [
                 'nextCourses' => $this->builder->getNextCourses(),
@@ -61,7 +61,7 @@ class HomeRenderer
             ->add('personnalMail', 'hidden', array('required' => false))
             ->getForm();
 
-        $this->blocks[] = [
+        return [
             'template' => 'EtuCoreBundle:Main/index_blocks:trombi.html.twig',
             'context' => [
                 'trombiForm' => $trombiFrom->createView(),
@@ -71,7 +71,7 @@ class HomeRenderer
 
     public function createNotificationsBlock()
     {
-        $this->blocks[] = [
+        return [
             'template' => 'EtuCoreBundle:Main/index_blocks:notifications.html.twig',
             'context' => [
                 'notifications' => $this->builder->getNotifications($this->modulesManager->getEnabledModules()),
@@ -85,7 +85,7 @@ class HomeRenderer
             $events = $this->builder->getEvents();
 
             if (count($events) > 0) {
-                $this->blocks[] = [
+                return [
                     'template' => 'EtuCoreBundle:Main/index_blocks:events.html.twig',
                     'context' => [
                         'events' => $events,
@@ -93,6 +93,8 @@ class HomeRenderer
                 ];
             }
         }
+
+        return false;
     }
 
     public function createReviewsBlock()
@@ -101,7 +103,7 @@ class HomeRenderer
             $reviews = $this->builder->getUvReviews();
 
             if (count($reviews) > 0) {
-                $this->blocks[] = [
+                return [
                     'template' => 'EtuCoreBundle:Main/index_blocks:reviews.html.twig',
                     'context' => [
                         'reviews' => $reviews,
@@ -109,6 +111,8 @@ class HomeRenderer
                 ];
             }
         }
+
+        return false;
     }
 
     public function createPhotosBlock()
@@ -117,7 +121,7 @@ class HomeRenderer
             $photos = $this->builder->getPhotos();
 
             if (count($photos) > 0) {
-                $this->blocks[] = [
+                return [
                     'template' => 'EtuCoreBundle:Main/index_blocks:photos.html.twig',
                     'context' => [
                         'photos' => $photos,
@@ -125,6 +129,8 @@ class HomeRenderer
                 ];
             }
         }
+
+        return false;
     }
 
     /**
@@ -132,13 +138,25 @@ class HomeRenderer
      */
     public function renderBlocks()
     {
-        $this->createCoursesBlock();
-        $this->createTrombiBlock();
-        $this->createEventsBlock();
-        $this->createNotificationsBlock();
-        $this->createPhotosBlock();
-        $this->createReviewsBlock();
+        $columns = [];
 
-        return $this->blocks;
+        $columns[0][] = $this->createCoursesBlock();
+        $columns[0][] = $this->createTrombiBlock();
+
+        if ($eventsBlock = $this->createEventsBlock()) {
+            $columns[0][] = $eventsBlock;
+        }
+
+        if ($photosBlock = $this->createPhotosBlock()) {
+            $columns[0][] = $photosBlock;
+        }
+
+        if ($reviewsBlock = $this->createReviewsBlock()) {
+            $columns[0][] = $reviewsBlock;
+        }
+
+        $columns[1][] = $this->createNotificationsBlock();
+
+        return $columns;
     }
 }

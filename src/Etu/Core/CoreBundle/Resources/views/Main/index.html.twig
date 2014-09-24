@@ -104,8 +104,6 @@
 {% block content %}
     <div class="padding20-all">
         <div class="row-fluid home-blocks">
-            {% set columns = blocks | chunk( (blocks|length / 2) | round(0, 'ceil') ) %}
-
             <div class="row-fluid home-blocks">
                 {% for blocks in columns %}
                     <div class="span6">

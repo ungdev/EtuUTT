@@ -278,7 +278,7 @@ class MainController extends Controller
         $user = $this->getUser();
 
         $view = $this->render('EtuCoreBundle:Main:index.html.twig', [
-            'blocks' => $homeRenderer->renderBlocks(),
+            'columns' => $homeRenderer->renderBlocks(),
             'firstLogin' => $user->getFirstLogin()
         ]);
 

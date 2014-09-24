@@ -1,5 +1,5 @@
 
-<div class="home-block home-block-events">
+<div class="home-block home-block-notifs">
     {% if notifications|length == 0 %}
         <div class="no-notif">
             <h4>{{ 'core.main.index.no_notif_message'|trans }}</h4>
@@ -15,25 +15,11 @@
         </div>
     {% else %}
         <div class="flux">
-            <div id="alert-new-notifs">
-                <a href="{{ path('homepage') }}" class="alert-new-notifs">
-                    <span id="alert-new-notifs-count">0</span> {{ 'core.main.index.new_notifs'|trans }}
-                </a>
-            </div>
-
             <div class="flux-notifs" id="flux-notifs">
-                {% for notif in notifs %}
-                    {{ render_notif(notif) }}
+                {% for notification in notifications %}
+                    {{ render_notif(notification) }}
                 {% endfor %}
             </div>
-        </div>
-
-        <div class="flux-loading" id="flux-loader">
-            <img src="{{ asset('src/img/loader.gif') }}" alt="{{ 'core.main.index.loading'|trans }}" title="{{ 'core.main.index.loading'|trans }}"/>
-        </div>
-
-        <div class="flux-end" id="flux-end">
-            <img src="{{ asset('src/img/logo-shadow.png') }}" alt="{{ 'core.main.index.logo'|trans }}" title="{{ 'core.main.index.logo'|trans }}"/>
         </div>
     {% endif %}
 </div>
