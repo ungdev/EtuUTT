@@ -1,0 +1,17 @@
+<div class="home-block home-block-photos">
+    <h4>Dernières photos Argentique</h4>
+
+    <div class="home-block-photos-gallery">
+        {% for photo in photos %}
+            <a href="{{ asset('uploads/argentique/' ~ photo.file) }}" target="_blank" class="home-block-photo" title="{{ photo.title }}">
+                <img src="{{ asset('uploads/argentique/' ~ photo.icon) }}" />
+            </a>
+        {% endfor %}
+    </div>
+
+    <p class="more-link">
+        <a href="{{ path('argentique_index') }}">
+            Voir la galerie complète
+        </a>
+    </p>
+</div>

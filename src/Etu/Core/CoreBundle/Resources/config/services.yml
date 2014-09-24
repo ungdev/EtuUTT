@@ -207,7 +207,7 @@ services:
     # Home builder
     etu.core.home_builder:
         class: %etu.core.home_builder.class%
-        arguments: [ @doctrine.orm.entity_manager, @security.context ]
+        arguments: [ @doctrine.orm.entity_manager, @security.context, @etu.twig.global_accessor ]
 
     etu.core.home_renderer:
         class: %etu.core.home_renderer.class%

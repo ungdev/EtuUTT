@@ -1,28 +1,26 @@
-<div class="span6">
-    <div class="home-block home-block-events">
-        <h4>Prochains événements</h4>
+<div class="home-block home-block-events">
+    <h4>Prochains événements</h4>
 
-        <ul>
-            {% for event in events %}
-                <li>
-                    <div class="date">
+    <ul>
+        {% for event in events %}
+            <li>
+                <div class="date">
                                     <span class="day">
                                         {{ event.begin|date('d/m') }}
                                     </span>
-                    </div>
-                    <h5>
-                        <a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}">
-                            {{ event.title }}
-                        </a>
-                    </h5>
-                </li>
-            {% endfor %}
-        </ul>
+                </div>
+                <h5>
+                    <a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}">
+                        {{ event.title }}
+                    </a>
+                </h5>
+            </li>
+        {% endfor %}
+    </ul>
 
-        <p class="more-link">
-            <a href="{{ path('events_index') }}">
-                Tous les événements
-            </a>
-        </p>
-    </div>
+    <p class="more-link">
+        <a href="{{ path('events_index') }}">
+            Tous les événements
+        </a>
+    </p>
 </div>

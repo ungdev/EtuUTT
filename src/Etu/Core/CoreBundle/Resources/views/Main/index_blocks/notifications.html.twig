@@ -1,0 +1,39 @@
+
+<div class="home-block home-block-events">
+    {% if notifications|length == 0 %}
+        <div class="no-notif">
+            <h4>{{ 'core.main.index.no_notif_message'|trans }}</h4>
+            <p>
+                {{ 'core.main.index.no_notif_description'|trans }}
+            </p>
+            <p class="pull-right">
+                <a href="{{ path('page_view', {'slug': 'les-abonnements'}) }}">
+                    {{ 'core.main.index.learn_more'|trans }}
+                </a>
+            </p>
+            <div class="clear"></div>
+        </div>
+    {% else %}
+        <div class="flux">
+            <div id="alert-new-notifs">
+                <a href="{{ path('homepage') }}" class="alert-new-notifs">
+                    <span id="alert-new-notifs-count">0</span> {{ 'core.main.index.new_notifs'|trans }}
+                </a>
+            </div>
+
+            <div class="flux-notifs" id="flux-notifs">
+                {% for notif in notifs %}
+                    {{ render_notif(notif) }}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="flux-loading" id="flux-loader">
+            <img src="{{ asset('src/img/loader.gif') }}" alt="{{ 'core.main.index.loading'|trans }}" title="{{ 'core.main.index.loading'|trans }}"/>
+        </div>
+
+        <div class="flux-end" id="flux-end">
+            <img src="{{ asset('src/img/logo-shadow.png') }}" alt="{{ 'core.main.index.logo'|trans }}" title="{{ 'core.main.index.logo'|trans }}"/>
+        </div>
+    {% endif %}
+</div>

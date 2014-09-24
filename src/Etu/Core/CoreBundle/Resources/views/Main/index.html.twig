@@ -5,6 +5,9 @@
 {% block main_menu_link_homepage %} active{% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('bower_components/swipebox/src/js/jquery.swipebox.min.js') }}" type="text/javascript"></script>
+    <script type="text/javascript"> $( '.home-block-photo' ).swipebox({ hideBarsDelay : 0 }); </script>
+
 	{% if not app.user.getFirstLogin() %}
 		<script type="text/javascript" src="{{ asset('bower_components/jquery-impromptu/dist/jquery-impromptu.min.js') }}"></script>
 		<script type="text/javascript">
@@ -101,13 +104,17 @@
 {% block content %}
     <div class="padding20-all">
         <div class="row-fluid home-blocks">
-            {% for block in blocks %}
-                {% if loop.index % 2 == 1 %}
-                    </div><div class="row-fluid home-blocks">
-                {% endif %}
+            {% set columns = blocks | chunk( (blocks|length / 2) | round(0, 'ceil') ) %}
 
-                {% include block.template with block.context %}
-            {% endfor %}
+            <div class="row-fluid home-blocks">
+                {% for blocks in columns %}
+                    <div class="span6">
+                        {% for block in blocks %}
+                            {% include block.template with block.context %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock %}

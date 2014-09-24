@@ -8,13 +8,10 @@ use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Entity\Page;
 use Etu\Core\CoreBundle\Entity\Subscription;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
-use Etu\Core\CoreBundle\Framework\Module\ModulesManager;
-use Etu\Core\CoreBundle\Home\HomeBuilder;
 use Etu\Core\CoreBundle\Home\HomeRenderer;
 use Etu\Core\UserBundle\Entity\User;
 
 use Etu\Module\EventsBundle\Entity\Event;
-use Etu\Module\UVBundle\Entity\Review;
 use Symfony\Component\HttpFoundation\Response;
 
 // Import @Route() and @Template() annotations
@@ -307,15 +304,6 @@ class MainController extends Controller
 
         // Load only notifications we should display, ie. notifications sent from
         // currently enabled modules
-
-        $query = $em
-            ->createQueryBuilder()
-            ->select('n')
-            ->from('EtuCoreBundle:Notification', 'n')
-            ->where('n.authorId != :userId')
-            ->setParameter('userId', $this->getUser()->getId())
-            ->orderBy('n.createdAt', 'DESC')
-            ->setMaxResults(25);
 
         /*
          * Subscriptions

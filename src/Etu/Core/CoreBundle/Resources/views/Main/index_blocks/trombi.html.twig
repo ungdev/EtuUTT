@@ -1,22 +1,20 @@
-<div class="span6">
-    <div class="home-block home-block-events">
-        <h4>Trombinoscope</h4>
+<div class="home-block home-block-events">
+    <h4>Trombinoscope</h4>
 
-        <p>
-            Rechercher rapidement sur le trombinoscope :
-        </p>
+    <p>
+        Rechercher rapidement sur le trombinoscope :
+    </p>
 
-        <form method="get" class="form-inline" action="{{ path('trombi_index') }}">
-            {{ form_widget(trombiForm.fullName, { 'attr': { 'placeholder': 'Nom, prénom ou surnom ...' } } ) }}
-            {{ form_rest(trombiForm) }}
+    <form method="get" class="form-inline" action="{{ path('trombi_index') }}">
+        {{ form_widget(trombiForm.fullName, { 'attr': { 'placeholder': 'Nom, prénom ou surnom ...' } } ) }}
+        {{ form_rest(trombiForm) }}
 
-            <button type="submit" class="btn">{{ 'trombi.main.index.search'|trans }}</button>
-        </form>
+        <button type="submit" class="btn">{{ 'trombi.main.index.search'|trans }}</button>
+    </form>
 
-        <p class="more-link">
-            <a href="{{ path('trombi_index') }}">
-                Aller sur le trombinoscope
-            </a>
-        </p>
-    </div>
+    <p class="more-link">
+        <a href="{{ path('trombi_index') }}">
+            Aller sur le trombinoscope
+        </a>
+    </p>
 </div>

@@ -69,6 +69,16 @@ class HomeRenderer
         ];
     }
 
+    public function createNotificationsBlock()
+    {
+        $this->blocks[] = [
+            'template' => 'EtuCoreBundle:Main/index_blocks:notifications.html.twig',
+            'context' => [
+                'notifications' => $this->builder->getNotifications($this->modulesManager->getEnabledModules()),
+            ]
+        ];
+    }
+
     public function createEventsBlock()
     {
         if ($this->modulesManager->getModuleByIdentifier('events')->isEnabled()) {
@@ -101,6 +111,22 @@ class HomeRenderer
         }
     }
 
+    public function createPhotosBlock()
+    {
+        if ($this->modulesManager->getModuleByIdentifier('argentique')->isEnabled()) {
+            $photos = $this->builder->getPhotos();
+
+            if (count($photos) > 0) {
+                $this->blocks[] = [
+                    'template' => 'EtuCoreBundle:Main/index_blocks:photos.html.twig',
+                    'context' => [
+                        'photos' => $photos,
+                    ]
+                ];
+            }
+        }
+    }
+
     /**
      * @return array
      */
@@ -109,6 +135,8 @@ class HomeRenderer
         $this->createCoursesBlock();
         $this->createTrombiBlock();
         $this->createEventsBlock();
+        $this->createNotificationsBlock();
+        $this->createPhotosBlock();
         $this->createReviewsBlock();
 
         return $this->blocks;

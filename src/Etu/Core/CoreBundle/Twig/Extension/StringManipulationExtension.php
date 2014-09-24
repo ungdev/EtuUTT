@@ -31,7 +31,8 @@ class StringManipulationExtension extends \Twig_Extension
 			'uncamelize' => new \Twig_Filter_Method($this, 'uncamelize'),
 			'seems_utf8' => new \Twig_Filter_Method($this, 'seemsUtf8'),
 			'unaccent' => new \Twig_Filter_Method($this, 'unaccent'),
-			'slugify' => new \Twig_Filter_Method($this, 'slugify'),
+            'slugify' => new \Twig_Filter_Method($this, 'slugify'),
+            'chunk' => new \Twig_Filter_Function('array_chunk'),
 		);
 	}
 
