@@ -14,8 +14,10 @@
         tree.cSets.hide();
         tree.cOpen.append('<i class="fa fa-caret-down"></i>');
 
-        // Open current
-        $('#{{ set.id }}').parent().show();
+        {% if set is defined %}
+            // Open current
+            $('#{{ set.id }}').parent().show();
+        {% endif %}
 
         tree.cOpen.click(function() {
             $(this).parent().find('ul').slideToggle();
