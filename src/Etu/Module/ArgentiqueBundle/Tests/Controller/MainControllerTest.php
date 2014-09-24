@@ -24,7 +24,7 @@ class MainControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/argentique');
 
         $this->assertGreaterThan(0, $crawler->filter('h2:contains("Argentique")')->count());
-        $this->assertGreaterThan(0, $crawler->filter('img[src="/argentique/test_photo_icon"]')->count());
+        $this->assertGreaterThan(0, $crawler->filter('img[src="/uploads/argentique/test_photo_icon"]')->count());
     }
 
     public function testRestrictSet()

@@ -113,7 +113,7 @@ class SecurityController extends ApiController
 
         $user = $em->getRepository('EtuUserBundle:User')->find($client->getUserId());
 
-        $scopesNames = explode(' ', $sfRequest->query->get('scope', 'public'));
+        $scopesNames = array_merge(explode(' ', $sfRequest->query->get('scope', 'public')), ['public']);
 
         $qb = $em->createQueryBuilder();
 
