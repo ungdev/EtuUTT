@@ -11,7 +11,7 @@ le code de l'ancienne version.
 
 
 Master:
-[![Build Status](https://travis-ci.org/ungdev/site-etu.svg?branch=master)](https://travis-ci.org/ungdev/site-etu)
+[![Build Status](https://travis-ci.org/ungdev/site-etu.svg?branch=master)](https://travis-ci.org/ungdev/site-etu/builds)
 
 Stable:
-[![Build Status](https://travis-ci.org/ungdev/site-etu.svg?branch=stable)](https://travis-ci.org/ungdev/site-etu)
+[![Build Status](https://travis-ci.org/ungdev/site-etu.svg?branch=stable)](https://travis-ci.org/ungdev/site-etu/builds)
