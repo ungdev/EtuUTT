@@ -45,7 +45,7 @@
                                 {% for s in collection.sets %}
                                     <li class="argentique-tree-s" id="{{ s.id }}">
                                         <a href="{{ path('argentique_set', {'id': s.id, 'slug': s.title|slugify}) }}">
-                                            {% if s.id == set.id %}
+                                            {% if set is defined and s.id == set.id %}
                                                 <em>{{ s.title }}</em>
                                             {% else %}
                                                 {{ s.title }}
