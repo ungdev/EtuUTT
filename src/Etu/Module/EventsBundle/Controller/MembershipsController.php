@@ -304,36 +304,6 @@ class MembershipsController extends Controller
 				)
 			);
 
-			// Send notifications to subscribers of all eventts
-			$notif = new Notification();
-
-			$notif
-				->setModule($this->getCurrentBundle()->getIdentifier())
-				->setHelper('event_created_all')
-				->setAuthorId($this->getUser()->getId())
-				->setEntityType('event')
-				->setEntityId(0)
-				->addEntity($entity);
-
-			$this->getNotificationsSender()->send($notif);
-
-			// Send notifications to subscribers of specific category
-			$notif = new Notification();
-
-			$availableCategories = Event::$categories;
-			array_unshift($availableCategories, 'all');
-			$keys = array_flip($availableCategories);
-
-			$notif
-				->setModule($this->getCurrentBundle()->getIdentifier())
-				->setHelper('event_created_category')
-				->setAuthorId($this->getUser()->getId())
-				->setEntityType('event-category')
-				->setEntityId($keys[$event->getCategory()])
-				->addEntity($entity);
-
-			$this->getNotificationsSender()->send($notif);
-
 			// Confirmation
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
@@ -652,19 +622,6 @@ class MembershipsController extends Controller
 					'name' => $event->getOrga()->getName(),
 				)
 			);
-
-			// Send notifications to subscribers
-			$notif = new Notification();
-
-			$notif
-				->setModule($this->getCurrentBundle()->getIdentifier())
-				->setHelper('event_deleted')
-				->setAuthorId($this->getUser()->getId())
-				->setEntityType('event')
-				->setEntityId($event->getId())
-				->addEntity($entity);
-
-			$this->getNotificationsSender()->send($notif);
 
 			$em->createQueryBuilder()
 				->delete()
