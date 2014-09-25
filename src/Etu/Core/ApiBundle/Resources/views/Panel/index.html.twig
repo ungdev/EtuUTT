@@ -14,15 +14,76 @@
         {% endif %}
 
         <p>
-            Cet espace réservé aux développeurs vous permet de créer et gérer vos accès à l'API EtuUTT, de télécharger
-            les librairies mises à dispositions par l'UNG et de consulter la documentation pour développeurs.
+            Vous êtes dévleoppeur ? EtuUTT met à votre disposition toute une infrastructure pour que vous
+            puissisez accéder aux données étudiantes de l'UTT. Laissez libre cours à vos idées et faciliter
+            la vie de chaque étudiant de l'UTT en développant des applications !
         </p>
 
         <hr />
 
         <div class="row-fluid">
             <div class="span7">
-                <h4>Mes applications</h4>
+                <h4>Développer une application externe</h4>
+
+                <p>
+                    Vous pouvez utiliser l'API d'EtuUTT pour développer une application ou un site externe.
+                    Vous aurez ainsi accès à un système de connexion centralisé, à des données sur les étudiants
+                    et les associations, etc.
+                </p>
+
+                <p>
+                    <strong>
+                        <a href="http://etuutt.readthedocs.org/fr/latest/api/index.html">
+                            Lire la documentation de l'API
+                        </a>
+                    </strong>
+                </p>
+
+                <p>
+                    <strong>
+                        <a href="{{ path('nelmio_api_doc_index') }}">
+                            Accéder à la référence des URL de l'API
+                        </a>
+                    </strong>
+                </p>
+
+                <hr />
+
+                <h4>Développer un module pour le site étudiant</h4>
+
+                <p>
+                    Vous pouvez créer votre module intégré au site étudiant et le proposer à l'UNG pour mettre en
+                    avant votre association, proposer des nouvelles fonctionnalités, etc. Par exemple, Argentique
+                    a un module "Galerie photo".
+                </p>
+
+                <p>
+                    <strong>
+                        <a href="http://etuutt.readthedocs.org/fr/latest/core/index.html">
+                            Lire le guide du contributeur d'EtuUTT
+                        </a>
+                    </strong>
+                </p>
+
+                <hr />
+
+                <h4>Utiliser les librairies de l'UNG</h4>
+
+                <p>
+                    Vous pouvez utiliser les librairies de l'UNG pour faciliter le développement de vos applications
+                    et de vos sites internet utilisant les ressources de l'UTT.
+                </p>
+
+                <p>
+                    <strong>
+                        <a href="http://etuutt.readthedocs.org/fr/latest/lib/index.html">
+                            Lire la documentation des librairies de l'UNG
+                        </a>
+                    </strong>
+                </p>
+            </div>
+            <div class="span5">
+                <h4>Mes accès API</h4>
 
                 <ul class="nav nav-list">
                     {% for client in clients %}
@@ -33,8 +94,6 @@
                                 <small class="muted">(client_id: {{ client.clientId }})</small>
                             </a>
                         </li>
-                    {% else %}
-                        <li>Aucune application</li>
                     {% endfor %}
                 </ul>
 
@@ -42,13 +101,6 @@
                     <br />
                     <a href="{{ path('devs_panel_create_app') }}" class="btn btn-small">Créer une application</a>
                 </p>
-            </div>
-            <div class="span5">
-                <h4>Documentation</h4>
-
-                <a href="http://etuutt.readthedocs.org/fr/latest/" class="btn btn-default">
-                    Documentation pour développeurs
-                </a>
             </div>
         </div>
     </div>
