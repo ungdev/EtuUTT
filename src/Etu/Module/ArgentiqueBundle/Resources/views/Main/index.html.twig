@@ -14,8 +14,10 @@
         tree.cSets.hide();
         tree.cOpen.append('<i class="fa fa-caret-down"></i>');
 
-        // Open current
-        $('#{{ set.id }}').parent().show();
+        {% if set is defined %}
+            // Open current
+            $('#{{ set.id }}').parent().show();
+        {% endif %}
 
         tree.cOpen.click(function() {
             $(this).parent().find('ul').slideToggle();
@@ -45,7 +47,7 @@
                                 {% for s in collection.sets %}
                                     <li class="argentique-tree-s" id="{{ s.id }}">
                                         <a href="{{ path('argentique_set', {'id': s.id, 'slug': s.title|slugify}) }}">
-                                            {% if s.id == set.id %}
+                                            {% if set is defined and s.id == set.id %}
                                                 <em>{{ s.title }}</em>
                                             {% else %}
                                                 {{ s.title }}
