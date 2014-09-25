@@ -19,18 +19,6 @@ Documentation
 La documentation est disponible sur
 [http://etuutt.readthedocs.org/fr/latest/](http://etuutt.readthedocs.org/fr/latest/).
 
-Contribuer
-----------
-
-La façon la plus simple de contribuer est de repérer des bugs sur le site
-(reporté par d'autres ou que vous avez découvert) et de les corriger.
-Pour cela, il existe un guide du contributeur, disponible à cette
-addresse : [http://ungdev.github.io/site-etu](http://ungdev.github.io/site-etu).
-
-Vous pouvez aussi récupérer le code complet du site et l'installer chez
-vous (en suivant la documentation officielle), pour par exemple développer
-un module complémentaire lié à votre association.
-
 Intégration continue
 --------------------
 
