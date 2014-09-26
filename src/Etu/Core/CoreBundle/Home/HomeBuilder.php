@@ -65,7 +65,7 @@ class HomeBuilder
             ->where('n.authorId != :userId')
             ->setParameter('userId', $this->user->getId())
             ->orderBy('n.createdAt', 'DESC')
-            ->setMaxResults(20);
+            ->setMaxResults(10);
 
         /** @var $subscriptions Subscription[] */
         $subscriptions = $this->globalAccessorObject->get('notifs')->get('subscriptions');
