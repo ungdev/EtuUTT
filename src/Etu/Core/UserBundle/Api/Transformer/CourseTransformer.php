@@ -2,6 +2,7 @@
 
 namespace Etu\Core\UserBundle\Api\Transformer;
 
+use Etu\Core\ApiBundle\Framework\Embed\EmbedBag;
 use Etu\Core\ApiBundle\Framework\Transformer\AbstractTransformer;
 use Etu\Core\UserBundle\Entity\Course;
 
@@ -9,9 +10,19 @@ class CourseTransformer extends AbstractTransformer
 {
     /**
      * @param Course $course
+     * @param EmbedBag $includes
      * @return array
      */
-    public function transformUnique($course)
+    public function transformUnique($course, EmbedBag $includes)
+    {
+        return $this->getData($course);
+    }
+
+    /**
+     * @param Course $course
+     * @return array
+     */
+    private function getData(Course $course)
     {
         $start = explode(':', $course->getStart());
         $end = explode(':', $course->getEnd());

@@ -82,6 +82,7 @@ services:
 
     etu.api.user.private_transformer:
         class: %etu.api.user.private_transformer.class%
+        arguments: [ @etu.api.badge.transformer ]
 
     etu.api.orga_member.transformer:
         class: %etu.api.orga_member.transformer.class%
