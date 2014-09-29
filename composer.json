@@ -14,6 +14,7 @@
 		"symfony/symfony": "2.3.*",
 		"doctrine/orm": ">=2.2.3,<2.4-dev",
 		"doctrine/doctrine-bundle": "1.2.*",
+        "beberlei/DoctrineExtensions": "*",
 		"twig/extensions": "1.0.*",
 		"symfony/assetic-bundle": "2.3.*",
 		"symfony/swiftmailer-bundle": "2.3.*",

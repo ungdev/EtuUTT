@@ -166,4 +166,50 @@ class HomeBuilder
 
         return $query->getResult();
     }
+
+    /**
+     * @return User[]
+     */
+    public function getBirthdays()
+    {
+        $query = $this->manager->createQueryBuilder()
+            ->select('u, m, o')
+            ->from('EtuUserBundle:User', 'u')
+            ->leftJoin('u.memberships', 'm')
+            ->leftJoin('m.organization', 'o')
+            ->where('DAY(u.birthday) = DAY(CURRENT_TIMESTAMP())')
+            ->andWhere('MONTH(u.birthday) = MONTH(CURRENT_TIMESTAMP())')
+            ->andWhere('u.birthdayPrivacy = :privacy')
+            ->setParameter('privacy', User::PRIVACY_PUBLIC)
+            //->andWhere('u.id != :me')
+            //->setParameter('me', $this->user->getId())
+            ->getQuery();
+
+        $query->useResultCache(true, 3600);
+
+        /** @var User[] $users */
+        $users = $query->getResult();
+
+        // Find more interesting birthdays : same promotion (SRT4), same branch (SRT), others
+        $usersWeights = [];
+
+        foreach ($users as $key => $user) {
+            $usersWeights[$key] = 0;
+
+            if ($user->getBranch() == $this->user->getBranch()) {
+                $usersWeights[$key]++;
+            }
+
+            if ($user->getNiveau() == $this->user->getNiveau()) {
+                $usersWeights[$key]++;
+            }
+        }
+
+        array_multisort(
+            $usersWeights, SORT_DESC, SORT_NUMERIC,
+            $users
+        );
+
+        return $users;
+    }
 }

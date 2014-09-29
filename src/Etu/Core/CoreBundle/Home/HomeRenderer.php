@@ -133,6 +133,22 @@ class HomeRenderer
         return false;
     }
 
+    public function createBirthdaysBlock()
+    {
+        $birthdays = $this->builder->getBirthdays();
+
+        if (count($birthdays) > 0) {
+            return [
+                'template' => 'EtuCoreBundle:Main/index_blocks:birthdays.html.twig',
+                'context' => [
+                    'birthdays' => $birthdays,
+                ]
+            ];
+        }
+
+        return false;
+    }
+
     /**
      * @return array
      */
@@ -145,6 +161,10 @@ class HomeRenderer
 
         if ($eventsBlock = $this->createEventsBlock()) {
             $columns[0][] = $eventsBlock;
+        }
+
+        if ($birthdays = $this->createBirthdaysBlock()) {
+            $columns[0][] = $birthdays;
         }
 
         if ($photosBlock = $this->createPhotosBlock()) {

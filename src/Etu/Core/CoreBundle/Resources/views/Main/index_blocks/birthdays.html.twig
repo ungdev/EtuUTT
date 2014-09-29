@@ -1,0 +1,14 @@
+<div class="home-block home-block-birthdays">
+    <h4>Les anniversaires aujourd'hui</h4>
+
+    <ul>
+        {% for user in birthdays %}
+            <li>
+                <a href="{{ path('user_view', {'login': user.login}) }}">
+                    {{ user.fullName }}
+                    <span class="muted pull-right">{{ user.age }} ans</span>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
