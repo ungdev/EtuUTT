@@ -2,11 +2,13 @@
     <h4>Dernières photos Argentique</h4>
 
     <div class="home-block-photos-gallery">
-        {% for photo in photos %}
-            <a href="{{ asset('uploads/argentique/' ~ photo.file) }}" target="_blank" class="home-block-photo" title="{{ photo.title }}">
-                <img src="{{ asset('uploads/argentique/' ~ photo.icon) }}" />
-            </a>
-        {% endfor %}
+        <div class="cycle-slideshow"
+             data-cycle-center-horz="true"
+             data-cycle-center-vert="true">
+            {% for photo in photos %}
+                <img src="{{ asset('uploads/argentique/' ~ photo.file) }}" class="home-block-photo" />
+            {% endfor %}
+        </div>
     </div>
 
     <p class="more-link">
