@@ -159,7 +159,7 @@ class HomeBuilder
             ->from('EtuModuleArgentiqueBundle:Photo', 'p')
             ->orderBy('p.createdAt', 'DESC')
             ->where('p.ready = 1')
-            ->setMaxResults(3)
+            ->setMaxResults(5)
             ->getQuery();
 
         $query->useResultCache(true, 1200);
