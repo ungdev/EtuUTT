@@ -179,6 +179,7 @@ class HomeBuilder
             ->leftJoin('m.organization', 'o')
             ->where('DAY(u.birthday) = DAY(CURRENT_TIMESTAMP())')
             ->andWhere('MONTH(u.birthday) = MONTH(CURRENT_TIMESTAMP())')
+            ->andWhere('u.birthday IS NOT NULL')
             ->andWhere('u.birthdayPrivacy = :privacy')
             ->setParameter('privacy', User::PRIVACY_PUBLIC)
             //->andWhere('u.id != :me')
@@ -210,6 +211,6 @@ class HomeBuilder
             $users
         );
 
-        return $users;
+        return array_slice($users, 0, 3);
     }
 }

@@ -163,12 +163,12 @@ class HomeRenderer
             $columns[0][] = $eventsBlock;
         }
 
-        if ($birthdays = $this->createBirthdaysBlock()) {
-            $columns[0][] = $birthdays;
-        }
-
         if ($photosBlock = $this->createPhotosBlock()) {
             $columns[0][] = $photosBlock;
+        }
+
+        if ($birthdays = $this->createBirthdaysBlock()) {
+            $columns[0][] = $birthdays;
         }
 
         if ($reviewsBlock = $this->createReviewsBlock()) {
