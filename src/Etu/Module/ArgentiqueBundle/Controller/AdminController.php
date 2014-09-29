@@ -73,21 +73,21 @@ class AdminController extends Controller
 
         // If there is no collections in API, remove all the entities in local
         if (empty($apiCollections) || ! isset($apiCollections['collections']) || ! isset($apiCollections['collections']['collection'])) {
-            $em->createQueryBuilder()
-                ->delete('EtuModuleArgentiqueBundle:Collection')
-                ->getQuery()
-                ->execute();
+            $photos = $em->getRepository('EtuModuleArgentiqueBundle:Photo')->findAll();
+
+            foreach ($photos as $photo) {
+                $em->remove($photo);
+            }
 
             $em->createQueryBuilder()
                 ->delete('EtuModuleArgentiqueBundle:PhotoSet')
                 ->getQuery()
                 ->execute();
 
-            $photos = $em->getRepository('EtuModuleArgentiqueBundle:Photo')->findAll();
-
-            foreach ($photos as $photo) {
-                $em->remove($photo);
-            }
+            $em->createQueryBuilder()
+                ->delete('EtuModuleArgentiqueBundle:Collection')
+                ->getQuery()
+                ->execute();
 
             $em->flush();
 
