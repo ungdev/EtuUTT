@@ -2,7 +2,7 @@
     <h4>Les anniversaires aujourd'hui</h4>
 
     <ul>
-        {% for user in birthdays %}
+        {% for user in birthdays if user.age != 0 %}
             <li>
                 <a href="{{ path('user_view', {'login': user.login}) }}">
                     {{ user.fullName }}
