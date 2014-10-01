@@ -16,6 +16,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class PublicOrgasListController extends ApiController
 {
     /**
+     * List of all the organizations in EtuUTT (display only public data).
+     *
      * @ApiDoc(
      *   section = "Organization - Public data",
      *   description = "List of the orgas (scope: public)",
@@ -74,6 +76,8 @@ class PublicOrgasListController extends ApiController
     }
 
     /**
+     * View a single organization informations, embeding members.
+     *
      * @ApiDoc(
      *   section = "Organization - Public data",
      *   description = "View a single organisation (scope: public)",
@@ -94,6 +98,8 @@ class PublicOrgasListController extends ApiController
     }
 
     /**
+     * View a given organization members and their associated informations.
+     *
      * @ApiDoc(
      *   section = "Organization - Public data",
      *   description = "List of a given organization members (scope: public)",
@@ -113,6 +119,10 @@ class PublicOrgasListController extends ApiController
     }
 
     /**
+     * Deprecated, please don't use it anymore.
+     *
+     * List of all the organizations in EtuUTT (display only public data).
+     *
      * @ApiDoc(
      *   section = "Organization - Public data",
      *   description = "Use /api/public/orgas instead. List of the orgas (scope: public)",
@@ -131,6 +141,10 @@ class PublicOrgasListController extends ApiController
     }
 
     /**
+     * Deprecated, please don't use it anymore.
+     *
+     * View a single organization informations, embeding members.
+     *
      * @ApiDoc(
      *   section = "Organization - Public data",
      *   description = "Use /api/public/orgas/{login} instead. View a single organisation (scope: public)",

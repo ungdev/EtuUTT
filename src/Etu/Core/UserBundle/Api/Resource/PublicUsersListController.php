@@ -16,6 +16,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class PublicUsersListController extends ApiController
 {
     /**
+     *
+     *
      * @ApiDoc(
      *   section = "User - Public data",
      *   description = "List of the users (scope: public)",

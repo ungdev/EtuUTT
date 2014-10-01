@@ -16,6 +16,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class PrivateUserController extends ApiController
 {
     /**
+     * Once you connected the user with EtuUTT, you will want to retrieve informations
+     * about him / her.
+     *
+     * This endpoint allows you to retrieve such informations.
+     *
+     * It's more complete than `/api/public/user/account` as it includes private data
+     * (it requires scope `private_user_account`).
+     *
      * @ApiDoc(
      *   section = "User - Private data",
      *   authentication = true,
