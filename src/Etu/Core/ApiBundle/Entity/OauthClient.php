@@ -101,15 +101,15 @@ class OauthClient
 
         // Create the logo thumbnail in a 200x200 box
         if (null === $this->file) {
-            $thumbnail = $imagine->open($this->file->getPathname())
+            $thumbnail = $imagine->open($rootDir . '/default.png')
                 ->thumbnail(new Box(200, 200), Image::THUMBNAIL_OUTBOUND);
         } else {
-            $thumbnail = $imagine->open($rootDir . '/default.jpg')
+            $thumbnail = $imagine->open($this->file->getPathname())
                 ->thumbnail(new Box(200, 200), Image::THUMBNAIL_OUTBOUND);
         }
 
         // Save the result
-        $thumbnail->save($rootDir . '/' . $this->getClientId().'.jpeg');
+        $thumbnail->save($rootDir . '/' . $this->getClientId().'.png');
     }
 
     public function generateClientId()
@@ -145,6 +145,14 @@ class OauthClient
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIcon()
+    {
+        return $this->clientId . '.png';
     }
 
     /**
