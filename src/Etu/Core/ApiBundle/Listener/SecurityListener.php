@@ -56,6 +56,8 @@ class SecurityListener
                 $scope = null;
             }
 
+            header('Access-Control-Allow-Origin: *');
+
             $request = \OAuth2\Request::createFromGlobals();
 
             if (! $this->server->verifyResourceRequest($request, null, $scope)) {
