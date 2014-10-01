@@ -92,9 +92,7 @@ class OauthClient
      */
     public function upload()
     {
-        if (null === $this->file) {
-            return false;
-        }
+        $rootDir = __DIR__ . '/../../../../../web/uploads/apps';
 
         /*
          * Upload and resize
@@ -102,11 +100,16 @@ class OauthClient
         $imagine = new Imagine();
 
         // Create the logo thumbnail in a 200x200 box
-        $thumbnail = $imagine->open($this->file->getPathname())
-            ->thumbnail(new Box(200, 200), Image::THUMBNAIL_OUTBOUND);
+        if (null === $this->file) {
+            $thumbnail = $imagine->open($this->file->getPathname())
+                ->thumbnail(new Box(200, 200), Image::THUMBNAIL_OUTBOUND);
+        } else {
+            $thumbnail = $imagine->open($rootDir . '/default.jpg')
+                ->thumbnail(new Box(200, 200), Image::THUMBNAIL_OUTBOUND);
+        }
 
         // Save the result
-        $thumbnail->save(__DIR__ . '/../../../../../web/uploads/apps/' . $this->getClientId().'.jpeg');
+        $thumbnail->save($rootDir . '/' . $this->getClientId().'.jpeg');
     }
 
     public function generateClientId()
