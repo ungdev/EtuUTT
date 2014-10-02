@@ -27,7 +27,7 @@ class CourseRepository extends EntityRepository
         $nextCourses = [];
 
         foreach ($todayCourses as $course) {
-            if ($course->getStartAsInt() >= (int) date('Hi')) {
+            if ($course->getStartAsInt() >= (int) date('Hi') - 15) {
                 $nextCourses[$course->getStart()][] = $course;
             }
         }
