@@ -262,16 +262,50 @@
                     <div class="block">
                         <div class="block-title">{{ 'user.profile.profile.apps'|trans }}</div>
 
-                        <ul>
+                        <p class="padding20-sides">
+                            {{ 'user.profile.profile.apps_explain'|trans }}
+                        </p>
+
+                        <ul class="nav nav-list">
                             {% for client in apps %}
                                 <li>
-                                    {{ client.name }}
+                                    <a>
+                                        <img src="{{ asset('uploads/apps/' ~ client.icon) }}" class="api-app-image-icon" />
+                                        {{ client.name }}
+                                    </a>
+
+                                    <div id="revoke-{{ client.clientId }}" class="overlay">
+                                        <div class="confirmation">
+                                            <div class="row-fluid">
+                                                <div class="span8">
+                                                    <div class="api-auth-app-infos">
+                                                        <p>
+                                                            L'application <strong>{{ client.name }}</strong>
+                                                        </p>
+
+                                                        <p class="muted">
+                                                            Est capable :
+                                                        </p>
+
+                                                        <ul>
+                                                            {% for scope in client.scopeList %}
+                                                                {% if scopesDescs[scope] is defined %}
+                                                                    <li>{{ scopesDescs[scope] }}</li>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </li>
                             {% endfor %}
                         </ul>
+
                     </div>
                 {% endif %}
-			</div>
+            </div>
 		</div>
 
 		<div class="block">

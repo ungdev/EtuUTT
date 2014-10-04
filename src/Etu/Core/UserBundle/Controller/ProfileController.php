@@ -5,6 +5,7 @@ namespace Etu\Core\UserBundle\Controller;
 use Doctrine\ORM\EntityManager;
 
 use Etu\Core\ApiBundle\Entity\OauthClient;
+use Etu\Core\ApiBundle\Entity\OauthScope;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\Course;
 use Etu\Core\UserBundle\Entity\Member;
@@ -20,23 +21,23 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class ProfileController extends Controller
 {
-	/**
-	 * @Route("/user/profile", name="user_profile")
-	 * @Template()
-	 */
-	public function profileAction()
-	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+    /**
+     * @Route("/user/profile", name="user_profile")
+     * @Template()
+     */
+    public function profileAction()
+    {
+        if (! $this->getUserLayer()->isUser()) {
+            return $this->createAccessDeniedResponse();
+        }
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         $appsIds = $em->createQueryBuilder()
-            ->select('t.clientId')
-            ->from('EtuCoreApiBundle:OauthRefreshToken', 't')
-            ->where('t.userId = :user')
+            ->select('a.clientId')
+            ->from('EtuCoreApiBundle:OauthAuthorization', 'a')
+            ->where('a.userId = :user')
             ->setParameter('user', $this->getUser()->getId())
             ->getQuery()
             ->getScalarResult();
@@ -48,6 +49,8 @@ class ProfileController extends Controller
         /** @var OauthClient[] $apps */
         $apps = array();
 
+        $scopesDescs = [];
+
         if (! empty($appsIds)) {
             $qb = $em->createQueryBuilder();
 
@@ -56,13 +59,84 @@ class ProfileController extends Controller
                 ->where($qb->expr()->in('c.clientId', $appsIds))
                 ->getQuery()
                 ->getResult();
+
+            /** @var OauthScope[] $scopes */
+            $scopes = $qb->select('s')
+                ->from('EtuCoreApiBundle:OauthScope', 's')
+                ->orderBy('s.weight', 'ASC')
+                ->getQuery()
+                ->getResult();
+
+            foreach ($scopes as $scope) {
+                $scopesDescs[$scope->getScope()] = $scope->getDescription();
+            }
         }
 
-		return array(
+        return array(
             'hasApps' => ! empty($appsIds),
             'apps' => $apps,
+            'scopesDescs' => $scopesDescs,
         );
-	}
+    }
+
+    /**
+     * @Route("/user/apps/revoke/{clientId}", name="user_profile_revoke_app")
+     */
+    public function appRevokeAction($clientId)
+    {
+        if (! $this->getUserLayer()->isUser()) {
+            return $this->createAccessDeniedResponse();
+        }
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        // Remove authorization
+        $em ->createQueryBuilder()
+            ->delete()
+            ->from('EtuCoreApiBundle:OauthAuthorization', 'a')
+            ->where('a.clientId = :client')
+            ->andWhere('a.userId = :user')
+            ->setParameter('client', $clientId)
+            ->setParameter('user', $this->getUser()->getId())
+            ->getQuery()
+            ->execute();
+
+        // Remove refresh_tokens
+        $em ->createQueryBuilder()
+            ->delete()
+            ->from('EtuCoreApiBundle:OauthRefreshToken', 't')
+            ->where('t.clientId = :client')
+            ->andWhere('t.userId = :user')
+            ->setParameter('client', $clientId)
+            ->setParameter('user', $this->getUser()->getId())
+            ->getQuery()
+            ->execute();
+
+        // Remove access_tokens
+        $em ->createQueryBuilder()
+            ->delete()
+            ->from('EtuCoreApiBundle:OauthAccessToken', 't')
+            ->where('t.clientId = :client')
+            ->andWhere('t.userId = :user')
+            ->setParameter('client', $clientId)
+            ->setParameter('user', $this->getUser()->getId())
+            ->getQuery()
+            ->execute();
+
+        // Remove authrization_code
+        $em ->createQueryBuilder()
+            ->delete()
+            ->from('EtuCoreApiBundle:OauthAuthorizationCode', 't')
+            ->where('t.clientId = :client')
+            ->andWhere('t.userId = :user')
+            ->setParameter('client', $clientId)
+            ->setParameter('user', $this->getUser()->getId())
+            ->getQuery()
+            ->execute();
+
+        return $this->redirect($this->generateUrl('user_profile'));
+    }
 
 	/**
 	 * @Route("/user/profile/edit", name="user_profile_edit")

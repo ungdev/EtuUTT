@@ -263,12 +263,14 @@ user:
             birthday: Date de naissance
             age: %age% ans
             trombi: Trombinoscope
-            apps: Applications autorisées à accéder à vos données
             surname: Surnom
             jadis: Jadis
             passions: Passions
             badges: Badges
             no_badge: %firstName% n'a aucun badge pour le moment
+            apps: Applications externes
+            apps_explain: Les applications suivantes ont accès à vos données.
+            revoke_app: Révoquer l'accès de %clientName% à mes données
         profileAvatar:
             title: Ma photo
             file: Image
