@@ -3,6 +3,7 @@
 namespace Etu\Core\ApiBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Etu\Core\ApiBundle\Entity\OauthAuthorization;
 use Etu\Core\ApiBundle\Entity\StatLogin;
 use Etu\Core\ApiBundle\Framework\Controller\ApiController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -89,10 +90,33 @@ class SecurityController extends ApiController
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $client = $em->getRepository('EtuCoreApiBundle:OauthClient')->findOneBy([ 'clientId' => $request->query('client_id') ]);
+        $client = $em->getRepository('EtuCoreApiBundle:OauthClient')->findOneBy([
+            'clientId' => $request->query('client_id')
+        ]);
 
         if (! $client) {
             throw $this->createNotFoundException();
+        }
+
+        $scopesNames = isset($request->query['scopes']) ? $request->query['scopes'] . ' public' : 'public';
+        $scopesNames = array_unique(explode(' ', $scopesNames));
+
+        // Search if user already approved the app
+        $authorization = $em->getRepository('EtuCoreApiBundle:OauthAuthorization')->findOneBy([
+            'clientId' => $client->getClientId(),
+            'userId' => $this->getUser()->getId(),
+        ]);
+
+        if ($authorization) {
+            // Compare scopes : if more requested, reask authorization
+            $newScopes = array_diff($scopesNames, $authorization->getScopesList());
+
+            if (empty($newScopes)) {
+                $server->handleAuthorizeRequest($request, $response, true, $this->getUser()->getId());
+
+                $response->send();
+                exit;
+            }
         }
 
         $form = $this->createFormBuilder()
@@ -103,17 +127,20 @@ class SecurityController extends ApiController
         if ($sfRequest->getMethod() == 'POST' && $form->submit($sfRequest)->isValid()) {
             $formData = $sfRequest->request->get('form', []);
 
-            $em->persist(new StatLogin($client, $this->getUser()));
-            $em->flush();
-
             $server->handleAuthorizeRequest($request, $response, isset($formData['accept']), $this->getUser()->getId());
+
+            if (! $response->getParameter('error')) {
+                $em->persist(new OauthAuthorization($client, $this->getUser(), $scopesNames));
+                $em->persist(new StatLogin($client, $this->getUser()));
+
+                $em->flush();
+            }
+
             $response->send();
             exit;
         }
 
         $user = $em->getRepository('EtuUserBundle:User')->find($client->getUserId());
-
-        $scopesNames = array_merge(explode(' ', $sfRequest->query->get('scope', 'public')), ['public']);
 
         $qb = $em->createQueryBuilder();
 
