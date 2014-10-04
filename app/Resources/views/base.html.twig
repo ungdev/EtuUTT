@@ -222,6 +222,7 @@
 				{{ render_sidebar_mobile() }}
 			{% endblock %}
 
+            {#
 			<ul class="list-vertical list-vertical-linked overlay-menu">
 				<li class="first">
 					<a href="#" class="change-locale">
@@ -234,6 +235,7 @@
 					</a>
 				</li>
 			</ul>
+			#}
 
 			<p class="clear footer-description footer-description-mobiles">
 				{{ 'base.footer.mobile_text'|trans|raw }}<br />
@@ -241,7 +243,7 @@
 			</p>
 		</div>
 
-		{# Change the locale (available languages) #}
+		{# Change the locale (available languages)
 		<div id="change-locale-choices">
 			<ul class="list-vertical list-vertical-linked overlay-menu">
 				<li class="first">
@@ -263,7 +265,7 @@
 					</a>
 				</li>
 			</ul>
-		</div>
+		</div>#}
 
 		{% block page %}{% endblock %}
 
