@@ -107,8 +107,8 @@ class HomeBuilder
                 $this->stopwatch->start('block_notifications_filters', 'home_blocks');
             }
 
-            if (Apc::enabled() && Apc::has('etuutt_home_filters_' . $this->user->getId())) {
-                $subscriptionsWhere = Apc::fetch('etuutt_home_filters_' . $this->user->getId());
+            if (Apc::enabled() && Apc::has('etuutt_home_subscription_' . $this->user->getId())) {
+                $subscriptionsWhere = Apc::fetch('etuutt_home_subscription_' . $this->user->getId());
             } else {
                 foreach ($subscriptions as $key => $subscription) {
                     $subscriptionsWhere[] =   '(n.entityType = \'' . $subscription->getEntityType() . '\'
