@@ -46,7 +46,7 @@ class Apc
      */
     public static function fetch($key = '')
     {
-        if (self::exists($key)) {
+        if (self::has($key)) {
             return apc_fetch($key);
         } else {
             return false;
