@@ -111,16 +111,14 @@ class HomeBuilder
                 $subscriptionsWhere = Apc::fetch('etuutt_home_filters_' . $this->user->getId());
             } else {
                 foreach ($subscriptions as $key => $subscription) {
-                    $subscriptionsWhere[] = '(n.entityType = :type_'.$key.' AND n.entityId = :id_'.$key.')';
-
-                    $query->setParameter('type_'.$key, $subscription->getEntityType());
-                    $query->setParameter('id_'.$key, $subscription->getEntityId());
+                    $subscriptionsWhere[] =   '(n.entityType = \'' . $subscription->getEntityType() . '\'
+                                                AND n.entityId = ' . intval($subscription->getEntityId()) . ')';
                 }
 
                 $subscriptionsWhere = implode(' OR ', $subscriptionsWhere);
 
                 if (Apc::enabled()) {
-                    Apc::store('etuutt_home_filters_' . $this->user->getId(), $subscriptionsWhere);
+                    Apc::store('etuutt_home_subscription_' . $this->user->getId(), $subscriptionsWhere);
                 }
             }
 
