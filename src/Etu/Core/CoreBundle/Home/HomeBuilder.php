@@ -13,6 +13,7 @@ use Etu\Module\ArgentiqueBundle\Entity\Photo;
 use Etu\Module\EventsBundle\Entity\Event;
 use Etu\Module\UVBundle\Entity\Review;
 use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Stopwatch\Stopwatch;
 
 class HomeBuilder
 {
@@ -32,15 +33,25 @@ class HomeBuilder
     protected $globalAccessorObject;
 
     /**
+     * @var Stopwatch
+     */
+    protected $stopwatch;
+
+    /**
      * @param EntityManager $manager
      * @param SecurityContext $context
      * @param GlobalAccessorObject $globalAccessorObject
+     * @param Stopwatch $stopwatch
      */
-    public function __construct(EntityManager $manager, SecurityContext $context, GlobalAccessorObject $globalAccessorObject)
+    public function __construct(EntityManager $manager,
+                                SecurityContext $context,
+                                GlobalAccessorObject $globalAccessorObject,
+                                Stopwatch $stopwatch)
     {
         $this->manager = $manager;
         $this->user = $context->getToken()->getUser();
         $this->globalAccessorObject = $globalAccessorObject;
+        $this->stopwatch = $stopwatch;
     }
 
     /**
@@ -48,9 +59,16 @@ class HomeBuilder
      */
     public function getNextCourses()
     {
-        return $this->manager
+        $this->stopwatch->start('block_next_courses', 'home_blocks');
+
+        /** @var Course[] $result */
+        $result = $this->manager
             ->getRepository('EtuUserBundle:Course')
             ->getUserNextCourses($this->user);
+
+        $this->stopwatch->stop('block_next_courses');
+
+        return $result;
     }
 
     /**
@@ -59,6 +77,8 @@ class HomeBuilder
      */
     public function getNotifications($enabledModules)
     {
+        $this->stopwatch->start('block_notifications', 'home_blocks');
+
         $query = $this->manager->createQueryBuilder()
             ->select('n')
             ->from('EtuCoreBundle:Notification', 'n')
@@ -67,8 +87,12 @@ class HomeBuilder
             ->orderBy('n.createdAt', 'DESC')
             ->setMaxResults(10);
 
+        $this->stopwatch->start('block_notifications_subscriptions', 'home_blocks');
+
         /** @var $subscriptions Subscription[] */
         $subscriptions = $this->globalAccessorObject->get('notifs')->get('subscriptions');
+
+        $this->stopwatch->stop('block_notifications_subscriptions');
 
         $subscriptionsWhere = [];
 
@@ -76,6 +100,7 @@ class HomeBuilder
         $notifications = [];
 
         if (! empty($subscriptions)) {
+            $this->stopwatch->start('block_notifications_filters', 'home_blocks');
 
             foreach ($subscriptions as $key => $subscription) {
                 $subscriptionsWhere[] = '(n.entityType = :type_'.$key.' AND n.entityId = :id_'.$key.')';
@@ -104,9 +129,16 @@ class HomeBuilder
                 $query = $query->andWhere(implode(' OR ', $modulesWhere));
             }
 
-            // Query
+            $this->stopwatch->stop('block_notifications_filters');
+
+            $this->stopwatch->start('block_notifications_query', 'home_blocks');
+
             $notifications = $query->getQuery()->getResult();
+
+            $this->stopwatch->stop('block_notifications_query');
         }
+
+        $this->stopwatch->stop('block_notifications');
 
         return $notifications;
     }
@@ -116,6 +148,8 @@ class HomeBuilder
      */
     public function getUvReviews()
     {
+        $this->stopwatch->start('block_uvs_reviews', 'home_blocks');
+
         $query = $this->manager
             ->getRepository('EtuModuleUVBundle:Review')
             ->createQbReviewOf($this->user->getUvsList())
@@ -125,7 +159,11 @@ class HomeBuilder
 
         $query->useResultCache(true, 1200);
 
-        return $query->getResult();
+        $result = $query->getResult();
+
+        $this->stopwatch->stop('block_uvs_reviews');
+
+        return $result;
     }
 
     /**
@@ -133,6 +171,8 @@ class HomeBuilder
      */
     public function getEvents()
     {
+        $this->stopwatch->start('block_events', 'home_blocks');
+
         $query = $this->manager->createQueryBuilder()
             ->select('e, o')
             ->from('EtuModuleEventsBundle:Event', 'e')
@@ -146,7 +186,11 @@ class HomeBuilder
 
         $query->useResultCache(true, 1200);
 
-        return $query->getResult();
+        $result = $query->getResult();
+
+        $this->stopwatch->stop('block_events');
+
+        return $result;
     }
 
     /**
@@ -154,6 +198,8 @@ class HomeBuilder
      */
     public function getPhotos()
     {
+        $this->stopwatch->start('block_photos', 'home_blocks');
+
         $query = $this->manager->createQueryBuilder()
             ->select('p')
             ->from('EtuModuleArgentiqueBundle:Photo', 'p')
@@ -164,7 +210,11 @@ class HomeBuilder
 
         $query->useResultCache(true, 1200);
 
-        return $query->getResult();
+        $result = $query->getResult();
+
+        $this->stopwatch->stop('block_photos');
+
+        return $result;
     }
 
     /**
@@ -172,6 +222,8 @@ class HomeBuilder
      */
     public function getBirthdays()
     {
+        $this->stopwatch->start('block_birthdays', 'home_blocks');
+
         $query = $this->manager->createQueryBuilder()
             ->select('u, m, o')
             ->from('EtuUserBundle:User', 'u')
@@ -182,8 +234,8 @@ class HomeBuilder
             ->andWhere('u.birthday IS NOT NULL')
             ->andWhere('u.birthdayPrivacy = :privacy')
             ->setParameter('privacy', User::PRIVACY_PUBLIC)
-            //->andWhere('u.id != :me')
-            //->setParameter('me', $this->user->getId())
+            ->andWhere('u.id != :me')
+            ->setParameter('me', $this->user->getId())
             ->getQuery();
 
         $query->useResultCache(true, 3600);
@@ -211,6 +263,10 @@ class HomeBuilder
             $users
         );
 
-        return array_slice($users, 0, 3);
+        $result = array_slice($users, 0, 3);
+
+        $this->stopwatch->stop('block_birthdays');
+
+        return $result;
     }
 }
