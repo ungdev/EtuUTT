@@ -47,7 +47,7 @@ class HomeBuilder
     public function __construct(EntityManager $manager,
                                 SecurityContext $context,
                                 GlobalAccessorObject $globalAccessorObject,
-                                Stopwatch $stopwatch)
+                                Stopwatch $stopwatch = null)
     {
         $this->manager = $manager;
         $this->user = $context->getToken()->getUser();
@@ -60,14 +60,18 @@ class HomeBuilder
      */
     public function getNextCourses()
     {
-        $this->stopwatch->start('block_next_courses', 'home_blocks');
+        if ($this->stopwatch) {
+            $this->stopwatch->start('block_next_courses', 'home_blocks');
+        }
 
         /** @var Course[] $result */
         $result = $this->manager
             ->getRepository('EtuUserBundle:Course')
             ->getUserNextCourses($this->user);
 
-        $this->stopwatch->stop('block_next_courses');
+        if ($this->stopwatch) {
+            $this->stopwatch->stop('block_next_courses');
+        }
 
         return $result;
     }
@@ -78,7 +82,9 @@ class HomeBuilder
      */
     public function getNotifications($enabledModules)
     {
-        $this->stopwatch->start('block_notifications', 'home_blocks');
+        if ($this->stopwatch) {
+            $this->stopwatch->start('block_notifications', 'home_blocks');
+        }
 
         $query = $this->manager->createQueryBuilder()
             ->select('n')
@@ -97,7 +103,9 @@ class HomeBuilder
         $notifications = [];
 
         if (! empty($subscriptions)) {
-            $this->stopwatch->start('block_notifications_filters', 'home_blocks');
+            if ($this->stopwatch) {
+                $this->stopwatch->start('block_notifications_filters', 'home_blocks');
+            }
 
             if (Apc::enabled() && Apc::has('etuutt_home_filters_' . $this->user->getId())) {
                 $subscriptionsWhere = Apc::fetch('etuutt_home_filters_' . $this->user->getId());
@@ -136,19 +144,25 @@ class HomeBuilder
                 $query = $query->andWhere(implode(' OR ', $modulesWhere));
             }
 
-            $this->stopwatch->stop('block_notifications_filters');
+            if ($this->stopwatch) {
+                $this->stopwatch->stop('block_notifications_filters');
 
-            $this->stopwatch->start('block_notifications_query', 'home_blocks');
+                $this->stopwatch->start('block_notifications_query', 'home_blocks');
+            }
 
             $query = $query->getQuery();
             $query->useResultCache(true, 1200);
 
             $notifications = $query->getResult();
 
-            $this->stopwatch->stop('block_notifications_query');
+            if ($this->stopwatch) {
+                $this->stopwatch->stop('block_notifications_query');
+            }
         }
 
-        $this->stopwatch->stop('block_notifications');
+        if ($this->stopwatch) {
+            $this->stopwatch->stop('block_notifications');
+        }
 
         return $notifications;
     }
@@ -158,7 +172,9 @@ class HomeBuilder
      */
     public function getUvReviews()
     {
-        $this->stopwatch->start('block_uvs_reviews', 'home_blocks');
+        if ($this->stopwatch) {
+            $this->stopwatch->start('block_uvs_reviews', 'home_blocks');
+        }
 
         $query = $this->manager
             ->getRepository('EtuModuleUVBundle:Review')
@@ -171,7 +187,9 @@ class HomeBuilder
 
         $result = $query->getResult();
 
-        $this->stopwatch->stop('block_uvs_reviews');
+        if ($this->stopwatch) {
+            $this->stopwatch->stop('block_uvs_reviews');
+        }
 
         return $result;
     }
@@ -181,7 +199,9 @@ class HomeBuilder
      */
     public function getEvents()
     {
-        $this->stopwatch->start('block_events', 'home_blocks');
+        if ($this->stopwatch) {
+            $this->stopwatch->start('block_events', 'home_blocks');
+        }
 
         $query = $this->manager->createQueryBuilder()
             ->select('e, o')
@@ -198,7 +218,9 @@ class HomeBuilder
 
         $result = $query->getResult();
 
-        $this->stopwatch->stop('block_events');
+        if ($this->stopwatch) {
+            $this->stopwatch->stop('block_events');
+        }
 
         return $result;
     }
@@ -208,7 +230,9 @@ class HomeBuilder
      */
     public function getPhotos()
     {
-        $this->stopwatch->start('block_photos', 'home_blocks');
+        if ($this->stopwatch) {
+            $this->stopwatch->start('block_photos', 'home_blocks');
+        }
 
         $query = $this->manager->createQueryBuilder()
             ->select('p')
@@ -222,7 +246,9 @@ class HomeBuilder
 
         $result = $query->getResult();
 
-        $this->stopwatch->stop('block_photos');
+        if ($this->stopwatch) {
+            $this->stopwatch->stop('block_photos');
+        }
 
         return $result;
     }
@@ -232,7 +258,9 @@ class HomeBuilder
      */
     public function getBirthdays()
     {
-        $this->stopwatch->start('block_birthdays', 'home_blocks');
+        if ($this->stopwatch) {
+            $this->stopwatch->start('block_birthdays', 'home_blocks');
+        }
 
         $query = $this->manager->createQueryBuilder()
             ->select('u, m, o')
@@ -275,7 +303,9 @@ class HomeBuilder
 
         $result = array_slice($users, 0, 3);
 
-        $this->stopwatch->stop('block_birthdays');
+        if ($this->stopwatch) {
+            $this->stopwatch->stop('block_birthdays');
+        }
 
         return $result;
     }
