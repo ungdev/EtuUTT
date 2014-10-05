@@ -118,7 +118,7 @@ class HomeBuilder
                 $subscriptionsWhere = implode(' OR ', $subscriptionsWhere);
 
                 if (Apc::enabled()) {
-                    Apc::store('etuutt_home_subscription_' . $this->user->getId(), $subscriptionsWhere);
+                    Apc::store('etuutt_home_subscription_' . $this->user->getId(), $subscriptionsWhere, 1200);
                 }
             }
 

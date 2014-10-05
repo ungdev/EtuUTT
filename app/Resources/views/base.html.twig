@@ -283,6 +283,7 @@
             'bower_components/moment/min/moment.min.js'
             'bower_components/moment/min/lang/fr.js'
             'bundles/fosjsrouting/js/router.js'
+            'src/js/routes.js'
             'src/js/common.js'
 
             filter='?minifier_js'
@@ -290,8 +291,6 @@
         %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
-
-        <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
 
 		{% block js_libs %}{% endblock %}
 
