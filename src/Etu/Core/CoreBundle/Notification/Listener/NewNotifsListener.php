@@ -50,76 +50,24 @@ class NewNotifsListener
 		$this->kernel = $kernel;
 	}
 
-	/**
-	 * @param GetResponseEvent $event
-	 */
-	public function onKernelRequest($event)
+    /**
+     * Event to find subscriptions on page laod
+     */
+	public function onKernelRequest()
 	{
 		$layer = new UserLayer($this->securityContext->getToken()->getUser());
-		$notifications = array();
 		$subscriptions = array();
 
 		if ($layer->isUser()) {
 			/** @var $em EntityManager */
 			$em = $this->doctrine->getManager();
 
-			// Load only notifications we should display, ie. notifications sent from
-			// currently enabled modules
-
-			$query = $em
-				->createQueryBuilder()
-				->select('n')
-				->from('EtuCoreBundle:Notification', 'n')
-				->where('n.createdAt > :lastVisitHome')
-				->andWhere('n.authorId != :userId')
-				->setParameter('userId', $layer->getUser()->getId())
-				->setParameter('lastVisitHome', $layer->getUser()->getLastVisitHome());
-
-			/*
-			 * Subscriptions
-			 */
-			/** @var $subscriptions Subscription[] */
-			$subscriptions = $em->getRepository('EtuCoreBundle:Subscription')->findBy(array('user' => $layer->getUser()));
-			$subscriptionsWhere = array();
-
-			if (! empty($subscriptions)) {
-				foreach ($subscriptions as $key => $subscription) {
-					$subscriptionsWhere[] = '(n.entityType = :type_'.$key.' AND n.entityId = :id_'.$key.')';
-
-					$query->setParameter('type_'.$key, $subscription->getEntityType());
-					$query->setParameter('id_'.$key, $subscription->getEntityId());
-				}
-
-				if (! empty($subscriptionsWhere)) {
-					$query = $query->andWhere(implode(' OR ', $subscriptionsWhere));
-				}
-
-				/*
-				 * Modules
-				 */
-				$modulesWhere = array('n.module = \'core\'', 'n.module = \'user\'');
-
-				foreach ($this->kernel->getModulesDefinitions() as $module) {
-					$identifier = $module->getIdentifier();
-					$modulesWhere[] = 'n.module = :module_'.$identifier;
-
-					$query->setParameter('module_'.$identifier, $identifier);
-				}
-
-				if (! empty($modulesWhere)) {
-					$query = $query->andWhere(implode(' OR ', $modulesWhere));
-				}
-
-				// Query
-				$notifications = $query->getQuery()->getResult();
-			} else {
-				$notifications = array();
-			}
+            $subscriptions = $em->getRepository('EtuCoreBundle:Subscription')->findBy(array('user' => $layer->getUser()));
 		}
 
 		$this->globalAccessor->set('notifs', new ArrayCollection());
 		$this->globalAccessor->get('notifs')->set('subscriptions', $subscriptions);
-		$this->globalAccessor->get('notifs')->set('new', $notifications);
-		$this->globalAccessor->get('notifs')->set('new_count', count($notifications));
+		$this->globalAccessor->get('notifs')->set('new', []);
+		$this->globalAccessor->get('notifs')->set('new_count', 0);
 	}
 }
