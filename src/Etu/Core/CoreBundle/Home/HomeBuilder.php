@@ -5,6 +5,7 @@ namespace Etu\Core\CoreBundle\Home;
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Entity\Subscription;
+use Etu\Core\CoreBundle\Framework\Cache\Apc;
 use Etu\Core\CoreBundle\Framework\Definition\Module;
 use Etu\Core\CoreBundle\Framework\Twig\GlobalAccessorObject;
 use Etu\Core\UserBundle\Entity\Course;
@@ -87,12 +88,8 @@ class HomeBuilder
             ->orderBy('n.createdAt', 'DESC')
             ->setMaxResults(10);
 
-        $this->stopwatch->start('block_notifications_subscriptions', 'home_blocks');
-
         /** @var $subscriptions Subscription[] */
         $subscriptions = $this->globalAccessorObject->get('notifs')->get('subscriptions');
-
-        $this->stopwatch->stop('block_notifications_subscriptions');
 
         $subscriptionsWhere = [];
 
@@ -102,15 +99,25 @@ class HomeBuilder
         if (! empty($subscriptions)) {
             $this->stopwatch->start('block_notifications_filters', 'home_blocks');
 
-            foreach ($subscriptions as $key => $subscription) {
-                $subscriptionsWhere[] = '(n.entityType = :type_'.$key.' AND n.entityId = :id_'.$key.')';
+            if (Apc::enabled() && Apc::has('etuutt_home_filters_' . $this->user->getId())) {
+                $subscriptionsWhere = Apc::fetch('etuutt_home_filters_' . $this->user->getId());
+            } else {
+                foreach ($subscriptions as $key => $subscription) {
+                    $subscriptionsWhere[] = '(n.entityType = :type_'.$key.' AND n.entityId = :id_'.$key.')';
 
-                $query->setParameter('type_'.$key, $subscription->getEntityType());
-                $query->setParameter('id_'.$key, $subscription->getEntityId());
+                    $query->setParameter('type_'.$key, $subscription->getEntityType());
+                    $query->setParameter('id_'.$key, $subscription->getEntityId());
+                }
+
+                $subscriptionsWhere = implode(' OR ', $subscriptionsWhere);
+
+                if (Apc::enabled()) {
+                    Apc::store('etuutt_home_filters_' . $this->user->getId(), $subscriptionsWhere);
+                }
             }
 
             if (! empty($subscriptionsWhere)) {
-                $query = $query->andWhere(implode(' OR ', $subscriptionsWhere));
+                $query = $query->andWhere($subscriptionsWhere);
             }
 
             /*
@@ -133,7 +140,10 @@ class HomeBuilder
 
             $this->stopwatch->start('block_notifications_query', 'home_blocks');
 
-            $notifications = $query->getQuery()->getResult();
+            $query = $query->getQuery();
+            $query->useResultCache(true, 1200);
+
+            $notifications = $query->getResult();
 
             $this->stopwatch->stop('block_notifications_query');
         }
