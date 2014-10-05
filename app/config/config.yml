@@ -24,7 +24,7 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
-    cache:            %kernel.debug%
+    cache:            "%kernel.cache_dir%/twig"
 
 # Doctrine Configuration
 doctrine:

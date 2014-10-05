@@ -274,6 +274,10 @@ class MainController extends Controller
         /** @var HomeRenderer $homeRenderer */
         $homeRenderer = $this->get('etu.core.home_renderer');
 
+        if ($this->getKernel()->isDebug()) {
+            $homeRenderer->stopwatch = $this->get('debug.stopwatch');
+        }
+
         /** @var User $user */
         $user = $this->getUser();
 
