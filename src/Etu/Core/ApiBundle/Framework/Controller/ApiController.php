@@ -2,7 +2,7 @@
 
 namespace Etu\Core\ApiBundle\Framework\Controller;
 
-use Etu\Core\ApiBundle\Framework\Model\Token;
+use Etu\Core\ApiBundle\Entity\OauthAccessToken;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,18 +20,14 @@ abstract class ApiController extends Controller
     }
 
     /**
-     * @return Token
+     * @return OauthAccessToken
      */
     protected function getAccessToken()
     {
-        if (! $this->getRequest()->attributes->get('_token')) {
+        if (! $this->getRequest()->attributes->get('_oauth_token')) {
             return false;
         }
 
-        if (! is_array($this->getRequest()->attributes->get('_token'))) {
-            return false;
-        }
-
-        return new Token($this->getRequest()->attributes->get('_token'));
+        return $this->getRequest()->attributes->get('_oauth_token');
     }
 }

@@ -10,73 +10,97 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class OauthScope
 {
-    public static $descDev = [
-        'public' => 'De lire les données publiques',
-        'private_user_account' => 'De lire les données privées du compte de l\'utilisateur connecté',
-        'private_user_schedule' => 'De lire l\'emploi du temps de l\'utilisateur connecté',
-        'private_user_organizations' => 'De lire les données associatives de l\'utilisateur connecté',
-    ];
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="scope", type="text", nullable=true)
-     */
-    private $scope;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="is_default", type="boolean", nullable=true)
-     */
-    private $isDefault;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="description", type="string", length=255, nullable=true)
-     */
-    private $description;
-
     /**
      * @var integer
      *
-     * @ORM\Column(name="weight", type="smallint", nullable=true)
-     */
-    private $weight = 0;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=50, nullable=false)
+     */
+    private $name;
 
     /**
-     * Set scope
+     * @var boolean
      *
-     * @param string $scope
+     * @ORM\Column(type="string", length=200, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isDefault;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $weight = 0;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
      * @return OauthScope
      */
-    public function setScope($scope)
+    public function setName($name)
     {
-        $this->scope = $scope;
-
+        $this->name = $name;
+    
         return $this;
     }
 
     /**
-     * Get scope
+     * Get name
      *
-     * @return string
+     * @return string 
      */
-    public function getScope()
+    public function getName()
     {
-        return $this->scope;
+        return $this->name;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return OauthScope
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**
@@ -88,14 +112,14 @@ class OauthScope
     public function setIsDefault($isDefault)
     {
         $this->isDefault = $isDefault;
-
+    
         return $this;
     }
 
     /**
      * Get isDefault
      *
-     * @return boolean
+     * @return boolean 
      */
     public function getIsDefault()
     {
@@ -103,45 +127,22 @@ class OauthScope
     }
 
     /**
-     * Get id
+     * Set weight
      *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param boolean $description
-     * @return $this
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param int $weight
-     * @return $this
+     * @param integer $weight
+     * @return OauthScope
      */
     public function setWeight($weight)
     {
         $this->weight = $weight;
+    
         return $this;
     }
 
     /**
-     * @return int
+     * Get weight
+     *
+     * @return integer 
      */
     public function getWeight()
     {

@@ -2,6 +2,7 @@
 
 namespace Etu\Core\ApiBundle;
 
+use Etu\Core\ApiBundle\DependencyInjection\CompilerPass\GrantTypeCompilerPass;
 use Etu\Core\ApiBundle\DependencyInjection\CompilerPass\SerializerCompilerPass;
 use Etu\Core\CoreBundle\Framework\Definition\Module;
 
@@ -22,6 +23,7 @@ class EtuCoreApiBundle extends Module
         parent::build($container);
 
         $container->addCompilerPass(new SerializerCompilerPass());
+        $container->addCompilerPass(new GrantTypeCompilerPass());
     }
 
     /**

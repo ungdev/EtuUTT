@@ -4,8 +4,12 @@ namespace Etu\Core\ApiBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Etu\Core\ApiBundle\Entity\OauthAuthorization;
-use Etu\Core\ApiBundle\Entity\StatLogin;
+use Etu\Core\ApiBundle\Entity\OauthAuthorizationCode;
+use Etu\Core\ApiBundle\Entity\OauthClient;
+use Etu\Core\ApiBundle\Entity\OauthScope;
 use Etu\Core\ApiBundle\Framework\Controller\ApiController;
+use Etu\Core\ApiBundle\Oauth\OauthServer;
+use Etu\Core\ApiBundle\Oauth\TokenBuilder;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -72,88 +76,137 @@ class SecurityController extends ApiController
      * @Method({"GET", "POST"})
      * @Template()
      */
-    public function authorizeAction(Request $sfRequest)
+    public function authorizeAction(Request $request)
     {
         if (! $this->getUserLayer()->isUser()) {
             return $this->createAccessDeniedResponse();
         }
 
-        $server = $this->get('oauth.server');
-
-        $request = \OAuth2\Request::createFromGlobals();
-        $response = new \OAuth2\Response();
-
-        if (! $server->validateAuthorizeRequest($request, $response)) {
-            return $this->get('etu.response_handler')->handle($sfRequest, $response);
-        }
-
+        /*
+         * Initialize OAuth
+         */
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
+        if (! $request->query->has('client_id')) {
+            $this->get('session')->getFlashBag()->set('message', array(
+                'type' => 'error',
+                'message' => 'L\'application externe n\'a pas été trouvée. Vous avez été redirigé vers EtuUTT.'
+            ));
+
+            return $this->redirect($this->generateUrl('homepage'));
+        }
+
+        // Find the client
+
+        /** @var OauthClient $client */
         $client = $em->getRepository('EtuCoreApiBundle:OauthClient')->findOneBy([
-            'clientId' => $request->query('client_id')
+            'clientId' => $request->query->get('client_id')
         ]);
 
         if (! $client) {
-            throw $this->createNotFoundException();
+            $this->get('session')->getFlashBag()->set('message', array(
+                'type' => 'error',
+                'message' => 'L\'application externe n\'a pas été trouvée. Vous avez été redirigé vers EtuUTT.'
+            ));
+
+            return $this->redirect($this->generateUrl('homepage'));
         }
 
-        $scopesNames = isset($request->query['scopes']) ? $request->query['scopes'] . ' public' : 'public';
-        $scopesNames = array_unique(explode(' ', $scopesNames));
+        $requestedScopes = [ 'public' ];
+
+        if ($request->query->has('scopes')) {
+            $requestedScopes = array_unique(array_merge($requestedScopes, explode(' ', $request->query->get('scopes'))));
+        }
 
         // Search if user already approved the app
         $authorization = $em->getRepository('EtuCoreApiBundle:OauthAuthorization')->findOneBy([
-            'clientId' => $client->getClientId(),
-            'userId' => $this->getUser()->getId(),
+            'client' => $client,
+            'user' => $this->getUser(),
         ]);
 
         if ($authorization) {
-            // Compare scopes : if more requested, reask authorization
-            $newScopes = array_diff($scopesNames, $authorization->getScopesList());
+            $authorizationScopes = [];
+
+            foreach ($authorization->getScopes() as $scope) {
+                $authorizationScopes[] = $scope->getName();
+            }
+
+            // Compare scopes : if more requested, reask authorization, otherwise redirect
+            $newScopes = array_diff($requestedScopes, $authorizationScopes);
 
             if (empty($newScopes)) {
-                $server->handleAuthorizeRequest($request, $response, true, $this->getUser()->getId());
+                $authorizationCode = new OauthAuthorizationCode();
+                $authorizationCode->setUser($this->getUser());
+                $authorizationCode->setClient($client);
+                $authorizationCode->generateCode();
 
-                $response->send();
-                exit;
+                foreach ($authorization->getScopes() as $scope) {
+                    $authorizationCode->addScope($scope);
+                }
+
+                $em->persist($authorizationCode);
+                $em->flush();
+
+                return $this->redirect($client->getRedirectUri() . '?authorization_code=' . $authorizationCode->getCode());
             }
         }
 
+        // Scopes
+        $qb = $em->createQueryBuilder();
+
+        /** @var OauthScope[] $scopes */
+        $scopes = $qb->select('s')
+            ->from('EtuCoreApiBundle:OauthScope', 's')
+            ->where($qb->expr()->in('s.name', $requestedScopes))
+            ->orderBy('s.weight', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        // If the use didn't already approve the app, ask him / her
         $form = $this->createFormBuilder()
             ->add('accept', 'submit', [ 'label' => 'Oui, accepter', 'attr' => [ 'class' => 'btn btn-primary', 'value' => '1' ] ])
             ->add('cancel', 'submit', [ 'label' => 'Non, annuler', 'attr' => [ 'class' => 'btn btn-default', 'value' => '0' ] ])
             ->getForm();
 
-        if ($sfRequest->getMethod() == 'POST' && $form->submit($sfRequest)->isValid()) {
-            $formData = $sfRequest->request->get('form', []);
+        if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
+            $formData = $request->request->get('form');
 
-            $server->handleAuthorizeRequest($request, $response, isset($formData['accept']), $this->getUser()->getId());
+            if (isset($formData['accept'])) {
+                $authorizationCode = new OauthAuthorizationCode();
+                $authorizationCode->setUser($this->getUser());
+                $authorizationCode->setClient($client);
+                $authorizationCode->generateCode();
 
-            if (! $response->getParameter('error')) {
-                $em->persist(new OauthAuthorization($client, $this->getUser(), $scopesNames));
-                $em->persist(new StatLogin($client, $this->getUser()));
+                /** @var OauthScope[] $defaultScopes */
+                $defaultScopes = $em->getRepository('EtuCoreApiBundle:OauthScope')->findBy([ 'isDefault' => true ]);
+
+                foreach ($defaultScopes as $defaultScope) {
+                    $authorizationCode->addScope($defaultScope);
+                }
+
+                foreach ($scopes as $scope) {
+                    if (! $scope->getIsDefault()) {
+                        $authorizationCode->addScope($scope);
+                    }
+                }
+
+                $em->persist($authorizationCode);
+
+                // Persist authorization to not ask anymore
+                $em->persist(OauthAuthorization::createFromAuthorizationCode($authorizationCode));
 
                 $em->flush();
+
+                return $this->redirect($client->getRedirectUri() . '?authorization_code=' . $authorizationCode->getCode());
+            } else {
+                return $this->redirect($client->getRedirectUri() . '?error=authentification_canceled&error_message=L\'utilisateur a annulé l\'authentification.');
             }
-
-            $response->send();
-            exit;
         }
-
-        $user = $em->getRepository('EtuUserBundle:User')->find($client->getUserId());
-
-        $qb = $em->createQueryBuilder();
-
-        $scopes = $qb->select('s')
-            ->from('EtuCoreApiBundle:OauthScope', 's')
-            ->where($qb->expr()->in('s.scope', $scopesNames))
-            ->orderBy('s.weight', 'ASC')
-            ->getQuery()
-            ->getResult();
 
         return [
             'client' => $client,
-            'user' => $user,
+            'user' => $client->getUser(),
             'scopes' => $scopes,
             'form' => $form->createView()
         ];
@@ -182,7 +235,7 @@ class SecurityController extends ApiController
      *          "description" = "The grant type to use to create the access_token."
      *      },
      *      {
-     *          "name" = "scope",
+     *          "name" = "scopes",
      *          "required" = false,
      *          "dataType" = "string",
      *          "description" = "List of the scopes you need for the token, separated by spaces, for instance: `public private_user_account`. If not provided, grant only access to public scope."
@@ -205,9 +258,43 @@ class SecurityController extends ApiController
      * @Route("/token", name="oauth_token")
      * @Method("POST")
      */
-    public function tokenAction()
+    public function tokenAction(Request $request)
     {
-        $response = $this->get('oauth.server')->handleTokenRequest(\OAuth2\Request::createFromGlobals());
-        return $this->get('etu.response_handler')->handle($this->getRequest(), $response);
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $clientId = $request->server->get('PHP_AUTH_USER');
+        $clientSecret = $request->server->get('PHP_AUTH_PW');
+
+        /** @var OauthClient $client */
+        $client = $em->getRepository('EtuCoreApiBundle:OauthClient')->findOneBy([
+            'clientId' => $clientId,
+            'clientSecret' => $clientSecret,
+        ]);
+
+        if (! $client) {
+            return $this->format([
+                'error' => 'invalid_client',
+                'error_message' => 'Client credentials are invalid'
+            ], 401);
+        }
+
+        /** @var OauthServer $server */
+        $server = $this->get('etu.oauth.server');
+
+        $request->attributes->set('_oauth_client', $client);
+
+        $grantType = $request->request->get('grant_type');
+
+        try {
+            $token = $server->createToken($grantType, $request);
+        } catch (\RuntimeException $exception) {
+            return $this->format([
+                'error' => 'grant_type_error',
+                'error_message' => $exception->getMessage()
+            ], 400);
+        }
+
+        return $this->format($server->formatToken($grantType, $token));
     }
 }

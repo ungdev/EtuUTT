@@ -24,6 +24,9 @@ class PrivateUserController extends ApiController
      * It's more complete than `/api/public/user/account` as it includes private data
      * (it requires scope `private_user_account`).
      *
+     * Be careful with the privacy of the data you access: please use the privacy
+     * informations to limit access in your application.
+     *
      * @ApiDoc(
      *   section = "User - Private data",
      *   authentication = true,
@@ -98,6 +101,33 @@ class PrivateUserController extends ApiController
 
         return $this->format([
             'data' => $this->get('etu.api.course.transformer')->transform($courses)
+        ]);
+    }
+
+    /**
+     * This endpoint list you the organizations the current user are in and the permission
+     * he or she has in these organizations.
+     *
+     * @ApiDoc(
+     *   section = "User - Private data",
+     *   authentication = true,
+     *   authenticationRoles = {"private_user_account"},
+     *   description = "Get the list of organizations of the current user and its permissions in them"
+     * )
+     *
+     * @Route("/organizations", name="api_private_user_organizations", options={"expose"=true})
+     * @Method("GET")
+     * @Scope("private_user_account")
+     */
+    public function organizationsAction()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository('EtuUserBundle:User')->find($this->getAccessToken()->getUser());
+
+        return $this->format([
+            'data' => $this->get('etu.api.user.private_transformer')->transform($user)
         ]);
     }
 }

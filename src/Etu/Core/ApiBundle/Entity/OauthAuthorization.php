@@ -2,6 +2,7 @@
 
 namespace Etu\Core\ApiBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Etu\Core\UserBundle\Entity\User;
 
@@ -23,48 +24,64 @@ class OauthAuthorization
     private $id;
 
     /**
-     * @var string
+     * @var OauthClient $client
      *
-     * @ORM\Column(name="client_id", type="string", length=80, nullable=false)
+     * @ORM\ManyToOne(targetEntity="OauthClient")
+     * @ORM\JoinColumn()
      */
-    private $clientId;
+    private $client;
 
     /**
-     * @var string
+     * @var User $user
      *
-     * @ORM\Column(name="user_id", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
+     * @ORM\JoinColumn()
      */
-    private $userId;
+    private $user;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $createdAt;
 
     /**
-     * @var string
+     * @var OauthScope[] $scopes
      *
-     * @ORM\Column(name="scope", type="string", length=2000, nullable=true)
+     * @ORM\ManyToMany(targetEntity="OauthScope")
+     * @ORM\JoinTable(name="oauth_authorizations_scopes")
      */
-    private $scope;
+    private $scopes;
 
     /**
+     * Constructor
+     *
      * @param OauthClient $client
      * @param User $user
-     * @param array $scopes
+     * @param array|Collection $scopes
      */
-    public function __construct(OauthClient $client, User $user, array $scopes)
+    public function __construct(OauthClient $client, User $user, $scopes)
     {
-        $this->clientId = $client->getClientId();
-        $this->userId = $user->getId();
+        $this->client = $client;
+        $this->user = $user;
         $this->createdAt = new \DateTime();
-        $this->scope = implode(' ', $scopes);
+        $this->scopes = $scopes;
     }
 
     /**
-     * @return int
+     * @param OauthAuthorizationCode $code
+     * @return OauthAuthorization
+     */
+    public static function createFromAuthorizationCode(OauthAuthorizationCode $code)
+    {
+        return new self($code->getClient(), $code->getUser(), $code->getScopes());
+    }
+    
+    /**
+     * Get id
+     *
+     * @return integer 
      */
     public function getId()
     {
@@ -72,23 +89,22 @@ class OauthAuthorization
     }
 
     /**
-     * @return string
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return OauthAuthorization
      */
-    public function getClientId()
+    public function setCreatedAt($createdAt)
     {
-        return $this->clientId;
+        $this->createdAt = $createdAt;
+    
+        return $this;
     }
 
     /**
-     * @param string $clientId
-     */
-    public function setClientId($clientId)
-    {
-        $this->clientId = $clientId;
-    }
-
-    /**
-     * @return \DateTime
+     * Get createdAt
+     *
+     * @return \DateTime 
      */
     public function getCreatedAt()
     {
@@ -96,50 +112,81 @@ class OauthAuthorization
     }
 
     /**
-     * @param \DateTime $createdAt
+     * Set client
+     *
+     * @param \Etu\Core\ApiBundle\Entity\OauthClient $client
+     * @return OauthAuthorization
      */
-    public function setCreatedAt($createdAt)
+    public function setClient(\Etu\Core\ApiBundle\Entity\OauthClient $client = null)
     {
-        $this->createdAt = $createdAt;
+        $this->client = $client;
+    
+        return $this;
     }
 
     /**
-     * @return string
+     * Get client
+     *
+     * @return \Etu\Core\ApiBundle\Entity\OauthClient 
      */
-    public function getScope()
+    public function getClient()
     {
-        return $this->scope;
+        return $this->client;
     }
 
     /**
-     * @return array
+     * Set user
+     *
+     * @param \Etu\Core\UserBundle\Entity\User $user
+     * @return OauthAuthorization
      */
-    public function getScopesList()
+    public function setUser(\Etu\Core\UserBundle\Entity\User $user = null)
     {
-        return explode(' ', $this->scope);
+        $this->user = $user;
+    
+        return $this;
     }
 
     /**
-     * @param string $scope
+     * Get user
+     *
+     * @return \Etu\Core\UserBundle\Entity\User 
      */
-    public function setScope($scope)
+    public function getUser()
     {
-        $this->scope = $scope;
+        return $this->user;
     }
 
     /**
-     * @return string
+     * Add scopes
+     *
+     * @param \Etu\Core\ApiBundle\Entity\OauthScope $scopes
+     * @return OauthAuthorization
      */
-    public function getUserId()
+    public function addScope(\Etu\Core\ApiBundle\Entity\OauthScope $scopes)
     {
-        return $this->userId;
+        $this->scopes[] = $scopes;
+    
+        return $this;
     }
 
     /**
-     * @param string $userId
+     * Remove scopes
+     *
+     * @param \Etu\Core\ApiBundle\Entity\OauthScope $scopes
      */
-    public function setUserId($userId)
+    public function removeScope(\Etu\Core\ApiBundle\Entity\OauthScope $scopes)
     {
-        $this->userId = $userId;
+        $this->scopes->removeElement($scopes);
+    }
+
+    /**
+     * Get scopes
+     *
+     * @return \Doctrine\Common\Collections\Collection|OauthScope[]
+     */
+    public function getScopes()
+    {
+        return $this->scopes;
     }
 }

@@ -3,183 +3,243 @@
 namespace Etu\Core\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Etu\Core\UserBundle\Entity\User;
 
 /**
  * OauthAuthorizationCodes
  *
- * @ORM\Table(name="oauth_authorization_codes")
+ * @ORM\Table(name="oauth_authorization_codes", indexes={ @ORM\Index(name="search_index", columns={ "code" }) })
  * @ORM\Entity
  */
 class OauthAuthorizationCode
 {
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="client_id", type="string", length=80, nullable=false)
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $clientId;
+    private $id;
+
+    /**
+     * @var OauthClient $client
+     *
+     * @ORM\ManyToOne(targetEntity="OauthClient")
+     * @ORM\JoinColumn()
+     */
+    private $client;
+
+    /**
+     * @var User $user
+     *
+     * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
+     * @ORM\JoinColumn()
+     */
+    private $user;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="user_id", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=50)
      */
-    private $userId;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="redirect_uri", type="string", length=2000, nullable=true)
-     */
-    private $redirectUri;
+    private $code;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="expires", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
-    private $expires;
+    private $createdAt;
 
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="scope", type="string", length=2000, nullable=true)
+     * @ORM\Column(type="datetime", nullable=false)
      */
-    private $scope;
+    private $expireAt;
 
     /**
-     * @var string
+     * @var OauthScope[] $scopes
      *
-     * @ORM\Column(name="authorization_code", type="string", length=40)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\ManyToMany(targetEntity="OauthScope")
+     * @ORM\JoinTable(name="oauth_authorization_codes_scopes")
      */
-    private $authorizationCode;
-
-
+    private $scopes;
 
     /**
-     * Set clientId
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+        $this->expireAt = new \DateTime('+30 seconds');
+        $this->scopes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function generateCode()
+    {
+        return $this->code = md5(uniqid(time(), true));
+    }
+    
+    /**
+     * Get id
      *
-     * @param string $clientId
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set code
+     *
+     * @param string $code
      * @return OauthAuthorizationCode
      */
-    public function setClientId($clientId)
+    public function setCode($code)
     {
-        $this->clientId = $clientId;
-
+        $this->code = $code;
+    
         return $this;
     }
 
     /**
-     * Get clientId
+     * Get code
      *
-     * @return string
+     * @return string 
      */
-    public function getClientId()
+    public function getCode()
     {
-        return $this->clientId;
+        return $this->code;
     }
 
     /**
-     * Set userId
+     * Set createdAt
      *
-     * @param string $userId
+     * @param \DateTime $createdAt
      * @return OauthAuthorizationCode
      */
-    public function setUserId($userId)
+    public function setCreatedAt($createdAt)
     {
-        $this->userId = $userId;
-
+        $this->createdAt = $createdAt;
+    
         return $this;
     }
 
     /**
-     * Get userId
+     * Get createdAt
      *
-     * @return string
+     * @return \DateTime 
      */
-    public function getUserId()
+    public function getCreatedAt()
     {
-        return $this->userId;
+        return $this->createdAt;
     }
 
     /**
-     * Set redirectUri
+     * Set expireAt
      *
-     * @param string $redirectUri
+     * @param \DateTime $expireAt
      * @return OauthAuthorizationCode
      */
-    public function setRedirectUri($redirectUri)
+    public function setExpireAt($expireAt)
     {
-        $this->redirectUri = $redirectUri;
-
+        $this->expireAt = $expireAt;
+    
         return $this;
     }
 
     /**
-     * Get redirectUri
+     * Get expireAt
      *
-     * @return string
+     * @return \DateTime 
      */
-    public function getRedirectUri()
+    public function getExpireAt()
     {
-        return $this->redirectUri;
+        return $this->expireAt;
     }
 
     /**
-     * Set expires
+     * Set client
      *
-     * @param \DateTime $expires
+     * @param \Etu\Core\ApiBundle\Entity\OauthClient $client
      * @return OauthAuthorizationCode
      */
-    public function setExpires($expires)
+    public function setClient(\Etu\Core\ApiBundle\Entity\OauthClient $client = null)
     {
-        $this->expires = $expires;
-
+        $this->client = $client;
+    
         return $this;
     }
 
     /**
-     * Get expires
+     * Get client
      *
-     * @return \DateTime
+     * @return \Etu\Core\ApiBundle\Entity\OauthClient 
      */
-    public function getExpires()
+    public function getClient()
     {
-        return $this->expires;
+        return $this->client;
     }
 
     /**
-     * Set scope
+     * Set user
      *
-     * @param string $scope
+     * @param \Etu\Core\UserBundle\Entity\User $user
      * @return OauthAuthorizationCode
      */
-    public function setScope($scope)
+    public function setUser(\Etu\Core\UserBundle\Entity\User $user = null)
     {
-        $this->scope = $scope;
-
+        $this->user = $user;
+    
         return $this;
     }
 
     /**
-     * Get scope
+     * Get user
      *
-     * @return string
+     * @return \Etu\Core\UserBundle\Entity\User 
      */
-    public function getScope()
+    public function getUser()
     {
-        return $this->scope;
+        return $this->user;
     }
 
     /**
-     * Get authorizationCode
+     * Add scopes
      *
-     * @return string
+     * @param \Etu\Core\ApiBundle\Entity\OauthScope $scopes
+     * @return OauthAuthorizationCode
      */
-    public function getAuthorizationCode()
+    public function addScope(\Etu\Core\ApiBundle\Entity\OauthScope $scopes)
     {
-        return $this->authorizationCode;
+        $this->scopes[] = $scopes;
+    
+        return $this;
+    }
+
+    /**
+     * Remove scopes
+     *
+     * @param \Etu\Core\ApiBundle\Entity\OauthScope $scopes
+     */
+    public function removeScope(\Etu\Core\ApiBundle\Entity\OauthScope $scopes)
+    {
+        $this->scopes->removeElement($scopes);
+    }
+
+    /**
+     * Get scopes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getScopes()
+    {
+        return $this->scopes;
     }
 }

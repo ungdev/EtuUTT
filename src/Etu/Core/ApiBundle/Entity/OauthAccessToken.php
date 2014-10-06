@@ -3,150 +3,284 @@
 namespace Etu\Core\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Etu\Core\UserBundle\Entity\User;
 
 /**
- * @ORM\Table(name="oauth_access_tokens")
+ * @ORM\Table(name="oauth_access_tokens", indexes={ @ORM\Index(name="search_index", columns={ "token" }) })
  * @ORM\Entity
  */
 class OauthAccessToken
 {
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="client_id", type="string", length=80, nullable=false)
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $clientId;
+    private $id;
+
+    /**
+     * @var OauthClient $client
+     *
+     * @ORM\ManyToOne(targetEntity="OauthClient")
+     * @ORM\JoinColumn()
+     */
+    private $client;
+
+    /**
+     * @var User $user
+     *
+     * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
+     * @ORM\JoinColumn()
+     */
+    private $user;
+
+    /**
+     * @var OauthRefreshToken $refreshToken
+     *
+     * @ORM\ManyToOne(targetEntity="Etu\Core\ApiBundle\Entity\OauthRefreshToken")
+     * @ORM\JoinColumn()
+     */
+    private $refreshToken;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="user_id", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=50)
      */
-    private $userId;
+    private $token;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="expires", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
-    private $expires;
+    private $createdAt;
 
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="scope", type="string", length=2000, nullable=true)
+     * @ORM\Column(type="datetime", nullable=false)
      */
-    private $scope;
+    private $expireAt;
 
     /**
-     * @var string
+     * @var OauthScope[] $scopes
      *
-     * @ORM\Column(name="access_token", type="string", length=40)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\ManyToMany(targetEntity="OauthScope")
+     * @ORM\JoinTable(name="oauth_access_tokens_scopes")
      */
-    private $accessToken;
-
+    private $scopes;
 
     /**
-     * Set clientId
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+        $this->expireAt = new \DateTime('+1 hour');
+        $this->scopes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function generateToken()
+    {
+        return $this->token = md5(uniqid(time(), true));
+    }
+    
+    /**
+     * Get id
      *
-     * @param string $clientId
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set token
+     *
+     * @param string $token
      * @return OauthAccessToken
      */
-    public function setClientId($clientId)
+    public function setToken($token)
     {
-        $this->clientId = $clientId;
-
+        $this->token = $token;
+    
         return $this;
     }
 
     /**
-     * Get clientId
+     * Get token
      *
-     * @return string
+     * @return string 
      */
-    public function getClientId()
+    public function getToken()
     {
-        return $this->clientId;
+        return $this->token;
     }
 
     /**
-     * Set userId
+     * Set createdAt
      *
-     * @param string $userId
+     * @param \DateTime $createdAt
      * @return OauthAccessToken
      */
-    public function setUserId($userId)
+    public function setCreatedAt($createdAt)
     {
-        $this->userId = $userId;
-
+        $this->createdAt = $createdAt;
+    
         return $this;
     }
 
     /**
-     * Get userId
+     * Get createdAt
      *
-     * @return string
+     * @return \DateTime 
      */
-    public function getUserId()
+    public function getCreatedAt()
     {
-        return $this->userId;
+        return $this->createdAt;
     }
 
     /**
-     * Set expires
+     * Set expireAt
      *
-     * @param \DateTime $expires
+     * @param \DateTime $expireAt
      * @return OauthAccessToken
      */
-    public function setExpires($expires)
+    public function setExpireAt($expireAt)
     {
-        $this->expires = $expires;
-
+        $this->expireAt = $expireAt;
+    
         return $this;
     }
 
     /**
-     * Get expires
+     * Get expireAt
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
-    public function getExpires()
+    public function getExpireAt()
     {
-        return $this->expires;
+        return $this->expireAt;
     }
 
     /**
-     * Set scope
+     * Set client
      *
-     * @param string $scope
+     * @param \Etu\Core\ApiBundle\Entity\OauthClient $client
      * @return OauthAccessToken
      */
-    public function setScope($scope)
+    public function setClient(\Etu\Core\ApiBundle\Entity\OauthClient $client = null)
     {
-        $this->scope = $scope;
-
+        $this->client = $client;
+    
         return $this;
     }
 
     /**
-     * Get scope
+     * Get client
      *
-     * @return string
+     * @return \Etu\Core\ApiBundle\Entity\OauthClient 
      */
-    public function getScope()
+    public function getClient()
     {
-        return $this->scope;
+        return $this->client;
     }
 
     /**
-     * Get accessToken
+     * Set user
      *
-     * @return string
+     * @param \Etu\Core\UserBundle\Entity\User $user
+     * @return OauthAccessToken
      */
-    public function getAccessToken()
+    public function setUser(\Etu\Core\UserBundle\Entity\User $user = null)
     {
-        return $this->accessToken;
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Etu\Core\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @return OauthRefreshToken
+     */
+    public function getRefreshToken()
+    {
+        return $this->refreshToken;
+    }
+
+    /**
+     * @param OauthRefreshToken $refreshToken
+     */
+    public function setRefreshToken(OauthRefreshToken $refreshToken)
+    {
+        $this->refreshToken = $refreshToken;
+    }
+
+    /**
+     * Add scopes
+     *
+     * @param \Etu\Core\ApiBundle\Entity\OauthScope $scopes
+     * @return OauthAccessToken
+     */
+    public function addScope(\Etu\Core\ApiBundle\Entity\OauthScope $scopes)
+    {
+        $this->scopes[] = $scopes;
+    
+        return $this;
+    }
+
+    /**
+     * Remove scopes
+     *
+     * @param \Etu\Core\ApiBundle\Entity\OauthScope $scopes
+     */
+    public function removeScope(\Etu\Core\ApiBundle\Entity\OauthScope $scopes)
+    {
+        $this->scopes->removeElement($scopes);
+    }
+
+    /**
+     * @param OauthScope|string $scope
+     * @return bool
+     */
+    public function hasScope($scope)
+    {
+        if (is_string($scope)) {
+            foreach ($this->scopes as $tokenScope) {
+                if ($tokenScope->getName() == $scope) {
+                    return true;
+                }
+            }
+
+            return false;
+        } else {
+            return in_array($scope, $this->scopes->toArray());
+        }
+    }
+
+    /**
+     * Get scopes
+     *
+     * @return \Doctrine\Common\Collections\Collection|OauthScope[]
+     */
+    public function getScopes()
+    {
+        return $this->scopes;
     }
 }
