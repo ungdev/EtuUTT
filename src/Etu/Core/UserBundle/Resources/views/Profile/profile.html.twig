@@ -267,7 +267,9 @@
                         </p>
 
                         <ul class="nav nav-list">
-                            {% for client in apps %}
+                            {% for authorization in apps %}
+                                {% set client = authorization.client %}
+
                                 <li>
                                     <a href="javascript:void(0);"
                                        onclick="$('#revoke-{{ client.clientId }}').show(); return false;">
@@ -278,14 +280,13 @@
                                     <div id="revoke-{{ client.clientId }}" class="overlay">
                                         <div class="confirmation">
                                             <p>
-                                                L'application <strong>{{ client.name }}</strong> est capable :
+                                                L'application <strong>{{ client.name }}</strong> peut lire les données
+                                                suivantes de votre compte :
                                             </p>
 
                                             <ul>
-                                                {% for scope in client.scopeList %}
-                                                    {% if scopesDescs[scope] is defined %}
-                                                        <li>{{ scopesDescs[scope] }}</li>
-                                                    {% endif %}
+                                                {% for scope in authorization.scopes %}
+                                                    <li>{{ scope.description }}</li>
                                                 {% endfor %}
                                             </ul>
 

@@ -34,55 +34,26 @@ class ProfileController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $appsIds = $em->createQueryBuilder()
-            ->select('a.clientId')
+        $apps = $em->createQueryBuilder()
+            ->select('a, c')
             ->from('EtuCoreApiBundle:OauthAuthorization', 'a')
-            ->where('a.userId = :user')
+            ->innerJoin('a.client', 'c')
+            ->where('a.user = :user')
             ->setParameter('user', $this->getUser()->getId())
+            ->groupBy('a.client')
             ->getQuery()
-            ->getScalarResult();
-
-        foreach ($appsIds as &$appsId) {
-            $appsId = $appsId['clientId'];
-        }
-
-        /** @var OauthClient[] $apps */
-        $apps = array();
-
-        $scopesDescs = [];
-
-        if (! empty($appsIds)) {
-            $qb = $em->createQueryBuilder();
-
-            $apps = $qb->select('c')
-                ->from('EtuCoreApiBundle:OauthClient', 'c')
-                ->where($qb->expr()->in('c.clientId', $appsIds))
-                ->getQuery()
-                ->getResult();
-
-            /** @var OauthScope[] $scopes */
-            $scopes = $qb->select('s')
-                ->from('EtuCoreApiBundle:OauthScope', 's')
-                ->orderBy('s.weight', 'ASC')
-                ->getQuery()
-                ->getResult();
-
-            foreach ($scopes as $scope) {
-                $scopesDescs[$scope->getScope()] = $scope->getDescription();
-            }
-        }
+            ->getResult();
 
         return array(
-            'hasApps' => ! empty($appsIds),
+            'hasApps' => ! empty($apps),
             'apps' => $apps,
-            'scopesDescs' => $scopesDescs,
         );
     }
 
     /**
      * @Route("/user/apps/revoke/{clientId}", name="user_profile_revoke_app")
      */
-    public function appRevokeAction($clientId)
+    public function appRevokeAction(OauthClient $client)
     {
         if (! $this->getUserLayer()->isUser()) {
             return $this->createAccessDeniedResponse();
@@ -95,20 +66,9 @@ class ProfileController extends Controller
         $em ->createQueryBuilder()
             ->delete()
             ->from('EtuCoreApiBundle:OauthAuthorization', 'a')
-            ->where('a.clientId = :client')
-            ->andWhere('a.userId = :user')
-            ->setParameter('client', $clientId)
-            ->setParameter('user', $this->getUser()->getId())
-            ->getQuery()
-            ->execute();
-
-        // Remove refresh_tokens
-        $em ->createQueryBuilder()
-            ->delete()
-            ->from('EtuCoreApiBundle:OauthRefreshToken', 't')
-            ->where('t.clientId = :client')
-            ->andWhere('t.userId = :user')
-            ->setParameter('client', $clientId)
+            ->where('a.client = :client')
+            ->andWhere('a.user = :user')
+            ->setParameter('client', $client->getId())
             ->setParameter('user', $this->getUser()->getId())
             ->getQuery()
             ->execute();
@@ -117,9 +77,20 @@ class ProfileController extends Controller
         $em ->createQueryBuilder()
             ->delete()
             ->from('EtuCoreApiBundle:OauthAccessToken', 't')
-            ->where('t.clientId = :client')
-            ->andWhere('t.userId = :user')
-            ->setParameter('client', $clientId)
+            ->where('t.client = :client')
+            ->andWhere('t.user = :user')
+            ->setParameter('client', $client->getId())
+            ->setParameter('user', $this->getUser()->getId())
+            ->getQuery()
+            ->execute();
+
+        // Remove refresh_tokens
+        $em ->createQueryBuilder()
+            ->delete()
+            ->from('EtuCoreApiBundle:OauthRefreshToken', 't')
+            ->where('t.client = :client')
+            ->andWhere('t.user = :user')
+            ->setParameter('client', $client->getId())
             ->setParameter('user', $this->getUser()->getId())
             ->getQuery()
             ->execute();
@@ -128,9 +99,9 @@ class ProfileController extends Controller
         $em ->createQueryBuilder()
             ->delete()
             ->from('EtuCoreApiBundle:OauthAuthorizationCode', 't')
-            ->where('t.clientId = :client')
-            ->andWhere('t.userId = :user')
-            ->setParameter('client', $clientId)
+            ->where('t.client = :client')
+            ->andWhere('t.user = :user')
+            ->setParameter('client', $client->getId())
             ->setParameter('user', $this->getUser()->getId())
             ->getQuery()
             ->execute();

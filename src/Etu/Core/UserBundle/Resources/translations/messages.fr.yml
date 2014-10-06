@@ -269,7 +269,7 @@ user:
             badges: Badges
             no_badge: %firstName% n'a aucun badge pour le moment
             apps: Applications externes
-            apps_explain: Les applications suivantes ont accès à vos données.
+            apps_explain: Les applications suivantes ont accès à vos données :
             revoke_app: Révoquer l'accès
             revoke_cancel: Annuler
         profileAvatar:

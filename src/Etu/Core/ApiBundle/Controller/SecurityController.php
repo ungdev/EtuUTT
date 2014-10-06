@@ -173,6 +173,17 @@ class SecurityController extends ApiController
             $formData = $request->request->get('form');
 
             if (isset($formData['accept'])) {
+                // Remove old authorizations
+                $em ->createQueryBuilder()
+                    ->delete()
+                    ->from('EtuCoreApiBundle:OauthAuthorization', 'a')
+                    ->where('a.client = :client')
+                    ->andWhere('a.user = :user')
+                    ->setParameter('client', $client->getId())
+                    ->setParameter('user', $this->getUser()->getId())
+                    ->getQuery()
+                    ->execute();
+
                 $authorizationCode = new OauthAuthorizationCode();
                 $authorizationCode->setUser($this->getUser());
                 $authorizationCode->setClient($client);
