@@ -8,7 +8,7 @@ use Etu\Core\UserBundle\Entity\User;
 /**
  * OauthAuthorizationCodes
  *
- * @ORM\Table(name="oauth_authorization_codes", indexes={ @ORM\Index(name="search_index", columns={ "code" }) })
+ * @ORM\Table(name="oauth_authorization_codes", indexes={ @ORM\Index(name="authorization_code_index", columns={ "code" }) })
  * @ORM\Entity
  */
 class OauthAuthorizationCode

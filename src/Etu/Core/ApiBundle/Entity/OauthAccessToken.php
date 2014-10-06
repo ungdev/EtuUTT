@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Etu\Core\UserBundle\Entity\User;
 
 /**
- * @ORM\Table(name="oauth_access_tokens", indexes={ @ORM\Index(name="search_index", columns={ "token" }) })
+ * @ORM\Table(name="oauth_access_tokens", indexes={ @ORM\Index(name="access_token_index", columns={ "token" }) })
  * @ORM\Entity
  */
 class OauthAccessToken

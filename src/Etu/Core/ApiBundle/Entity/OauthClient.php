@@ -14,7 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * OauthClients
  *
- * @ORM\Table(name="oauth_clients", indexes={ @ORM\Index(name="search_index", columns={ "clientId" }) })
+ * @ORM\Table(name="oauth_clients", indexes={ @ORM\Index(name="client_index", columns={ "clientId" }) })
  * @ORM\Entity
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
