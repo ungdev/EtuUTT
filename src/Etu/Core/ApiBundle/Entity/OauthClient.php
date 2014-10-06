@@ -9,12 +9,14 @@ use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * OauthClients
  *
  * @ORM\Table(name="oauth_clients", indexes={ @ORM\Index(name="search_index", columns={ "clientId" }) })
  * @ORM\Entity
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class OauthClient
 {
@@ -69,6 +71,13 @@ class OauthClient
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $createdAt;
+
+    /**
+     * @var \DateTime $deletedAt
+     *
+     * @ORM\Column(type="datetime", nullable = true)
+     */
+    protected $deletedAt;
 
     /**
      * @var OauthScope[] $scopes
@@ -140,11 +149,21 @@ class OauthClient
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get client icon
+     *
+     * @return string
+     */
+    public function getIcon()
+    {
+        return $this->clientId . '.png';
     }
 
     /**

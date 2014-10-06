@@ -16,13 +16,13 @@
                         {{ client.name }}
                     </li>
                     <li>
-                        <a href="{{ path('devs_panel_manage_app', { 'id': client.clientId }) }}">Application</a>
+                        <a href="{{ path('devs_panel_manage_app', { 'clientId': client.clientId }) }}">Application</a>
                     </li>
                     <li class="active">
-                        <a href="{{ path('devs_panel_edit_app', { 'id': client.clientId }) }}">Paramètres</a>
+                        <a href="{{ path('devs_panel_edit_app', { 'clientId': client.clientId }) }}">Paramètres</a>
                     </li>
                     <li>
-                        <a href="{{ path('devs_panel_remove_app', { 'id': client.clientId }) }}">Supprimer</a>
+                        <a href="{{ path('devs_panel_remove_app', { 'clientId': client.clientId }) }}">Supprimer</a>
                     </li>
 
                     {% if clients|length > 1 %}
@@ -32,7 +32,7 @@
 
                         {% for other in clients if other.clientId != client.clientId %}
                             <li>
-                                <a href="{{ path('devs_panel_manage_app', { 'id': other.clientId }) }}">
+                                <a href="{{ path('devs_panel_manage_app', { 'clientId': other.clientId }) }}">
                                     {{ other.name }}
                                 </a>
                             </li>
@@ -72,7 +72,7 @@
 
                     <hr />
 
-                    {{ form_row(form.scopesList) }}
+                    {{ form_row(form.scopes) }}
 
                     <hr />
 

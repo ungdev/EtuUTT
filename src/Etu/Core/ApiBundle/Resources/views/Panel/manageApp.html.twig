@@ -16,13 +16,13 @@
                         {{ client.name }}
                     </li>
                     <li class="active">
-                        <a href="{{ path('devs_panel_manage_app', { 'id': client.clientId }) }}">Application</a>
+                        <a href="{{ path('devs_panel_manage_app', { 'clientId': client.clientId }) }}">Application</a>
                     </li>
                     <li>
-                        <a href="{{ path('devs_panel_edit_app', { 'id': client.clientId }) }}">Paramètres</a>
+                        <a href="{{ path('devs_panel_edit_app', { 'clientId': client.clientId }) }}">Paramètres</a>
                     </li>
                     <li>
-                        <a href="{{ path('devs_panel_remove_app', { 'id': client.clientId }) }}">Supprimer</a>
+                        <a href="{{ path('devs_panel_remove_app', { 'clientId': client.clientId }) }}">Supprimer</a>
                     </li>
 
                     {% if clients|length > 1 %}
@@ -32,7 +32,7 @@
 
                         {% for other in clients if other.clientId != client.clientId %}
                             <li>
-                                <a href="{{ path('devs_panel_manage_app', { 'id': other.clientId }) }}">
+                                <a href="{{ path('devs_panel_manage_app', { 'clientId': other.clientId }) }}">
                                     {{ other.name }}
                                 </a>
                             </li>
@@ -76,12 +76,12 @@
                 <hr />
 
                 <p>
-                    <strong>Votre application à la possibilité ...</strong>
+                    <strong>Votre application à accès aux données des utilisateurs suivantes :</strong>
                 </p>
 
-                <div id="etu_api_client_scopesList">
-                    {% for scope in scopes %}
-                        <div class="scope">{{ scopesDescs[scope.scope] }}</div>
+                <div id="etu_api_client_scopes">
+                    {% for scope in client.scopes %}
+                        <div class="scope">{{ scope.description }}</div>
                     {% endfor %}
                 </div>
 
@@ -92,32 +92,7 @@
                         les deux versions dans votre applciation.
                     </small>
                 </p>
-
-                <hr />
-
-                <p>
-                    <strong>Statistiques d'autorisation</strong>
-                </p>
-
-                <div id="stats"></div>
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block javascripts %}
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-        google.load("visualization", "1", {packages:["corechart"]});
-        google.setOnLoadCallback(drawChart);
-
-        function drawChart() {
-            var chart = new google.visualization.ColumnChart(document.getElementById('stats'));
-
-            chart.draw(
-                google.visualization.arrayToDataTable([ ['Jour', 'Authentifications'], {{ stats|raw }}]),
-                { title: 'Nombre d\'autorisation par jour pour le mois actuel' }
-            );
-        }
-    </script>
 {% endblock %}

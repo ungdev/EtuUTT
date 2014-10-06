@@ -48,6 +48,14 @@ class OauthScope
     private $weight = 0;
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->description;
+    }
+
+    /**
      * Get id
      *
      * @return integer 
