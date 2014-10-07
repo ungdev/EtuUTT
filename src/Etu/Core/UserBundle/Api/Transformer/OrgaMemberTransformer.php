@@ -72,7 +72,7 @@ class OrgaMemberTransformer extends AbstractTransformer
         if ($includes->has('user')) {
             $embed['user'] = $this->userTransformer->transform($member->getUser());
         } else {
-            $embed['user'] = $member->getUser()->getId();
+            $embed['user'] = $member->getUser()->getLogin();
         }
 
         return [

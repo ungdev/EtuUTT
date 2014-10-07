@@ -77,7 +77,7 @@ class UserOrgasPrivateTransformer extends AbstractTransformer
         if ($includes->has('organization')) {
             $embed['organization'] = $this->orgaTransformer->transform($member->getOrganization());
         } else {
-            $embed['organization'] = $member->getOrganization()->getId();
+            $embed['organization'] = $member->getOrganization()->getLogin();
         }
 
         return [
