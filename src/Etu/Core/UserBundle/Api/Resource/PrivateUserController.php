@@ -5,10 +5,12 @@ namespace Etu\Core\UserBundle\Api\Resource;
 use Doctrine\ORM\EntityManager;
 use Etu\Core\ApiBundle\Framework\Annotation\Scope;
 use Etu\Core\ApiBundle\Framework\Controller\ApiController;
+use Etu\Core\ApiBundle\Framework\Embed\EmbedBag;
 use Etu\Core\UserBundle\Entity\Course;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/private/user")
@@ -111,15 +113,15 @@ class PrivateUserController extends ApiController
      * @ApiDoc(
      *   section = "User - Private data",
      *   authentication = true,
-     *   authenticationRoles = {"private_user_account"},
+     *   authenticationRoles = {"private_user_organizations"},
      *   description = "Get the list of organizations of the current user and its permissions in them"
      * )
      *
      * @Route("/organizations", name="api_private_user_organizations", options={"expose"=true})
      * @Method("GET")
-     * @Scope("private_user_account")
+     * @Scope("private_user_organizations")
      */
-    public function organizationsAction()
+    public function organizationsAction(Request $request)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -127,7 +129,7 @@ class PrivateUserController extends ApiController
         $user = $em->getRepository('EtuUserBundle:User')->find($this->getAccessToken()->getUser());
 
         return $this->format([
-            'data' => $this->get('etu.api.user.private_transformer')->transform($user)
+            'data' => $this->get('etu.api.user_orgas_private.transformer')->transform($user->getMemberships()->toArray(), EmbedBag::createFromRequest($request))
         ]);
     }
 }

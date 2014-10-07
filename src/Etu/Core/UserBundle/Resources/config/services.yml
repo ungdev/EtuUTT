@@ -16,6 +16,7 @@ parameters:
     etu.api.user.private_transformer.class: Etu\Core\UserBundle\Api\Transformer\UserPrivateTransformer
     etu.api.orga.transformer.class: Etu\Core\UserBundle\Api\Transformer\OrgaTransformer
     etu.api.orga_member.transformer.class: Etu\Core\UserBundle\Api\Transformer\OrgaMemberTransformer
+    etu.api.user_orgas_private.transformer.class: Etu\Core\UserBundle\Api\Transformer\UserOrgasPrivateTransformer
 
     etu.api.user.mapper.class: Etu\Core\UserBundle\Api\QueryMapper\UserListMapper
     etu.api.orga.mapper.class: Etu\Core\UserBundle\Api\QueryMapper\OrgaListMapper
@@ -97,3 +98,7 @@ services:
 
     etu.api.orga.mapper:
         class: %etu.api.orga.mapper.class%
+
+    etu.api.user_orgas_private.transformer:
+        class: %etu.api.user_orgas_private.transformer.class%
+        arguments: [ @etu.api.orga.transformer ]

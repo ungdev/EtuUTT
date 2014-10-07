@@ -16,3 +16,5 @@ parameters:
 
     argentique_client_id:       ID
     argentique_client_secret:   Secret
+
+    assets_version: v10.1.1
