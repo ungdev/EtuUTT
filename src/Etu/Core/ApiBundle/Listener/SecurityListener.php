@@ -63,11 +63,9 @@ class SecurityListener
 
             $request = $event->getRequest();
 
-            $clientId = $request->server->get('PHP_AUTH_USER');
-            $clientSecret = $request->server->get('PHP_AUTH_PW');
             $token = $request->query->get('access_token');
 
-            $access = $this->server->checkAccess($clientId, $clientSecret, $token, $requiredScope);
+            $access = $this->server->checkAccess($token, $requiredScope);
 
             if (! $access->isGranted()) {
                 $event->setResponse($this->formatter->format($event->getRequest(), [

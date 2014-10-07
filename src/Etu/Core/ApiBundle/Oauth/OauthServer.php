@@ -4,10 +4,7 @@ namespace Etu\Core\ApiBundle\Oauth;
 
 use Doctrine\ORM\EntityManager;
 use Etu\Core\ApiBundle\Entity\OauthAccessToken;
-use Etu\Core\ApiBundle\Entity\OauthAuthorizationCode;
-use Etu\Core\ApiBundle\Entity\OauthClient;
 use Etu\Core\ApiBundle\Oauth\GrantType\GrantTypeInterface;
-use Etu\Core\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 
 class OauthServer
@@ -34,31 +31,15 @@ class OauthServer
     /**
      * Check access for a resource.
      *
-     * @param integer $clientId
-     * @param string $clientSecret
      * @param string $token
      * @param string $requiredScope
      * @return ApiAccess
      */
-    public function checkAccess($clientId, $clientSecret, $token, $requiredScope = null)
+    public function checkAccess($token, $requiredScope = null)
     {
         $access = new ApiAccess();
 
-        $client = $this->manager->getRepository('EtuCoreApiBundle:OauthClient')->findOneBy([
-            'clientId' => $clientId,
-            'clientSecret' => $clientSecret,
-        ]);
-
-        if (! $client) {
-            $access->setIsGranted(false);
-            $access->setError('invalid_client');
-            $access->setErrorMessage('Client credentials are invalid');
-
-            return $access;
-        }
-
         $accessToken = $this->manager->getRepository('EtuCoreApiBundle:OauthAccessToken')->findOneBy([
-            'client' => $client,
             'token' => $token,
         ]);
 
@@ -85,8 +66,6 @@ class OauthServer
 
             return $access;
         }
-
-        $accessToken->setClient($client);
 
         $access->setIsGranted(true);
         $access->setToken($accessToken);
