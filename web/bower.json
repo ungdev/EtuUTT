@@ -9,7 +9,7 @@
         "tgalopin <galopintitouan@gmail.com>"
     ],
     "dependencies": {
-        "ace": "1.1.*",
+        "ace-builds": "1.1.*",
         "bootstrap": "2.3.*",
         "facebox": "*",
         "fontawesome": "4.0.*",
