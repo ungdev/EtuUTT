@@ -5,9 +5,6 @@
 {% block main_menu_link_homepage %} active{% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('bower_components/swipebox/src/js/jquery.swipebox.min.js') }}" type="text/javascript"></script>
-    <script type="text/javascript"> $( '.home-block-photo' ).swipebox({ hideBarsDelay : 0 }); </script>
-
 	{% if not app.user.getFirstLogin() %}
 		<script type="text/javascript" src="{{ asset('bower_components/jquery-impromptu/dist/jquery-impromptu.min.js') }}"></script>
 		<script type="text/javascript">

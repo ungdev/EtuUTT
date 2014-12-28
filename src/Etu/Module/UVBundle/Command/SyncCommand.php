@@ -6,13 +6,9 @@ use Doctrine\ORM\EntityManager;
 use Etu\Core\UserBundle\Command\Util\ProgressBar;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\Container;
-use Guzzle\Http;
-use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Module\UVBundle\Entity\UV;
 
 class SyncCommand extends ContainerAwareCommand

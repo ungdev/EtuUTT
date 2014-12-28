@@ -10,7 +10,6 @@ use Etu\Core\UserBundle\Schedule\Model\Course;
 use Etu\Core\UserBundle\Schedule\ScheduleApi;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class SyncScheduleCommand extends ContainerAwareCommand
@@ -31,8 +30,6 @@ class SyncScheduleCommand extends ContainerAwareCommand
 	 * @param \Symfony\Component\Console\Output\OutputInterface $output
 	 * @return void
 	 * @throws \RuntimeException
-	 *
-	 * @todo
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
@@ -122,7 +119,6 @@ This command helps you to synchronise database\'s with officials schedules.
 		$bar->update(count($content));
 
 		$output->writeln('Deleteing old schedules ...');
-
 		$em->createQuery('DELETE FROM EtuUserBundle:Course')->execute();
 
 		$output->writeln('Inserting new schedules ...');
