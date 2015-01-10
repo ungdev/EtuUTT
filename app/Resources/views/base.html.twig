@@ -12,6 +12,20 @@
 		<title>{% block title %}{{ 'home.index.page.title'|trans }}{% endblock %} - {{ 'base.title'|trans }}</title>
 
 		<meta name="description" content="{% block meta_desc %}{{ 'base.meta'|trans }}{% endblock %}" />
+		<meta name="apple-mobile-web-app-title" content="EtuUTT">
+		<meta name="msapplication-TileColor" content="#00aba9">
+		<meta name="application-name" content="EtuUTT">
+
+		<link rel="apple-touch-icon" sizes="120x120" href="{{ asset('apple-touch-icon-120x120.png') }}">
+		<link rel="apple-touch-icon" sizes="114x114" href="{{ asset('apple-touch-icon-114x114.png') }}">
+		<link rel="apple-touch-icon" sizes="76x76" href="{{ asset('apple-touch-icon-76x76.png') }}">
+		<link rel="apple-touch-icon" sizes="72x72" href="{{ asset('apple-touch-icon-72x72.png') }}">
+		<link rel="apple-touch-icon" sizes="60x60" href="{{ asset('apple-touch-icon-60x60.png') }}">
+		<link rel="apple-touch-icon" sizes="57x57" href="{{ asset('apple-touch-icon-57x57.png') }}">
+
+		<link rel="icon" type="image/png" href="{{ asset('favicon-16x16.png') }}" sizes="16x16">
+		<link rel="icon" type="image/png" href="{{ asset('favicon-32x32.png') }}" sizes="32x32">
+		<link rel="icon" type="image/png" href="{{ asset('favicon-96x96.png') }}" sizes="96x96">
 
         {% stylesheets
             'bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css'
@@ -30,9 +44,6 @@
         %}
             <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
         {% endstylesheets %}
-
-		<link href="{{ asset('favicon.ico') }}" rel="icon" type="image/ico" />
-        <link href="{{ asset('apple-touch-icon.png') }}" rel="apple-touch-icon" sizes="129x129">
 
 		{% if not app.request.cookies.has('disable_responsive') %}
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
