@@ -54,6 +54,10 @@
 		{% endif %}
 
 		{% block stylesheets %}{% endblock %}
+
+		<!--[if lt IE 9]>
+			<script type="text/javascript" src="{{ asset('bower_components/html5shiv/dist/html5shiv.min.js') }}"></script>
+		<![endif]-->
 	</head>
 	<body class="bg-soft-grey">
 		<div id="loader" class="overlay">

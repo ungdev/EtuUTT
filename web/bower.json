@@ -1,41 +1,42 @@
 {
-    "name": "site-etu",
-    "version": "10.1.1",
-    "homepage": "https://github.com/ungdev/site-etu",
-    "description": "UTT students website",
-    "license": "MIT",
-    "private": true,
-    "authors": [
-        "tgalopin <galopintitouan@gmail.com>"
-    ],
-    "dependencies": {
-        "ace-builds": "1.1.*",
-        "bootstrap": "2.3.*",
-        "facebox": "*",
-        "fontawesome": "4.0.*",
-        "fullcalendar": "1.6.*",
-        "gmaps": "0.4.*",
-        "imgareaselect": "0.9.*",
-        "jquery": "1.10.2",
-        "jquery-ui": "1.10.2",
-        "jquery-cookie": "1.4.*",
-        "jquery-ui-touch-punch": "*",
-        "jquery-impromptu": "5.2.*",
-        "moment": "2.1.*",
-        "SCEditor": "1.4.*",
-        "swipebox": "1.2.*",
-        "tipsy": "0.1.*",
-        "tinycarousel": "*",
-    "jquery-cycle2": "*"
-    },
-    "ignore": [
-        "**/.*",
-        "node_modules",
-        "bower_components",
-        "test",
-        "tests"
-    ],
-    "resolutions": {
-        "jquery": ">=1.8.0 <2.1.0"
-    }
+  "name": "site-etu",
+  "version": "10.1.1",
+  "homepage": "https://github.com/ungdev/site-etu",
+  "description": "UTT students website",
+  "license": "MIT",
+  "private": true,
+  "authors": [
+    "tgalopin <galopintitouan@gmail.com>"
+  ],
+  "dependencies": {
+    "ace-builds": "1.1.*",
+    "bootstrap": "2.3.*",
+    "facebox": "*",
+    "fontawesome": "4.0.*",
+    "fullcalendar": "1.6.*",
+    "gmaps": "0.4.*",
+    "imgareaselect": "0.9.*",
+    "jquery": "1.10.2",
+    "jquery-ui": "1.10.2",
+    "jquery-cookie": "1.4.*",
+    "jquery-ui-touch-punch": "*",
+    "jquery-impromptu": "5.2.*",
+    "moment": "2.1.*",
+    "SCEditor": "1.4.*",
+    "swipebox": "1.2.*",
+    "tipsy": "0.1.*",
+    "tinycarousel": "*",
+    "jquery-cycle2": "*",
+    "html5shiv": "~3.7.2"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "resolutions": {
+    "jquery": ">=1.8.0 <2.1.0"
+  }
 }
