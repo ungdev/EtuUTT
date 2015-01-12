@@ -1,5 +1,16 @@
 
 /*
+ * Add CSS on page load to display fonts
+ */
+var fontsCss = $('<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro" type="text/css" />'),
+	head = $('head');
+
+$(function() {
+	setTimeout(function() { head.append(fontsCss); });
+});
+
+
+/*
  * jQuery selectors
  */
 var facebox = $('a[rel*=facebox]'),
@@ -380,7 +391,7 @@ $(function() {
                         imageLink = link;
                     }
                 }
-    
+
 				return $("<li style=\"margin-bottom: 3px;\">")
 					.append(
 						"<a>" +
