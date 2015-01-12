@@ -52,7 +52,7 @@ uvs:
             pending: En attente de validation
             countReviews: %count% annale|%count% annales
             sendReview: Envoyer une annale
-            winBadges: Envoyez des annales pour gagnez des badges !
+            winBadges: Envoyez des annales pour gagner des badges !
             comments: Commentaires
             noComment: Aucun commentaire pour le moment
             body: Ajouter un commentaire
