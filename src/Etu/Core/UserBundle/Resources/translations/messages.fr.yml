@@ -349,7 +349,7 @@ user:
             passions: Passions
             last_badges: Derniers badges débloqués
         organizations:
-            is_in: "%name% fait parti de %count% association(s) :"
+            is_in: "%name% fait partie de %count% association(s) :"
             not_asso: %name% ne fait partie d'aucune association
         badges:
             by: "Badges obtenus par %name%"
