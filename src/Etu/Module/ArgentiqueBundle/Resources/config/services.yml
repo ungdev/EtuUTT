@@ -2,4 +2,13 @@
 parameters:
     etu.argentique.authorized_admin: [ admin, galopint, tgalopin, argentiq ]
 
-services: ~
+services:
+    argentique.url_builder:
+        class: Etu\Module\ArgentiqueBundle\Glide\UrlBuilder
+        arguments: [ %secret%, @twig.extension.assets ]
+
+    argentique.twig.url_builder_extension:
+        class: Etu\Module\ArgentiqueBundle\Twig\UrlBuilderExtension
+        arguments: [ @argentique.url_builder ]
+        tags:
+            - { name: twig.extension }

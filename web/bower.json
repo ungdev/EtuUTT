@@ -27,7 +27,8 @@
     "tipsy": "0.1.*",
     "tinycarousel": "*",
     "jquery-cycle2": "*",
-    "html5shiv": "~3.7.2"
+    "html5shiv": "~3.7.2",
+    "Justified-Gallery": "~3.5.1"
   },
   "ignore": [
     "**/.*",

@@ -1,28 +1,51 @@
 {% extends '::page-2cols.html.twig' %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bower_components/Justified-Gallery/dist/css/justifiedGallery.min.css') }}" />
+    <style>
+        .argentique-collections {
+            text-align: center;
+        }
+        .argentique-collections a {
+            width: 150px;
+            display: inline-block;
+            padding: 15px 0;
+            background: #f5f5f5;
+            margin: 0 10px 20px 10px;
+            color: #333;
+            font-weight: bold;
+        }
+        .argentique-collections a:hover {
+            text-decoration: none;
+            background: #e5e5e5;
+        }
+        .argentique-collections img {
+            width: 130px;
+            display: inline;
+            margin-bottom: 5px;
+        }
+        .argentique-gallery:hover img {
+            opacity: 0.8;
+        }
+        .argentique-gallery:hover img:hover {
+            opacity: 1;
+        }
+    </style>
+{% endblock %}
+
 {% block javascripts %}
+    <script src="{{ asset('bower_components/Justified-Gallery/dist/js/jquery.justifiedGallery.min.js') }}"></script>
     <script src="{{ asset('bower_components/swipebox/src/js/jquery.swipebox.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
+        $('.argentique-gallery').justifiedGallery();
+
         var gallery = $('.swipebox'),
-                tree = {
-                    cSets: $('.argentique-tree-c ul'),
-                    cOpen: $('.argentique-tree-c .c-open')
-                };
+            tree = {
+                cSets: $('.argentique-tree-c ul'),
+                cOpen: $('.argentique-tree-c .c-open')
+            };
 
         gallery.swipebox({ hideBarsDelay : 0 });
-
-        tree.cSets.hide();
-        tree.cOpen.append('<i class="fa fa-caret-down"></i>');
-
-        {% if set is defined %}
-            // Open current
-            $('#{{ set.id }}').parent().show();
-        {% endif %}
-
-        tree.cOpen.click(function() {
-            $(this).parent().find('ul').slideToggle();
-            return false;
-        });
     </script>
 {% endblock %}
 
@@ -34,52 +57,58 @@
 
 {% block content %}
     <div class="padding20-all argentique-index">
-        <div class="row-fluid">
-            <div class="span4 argentique-galleries">
-                <ul class="argentique-tree">
-                    {% for collection in collections %}
-                        <li class="argentique-tree-c" data-id="c-{{ collection.id }}">
-                            <a href="javascript:void(0)" class="c-open">
-                                <strong>{{ collection.title }}</strong>
-                            </a>
-
-                            <ul>
-                                {% for s in collection.sets %}
-                                    <li class="argentique-tree-s" id="{{ s.id }}">
-                                        <a href="{{ path('argentique_set', {'id': s.id, 'slug': s.title|slugify}) }}">
-                                            {% if set is defined and s.id == set.id %}
-                                                <em>{{ s.title }}</em>
-                                            {% else %}
-                                                {{ s.title }}
-                                            {% endif %}
-                                        </a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                    {% endfor %}
-                </ul>
-
-                {% if is_admin %}
-                    <br />
-
-                    <p class="align-right">
-                        <a href="{{ path('argentique_admin_synchronize') }}" class="btn btn-primary">
-                            {{ 'argentique.main.index.synchronize'|trans }}
-                        </a>
-                    </p>
+        <ul class="breadcrumb">
+            {% for item in breadcrumb %}
+                {% if item.pathname == directory %}
+                    <li class="active">{{ item.basename }}</li>
+                {% else %}
+                    <li>
+                        {% if not item.pathname %}
+                            <a href="{{ path('argentique_index') }}">
+                                {{ item.basename }}<!--
+                         --></a>
+                        {% else %}
+                            <a href="{{ path('argentique_directory', { 'directory': item.pathname }) }}">
+                                {{ item.basename }}<!--
+                         --></a>
+                        {% endif %}
+                        <span class="divider">/</span>
+                    </li>
                 {% endif %}
-            </div>
-            <div class="span8">
-                <h4>{{ 'argentique.main.index.lasts'|trans }}</h4>
+            {% endfor %}
+        </ul>
 
-                {% for photo in photos %}
-                    <a href="{{ asset('uploads/argentique/' ~ photo.file) }}" target="_blank" class="swipebox argentique-photo"
-                            title="{{ photo.title }}">
-                        <img src="{{ asset('uploads/argentique/' ~ photo.icon) }}" />
+        {% if directories|length > 0 %}
+            {% if not directory %}
+                <h3>Collections</h3>
+            {% else %}
+                <h3>Sous-collections</h3>
+            {% endif %}
+
+            <div class="argentique-collections">
+                {% for dir in directories %}
+                    <a href="{{ path('argentique_directory', { 'directory': dir.pathname }) }}">
+                        <img src="{{ argentique_collection(dir.pathname) }}" alt="Voir la collection {{ dir.basename }}" />
+                        <br />
+                        <span>{{ dir.basename }}</span>
                     </a>
                 {% endfor %}
             </div>
-        </div>
+
+            {% if photos|length > 0 %}<hr />{% endif %}
+        {% endif %}
+
+        {% if photos|length > 0 %}
+            <h3>Photos</h3>
+
+            <div class="argentique-gallery">
+                {% for photo in photos %}
+                    <a href="{{ argentique_photo(photo.pathname) }}" class="swipebox">
+                        <img src="{{ argentique_photo(photo.pathname, { 'w': 300 }) }}" />
+                    </a>
+                {% endfor %}
+            </div>
+        {% endif %}
+
     </div>
 {% endblock %}

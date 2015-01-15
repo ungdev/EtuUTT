@@ -9,11 +9,13 @@
 /app/bootstrap.php.cache
 /app/SymfonyRequirements.php
 /src/Etu/Module/LoggerBundle/Resources/objects/errors
+/src/Etu/Module/ArgentiqueBundle/Resources/photos/*
 
 /web/bower_components/
 /web/min/
 /web/bundles/
 /web/uploads/
+/web/argentique/cache/
 /web/app.php
 /web/etu_dev.php
 /web/config.php

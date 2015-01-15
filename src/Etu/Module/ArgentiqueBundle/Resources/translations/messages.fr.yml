@@ -23,11 +23,7 @@ argentique:
 
     admin:
         synchronize:
-            title: Gérer les galeries
-            starting: La synchronisation démarre ...
-            ending: La synchronisation se termine ...
-            importing: Importation en cours ...
-            photos: photos
+            title: Gérer les photos
             no_photo: Aucune photo n'a besoin d'être importée
             no_photo_back: Retour à la galerie
             success: La synchronisation est terminée !

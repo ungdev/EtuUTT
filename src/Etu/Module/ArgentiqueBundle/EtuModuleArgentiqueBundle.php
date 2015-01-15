@@ -82,4 +82,12 @@ class EtuModuleArgentiqueBundle extends Module
 			// Insert your requirements here
 		);
 	}
+
+	/**
+	 * @return string
+	 */
+	public static function getPhotosRoot()
+	{
+		return __DIR__ . '/Resources/photos';
+	}
 }
