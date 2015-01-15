@@ -49,7 +49,7 @@ class UrlBuilderExtension extends \Twig_Extension
      */
     public function generateCollectionUrl($path)
     {
-        return '/argentique/d.php/' . $path;
+        return $this->builder->getWebPath() . 'argentique/d.php/' . $path;
     }
 
     /**

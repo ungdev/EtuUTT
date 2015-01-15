@@ -47,7 +47,7 @@ class UrlBuilder
      */
     public function generate($photo, $options = [])
     {
-        return $this->webPath . 'argentique/p.php' . $this->builder->getUrl($photo, $options);
+        return $this->webPath . '/argentique/p.php' . $this->builder->getUrl($photo, $options);
     }
 
     /**
