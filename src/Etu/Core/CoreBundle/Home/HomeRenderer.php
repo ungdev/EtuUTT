@@ -125,6 +125,8 @@ class HomeRenderer
 
     public function createPhotosBlock()
     {
+        return;
+
         if ($this->modulesManager->getModuleByIdentifier('argentique')->isEnabled()) {
             $photos = $this->builder->getPhotos();
 
