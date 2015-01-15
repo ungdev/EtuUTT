@@ -78,7 +78,7 @@
 
 				<nav class="pull-left">
 					<ul class="list-horizontal list-horizontal-linked menu" id="head-menu-list">
-						<li class="first{% block main_menu_link_homepage %}{% endblock %}">
+						<li class="first">
 							{% if etu.notifs.new_count == 0 %}
 							<span id="head-menu-home-pins" class="pins pins-alert pins-head pins-head-hidden">0</span>
 							{% else %}
@@ -92,7 +92,7 @@
 							</a>
 						</li>
 						{% if etu.modules.isEnabled('events') %}
-						<li class="{% block main_menu_link_events %}{% endblock %}">
+						<li>
 							<a href="{{ path('events_index') }}">
 								<i class="icon icon-head icon-head-events"></i>
 								<span class="menu-link-text" id="menu_events">{{ 'base.menu.events'|trans }}</span>
@@ -101,7 +101,7 @@
 						</li>
 						{% endif %}
 						{% if etu.modules.isEnabled('forum') and app.user %}
-						<li class="{% block main_menu_link_forums %}{% endblock %}">
+						<li>
 							<a href="{{ path('forum_index') }}">
 								<i class="icon icon-head icon-head-forums"></i>
 								<span class="menu-link-text" id="menu_forums">{{ 'base.menu.forums'|trans }}</span>
@@ -110,7 +110,7 @@
 						</li>
 						{% endif %}
 						{% if etu.modules.isEnabled('assos') %}
-						<li class="last hidden-for-phones{% block main_menu_link_assos %}{% endblock %}">
+						<li class="last hidden-for-phones">
 							<a href="{{ path('orgas_index') }}">
 								<i class="icon icon-head icon-head-associations"></i>
 								<span class="menu-link-text" id="menu_assos">{{ 'base.menu.associations'|trans }}</span>
