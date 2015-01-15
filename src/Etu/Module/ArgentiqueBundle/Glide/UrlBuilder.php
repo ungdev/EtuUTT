@@ -4,7 +4,7 @@ namespace Etu\Module\ArgentiqueBundle\Glide;
 
 use League\Glide\Factories\UrlBuilder as BuilderFactory;
 use League\Glide\UrlBuilder as Builder;
-use Symfony\Bundle\TwigBundle\Extension\AssetsExtension;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * URL builder
@@ -25,12 +25,17 @@ class UrlBuilder
 
     /**
      * @param $secret
-     * @param AssetsExtension $assetsExtension
+     * @param ContainerInterface $container
      */
-    public function __construct($secret, AssetsExtension $assetsExtension)
+    public function __construct($secret, ContainerInterface $container)
     {
         $this->builder = BuilderFactory::create('', $secret);
-        $this->webPath = reset(explode('?', $assetsExtension->getAssetUrl('')));
+
+        if ($container->has('twig.extension.assets')) {
+            $this->webPath = reset(explode('?', $container->get('twig.extension.assets')->getAssetUrl('')));
+        } else {
+            $this->webPath = '';
+        }
     }
 
     /**

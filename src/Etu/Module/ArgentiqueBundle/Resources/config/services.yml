@@ -5,7 +5,7 @@ parameters:
 services:
     argentique.url_builder:
         class: Etu\Module\ArgentiqueBundle\Glide\UrlBuilder
-        arguments: [ %secret%, @twig.extension.assets ]
+        arguments: [ %secret%, @service_container ]
 
     argentique.twig.url_builder_extension:
         class: Etu\Module\ArgentiqueBundle\Twig\UrlBuilderExtension

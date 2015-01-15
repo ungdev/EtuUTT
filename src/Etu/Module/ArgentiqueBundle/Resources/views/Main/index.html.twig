@@ -2,35 +2,6 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('bower_components/Justified-Gallery/dist/css/justifiedGallery.min.css') }}" />
-    <style>
-        .argentique-collections {
-            text-align: center;
-        }
-        .argentique-collections a {
-            width: 150px;
-            display: inline-block;
-            padding: 15px 0;
-            background: #f5f5f5;
-            margin: 0 10px 20px 10px;
-            color: #333;
-            font-weight: bold;
-        }
-        .argentique-collections a:hover {
-            text-decoration: none;
-            background: #e5e5e5;
-        }
-        .argentique-collections img {
-            width: 130px;
-            display: inline;
-            margin-bottom: 5px;
-        }
-        .argentique-gallery:hover img {
-            opacity: 0.8;
-        }
-        .argentique-gallery:hover img:hover {
-            opacity: 1;
-        }
-    </style>
 {% endblock %}
 
 {% block javascripts %}
@@ -38,14 +9,7 @@
     <script src="{{ asset('bower_components/swipebox/src/js/jquery.swipebox.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $('.argentique-gallery').justifiedGallery();
-
-        var gallery = $('.swipebox'),
-            tree = {
-                cSets: $('.argentique-tree-c ul'),
-                cOpen: $('.argentique-tree-c .c-open')
-            };
-
-        gallery.swipebox({ hideBarsDelay : 0 });
+        $('.swipebox').swipebox({ hideBarsDelay : 0 });
     </script>
 {% endblock %}
 
