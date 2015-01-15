@@ -28,7 +28,7 @@ class MainController extends Controller
         /** @var string $root */
         $root = EtuModuleArgentiqueBundle::getPhotosRoot();
 
-        if (strpos($directory, './') !== false || ! file_exists($root . '/' . $directory)) {
+        if (strpos($directory, './') !== false) {
             return $this->redirect($this->generateUrl('argentique_index'));
         }
 
