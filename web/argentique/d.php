@@ -114,7 +114,7 @@ if ($photo) {
     $image->paste($photo, new Point(36, 48));
 }
 
-$image = $image->thumbnail(new Box(300, 200), ImageInterface::THUMBNAIL_OUTBOUND);
+$image = $image->thumbnail(new Box(132, 88), ImageInterface::THUMBNAIL_OUTBOUND);
 
 if ($photo) {
     $image->save($cacheFile);

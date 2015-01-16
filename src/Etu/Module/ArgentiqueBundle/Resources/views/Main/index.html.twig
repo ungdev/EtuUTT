@@ -8,8 +8,23 @@
     <script src="{{ asset('bower_components/Justified-Gallery/dist/js/jquery.justifiedGallery.min.js') }}"></script>
     <script src="{{ asset('bower_components/swipebox/src/js/jquery.swipebox.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
-        $('.argentique-gallery').justifiedGallery();
-        $('.swipebox').swipebox({ hideBarsDelay : 0 });
+        var gallery = $('.argentique-gallery'),
+            swipebox = $('.swipebox');
+
+        swipebox.swipebox({ hideBarsDelay : 0 });
+        gallery.justifiedGallery();
+
+        window.onload = function () {
+            {% for photo in photos|slice(43) %}
+                gallery.append(
+                    '<a href="{{ argentique_photo(photo.pathname) }}" class="swipebox">' +
+                        '<img src="{{ argentique_photo(photo.pathname, { 'w': 200 }) }}" />' +
+                    '</a>'
+                );
+            {% endfor %}
+
+            gallery.justifiedGallery('norewind');
+        };
     </script>
 {% endblock %}
 
@@ -66,9 +81,9 @@
             <h3>Photos</h3>
 
             <div class="argentique-gallery">
-                {% for photo in photos %}
+                {% for photo in photos|slice(0, 43) %}
                     <a href="{{ argentique_photo(photo.pathname) }}" class="swipebox">
-                        <img src="{{ argentique_photo(photo.pathname, { 'w': 300 }) }}" />
+                        <img src="{{ argentique_photo(photo.pathname, { 'w': 200 }) }}" />
                     </a>
                 {% endfor %}
             </div>
