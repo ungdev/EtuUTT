@@ -6,7 +6,7 @@
              data-cycle-center-horz="true"
              data-cycle-center-vert="true">
             {% for photo in photos %}
-                <img src="{{ asset('uploads/argentique/' ~ photo.file) }}" class="home-block-photo" />
+                <img src="{{ argentique_photo(photo.pathname, { 'h': 200 }) }}" class="home-block-photo" />
             {% endfor %}
         </div>
     </div>

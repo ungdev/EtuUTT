@@ -11,6 +11,7 @@ use Etu\Core\CoreBundle\Framework\Twig\GlobalAccessorObject;
 use Etu\Core\UserBundle\Entity\Course;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Module\ArgentiqueBundle\Entity\Photo;
+use Etu\Module\ArgentiqueBundle\EtuModuleArgentiqueBundle;
 use Etu\Module\EventsBundle\Entity\Event;
 use Etu\Module\UVBundle\Entity\Review;
 use Symfony\Component\Security\Core\SecurityContext;
@@ -224,7 +225,7 @@ class HomeBuilder
     }
 
     /**
-     * @return Photo[]
+     * @return array
      */
     public function getPhotos()
     {
@@ -232,23 +233,76 @@ class HomeBuilder
             $this->stopwatch->start('block_photos', 'home_blocks');
         }
 
-        $query = $this->manager->createQueryBuilder()
-            ->select('p')
-            ->from('EtuModuleArgentiqueBundle:Photo', 'p')
-            ->orderBy('p.createdAt', 'DESC')
-            ->where('p.ready = 1')
-            ->setMaxResults(5)
-            ->getQuery();
+        /** @var string $root */
+        $root = EtuModuleArgentiqueBundle::getPhotosRoot();
 
-        $query->useResultCache(true, 1200);
+        if (! file_exists($root)) {
+            return [];
+        }
 
-        $result = $query->getResult();
+        /*
+         * Select most recent collection, find most recent set in it and get 5 random images from this set
+         */
+
+        // Collection
+        $collections = glob($root . '/*', GLOB_ONLYDIR);
+        $collectionsRegistry = [];
+
+        foreach ($collections as $collection) {
+            $collectionsRegistry[$collection] = filemtime($collection);
+        }
+
+        arsort($collectionsRegistry);
+        $collectionsRegistry = array_flip($collectionsRegistry);
+
+        $collection = reset($collectionsRegistry);
+
+
+        // Set
+        $sets = glob($collection . '/*', GLOB_ONLYDIR);
+        $setsRegistry = [];
+
+        foreach ($sets as $set) {
+            $setsRegistry[$set] = filemtime($set);
+        }
+
+        arsort($setsRegistry);
+        $setsRegistry = array_flip($setsRegistry);
+
+        $set = reset($setsRegistry);
+
+
+        // Random
+        /** @var \SplFileInfo[] $iterator */
+        $iterator = new \DirectoryIterator($set);
+
+        $i = 0;
+
+        /** @var array $photos */
+        $photos = [];
+
+        foreach ($iterator as $file) {
+            if ($file->getExtension() == 'jpg' || $file->getExtension() == 'jpeg') {
+                $photos[] = [
+                    'extension' => $file->getExtension(),
+                    'pathname' => str_replace($root . '/', '', $file->getPathname()),
+                    'basename' => $file->getBasename(),
+                    'filename' => $file->getBasename('.' . $file->getExtension()),
+                ];
+
+                $i++;
+
+                if ($i == 10) {
+                    break;
+                }
+            }
+        }
 
         if ($this->stopwatch) {
             $this->stopwatch->stop('block_photos');
         }
 
-        return $result;
+        return $photos;
     }
 
     /**
