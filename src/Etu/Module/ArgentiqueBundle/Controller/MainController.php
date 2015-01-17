@@ -92,11 +92,18 @@ class MainController extends Controller
                     'score' => $score,
                 ];
             } elseif ($file->getExtension() == 'jpg' || $file->getExtension() == 'jpeg') {
+                $size = getimagesize($file->getPathname());
+
                 $photos[] = [
                     'extension' => $file->getExtension(),
                     'pathname' => str_replace($root . '/', '', $file->getPathname()),
                     'basename' => $file->getBasename(),
                     'filename' => $file->getBasename('.' . $file->getExtension()),
+                    'size' => [
+                        'width' => $size[0],
+                        'height' => $size[1],
+                        'ratio' => $size[1] / 150
+                    ]
                 ];
             }
         }

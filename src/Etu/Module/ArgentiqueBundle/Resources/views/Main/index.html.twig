@@ -12,7 +12,10 @@
             swipebox = $('.swipebox');
 
         swipebox.swipebox({ hideBarsDelay : 0 });
-        gallery.justifiedGallery();
+
+        gallery.justifiedGallery({
+            waitThumbnailsLoad: false
+        });
 
         window.onload = function () {
             {% for photo in photos|slice(43) %}
@@ -83,7 +86,8 @@
             <div class="argentique-gallery">
                 {% for photo in photos|slice(0, 43) %}
                     <a href="{{ argentique_photo(photo.pathname) }}" class="swipebox">
-                        <img src="{{ argentique_photo(photo.pathname, { 'w': 300 }) }}" />
+                        <img src="{{ argentique_photo(photo.pathname, { 'h': 150 }) }}"
+                                height="150px" width="{{ (photo.size.width / photo.size.ratio)|round }}px" />
                     </a>
                 {% endfor %}
             </div>
