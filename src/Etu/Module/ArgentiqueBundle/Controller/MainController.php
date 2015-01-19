@@ -3,9 +3,9 @@
 namespace Etu\Module\ArgentiqueBundle\Controller;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
+use Etu\Module\ArgentiqueBundle\EtuModuleArgentiqueBundle;
 
 // Import annotations
-use Etu\Module\ArgentiqueBundle\EtuModuleArgentiqueBundle;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -80,10 +80,14 @@ class MainController extends Controller
             if ($file->isDir()) {
                 $basename = str_replace($root . '/' . (($directory) ? $directory . '/' : ''), '', $file->getPathname());
 
-                $score = intval(substr($basename, 1)) * 2;
+                $score = $basename;
 
-                if (substr($basename, 0, 1) == 'A') {
-                    $score += 1;
+                if (! $directory) {
+                    $score = intval(substr($basename, 1)) * 2;
+
+                    if (substr($basename, 0, 1) == 'A') {
+                        $score += 1;
+                    }
                 }
 
                 $directories[] = [
@@ -109,7 +113,7 @@ class MainController extends Controller
         }
 
         usort($directories, function($a, $b) {
-            return ($a['score'] < $b['score']) ? -1 : 1;
+            return ($a['score'] > $b['score']) ? -1 : 1;
         });
 
         return [

@@ -27,7 +27,10 @@
     "tinycarousel": "*",
     "jquery-cycle2": "*",
     "html5shiv": "~3.7.2",
-    "Justified-Gallery": "~3.5.1"
+    "Justified-Gallery": "~3.5.1",
+    "blueimp-file-upload": "~9.9.2",
+    "jqtree": "~1.0.0",
+    "jstree": "~3.0.9"
   },
   "ignore": [
     "**/.*",

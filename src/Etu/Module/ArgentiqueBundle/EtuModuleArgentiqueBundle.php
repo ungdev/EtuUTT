@@ -3,6 +3,7 @@
 namespace Etu\Module\ArgentiqueBundle;
 
 use Etu\Core\CoreBundle\Framework\Definition\Module;
+use Etu\Core\CoreBundle\Framework\Definition\Permission;
 
 class EtuModuleArgentiqueBundle extends Module
 {
@@ -29,6 +30,15 @@ class EtuModuleArgentiqueBundle extends Module
                     ->setUrl($this->router->generate('argentique_index'))
                 ->end()
             ->end();
+
+		$this->getAdminMenuBuilder()
+			->getBlock('base.admin_menu.title')
+				->add('argentique.admin.menu')
+					->setIcon('argentique.png')
+					->setUrl($this->getRouter()->generate('argentique_admin'))
+					->setPosition(7)
+				->end()
+			->end();
     }
 
     /**
@@ -80,6 +90,16 @@ class EtuModuleArgentiqueBundle extends Module
 	{
 		return array(
 			// Insert your requirements here
+		);
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getAvailablePermissions()
+	{
+		return array(
+			new Permission('argentique.admin', Permission::DEFAULT_DISABLED, 'Peut gérer les photos Argentique'),
 		);
 	}
 

@@ -22,8 +22,5 @@ argentique:
                 Revenez dans quelques minutes !
 
     admin:
-        synchronize:
-            title: Gérer les photos
-            no_photo: Aucune photo n'a besoin d'être importée
-            no_photo_back: Retour à la galerie
-            success: La synchronisation est terminée !
+        menu: Gérer la gallerie Argentique
+        title: Administration Argentique

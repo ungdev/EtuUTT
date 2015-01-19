@@ -196,16 +196,27 @@
 										</a>
 									</li>
 								</ul>
-							{% elseif app.user.hasPermission('pages.admin') %}
+							{% elseif app.user.hasPermission('pages.admin') or app.user.hasPermission('argentique.admin') %}
 								<hr class="separator" />
 
 								<ul class="list-vertical list-vertical-linked">
-									<li>
-										<a href="{{ path('admin_pages') }}">
-											<img src="{{ asset('src/img/icons/book.png') }}" class="etu-img-icon" />
-											{{ 'base.user.menu.pages'|trans }}
-										</a>
-									</li>
+									{% if app.user.hasPermission('pages.admin') %}
+										<li>
+											<a href="{{ path('admin_pages') }}">
+												<img src="{{ asset('src/img/icons/book.png') }}" class="etu-img-icon" />
+												{{ 'base.user.menu.pages'|trans }}
+											</a>
+										</li>
+									{% endif %}
+
+									{% if app.user.hasPermission('argentique.admin') %}
+										<li>
+											<a href="{{ path('argentique_admin') }}">
+												<img src="{{ asset('src/img/icons/argentique.png') }}" class="etu-img-icon" />
+												{{ 'argentique.admin.menu'|trans }}
+											</a>
+										</li>
+									{% endif %}
 								</ul>
 							{% endif %}
 						{% else %}
@@ -237,50 +248,11 @@
 				{{ render_sidebar_mobile() }}
 			{% endblock %}
 
-            {#
-			<ul class="list-vertical list-vertical-linked overlay-menu">
-				<li class="first">
-					<a href="#" class="change-locale">
-						{{ 'base.footer.change_locale'|trans }}
-					</a>
-				</li>
-				<li>
-					<a href="{{ path('desktop_version') }}">
-						{{ 'base.footer.desktop_version'|trans }}
-					</a>
-				</li>
-			</ul>
-			#}
-
 			<p class="clear footer-description footer-description-mobiles">
 				{{ 'base.footer.mobile_text'|trans|raw }}<br />
 				{% include '::version.html.twig' %}
 			</p>
 		</div>
-
-		{# Change the locale (available languages)
-		<div id="change-locale-choices">
-			<ul class="list-vertical list-vertical-linked overlay-menu">
-				<li class="first">
-					<a href="{{ path('change_locale', {'lang': 'fr'}) }}">
-						<img src="{{ asset('src/img/lang/fr.png') }}" />
-						Français
-					</a>
-				</li>
-				<li>
-					<a href="{{ path('change_locale', {'lang': 'en'}) }}">
-						<img src="{{ asset('src/img/lang/en.png') }}" />
-						English
-					</a>
-				</li>
-				<li>
-					<a href="{{ path('change_locale', {'lang': 'de'}) }}">
-						<img src="{{ asset('src/img/lang/de.png') }}" />
-						Deutsh
-					</a>
-				</li>
-			</ul>
-		</div>#}
 
 		{% block page %}{% endblock %}
 

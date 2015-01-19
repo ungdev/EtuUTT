@@ -1,0 +1,46 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'argentique.admin.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+    <img src="{{ asset('src/img/titles/argentique.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('vendor/jstree/dist/themes/default/style.css') }}" />
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var collectionsTree = {{ tree|json_encode|raw }};
+    </script>
+    <script src="{{ asset('vendor/blueimp-file-upload/js/jquery.fileupload.js') }}"></script>
+    <script src="{{ asset('vendor/jstree/dist/jstree.js') }}"></script>
+    <script src="{{ asset('src/js/bundles/argentique_admin.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="padding20-all argentique-admin">
+        <div class="row-fluid">
+            <div class="span4">
+                <h4>Envoyer des photos</h4>
+
+                <input id="fileupload" type="file" name="files[]" data-url="/" multiple>
+
+                <div id="dropzone">Drop files here</div>
+
+                <hr />
+
+                <h4>Collections</h4>
+
+                <p>
+                    <small class="muted"><em>Limité à deux niveaux de profondeur</em></small>
+                </p>
+
+                <div id="tree"></div>
+            </div>
+            <div class="span8">
+            </div>
+        </div>
+    </div>
+{% endblock %}
