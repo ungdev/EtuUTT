@@ -6,8 +6,29 @@
 	<img src="{{ asset('src/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
-{% block stylesheets %}
-	<link rel="stylesheet" href="{{ asset('css/bundles/trombi.css') }}" type="text/css" />
+{% block javascripts %}
+	<script type="text/javascript">
+		var moreOptions = $('#more-options'),
+			lessOptions = $('#less-options');
+
+		var phonesElements = $('.hidden-phone');
+
+		moreOptions.click(function() {
+			phonesElements.removeClass('hidden-phone');
+			moreOptions.hide();
+			lessOptions.show();
+
+			return false;
+		});
+
+		lessOptions.click(function() {
+			phonesElements.addClass('hidden-phone');
+			lessOptions.hide();
+			moreOptions.show();
+
+			return false;
+		});
+	</script>
 {% endblock %}
 
 {% block content %}
@@ -94,7 +115,22 @@
 
 				<div class="trombi-search-submit">
 					{{ form_rest(form) }}
-					<button type="submit" class="btn">{{ 'trombi.main.index.search'|trans }}</button>
+
+					<button type="submit" class="btn">
+						{{ 'trombi.main.index.search'|trans }}
+					</button>
+
+					<div class="visible-phone">
+						<br />
+						<button type="button" class="btn" id="more-options">
+							<i class="fa fa-plus"></i>
+							{{ 'trombi.main.index.more_options'|trans }}
+						</button>
+						<button type="button" class="btn" id="less-options" style="display: none;">
+							<i class="fa fa-minus"></i>
+							{{ 'trombi.main.index.less_options'|trans }}
+						</button>
+					</div>
 				</div>
 			</form>
 		</div>

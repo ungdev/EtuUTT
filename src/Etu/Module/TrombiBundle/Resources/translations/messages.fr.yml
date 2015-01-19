@@ -9,6 +9,8 @@ trombi:
                 link: Mon compte
             search_title: Rechercher un étudiant
             search: Rechercher
+            more_options: Plus d'options
+            less_options: Moins d'options
             more: Plus de critères
             name: Nom, prénom ou surnom
             studentId: Numéro d'étudiant
