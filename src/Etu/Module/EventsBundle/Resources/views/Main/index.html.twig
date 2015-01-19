@@ -25,7 +25,7 @@
 {% endblock %}
 
 {% block javascripts %}
-	<script src="{{ asset('vendor/fullcalendar/dist/fullcalendar.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('vendor/fullcalendar/dist/fullcalendar.js') }}" type="text/javascript"></script>
 	<script type="text/javascript">
 		var source = '{{ path('events_find', {'category': currentCategory}) }}';
 
