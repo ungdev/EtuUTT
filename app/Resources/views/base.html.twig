@@ -28,14 +28,14 @@
 		<link rel="icon" type="image/png" href="{{ asset('favicon-96x96.png') }}" sizes="96x96">
 
         {% stylesheets
-            'bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css'
-            'bower_components/bootstrap/docs/assets/css/bootstrap.css'
-            'bower_components/bootstrap/docs/assets/css/bootstrap-responsive.css'
-            'bower_components/fontawesome/css/font-awesome.min.css'
-            'bower_components/tipsy/src/stylesheets/tipsy.css'
-            'bower_components/facebox/src/facebox.css'
-            'bower_components/swipebox/src/css/swipebox.min.css'
-            'bower_components/jquery-impromptu/dist/jquery-impromptu.min.css'
+            'vendor/jquery-ui/themes/smoothness/jquery-ui.min.css'
+            'vendor/bootstrap/docs/assets/css/bootstrap.css'
+            'vendor/bootstrap/docs/assets/css/bootstrap-responsive.css'
+            'vendor/fontawesome/css/font-awesome.min.css'
+            'vendor/tipsy/src/stylesheets/tipsy.css'
+            'vendor/facebox/src/facebox.css'
+            'vendor/swipebox/src/css/swipebox.min.css'
+            'vendor/jquery-impromptu/dist/jquery-impromptu.min.css'
             'src/css/sceditor.less'
             'src/css/boot.less'
 
@@ -56,7 +56,7 @@
 		{% block stylesheets %}{% endblock %}
 
 		<!--[if lt IE 9]>
-			<script type="text/javascript" src="{{ asset('bower_components/html5shiv/dist/html5shiv.min.js') }}"></script>
+			<script type="text/javascript" src="{{ asset('vendor/html5shiv/dist/html5shiv.min.js') }}"></script>
 		<![endif]-->
 	</head>
 	<body class="bg-soft-grey">
@@ -285,18 +285,18 @@
 		{% block page %}{% endblock %}
 
         {% javascripts
-            'bower_components/jquery/jquery.min.js'
-            'bower_components/jquery-ui/ui/minified/jquery-ui.custom.min.js'
-            'bower_components/bootstrap/docs/assets/js/bootstrap.min.js'
-            'bower_components/facebox/src/facebox.js'
-            'bower_components/SCEditor/minified/jquery.sceditor.bbcode.min.js'
-            'bower_components/SCEditor/languages/fr.js'
-            'bower_components/tipsy/src/javascripts/jquery.tipsy.js'
-            'bower_components/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js'
-            'bower_components/jquery-cycle2/build/jquery.cycle2.min.js'
-            'bower_components/jquery-cycle2/build/plugin/jquery.cycle2.center.min.js'
-            'bower_components/moment/min/moment.min.js'
-            'bower_components/moment/min/lang/fr.js'
+            'vendor/jquery/jquery.min.js'
+            'vendor/jquery-ui/ui/minified/jquery-ui.custom.min.js'
+            'vendor/bootstrap/docs/assets/js/bootstrap.min.js'
+            'vendor/facebox/src/facebox.js'
+            'vendor/SCEditor/minified/jquery.sceditor.bbcode.min.js'
+            'vendor/SCEditor/languages/fr.js'
+            'vendor/tipsy/src/javascripts/jquery.tipsy.js'
+            'vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js'
+            'vendor/jquery-cycle2/build/jquery.cycle2.min.js'
+            'vendor/jquery-cycle2/build/plugin/jquery.cycle2.center.min.js'
+            'vendor/moment/min/moment.min.js'
+            'vendor/moment/min/lang/fr.js'
             'bundles/fosjsrouting/js/router.js'
             'src/js/routes.js'
             'src/js/common.js'

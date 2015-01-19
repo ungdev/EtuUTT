@@ -257,7 +257,7 @@ $(function() {
     // Load SCeditor
     sceditor.sceditor({
         plugins: "bbcode",
-        style: "/bower_components/SCEditor/minified/jquery.sceditor.default.min.css",
+        style: "/vendor/SCEditor/minified/jquery.sceditor.default.min.css",
         emoticonsRoot: '/',
         toolbar:
             "source|bold,italic,underline,strike,subscript,superscript|left,center,right,justify" +
@@ -305,7 +305,7 @@ $(function() {
     // Load SCeditor limited
     sceditorLimited.sceditor({
         plugins: "bbcode",
-        style: "/bower_components/SCEditor/minified/jquery.sceditor.default.min.css",
+        style: "/vendor/SCEditor/minified/jquery.sceditor.default.min.css",
         emoticonsRoot: '/',
         toolbar:
             "source|bold,italic,underline,strike|left,center,right,justify|link,unlink|maximize",

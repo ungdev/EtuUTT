@@ -53,7 +53,6 @@ class MainController extends Controller
 	 *      name="events_find",
 	 *      options={"expose"=true}
 	 * )
-	 * @Template()
 	 */
 	public function ajaxEventsAction(Request $request, $category = 'all')
 	{

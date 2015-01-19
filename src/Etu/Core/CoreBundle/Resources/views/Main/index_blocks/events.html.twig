@@ -5,9 +5,9 @@
         {% for event in events %}
             <li>
                 <div class="date">
-                                    <span class="day">
-                                        {{ event.begin|date('d/m') }}
-                                    </span>
+                    <span class="day">
+                        {{ event.begin|date('d/m') }}
+                    </span>
                 </div>
                 <h5>
                     <a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}">

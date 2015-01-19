@@ -11,7 +11,7 @@
 /src/Etu/Module/LoggerBundle/Resources/objects/errors
 /src/Etu/Module/ArgentiqueBundle/Resources/photos/*
 
-/web/bower_components/
+/web/vendor/
 /web/min/
 /web/bundles/
 /web/uploads/
