@@ -56,7 +56,7 @@ class AdminController extends Controller
         $root = EtuModuleArgentiqueBundle::getPhotosRoot();
 
         /** @var \SplFileInfo[] $iterator */
-        $iterator = new \DirectoryIterator($root . '/' . $path);
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($root . '/' . $path));
 
         /** @var array $photos */
         $photos = [];
@@ -140,6 +140,9 @@ class AdminController extends Controller
                         'pathname' => str_replace($root . '/', '', $file->getPathname()),
                     ],
                     'score' => $score,
+                    'state' => [
+                        'opened' => true,
+                    ]
                 ];
             }
         }

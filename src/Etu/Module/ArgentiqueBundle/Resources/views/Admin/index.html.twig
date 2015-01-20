@@ -23,6 +23,29 @@
 
 {% block content %}
     <div class="padding20-all argentique-admin">
+        <div id="argentique-manage-collections" class="modal hide fade"
+             tabindex="-1" role="dialog" aria-labelledby="argentique-manage-collections-title" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="argentique-manage-collections-title">Modifier les collections</h3>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <small class="muted"><em>Limité à deux niveaux de profondeur</em></small><br />
+                    <small class="muted"><em>L'ordre n'est pas enregistré</em></small>
+                </p>
+
+                <div class="argentique-manage-collections-root">
+                    Gallerie Argentique
+                </div>
+                <div id="write-tree"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-link" data-dismiss="modal" aria-hidden="true">Annuler</button>
+                <button class="btn btn-primary">Appliquer les changements</button>
+            </div>
+        </div>
+
         <div class="row-fluid">
             <div class="span4">
                 <h4>Envoyer des photos</h4>
@@ -39,15 +62,11 @@
                 <h4>
                     Collections
 
-                    <a href="" class="btn tip argentique-admin-add-collection" title="Modifier les collections">
+                    <button class="btn tip argentique-admin-add-collection" title="Modifier les collections"
+                            role="button" data-toggle="modal" data-target="#argentique-manage-collections">
                         <i class="fa fa-edit"></i>
-                    </a>
+                    </button>
                 </h4>
-
-                <p>
-                    <small class="muted"><em>Limité à deux niveaux de profondeur</em></small><br />
-                    <small class="muted"><em>L'ordre n'est pas enregistré</em></small>
-                </p>
 
                 <div id="read-tree"></div>
             </div>
