@@ -8,6 +8,7 @@ use Etu\Module\ArgentiqueBundle\EtuModuleArgentiqueBundle;
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
@@ -39,8 +40,79 @@ class AdminController extends Controller
         ];
     }
 
+    /**
+     * @Route("/photos", name="argentique_admin_photos", options={"expose"=true})
+     * @Template()
+     */
+    public function photosAction(Request $request)
+    {
+        if (! $this->getUserLayer()->isConnected() || ! $this->getUser()->hasPermission('argentique.admin')) {
+            throw new AccessDeniedHttpException();
+        }
+
+        $path = urldecode($request->query->get('p'));
+
+        /** @var string $root */
+        $root = EtuModuleArgentiqueBundle::getPhotosRoot();
+
+        /** @var \SplFileInfo[] $iterator */
+        $iterator = new \DirectoryIterator($root . '/' . $path);
+
+        /** @var array $photos */
+        $photos = [];
+
+        foreach ($iterator as $file) {
+            if (substr($file->getBasename(), 0, 1) == '.') {
+                continue;
+            }
+
+            if ($file->getExtension() == 'jpg' || $file->getExtension() == 'jpeg') {
+                $size = getimagesize($file->getPathname());
+
+                $photos[] = [
+                    'extension' => $file->getExtension(),
+                    'pathname' => str_replace($root . '/', '', $file->getPathname()),
+                    'basename' => $file->getBasename(),
+                    'filename' => $file->getBasename('.' . $file->getExtension()),
+                    'size' => [
+                        'width' => $size[0],
+                        'height' => $size[1],
+                        'ratio' => $size[1] / 150
+                    ]
+                ];
+            }
+        }
+
+        return [
+            'photos' => $photos,
+        ];
+    }
+
+    /**
+     * @Route("/upload", name="argentique_admin_upload")
+     */
+    public function uploadAction(Request $request)
+    {
+        if (! $this->getUserLayer()->isConnected() || ! $this->getUser()->hasPermission('argentique.admin')) {
+            throw new AccessDeniedHttpException();
+        }
+
+        echo '<pre>';
+        var_dump($request);
+        echo '</pre>';
+        exit;
+    }
+
+
+    /**
+     * @param string $directory
+     * @return array
+     */
     protected function createTree($directory)
     {
+        /** @var string $root */
+        $root = EtuModuleArgentiqueBundle::getPhotosRoot();
+
         /** @var \SplFileInfo[] $iterator */
         $iterator = new \DirectoryIterator($directory);
 
@@ -63,7 +135,10 @@ class AdminController extends Controller
                     'id' => md5($file->getPathname()),
                     'text' => $file->getBasename(),
                     'children' => $this->createTree($file->getPathname()),
-                    'pathname' => $file->getPathname(),
+                    'data' => [
+                        'basename' => $file->getBasename(),
+                        'pathname' => str_replace($root . '/', '', $file->getPathname()),
+                    ],
                     'score' => $score,
                 ];
             }

@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('vendor/Justified-Gallery/dist/css/justifiedGallery.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('vendor/jstree/dist/themes/default/style.css') }}" />
 {% endblock %}
 
@@ -14,6 +15,7 @@
     <script>
         var collectionsTree = {{ tree|json_encode|raw }};
     </script>
+    <script src="{{ asset('vendor/Justified-Gallery/dist/js/jquery.justifiedGallery.min.js') }}"></script>
     <script src="{{ asset('vendor/blueimp-file-upload/js/jquery.fileupload.js') }}"></script>
     <script src="{{ asset('vendor/jstree/dist/jstree.js') }}"></script>
     <script src="{{ asset('src/js/bundles/argentique_admin.js') }}"></script>
@@ -25,21 +27,42 @@
             <div class="span4">
                 <h4>Envoyer des photos</h4>
 
-                <input id="fileupload" type="file" name="files[]" data-url="/" multiple>
-
-                <div id="dropzone">Drop files here</div>
+                <div id="dropzone">
+                    <input id="fileupload" type="file" name="files[]" data-url="{{ path('argentique_admin_upload') }}" multiple />
+                    <button type="button" class="btn btn-primary">Sélectionner des fichiers</button>
+                    <br />
+                    ou cliquez-déposez ici
+                </div>
 
                 <hr />
 
-                <h4>Collections</h4>
+                <h4>
+                    Collections
+
+                    <a href="" class="btn tip argentique-admin-add-collection" title="Modifier les collections">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                </h4>
 
                 <p>
-                    <small class="muted"><em>Limité à deux niveaux de profondeur</em></small>
+                    <small class="muted"><em>Limité à deux niveaux de profondeur</em></small><br />
+                    <small class="muted"><em>L'ordre n'est pas enregistré</em></small>
                 </p>
 
-                <div id="tree"></div>
+                <div id="read-tree"></div>
             </div>
             <div class="span8">
+                <div id="explainations">
+                    <p>
+                        <small class="muted">Choisissez une collection à afficher</small>
+                    </p>
+                </div>
+
+                <div id="photos-loader" style="display: none">
+                    <img src="{{ asset('src/img/loader-smooth.gif') }}" />
+                </div>
+
+                <div id="photos" style="display: none"></div>
             </div>
         </div>
     </div>
