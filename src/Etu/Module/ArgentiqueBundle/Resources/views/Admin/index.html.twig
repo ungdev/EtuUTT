@@ -6,83 +6,82 @@
     <img src="{{ asset('src/img/titles/argentique.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('vendor/Justified-Gallery/dist/css/justifiedGallery.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('vendor/jstree/dist/themes/default/style.css') }}" />
-{% endblock %}
-
-{% block javascripts %}
-    <script>
-        var collectionsTree = {{ tree|json_encode|raw }};
-    </script>
-    <script src="{{ asset('vendor/Justified-Gallery/dist/js/jquery.justifiedGallery.min.js') }}"></script>
-    <script src="{{ asset('vendor/blueimp-file-upload/js/jquery.fileupload.js') }}"></script>
-    <script src="{{ asset('vendor/jstree/dist/jstree.js') }}"></script>
-    <script src="{{ asset('src/js/bundles/argentique_admin.js') }}"></script>
-{% endblock %}
-
 {% block content %}
     <div class="padding20-all argentique-admin">
-        <div id="argentique-manage-collections" class="modal hide fade"
-             tabindex="-1" role="dialog" aria-labelledby="argentique-manage-collections-title" aria-hidden="true">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="argentique-manage-collections-title">Modifier les collections</h3>
-            </div>
-            <div class="modal-body">
-                <p>
-                    <small class="muted"><em>Limité à deux niveaux de profondeur</em></small><br />
-                    <small class="muted"><em>L'ordre n'est pas enregistré</em></small>
-                </p>
+        <h4>Administrer la gallerie Argentique - Mode d'emploi</h4>
 
-                <div class="argentique-manage-collections-root">
-                    Gallerie Argentique
-                </div>
-                <div id="write-tree"></div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-link" data-dismiss="modal" aria-hidden="true">Annuler</button>
-                <button class="btn btn-primary">Appliquer les changements</button>
-            </div>
-        </div>
+        <br />
 
-        <div class="row-fluid">
-            <div class="span4">
-                <h4>Envoyer des photos</h4>
+        <h5>Pré-requis</h5>
 
-                <div id="dropzone">
-                    <input id="fileupload" type="file" name="files[]" data-url="{{ path('argentique_admin_upload') }}" multiple />
-                    <button type="button" class="btn btn-primary">Sélectionner des fichiers</button>
-                    <br />
-                    ou cliquez-déposez ici
-                </div>
+        <p>
+            L'administration de la gallerie Argentique passe par un outil appelé Filezilla.
+        </p>
+        <p>
+            Si vous ne l'avez pas, téléchargez-le ici :
+        </p>
+        <p>
+            <a href="https://filezilla-project.org/download.php?type=client">Télécharger Filezilla</a>
+        </p>
+        <p>
+            Installez-le, et lancez-le.
+        </p>
 
-                <hr />
+        <br />
 
-                <h4>
-                    Collections
+        <h5>Utilisation de Filezilla</h5>
 
-                    <button class="btn tip argentique-admin-add-collection" title="Modifier les collections"
-                            role="button" data-toggle="modal" data-target="#argentique-manage-collections">
-                        <i class="fa fa-edit"></i>
-                    </button>
-                </h4>
+        <p>
+            En haut de la fenêtre existent quatre champs, appelés dans l'ordre
+            <em>Hôte, Identifiant, Mot de passe, Port</em>. Remplissez-les comme suit :
+        </p>
 
-                <div id="read-tree"></div>
-            </div>
-            <div class="span8">
-                <div id="explainations">
-                    <p>
-                        <small class="muted">Choisissez une collection à afficher</small>
-                    </p>
-                </div>
+        <ul>
+            <li><strong>Hôte</strong> : sftp://etu.utt.fr</li>
+            <li><strong>Identifiant</strong> : argentiq</li>
+            <li><strong>Mot de passe</strong> : argentiq</li>
+            <li><strong>Port</strong> : 22</li>
+        </ul>
 
-                <div id="photos-loader" style="display: none">
-                    <img src="{{ asset('src/img/loader-smooth.gif') }}" />
-                </div>
+        <p>
+            Puis cliquez sur "Connexion rapide".
+        </p>
+        <p>
+            Si tout se passe bien, vous devriez obtenir une liste de dossiers / fichiers dans la partie droite de
+            Filezilla. Si ce n'est pas le cas, contactez l'UNG.
+        </p>
 
-                <div id="photos" style="display: none"></div>
-            </div>
-        </div>
+        <br />
+
+        <h5>Fonctionnement de la gallerie</h5>
+
+        <p>
+            Les dossiers que vous créés dans cet espace où vous venez de vous connecter seront transformés en
+            "Collections" sur le site étudiant, et les images en JPG ou JPEG seront considérés comme des photos.
+        </p>
+        <p>
+            De cette manière, vous pouvez créer / modifier / supprimer les dossiers / les images de cet espace pour
+            créer / modifier / supprimer les collections / les photos de la gallerie du site étudiant.
+        </p>
+        <p>
+            Pour envoyer des images, naviguez sur votre système dans la partie de gauche de Filezilla, choisissez les
+            fichiers à envoyer, puis cliquez-droit sur eux et cliquez sur "Envoyer". Vous ne pouvez évidemment envoyer
+            des fichiers que si vous êtes connectés à l'espace de photos.
+        </p>
+
+        <br />
+
+        <h5>Recommandations</h5>
+
+        <p>
+            Il est essentiel de garder un usage agréable du site aux étudiants, il faut donc suivre
+            ces quelques recommandations :
+        </p>
+
+        <ul>
+            <li>Créez une collection à la racine pour chaque semestre (A2012, P2014, ...)</li>
+            <li>Créez une sous-collection pour chaque événement, sans le bon semestre évidemment</li>
+            <li>N'envoyez pas de photos de plus de 2500 pixels de hauteur ou de largeur, cela ralentirait la gallerie</li>
+        </ul>
     </div>
 {% endblock %}
