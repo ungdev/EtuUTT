@@ -121,7 +121,7 @@
                     {{ 'base.footer.change_locale'|trans }}
                 </a>
                 #}
-                
+
                 {% if app.request.cookies.has('disable_responsive') %}
                     <a href="{{ path('mobile_version') }}" class="footer-link">
                         {{ 'base.footer.mobile_version'|trans }}
