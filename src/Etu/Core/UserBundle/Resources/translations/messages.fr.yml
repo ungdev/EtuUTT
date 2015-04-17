@@ -11,6 +11,10 @@ user:
 
     denied: Vous n'avez pas le droit de voir cette page
 
+    api_login:
+        login: Connectez-vous pour utilisez l'application %name%
+        orga: Vous ne pouvez pas utiliser une application externe en tant qu'association
+
     admin:
         userAvatar:
             title: Modifier la photo

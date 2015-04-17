@@ -34,6 +34,11 @@
 
         <div class="align-center">
             <p>
+                Vous êtes connecté en tant que <strong>{{ app.user.fullName }}</strong>
+                (<a href="{{ path('user_disconnect') }}">se déconnecter</a>).
+            </p>
+
+            <p>
                 Acceptez-vous de donner ces informations à l'application <strong>{{ client.name }}</strong> ?
             </p>
 

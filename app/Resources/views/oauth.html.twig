@@ -74,7 +74,7 @@
         {# Overlay #}
         <div id="overlay"></div>
 
-        {# Change the locale (available languages) #}
+        {# Change the locale (available languages)
         <div id="change-locale-choices">
             <ul class="list-vertical list-vertical-linked overlay-menu">
                 <li class="first">
@@ -97,6 +97,7 @@
                 </li>
             </ul>
         </div>
+        #}
 
         <section class="page">
             <div class="container page-container">
@@ -115,9 +116,12 @@
 
         <footer class="container footer-bottom">
             <p>
+                {#
                 <a href="#" class="footer-link change-locale">
                     {{ 'base.footer.change_locale'|trans }}
                 </a>
+                #}
+                
                 {% if app.request.cookies.has('disable_responsive') %}
                     <a href="{{ path('mobile_version') }}" class="footer-link">
                         {{ 'base.footer.mobile_version'|trans }}

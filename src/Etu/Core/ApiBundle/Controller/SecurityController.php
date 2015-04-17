@@ -78,10 +78,6 @@ class SecurityController extends ApiController
      */
     public function authorizeAction(Request $request)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
-
         /*
          * Initialize OAuth
          */
@@ -98,7 +94,6 @@ class SecurityController extends ApiController
         }
 
         // Find the client
-
         /** @var OauthClient $client */
         $client = $em->getRepository('EtuCoreApiBundle:OauthClient')->findOneBy([
             'clientId' => $request->query->get('client_id')
@@ -108,6 +103,28 @@ class SecurityController extends ApiController
             $this->get('session')->getFlashBag()->set('message', array(
                 'type' => 'error',
                 'message' => 'L\'application externe n\'a pas été trouvée. Vous avez été redirigé vers EtuUTT.'
+            ));
+
+            return $this->redirect($this->generateUrl('homepage'));
+        }
+
+        // Not logged in
+        if (! $this->getUserLayer()->isConnected()) {
+            $this->get('session')->getFlashBag()->set('message', array(
+                'type' => 'error',
+                'message' => $this->get('translator')->trans('user.api_login.login', [ '%name%' => $client->getName() ])
+            ));
+
+            $this->get('session')->set('etu.last_url', $request->getRequestUri());
+
+            return $this->redirect($this->generateUrl('user_connect'));
+        }
+
+        // Logged in but as organization
+        if ($this->getUserLayer()->isOrga()) {
+            $this->get('session')->getFlashBag()->set('message', array(
+                'type' => 'error',
+                'message' => $this->get('translator')->trans('user.api_login.orga')
             ));
 
             return $this->redirect($this->generateUrl('homepage'));
