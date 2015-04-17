@@ -23,7 +23,7 @@ class BadgesManager
 	/**
 	 * @var Badge[]
 	 */
-	protected static $badges;
+	protected static $badges = [];
 
 	/**
 	 * @var UserBadge[]
