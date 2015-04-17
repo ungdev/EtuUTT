@@ -41,35 +41,11 @@ class CreateUserCommand extends ContainerAwareCommand
 		/** @var EntityManager $em */
 		$em = $this->getContainer()->get('doctrine')->getManager();
 
-        if ($input->hasOption('login')) {
-            $login = $input->getOption('login');
-        } else {
-            $login = $dialog->ask($output, 'Login: ');
-        }
-
-        if ($input->hasOption('firstName')) {
-            $firstName = $input->getOption('firstName');
-        } else {
-            $firstName = $dialog->ask($output, 'First name: ');
-        }
-
-        if ($input->hasOption('lastName')) {
-            $lastName = $input->getOption('lastName');
-        } else {
-            $lastName = $dialog->ask($output, 'Last name: ');
-        }
-
-        if ($input->hasOption('password')) {
-            $password = $input->getOption('password');
-        } else {
-            $password = $dialog->ask($output, 'Password: ');
-        }
-
-        if ($input->hasOption('email')) {
-            $email = $input->getOption('email');
-        } else {
-            $email = $dialog->ask($output, 'Public e-mail: ');
-        }
+        $login = ($input->getOption('login') !== null) ? $input->getOption('login') : $dialog->ask($output, 'Login: ');
+        $firstName = ($input->getOption('firstName') !== null) ? $input->getOption('firstName') : $dialog->ask($output, 'First name: ');
+        $lastName = ($input->getOption('lastName') !== null) ? $input->getOption('lastName') : $dialog->ask($output, 'Last name: ');
+        $password = ($input->getOption('password') !== null) ? $input->getOption('password') : $dialog->ask($output, 'Password: ');
+        $email = ($input->getOption('email') !== null) ? $input->getOption('email') : $dialog->ask($output, 'Public e-mail: ');
 
 		$user = new User();
 		$user->setKeepActive(true);

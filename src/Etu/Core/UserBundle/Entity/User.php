@@ -620,7 +620,7 @@ class User implements UserInterface, \Serializable
 		$this->permissions = array();
 		$this->ldapInformations = new LdapUser();
 		$this->uvs = '';
-		$this->lastVisitHome = new \DateTime('0000-00-00 00:00:00');
+		$this->lastVisitHome = new \DateTime();
 		$this->createdAt = new \DateTime();
 		$this->firstLogin = false;
 	}
