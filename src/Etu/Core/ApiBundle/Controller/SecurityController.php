@@ -319,7 +319,8 @@ class SecurityController extends ApiController
         } catch (\RuntimeException $exception) {
             return $this->format([
                 'error' => 'grant_type_error',
-                'error_message' => $exception->getMessage()
+                'error_message' => $exception->getMessage(),
+                'received_request' => $request->request->all()
             ], 400);
         }
 
