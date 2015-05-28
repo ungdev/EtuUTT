@@ -49,7 +49,7 @@
                     </a>
                 </div>
                 <div class="upload-label">
-                    <input type="text" value="http://{{ etu.domain ~ asset('uploads/users_files/' ~ app.user.login ~ '/' ~ image.name) }}" />
+                    <input type="text" value="http://{{ etu.domain ~ 'uploads/users_files/' ~ app.user.login ~ '/' ~ image.name }}" />
                 </div>
             </div>
         {% endfor %}
