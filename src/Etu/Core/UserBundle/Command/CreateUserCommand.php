@@ -24,6 +24,7 @@ class CreateUserCommand extends ContainerAwareCommand
             ->addOption('lastName', 'ln', InputOption::VALUE_REQUIRED, 'Last name')
             ->addOption('password', 'pa', InputOption::VALUE_REQUIRED, 'Password')
             ->addOption('email', 'em', InputOption::VALUE_REQUIRED, 'Public e-mail')
+            ->addOption('branch', 'br', InputOption::VALUE_REQUIRED, 'Branch')
 			->setDescription('Create a user')
 		;
 	}
@@ -46,6 +47,7 @@ class CreateUserCommand extends ContainerAwareCommand
         $lastName = ($input->getOption('lastName') !== null) ? $input->getOption('lastName') : $dialog->ask($output, 'Last name: ');
         $password = ($input->getOption('password') !== null) ? $input->getOption('password') : $dialog->ask($output, 'Password: ');
         $email = ($input->getOption('email') !== null) ? $input->getOption('email') : $dialog->ask($output, 'Public e-mail: ');
+        $branch = ($input->getOption('branch') !== null) ? $input->getOption('branch') : $dialog->ask($output, 'Branch: ');
 
 		$user = new User();
 		$user->setKeepActive(true);
@@ -55,6 +57,7 @@ class CreateUserCommand extends ContainerAwareCommand
 		$user->setFullName($user->getFirstName().' '.$user->getLastName());
 		$user->setPassword($this->getContainer()->get('etu.user.crypting')->encrypt($password));
 		$user->setMail($email);
+		$user->setBranch($branch);
 
 		$em->persist($user);
 		$em->flush();
