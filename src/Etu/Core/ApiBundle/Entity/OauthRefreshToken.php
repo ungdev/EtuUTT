@@ -2,6 +2,7 @@
 
 namespace Etu\Core\ApiBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Etu\Core\UserBundle\Entity\User;
 
@@ -72,7 +73,7 @@ class OauthRefreshToken
     {
         $this->createdAt = new \DateTime();
         $this->expireAt = new \DateTime('+1 month');
-        $this->scopes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->scopes = new ArrayCollection();
     }
 
     /**
@@ -165,10 +166,10 @@ class OauthRefreshToken
     /**
      * Set client
      *
-     * @param \Etu\Core\ApiBundle\Entity\OauthClient $client
+     * @param OauthClient $client
      * @return OauthRefreshToken
      */
-    public function setClient(\Etu\Core\ApiBundle\Entity\OauthClient $client = null)
+    public function setClient(OauthClient $client = null)
     {
         $this->client = $client;
     
@@ -178,7 +179,7 @@ class OauthRefreshToken
     /**
      * Get client
      *
-     * @return \Etu\Core\ApiBundle\Entity\OauthClient 
+     * @return OauthClient
      */
     public function getClient()
     {
@@ -188,10 +189,10 @@ class OauthRefreshToken
     /**
      * Set user
      *
-     * @param \Etu\Core\UserBundle\Entity\User $user
+     * @param User $user
      * @return OauthRefreshToken
      */
-    public function setUser(\Etu\Core\UserBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
     
@@ -201,7 +202,7 @@ class OauthRefreshToken
     /**
      * Get user
      *
-     * @return \Etu\Core\UserBundle\Entity\User 
+     * @return User
      */
     public function getUser()
     {
@@ -211,10 +212,10 @@ class OauthRefreshToken
     /**
      * Add scopes
      *
-     * @param \Etu\Core\ApiBundle\Entity\OauthScope $scopes
+     * @param OauthScope $scopes
      * @return OauthRefreshToken
      */
-    public function addScope(\Etu\Core\ApiBundle\Entity\OauthScope $scopes)
+    public function addScope(OauthScope $scopes)
     {
         $this->scopes[] = $scopes;
     
@@ -224,9 +225,9 @@ class OauthRefreshToken
     /**
      * Remove scopes
      *
-     * @param \Etu\Core\ApiBundle\Entity\OauthScope $scopes
+     * @param OauthScope $scopes
      */
-    public function removeScope(\Etu\Core\ApiBundle\Entity\OauthScope $scopes)
+    public function removeScope(OauthScope $scopes)
     {
         $this->scopes->removeElement($scopes);
     }

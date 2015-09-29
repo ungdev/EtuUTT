@@ -3,6 +3,7 @@
 namespace Etu\Module\CovoitBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Etu\Core\UserBundle\Entity\User;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
@@ -32,7 +33,7 @@ class CovoitMessage
     private $covoit;
 
     /**
-     * @var \Etu\Core\UserBundle\Entity\User
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
      * @ORM\JoinColumn()
@@ -174,10 +175,10 @@ class CovoitMessage
     /**
      * Set covoit
      *
-     * @param \Etu\Module\CovoitBundle\Entity\Covoit $covoit
+     * @param Covoit $covoit
      * @return CovoitMessage
      */
-    public function setCovoit(\Etu\Module\CovoitBundle\Entity\Covoit $covoit = null)
+    public function setCovoit(Covoit $covoit = null)
     {
         $this->covoit = $covoit;
 
@@ -187,7 +188,7 @@ class CovoitMessage
     /**
      * Get covoit
      *
-     * @return \Etu\Module\CovoitBundle\Entity\Covoit
+     * @return Covoit
      */
     public function getCovoit()
     {
@@ -197,10 +198,10 @@ class CovoitMessage
     /**
      * Set author
      *
-     * @param \Etu\Core\UserBundle\Entity\User $author
+     * @param User $author
      * @return CovoitMessage
      */
-    public function setAuthor(\Etu\Core\UserBundle\Entity\User $author = null)
+    public function setAuthor(User $author = null)
     {
         $this->author = $author;
 
@@ -210,7 +211,7 @@ class CovoitMessage
     /**
      * Get author
      *
-     * @return \Etu\Core\UserBundle\Entity\User
+     * @return User
      */
     public function getAuthor()
     {

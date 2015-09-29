@@ -4,9 +4,7 @@ namespace Etu\Module\ForumBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
-use Etu\Module\ForumBundle\Form\MessageType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ThreadTypeNoSticky extends AbstractType
 {
@@ -14,15 +12,16 @@ class ThreadTypeNoSticky extends AbstractType
     {
         $builder
             ->add('title', 'text')
-            ->add('lastMessage', new MessageType())
-        ;
+            ->add('lastMessage', new MessageType());
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Etu\Module\ForumBundle\Entity\Thread'
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class' => 'Etu\Module\ForumBundle\Entity\Thread',
+            ]
+        );
     }
 
     public function getName()

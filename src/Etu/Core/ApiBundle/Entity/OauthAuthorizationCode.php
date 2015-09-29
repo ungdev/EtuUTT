@@ -167,10 +167,10 @@ class OauthAuthorizationCode
     /**
      * Set client
      *
-     * @param \Etu\Core\ApiBundle\Entity\OauthClient $client
+     * @param OauthClient $client
      * @return OauthAuthorizationCode
      */
-    public function setClient(\Etu\Core\ApiBundle\Entity\OauthClient $client = null)
+    public function setClient(OauthClient $client = null)
     {
         $this->client = $client;
     
@@ -180,7 +180,7 @@ class OauthAuthorizationCode
     /**
      * Get client
      *
-     * @return \Etu\Core\ApiBundle\Entity\OauthClient 
+     * @return OauthClient
      */
     public function getClient()
     {
@@ -190,10 +190,10 @@ class OauthAuthorizationCode
     /**
      * Set user
      *
-     * @param \Etu\Core\UserBundle\Entity\User $user
+     * @param User $user
      * @return OauthAuthorizationCode
      */
-    public function setUser(\Etu\Core\UserBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
     
@@ -203,7 +203,7 @@ class OauthAuthorizationCode
     /**
      * Get user
      *
-     * @return \Etu\Core\UserBundle\Entity\User 
+     * @return User
      */
     public function getUser()
     {
@@ -213,10 +213,10 @@ class OauthAuthorizationCode
     /**
      * Add scopes
      *
-     * @param \Etu\Core\ApiBundle\Entity\OauthScope $scopes
+     * @param OauthScope $scopes
      * @return OauthAuthorizationCode
      */
-    public function addScope(\Etu\Core\ApiBundle\Entity\OauthScope $scopes)
+    public function addScope(OauthScope $scopes)
     {
         $this->scopes[] = $scopes;
     
@@ -226,9 +226,9 @@ class OauthAuthorizationCode
     /**
      * Remove scopes
      *
-     * @param \Etu\Core\ApiBundle\Entity\OauthScope $scopes
+     * @param OauthScope $scopes
      */
-    public function removeScope(\Etu\Core\ApiBundle\Entity\OauthScope $scopes)
+    public function removeScope(OauthScope $scopes)
     {
         $this->scopes->removeElement($scopes);
     }

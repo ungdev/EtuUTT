@@ -4,7 +4,7 @@ namespace Etu\Module\ForumBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MessageEditType extends AbstractType
 {
@@ -12,15 +12,16 @@ class MessageEditType extends AbstractType
     {
         $builder
             ->add('content', 'redactor')
-            ->add('thread', new ThreadEditType())
-        ;
+            ->add('thread', new ThreadEditType());
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Etu\Module\ForumBundle\Entity\Message'
-        ));
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Etu\Module\ForumBundle\Entity\Message',
+            )
+        );
     }
 
     public function getName()
