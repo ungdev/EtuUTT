@@ -119,7 +119,7 @@ class DaymailPart
 		// Maximum time for edition of daymail
 		$current_time = new \DateTime("now");
 		$max_edit_time = new \DateTime("today 06:00");
-		if($current_time > $max_edit_time)
+		if($current_time < $max_edit_time)
 		{
 			$available[$current_time->format('d-m-Y')] = $current_time;
 			$available[$current_time->format('d-m-Y')]->old = false;
