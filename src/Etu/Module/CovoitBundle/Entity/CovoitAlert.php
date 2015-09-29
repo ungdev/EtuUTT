@@ -3,6 +3,7 @@
 namespace Etu\Module\CovoitBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Etu\Core\CoreBundle\Entity\City;
 use Etu\Core\UserBundle\Entity\User;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -24,7 +25,7 @@ class CovoitAlert
     private $id;
 
     /**
-     * @var \Etu\Core\UserBundle\Entity\User
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
      * @ORM\JoinColumn()
@@ -57,7 +58,7 @@ class CovoitAlert
     private $endDate;
 
     /**
-     * @var \Etu\Core\CoreBundle\Entity\City
+     * @var City
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\CoreBundle\Entity\City")
      * @ORM\JoinColumn()
@@ -66,7 +67,7 @@ class CovoitAlert
     private $startCity;
 
     /**
-     * @var \Etu\Core\CoreBundle\Entity\City
+     * @var City
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\CoreBundle\Entity\City")
      * @ORM\JoinColumn()
@@ -105,23 +106,23 @@ class CovoitAlert
         $parts = [];
 
         if ($this->getStartCity()) {
-            $parts[] = 'startCity: ' . $this->getStartCity()->getName();
+            $parts[] = 'startCity: '.$this->getStartCity()->getName();
         }
 
         if ($this->getEndCity()) {
-            $parts[] = 'endCity: ' . $this->getEndCity()->getName();
+            $parts[] = 'endCity: '.$this->getEndCity()->getName();
         }
 
         if ($this->getStartDate()) {
-            $parts[] = 'startDate: ' . $this->getStartDate()->format('d/m/Y');
+            $parts[] = 'startDate: '.$this->getStartDate()->format('d/m/Y');
         }
 
         if ($this->getEndDate()) {
-            $parts[] = 'endDate: ' . $this->getEndDate()->format('d/m/Y');
+            $parts[] = 'endDate: '.$this->getEndDate()->format('d/m/Y');
         }
 
         if ($this->getPriceMax()) {
-            $parts[] = 'priceMax: ' . $this->getPriceMax();
+            $parts[] = 'priceMax: '.$this->getPriceMax();
         }
 
         return implode(', ', $parts);
@@ -130,7 +131,7 @@ class CovoitAlert
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -146,14 +147,14 @@ class CovoitAlert
     public function setPriceMax($priceMax)
     {
         $this->priceMax = $priceMax;
-    
+
         return $this;
     }
 
     /**
      * Get priceMax
      *
-     * @return string 
+     * @return string
      */
     public function getPriceMax()
     {
@@ -169,14 +170,14 @@ class CovoitAlert
     public function setStartDate($startDate)
     {
         $this->startDate = $startDate;
-    
+
         return $this;
     }
 
     /**
      * Get startDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getStartDate()
     {
@@ -192,14 +193,14 @@ class CovoitAlert
     public function setEndDate($endDate)
     {
         $this->endDate = $endDate;
-    
+
         return $this;
     }
 
     /**
      * Get endDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getEndDate()
     {
@@ -215,14 +216,14 @@ class CovoitAlert
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -238,14 +239,14 @@ class CovoitAlert
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -261,14 +262,14 @@ class CovoitAlert
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
-    
+
         return $this;
     }
 
     /**
      * Get deletedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDeletedAt()
     {
@@ -278,20 +279,20 @@ class CovoitAlert
     /**
      * Set user
      *
-     * @param \Etu\Core\UserBundle\Entity\User $user
+     * @param User $user
      * @return CovoitAlert
      */
-    public function setUser(\Etu\Core\UserBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return \Etu\Core\UserBundle\Entity\User 
+     * @return User
      */
     public function getUser()
     {
@@ -301,20 +302,20 @@ class CovoitAlert
     /**
      * Set startCity
      *
-     * @param \Etu\Core\CoreBundle\Entity\City $startCity
+     * @param City $startCity
      * @return CovoitAlert
      */
-    public function setStartCity(\Etu\Core\CoreBundle\Entity\City $startCity = null)
+    public function setStartCity(City $startCity = null)
     {
         $this->startCity = $startCity;
-    
+
         return $this;
     }
 
     /**
      * Get startCity
      *
-     * @return \Etu\Core\CoreBundle\Entity\City 
+     * @return City
      */
     public function getStartCity()
     {
@@ -324,20 +325,20 @@ class CovoitAlert
     /**
      * Set endCity
      *
-     * @param \Etu\Core\CoreBundle\Entity\City $endCity
+     * @param City $endCity
      * @return CovoitAlert
      */
-    public function setEndCity(\Etu\Core\CoreBundle\Entity\City $endCity = null)
+    public function setEndCity(City $endCity = null)
     {
         $this->endCity = $endCity;
-    
+
         return $this;
     }
 
     /**
      * Get endCity
      *
-     * @return \Etu\Core\CoreBundle\Entity\City 
+     * @return City
      */
     public function getEndCity()
     {

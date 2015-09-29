@@ -4,7 +4,6 @@ namespace Etu\Module\CumulBundle\Schedule;
 
 use Etu\Core\UserBundle\Entity\Course;
 use Etu\Core\UserBundle\Schedule\Helper\ScheduleBuilder;
-use Etu\Core\UserBundle\Schedule\Model\CourseHalf;
 
 class ScheduleComparator
 {
@@ -28,6 +27,7 @@ class ScheduleComparator
     public function addBuilder(ScheduleBuilder $builder)
     {
         $this->builders[] = $builder;
+
         return $this;
     }
 
@@ -38,6 +38,7 @@ class ScheduleComparator
     public function setBuilders($builders)
     {
         $this->builders = $builders;
+
         return $this;
     }
 
@@ -73,8 +74,12 @@ class ScheduleComparator
         $avWeek = [];
 
         $days = array(
-            Course::DAY_MONDAY, Course::DAY_TUESDAY, Course::DAY_WENESDAY,
-            Course::DAY_THURSDAY, Course::DAY_FRIDAY, Course::DAY_SATHURDAY
+            Course::DAY_MONDAY,
+            Course::DAY_TUESDAY,
+            Course::DAY_WENESDAY,
+            Course::DAY_THURSDAY,
+            Course::DAY_FRIDAY,
+            Course::DAY_SATHURDAY,
         );
 
         $hours = array('08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19');
@@ -83,8 +88,8 @@ class ScheduleComparator
             $avWeek[$day] = array();
 
             foreach ($hours as $hour) {
-                $avWeek[$day][(int) $hour.'00'] = [];
-                $avWeek[$day][(int) $hour.'30'] = [];
+                $avWeek[$day][(int)$hour.'00'] = [];
+                $avWeek[$day][(int)$hour.'30'] = [];
             }
         }
 

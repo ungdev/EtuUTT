@@ -3,6 +3,7 @@
 namespace Etu\Module\CovoitBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Etu\Core\UserBundle\Entity\User;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
@@ -32,7 +33,7 @@ class CovoitSubscription
     private $covoit;
 
     /**
-     * @var \Etu\Core\UserBundle\Entity\User
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
      * @ORM\JoinColumn()
@@ -143,10 +144,10 @@ class CovoitSubscription
     /**
      * Set covoit
      *
-     * @param \Etu\Module\CovoitBundle\Entity\Covoit $covoit
+     * @param Covoit $covoit
      * @return CovoitSubscription
      */
-    public function setCovoit(\Etu\Module\CovoitBundle\Entity\Covoit $covoit = null)
+    public function setCovoit(Covoit $covoit = null)
     {
         $this->covoit = $covoit;
 
@@ -156,7 +157,7 @@ class CovoitSubscription
     /**
      * Get covoit
      *
-     * @return \Etu\Module\CovoitBundle\Entity\Covoit
+     * @return Covoit
      */
     public function getCovoit()
     {
@@ -166,10 +167,10 @@ class CovoitSubscription
     /**
      * Set user
      *
-     * @param \Etu\Core\UserBundle\Entity\User $user
+     * @param User $user
      * @return CovoitSubscription
      */
-    public function setUser(\Etu\Core\UserBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -179,7 +180,7 @@ class CovoitSubscription
     /**
      * Get user
      *
-     * @return \Etu\Core\UserBundle\Entity\User
+     * @return User
      */
     public function getUser()
     {

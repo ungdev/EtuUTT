@@ -552,7 +552,7 @@ class User implements UserInterface, \Serializable
 	protected $deletedAt;
 
     /**
-     * @var Member[] $memberships
+     * @var \Doctrine\Common\Collections\Collection<Member> $memberships
      *
      * @ORM\OneToMany(targetEntity="\Etu\Core\UserBundle\Entity\Member", mappedBy="user")
      * @ORM\JoinColumn()
@@ -2403,10 +2403,10 @@ class User implements UserInterface, \Serializable
 	/**
 	 * Add memberships
 	 *
-	 * @param \Etu\Core\UserBundle\Entity\Member $memberships
+	 * @param Member $memberships
 	 * @return User
 	 */
-	public function addMembership(\Etu\Core\UserBundle\Entity\Member $memberships)
+	public function addMembership(Member $memberships)
 	{
 		$this->memberships[] = $memberships;
 
@@ -2416,9 +2416,9 @@ class User implements UserInterface, \Serializable
 	/**
 	 * Remove memberships
 	 *
-	 * @param \Etu\Core\UserBundle\Entity\Member $memberships
+	 * @param Member $memberships
 	 */
-	public function removeMembership(\Etu\Core\UserBundle\Entity\Member $memberships)
+	public function removeMembership(Member $memberships)
 	{
 		$this->memberships->removeElement($memberships);
 	}
@@ -2484,10 +2484,10 @@ class User implements UserInterface, \Serializable
     /**
      * Add badges
      *
-     * @param \Etu\Core\UserBundle\Entity\UserBadge $badges
+     * @param UserBadge $badges
      * @return User
      */
-    public function addBadge(\Etu\Core\UserBundle\Entity\UserBadge $badges)
+    public function addBadge(UserBadge $badges)
     {
         $this->badges[] = $badges;
 
@@ -2497,9 +2497,9 @@ class User implements UserInterface, \Serializable
     /**
      * Remove badges
      *
-     * @param \Etu\Core\UserBundle\Entity\UserBadge $badges
+     * @param UserBadge $badges
      */
-    public function removeBadge(\Etu\Core\UserBundle\Entity\UserBadge $badges)
+    public function removeBadge(UserBadge $badges)
     {
         $this->badges->removeElement($badges);
     }

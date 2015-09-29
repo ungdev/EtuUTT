@@ -177,10 +177,10 @@ class Comment
     /**
      * Set user
      *
-     * @param \Etu\Core\UserBundle\Entity\User $user
+     * @param User $user
      * @return Comment
      */
-    public function setUser(\Etu\Core\UserBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -190,7 +190,7 @@ class Comment
     /**
      * Get user
      *
-     * @return \Etu\Core\UserBundle\Entity\User
+     * @return User
      */
     public function getUser()
     {
@@ -200,10 +200,10 @@ class Comment
     /**
      * Set uv
      *
-     * @param \Etu\Module\UVBundle\Entity\UV $uv
+     * @param UV $uv
      * @return Comment
      */
-    public function setUv(\Etu\Module\UVBundle\Entity\UV $uv = null)
+    public function setUv(UV $uv = null)
     {
         $this->uv = $uv;
 
@@ -213,7 +213,7 @@ class Comment
     /**
      * Get uv
      *
-     * @return \Etu\Module\UVBundle\Entity\UV
+     * @return UV
      */
     public function getUv()
     {

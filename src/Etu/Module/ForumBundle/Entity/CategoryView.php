@@ -4,88 +4,86 @@ namespace Etu\Module\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use Etu\Module\ForumBundle\Entity\Category;
-
 /**
  * @ORM\Table(name="etu_forum_categoriesViews")
  * @ORM\Entity
  */
 class CategoryView
 {
-	/**
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	protected $id;
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
 
-	/**
-	 * @var User $user
-	 *
-	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
-	 * @ORM\JoinColumn(onDelete="SET NULL")
-	 */
-	protected $user;
+    /**
+     * @var User $user
+     *
+     * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
+    protected $user;
 
-	/**
-	 * @var Category $category
-	 *
-	 * @ORM\ManyToOne(targetEntity="category")
-	 * @ORM\JoinColumn(onDelete="SET NULL")
-	 */
-	protected $category;
+    /**
+     * @var Category $category
+     *
+     * @ORM\ManyToOne(targetEntity="category")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
+    protected $category;
 
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-	}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+    }
 
-	/**
-	 * @return integer
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+    /**
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	/**
-	 * @param int $user
-	 * @return View
-	 */
-	public function setUser($user)
-	{
-		$this->user = $user;
+    /**
+     * @param int $user
+     * @return View
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @return User
-	 */
-	public function getUser()
-	{
-		return $this->user;
-	}
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 
-	/**
-	 * @param int $category
-	 * @return CategoryView
-	 */
-	public function setCategory($category)
-	{
-		$this->category = $category;
+    /**
+     * @param int $category
+     * @return CategoryView
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @return Category
-	 */
-	public function getCategory()
-	{
-		return $this->category;
-	}
+    /**
+     * @return Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
 }

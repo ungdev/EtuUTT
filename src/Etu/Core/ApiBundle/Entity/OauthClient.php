@@ -2,6 +2,7 @@
 
 namespace Etu\Core\ApiBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Etu\Core\UserBundle\Entity\User;
 use Imagine\Gd\Image;
@@ -100,7 +101,7 @@ class OauthClient
     public function __construct()
     {
         $this->createdAt = new \DateTime();
-        $this->scopes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->scopes = new ArrayCollection();
     }
 
     /**
@@ -307,10 +308,10 @@ class OauthClient
     /**
      * Set user
      *
-     * @param \Etu\Core\UserBundle\Entity\User $user
+     * @param User $user
      * @return OauthClient
      */
-    public function setUser(\Etu\Core\UserBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
     
@@ -320,7 +321,7 @@ class OauthClient
     /**
      * Get user
      *
-     * @return \Etu\Core\UserBundle\Entity\User 
+     * @return User
      */
     public function getUser()
     {
@@ -330,10 +331,10 @@ class OauthClient
     /**
      * Add scopes
      *
-     * @param \Etu\Core\ApiBundle\Entity\OauthScope $scopes
+     * @param OauthScope $scopes
      * @return OauthClient
      */
-    public function addScope(\Etu\Core\ApiBundle\Entity\OauthScope $scopes)
+    public function addScope(OauthScope $scopes)
     {
         $this->scopes[] = $scopes;
     
@@ -343,9 +344,9 @@ class OauthClient
     /**
      * Remove scopes
      *
-     * @param \Etu\Core\ApiBundle\Entity\OauthScope $scopes
+     * @param OauthScope $scopes
      */
-    public function removeScope(\Etu\Core\ApiBundle\Entity\OauthScope $scopes)
+    public function removeScope(OauthScope $scopes)
     {
         $this->scopes->removeElement($scopes);
     }
