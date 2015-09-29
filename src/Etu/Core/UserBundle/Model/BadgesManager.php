@@ -218,8 +218,8 @@ class BadgesManager
 		$usersBadges = self::$doctrine->getRepository('EtuUserBundle:UserBadge')
 			->createQueryBuilder('ub')
 			->select('ub, u, b')
-			->leftJoin('ub.user', 'u')
-			->leftJoin('ub.badge', 'b')
+			->join('ub.badge', 'b')
+			->join('ub.user', 'u')
 			->getQuery()
 			->getResult();
 
