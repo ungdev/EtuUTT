@@ -66,6 +66,7 @@ class ClientCredentialsGrantType implements GrantTypeInterface
             'access_token' => $token->getToken(),
             'expires_at' => $token->getExpireAt()->format('U'),
             'scopes' => $scopes,
+            'token_type' => 'Bearer'
         ];
     }
 
