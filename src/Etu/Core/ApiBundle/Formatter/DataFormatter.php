@@ -29,13 +29,14 @@ class DataFormatter
      */
     public function format($request, $data = array(), $status = 200, $message = null)
     {
-        $data = [
-            'http' => [
+        $data = array_merge($data, [
+            'http' => [ // @TODO: remove this when everything is OAuth2 compatible
                 'status' => $status,
-                'message' => ($message) ? $message : Response::$statusTexts[$status]
+                'message' => ($message) ? $message : Response::$statusTexts[$status],
+                '_note' => 'http and response fields are deprecated'
             ],
             'response' => $data
-        ];
+        ]);
 
         $format = 'json';
 
