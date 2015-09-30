@@ -5,6 +5,7 @@
     #    RewriteBase /
     #</IfModule>
 
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^(.*)$ etu_dev.php [QSA,L]
 </IfModule>
