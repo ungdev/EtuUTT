@@ -388,10 +388,10 @@ class Review
     /**
      * Set uv
      *
-     * @param \Etu\Module\UVBundle\Entity\UV $uv
+     * @param UV $uv
      * @return Review
      */
-    public function setUv(\Etu\Module\UVBundle\Entity\UV $uv = null)
+    public function setUv(UV $uv = null)
     {
         $this->uv = $uv;
 
@@ -401,7 +401,7 @@ class Review
     /**
      * Get uv
      *
-     * @return \Etu\Module\UVBundle\Entity\UV
+     * @return UV
      */
     public function getUv()
     {

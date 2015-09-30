@@ -4,7 +4,7 @@ namespace Etu\Core\ApiBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ClientType extends AbstractType
 {
@@ -15,21 +15,31 @@ class ClientType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', [ 'label' => 'Nom', 'required' => true ])
-            ->add('redirectUri', 'url', [ 'label' => 'URL de redirection', 'required' => true ])
-            ->add('file', 'file', [ 'label' => 'Image', 'required' => false ])
-            ->add('scopes', null, [ 'label' => 'Vous voulez accéder aux données suivantes :', 'required' => false, 'multiple' => true, 'expanded' => true, ])
-        ;
+            ->add('name', 'text', ['label' => 'Nom', 'required' => true])
+            ->add('redirectUri', 'url', ['label' => 'URL de redirection', 'required' => true])
+            ->add('file', 'file', ['label' => 'Image', 'required' => false])
+            ->add(
+                'scopes',
+                null,
+                [
+                    'label' => 'Vous voulez accéder aux données suivantes :',
+                    'required' => false,
+                    'multiple' => true,
+                    'expanded' => true,
+                ]
+            );
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Etu\Core\ApiBundle\Entity\OauthClient'
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class' => 'Etu\Core\ApiBundle\Entity\OauthClient',
+            ]
+        );
     }
 
     /**

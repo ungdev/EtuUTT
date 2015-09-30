@@ -2,6 +2,7 @@
 
 namespace Etu\Core\ApiBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Etu\Core\UserBundle\Entity\User;
 
@@ -80,7 +81,7 @@ class OauthAccessToken
     {
         $this->createdAt = new \DateTime();
         $this->expireAt = new \DateTime('+1 hour');
-        $this->scopes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->scopes = new ArrayCollection();
     }
 
     /**
@@ -173,10 +174,10 @@ class OauthAccessToken
     /**
      * Set client
      *
-     * @param \Etu\Core\ApiBundle\Entity\OauthClient $client
+     * @param OauthClient $client
      * @return OauthAccessToken
      */
-    public function setClient(\Etu\Core\ApiBundle\Entity\OauthClient $client = null)
+    public function setClient(OauthClient $client = null)
     {
         $this->client = $client;
     
@@ -186,7 +187,7 @@ class OauthAccessToken
     /**
      * Get client
      *
-     * @return \Etu\Core\ApiBundle\Entity\OauthClient 
+     * @return OauthClient
      */
     public function getClient()
     {
@@ -196,10 +197,10 @@ class OauthAccessToken
     /**
      * Set user
      *
-     * @param \Etu\Core\UserBundle\Entity\User $user
+     * @param User $user
      * @return OauthAccessToken
      */
-    public function setUser(\Etu\Core\UserBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
     
@@ -209,7 +210,7 @@ class OauthAccessToken
     /**
      * Get user
      *
-     * @return \Etu\Core\UserBundle\Entity\User 
+     * @return User
      */
     public function getUser()
     {
@@ -235,10 +236,10 @@ class OauthAccessToken
     /**
      * Add scopes
      *
-     * @param \Etu\Core\ApiBundle\Entity\OauthScope $scopes
+     * @param OauthScope $scopes
      * @return OauthAccessToken
      */
-    public function addScope(\Etu\Core\ApiBundle\Entity\OauthScope $scopes)
+    public function addScope(OauthScope $scopes)
     {
         $this->scopes[] = $scopes;
     
@@ -248,9 +249,9 @@ class OauthAccessToken
     /**
      * Remove scopes
      *
-     * @param \Etu\Core\ApiBundle\Entity\OauthScope $scopes
+     * @param OauthScope $scopes
      */
-    public function removeScope(\Etu\Core\ApiBundle\Entity\OauthScope $scopes)
+    public function removeScope(OauthScope $scopes)
     {
         $this->scopes->removeElement($scopes);
     }

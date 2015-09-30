@@ -81,8 +81,10 @@ class RefreshTokenGrantType implements GrantTypeInterface
         return [
             'access_token' => $token->getToken(),
             'expires_at' => $token->getExpireAt()->format('U'),
+            'expires' => $token->getExpireAt()->format('U'),
             'scopes' => $scopes,
-            'refresh_token' => $token->getRefreshToken()->getToken()
+            'refresh_token' => $token->getRefreshToken()->getToken(),
+            'token_type' => 'Bearer'
         ];
     }
 

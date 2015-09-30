@@ -95,10 +95,10 @@ class Answer
     /**
      * Set event
      *
-     * @param \Etu\Module\EventsBundle\Entity\Event $event
+     * @param Event $event
      * @return Answer
      */
-    public function setEvent(\Etu\Module\EventsBundle\Entity\Event $event = null)
+    public function setEvent(Event $event = null)
     {
         $this->event = $event;
 
@@ -108,7 +108,7 @@ class Answer
     /**
      * Get event
      *
-     * @return \Etu\Module\EventsBundle\Entity\Event
+     * @return Event
      */
     public function getEvent()
     {

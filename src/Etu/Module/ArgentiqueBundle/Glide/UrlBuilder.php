@@ -2,8 +2,8 @@
 
 namespace Etu\Module\ArgentiqueBundle\Glide;
 
-use League\Glide\Factories\UrlBuilder as BuilderFactory;
-use League\Glide\UrlBuilder as Builder;
+use League\Glide\Http\UrlBuilder as Builder;
+use League\Glide\Http\UrlBuilderFactory as BuilderFactory;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -47,7 +47,7 @@ class UrlBuilder
      */
     public function generate($photo, $options = [])
     {
-        return $this->webPath . '/argentique/p.php' . $this->builder->getUrl($photo, $options);
+        return $this->webPath.'/argentique/p.php'.$this->builder->getUrl($photo, $options);
     }
 
     /**

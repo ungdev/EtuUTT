@@ -2,11 +2,13 @@
 
 namespace Etu\Module\CovoitBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Etu\Core\CoreBundle\Entity\City;
 use Etu\Core\UserBundle\Entity\User;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\ExecutionContextInterface;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Covoit
@@ -29,7 +31,7 @@ class Covoit
     private $id;
 
     /**
-     * @var \Etu\Core\UserBundle\Entity\User
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
      * @ORM\JoinColumn()
@@ -96,7 +98,7 @@ class Covoit
     private $blablacarUrl;
 
     /**
-     * @var \Etu\Core\CoreBundle\Entity\City
+     * @var City
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\CoreBundle\Entity\City")
      * @ORM\JoinColumn()
@@ -125,7 +127,7 @@ class Covoit
     private $startHour;
 
     /**
-     * @var \Etu\Core\CoreBundle\Entity\City
+     * @var City
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\CoreBundle\Entity\City")
      * @ORM\JoinColumn()
@@ -197,8 +199,8 @@ class Covoit
      */
     public function __construct()
     {
-        $this->subscriptions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->messages = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->subscriptions = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
 
     /**
@@ -209,19 +211,19 @@ class Covoit
         $parts = [];
 
         if ($this->getStartCity()) {
-            $parts[] = 'startCity: ' . $this->getStartCity()->getName();
+            $parts[] = 'startCity: '.$this->getStartCity()->getName();
         }
 
         if ($this->getEndCity()) {
-            $parts[] = 'endCity: ' . $this->getEndCity()->getName();
+            $parts[] = 'endCity: '.$this->getEndCity()->getName();
         }
 
         if ($this->getDate()) {
-            $parts[] = 'date: ' . $this->getDate()->format('d/m/Y');
+            $parts[] = 'date: '.$this->getDate()->format('d/m/Y');
         }
 
         if ($this->getPrice()) {
-            $parts[] = 'price: ' . $this->getPrice();
+            $parts[] = 'price: '.$this->getPrice();
         }
 
         return implode(', ', $parts);
@@ -232,13 +234,15 @@ class Covoit
      */
     public function isBlaBlaCarUrlValid(ExecutionContextInterface $context)
     {
-        if (! empty($this->blablacarUrl)) {
+        if (!empty($this->blablacarUrl)) {
             if (strpos($this->blablacarUrl, 'http') === false) {
-                $this->blablacarUrl = 'http://' . $this->blablacarUrl;
+                $this->blablacarUrl = 'http://'.$this->blablacarUrl;
             }
 
-            if (! in_array(parse_url($this->blablacarUrl, PHP_URL_HOST), ['www.covoiturage.fr', 'covoiturage.fr'])) {
-                $context->addViolationAt('blablacarUrl', 'Cette URL n\'est pas une URL BlaBlaCar valide', array(), null);
+            if (!in_array(parse_url($this->blablacarUrl, PHP_URL_HOST), ['www.covoiturage.fr', 'covoiturage.fr'])) {
+                $context->buildViolation('Cette URL n\'est pas une URL BlaBlaCar valide')
+                    ->atPath('blablacarUrl')
+                    ->addViolation();
             }
         }
     }
@@ -591,10 +595,10 @@ class Covoit
     /**
      * Set author
      *
-     * @param \Etu\Core\UserBundle\Entity\User $author
+     * @param User $author
      * @return Covoit
      */
-    public function setAuthor(\Etu\Core\UserBundle\Entity\User $author = null)
+    public function setAuthor(User $author = null)
     {
         $this->author = $author;
 
@@ -604,7 +608,7 @@ class Covoit
     /**
      * Get author
      *
-     * @return \Etu\Core\UserBundle\Entity\User
+     * @return User
      */
     public function getAuthor()
     {
@@ -614,10 +618,10 @@ class Covoit
     /**
      * Set startCity
      *
-     * @param \Etu\Core\CoreBundle\Entity\City $startCity
+     * @param City $startCity
      * @return Covoit
      */
-    public function setStartCity(\Etu\Core\CoreBundle\Entity\City $startCity = null)
+    public function setStartCity(City $startCity = null)
     {
         $this->startCity = $startCity;
 
@@ -627,7 +631,7 @@ class Covoit
     /**
      * Get startCity
      *
-     * @return \Etu\Core\CoreBundle\Entity\City
+     * @return City
      */
     public function getStartCity()
     {
@@ -637,10 +641,10 @@ class Covoit
     /**
      * Set endCity
      *
-     * @param \Etu\Core\CoreBundle\Entity\City $endCity
+     * @param City $endCity
      * @return Covoit
      */
-    public function setEndCity(\Etu\Core\CoreBundle\Entity\City $endCity = null)
+    public function setEndCity(City $endCity = null)
     {
         $this->endCity = $endCity;
 
@@ -650,7 +654,7 @@ class Covoit
     /**
      * Get endCity
      *
-     * @return \Etu\Core\CoreBundle\Entity\City
+     * @return City
      */
     public function getEndCity()
     {
@@ -660,10 +664,10 @@ class Covoit
     /**
      * Add subscriptions
      *
-     * @param \Etu\Module\CovoitBundle\Entity\CovoitSubscription $subscriptions
+     * @param CovoitSubscription $subscriptions
      * @return Covoit
      */
-    public function addSubscription(\Etu\Module\CovoitBundle\Entity\CovoitSubscription $subscriptions)
+    public function addSubscription(CovoitSubscription $subscriptions)
     {
         $this->subscriptions[] = $subscriptions;
 
@@ -673,9 +677,9 @@ class Covoit
     /**
      * Remove subscriptions
      *
-     * @param \Etu\Module\CovoitBundle\Entity\CovoitSubscription $subscriptions
+     * @param CovoitSubscription $subscriptions
      */
-    public function removeSubscription(\Etu\Module\CovoitBundle\Entity\CovoitSubscription $subscriptions)
+    public function removeSubscription(CovoitSubscription $subscriptions)
     {
         $this->subscriptions->removeElement($subscriptions);
     }
@@ -712,22 +716,22 @@ class Covoit
     /**
      * Add messages
      *
-     * @param \Etu\Module\CovoitBundle\Entity\CovoitMessage $messages
+     * @param CovoitMessage $messages
      * @return Covoit
      */
-    public function addMessage(\Etu\Module\CovoitBundle\Entity\CovoitMessage $messages)
+    public function addMessage(CovoitMessage $messages)
     {
         $this->messages[] = $messages;
-    
+
         return $this;
     }
 
     /**
      * Remove messages
      *
-     * @param \Etu\Module\CovoitBundle\Entity\CovoitMessage $messages
+     * @param CovoitMessage $messages
      */
-    public function removeMessage(\Etu\Module\CovoitBundle\Entity\CovoitMessage $messages)
+    public function removeMessage(CovoitMessage $messages)
     {
         $this->messages->removeElement($messages);
     }
@@ -735,7 +739,7 @@ class Covoit
     /**
      * Get messages
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMessages()
     {

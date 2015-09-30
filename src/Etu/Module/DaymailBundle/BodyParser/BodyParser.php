@@ -2,6 +2,7 @@
 
 namespace Etu\Module\DaymailBundle\BodyParser;
 
+use Imagine\Gd\Imagine;
 use Symfony\Component\HttpKernel\Kernel;
 
 class BodyParser
@@ -28,7 +29,7 @@ class BodyParser
         preg_match_all('/<img .+>/isU', $string, $matches);
         $images = $matches[0];
 
-        $imagine = new \Imagine\Gd\Imagine();
+        $imagine = new Imagine();
 
         foreach ($images as $image) {
             preg_match('/src="(.+)"/iU', $image, $src);

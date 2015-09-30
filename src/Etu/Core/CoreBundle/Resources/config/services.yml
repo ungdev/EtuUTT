@@ -20,7 +20,7 @@ parameters:
 
     etu.modules_boot_listener.class: Etu\Core\CoreBundle\Framework\Listener\ModulesBootListener
     etu.locale_listener.class: Etu\Core\CoreBundle\Framework\Listener\LocaleListener
-    etu.terminate_listener.class: Etu\Core\CoreBundle\Framework\Listener\TerminateListener
+    etu.response_listener.class: Etu\Core\CoreBundle\Framework\Listener\ResponseListener
 
     etu.twig.string_manipulation.class: Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension
     etu.twig.array_manipulation.class: Etu\Core\CoreBundle\Twig\Extension\ArrayManipulationExtension
@@ -120,11 +120,11 @@ services:
         arguments: [@session, @translator]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-    etu.terminate_listener:
-        class: %etu.terminate_listener.class%
+    etu.response_listener:
+        class: %etu.response_listener.class%
         arguments: [@session]
         tags:
-            - { name: kernel.event_listener, event: kernel.terminate, method: onKernelTerminate }
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
     # String manipulation
     etu.twig.string_manipulation:

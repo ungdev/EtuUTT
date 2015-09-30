@@ -254,7 +254,7 @@ class Process
 
     public static function installBower($rootDir)
     {
-        chdir($rootDir . '/web');
+        chdir($rootDir);
         passthru('bower install --force');
         chdir($rootDir);
     }
