@@ -64,6 +64,13 @@ class SecurityListener
             $request = $event->getRequest();
 
             $token = $request->query->get('access_token');
+            if ($request->headers->has('Authorization')) {
+                $authorizationHeader = $request->headers->get('Authorization');
+                preg_match('/Bearer (.*)/i', $authorizationHeader, $matches);
+                if (!empty($matches[1])) {
+                    $token = $matches[1];
+                }
+            }
 
             $access = $this->server->checkAccess($token, $requiredScope);
 

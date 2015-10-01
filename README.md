@@ -25,7 +25,7 @@ Intégration continue
 Ce projet utilise l'intégration continue (TravisCI) :
 
 **master** (développement) :
-[![Build Status](https://travis-ci.org/ungdev/site-etu.svg?branch=master)](https://travis-ci.org/ungdev/site-etu/builds)
+[![Build Status](https://travis-ci.org/ungdev/EtuUTT.svg?branch=master)](https://travis-ci.org/ungdev/EtuUTT)
 
 **stable** (production) :
-[![Build Status](https://travis-ci.org/ungdev/site-etu.svg?branch=stable)](https://travis-ci.org/ungdev/site-etu/builds)
+[![Build Status](https://travis-ci.org/ungdev/EtuUTT.svg?branch=stable)](https://travis-ci.org/ungdev/EtuUTT)

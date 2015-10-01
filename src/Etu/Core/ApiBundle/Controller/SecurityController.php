@@ -165,7 +165,7 @@ class SecurityController extends ApiController
                 $em->persist($authorizationCode);
                 $em->flush();
 
-                return $this->redirect($client->getRedirectUri() . '?authorization_code=' . $authorizationCode->getCode());
+                return $this->redirect($client->getRedirectUri() . '?authorization_code=' . $authorizationCode->getCode() . '&code=' . $authorizationCode->getCode());
             }
         }
 
@@ -226,7 +226,7 @@ class SecurityController extends ApiController
 
                 $em->flush();
 
-                return $this->redirect($client->getRedirectUri() . '?authorization_code=' . $authorizationCode->getCode());
+                return $this->redirect($client->getRedirectUri() . '?authorization_code=' . $authorizationCode->getCode() . '&code=' . $authorizationCode->getCode());
             } else {
                 return $this->redirect($client->getRedirectUri() . '?error=authentification_canceled&error_message=L\'utilisateur a annulé l\'authentification.');
             }
@@ -279,6 +279,18 @@ class SecurityController extends ApiController
      *          "required" = false,
      *          "dataType" = "string",
      *          "description" = "The refresh_token provided on the first access_token retrieval. Required if grant_type == 'refresh_token'."
+     *      },
+     *      {
+     *          "name" = "client_id",
+     *          "required" = false,
+     *          "dataType" = "string",
+     *          "description" = "Your Client ID (given in your developper panel). Required if not using Basic Authentification."
+     *      },
+     *      {
+     *          "name" = "client_secret",
+     *          "required" = false,
+     *          "dataType" = "string",
+     *          "description" = "Your Client Secret Token (given in your developper panel). Required if not using Basic Authentification."
      *      }
      *   }
      * )
@@ -291,8 +303,8 @@ class SecurityController extends ApiController
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $clientId = $request->server->get('PHP_AUTH_USER');
-        $clientSecret = $request->server->get('PHP_AUTH_PW');
+        $clientId = $request->get('client_id', $request->server->get('PHP_AUTH_USER'));
+        $clientSecret = $request->get('client_secret', $request->server->get('PHP_AUTH_PW'));
 
         /** @var OauthClient $client */
         $client = $em->getRepository('EtuCoreApiBundle:OauthClient')->findOneBy([
