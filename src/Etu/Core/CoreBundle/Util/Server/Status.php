@@ -127,7 +127,7 @@ class Status
 	{
 		$this->versions = array(
 			'php' => phpversion(),
-			'mysql' => mysql_get_client_info(),
+			'mysql' => mysqli_get_client_info(),
 			'zend' => zend_version(),
 		);
 	}
