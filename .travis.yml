@@ -11,14 +11,20 @@ php:
   - nightly
 
 matrix:
+  fast_finish: true
   allow_failures:
     - php: 7.0
     - php: nightly
 
+cache:
+  directories:
+    - vendor
+    - $HOME/.composer/cache
+
 before_script:
   - cp app/config/parameters.yml.test app/config/parameters.yml
   - composer self-update
-  - composer install --ignore-platform-reqs --dev --no-interaction --prefer-source
+  - composer install --ignore-platform-reqs --dev --no-interaction --prefer-dist
 
 script:
   - phpunit -c app
