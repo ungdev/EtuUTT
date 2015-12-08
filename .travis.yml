@@ -1,28 +1,24 @@
 language: php
-
 sudo: false
-
 php:
-  - 5.4
-  - 5.5
-  - 5.6
-  - 7.0
-  - hhvm
-  - nightly
-
+- 5.4
+- 5.5
+- 5.6
+- 7.0
+- hhvm
+- nightly
 matrix:
   allow_failures:
-    - php: 7.0
-    - php: nightly
-
+  - php: 7.0
+  - php: nightly
 before_script:
-  - cp app/config/parameters.yml.test app/config/parameters.yml
-  - composer self-update
-  - composer install --ignore-platform-reqs --dev --no-interaction --prefer-source
-
+- cp app/config/parameters.yml.test app/config/parameters.yml
+- composer self-update
+- composer install --ignore-platform-reqs --dev --no-interaction --prefer-source
 script:
-  - phpunit -c app
-
+- phpunit -c app
 notifications:
   email:
-    - uttnetgroup@gmail.com
+  - uttnetgroup@gmail.com
+  slack:
+    secure: DtA5ucKly5MJiE0h8aAi+DmhMzopaHAUa6IU9izyb5KkkfDwFPhS9Ve63w3X3mW5kB9N08Nn9KDCYGUbMr44Nasyq9nfzjQPRya1xH+Skn+hmRId2ezMwX/viZN3m7OQ0qskWjX2Kjn/CTbiIvpBgYjNEDegEDuWRG6ynk+zIfI=
