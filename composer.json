@@ -42,7 +42,8 @@
     "sonata-project/intl-bundle": "^2.2",
     "elao/web-profiler-extra-bundle": "^2.3",
     "league/glide": "0.3.5",
-    "raven/raven": "^0.13.0"
+    "raven/raven": "^0.13.0",
+    "doctrine/doctrine-migrations-bundle": "^1.1"
   },
   "scripts": {
     "post-install-cmd": [
