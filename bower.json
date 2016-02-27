@@ -21,7 +21,7 @@
     "jquery-ui-touch-punch": "*",
     "jquery-impromptu": "5.2.*",
     "moment": "2.9.*",
-    "SCEditor": "1.4.6",
+    "SCEditor": "v1.4.4",
     "swipebox": "1.2.*",
     "tipsy": "0.1.*",
     "tinycarousel": "*",
