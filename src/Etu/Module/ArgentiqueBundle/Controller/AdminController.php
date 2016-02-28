@@ -16,7 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class AdminController extends Controller
 {
     /**
-     * @Route("", name="argentique_admin")
+     * @Route("/", name="argentique_admin")
      * @Template()
      */
     public function indexAction()

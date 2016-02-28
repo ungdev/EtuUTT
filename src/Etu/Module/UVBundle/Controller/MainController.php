@@ -19,7 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class MainController extends Controller
 {
 	/**
-	 * @Route("", name="uvs_index")
+	 * @Route("/", name="uvs_index")
 	 * @Template()
 	 */
 	public function indexAction()
