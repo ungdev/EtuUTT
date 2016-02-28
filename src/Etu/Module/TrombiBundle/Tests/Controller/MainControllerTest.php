@@ -13,7 +13,7 @@ class MainControllerTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/trombi');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
 
     public function testIndex()
@@ -22,7 +22,7 @@ class MainControllerTest extends WebTestCase
         $client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
         $crawler = $client->request('GET', '/trombi');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 200);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertGreaterThan(0, $crawler->filter('h2:contains("Trombinoscope")')->count());
     }
 }
