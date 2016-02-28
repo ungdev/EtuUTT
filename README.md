@@ -19,10 +19,10 @@ Documentation
 La documentation est disponible sur
 [http://etuutt.readthedocs.org/fr/latest/](http://etuutt.readthedocs.org/fr/latest/).
 
-Intégration continue
+Déploiement continu
 --------------------
 
-Ce projet utilise l'intégration continue (TravisCI), et master est synchronisé avec la production
+Ce projet utilise l'intégration continue (TravisCI), et master est synchronisé avec la production.
 
 **dev** (développement) :
 [![Build Status](https://travis-ci.org/ungdev/EtuUTT.svg?branch=dev)](https://travis-ci.org/ungdev/EtuUTT)
