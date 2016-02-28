@@ -100,8 +100,9 @@ class AppKernel extends EtuKernel
                     }
                 }
 
-                if (class_exists($module)) {
-                    $module = new $module;
+                if (class_exists($module, false)) {
+                    $module = new ReflectionClass($module);
+                    $module = $module->newInstance();
 
                     if ($module instanceof Module) {
                         $bundles[] = $module;
