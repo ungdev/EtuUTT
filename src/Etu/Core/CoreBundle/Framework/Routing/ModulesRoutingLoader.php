@@ -48,7 +48,6 @@ class ModulesRoutingLoader implements LoaderInterface
 
         /** @var $module Module */
         foreach ($this->kernel->getModulesDefinitions() as $module) {
-            var_dump($module);
             $routing = $module->getRouting();
             $loader = $this->resolver->resolve($routing['resource'], $routing['type']);
 
@@ -56,7 +55,6 @@ class ModulesRoutingLoader implements LoaderInterface
                 $routes->addCollection($loader->load($routing['resource'], $routing['type']));
             }
         }
-        var_dump($routes->all());
 
         return $routes;
     }
@@ -68,10 +66,6 @@ class ModulesRoutingLoader implements LoaderInterface
      */
     public function supports($resource, $type = null)
     {
-        if ($type === 'modules') {
-            echo('Called !');
-        }
-
         return $type === 'modules';
     }
 

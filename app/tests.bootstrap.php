@@ -1,8 +1,4 @@
 <?php
-
-date_default_timezone_set('Europe/Paris');
-chdir(dirname(__DIR__));
-
 $symfonyDir = __DIR__.'/../vendor/symfony/symfony/src';
 $etuUttDir = __DIR__.'/../src';
 
