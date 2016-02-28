@@ -15,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class MainController extends Controller
 {
     /**
-     * @Route("/", name="argentique_index")
+     * @Route("", name="argentique_index")
      * @Route("/collection/{directory}", requirements={"directory"=".+"}, name="argentique_directory")
      * @Template()
      */

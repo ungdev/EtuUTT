@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints\EqualTo;
 class PanelController extends Controller
 {
     /**
-     * @Route("/", name="devs_panel_index")
+     * @Route("", name="devs_panel_index")
      * @Template()
      */
     public function indexAction()
