@@ -14,7 +14,7 @@ class MembershipsControllerTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/user/membership/orga/daymail');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
 
     public function testRestrictionDaymailOrga()
@@ -23,7 +23,7 @@ class MembershipsControllerTest extends WebTestCase
         $client->getContainer()->get('security.token_storage')->setToken(new OrgaToken(MockUser::createOrga()));
 
         $client->request('GET', '/user/membership/orga/daymail');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
 
     public function testRestrictionPreview()
@@ -31,7 +31,7 @@ class MembershipsControllerTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/user/membership/orga/daymail/current/preview');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
 
     public function testRestrictionPreviewOrga()
@@ -40,7 +40,7 @@ class MembershipsControllerTest extends WebTestCase
         $client->getContainer()->get('security.token_storage')->setToken(new OrgaToken(MockUser::createOrga()));
 
         $client->request('GET', '/user/membership/orga/daymail/current/preview');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
 
     public function testDaymail()
@@ -49,7 +49,7 @@ class MembershipsControllerTest extends WebTestCase
         $client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
         $crawler = $client->request('GET', '/user/membership/orga/daymail');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 200);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
     public function testPreview()
@@ -59,6 +59,6 @@ class MembershipsControllerTest extends WebTestCase
 
         $client->request('GET', '/user/membership/orga/daymail/current/preview');
 
-        $this->assertEquals($client->getResponse()->getStatusCode(), 200);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

@@ -35,7 +35,7 @@ class MainControllerTest extends WebTestCase
     public function testMembers()
     {
         $client = static::createClient();
-        $client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+        $client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
         $crawler = $client->request('GET', '/orgas/orga/members');
 
