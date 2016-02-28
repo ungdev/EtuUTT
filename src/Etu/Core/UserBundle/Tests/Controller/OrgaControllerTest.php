@@ -36,7 +36,7 @@ class OrgaControllerTest extends WebTestCase
 	public function testIndex()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new OrgaToken(MockUser::createOrga()));
+		$client->getContainer()->get('security.token_storage')->setToken(new OrgaToken(MockUser::createOrga()));
 
 		$crawler = $client->request('GET', '/orga');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Association")')->count());
@@ -45,7 +45,7 @@ class OrgaControllerTest extends WebTestCase
 	public function testAvatar()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new OrgaToken(MockUser::createOrga()));
+		$client->getContainer()->get('security.token_storage')->setToken(new OrgaToken(MockUser::createOrga()));
 
 		$crawler = $client->request('GET', '/orga/avatar');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier votre logo")')->count());

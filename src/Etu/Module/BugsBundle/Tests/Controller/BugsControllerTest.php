@@ -47,7 +47,7 @@ class BugsControllerTest extends WebTestCase
 		$user = MockUser::createUser();
 		$user->addRemovedPermission('bugs.add');
 
-		$client->getContainer()->get('security.context')->setToken(new UserToken($user));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken($user));
 
 		$client->request('GET', '/bugs/create');
 		$this->assertEquals($client->getResponse()->getStatusCode(), 403);
@@ -72,7 +72,7 @@ class BugsControllerTest extends WebTestCase
 	public function testRestrictionEditCommentNotAuthor()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
 		$client->request('GET', '/bugs/1-issue-title/edit/comment/1');
 		$this->assertEquals($client->getResponse()->getStatusCode(), 403);
@@ -81,7 +81,7 @@ class BugsControllerTest extends WebTestCase
 	public function testIndex()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
 		$crawler = $client->request('GET', '/bugs');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Bugs ouverts")')->count());
@@ -90,7 +90,7 @@ class BugsControllerTest extends WebTestCase
 	public function testClosed()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
 		$crawler = $client->request('GET', '/bugs/closed');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Bugs résolus")')->count());
@@ -99,7 +99,7 @@ class BugsControllerTest extends WebTestCase
 	public function testView()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
 		$crawler = $client->request('GET', '/bugs/1-issue-title');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Détails d\'un bug")')->count());
@@ -110,7 +110,7 @@ class BugsControllerTest extends WebTestCase
 		$user = MockUser::createUser();
 
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
 		$crawler = $client->request('GET', '/bugs/create');
 
@@ -120,7 +120,7 @@ class BugsControllerTest extends WebTestCase
 	public function testEdit()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
 		$crawler = $client->request('GET', '/bugs/1-issue-title/edit');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier un bug")')->count());

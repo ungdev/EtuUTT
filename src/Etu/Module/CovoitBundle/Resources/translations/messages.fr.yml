@@ -1,172 +1,157 @@
-
-covoit:
-    menu:
-        home: Les derniers
-        my: Mes covoiturages
-        alerts: Mes alertes
-
-    notifs:
-        canceled: Le covoiturage %start% - %end% de %author% le %date% a été annulé par son créateur
-        edited: Le covoiturage %start% - %end% de %author% le %date% a été modifié
-        alert: Le covoiturage %start% - %end% de %author% le %date% pourrait vous intéresser
-        new_message: %author% a posté un message sur le covoiturage %start% - %end% du %date%
-        subscription: %name% a réservé une place du covoiturage %start% - %end% le %date%
-
-    messages:
-        created: Votre proposition a bien été créée
-        edited: Votre covoiturage a bien été modifié
-        canceled: Votre covoiturage a bien été annulé
-        message_sent: Votre message a bien été envoyé
-        message_edited: Votre message a bien été modifié
-        already_subscribed: Vous êtes déjà inscrit à ce covoiturage
-        subscribed: Vous avez bien réservé une place dans ce covoiturage
-        unsubscribed: Vous avez bien annulé votre réservation dans ce covoiturage
-        alert_created: Votre alerte a bien été crée
-        alert_edited: Votre alerte a bien été modifiée
-        alert_deleted: Votre alerte a bien été supprimée
-        required_phone: Vous devez indiquer un numéro de téléphone dans votre trombinoscope pour réserver un covoiturage
-
-    index:
-        title: Covoiturage
-        no_covoit:
-            text: Aucun covoiturage pour le moment !
-            link: Proposez-en un !
-
-    search:
-        title: Rechercher un covoiturage
-        places_left: Nombre minimal de place restantes
-        date: Date
-        date_before_after: Inclure la veille et le lendemain
-        price_max: Prix maximal
-        hour_min: Heure minimale de départ
-        hour_max: Heure maximale de départ
-        keywords: Mots-clés
-        start_city: Ville de départ
-        end_city: Ville d'arrivée
-        olds: Inclure les anciens covoiturages
-        submit: Rechercher
-        no_covoit: Aucun covoiturage n'a été trouvé
-
-    public_view:
-        title: Détails d'un covoiturage
-        edit: Modifier
-        from_to: %name% propose un covoiturage de %startCity% à %endCity%
-        creator: Créateur
-        startHour:
-            label: Heure de départ
-            value:
-                start: Le %date% à %startHour%
-                end: (pour une arrivée vers %endHour% à %endCity%)
-        startAdress: Adresse de départ
-        endAdress: Adresse d'arrivée
-        price: Prix (par place)
-        places_left:
-            label: Places disponibles
-            value: %placesLeft% / %capacity%
-        blablacar: Voir sur BlaBlaCar
-        subscribe: Réserver une place
-        notes: Remarques de %name%
-        subscriptions: Personnes inscrites
-        comments: Commentaires
-        no_comment: Aucun commentaire pour le moment
-        comment: Ajouter le commentaire
-        cancel: Annuler ma réservation
-
-    private_index:
-        title: Mes covoiturages
-        subscriptions_left: none_or_one: place<br />restante|some: places<br />restantes
-        per_place: par place
-        creator: Créateur
-        subscribed: Inscrit
-        by: par %name%
-        no_covoit:
-            text: Vous n'avez participé à aucun covoiturage pour le moment !
-            link: Proposez-en un !
-
-    private_alerts:
-        title: Mes alertes
-        create: Créer une alerte
-        no_alert:
-            text: Vous n'avez configuré aucun alerte pour le moment.
-
-    proposal:
-        title: Proposer un covoiturage
-        titles:
-            details: Détails
-            start: Départ
-            end: Arrivée
-        phone:
-            label: Numéro de téléphone
-        notes:
-            label: Détails quant au voyage (description de la voiture, place pour la valise, ...) (optionnel)
-        capacity:
-            label: Capacité de votre véhicule (en vous excluant)
-        date:
-            label: Date
-        price:
-            label: Prix (par place)
-        blablacarUrl:
-            label: URL de l'annonce BlaBlaCar (optionnel)
-        start:
-            city:
-                label: Ville (ou grande ville la plus proche)
-            adress:
-                label: Adresse précise du point de rendez-vous
-            hour:
-                label: Heure de départ
-        end:
-            city:
-                label: Ville (ou grande ville la plus proche)
-            adress:
-                label: Adresse précise du point d'arrivée
-            hour:
-                label: Heure approximative d'arrivée
-        submit: Proposer ce covoiturage
-
-    private_edit:
-        title: Modifier un covoiturage
-        delete: Annuler ce covoiturage
-        submit: Modifier
-        cancel: Annuler
-
-    private_delete:
-        title: Annuler un covoiturage
-        question: Voulez-vous vraiment supprimer le covoiturage %start% <i class="fa fa-angle-right"></i> %end% du %date% ?<br />Cette action est irréversible.
-        yes: Oui, le supprimer
-        no: Non, annuler
-
-    private_edit_message:
-        title: Modifier un message
-        submit: Modifier le message
-        cancel: Annuler
-
-    alerts:
-        label:
-            startDate: Ayant lieu entre le ...
-            endDate: et le ...
-            priceMax: Dont le prix est inférieur à ...
-            startCity: Partant de ...
-            endCity: Arrivant à ...
-
-        index:
-            currently: Vous êtes actuellement alerté pour les covoiturages ...
-            startCity: partant de %startCity%
-            endCity: allant à %endCity%
-            datePrecise: le %date%
-            dateEnd: avant le %date%
-            dateBoth: entre le %startDate% et le %endDate%
-            priceMax: coutant au maximum %price% €
-
-        create:
-            title: Créer une alerte
-            subtitle: Créer une alerte pour les covoiturages ...
-            explainations: Laisez un champ vide pour ne pas inclure la condition
-            precise_date: Ne renseignez que le champ "Ayant lieu entre le ..." pour indiquer une date précise
-            submit: Créer
-
-        edit:
-            title: Modifier une alerte
-            subtitle: Etre alerté pour les covoiturages ...
-            submit: Modifier
-            cancel: Annuler
-            delete: Supprimer
+--- 
+covoit: 
+  alerts: 
+    create: 
+      explainations: "Laisez un champ vide pour ne pas inclure la condition"
+      precise_date: "Ne renseignez que le champ \"Ayant lieu entre le ...\" pour indiquer une date précise"
+      submit: Créer
+      subtitle: "Créer une alerte pour les covoiturages ..."
+      title: "Créer une alerte"
+    edit: 
+      cancel: Annuler
+      delete: Supprimer
+      submit: Modifier
+      subtitle: "Etre alerté pour les covoiturages ..."
+      title: "Modifier une alerte"
+    index: 
+      currently: "Vous êtes actuellement alerté pour les covoiturages ..."
+      dateBoth: "entre le %startDate% et le %endDate%"
+      dateEnd: "avant le %date%"
+      datePrecise: "le %date%"
+      endCity: "allant à %endCity%"
+      priceMax: "coutant au maximum %price% €"
+      startCity: "partant de %startCity%"
+    label: 
+      endCity: "Arrivant à ..."
+      endDate: "et le ..."
+      priceMax: "Dont le prix est inférieur à ..."
+      startCity: "Partant de ..."
+      startDate: "Ayant lieu entre le ..."
+  index: 
+    no_covoit: 
+      link: "Proposez-en un !"
+      text: "Aucun covoiturage pour le moment !"
+    title: Covoiturage
+  menu: 
+    alerts: "Mes alertes"
+    home: "Les derniers"
+    my: "Mes covoiturages"
+  messages: 
+    alert_created: "Votre alerte a bien été crée"
+    alert_deleted: "Votre alerte a bien été supprimée"
+    alert_edited: "Votre alerte a bien été modifiée"
+    already_subscribed: "Vous êtes déjà inscrit à ce covoiturage"
+    canceled: "Votre covoiturage a bien été annulé"
+    created: "Votre proposition a bien été créée"
+    edited: "Votre covoiturage a bien été modifié"
+    message_edited: "Votre message a bien été modifié"
+    message_sent: "Votre message a bien été envoyé"
+    required_phone: "Vous devez indiquer un numéro de téléphone dans votre trombinoscope pour réserver un covoiturage"
+    subscribed: "Vous avez bien réservé une place dans ce covoiturage"
+    unsubscribed: "Vous avez bien annulé votre réservation dans ce covoiturage"
+  notifs: 
+    alert: "Le covoiturage %start% - %end% de %author% le %date% pourrait vous intéresser"
+    canceled: "Le covoiturage %start% - %end% de %author% le %date% a été annulé par son créateur"
+    edited: "Le covoiturage %start% - %end% de %author% le %date% a été modifié"
+    new_message: "%author% a posté un message sur le covoiturage %start% - %end% du %date%"
+    subscription: "%name% a réservé une place du covoiturage %start% - %end% le %date%"
+  private_alerts: 
+    create: "Créer une alerte"
+    no_alert: 
+      text: "Vous n'avez configuré aucun alerte pour le moment."
+    title: "Mes alertes"
+  private_delete: 
+    false: "Non, annuler"
+    question: "Voulez-vous vraiment supprimer le covoiturage %start% <i class=\"fa fa-angle-right\"></i> %end% du %date% ?<br />Cette action est irréversible."
+    title: "Annuler un covoiturage"
+    true: "Oui, le supprimer"
+  private_edit: 
+    cancel: Annuler
+    delete: "Annuler ce covoiturage"
+    submit: Modifier
+    title: "Modifier un covoiturage"
+  private_edit_message: 
+    cancel: Annuler
+    submit: "Modifier le message"
+    title: "Modifier un message"
+  private_index: 
+    by: "par %name%"
+    creator: Créateur
+    no_covoit: 
+      link: "Proposez-en un !"
+      text: "Vous n'avez participé à aucun covoiturage pour le moment !"
+    per_place: "par place"
+    subscribed: Inscrit
+    subscriptions_left: "none_or_one: place<br />restante|some: places<br />restantes"
+    title: "Mes covoiturages"
+  proposal: 
+    blablacarUrl: 
+      label: "URL de l'annonce BlaBlaCar (optionnel)"
+    capacity: 
+      label: "Capacité de votre véhicule (en vous excluant)"
+    date: 
+      label: Date
+    end: 
+      adress: 
+        label: "Adresse précise du point d'arrivée"
+      city: 
+        label: "Ville (ou grande ville la plus proche)"
+      hour: 
+        label: "Heure approximative d'arrivée"
+    notes: 
+      label: "Détails quant au voyage (description de la voiture, place pour la valise, ...) (optionnel)"
+    phone: 
+      label: "Numéro de téléphone"
+    price: 
+      label: "Prix (par place)"
+    start: 
+      adress: 
+        label: "Adresse précise du point de rendez-vous"
+      city: 
+        label: "Ville (ou grande ville la plus proche)"
+      hour: 
+        label: "Heure de départ"
+    submit: "Proposer ce covoiturage"
+    title: "Proposer un covoiturage"
+    titles: 
+      details: Détails
+      end: Arrivée
+      start: Départ
+  public_view: 
+    blablacar: "Voir sur BlaBlaCar"
+    cancel: "Annuler ma réservation"
+    comment: "Ajouter le commentaire"
+    comments: Commentaires
+    creator: Créateur
+    edit: Modifier
+    endAdress: "Adresse d'arrivée"
+    from_to: "%name% propose un covoiturage de %startCity% à %endCity%"
+    no_comment: "Aucun commentaire pour le moment"
+    notes: "Remarques de %name%"
+    places_left: 
+      label: "Places disponibles"
+      value: "%placesLeft% / %capacity%"
+    price: "Prix (par place)"
+    startAdress: "Adresse de départ"
+    startHour: 
+      label: "Heure de départ"
+      value: 
+        end: "(pour une arrivée vers %endHour% à %endCity%)"
+        start: "Le %date% à %startHour%"
+    subscribe: "Réserver une place"
+    subscriptions: "Personnes inscrites"
+    title: "Détails d'un covoiturage"
+  search: 
+    date: Date
+    date_before_after: "Inclure la veille et le lendemain"
+    end_city: "Ville d'arrivée"
+    hour_max: "Heure maximale de départ"
+    hour_min: "Heure minimale de départ"
+    keywords: Mots-clés
+    no_covoit: "Aucun covoiturage n'a été trouvé"
+    olds: "Inclure les anciens covoiturages"
+    places_left: "Nombre minimal de place restantes"
+    price_max: "Prix maximal"
+    start_city: "Ville de départ"
+    submit: Rechercher
+    title: "Rechercher un covoiturage"

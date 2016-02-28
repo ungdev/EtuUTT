@@ -1,23 +1,23 @@
-
+---
 trombi:
-    main:
-        index:
-            title: Trombinoscope
-            uncomplete_profile:
-                title: Votre profil est incomplet
-                desc: Votre profil doit être complet (privé ou public) pour pouvoir utiliser le trombinoscope
-                link: Mon compte
-            search_title: Rechercher un étudiant
-            search: Rechercher
-            more_options: Plus d'options
-            less_options: Moins d'options
-            more: Plus de critères
-            name: Nom, prénom ou surnom
-            studentId: Numéro d'étudiant
-            uv: UVs (séparées par des virgules)
-            phone: Numéro de téléphone
-            personnalMail: E-mail personnel
-            branche: Branche
-            explainations: Effectuez votre recherche en utilisant le formulaire ci-dessus
-            no_results: Aucun résultat
-            count: %count% résultat|%count% résultats
+  main:
+    index:
+      branche: Branche
+      count: "%count% résultat|%count% résultats"
+      explainations: "Effectuez votre recherche en utilisant le formulaire ci-dessus"
+      less_options: "Moins d'options"
+      more: "Plus de critères"
+      more_options: "Plus d'options"
+      name: "Nom, prénom ou surnom"
+      no_results: "Aucun résultat"
+      personnalMail: "E-mail personnel"
+      phone: "Numéro de téléphone"
+      search: Rechercher
+      search_title: "Rechercher un étudiant"
+      studentId: "Numéro d'étudiant"
+      title: Trombinoscope
+      uncomplete_profile:
+        desc: "Votre profil doit être complet (privé ou public) pour pouvoir utiliser le trombinoscope"
+        link: "Mon compte"
+        title: "Votre profil est incomplet"
+      uv: "UVs (séparées par des virgules)"

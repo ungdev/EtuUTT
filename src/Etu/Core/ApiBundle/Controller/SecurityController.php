@@ -165,7 +165,7 @@ class SecurityController extends ApiController
                 $em->persist($authorizationCode);
                 $em->flush();
 
-                return $this->redirect($client->getRedirectUri() . '?authorization_code=' . $authorizationCode->getCode());
+                return $this->redirect($client->getRedirectUri() . '?authorization_code=' . $authorizationCode->getCode() . '&code=' . $authorizationCode->getCode());
             }
         }
 

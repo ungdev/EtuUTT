@@ -1,90 +1,83 @@
-
+---
 buckutt:
-    main:
-        menu:
-            history: Historique
-            reload: Recharger
-            admin: Administrer
-            logout: Déconnexion
-
-        unknownError: Erreur inconnue - Merci de contacter buckutt@utt.fr
-
-        connect:
-            ask: Entrez votre code PIN BuckUTT
-            explainations:
-                1: |
-                    BuckUTT est le système de paiement utilisé pour régler vos achats au foyer,
-                    au BDE ou en soirée. Il vous suffit de recharger votre carte étu ici, avec votre
-                    carte bancaire, ou en passant dans la journée au BDE.
-                2: |
-                    Sur cette interface, vous pouvez également suivre vos derniers achats et rechargements.
-                3: |
-                    Pour commencer, connectez-vous avec votre code PIN qui vous a été envoyé par mail (si
-                    vous l'avez oublié, pas de panique, vous pouvez en regénérer un nouveau avec le lien présent
-                    sous le formulaire).
-            warnings:
-                1: Comme votre code de carte bleue, votre code PIN BuckUTT est personnel. Ne le donnez à personne !
-                2: |
-                    Pour des questions de sécurité, au bout de 3 tentatives ratées, votre compte
-                    sera bloqué. Vous devrez alors passer au BDE pour le faire débloquer.
-            notStudent: |
-                Votre compte n'est pas un compte UTT : vous ne pouvez pas accéder à BuckUTT, qui n'est
-                accessible qu'en tant qu'étudiant UTT.
-            connect: Connexion
-            invalidPin: Code PIN incorrect
-            lostPin: J'ai perdu mon code PIN
-            cantSendMail: Impossible d'envoyer un mail. Merci de contacter buckutt@utt.fr
-            newPinSent: Un nouveau code vous a été envoyé par mail
-
-        index:
-            title: BuckUTT
-            main_title: Gérer son compte BuckUTT
-            credit: Crédit
-            reload: Rechargement
-            noActionFound: Aucune action trouvée
-
-        admin:
-            changePin:
-                title: Changer mon code PIN
-                constraint: Le nouveau code PIN doit contenir 4 chiffres, ni plus ni moins.
-                change: Changer
-                security: |
-                    Pour des raisons de sécurité, votre nouveau code PIN ne peut pas être un quadruplé
-                    (ex: 0000, 1111, etc), 1234 ou 4321. Evitez de mettre votre date de naisssance
-                    ou quoi que ce soit de trop évident.
-                label:
-                    old: Ancien code PIN
-                    new: Nouveau code PIN
-                    confirm: Confirmation
-                results:
-                    confirm: Votre code PIN a été changé avec succès
-                    fillAllFields: Vous devez remplir tout les champs
-                    newDifferents: Les deux nouveaux PIN ne sont pas identiques
-                    invalids: Les codes PIN doivent êtres des entiers positifs à 4 chiffres
-                    newInvalid: Nouveau PIN invalide
-                    oldInvalid: L'ancien PIN est incorrect
-
-            block:
-                title: Bloquer mon compte
-                explaination: |
-                    En cas de perte ou de vol de votre carte, bloquez votre compte pour empêcher
-                    quiconque la trouverait d'utiliser votre compte BuckUTT.
-                warning: |
-                    Vous ne pourrez pas débloquer votre compte seul ! Vous devrez passer au BDE
-                    pour le débloquer.
-                label:
-                    pin: Code PIN
-                block: Bloquer mon compte
-                confirm: Votre compte est maintenant bloqué
-
-        reload:
-            explainations:
-                1: Actuellement, vous avez un crédit de %credit% € sur votre compte.
-                2: Vous souhaitez effectuer un rechargement de %amount% €.
-                3: Votre solde sera donc de %amount_total% €.
-            infos: |
-                Le montant maximum de votre compte BuckUTT est de %max_amount% €.
-                Vous pouvez donc recharger d'un maximum de %possible_amount% €.
-            choose: Choisissez le montant à recharger
-            reload: Recharger
-            confirm: Vous avez bien rechargé votre compte
+  main:
+    admin:
+      block:
+        block: "Bloquer mon compte"
+        confirm: "Votre compte est maintenant bloqué"
+        explaination: |
+            En cas de perte ou de vol de votre carte, bloquez votre compte pour empêcher
+            quiconque la trouverait d'utiliser votre compte BuckUTT.
+        label:
+          pin: "Code PIN"
+        title: "Bloquer mon compte"
+        warning: |
+            Vous ne pourrez pas débloquer votre compte seul ! Vous devrez passer au BDE
+            pour le débloquer.
+      changePin:
+        change: Changer
+        constraint: "Le nouveau code PIN doit contenir 4 chiffres, ni plus ni moins."
+        label:
+          confirm: Confirmation
+          new: "Nouveau code PIN"
+          old: "Ancien code PIN"
+        results:
+          confirm: "Votre code PIN a été changé avec succès"
+          fillAllFields: "Vous devez remplir tout les champs"
+          invalids: "Les codes PIN doivent êtres des entiers positifs à 4 chiffres"
+          newDifferents: "Les deux nouveaux PIN ne sont pas identiques"
+          newInvalid: "Nouveau PIN invalide"
+          oldInvalid: "L'ancien PIN est incorrect"
+        security: |
+            Pour des raisons de sécurité, votre nouveau code PIN ne peut pas être un quadruplé
+            (ex: 0000, 1111, etc), 1234 ou 4321. Evitez de mettre votre date de naisssance
+            ou quoi que ce soit de trop évident.
+        title: "Changer mon code PIN"
+    connect:
+      ask: "Entrez votre code PIN BuckUTT"
+      cantSendMail: "Impossible d'envoyer un mail. Merci de contacter buckutt@utt.fr"
+      connect: Connexion
+      explainations:
+        1: |
+            BuckUTT est le système de paiement utilisé pour régler vos achats au foyer,
+            au BDE ou en soirée. Il vous suffit de recharger votre carte étu ici, avec votre
+            carte bancaire, ou en passant dans la journée au BDE.
+        2: "Sur cette interface, vous pouvez également suivre vos derniers achats et rechargements.\n"
+        3: |
+            Pour commencer, connectez-vous avec votre code PIN qui vous a été envoyé par mail (si
+            vous l'avez oublié, pas de panique, vous pouvez en regénérer un nouveau avec le lien présent
+            sous le formulaire).
+      invalidPin: "Code PIN incorrect"
+      lostPin: "J'ai perdu mon code PIN"
+      newPinSent: "Un nouveau code vous a été envoyé par mail"
+      notStudent: |
+          Votre compte n'est pas un compte UTT : vous ne pouvez pas accéder à BuckUTT, qui n'est
+          accessible qu'en tant qu'étudiant UTT.
+      warnings:
+        1: "Comme votre code de carte bleue, votre code PIN BuckUTT est personnel. Ne le donnez à personne !"
+        2: |
+            Pour des questions de sécurité, au bout de 3 tentatives ratées, votre compte
+            sera bloqué. Vous devrez alors passer au BDE pour le faire débloquer.
+    index:
+      credit: Crédit
+      main_title: "Gérer son compte BuckUTT"
+      noActionFound: "Aucune action trouvée"
+      reload: Rechargement
+      title: BuckUTT
+    menu:
+      admin: Administrer
+      history: Historique
+      logout: Déconnexion
+      reload: Recharger
+    reload:
+      choose: "Choisissez le montant à recharger"
+      confirm: "Vous avez bien rechargé votre compte"
+      explainations:
+        1: "Actuellement, vous avez un crédit de %credit% € sur votre compte."
+        2: "Vous souhaitez effectuer un rechargement de %amount% €."
+        3: "Votre solde sera donc de %amount_total% €."
+      infos: |
+          Le montant maximum de votre compte BuckUTT est de %max_amount% €.
+          Vous pouvez donc recharger d'un maximum de %possible_amount% €.
+      reload: Recharger
+    unknownError: "Erreur inconnue - Merci de contacter buckutt@utt.fr"

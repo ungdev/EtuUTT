@@ -9,81 +9,82 @@ use Symfony\Component\Routing\RouteCollection;
 
 class ModulesRoutingLoader implements LoaderInterface
 {
-	/**
-	 * @var bool
-	 */
-	private $loaded = false;
+    /**
+     * @var bool
+     */
+    private $loaded = false;
 
-	/**
-	 * @var \AppKernel
-	 */
-	private $kernel;
+    /**
+     * @var \AppKernel
+     */
+    private $kernel;
 
-	/**
-	 * @var LoaderResolverInterface
-	 */
-	private $resolver;
+    /**
+     * @var LoaderResolverInterface
+     */
+    private $resolver;
 
-	/**
-	 * @param \AppKernel $kernel
-	 */
-	public function __construct(\AppKernel $kernel)
-	{
-		$this->kernel = $kernel;
-	}
+    /**
+     * @param \AppKernel $kernel
+     */
+    public function __construct(\AppKernel $kernel)
+    {
+        $this->kernel = $kernel;
+    }
 
-	/**
-	 * @param mixed $resource
-	 * @param null $type
-	 * @return \Symfony\Component\Routing\RouteCollection
-	 * @throws \RuntimeException
-	 */
-	public function load($resource, $type = null)
-	{
-		if ($this->loaded) {
-			throw new \RuntimeException('Do not add this loader twice');
-		}
+    /**
+     * @param mixed $resource
+     * @param null $type
+     * @return \Symfony\Component\Routing\RouteCollection
+     * @throws \RuntimeException
+     */
+    public function load($resource, $type = null)
+    {
+        if ($this->loaded) {
+            throw new \RuntimeException('Do not add this loader twice');
+        }
 
-		$routes = new RouteCollection();
+        $routes = new RouteCollection();
 
         /** @var $module Module */
-		foreach ($this->kernel->getModulesDefinitions() as $module) {
+        foreach ($this->kernel->getModulesDefinitions() as $module) {
             $routing = $module->getRouting();
             $loader = $this->resolver->resolve($routing['resource'], $routing['type']);
 
             if ($loader) {
                 $routes->addCollection($loader->load($routing['resource'], $routing['type']));
             }
-		}
+        }
 
-		return $routes;
-	}
+        return $routes;
+    }
 
-	/**
-	 * @param mixed $resource
-	 * @param string|null $type
-	 * @return bool
-	 */
-	public function supports($resource, $type = null)
-	{
-		return $type === 'modules';
-	}
+    /**
+     * @param mixed $resource
+     * @param string|null $type
+     * @return bool
+     */
+    public function supports($resource, $type = null)
+    {
+        return $type === 'modules';
+    }
 
-	/**
-	 * @return \Symfony\Component\Config\Loader\LoaderResolverInterface
-	 */
-	public function getResolver()
-	{
-		return $this->resolver;
-	}
+    /**
+     * @return \Symfony\Component\Config\Loader\LoaderResolverInterface
+     */
+    public function getResolver()
+    {
+        return $this->resolver;
+    }
 
-	/**
-	 * @param \Symfony\Component\Config\Loader\LoaderResolverInterface $resolver
-	 * @return ModulesRoutingLoader
-	 */
-	public function setResolver(LoaderResolverInterface $resolver)
-	{
-		$this->resolver = $resolver;
-		return $this;
-	}
+    /**
+     * @param \Symfony\Component\Config\Loader\LoaderResolverInterface $resolver
+     * @return ModulesRoutingLoader
+     */
+    public function setResolver(LoaderResolverInterface $resolver)
+    {
+        $this->resolver = $resolver;
+
+        return $this;
+    }
 }

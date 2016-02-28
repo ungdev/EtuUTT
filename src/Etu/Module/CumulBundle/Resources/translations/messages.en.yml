@@ -1,12 +1,13 @@
-cumul:
-    main:
-        index:
-            title: Overlapping timetables
-            explainations: |
-                This page will allow you to easily compare student timetables
-                (up to 5).<br />To do so, add desired students on the left column.
-            placeholder: First Name Last Name
-            add: Add the student
-            week: Week
-            warning: You can only add up to 5 students at a time
-            warning_phones: Overlapping timetables cannot be used on small resolutions
+--- 
+cumul: 
+  main: 
+    index: 
+      add: "Add the student"
+      explainations: |
+          This page will allow you to easily compare student timetables
+          (up to 5).<br />To do so, add desired students on the left column.
+      placeholder: "First Name Last Name"
+      title: "Overlapping timetables"
+      warning: "You can only add up to 5 students at a time"
+      warning_phones: "Overlapping timetables cannot be used on small resolutions"
+      week: Week

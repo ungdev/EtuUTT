@@ -8,80 +8,80 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ProfileControllerTest extends WebTestCase
 {
-	public function testRestrictionProfile()
-	{
-		$client = static::createClient();
+    public function testRestrictionProfile()
+    {
+        $client = static::createClient();
 
-		$client->request('GET', '/user/profile');
-		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
-	}
+        $client->request('GET', '/user/profile');
+        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+    }
 
-	public function testRestrictionProfileEdit()
-	{
-		$client = static::createClient();
+    public function testRestrictionProfileEdit()
+    {
+        $client = static::createClient();
 
-		$client->request('GET', '/user/profile/edit');
-		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
-	}
+        $client->request('GET', '/user/profile/edit');
+        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+    }
 
-	public function testRestrictionProfileAvatar()
-	{
-		$client = static::createClient();
+    public function testRestrictionProfileAvatar()
+    {
+        $client = static::createClient();
 
-		$client->request('GET', '/user/profile/avatar');
-		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
-	}
+        $client->request('GET', '/user/profile/avatar');
+        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+    }
 
-	public function testRestrictionTrombiEdit()
-	{
-		$client = static::createClient();
+    public function testRestrictionTrombiEdit()
+    {
+        $client = static::createClient();
 
-		$client->request('GET', '/user/trombi/edit');
-		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
-	}
+        $client->request('GET', '/user/trombi/edit');
+        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+    }
 
-	public function testRestrictionView()
-	{
-		$client = static::createClient();
+    public function testRestrictionView()
+    {
+        $client = static::createClient();
 
-		$client->request('GET', '/user/admin');
-		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
-	}
+        $client->request('GET', '/user/admin');
+        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+    }
 
-	public function testProfile()
-	{
-		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+    public function testProfile()
+    {
+        $client = static::createClient();
+        $client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
-		$crawler = $client->request('GET', '/user/profile');
+        $crawler = $client->request('GET', '/user/profile');
 
-		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Mon profil")')->count());
-	}
+        $this->assertGreaterThan(0, $crawler->filter('h2:contains("Mon profil")')->count());
+    }
 
-	public function testProfileEdit()
-	{
-		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+    public function testProfileEdit()
+    {
+        $client = static::createClient();
+        $client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
-		$crawler = $client->request('GET', '/user/profile/edit');
-		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier mes informations")')->count());
-	}
+        $crawler = $client->request('GET', '/user/profile/edit');
+        $this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier mes informations")')->count(), $client->getResponse()->getContent());
+    }
 
-	public function testTrombiEdit()
-	{
-		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+    public function testTrombiEdit()
+    {
+        $client = static::createClient();
+        $client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
-		$crawler = $client->request('GET', '/user/trombi/edit');
-		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Mon trombinoscope")')->count());
-	}
+        $crawler = $client->request('GET', '/user/trombi/edit');
+        $this->assertGreaterThan(0, $crawler->filter('h2:contains("Mon trombinoscope")')->count());
+    }
 
-	public function testView()
-	{
-		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+    public function testView()
+    {
+        $client = static::createClient();
+        $client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
-		$crawler = $client->request('GET', '/user/admin');
-		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Détail d\'un profil")')->count());
-	}
+        $crawler = $client->request('GET', '/user/admin');
+        $this->assertGreaterThan(0, $crawler->filter('h2:contains("Détail d\'un profil")')->count());
+    }
 }

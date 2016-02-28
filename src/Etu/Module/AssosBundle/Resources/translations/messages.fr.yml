@@ -1,35 +1,35 @@
-
+---
 assos:
-    main:
-        menu:
-            description: Description
-            members: Membres
-            orgas: Associations et clubs
-            elus: Elus étudiants
-        index:
-            title: Les associations
-            meta: Découvrez les associations étudiantes de l'UTT !
-            president: Président
-        elus:
-            title: Elus étudiants
-            meta: Elus étudiants
-        view:
-            title: Détail d'une association
-            back: Retour à la liste
-            name: Nom
-            president: Président
-            contactMail: E-mail de contact
-            contactPhone: Téléphone de contact
-            description: Description
-            website: Site internet
-        members:
-            title: Membres d'une assocation
-            back: Retour à la liste
-            name: Nom
-            president: Président
-            contactMail: E-mail de contact
-            contactPhone: Téléphone de contact
-            description: Description
-            website: Site internet
-            office: Bureau
-            members: Membres
+  main:
+    elus:
+      meta: "Elus étudiants"
+      title: "Elus étudiants"
+    index:
+      meta: "Découvrez les associations étudiantes de l'UTT !"
+      president: Président
+      title: "Les associations"
+    members:
+      back: "Retour à la liste"
+      contactMail: "E-mail de contact"
+      contactPhone: "Téléphone de contact"
+      description: Description
+      members: Membres
+      name: Nom
+      office: Bureau
+      president: Président
+      title: "Membres d'une assocation"
+      website: "Site internet"
+    menu:
+      description: Description
+      elus: "Elus étudiants"
+      members: Membres
+      orgas: "Associations et clubs"
+    view:
+      back: "Retour à la liste"
+      contactMail: "E-mail de contact"
+      contactPhone: "Téléphone de contact"
+      description: Description
+      name: Nom
+      president: Président
+      title: "Détail d'une association"
+      website: "Site internet"

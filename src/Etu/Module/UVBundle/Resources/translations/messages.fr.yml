@@ -1,97 +1,91 @@
-
+---
 uvs:
-    notifs:
-        newComment: Nouveau commentaire dans l'UV %uv% (par %user%)
-        newReview: Nouvelle annale dans l'UV %uv% (par %user%)
-
-    categories:
-        cs: Connaissances scientifiques
-        tm: Techniques et méthodes
-        ct: Culture et technologie
-        me: Management de l'entreprise
-        ec: Expression et communication
-        st: Stages
-        other: Autre
-
-    reviews:
-        partiel: Partiel
-        partiel_1: Partiel 1
-        partiel_2: Partiel 2
-        dm: Devoir Maison
-        midterm: Médian
-        final: Final
-
-    main:
-        index:
-            title: Les UV
-            my: Mes UV
-            noResult: Vous semblez ne suivre aucune UV !
-        category:
-            title: Catégorie d'UV
-            noResult : Aucune UV dans cette catégorie
-        search:
-            title: Rechercher une UV
-            noResult: Aucun résultat
-        view:
-            title: Détail d'une UV - %code%
-            dontExists: Cette UV n'existe plus
-            viewCourses: Voir les créneaux de cette UV
-            credits: Crédits
-            cm: Cours magistral
-            td: Travaux dirigés
-            tp: Travaux pratiques
-            the: Travail personnel
-            available: Disponibilité
-            autumn: Automne
-            spring: Printemps
-            autumnAndSpring: Automne et printemps
-            content: Programme
-            aims: Objectifs
-            reviews: Annales
-            approuved: Approuvées par l'équipe
-            pending: En attente de validation
-            countReviews: %count% annale|%count% annales
-            sendReview: Envoyer une annale
-            winBadges: Envoyez des annales pour gagner des badges !
-            comments: Commentaires
-            noComment: Aucun commentaire pour le moment
-            body: Ajouter un commentaire
-            submit: Commenter
-        sendReview:
-            title: Envoyer une annale
-            back: Retour
-            type: Type d'examen
-            semester: Semestre de l'annale
-            file: Fichier (accepté : pdf, jpg, jpeg, png)
-            submit: Envoyer l'annale
-            cancel: Annuler
-            confirm: Votre annale a bien été envoyée. Merci de votre participation !
-        comment:
-            confirm: Votre commentaire a bien été envoyée. Merci de votre participation !
-        courses:
-            title: Créneaux de %uv%
-
-    admin:
-        back: Retour
-        menu_item: Gestion des UV
-        index:
-            title: Gérer les UV
-            actions: Actions
-            lastsReviews: Dernières annales
-            review: Annale
-            sender: Auteur
-            uv: UV
-            validate: Valider
-            unvalidate: Dévalider
-            delete: Supprimer
-            reviews: Toutes les annales
-            lastsComments: Derniers commentaires
-            comments: Tous les commentaires
-        validateReview:
-            confirm: Vous avez bien validé cette annale
-        unvalidateReview:
-            confirm: Vous avez bien dévalidé cette annale
-        deleteReview:
-            confirm: Vous avez bien supprimé cette annale
-
-
+  admin:
+    back: Retour
+    deleteReview:
+      confirm: "Vous avez bien supprimé cette annale"
+    index:
+      actions: Actions
+      comments: "Tous les commentaires"
+      delete: Supprimer
+      lastsComments: "Derniers commentaires"
+      lastsReviews: "Dernières annales"
+      review: Annale
+      reviews: "Toutes les annales"
+      sender: Auteur
+      title: "Gérer les UV"
+      unvalidate: Dévalider
+      uv: UV
+      validate: Valider
+    menu_item: "Gestion des UV"
+    unvalidateReview:
+      confirm: "Vous avez bien dévalidé cette annale"
+    validateReview:
+      confirm: "Vous avez bien validé cette annale"
+  categories:
+    cs: "Connaissances scientifiques"
+    ct: "Culture et technologie"
+    ec: "Expression et communication"
+    me: "Management de l'entreprise"
+    other: Autre
+    st: Stages
+    tm: "Techniques et méthodes"
+  main:
+    category:
+      noResult: "Aucune UV dans cette catégorie"
+      title: "Catégorie d'UV"
+    comment:
+      confirm: "Votre commentaire a bien été envoyée. Merci de votre participation !"
+    courses:
+      title: "Créneaux de %uv%"
+    index:
+      my: "Mes UV"
+      noResult: "Vous semblez ne suivre aucune UV !"
+      title: "Les UV"
+    search:
+      noResult: "Aucun résultat"
+      title: "Rechercher une UV"
+    sendReview:
+      back: Retour
+      cancel: Annuler
+      confirm: "Votre annale a bien été envoyée. Merci de votre participation !"
+      file: "Fichier (accepté : pdf, jpg, jpeg, png)"
+      semester: "Semestre de l'annale"
+      submit: "Envoyer l'annale"
+      title: "Envoyer une annale"
+      type: "Type d'examen"
+    view:
+      aims: Objectifs
+      approuved: "Approuvées par l'équipe"
+      autumn: Automne
+      autumnAndSpring: "Automne et printemps"
+      available: Disponibilité
+      body: "Ajouter un commentaire"
+      cm: "Cours magistral"
+      comments: Commentaires
+      content: Programme
+      countReviews: "%count% annale|%count% annales"
+      credits: Crédits
+      dontExists: "Cette UV n'existe plus"
+      noComment: "Aucun commentaire pour le moment"
+      pending: "En attente de validation"
+      reviews: Annales
+      sendReview: "Envoyer une annale"
+      spring: Printemps
+      submit: Commenter
+      td: "Travaux dirigés"
+      the: "Travail personnel"
+      title: "Détail d'une UV - %code%"
+      tp: "Travaux pratiques"
+      viewCourses: "Voir les créneaux de cette UV"
+      winBadges: "Envoyez des annales pour gagner des badges !"
+  notifs:
+    newComment: "Nouveau commentaire dans l'UV %uv% (par %user%)"
+    newReview: "Nouvelle annale dans l'UV %uv% (par %user%)"
+  reviews:
+    dm: "Devoir Maison"
+    final: Final
+    midterm: Médian
+    partiel: Partiel
+    partiel_1: "Partiel 1"
+    partiel_2: "Partiel 2"

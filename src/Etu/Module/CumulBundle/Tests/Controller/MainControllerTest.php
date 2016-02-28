@@ -21,7 +21,7 @@ class MainControllerTest extends WebTestCase
 	public function testRestrictionIndexOrga()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new OrgaToken(MockUser::createOrga()));
+		$client->getContainer()->get('security.token_storage')->setToken(new OrgaToken(MockUser::createOrga()));
 
 		$client->request('GET', '/cumul?q=user');
 		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
@@ -33,7 +33,7 @@ class MainControllerTest extends WebTestCase
 	public function testIndex()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 		$client->followRedirects(true);
 
 		$crawler = $client->request('GET', '/cumul', array('q' => 'user'));

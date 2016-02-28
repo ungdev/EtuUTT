@@ -25,3 +25,7 @@ monolog:
             type:  stream
             path:  %kernel.logs_dir%/%kernel.environment%.log
             level: debug
+        sentry:
+            type: raven
+            dsn: %sentry_dsn%
+            level: notice
