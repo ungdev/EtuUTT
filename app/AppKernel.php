@@ -79,8 +79,7 @@ class AppKernel extends EtuKernel
          * Modules bundles, loaded dynamically from app/config/modules.yml
          */
         $modules = Symfony\Component\Yaml\Yaml::parse($this->getRootDir().'/config/modules.yml');
-
-        if (isset($modules['modules'])) {
+        if (array_key_exists('modules', $modules)) {
             if (!is_array($modules['modules'])) {
                 throw new FatalErrorException('Key "modules" in app/config/modules.yml must be an array');
             }
@@ -123,6 +122,8 @@ class AppKernel extends EtuKernel
                     );
                 }
             }
+        } else {
+            throw new \RuntimeException('No modules defined ??');
         }
 
         $this->checkModulesIntegrity();
