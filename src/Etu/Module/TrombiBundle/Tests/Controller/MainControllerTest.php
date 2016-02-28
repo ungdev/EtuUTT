@@ -22,6 +22,7 @@ class MainControllerTest extends WebTestCase
 		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
 
 		$crawler = $client->request('GET', '/trombi');
+		var_dump($crawler->filter('h2:contains("Trombinoscope")'));
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Trombinoscope")')->count());
 	}
 }
