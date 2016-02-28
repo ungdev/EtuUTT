@@ -67,7 +67,7 @@ class AdminControllerTest extends WebTestCase
 	public function testUsers()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createAdminUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createAdminUser()));
 
 		$crawler = $client->request('GET', '/admin/users');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Utilisateurs")')->count());
@@ -76,7 +76,7 @@ class AdminControllerTest extends WebTestCase
 	public function testUserCreate()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createAdminUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createAdminUser()));
 
 		$crawler = $client->request('GET', '/admin/user/create');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Créer un utilisateur")')->count());
@@ -85,7 +85,7 @@ class AdminControllerTest extends WebTestCase
 	public function testUserEdit()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createAdminUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createAdminUser()));
 
 		$crawler = $client->request('GET', '/admin/user/admin/edit');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier un utilisateur")')->count());
@@ -94,7 +94,7 @@ class AdminControllerTest extends WebTestCase
 	public function testUserAvatar()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createAdminUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createAdminUser()));
 
 		$crawler = $client->request('GET', '/admin/user/admin/avatar');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier la photo")')->count());
@@ -103,7 +103,7 @@ class AdminControllerTest extends WebTestCase
 	public function testUserDelete()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createAdminUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createAdminUser()));
 
 		$crawler = $client->request('GET', '/admin/user/admin/delete');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Supprimer un utilisateur")')->count());
@@ -112,7 +112,7 @@ class AdminControllerTest extends WebTestCase
 	public function testUserPermissions()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createAdminUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createAdminUser()));
 
 		$crawler = $client->request('GET', '/admin/user/admin/permissions');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier les permissions")')->count());

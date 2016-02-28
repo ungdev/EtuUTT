@@ -67,7 +67,7 @@ class BugsAdminControllerTest extends WebTestCase
 	public function testDelete()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createAdminUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createAdminUser()));
 
 		$crawler = $client->request('GET', '/admin/bugs/1-issue-title/delete');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Supprimer un bug")')->count());

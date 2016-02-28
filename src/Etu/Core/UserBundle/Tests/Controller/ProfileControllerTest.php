@@ -51,7 +51,7 @@ class ProfileControllerTest extends WebTestCase
 	public function testProfile()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
 		$crawler = $client->request('GET', '/user/profile');
 
@@ -61,7 +61,7 @@ class ProfileControllerTest extends WebTestCase
 	public function testProfileEdit()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
 		$crawler = $client->request('GET', '/user/profile/edit');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier mes informations")')->count());
@@ -70,7 +70,7 @@ class ProfileControllerTest extends WebTestCase
 	public function testTrombiEdit()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
 		$crawler = $client->request('GET', '/user/trombi/edit');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Mon trombinoscope")')->count());
@@ -79,7 +79,7 @@ class ProfileControllerTest extends WebTestCase
 	public function testView()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
 		$crawler = $client->request('GET', '/user/admin');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Détail d\'un profil")')->count());

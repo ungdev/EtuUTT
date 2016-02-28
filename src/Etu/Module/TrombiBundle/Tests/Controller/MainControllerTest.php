@@ -8,21 +8,21 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class MainControllerTest extends WebTestCase
 {
-	public function testRestrictionIndex()
-	{
-		$client = static::createClient();
+    public function testRestrictionIndex()
+    {
+        $client = static::createClient();
 
-		$client->request('GET', '/trombi');
-		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
-	}
+        $client->request('GET', '/trombi');
+        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+    }
 
-	public function testIndex()
-	{
-		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+    public function testIndex()
+    {
+        $client = static::createClient();
+        $client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
-		$crawler = $client->request('GET', '/trombi');
-		var_dump($crawler->filter('h2:contains("Trombinoscope")'));
-		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Trombinoscope")')->count());
-	}
+        $crawler = $client->request('GET', '/trombi');
+        $this->assertEquals($client->getResponse()->getStatusCode(), 200);
+        $this->assertGreaterThan(0, $crawler->filter('h2:contains("Trombinoscope")')->count());
+    }
 }

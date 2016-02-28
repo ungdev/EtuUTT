@@ -35,7 +35,7 @@ class ScheduleControllerTest extends WebTestCase
 	public function testView()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
 		$crawler = $client->request('GET', '/schedule');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Mon emploi du temps")')->count());
@@ -44,7 +44,7 @@ class ScheduleControllerTest extends WebTestCase
 	public function testEdit()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
 		$crawler = $client->request('GET', '/schedule/edit');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier")')->count());
@@ -53,7 +53,7 @@ class ScheduleControllerTest extends WebTestCase
 	public function testPrint()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
 		$crawler = $client->request('GET', '/schedule/print');
 		$this->assertGreaterThan(0, $crawler->filter('title:contains("Imprimer mon emploi du temps")')->count());

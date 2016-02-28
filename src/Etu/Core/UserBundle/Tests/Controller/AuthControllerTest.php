@@ -12,7 +12,7 @@ class AuthControllerTest extends WebTestCase
 	public function testRestrictionConnect()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
 		$client->request('GET', '/user');
 		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
@@ -21,7 +21,7 @@ class AuthControllerTest extends WebTestCase
 	public function testRestrictionConnectCAS()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
 		$client->request('GET', '/user/cas');
 		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
@@ -30,7 +30,7 @@ class AuthControllerTest extends WebTestCase
 	public function testRestrictionConnectExternal()
 	{
 		$client = static::createClient();
-		$client->getContainer()->get('security.context')->setToken(new UserToken(MockUser::createUser()));
+		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
 
 		$client->request('GET', '/user/external');
 		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
