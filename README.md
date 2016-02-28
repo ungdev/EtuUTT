@@ -11,7 +11,7 @@ pour faciliter leur intégration et leur vie étudiante.
 Cette refonte de 2013 a pour vocation d'améliorer les performances, le
 design et la qualité du code.
 
-Ce projet utilise Symfony 2.3 (LTS).
+Ce projet utilise Symfony 2.x.
 
 Documentation
 -------------
@@ -22,10 +22,10 @@ La documentation est disponible sur
 Intégration continue
 --------------------
 
-Ce projet utilise l'intégration continue (TravisCI) :
+Ce projet utilise l'intégration continue (TravisCI), et master est synchronisé avec la production
 
-**master** (développement) :
+**de** (développement) :
+[![Build Status](https://travis-ci.org/ungdev/EtuUTT.svg?branch=dev)](https://travis-ci.org/ungdev/EtuUTT)
+
+**master** (production) :
 [![Build Status](https://travis-ci.org/ungdev/EtuUTT.svg?branch=master)](https://travis-ci.org/ungdev/EtuUTT)
-
-**stable** (production) :
-[![Build Status](https://travis-ci.org/ungdev/EtuUTT.svg?branch=stable)](https://travis-ci.org/ungdev/EtuUTT)
