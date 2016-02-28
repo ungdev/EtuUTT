@@ -48,6 +48,7 @@ class ModulesRoutingLoader implements LoaderInterface
 
         /** @var $module Module */
         foreach ($this->kernel->getModulesDefinitions() as $module) {
+            var_dump($module);
             $routing = $module->getRouting();
             $loader = $this->resolver->resolve($routing['resource'], $routing['type']);
 
