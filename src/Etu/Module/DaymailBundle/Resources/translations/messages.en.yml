@@ -1,33 +1,34 @@
-daymail:
-    memberships:
-        daymail:
-            days:
-                mon: Monday
-                tue: Tuesday
-                wed: Wednesday
-                thu: Thursday
-                fri: Friday
-                sat: Saturday
-                sun: Sunday
-            months:
-                jan: january
-                feb: february
-                mar: march
-                apr: april
-                may: may
-                jun: june
-                jul: july
-                aug: august
-                sep: september
-                oct: october
-                nov: november
-                dec: december
-            title:
-                label: Subject
-            body:
-                label: Content
-            date:
-                label: Date of publication
-            submit: Edit this daymail
-            preview: Preview
-            confirm: You have successfully edited this daymail
+--- 
+daymail: 
+  memberships: 
+    daymail: 
+      body: 
+        label: Content
+      confirm: "You have successfully edited this daymail"
+      date: 
+        label: "Date of publication"
+      days: 
+        fri: Friday
+        mon: Monday
+        sat: Saturday
+        sun: Sunday
+        thu: Thursday
+        tue: Tuesday
+        wed: Wednesday
+      months: 
+        apr: april
+        aug: august
+        dec: december
+        feb: february
+        jan: january
+        jul: july
+        jun: june
+        mar: march
+        may: may
+        nov: november
+        oct: october
+        sep: september
+      preview: Preview
+      submit: "Edit this daymail"
+      title: 
+        label: Subject

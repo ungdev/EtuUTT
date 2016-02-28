@@ -1,138 +1,134 @@
-
+---
 events:
-    notifs:
-        eventCreated: L'évènement %title% a été créé par %orga%
-        eventEdited:
-            location: L'évènement %title% a changé d'emplacement (%newLocation%)
-            beginDate: L'évènement %title% a changé de date de début
-            beginHour: L'évènement %title% a changé d'horaire de début
-            beginBoth: L'évènement %title% a changé de date et d'horaire de début
-            endDate: L'évènement %title% a changé de date de fin
-            endHour: L'évènement %title% a changé d'horaire de fin
-            endBoth: L'évènement %title% a changé de date et d'horaire de fin
-            locationHour:  L'évènement %title% a changé d'emplacement (%newLocation%) et d'horaires
-            other: L'évènement %title% a été modifié
-        eventDeleted: L'évènement %title% a été supprimé
-
-    categories:
-        culture: Culturel
-        sport: Sport
-        formation: Formation
-        soiree: Soirées
-        autre: Autre
-        all: Tous les évènements
-
-    main:
-        menu:
-            month: Mois
-            week: Semaine
-        days:
-            mon: Lundi
-            tue: Mardi
-            wed: Mercredi
-            thu: Jeudi
-            fri: Vendredi
-            sat: Samedi
-            sun: Dimanche
-        daysShort:
-            mon: Lun
-            tue: Mar
-            wed: Mer
-            thu: Jeu
-            fri: Ven
-            sat: Sam
-            sun: Dim
-        months:
-            jan: Janvier
-            feb: Février
-            mar: Mars
-            apr: Avril
-            may: Mai
-            jun: Juin
-            jul: Juillet
-            aug: Août
-            sep: Septembre
-            oct: Octobre
-            nov: Novembre
-            dec: Décembre
-        monthsShort:
-            jan: Jan
-            feb: Fév
-            mar: Mars
-            apr: Avril
-            may: Mai
-            jun: Juin
-            jul: Juil
-            aug: Août
-            sep: Sept
-            oct: Oct
-            nov: Nov
-            dec: Déc
-        index:
-            title: Evènements
-            meta: Découvrez les évènements étudiants organisés à l'UTT !
-            category_orga: Dans %category%, organisé par %orga%
-        week:
-            week: Semaine
-        view:
-            title: Détail d'un évènement
-            willYouCome: Viendrez-vous ?
-            back: Retour au calendrier
-            in: Dans %category%
-            by: organisé par
-            start: Début
-            end: Fin
-            on: Le
-            location: Lieu
-            menu:
-                description: Description
-                subscribers: Participants
-        subscribers:
-            title: Participants à un évènement
-            yes: Oui, je viendrai
-            probably: Je viendrai peut-être
-            no: Non, je ne viendrai pas
-
-    memberships:
-        events:
-            create: Créer un évènement
-        create:
-            back: Retour au calendrier
-            creation: Création d'un évènement
-            title: Titre
-            privacy:
-                label: Public visé
-                public: Exterieurs et étudiants
-                private: Etudiants seulement
-                explain:
-                    1: "Exterieurs et étudiants : tout le monde verra l'événement"
-                    2: "Etudiants seulement : seuls les étudiants verront l'événement"
-            image:
-                label: Image
-                desc: Va être redimensionné en 200x200 pixels
-            category: Categorie
-            begin: Début
-            end: Fin
-            location: Lieu
-            description: Description
-            submit: Créer l'évènement
-            confirm: L'évènement a bien été créé
-        edit:
-            back: Retour au calendrier
-            publicView: Voir la page de l'évènement
-            title: Titre
-            category: Categorie
-            image: Image
-            begin: Début
-            end: Fin
-            location: Lieu
-            description: Description
-            submit: Modifier l'évènement
-            delete: Supprimer l'évènement
-            confirm: L'évènement a bien été modifié
-        delete:
-            question: Voulez-vous vraiment supprimer l'évènement %title% ?
-            yes: Oui, supprimer
-            no: Non, annuler
-            confirm: L'évènement a bien été supprimé
-
+  categories:
+    all: "Tous les évènements"
+    autre: Autre
+    culture: Culturel
+    formation: Formation
+    soiree: Soirées
+    sport: Sport
+  main:
+    days:
+      fri: Vendredi
+      mon: Lundi
+      sat: Samedi
+      sun: Dimanche
+      thu: Jeudi
+      tue: Mardi
+      wed: Mercredi
+    daysShort:
+      fri: Ven
+      mon: Lun
+      sat: Sam
+      sun: Dim
+      thu: Jeu
+      tue: Mar
+      wed: Mer
+    index:
+      category_orga: "Dans %category%, organisé par %orga%"
+      meta: "Découvrez les évènements étudiants organisés à l'UTT !"
+      title: Evènements
+    menu:
+      month: Mois
+      week: Semaine
+    months:
+      apr: Avril
+      aug: Août
+      dec: Décembre
+      feb: Février
+      jan: Janvier
+      jul: Juillet
+      jun: Juin
+      mar: Mars
+      may: Mai
+      nov: Novembre
+      oct: Octobre
+      sep: Septembre
+    monthsShort:
+      apr: Avril
+      aug: Août
+      dec: Déc
+      feb: Fév
+      jan: Jan
+      jul: Juil
+      jun: Juin
+      mar: Mars
+      may: Mai
+      nov: Nov
+      oct: Oct
+      sep: Sept
+    subscribers:
+      false: "Non, je ne viendrai pas"
+      probably: "Je viendrai peut-être"
+      title: "Participants à un évènement"
+      true: "Oui, je viendrai"
+    view:
+      back: "Retour au calendrier"
+      by: "organisé par"
+      end: Fin
+      in: "Dans %category%"
+      location: Lieu
+      menu:
+        description: Description
+        subscribers: Participants
+      start: Début
+      title: "Détail d'un évènement"
+      true: Le
+      willYouCome: "Viendrez-vous ?"
+    week:
+      week: Semaine
+  memberships:
+    create:
+      back: "Retour au calendrier"
+      begin: Début
+      category: Categorie
+      confirm: "L'évènement a bien été créé"
+      creation: "Création d'un évènement"
+      description: Description
+      end: Fin
+      image:
+        desc: "Va être redimensionné en 200x200 pixels"
+        label: Image
+      location: Lieu
+      privacy:
+        explain:
+          1: "Exterieurs et étudiants : tout le monde verra l'événement"
+          2: "Etudiants seulement : seuls les étudiants verront l'événement"
+        label: "Public visé"
+        private: "Etudiants seulement"
+        public: "Exterieurs et étudiants"
+      submit: "Créer l'évènement"
+      title: Titre
+    delete:
+      confirm: "L'évènement a bien été supprimé"
+      false: "Non, annuler"
+      question: "Voulez-vous vraiment supprimer l'évènement %title% ?"
+      true: "Oui, supprimer"
+    edit:
+      back: "Retour au calendrier"
+      begin: Début
+      category: Categorie
+      confirm: "L'évènement a bien été modifié"
+      delete: "Supprimer l'évènement"
+      description: Description
+      end: Fin
+      image: Image
+      location: Lieu
+      publicView: "Voir la page de l'évènement"
+      submit: "Modifier l'évènement"
+      title: Titre
+    events:
+      create: "Créer un évènement"
+  notifs:
+    eventCreated: "L'évènement %title% a été créé par %orga%"
+    eventDeleted: "L'évènement %title% a été supprimé"
+    eventEdited:
+      beginBoth: "L'évènement %title% a changé de date et d'horaire de début"
+      beginDate: "L'évènement %title% a changé de date de début"
+      beginHour: "L'évènement %title% a changé d'horaire de début"
+      endBoth: "L'évènement %title% a changé de date et d'horaire de fin"
+      endDate: "L'évènement %title% a changé de date de fin"
+      endHour: "L'évènement %title% a changé d'horaire de fin"
+      location: "L'évènement %title% a changé d'emplacement (%newLocation%)"
+      locationHour: "L'évènement %title% a changé d'emplacement (%newLocation%) et d'horaires"
+      other: "L'évènement %title% a été modifié"

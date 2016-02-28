@@ -1,19 +1,19 @@
-upload:
-    upload_link: Upload a picture
-
-    main:
-        index:
-            title: Uploading a picture
-            send: Send a picture (jpg, png, gif, bmp, 2 MB maximum) :
-            send_submit: Send
-            adress: Recover adress
-            remove: delete the picture
-            no_image_yet: You have not sent a picture yet
-            confirm: You have sent a picture
-            error_type: The file doesn't seem to be a picture (jpg, png, gif, bmp)
-            error_size: The file seems to be too big in size (maximum 2MB)
-        remove:
-            question: Do you really want to delete <strong>%name%</strong> from the server ?
-            yes: Yes, delete
-            no: No, cancel
-            confirm: You have deleted the picture
+--- 
+upload: 
+  main: 
+    index: 
+      adress: "Recover adress"
+      confirm: "You have sent a picture"
+      error_size: "The file seems to be too big in size (maximum 2MB)"
+      error_type: "The file doesn't seem to be a picture (jpg, png, gif, bmp)"
+      no_image_yet: "You have not sent a picture yet"
+      remove: "delete the picture"
+      send: "Send a picture (jpg, png, gif, bmp, 2 MB maximum) :"
+      send_submit: Send
+      title: "Uploading a picture"
+    remove: 
+      confirm: "You have deleted the picture"
+      false: "No, cancel"
+      question: "Do you really want to delete <strong>%name%</strong> from the server ?"
+      true: "Yes, delete"
+  upload_link: "Upload a picture"
