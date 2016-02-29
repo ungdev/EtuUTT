@@ -25,6 +25,8 @@
 *.php~
 
 # IDE #
+/src/Etu/Core/UserBundle/Resources/temp
+# Used to store schedules
 #######
 
 .idea/
