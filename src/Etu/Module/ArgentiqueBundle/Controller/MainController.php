@@ -4,10 +4,18 @@ namespace Etu\Module\ArgentiqueBundle\Controller;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\ArgentiqueBundle\EtuModuleArgentiqueBundle;
-
-// Import annotations
+use Imagine\Gd\Imagine;
+use Imagine\Image\Box;
+use Imagine\Image\ImageInterface;
+use Imagine\Image\Point;
+use League\Glide\Responses\SymfonyResponseFactory;
+use League\Glide\ServerFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
+
+
+// Import annotations
 
 /**
  * @Route("/argentique")
@@ -15,20 +23,99 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class MainController extends Controller
 {
     /**
+     * @Route("/photo/{file}", requirements={"file"=".+"}, name="argentique_view")
+     */
+    public function viewAction($file)
+    {
+        if (!$this->getUserLayer()->isConnected()) {
+            return $this->createAccessDeniedResponse();
+        }
+
+        /** @var string $root */
+        $root = EtuModuleArgentiqueBundle::getPhotosRoot();
+        $cache_root = $this->get('kernel')->getRootDir().'/cache/';
+
+        $glide = ServerFactory::create(
+            [
+                'source' => $root,
+                'cache' => $cache_root,
+                'response' => new SymfonyResponseFactory(),
+            ]
+        );
+
+        return $glide->getImageResponse($file, $_GET);
+    }
+
+    /**
+     * @Route("/directory/{file}", requirements={"file"=".+"}, name="argentique_collectionImage")
+     */
+    public function collectionImageAction(Request $request, $file)
+    {
+        if (!$this->getUserLayer()->isConnected()) {
+            return $this->createAccessDeniedResponse();
+        }
+
+        /** @var string $root */
+        $root = EtuModuleArgentiqueBundle::getPhotosRoot();
+        $cache_root = $this->get('kernel')->getRootDir().'/cache/';
+        $web_root = $this->get('kernel')->getRootDir().'/../web/';
+
+        $imagine = new Imagine();
+        $cacheFile = $cache_root.md5($request->getPathInfo()).'.png';
+
+        if (file_exists($cacheFile)) {
+            $imagine->open($cacheFile)->show('png');
+            exit;
+        }
+
+        /** @var \SplFileInfo[]|\RecursiveIteratorIterator $iterator */
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($root.'/'.$file));
+
+        $photo = false;
+
+        foreach ($iterator as $file) {
+            if ($file->getExtension() == 'jpg' || $file->getExtension() == 'jpeg') {
+                $size = getimagesize($file->getPathname());
+
+                // Landscape images only
+                if ($size[0] > $size[1]) {
+                    $photo = $file->getPathname();
+                    break;
+                }
+            }
+        }
+
+        $image = $imagine->open($web_root.'/src/img/dirmask.png');
+
+        if ($photo) {
+            $photo = $imagine->open($photo)->thumbnail(new Box(300, 200), ImageInterface::THUMBNAIL_OUTBOUND);
+            $image->paste($photo, new Point(36, 48));
+        }
+
+        $image = $image->thumbnail(new Box(132, 88), ImageInterface::THUMBNAIL_OUTBOUND);
+
+        if ($photo) {
+            $image->save($cacheFile);
+        }
+
+        return $image->show('png');
+    }
+
+    /**
      * @Route("", name="argentique_index")
      * @Route("/collection/{directory}", requirements={"directory"=".+"}, name="argentique_directory")
      * @Template()
      */
     public function indexAction($directory = null)
     {
-        if (! $this->getUserLayer()->isConnected()) {
+        if (!$this->getUserLayer()->isConnected()) {
             return $this->createAccessDeniedResponse();
         }
 
         /** @var string $root */
         $root = EtuModuleArgentiqueBundle::getPhotosRoot();
 
-        if (! file_exists($root)) {
+        if (!file_exists($root)) {
             mkdir($root, 0777, true);
         }
 
@@ -54,7 +141,7 @@ class MainController extends Controller
             if (empty($pathname)) {
                 $pathname = $part;
             } else {
-                $pathname .= '/' . $part;
+                $pathname .= '/'.$part;
             }
 
             $breadcrumb[] = [
@@ -64,7 +151,7 @@ class MainController extends Controller
         }
 
         /** @var \SplFileInfo[] $iterator */
-        $iterator = new \DirectoryIterator($root . '/' . $directory);
+        $iterator = new \DirectoryIterator($root.'/'.$directory);
 
         /** @var array $directories */
         $directories = [];
@@ -78,11 +165,11 @@ class MainController extends Controller
             }
 
             if ($file->isDir()) {
-                $basename = str_replace($root . '/' . (($directory) ? $directory . '/' : ''), '', $file->getPathname());
+                $basename = str_replace($root.'/'.(($directory) ? $directory.'/' : ''), '', $file->getPathname());
 
                 $score = $basename;
 
-                if (! $directory) {
+                if (!$directory) {
                     $score = intval(substr($basename, 1)) * 2;
 
                     if (substr($basename, 0, 1) == 'A') {
@@ -91,7 +178,7 @@ class MainController extends Controller
                 }
 
                 $directories[] = [
-                    'pathname' => str_replace($root . '/', '', $file->getPathname()),
+                    'pathname' => str_replace($root.'/', '', $file->getPathname()),
                     'basename' => $basename,
                     'score' => $score,
                 ];
@@ -100,21 +187,23 @@ class MainController extends Controller
 
                 $photos[] = [
                     'extension' => $file->getExtension(),
-                    'pathname' => str_replace($root . '/', '', $file->getPathname()),
+                    'pathname' => str_replace($root.'/', '', $file->getPathname()),
                     'basename' => $file->getBasename(),
-                    'filename' => $file->getBasename('.' . $file->getExtension()),
+                    'filename' => $file->getBasename('.'.$file->getExtension()),
                     'size' => [
                         'width' => $size[0],
                         'height' => $size[1],
-                        'ratio' => $size[1] / 150
-                    ]
+                        'ratio' => $size[1] / 150,
+                    ],
                 ];
             }
         }
 
-        usort($directories, function($a, $b) {
+        usort(
+            $directories, function ($a, $b) {
             return ($a['score'] > $b['score']) ? -1 : 1;
-        });
+        }
+        );
 
         return [
             'breadcrumb' => $breadcrumb,
