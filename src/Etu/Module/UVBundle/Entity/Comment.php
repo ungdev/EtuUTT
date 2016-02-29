@@ -35,7 +35,7 @@ class Comment
 	/**
 	 * @var UV $uv
 	 *
-	 * @ORM\ManyToOne(targetEntity="UV")
+	 * @ORM\ManyToOne(targetEntity="UV", inversedBy="comments")
 	 * @ORM\JoinColumn()
 	 */
 	protected $uv;

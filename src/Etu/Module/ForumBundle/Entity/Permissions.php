@@ -22,7 +22,7 @@ class Permissions
     /**
      * @var Category $category
      *
-     * @ORM\ManyToOne(targetEntity="Category")
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="permissions")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     protected $category;

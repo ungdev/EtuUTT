@@ -59,7 +59,7 @@ class Member
 	/**
 	 * @var Organization $organization
 	 *
-	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\Organization", inversedBy="")
+	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\Organization", inversedBy="memberships")
 	 * @ORM\JoinColumn()
 	 */
 	protected $organization;

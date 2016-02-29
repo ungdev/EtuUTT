@@ -46,7 +46,7 @@ class Review
 	/**
 	 * @var UV $uv
 	 *
-	 * @ORM\ManyToOne(targetEntity="UV")
+	 * @ORM\ManyToOne(targetEntity="UV", inversedBy="reviews")
 	 * @ORM\JoinColumn()
 	 */
 	protected $uv;
