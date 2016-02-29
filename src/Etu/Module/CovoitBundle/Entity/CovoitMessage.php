@@ -27,7 +27,7 @@ class CovoitMessage
     /**
      * @var Covoit
      *
-     * @ORM\ManyToOne(targetEntity="Covoit")
+     * @ORM\ManyToOne(targetEntity="Covoit", inversedBy="messages")
      * @ORM\JoinColumn()
      */
     private $covoit;

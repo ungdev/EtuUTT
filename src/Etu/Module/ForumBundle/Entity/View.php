@@ -28,7 +28,7 @@ class View
     /**
      * @var Thread $thread
      *
-     * @ORM\ManyToOne(targetEntity="thread")
+     * @ORM\ManyToOne(targetEntity="thread", inversedBy="viewed")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     protected $thread;

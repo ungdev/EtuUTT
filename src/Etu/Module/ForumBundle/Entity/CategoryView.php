@@ -28,7 +28,7 @@ class CategoryView
     /**
      * @var Category $category
      *
-     * @ORM\ManyToOne(targetEntity="category")
+     * @ORM\ManyToOne(targetEntity="category", inversedBy="categoryViewed")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     protected $category;
