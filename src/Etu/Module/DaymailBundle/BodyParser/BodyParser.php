@@ -34,15 +34,16 @@ class BodyParser
         foreach ($images as $image) {
             preg_match('/src="(.+)"/iU', $image, $src);
             $src = $src[1];
+            if (stripos('/uploads/', $src)) {
+                $path = explode('/uploads/', $src);
+                $path = $path[1];
 
-            $path = explode('/uploads/', $src);
-            $path = $path[1];
+                $size = $imagine->open($this->webDir.'/uploads/'.$path)->getSize();
 
-            $size = $imagine->open($this->webDir . '/uploads/' . $path)->getSize();
-
-            if ($size->getWidth() > 600) {
-                $replacement = '<img src="'. $src .'" style="width:600px; max-width: 100%;" width="600" />';
-                $string = str_replace($image, $replacement, $string);
+                if ($size->getWidth() > 600) {
+                    $replacement = '<img src="'.$src.'" style="width:600px; max-width: 100%;" width="600" />';
+                    $string = str_replace($image, $replacement, $string);
+                }
             }
         }
 
