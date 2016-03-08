@@ -30,5 +30,6 @@ notifications:
   webhooks:
     urls:
       - https://ungdev.utt.fr/deploy
+      - etu.utt.fr
     on_failure: never
     on_start: never
