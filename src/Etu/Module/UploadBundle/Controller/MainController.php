@@ -32,7 +32,7 @@ class MainController extends Controller
 
 		/** @var $file \SplFileInfo */
 		foreach ($iterator as $file) {
-			if ($file->isFile() && in_array($file->getExtension(), array('png', 'jpg', 'jpeg', 'gif', 'bmp'))) {
+			if ($file->isFile() && in_array(strtolower($file->getExtension()), array('png', 'jpg', 'jpeg', 'gif', 'bmp'))) {
 				$images[] = array(
 					'id' => substr(md5($file->getBasename()), 0, 10),
 					'name' => $file->getBasename()
@@ -52,7 +52,7 @@ class MainController extends Controller
 			$file = $form->getData()['file'];
 
 			if (! in_array(
-				pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION),
+				strtolower(pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION)),
 				array('png', 'jpg', 'jpeg', 'gif', 'bmp')))
 			{
 				$this->get('session')->getFlashBag()->set('message', array(
@@ -118,7 +118,7 @@ class MainController extends Controller
 
 		/** @var $file \SplFileInfo */
 		foreach ($iterator as $file) {
-			if ($file->isFile() && in_array($file->getExtension(), array('png', 'jpg', 'jpeg', 'gif', 'bmp'))) {
+			if ($file->isFile() && in_array(strtolower($file->getExtension()), array('png', 'jpg', 'jpeg', 'gif', 'bmp'))) {
 				if (substr(md5($file->getBasename()), 0, 10) == $id) {
 					$image = array(
 						'id' => substr(md5($file->getBasename()), 0, 10),
