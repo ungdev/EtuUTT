@@ -141,7 +141,7 @@ class ScheduleController extends Controller
 				$day = $course->getDay();
 			}
 
-			$day = new \DateTime('last '.$day);
+			$day = new \DateTime('last '.$day, new \DateTimeZone('Europe/Paris'));
 
 			$start = clone $day;
 			$time = explode(':', $course->getStart());
