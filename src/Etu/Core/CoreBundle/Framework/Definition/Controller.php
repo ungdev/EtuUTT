@@ -98,7 +98,9 @@ class Controller extends BaseController
 	public function getCurrentBundle()
 	{
 		$bundles = $this->getKernel()->getBundles();
-		$currentShortName = $this->getRequest()->attributes->get('_template')->get('bundle');
+		$controller = $this->getRequest()->attributes->get('_controller');
+		preg_match('/^(.*)\\\Controller\\\(.*)Controller::/', $controller, $matches);
+		$currentShortName = str_replace('\\','',$matches[1]);
 
 		return (isset($bundles[$currentShortName])) ? $bundles[$currentShortName] : false;
 	}
