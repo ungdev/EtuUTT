@@ -45,11 +45,13 @@ $(function() {
 		monthNamesShort: monthNamesShort,
 		dayNames: dayNames,
 		dayNamesShort: dayNamesShort,
+		themeButtonIcons: {
+			prev: 'circle-triangle-w',
+			next: 'circle-triangle-e',
+			prevYear: 'seek-prev',
+			nextYear: 'seek-next'
+		},
 		buttonText: {
-			prev: "<span class='fc-text-arrow'>&lsaquo;</span>",
-			next: "<span class='fc-text-arrow'>&rsaquo;</span>",
-			prevYear: "<span class='fc-text-arrow'>&laquo;</span>",
-			nextYear: "<span class='fc-text-arrow'>&raquo;</span>",
 			today: 'Aujourd\'hui',
 			month: 'Mois',
 			week: 'Semaine',
@@ -58,30 +60,25 @@ $(function() {
 
 		// time formats
 		titleFormat: {
-			month: 'MMMM yyyy',
-			week: "dd MMM yyyy",
-			day: 'dddd dd MMM yyyy'
+			month: 'MMMM YYYY',
+			week: "DD MMM YYYY",
+			day: 'dddd DD MMM YYYY'
 		},
 		columnFormat: {
 			month: 'ddd',
-			week: 'ddd dd/MM',
-			day: 'dddd dd MMMM'
+			week: 'ddd DD/MM',
+			day: 'dddd DD MMMM'
 		},
 		allDaySlot: true,
-		allDayText: 'Journée<br />complète',
+		allDayText: 'Journée\ncomplète',
 		firstHour: 6,
 		slotMinutes: 30,
 		defaultEventMinutes: 120,
 		axisFormat: 'HH:mm',
-		timeFormat: {
-			agenda: 'HH:mm{ - HH:mm}',
-			'': 'HH:mm'
-		},
+		timeFormat: 'H:mm',
 		dragOpacity: {
 			agenda: .5
 		},
-		minTime: 0,
-		maxTime: 24,
 
 		events: source,
 
