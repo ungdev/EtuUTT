@@ -165,9 +165,8 @@ class MembershipsController extends Controller
 				'message' => '"end" parameter is required',
 			)));
 		}
-
-		$start = \DateTime::createFromFormat('U', $start);
-		$end = \DateTime::createFromFormat('U', $end);
+		$start = \DateTime::createFromFormat('Y-m-d', $start);
+		$end = \DateTime::createFromFormat('Y-m-d', $end);
 
 		/** @var Calendar $calendr */
 		$calendr = $this->get('calendr');
@@ -292,7 +291,7 @@ class MembershipsController extends Controller
 
 			$event->upload();
 
-			$entity = array(
+			$entity = array( // @TODO WTF? Y U AN ARRAY?
 				'id' => $event->getId(),
 				'title' => $event->getTitle(),
 				'category' => $categories[$event->getCategory()],
@@ -306,7 +305,7 @@ class MembershipsController extends Controller
 			$notif = new Notification();
 
 			$notif
-				->setModule($this->getCurrentBundle()->getIdentifier())
+				->setModule('event')
 				->setHelper('event_created_all')
 				->setAuthorId($this->getUser()->getId())
 				->setEntityType('event')
@@ -323,7 +322,7 @@ class MembershipsController extends Controller
 			$keys = array_flip($availableCategories);
 
 			$notif
-				->setModule($this->getCurrentBundle()->getIdentifier())
+				->setModule('event')
 				->setHelper('event_created_category')
 				->setAuthorId($this->getUser()->getId())
 				->setEntityType('event-category')
@@ -655,7 +654,7 @@ class MembershipsController extends Controller
 			$notif = new Notification();
 
 			$notif
-				->setModule($this->getCurrentBundle()->getIdentifier())
+				->setModule('event')
 				->setHelper('event_deleted')
 				->setAuthorId($this->getUser()->getId())
 				->setEntityType('event')

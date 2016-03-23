@@ -22,12 +22,7 @@ $(function() {
 		slotMinutes: 30,
 		defaultEventMinutes: 120,
 		axisFormat: 'HH:mm',
-		timeFormat: {
-			agenda: 'HH:mm{ - HH:mm}',
-			'': 'HH:mm'
-		},
-		minTime: 0,
-		maxTime: 24,
+		timeFormat: 'H:mm',
 
 		events: source,
 

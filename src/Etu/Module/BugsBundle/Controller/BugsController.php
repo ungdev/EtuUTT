@@ -141,7 +141,7 @@ class BugsController extends Controller
 				$notif = new Notification();
 
 				$notif
-					->setModule($this->getCurrentBundle()->getIdentifier())
+					->setModule('bugs')
 					->setHelper('bugs_new_comment')
 					->setAuthorId($this->getUser()->getId())
 					->setEntityType('issue')
@@ -230,7 +230,7 @@ class BugsController extends Controller
 			$notif = new Notification();
 
 			$notif
-				->setModule($this->getCurrentBundle()->getIdentifier())
+				->setModule('bugs')
 				->setHelper('bugs_new_opened')
 				->setAuthorId($this->getUser()->getId())
 				->setEntityType('issue')

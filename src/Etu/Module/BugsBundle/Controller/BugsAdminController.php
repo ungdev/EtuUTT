@@ -335,7 +335,7 @@ class BugsAdminController extends Controller
 		$notif = new Notification();
 
 		$notif
-			->setModule($this->getCurrentBundle()->getIdentifier())
+			->setModule('bugs')
 			->setHelper('bugs_closed')
 			->setAuthorId($this->getUser()->getId())
 			->setEntityType('issue')
