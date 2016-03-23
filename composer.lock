@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "30a92fc341686ad84872827fb96a6045",
-    "content-hash": "ae6f26589de0ab39a368787bc8fb36ca",
+    "hash": "2dc4627886e3b06af12ccdad192b101e",
+    "content-hash": "bfc331c451cb53df19c05044853100a1",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -988,41 +988,6 @@
                 "orm"
             ],
             "time": "2016-01-05 21:34:58"
-        },
-        {
-            "name": "dopiaza/dpzflickr",
-            "version": "1.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dopiaza/DPZFlickr.git",
-                "reference": "b45585978f8dd20f402a1cf19a8924658be85fb2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dopiaza/DPZFlickr/zipball/b45585978f8dd20f402a1cf19a8924658be85fb2",
-                "reference": "b45585978f8dd20f402a1cf19a8924658be85fb2",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "0",
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "DPZ": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "David Wilkinson",
-                    "homepage": "http://dopiaza.org",
-                    "role": "Developer"
-                }
-            ],
-            "description": "PHP client library for Flickr.",
-            "time": "2014-06-01 13:24:21"
         },
         {
             "name": "elao/web-profiler-extra-bundle",
