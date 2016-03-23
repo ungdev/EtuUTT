@@ -44,7 +44,7 @@
     "league/glide": "^1.0",
     "raven/raven": "^0.13.0",
     "league/glide-symfony": "^1.0",
-    "imagine/imagine": "^0.5"
+    "imagine/imagine": "^0.6.3"
   },
   "scripts": {
     "post-install-cmd": [

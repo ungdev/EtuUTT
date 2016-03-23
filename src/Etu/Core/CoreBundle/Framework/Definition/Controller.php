@@ -91,17 +91,4 @@ class Controller extends BaseController
 	{
 		return parent::getUser();
 	}
-
-	/**
-	 * @return \Etu\Core\CoreBundle\Framework\Definition\Module
-	 */
-	public function getCurrentBundle()
-	{
-		$bundles = $this->getKernel()->getBundles();
-		$controller = $this->getRequest()->attributes->get('_controller');
-		preg_match('/^(.*)\\\Controller\\\(.*)Controller::/', $controller, $matches);
-		$currentShortName = str_replace('\\','',$matches[1]);
-
-		return (isset($bundles[$currentShortName])) ? $bundles[$currentShortName] : false;
-	}
 }

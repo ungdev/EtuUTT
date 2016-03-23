@@ -376,7 +376,7 @@ class MainController extends Controller
 
 				$notif = new Notification();
 				$notif
-					->setModule($this->getCurrentBundle()->getIdentifier())
+					->setModule('forum')
 					->setHelper('thread_answered')
 					->setAuthorId($this->getUser()->getId())
 					->setEntityType('message')

@@ -187,7 +187,7 @@ class PrivateController extends Controller
                 $notif = new Notification();
 
                 $notif
-                    ->setModule($this->getCurrentBundle()->getIdentifier())
+                    ->setModule('covoit')
                     ->setHelper('covoit_edited')
                     ->setAuthorId($this->getUser()->getId())
                     ->setEntityType('covoit')
@@ -298,7 +298,7 @@ class PrivateController extends Controller
             $notif = new Notification();
 
             $notif
-                ->setModule($this->getCurrentBundle()->getIdentifier())
+                ->setModule('covoit')
                 ->setHelper('covoit_canceled')
                 ->setAuthorId($this->getUser()->getId())
                 ->setEntityType('covoit')
@@ -376,7 +376,7 @@ class PrivateController extends Controller
             $notif = new Notification();
 
             $notif
-                ->setModule($this->getCurrentBundle()->getIdentifier())
+                ->setModule('covoit')
                 ->setHelper('covoit_subscription')
                 ->setAuthorId($this->getUser()->getId())
                 ->setEntityType('covoit')
