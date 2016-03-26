@@ -24,6 +24,27 @@
 				'unorderedlist', '|', 'image', 'link'
 			]
 		});
+
+		var updateImgSizeAttr = function(){
+			$(this).find('img').each(function() {
+				// Force to keep ratio
+				if(!$(this).data('ratio')) {
+					$(this).data('ratio', parseInt($(this).css('width'))/parseInt($(this).css('height')));
+				}
+				else {
+					$(this).css('height', parseInt($(this).css('width'))/$(this).data('ratio'));
+				}
+
+				// Set width and height for php parsing
+				$(this).attr('width', parseInt($(this).css('width')));
+				$(this).attr('height', parseInt($(this).css('height')));
+			});
+			return true;
+		};
+
+		$('.redactor_redactor-html').bind("DOMSubtreeModified", updateImgSizeAttr);
+		$('#daymailform').submit(updateImgSizeAttr);
+
 	</script>
 
 	{% if wantPreview %}
@@ -130,7 +151,7 @@
 					</div>
 				</div>
 
-				<form method="post" action="">
+				<form id="daymailform" method="post" action="">
 					{{ form_errors(form) }}
 
 					<div class="control-group">
