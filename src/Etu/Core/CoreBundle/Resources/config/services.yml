@@ -40,6 +40,7 @@ parameters:
     etu.redactor_limited_type.class: Etu\Core\CoreBundle\Form\RedactorLimitedType
     etu.redactor_html_type.class: Etu\Core\CoreBundle\Form\RedactorHtmlType
 
+    etu.form.datetime_picker_type.class: Etu\Core\CoreBundle\Form\DateTimePickerType
     etu.form.date_picker_type.class: Etu\Core\CoreBundle\Form\DatePickerType
     etu.form.birthday_picker_type.class: Etu\Core\CoreBundle\Form\BirthdayPickerType
 
@@ -202,6 +203,10 @@ services:
         class: %etu.form.birthday_picker_type.class%
         tags:
             - { name: form.type, alias: birthday_picker }
+    etu.form.datetime_picker_type:
+        class: %etu.form.datetime_picker_type.class%
+        tags:
+            - { name: form.type, alias: datetime_picker }
 
 
     # Home builder
