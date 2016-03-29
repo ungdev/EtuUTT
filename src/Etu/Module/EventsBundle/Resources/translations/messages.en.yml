@@ -58,10 +58,10 @@ events:
       oct: Oct
       sep: Sep
     subscribers:
-      false: "No, I will not come"
+      no: "No, I will not come"
       probably: "I'm not sure if I will come"
       title: "Participants of an event"
-      true: "Yes, I will come"
+      yes: "Yes, I will come"
     view:
       back: "Back to the calendar"
       by: "Organized by"
