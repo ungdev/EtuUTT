@@ -37,7 +37,7 @@ class OrgaMenuRendererExtension extends \Twig_Extension
 	public function getFunctions()
 	{
 		return array(
-			'render_orga_menu' => new \Twig_Function_Method($this, 'render', array('is_safe' => array('html'))),
+			new \Twig_SimpleFunction('render_orga_menu', array($this, 'render'), array('is_safe' => array('html'))),
 		);
 	}
 

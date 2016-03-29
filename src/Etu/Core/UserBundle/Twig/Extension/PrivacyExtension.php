@@ -15,8 +15,8 @@ class PrivacyExtension extends \Twig_Extension
 	public function getFunctions()
 	{
 		return array(
-			'is_private' => new \Twig_Function_Method($this, 'isPrivate'),
-			'is_public' => new \Twig_Function_Method($this, 'isPublic'),
+			new \Twig_SimpleFunction('is_private', array($this, 'isPrivate')),
+			new \Twig_SimpleFunction('is_public', array($this, 'isPublic')),
 		);
 	}
 

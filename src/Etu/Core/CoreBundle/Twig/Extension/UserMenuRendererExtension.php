@@ -37,7 +37,7 @@ class UserMenuRendererExtension extends \Twig_Extension
 	public function getFunctions()
 	{
 		return array(
-			'render_user_menu' => new \Twig_Function_Method($this, 'render', array('is_safe' => array('html'))),
+			new \Twig_SimpleFunction('render_user_menu', array($this, 'render'), array('is_safe' => array('html'))),
 		);
 	}
 
