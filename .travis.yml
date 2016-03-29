@@ -33,3 +33,4 @@ notifications:
       - https://etu.utt.fr/deploy
     on_failure: never
     on_start: never
+    on_pull_requests: false
