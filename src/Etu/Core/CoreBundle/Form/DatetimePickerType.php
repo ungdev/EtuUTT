@@ -5,7 +5,7 @@ namespace Etu\Core\CoreBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class DateTimePickerType extends AbstractType
+class DatetimePickerType extends AbstractType
 {
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
 	{
