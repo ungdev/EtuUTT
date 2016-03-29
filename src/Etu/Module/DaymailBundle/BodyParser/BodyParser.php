@@ -36,8 +36,8 @@ class BodyParser
             $style = ($style)? $style[1] : '';
 
             preg_match('/src="(.+)"/iU', $image, $src);
-            preg_match('/width="([0-9]+)"/iU', $image, $width);
-            preg_match('/height="([0-9]+)"/iU', $image, $height);
+            preg_match('/data-width="([0-9]+)"/iU', $image, $width);
+            preg_match('/data-height="([0-9]+)"/iU', $image, $height);
 
             if($width && $height && $src) {
                 // Resize image if necessary
