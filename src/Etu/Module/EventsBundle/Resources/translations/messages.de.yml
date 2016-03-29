@@ -37,10 +37,10 @@ events:
       oct: Oktober
       sep: September
     subscribers: 
-      false: "Nein, ich komme nicht"
+      no: "Nein, ich komme nicht"
       probably: "Ich werde vielleicht kommen"
       title: "Teilnehmer an einem Event"
-      true: "Ja, ich komme"
+      yes: "Ja, ich komme"
     view: 
       back: "Zurück zum Kalendar"
       by: "Organiesiert von"
