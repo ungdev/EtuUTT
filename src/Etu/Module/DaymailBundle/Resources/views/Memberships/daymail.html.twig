@@ -26,28 +26,46 @@
 		});
 
 		var updateImgSizeAttr = function(){
-			$(this).find('img').each(function() {
+			$('.redactor_redactor-html').find('img').each(function() {
 
-				// Force to keep ratio for image that are loaded
-				if(parseInt($(this).css('width')) >= 25 && parseInt($(this).css('width')) >= 25)
+				if($(this).width() >= 25 && $(this).height() >= 25)
 				{
+					// Force to keep ratio
 					if(!$(this).data('ratio')) {
-						$(this).data('ratio', parseInt($(this).css('width'))/parseInt($(this).css('height')));
+						$(this).data('ratio', $(this).width() / $(this).height());
+
+						// Center image when inserted
+						$(this).css('display', 'block');
+						$(this).css('margin-left', 'auto');
+						$(this).css('margin-right', 'auto');
 					}
 					else {
-						$(this).css('height', parseInt($(this).css('width'))/$(this).data('ratio'));
+						$(this).height($(this).width() / $(this).data('ratio'));
+					}
+
+					// Limit image size
+					if($(this).width() > 600) {
+						$(this).height(600 / $(this).data('ratio'));
+						(this).width(600);
+					}
+					if($(this).height() > 500) {
+						$(this).height(500);
+						$(this).width(500 * $(this).data('ratio'));
 					}
 				}
 
 				// Set width and height for php parsing
-				$(this).attr('data-width', parseInt($(this).css('width')));
-				$(this).attr('data-height', parseInt($(this).css('height')));
+				$(this).attr('data-width', $(this).width());
+				$(this).attr('data-height', $(this).height());
 
 			});
+
+			imgTimeout = setTimeout(updateImgSizeAttr, 250);
 			return true;
 		};
+		// ugly without an event, but there is no *html change event* compatible everywhere
+		var imgTimeout = setTimeout(updateImgSizeAttr, 250);
 
-		$('.redactor_redactor-html').bind("DOMSubtreeModified", updateImgSizeAttr);
 		$('#daymailform').submit(updateImgSizeAttr);
 
 	</script>
