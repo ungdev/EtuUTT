@@ -1,36 +1,36 @@
---- 
-bugs: 
-  bugs: 
-    closed: 
+---
+bugs:
+  bugs:
+    closed:
       by: von
       count: "%count% Bug aufgelöst|%count% Bugs aufgelöst"
       no_bug: "Kein Bug wurde bisher aufgelöst"
       title: "Bugs aufgelöst"
-    create: 
+    create:
       body: Erklärung
       confirm: "Ihr Problem wurde gemeldet. Danke für Ihre Beteiligung !"
       criticality: Kritikalität
       name: Titel
       submit: Melden
       title: "Bug melden"
-    edit: 
+    edit:
       body: Erklärung
       confirm: "Ihr Problem wurde geändert"
       criticality: Kritikalität
       submit: Melden
       title: "Einen Bug ändern"
-    editComment: 
+    editComment:
       title: "Eine Kommentar ändern"
-    index: 
+    index:
       assigned_to: "Bestimmt für %name%"
       by: von
       count: "%count% offener Bug|%count% offene Bugs"
       no_bug: "Kein offener Bug zur Zeit"
       title: "Offene Bugs"
-    state: 
+    state:
       opened: Offen
       resolved: Aufgelöst
-    view: 
+    view:
       admin_assign: "Für jemandem bestimmen"
       admin_assign_placeholder: "Bestimmen für ..."
       admin_edit: Ändern
@@ -51,55 +51,55 @@ bugs:
       resolved: "Dieser Bug wurde gelöst"
       resolved_by: "Dieser Bug wurde gelöst von %name%"
       title: "Einzelheiten eines Bugs"
-  bugs_admin: 
-    assign: 
+  bugs_admin:
+    assign:
       assignee_not_found: "Der User wurde nicht gefunden"
       message: "%adminName% hat den Bug für %userName% bestimmt"
       success: "Der Bug wurde dem User zugestimmt"
-    close: 
+    close:
       message: "Geschlossen von %adminName%"
       success: "Der Bug wurde als gelöst gezeichnet"
-    criticality: 
+    criticality:
       message: "%adminName% hat die Kritikalität des Bugs von %before% auf %after% geändert"
       success: "Die Kritikalität des Bugs wurde geändert"
-    delete: 
-      false: "Nein, absagen"
+    delete:
+      no: "Nein, absagen"
       success: "Der Bug wurde erfolgreich gelöscht"
       sure: "Wollen Sie wirklich de Bug %bugName% löschen ?"
       title: "Ein Bug löschen"
-      true: "Ja, den Bug löschen"
-    open: 
+      yes: "Ja, den Bug löschen"
+    open:
       message: "Wieder auf gemacht von %adminName%"
       success: "Der Bug wurde wieder auf gemacht"
-    unassign: 
+    unassign:
       message: "%adminName% hat %userName% dem Bug entzogen"
       success: "Der User wurde dem Bug entzogen"
-  criticality: 
+  criticality:
     10: Druckfehler
     20: "Grafisches Problem"
     30: "Zweitrangiges Problem"
     40: "Grosses Problem"
     50: "Kritisches Problem"
     60: "Sicherheits Problem"
-  menu: 
-    sidebar: 
+  menu:
+    sidebar:
       bugs: "Bug melden"
-  notifs: 
-    closed: 
+  notifs:
+    closed:
       anyone: "Der Bug %bugName% wurde gelöst"
       by: "Der Bug %bugName% wurde von %userName% gelöst"
-    newComment: 
-      other: 
+    newComment:
+      other:
         more_many: "%first%, %second% und %count% andere Personen haben den Bug %bugName% kommentiert"
         more_single: "%first%, %second% und 1 andere Person haben den Bug %bugName% kommentiert"
         one: "%userName% hat den Bug %bugName% kommentiert"
         two: "%first% und %second% haben den Bug %bugName% kommentiert"
-      your: 
+      your:
         more_many: "%first%, %second% und %count% andere Personen haben Ihren Bug %bugName% kommentiert"
         more_single: "%first%, %second% und 1 andere Person haben Ihren Bug %bugName% kommentiert"
         one: "%userName% hat Ihren Bug %bugName% kommentiert"
         two: "%first% und %second% haben Ihenr Bug %bugName% kommentiert"
-    newOpened: 
+    newOpened:
       more_many: "%first%, %second% udn %count% andere Personen haben neue Bugs gemeldet"
       more_single: "%first%, %second% und 1 andere Person haben neue Bugs gemeldet"
       one: "%userName% hat einen neuen Bug gemeldet (%bugName%)"

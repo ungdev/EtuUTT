@@ -1,34 +1,34 @@
---- 
-bugs: 
-  bugs: 
-    closed: 
+---
+bugs:
+  bugs:
+    closed:
       assigned_to: "Assigned to %name%"
       by: "By %name%"
       no_bug: "No bugs resolved at the moment"
       title: "Bugs resolved"
-    create: 
+    create:
       body: Description
       confirm: "Your problem has been reported. Thank you for participating !"
       criticality: Criticality
       submit: Report
       title: "Report a bug"
-    edit: 
+    edit:
       body: Descriptions
       confirm: "You have successfully edited your problem"
       criticality: Criticality
       submit: Edit
       title: "Edit a bug"
-    editComment: 
+    editComment:
       title: "Edit a comment"
-    index: 
+    index:
       assigned_to: "Assigned to %name%"
       by: "By %name%"
       no_bug: "No bugs resolved at the moment"
       title: "Opened bugs"
-    state: 
+    state:
       opened: Opened
       resolved: Resolved
-    view: 
+    view:
       admin_assigne: Assigne
       admin_assigne_placeholder: "Assigne to ..."
       admin_edit: Edit
@@ -49,52 +49,52 @@ bugs:
       resolved: "This bug has been resolved"
       resolved_by: "This bug has been resolved by %name%"
       title: "Details of a bug"
-  bugs_admin: 
-    assign: 
+  bugs_admin:
+    assign:
       assignee_not_found: "The user has not been found"
       message: "%adminName% has assigned %userName% to the bug"
       success: "The user has been assigned to the bug"
-    close: 
+    close:
       message: "Closed by %adminName%"
       success: "The bug has been marked as resolved"
-    criticality: 
+    criticality:
       message: "%adminName% has changed the criticality of the bug from %before% to %after%"
       success: "The criticality of the bug has successfully been updated"
-    delete: 
-      false: "No, cancel"
+    delete:
+      no: "No, cancel"
       success: "The bug has been deleted"
       sure: "Do you really want to delete the bug %bugName% ?"
       title: "Delete a bug"
-      true: "Delete, delete"
-    open: 
+      yes: "Delete, delete"
+    open:
       message: "Re-opened by %adminName%"
       success: "The bug has been re-opened"
-    unassign: 
+    unassign:
       message: "%adminName% has unassigned %userName% from the bug"
       success: "The user has been unassigned from the bug"
-  criticality: 
+  criticality:
     critical: "Critical problem"
     major: "Major problem"
     minor: "Minor problem"
     security: "Security problem"
     typo: Typo
     visual: "Visual problem"
-  menu: 
-    sidebar: 
+  menu:
+    sidebar:
       bugs: "Report a bug"
-  notifs: 
-    newComment: 
-      other: 
+  notifs:
+    newComment:
+      other:
         more_many: "%first%, %second% and %count% other people have commented the bug %bugName%"
         more_single: "%first%, %second% and 1 other person have commented the bug %bugName%"
         one: "%userName% has commented the bug %bugName%"
         two: "%first% and %second% have commented the bug %bugName%"
-      your: 
+      your:
         more_many: "%first%, %second% and %count% other people have commented your bug %bugName%"
         more_single: "%first%, %second% and 1 other person have commented your bug %bugName%"
         one: "%userName% has commented your bug %bugName%"
         two: "%first% and %second% have commented your bug %bugName%"
-    newOpened: 
+    newOpened:
       more_many: "%first%, %second% and %count% other people have reported new bugs"
       more_single: "%first%, %second% and 1 other person have reported new bugs"
       one: "%userName% has reported a new bug (%bugName%)"
