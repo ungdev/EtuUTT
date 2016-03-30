@@ -7,7 +7,7 @@ file_put_contents('log.log', var_export($_SERVER, true));
 file_put_contents('post.log', var_export($_POST, true));
 
 $travis_token = '…';
-$hook_url = 'https://hooks.slack.com/services/…/…;
+$hook_url = 'https://hooks.slack.com/services/…/…';
 
 $repository = $_SERVER['HTTP_TRAVIS_REPO_SLUG'] ?? '';
 $authorization = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
