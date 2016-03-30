@@ -213,7 +213,7 @@ class HomeBuilder
             ->setMaxResults(3)
             ->getQuery();
 
-        $query->useResultCache(true, 1200);
+        // $query->useResultCache(true, 1200);
 
         $result = $query->getResult();
 
