@@ -1,5 +1,6 @@
 imports:
     - { resource: parameters.yml }
+    - { resource: version.yml }
     - { resource: security.yml }
 
 framework:
@@ -14,7 +15,7 @@ framework:
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
-        assets_version: %assets_version%
+        assets_version: %version_id%
     default_locale:  "%locale%"
     trusted_proxies: ~
     session:         ~

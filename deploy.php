@@ -54,6 +54,7 @@ run('git checkout '.$commit.' 2>&1');
 run('php app/console cache:clear --env=prod --no-debug');
 run('php app/console cache:warmup --env=prod --no-debug');
 run('php app/console assetic:dump --env=prod --no-debug');
+file_put_contents('app/config/version.yml', "parameters:\n    version_id: ".substr($commit,0,6));
 
 unlink('web/.maintenance');
 
