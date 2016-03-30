@@ -1,7 +1,7 @@
 <?php
 
 // Under WTFPL license.
-// Thanks @Punkeel :^)
+// Thanks @PunKeel :^)
 
 file_put_contents('log.log', var_export($_SERVER, true));
 file_put_contents('post.log', var_export($_POST, true));
