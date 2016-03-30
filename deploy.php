@@ -1,4 +1,8 @@
 <?php
+
+// Under WTFPL license.
+// Thanks @Punkeel :^)
+
 file_put_contents('log.log', var_export($_SERVER, true));
 file_put_contents('post.log', var_export($_POST, true));
 
@@ -49,6 +53,7 @@ run('git checkout '.$commit.' 2>&1');
 
 run('php app/console cache:clear --env=prod --no-debug');
 run('php app/console cache:warmup --env=prod --no-debug');
+run('php app/console assetic:dump --env=prod --no-debug');
 
 unlink('web/.maintenance');
 
