@@ -8,7 +8,7 @@ $hook_url = 'https://hooks.slack.com/services/…/…;
 $repository = $_SERVER['HTTP_TRAVIS_REPO_SLUG'] ?? '';
 $authorization = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
 
-if(empty($repository) || empty($authorization) || $repository != 'ungdev/EtuUTT' || hash_equals(hash('sha256', $repository.$travis_token), $authorization)){
+if(empty($repository) || empty($authorization) || $repository != 'ungdev/EtuUTT' || ! hash_equals(hash('sha256', $repository.$travis_token), $authorization)){
 	exit;
 }
 
