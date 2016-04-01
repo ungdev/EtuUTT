@@ -46,10 +46,10 @@ class SubscriptionsManagerExtension extends \Twig_Extension
 	public function getFunctions()
 	{
 		return array(
-			// 'notifs_subscribe' => new \Twig_Function_Method($this, 'subscribe'),
-			// 'notifs_unsubscribe' => new \Twig_Function_Method($this, 'unsubscribe'),
-			'is_subscriber' => new \Twig_Function_Method($this, 'isSubscriber'),
-			'render_subscribe_button' => new \Twig_Function_Method($this, 'renderButton', array('is_safe' => array('html'))),
+			// new \Twig_SimpleFunction('notifs_subscribe', array($this, 'subscribe')),
+			// new \Twig_SimpleFunction('notifs_unsubscribe', array($this, 'unsubscribe')),
+			new \Twig_SimpleFunction('is_subscriber', array($this, 'isSubscriber')),
+			new \Twig_SimpleFunction('render_subscribe_button', array($this, 'renderButton'), array('is_safe' => array('html'))),
 		);
 	}
 

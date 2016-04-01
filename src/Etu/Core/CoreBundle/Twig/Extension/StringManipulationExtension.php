@@ -23,16 +23,16 @@ class StringManipulationExtension extends \Twig_Extension
 	public function getFilters()
 	{
 		return array(
-			'count' => new \Twig_Filter_Function('count'),
-			'ucfirst' => new \Twig_Filter_Function('ucfirst'),
-			'urlencode' => new \Twig_Filter_Function('urlencode'),
-			'limit' => new \Twig_Filter_Method($this, 'limit'),
-			'camelize' => new \Twig_Filter_Method($this, 'camelize'),
-			'uncamelize' => new \Twig_Filter_Method($this, 'uncamelize'),
-			'seems_utf8' => new \Twig_Filter_Method($this, 'seemsUtf8'),
-			'unaccent' => new \Twig_Filter_Method($this, 'unaccent'),
-            'slugify' => new \Twig_Filter_Method($this, 'slugify'),
-            'chunk' => new \Twig_Filter_Function('array_chunk'),
+			new \Twig_SimpleFilter('count','count'),
+			new \Twig_SimpleFilter('ucfirst','ucfirst'),
+			new \Twig_SimpleFilter('urlencode','urlencode'),
+			new \Twig_SimpleFilter('limit', array($this, 'limit')),
+			new \Twig_SimpleFilter('camelize', array($this, 'camelize')),
+			new \Twig_SimpleFilter('uncamelize', array($this, 'uncamelize')),
+			new \Twig_SimpleFilter('seems_utf8', array($this, 'seemsUtf8')),
+			new \Twig_SimpleFilter('unaccent', array($this, 'unaccent')),
+            new \Twig_SimpleFilter('slugify', array($this, 'slugify')),
+            new \Twig_SimpleFilter('chunk','array_chunk'),
 		);
 	}
 

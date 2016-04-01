@@ -272,6 +272,8 @@ class MembershipsController extends Controller
 
 		$form = $this->createFormBuilder($event)
 			->add('title')
+			->add('begin', 'datetime_picker')
+			->add('end', 'datetime_picker')
 			->add('category', 'choice', array('choices' => $categories))
 			->add('file', 'file')
 			->add('location', 'textarea')
@@ -434,6 +436,8 @@ class MembershipsController extends Controller
 
 		$form = $this->createFormBuilder($event)
 			->add('title')
+			->add('begin', 'datetime_picker')
+			->add('end', 'datetime_picker')
 			->add('category', 'choice', array('choices' => $categories))
 			->add('file', 'file', array('required' => false))
 			->add('privacy', 'choice', array(

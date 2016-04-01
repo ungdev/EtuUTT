@@ -228,6 +228,15 @@ $('.date-picker').datepicker({
     monthNamesShort: [ "Jan", "Fev", "Mar", "Avr", "Mai", "Juin", "Juil", "Aou", "Sep", "Oct", "Nov", "Dec" ]
 });
 
+$('.datetime-picker input:first-of-type').datepicker({
+    firstDay: 1,
+	dateFormat: 'dd/mm/yy',
+	changeMonth: true,
+	changeYear: true,
+    dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
+    monthNamesShort: [ "Jan", "Fev", "Mar", "Avr", "Mai", "Juin", "Juil", "Aou", "Sep", "Oct", "Nov", "Dec" ]
+});
+
 $('.birthday-picker').datepicker({
     firstDay: 1,
 	dateFormat: 'dd/mm/yy',

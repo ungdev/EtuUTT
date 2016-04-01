@@ -14,5 +14,3 @@ parameters:
 
     locale:            fr
     secret:            YourSecretHere
-
-    assets_version: v10.1.1

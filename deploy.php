@@ -1,14 +1,18 @@
 <?php
+
+// Under WTFPL license.
+// Thanks @PunKeel :^)
+
 file_put_contents('log.log', var_export($_SERVER, true));
 file_put_contents('post.log', var_export($_POST, true));
 
 $travis_token = '…';
-$hook_url = 'https://hooks.slack.com/services/…/…;
+$hook_url = 'https://hooks.slack.com/services/…/…';
 
 $repository = $_SERVER['HTTP_TRAVIS_REPO_SLUG'] ?? '';
 $authorization = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
 
-if(empty($repository) || empty($authorization) || $repository != 'ungdev/EtuUTT' || hash_equals(hash('sha256', $repository.$travis_token), $authorization)){
+if(empty($repository) || empty($authorization) || $repository != 'ungdev/EtuUTT' || ! hash_equals(hash('sha256', $repository.$travis_token), $authorization)){
 	exit;
 }
 
@@ -49,6 +53,8 @@ run('git checkout '.$commit.' 2>&1');
 
 run('php app/console cache:clear --env=prod --no-debug');
 run('php app/console cache:warmup --env=prod --no-debug');
+run('php app/console assetic:dump --env=prod --no-debug');
+file_put_contents('app/config/version.yml', "parameters:\n    version_id: ".substr($commit,0,6));
 
 unlink('web/.maintenance');
 

@@ -3,17 +3,22 @@
 
     <ul>
         {% for event in events %}
-            <li>
-                <div class="date">
-                    <span class="day">
-                        {{ event.begin|date('d/m') }}
-                    </span>
-                </div>
-                <h5>
+            <li style="height:60px;padding:5px;">
+                <img src="{{ asset('uploads/events/'~event.id~'.png') }}" alt="{{ event.title }}" class="event-tooltip-image" style="height:60px;float:left;margin-right:8px;" />
+                <h5 style="margin-bottom:0px;margin-top:5px;white-space: nowrap;overflow:hidden;">
                     <a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}">
                         {{ event.title }}
                     </a>
                 </h5>
+                <div class="datea" style="">
+                    <span class="day">
+                        {{ ('events.main.days.' ~ event.begin.format('D'))|lower|trans }}
+                        {{ event.begin.format('d') }}
+                        {{ ('events.main.months.' ~ event.begin.format('M'))|lower|trans }} - 
+                        {{ event.begin.format('G:i') }}
+
+                    </span>
+                </div>
             </li>
         {% endfor %}
     </ul>
