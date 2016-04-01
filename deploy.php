@@ -54,8 +54,9 @@ run('git checkout '.$commit.' 2>&1');
 run('php app/console cache:clear --env=prod --no-debug');
 run('php app/console cache:warmup --env=prod --no-debug');
 run('php app/console assetic:dump --env=prod --no-debug');
+run('php app/console doctrine:cache:clear-metadata --env=prod --no-debug');
+run('php app/console doctrine:cache:clear-query --env=prod --no-debug');
+run('php app/console doctrine:cache:clear-result --env=prod --no-debug');
 file_put_contents('app/config/version.yml', "parameters:\n    version_id: ".substr($commit,0,6));
-
 unlink('web/.maintenance');
-
 tell_slack('New version deployed !', implode(PHP_EOL, $output), 'good', 'Deployed commit '.$commit);
