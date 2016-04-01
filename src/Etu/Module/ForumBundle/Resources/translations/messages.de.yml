@@ -1,11 +1,11 @@
---- 
-forum: 
-  main: 
-    answer: 
+---
+forum:
+  main:
+    answer:
       title: Antworten
-    edit: 
+    edit:
       title: "Nachricht editieren"
-    index: 
+    index:
       category: Kategorie
       forum: Forum
       lastMessage: "Letzte Nachricht"
@@ -13,7 +13,7 @@ forum:
       nbMessages: Nachricht
       nbThreads: Thema
       noMessage: "Keine Nachricht in dieser Kategorie."
-    mod: 
+    mod:
       back: Zurück
       lock: Abblocken
       locked: "Thema wurde blockiert"
@@ -27,14 +27,14 @@ forum:
       unlock: Klären
       unlocked: "Thema wurde geklärt"
       where: "Wohin bewegen ?"
-    post: 
+    post:
       content: Nachricht
-      false: Nein
+      no: Nein
       sticky: "Angepint ?"
       threadTitle: "Titel des Themas"
       title: "Thema herstellen"
-      true: Ja
-    thread: 
+      yes: Ja
+    thread:
       answer: Antworten
       by: Von
       date: Datum
@@ -52,5 +52,5 @@ forum:
       sticky: Angepint
       thread: Thema
   meta: "Die Foren der UTT Studentenwebseite"
-  notifs: 
+  notifs:
     threadCreated: "%author% hat in %title% geantwortet"

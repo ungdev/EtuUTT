@@ -30,11 +30,11 @@ forum:
       where: "Vers où déplacer le sujet ?"
     post:
       content: Message
-      false: Non
+      no: Non
       sticky: "Epinglé ?"
       threadTitle: "Titre du sujet"
       title: "Création d'un sujet"
-      true: Oui
+      yes: Oui
     thread:
       answer: Répondre
       by: Par

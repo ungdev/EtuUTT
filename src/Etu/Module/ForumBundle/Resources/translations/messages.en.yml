@@ -1,11 +1,11 @@
---- 
-forum: 
-  main: 
-    answer: 
+---
+forum:
+  main:
+    answer:
       title: Answer
-    edit: 
+    edit:
       title: "Edit a message"
-    index: 
+    index:
       category: Category
       forum: Forum
       lastMessage: "Last message"
@@ -14,7 +14,7 @@ forum:
       nbThreads: Threads
       new: New
       noMessage: "There are no messages in this category."
-    mod: 
+    mod:
       back: Back
       lock: Lock
       locked: "The thread has been locked"
@@ -28,14 +28,14 @@ forum:
       unlock: Unlock
       unlocked: "The thread has been unlocked"
       where: "Where do you want to move the thread ?"
-    post: 
+    post:
       content: Message
-      false: false
+      no: false
       sticky: "Sticky ?"
       threadTitle: "Thread title"
       title: "New thread"
-      true: true
-    thread: 
+      yes: true
+    thread:
       answer: Answer
       by: By
       date: Date
@@ -53,5 +53,5 @@ forum:
       sticky: Sticky
       thread: Thread
   meta: "The forums of the UTT student website"
-  notifs: 
+  notifs:
     threadCreated: "%author% has answered to %title%"
