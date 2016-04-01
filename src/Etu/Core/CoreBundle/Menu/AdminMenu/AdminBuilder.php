@@ -40,11 +40,6 @@ class AdminBuilder extends SidebarBuilder
 					->setIcon('bank.png')
 					->setUrl($router->generate('admin_orgas_index'))
 				->end()
-				->add('base.admin_menu.items.stats')
-					->setIcon('chart.png')
-					->setLinkAttribute('target', '_blank')
-					->setUrl('https://www.google.com/analytics/web/?hl=fr&pli=1#report/visitors-overview/a43851564w73993887p76419007/')
-				->end()
 			->end()
 		;
 	}
