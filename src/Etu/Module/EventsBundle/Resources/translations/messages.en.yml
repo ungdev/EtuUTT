@@ -97,9 +97,9 @@ events:
       title: Title
     delete:
       confirm: "The event has been deleted"
-      false: "No, cancel"
+      no: "No, cancel"
       question: "Do you really want to delete %title% ?"
-      true: "Yes, delete"
+      yes: "Yes, delete"
     edit:
       back: "Back to the calender"
       begin: Start

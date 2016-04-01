@@ -101,9 +101,9 @@ events:
       title: Titre
     delete:
       confirm: "L'évènement a bien été supprimé"
-      false: "Non, annuler"
+      no: "Non, annuler"
       question: "Voulez-vous vraiment supprimer l'évènement %title% ?"
-      true: "Oui, supprimer"
+      yes: "Oui, supprimer"
     edit:
       back: "Retour au calendrier"
       begin: Début

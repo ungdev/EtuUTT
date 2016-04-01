@@ -1,14 +1,14 @@
---- 
-events: 
-  categories: 
+---
+events:
+  categories:
     all: "Alle Events"
     autre: Andere
     culture: Kultur
     formation: Ausbildung
     soiree: Parties
     sport: Sport
-  main: 
-    days: 
+  main:
+    days:
       fri: Freitag
       mon: Montag
       sat: Samstag
@@ -16,14 +16,14 @@ events:
       thu: Donnerstag
       tue: Dienstag
       wed: Mittwoch
-    index: 
+    index:
       category_orga: "In %category%, organiesiert von %orga%"
       meta: "Entdecken Sie die Studentenevents von der UTT !"
       title: Events
-    menu: 
+    menu:
       month: Monat
       week: Woche
-    months: 
+    months:
       apr: April
       aug: August
       dec: Dezember
@@ -36,45 +36,45 @@ events:
       nov: November
       oct: Oktober
       sep: September
-    subscribers: 
+    subscribers:
       no: "Nein, ich komme nicht"
       probably: "Ich werde vielleicht kommen"
       title: "Teilnehmer an einem Event"
       yes: "Ja, ich komme"
-    view: 
+    view:
       back: "Zurück zum Kalendar"
       by: "Organiesiert von"
       end: Ende
       in: "In %category%"
       location: Ort
-      menu: 
+      menu:
         description: Beschreibung
         subscribers: Teilnehmer
       start: Anfang
       title: "Einzelheiten eines Events"
       willYouCome: "Werden Sie kommen ?"
-    week: 
+    week:
       week: Woche
-  memberships: 
-    create: 
+  memberships:
+    create:
       back: "Zurück zum Kalendar"
       begin: Anfang
       category: Kategorie
       confirm: "Event wurde erfolgreich hergestellt"
       description: Beschreibung
       end: Ende
-      image: 
+      image:
         desc: "Wird in 200x200 pixels wieder dimensioniert"
         label: Bild
       location: Ort
       submit: "Das Event herstellen"
       title: Titel
-    delete: 
+    delete:
       confirm: "Event wurde gelöscht"
-      false: "Nein, abbrechen"
+      no: "Nein, abbrechen"
       question: "Wollen Sie das Event %title% wirklich löschen ?"
-      true: "Ja, löschen"
-    edit: 
+      yes: "Ja, löschen"
+    edit:
       back: "Zurück zum Kalendar"
       begin: Anfang
       category: Kategorie
@@ -87,12 +87,12 @@ events:
       publicView: "Die Seite des Events sehen"
       submit: "Event ändern"
       title: Titel
-    events: 
+    events:
       create: "Ein Event herstellen"
-  notifs: 
+  notifs:
     eventCreated: "Das Event %title% wurde von %orga% hergestellt"
     eventDeleted: "Das Event %title% wurde gelöscht"
-    eventEdited: 
+    eventEdited:
       beginBoth: "Die Anfangsuhrzeit und das Anfangsdatum des Events %title% wurden geändert"
       beginDate: "Das Anfangsdatum des Events %title% wurde geändert"
       beginHour: "Die Anfangsuhrzeit des Events %title% wurde geändert"
