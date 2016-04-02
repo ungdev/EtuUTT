@@ -215,7 +215,7 @@ class MainController extends Controller
             ->setMaxResults(1)
             ->getQuery();
 
-        $query->useResultCache(true, 3600 * 24 * 7);
+        $query->useResultCache(true, 3600 * 24);
 
         /** @var $page Page */
         $page = $query->getOneOrNullResult();

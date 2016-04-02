@@ -219,7 +219,7 @@ databsse, it will only update them.
 
 			foreach ($toRemove as $code) {
 				$entity = $database[$code];
-				$entity->setIdOld(true);
+				$entity->setIsOld(true);
 
 				$em->persist($entity);
 
