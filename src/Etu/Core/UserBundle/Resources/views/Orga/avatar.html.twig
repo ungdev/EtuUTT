@@ -20,7 +20,7 @@
 		<form method="post" {{ form_enctype(form) }}>
 			{{ form_errors(form) }}
 
-			<img src="{{ asset('logos/'~app.user.logo) }}" style="max-width: 100px;" alt="{{ app.user.fullName }}" title="{{ app.user.fullName }}" />
+			<img src="{{ asset('uploads/logos/'~app.user.logo) }}" style="max-width: 100px;" alt="{{ app.user.fullName }}" title="{{ app.user.fullName }}" />
 
 			<p>
 				<br />

@@ -30,7 +30,7 @@
 				<form method="post" action="{{ path('orga_admin_avatar') }}" {{ form_enctype(avatarForm) }}>
 					<h4>{{ 'user.orga.avatar.title'|trans }}</h4>
 
-					<img src="{{ asset('logos/'~app.user.logo) }}?{{ rand }}" style="max-width: 100px;" alt="{{ app.user.fullName }}" title="{{ app.user.fullName }}" />
+					<img src="{{ asset('uploads/logos/'~app.user.logo) }}?{{ rand }}" style="max-width: 100px;" alt="{{ app.user.fullName }}" title="{{ app.user.fullName }}" />
 
 					<p>
 						<br />
@@ -52,7 +52,7 @@
 			<div class="row-fluid">
 				<div class="span3">
 					<div class="profileEdit-avatar">
-						<img src="{{ asset('logos/'~app.user.logo) }}?{{ rand }}" alt="{{ app.user.fullName }}" title="{{ app.user.fullName }}" />
+						<img src="{{ asset('uploads/logos/'~app.user.logo) }}?{{ rand }}" alt="{{ app.user.fullName }}" title="{{ app.user.fullName }}" />
 
 						<p>
 							<br />
