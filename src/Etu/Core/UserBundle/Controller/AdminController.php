@@ -672,6 +672,15 @@ class AdminController extends Controller
 			throw $this->createNotFoundException(sprintf('Login %s not found', $login));
 		}
 
+		/** @var $members Members of the organisation to be removed */
+		$members = $em->getRepository('EtuUserBundle:Member')
+				->findBy(array('organization' => $orga));
+
+		foreach ($members as $member) {
+			$member->setDeletedAt(new \DateTime());
+			$em->persist($member);
+		}
+
 		$orga->setDeletedAt(new \DateTime());
 
 		$em->persist($orga);
