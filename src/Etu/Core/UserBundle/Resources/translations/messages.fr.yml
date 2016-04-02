@@ -116,6 +116,9 @@ user:
             orga_not_found: Association non trouvée
             user_not_found: Utilisateur non trouvé
             button: Se connecter en tant que ...
+            badCookie: Reconnexion impossible. Veuillez vous reconnecter normalement.
+            welcomeBack: Vous êtes bien connecté sur votre vrai compte
+            loginBack: Retour à votre compte
     auth:
         connect:
             title: Connexion

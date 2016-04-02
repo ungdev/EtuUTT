@@ -761,6 +761,7 @@ class AdminController extends Controller
 					$em->persist($session);
 					$em->flush();
 					setcookie(md5('etuutt-session-cookie-name'), $session->getToken(), $session->getExpireAt()->format('U'), '/');
+					$this->get('session')->set('logas-cookie-save', $request->cookies->get(md5('etuutt-session-cookie-name')));
 
 					$logger = $this->get('monolog.logger.admin');
 					$logger->warn('`'.$this->getUser()->getLogin().'` login as organization `'.$orga->getLogin().'`');
@@ -795,6 +796,7 @@ class AdminController extends Controller
 					$em->persist($session);
 					$em->flush();
 					setcookie(md5('etuutt-session-cookie-name'), $session->getToken(), $session->getExpireAt()->format('U'), '/');
+					$this->get('session')->set('logas-cookie-save', $request->cookies->get(md5('etuutt-session-cookie-name')));
 
 
 					$logger = $this->get('monolog.logger.admin');
@@ -808,5 +810,40 @@ class AdminController extends Controller
 				}
 			}
 		}
+	}
+
+
+	/**
+	 * @Route("/log-as/back", name="admin_log-as_back")
+	 * @Template()
+	 */
+	public function logAsBackAction()
+	{
+		if (! $this->get('session')->has('logas-cookie-save')) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$token = $this->get('session')->get('logas-cookie-save');
+		$this->get('session')->remove('logas-cookie-save');
+
+		$em = $this->getDoctrine()->getManager();
+		$session = $em->getRepository('EtuUserBundle:Session')->findOneBy(array('token' => $token));
+
+		if(!$session) {
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'error',
+				'message' => 'user.admin.logAs.badCookie'
+			));
+		}
+		else {
+			setcookie(md5('etuutt-session-cookie-name'), $session->getToken(), $session->getExpireAt()->format('U'), '/');
+
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'user.admin.logAs.welcomeBack'
+			));
+		}
+
+		return $this->redirect($this->generateUrl('homepage'));
 	}
 }

@@ -89,6 +89,9 @@ user:
             orga_not_found: Association not found
             user_not_found: User not found
             button: Log in as ...
+            badCookie: Impossible to log in. Please try to log in normally.
+            welcomeBack: Welcome back to your original account
+            loginBack: Back to your account
     auth:
         connect:
             title: Log in
