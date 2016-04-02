@@ -205,6 +205,9 @@ class AdminController extends Controller
 			$em->persist($user);
 			$em->flush();
 
+			$logger = $this->get('monolog.logger.admin');
+			$logger->info('`'.$this->getUser()->getLogin().'` update profil of `'.$user->getLogin().'`');
+
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
 				'message' => 'user.admin.userEdit.confirm'
@@ -337,6 +340,9 @@ class AdminController extends Controller
 			$em->persist($user);
 			$em->flush();
 
+			$logger = $this->get('monolog.logger.admin');
+			$logger->warn('`'.$this->getUser()->getLogin().'` update permissions of `'.$user->getLogin().'`');
+
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
 				'message' => 'user.admin.userPermissions.confirm'
@@ -387,6 +393,9 @@ class AdminController extends Controller
 			$em->persist($user);
 			$em->flush();
 
+			$logger = $this->get('monolog.logger.admin');
+			$logger->info('`'.$this->getUser()->getLogin().'` update avatar of `'.$user->getLogin().'`');
+
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
 				'message' => 'user.admin.userEdit.confirm'
@@ -425,12 +434,18 @@ class AdminController extends Controller
 		if (! $user->getIsReadOnly()) {
 			$user->setIsReadOnly(true)->setReadOnlyPeriod('42 days');
 
+			$logger = $this->get('monolog.logger.admin');
+			$logger->warn('`'.$this->getUser()->getLogin().'` put `'.$user->getLogin().'` on read only (ban)');
+
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
 				'message' => 'user.admin.userReadOnly.confirm_set'
 			));
 		} else {
 			$user->setIsReadOnly(false);
+
+			$logger = $this->get('monolog.logger.admin');
+			$logger->warn('`'.$this->getUser()->getLogin().'` remove `'.$user->getLogin().'` from read only (unban)');
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
@@ -532,6 +547,9 @@ class AdminController extends Controller
 			$em->persist($user);
 			$em->flush();
 
+			$logger = $this->get('monolog.logger.admin');
+			$logger->info('`'.$this->getUser()->getLogin().'` create an user `'.$user->getLogin().'`');
+
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
 				'message' => 'user.admin.userCreate.confirm'
@@ -572,6 +590,9 @@ class AdminController extends Controller
 
 			$em->persist($user);
 			$em->flush();
+
+			$logger = $this->get('monolog.logger.admin');
+			$logger->warn('`'.$this->getUser()->getLogin().'` delete an user `'.$user->getLogin().'`');
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
@@ -640,6 +661,9 @@ class AdminController extends Controller
 			$em->persist($orga);
 			$em->flush();
 
+			$logger = $this->get('monolog.logger.admin');
+			$logger->info('`'.$this->getUser()->getLogin().'` create organization `'.$orga->getLogin().'`');
+
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
 				'message' => 'user.admin.orgasCreate.confirm'
@@ -688,6 +712,9 @@ class AdminController extends Controller
 		$em->persist($orga);
 		$em->flush();
 
+		$logger = $this->get('monolog.logger.admin');
+		$logger->warn('`'.$this->getUser()->getLogin().'` delete organization `'.$orga->getLogin().'`');
+
 		$this->get('session')->getFlashBag()->set('message', array(
 			'type' => 'success',
 			'message' => 'user.admin.orgasDelete.confirm'
@@ -735,6 +762,9 @@ class AdminController extends Controller
 					$em->flush();
 					setcookie(md5('etuutt-session-cookie-name'), $session->getToken(), $session->getExpireAt()->format('U'), '/');
 
+					$logger = $this->get('monolog.logger.admin');
+					$logger->warn('`'.$this->getUser()->getLogin().'` login as organization `'.$orga->getLogin().'`');
+
 					$this->get('session')->getFlashBag()->set('message', array(
 						'type' => 'success',
 						'message' => 'user.auth.connect.confirm'
@@ -765,6 +795,10 @@ class AdminController extends Controller
 					$em->persist($session);
 					$em->flush();
 					setcookie(md5('etuutt-session-cookie-name'), $session->getToken(), $session->getExpireAt()->format('U'), '/');
+
+
+					$logger = $this->get('monolog.logger.admin');
+					$logger->warn('`'.$this->getUser()->getLogin().'` login as an user `'.$user->getLogin().'`');
 
 					$this->get('session')->getFlashBag()->set('message', array(
 						'type' => 'success',
