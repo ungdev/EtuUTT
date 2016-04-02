@@ -57,6 +57,7 @@ $(function() {
 			week: 'Semaine',
 			day: 'Jour'
 		},
+		defaultView:'agendaWeek',
 
 		// time formats
 		titleFormat: {
@@ -69,10 +70,9 @@ $(function() {
 			week: 'ddd DD/MM',
 			day: 'dddd DD MMMM'
 		},
-		allDaySlot: true,
-		allDayText: 'Journée\ncomplète',
-		firstHour: 6,
-		slotMinutes: 30,
+		allDaySlot: false,
+		scrollTime: '08:00:00',
+		slotDuration: '01:00:00',
 		defaultEventMinutes: 120,
 		axisFormat: 'HH:mm',
 		timeFormat: 'H:mm',
@@ -92,7 +92,7 @@ $(function() {
 			start = moment(start).format('DD-MM-YYYY--HH-mm');
 			end = moment(end).format('DD-MM-YYYY--HH-mm');
 
-			window.location.href = createUrl+'?s='+start+'&e='+end+'&a='+allDay;
+			window.location.href = createUrl+'?s='+start+'&e='+end;
 		}
 	});
 });

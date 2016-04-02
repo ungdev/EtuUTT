@@ -16,10 +16,9 @@ $(function() {
 		},
 
 		// time formats
-		allDaySlot: true,
-		allDayText: 'Journée complète',
-		firstHour: 6,
-		slotMinutes: 30,
+		allDaySlot: false,
+		scrollTime: '08:00:00',
+		slotDuration: '01:00:00',
 		defaultEventMinutes: 120,
 		axisFormat: 'HH:mm',
 		timeFormat: 'H:mm',
