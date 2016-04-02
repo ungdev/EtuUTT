@@ -250,7 +250,7 @@ class MainController extends Controller
                 ->setParameter('public', Event::PRIVACY_PUBLIC)
                 ->orderBy('e.begin', 'ASC')
                 ->addOrderBy('e.end', 'ASC')
-                ->setMaxResults(3)
+                ->setMaxResults(4)
                 ->getQuery();
 
             $query->useResultCache(true, 3600);
