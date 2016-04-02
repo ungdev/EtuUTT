@@ -1,0 +1,35 @@
+{% extends 'EtuCoreBundle:Admin:layout.html.twig' %}
+
+{% block title %}{{ 'user.admin.logAs.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('src/img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<ul class="nav nav-tabs page-tabs">
+		<li>
+			<a href="{{ path('admin_index') }}">
+				<i class="icon-chevron-left"></i>
+				{{ 'user.admin.logAs.back'|trans }}
+			</a>
+		</li>
+	</ul>
+
+	<div class="padding20-sides">
+		<h5>{{ 'user.admin.logAs.logAsUser'|trans }}</h5>
+
+		<form method="post" action="{{ path('admin_log-as') }}" class="form-inline">
+			<input name="user" class="user-autocomplete" type="text" placeholder="{{ 'user.admin.logAs.logAsUser_placeholder'|trans }}" />
+			<button type="submit" class="btn">{{ 'user.admin.logAs.logAsUser_submit'|trans }}</button>
+		</form>
+
+		<h5>{{ 'user.admin.logAs.logAsOrga'|trans }}</h5>
+
+		<form method="post" action="{{ path('admin_log-as') }}" class="form-inline">
+			<input name="orga" class="orga-autocomplete" type="text" placeholder="{{ 'user.admin.logAs.logAsOrga_placeholder'|trans }}" />
+			<button type="submit" class="btn">{{ 'user.admin.logAs.logAsOrga_submit'|trans }}</button>
+		</form>
+
+	</div>
+{% endblock %}

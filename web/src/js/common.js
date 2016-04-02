@@ -22,6 +22,7 @@ var facebox = $('a[rel*=facebox]'),
     sceditor = $('.redactor'),
     sceditorLimited = $('.redactor-limited'),
 	usersAutocomplete = $('.user-autocomplete'),
+	orgasAutocomplete = $('.orga-autocomplete'),
 	changeLocale = {
 		link: $('.change-locale'),
 		box: $('#change-locale-choices')
@@ -397,6 +398,62 @@ $(function() {
                     link = item.user._links[i];
 
                     if (link.rel == 'user.image') {
+                        imageLink = link;
+                    }
+                }
+
+				return $("<li style=\"margin-bottom: 3px;\">")
+					.append(
+						"<a>" +
+							"<img src=\" "+ imageLink.uri + "\" style=\"float: left; max-height: 25px; max-width: 25px; margin-right: 5px;\" />" +
+							"<span style=\"display: block; float: left; margin-top: 0;\">" + item.label + "</span>" +
+							"<div style=\"clear: both;\"></div>" +
+                        "</a>"
+					)
+					.appendTo(ul);
+			};
+		}
+	}
+
+	// Orga autocomplete
+	if (orgasAutocomplete) {
+		orgasAutocomplete.autocomplete({
+			minLength: 1,
+			source: function(request, response) {
+				$.getJSON(
+                    Routing.generate('orga_ajax_search'),
+                    {
+                        term: request.term
+                    },
+					function(data)
+                    {
+						var orgas = data.response.orgas;
+
+						response($.map(orgas, function(item) {
+							return {
+								label: item.name,
+								value: item.name,
+								orga: item
+							}
+						}));
+					}
+                );
+			},
+            select: function( event, ui ) {
+                var input = $(event.target);
+                input.attr('data-login', ui.item.orga.login);
+                input.attr('data-name', ui.item.orga.name);
+            }
+		});
+
+		if (orgasAutocomplete.data("ui-autocomplete")) {
+			orgasAutocomplete.data("ui-autocomplete")._renderItem = function(ul, item) {
+                var imageLink, link;
+
+                for (var i = 0; i < item.orga._links.length; i++) {
+                    link = item.orga._links[i];
+
+                    if (link.rel == 'orga.image') {
                         imageLink = link;
                     }
                 }

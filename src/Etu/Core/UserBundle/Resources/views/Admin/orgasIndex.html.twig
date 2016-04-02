@@ -10,6 +10,11 @@
 
 	<div class="trombi-search-box">
 		<p class="pull-right padding10-all">
+			<a href="{{ path('admin_log-as') }}" class="btn btn-success">
+				<i class="icon-user icon-white"></i>
+				{{ 'user.admin.logAs.button'|trans }}
+			</a>
+
 			<a href="{{ path('admin_orgas_create') }}" class="btn btn-primary">
 				<i class="icon-plus icon-white"></i>
 				{{ 'user.admin.oragsIndex.create'|trans }}

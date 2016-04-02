@@ -9,6 +9,8 @@ use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Framework\Definition\Permission;
 use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Core\UserBundle\Entity\User;
+use Etu\Core\UserBundle\Controller\AuthController;
+use Etu\Core\UserBundle\Entity\Session;
 
 use Etu\Core\UserBundle\Model\Badge;
 use Etu\Core\UserBundle\Model\BadgesManager;
@@ -692,5 +694,85 @@ class AdminController extends Controller
 		));
 
 		return $this->redirect($this->generateUrl('admin_orgas_index'));
+	}
+
+
+	/**
+	 * @Route("/log-as", name="admin_log-as")
+	 * @Template()
+	 */
+	public function logAsAction()
+	{
+		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$em = $this->getDoctrine()->getManager();
+		$request = $this->getRequest();
+
+		if ($request->getMethod() == 'POST') {
+			if(!empty($request->get('orga'))) {
+				$orga = $em->createQueryBuilder()
+					->select('o')
+					->from('EtuUserBundle:Organization', 'o')
+					->where('o.name = :input')
+					->orWhere('o.login = :input')
+					->setParameter('input', $request->get('orga'))
+					->setMaxResults(1)
+					->getQuery()
+					->getOneOrNullResult();
+
+				if (! $orga) {
+					$this->get('session')->getFlashBag()->set('message', array(
+						'type' => 'error',
+						'message' => 'user.admin.logAs.orga_not_found'
+					));
+				}
+				else {
+					$session = new Session(Session::TYPE_ORGA, $orga->getId());
+					$session->createName($_SERVER);
+					$em->persist($session);
+					$em->flush();
+					setcookie(md5('etuutt-session-cookie-name'), $session->getToken(), $session->getExpireAt()->format('U'), '/');
+
+					$this->get('session')->getFlashBag()->set('message', array(
+						'type' => 'success',
+						'message' => 'user.auth.connect.confirm'
+					));
+					return $this->redirect($this->generateUrl('homepage'));
+				}
+			}
+			else {
+				$user = $em->createQueryBuilder()
+					->select('u')
+					->from('EtuUserBundle:User', 'u')
+					->where('u.fullName = :input')
+					->orWhere('u.login = :input')
+					->setParameter('input', $request->get('user'))
+					->setMaxResults(1)
+					->getQuery()
+					->getOneOrNullResult();
+
+				if (! $user) {
+					$this->get('session')->getFlashBag()->set('message', array(
+						'type' => 'error',
+						'message' => 'user.admin.logAs.user_not_found'
+					));
+				}
+				else {
+					$session = new Session(Session::TYPE_USER, $user->getId());
+					$session->createName($_SERVER);
+					$em->persist($session);
+					$em->flush();
+					setcookie(md5('etuutt-session-cookie-name'), $session->getToken(), $session->getExpireAt()->format('U'), '/');
+
+					$this->get('session')->getFlashBag()->set('message', array(
+						'type' => 'success',
+						'message' => 'user.auth.connect.confirm'
+					));
+					return $this->redirect($this->generateUrl('homepage'));
+				}
+			}
+		}
 	}
 }

@@ -104,7 +104,18 @@ user:
             confirm: L'accès a bien été créé
         orgasDelete:
             confirm: L'accès a bien été supprimé
-
+        logAs:
+            title: Se connecter en tant que ...
+            back: Retour
+            logAsUser: Se connecter en tant qu'un utilisateur
+            logAsUser_placeholder: Utilisateur
+            logAsUser_submit: Se connecter
+            logAsOrga: Se connecter en tant qu'une association
+            logAsOrga_placeholder: Association
+            logAsOrga_submit: Se connecter
+            orga_not_found: Association non trouvée
+            user_not_found: Utilisateur non trouvé
+            button: Se connecter en tant que ...
     auth:
         connect:
             title: Connexion
