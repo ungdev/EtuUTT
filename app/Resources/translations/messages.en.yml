@@ -1,6 +1,4 @@
-
-# Global strings: title, logo, footer, etc.
-# Used in base.html.twig
+---
 base:
     title: UTT's student website
     description: Website created and designed by the students of the University of Technology of Troyes
