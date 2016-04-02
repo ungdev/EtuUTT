@@ -256,11 +256,20 @@ class MembershipsController extends Controller
 
 		$orga = $membership->getOrganization();
 
+		if(substr($start,12) == '00-00' && substr($end,12) == '00-00') {
+
+			$start = substr($start, 0, 12).'12-00';
+
+			$jour2 = str_pad((substr($end, 0, 2)-1), 2, '0', STR_PAD_LEFT);
+			$end = $jour2.substr($end, 2, 10).'13-00';
+		}
+
 		$event = new Event(
 			null,
 			\DateTime::createFromFormat('d-m-Y--H-i', $start),
 			\DateTime::createFromFormat('d-m-Y--H-i', $end)
 		);
+
 		$event->setOrga($orga)
 			->setIsAllDay($allDay);
 

@@ -4,6 +4,7 @@ var calendar = $('#calendar'),
 $(function() {
 	var options = {
 		firstDay: 1,
+		height: 750,
 		monthNames: monthNames,
 		monthNamesShort: monthNamesShort,
 		dayNames: dayNames,
@@ -16,10 +17,9 @@ $(function() {
 		},
 
 		// time formats
-		allDaySlot: true,
-		allDayText: 'Journée complète',
-		firstHour: 6,
-		slotMinutes: 30,
+		allDaySlot: false,
+		scrollTime: '08:00:00',
+		slotDuration: '00:30:00',
 		defaultEventMinutes: 120,
 		axisFormat: 'HH:mm',
 		timeFormat: 'H:mm',

@@ -77,7 +77,21 @@ user:
         userReadOnly:
             confirm_set: The user now has access to read only.
             confirm_unset: The user now has complete access.
-
+        logAs:
+            title: Log in as someone
+            back: Back
+            logAsUser: Log in as an user
+            logAsUser_placeholder: User
+            logAsUser_submit: Log in
+            logAsOrga: Log in as an association
+            logAsOrga_placeholder: Association
+            logAsOrga_submit: Log in
+            orga_not_found: Association not found
+            user_not_found: User not found
+            button: Log in as ...
+            badCookie: Impossible to log in. Please try to log in normally.
+            welcomeBack: Welcome back to your original account
+            loginBack: Back to your account
     auth:
         connect:
             title: Log in

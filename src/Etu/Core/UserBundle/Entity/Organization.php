@@ -211,7 +211,7 @@ class Organization implements UserInterface, \Serializable
 		$image->paste($thumbnail, $pastePoint);
 
 		// Save the result
-		$image->save(__DIR__ . '/../../../../../web/logos/'.$this->getLogin().'.png');
+		$image->save(__DIR__ . '/../../../../../web/uploads/logos/'.$this->getLogin().'.png');
 
 		$this->logo = $this->getLogin().'.png';
 

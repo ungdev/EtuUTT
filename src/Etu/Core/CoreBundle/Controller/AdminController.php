@@ -131,6 +131,8 @@ class AdminController extends Controller
 				}
 			}
 
+			$logger = $this->get('monolog.logger.admin');
+			$logger->warn('`'.$this->getUser()->getLogin().'` edit enabled modules');
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',

@@ -9,6 +9,8 @@ use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Framework\Definition\Permission;
 use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Core\UserBundle\Entity\User;
+use Etu\Core\UserBundle\Controller\AuthController;
+use Etu\Core\UserBundle\Entity\Session;
 
 use Etu\Core\UserBundle\Model\Badge;
 use Etu\Core\UserBundle\Model\BadgesManager;
@@ -203,6 +205,9 @@ class AdminController extends Controller
 			$em->persist($user);
 			$em->flush();
 
+			$logger = $this->get('monolog.logger.admin');
+			$logger->info('`'.$this->getUser()->getLogin().'` update profil of `'.$user->getLogin().'`');
+
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
 				'message' => 'user.admin.userEdit.confirm'
@@ -335,6 +340,9 @@ class AdminController extends Controller
 			$em->persist($user);
 			$em->flush();
 
+			$logger = $this->get('monolog.logger.admin');
+			$logger->warn('`'.$this->getUser()->getLogin().'` update permissions of `'.$user->getLogin().'`');
+
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
 				'message' => 'user.admin.userPermissions.confirm'
@@ -385,6 +393,9 @@ class AdminController extends Controller
 			$em->persist($user);
 			$em->flush();
 
+			$logger = $this->get('monolog.logger.admin');
+			$logger->info('`'.$this->getUser()->getLogin().'` update avatar of `'.$user->getLogin().'`');
+
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
 				'message' => 'user.admin.userEdit.confirm'
@@ -423,12 +434,18 @@ class AdminController extends Controller
 		if (! $user->getIsReadOnly()) {
 			$user->setIsReadOnly(true)->setReadOnlyPeriod('42 days');
 
+			$logger = $this->get('monolog.logger.admin');
+			$logger->warn('`'.$this->getUser()->getLogin().'` put `'.$user->getLogin().'` on read only (ban)');
+
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
 				'message' => 'user.admin.userReadOnly.confirm_set'
 			));
 		} else {
 			$user->setIsReadOnly(false);
+
+			$logger = $this->get('monolog.logger.admin');
+			$logger->warn('`'.$this->getUser()->getLogin().'` remove `'.$user->getLogin().'` from read only (unban)');
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
@@ -530,6 +547,9 @@ class AdminController extends Controller
 			$em->persist($user);
 			$em->flush();
 
+			$logger = $this->get('monolog.logger.admin');
+			$logger->info('`'.$this->getUser()->getLogin().'` create an user `'.$user->getLogin().'`');
+
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
 				'message' => 'user.admin.userCreate.confirm'
@@ -570,6 +590,9 @@ class AdminController extends Controller
 
 			$em->persist($user);
 			$em->flush();
+
+			$logger = $this->get('monolog.logger.admin');
+			$logger->warn('`'.$this->getUser()->getLogin().'` delete an user `'.$user->getLogin().'`');
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
@@ -638,6 +661,9 @@ class AdminController extends Controller
 			$em->persist($orga);
 			$em->flush();
 
+			$logger = $this->get('monolog.logger.admin');
+			$logger->info('`'.$this->getUser()->getLogin().'` create organization `'.$orga->getLogin().'`');
+
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
 				'message' => 'user.admin.orgasCreate.confirm'
@@ -672,10 +698,22 @@ class AdminController extends Controller
 			throw $this->createNotFoundException(sprintf('Login %s not found', $login));
 		}
 
+		/** @var $members Members of the organisation to be removed */
+		$members = $em->getRepository('EtuUserBundle:Member')
+				->findBy(array('organization' => $orga));
+
+		foreach ($members as $member) {
+			$member->setDeletedAt(new \DateTime());
+			$em->persist($member);
+		}
+
 		$orga->setDeletedAt(new \DateTime());
 
 		$em->persist($orga);
 		$em->flush();
+
+		$logger = $this->get('monolog.logger.admin');
+		$logger->warn('`'.$this->getUser()->getLogin().'` delete organization `'.$orga->getLogin().'`');
 
 		$this->get('session')->getFlashBag()->set('message', array(
 			'type' => 'success',
@@ -683,5 +721,129 @@ class AdminController extends Controller
 		));
 
 		return $this->redirect($this->generateUrl('admin_orgas_index'));
+	}
+
+
+	/**
+	 * @Route("/log-as", name="admin_log-as")
+	 * @Template()
+	 */
+	public function logAsAction()
+	{
+		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$em = $this->getDoctrine()->getManager();
+		$request = $this->getRequest();
+
+		if ($request->getMethod() == 'POST') {
+			if(!empty($request->get('orga'))) {
+				$orga = $em->createQueryBuilder()
+					->select('o')
+					->from('EtuUserBundle:Organization', 'o')
+					->where('o.name = :input')
+					->orWhere('o.login = :input')
+					->setParameter('input', $request->get('orga'))
+					->setMaxResults(1)
+					->getQuery()
+					->getOneOrNullResult();
+
+				if (! $orga) {
+					$this->get('session')->getFlashBag()->set('message', array(
+						'type' => 'error',
+						'message' => 'user.admin.logAs.orga_not_found'
+					));
+				}
+				else {
+					$session = new Session(Session::TYPE_ORGA, $orga->getId());
+					$session->createName($_SERVER);
+					$em->persist($session);
+					$em->flush();
+					setcookie(md5('etuutt-session-cookie-name'), $session->getToken(), $session->getExpireAt()->format('U'), '/');
+					$this->get('session')->set('logas-cookie-save', $request->cookies->get(md5('etuutt-session-cookie-name')));
+
+					$logger = $this->get('monolog.logger.admin');
+					$logger->warn('`'.$this->getUser()->getLogin().'` login as organization `'.$orga->getLogin().'`');
+
+					$this->get('session')->getFlashBag()->set('message', array(
+						'type' => 'success',
+						'message' => 'user.auth.connect.confirm'
+					));
+					return $this->redirect($this->generateUrl('homepage'));
+				}
+			}
+			else {
+				$user = $em->createQueryBuilder()
+					->select('u')
+					->from('EtuUserBundle:User', 'u')
+					->where('u.fullName = :input')
+					->orWhere('u.login = :input')
+					->setParameter('input', $request->get('user'))
+					->setMaxResults(1)
+					->getQuery()
+					->getOneOrNullResult();
+
+				if (! $user) {
+					$this->get('session')->getFlashBag()->set('message', array(
+						'type' => 'error',
+						'message' => 'user.admin.logAs.user_not_found'
+					));
+				}
+				else {
+					$session = new Session(Session::TYPE_USER, $user->getId());
+					$session->createName($_SERVER);
+					$em->persist($session);
+					$em->flush();
+					setcookie(md5('etuutt-session-cookie-name'), $session->getToken(), $session->getExpireAt()->format('U'), '/');
+					$this->get('session')->set('logas-cookie-save', $request->cookies->get(md5('etuutt-session-cookie-name')));
+
+
+					$logger = $this->get('monolog.logger.admin');
+					$logger->warn('`'.$this->getUser()->getLogin().'` login as an user `'.$user->getLogin().'`');
+
+					$this->get('session')->getFlashBag()->set('message', array(
+						'type' => 'success',
+						'message' => 'user.auth.connect.confirm'
+					));
+					return $this->redirect($this->generateUrl('homepage'));
+				}
+			}
+		}
+	}
+
+
+	/**
+	 * @Route("/log-as/back", name="admin_log-as_back")
+	 * @Template()
+	 */
+	public function logAsBackAction()
+	{
+		if (! $this->get('session')->has('logas-cookie-save')) {
+			return $this->createAccessDeniedResponse();
+		}
+
+		$token = $this->get('session')->get('logas-cookie-save');
+		$this->get('session')->remove('logas-cookie-save');
+
+		$em = $this->getDoctrine()->getManager();
+		$session = $em->getRepository('EtuUserBundle:Session')->findOneBy(array('token' => $token));
+
+		if(!$session) {
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'error',
+				'message' => 'user.admin.logAs.badCookie'
+			));
+		}
+		else {
+			setcookie(md5('etuutt-session-cookie-name'), $session->getToken(), $session->getExpireAt()->format('U'), '/');
+
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'user.admin.logAs.welcomeBack'
+			));
+		}
+
+		return $this->redirect($this->generateUrl('homepage'));
 	}
 }

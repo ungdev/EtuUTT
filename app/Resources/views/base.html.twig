@@ -222,6 +222,19 @@
 						{% else %}
 							{{ render_orga_menu() }}
 						{% endif %}
+
+						{% if app.request.session.has('logas-cookie-save') %}
+							<hr class="separator" />
+
+							<ul class="list-vertical list-vertical-linked">
+								<li>
+									<a href="{{ path('admin_log-as_back') }}">
+										<img src="{{ asset('src/img/icons/users.png') }}" class="etu-img-icon" />
+										{{ 'user.admin.logAs.loginBack'|trans }}
+									</a>
+								</li>
+							</ul>
+						{% endif %}
 					</div>
 					{% endif %}
 				</div>

@@ -153,4 +153,10 @@ etu_user:
         path: '/cas/'
         change_session_id: false
 
-
+monolog:
+    channels: ['admin']
+    handlers:
+        admin:
+            type:     stream
+            path:     '%kernel.logs_dir%/admin.log'
+            channels: ['admin']
