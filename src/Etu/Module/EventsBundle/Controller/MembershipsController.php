@@ -316,7 +316,7 @@ class MembershipsController extends Controller
 			$notif = new Notification();
 
 			$notif
-				->setModule('event')
+				->setModule('events')
 				->setHelper('event_created_all')
 				->setAuthorId($this->getUser()->getId())
 				->setEntityType('event')
@@ -333,7 +333,7 @@ class MembershipsController extends Controller
 			$keys = array_flip($availableCategories);
 
 			$notif
-				->setModule('event')
+				->setModule('events')
 				->setHelper('event_created_category')
 				->setAuthorId($this->getUser()->getId())
 				->setEntityType('event-category')
@@ -667,7 +667,7 @@ class MembershipsController extends Controller
 			$notif = new Notification();
 
 			$notif
-				->setModule('event')
+				->setModule('events')
 				->setHelper('event_deleted')
 				->setAuthorId($this->getUser()->getId())
 				->setEntityType('event')
