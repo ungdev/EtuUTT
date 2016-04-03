@@ -1,14 +1,13 @@
---- 
-assos: 
-  main: 
-    index: 
+assos:
+  main:
+    index:
       meta: "Entdeckt die Studentenvereine der UTT !"
       president: Vorsitzender
       title: "Die Vereine"
-    members: 
+    members:
       back: "Zurück zur Liste"
       contactMail: "E-mail Adresse"
-      contactPhone: Telefonnummer
+      contactPhone: "Telefonnummer"
       description: Beschreibung
       members: Mitglieder
       name: Name
@@ -16,13 +15,13 @@ assos:
       president: Vorsitzender
       title: "Mitglieder eines Vereins"
       website: "Internet Seite"
-    menu: 
+    menu:
       description: Beschreibung
       members: Mitglieder
-    view: 
+    view:
       back: "Zurück zur Liste"
       contactMail: "E-mail Adresse"
-      contactPhone: Telefonnummer
+      contactPhone: "Telefonnummer"
       description: Beschreibung
       name: Name
       president: Vorsitzender

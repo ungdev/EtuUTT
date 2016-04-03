@@ -1,17 +1,16 @@
----
 uvs:
   categories:
     cs: "Wissenschaftliche Kenntnisse"
     ct: "Kultur und Technik"
-    ec: Kommunikation
-    me: Betriebswissenschaft
+    ec: "Kommunikation"
+    me: "Betriebswissenschaft"
     other: Andere
     st: Praktikum
     tm: "Techniken und Methoden"
   main:
     category:
       noResult: "Keinen Kurs in dieser Kategorie"
-      title: Kurskategorie
+      title: "Kurskategorie"
     comment:
       confirm: "Kommentar wurde gesendet. Danke !"
     index:
@@ -26,10 +25,10 @@ uvs:
       cancel: Abbrechen
       confirm: "Annalen wurden gesendet. Danke !"
       file: "Datei (angenommen : pdf, jpg, jpeg, png)"
-      semester: Annalensemester
+      semester: "Annalensemester"
       submit: "Annalen senden"
       title: "Annalen senden"
-      type: Klausurtyp
+      type: "Klausurtyp"
     view:
       aims: Ziele
       approuved: "Vom Team bestätigt"
@@ -37,7 +36,7 @@ uvs:
       autumnAndSpring: "Herbst und Frühling"
       available: Verfügbarkeit
       body: "Ein Kommentar hinzufügen"
-      cm: Vorträge
+      cm: "Vorträge"
       comments: Kommentare
       content: Programme
       countReviews: "%count% Annalen|%count% annales"
@@ -49,7 +48,7 @@ uvs:
       sendReview: "Annalen senden"
       spring: Frühling
       submit: Kommentieren
-      td: Tutorien
+      td: "Tutorien"
       the: "Persönliche Arbeiten"
       title: "Einzelheiten eines Kurses - %code%"
       tp: "Praktiche Arbeiten"

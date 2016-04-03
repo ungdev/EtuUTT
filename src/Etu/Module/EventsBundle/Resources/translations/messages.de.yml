@@ -1,4 +1,3 @@
----
 events:
   categories:
     all: "Alle Events"
@@ -37,10 +36,10 @@ events:
       oct: Oktober
       sep: September
     subscribers:
-      no: "Nein, ich komme nicht"
+      'no': "Nein, ich komme nicht"
       probably: "Ich werde vielleicht kommen"
       title: "Teilnehmer an einem Event"
-      yes: "Ja, ich komme"
+      'yes': "Ja, ich komme"
     view:
       back: "Zurück zum Kalendar"
       by: "Organiesiert von"
@@ -71,9 +70,9 @@ events:
       title: Titel
     delete:
       confirm: "Event wurde gelöscht"
-      no: "Nein, abbrechen"
+      'no': "Nein, abbrechen"
       question: "Wollen Sie das Event %title% wirklich löschen ?"
-      yes: "Ja, löschen"
+      'yes': "Ja, löschen"
     edit:
       back: "Zurück zum Kalendar"
       begin: Anfang

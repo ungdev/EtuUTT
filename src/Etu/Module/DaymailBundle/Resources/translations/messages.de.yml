@@ -1,13 +1,12 @@
---- 
-daymail: 
-  memberships: 
-    daymail: 
-      body: 
+daymail:
+  memberships:
+    daymail:
+      body:
         label: Inhalt
       confirm: "Sie haben diesen Daymail erfolgreich geändert"
-      date: 
+      date:
         label: "Datum der Herausgabe"
-      days: 
+      days:
         fri: Freitag
         mon: Montag
         sat: Samstag
@@ -15,7 +14,7 @@ daymail:
         thu: Donnerstag
         tue: Dienstag
         wed: Mittwoch
-      months: 
+      months:
         apr: April
         aug: August
         dec: Dezember
@@ -28,7 +27,6 @@ daymail:
         nov: November
         oct: October
         sep: September
-      preview: Vorschau
-      submit: "Diesen Daymail ändern"
-      title: 
+      preview: "Vorschau"
+      title:
         label: Thema

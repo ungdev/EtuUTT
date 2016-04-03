@@ -1,4 +1,3 @@
----
 forum:
   main:
     answer:
@@ -23,17 +22,17 @@ forum:
       removeMessage: "Nachricht wirklich löschen ?"
       removeThread: "Thema wirklich löschen ?"
       removeThreadWarning: "Achtung, wenn Sie diese Nachricht löschen, wird das Thema auch gelöscht. Wollen Sie das wirklich ?"
-      title: Mdorierungsschild
+      title: "Mdorierungsschild"
       unlock: Klären
       unlocked: "Thema wurde geklärt"
       where: "Wohin bewegen ?"
     post:
       content: Nachricht
-      no: Nein
+      'no': Nein
       sticky: "Angepint ?"
       threadTitle: "Titel des Themas"
       title: "Thema herstellen"
-      yes: Ja
+      'yes': Ja
     thread:
       answer: Antworten
       by: Von

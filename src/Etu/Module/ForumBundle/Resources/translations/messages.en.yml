@@ -1,4 +1,3 @@
----
 forum:
   main:
     answer:
@@ -30,24 +29,24 @@ forum:
       where: "Where do you want to move the thread ?"
     post:
       content: Message
-      no: false
+      'no': 'No'
       sticky: "Sticky ?"
       threadTitle: "Thread title"
       title: "New thread"
-      yes: true
+      'yes': 'Yes'
     thread:
       answer: Answer
       by: By
       date: Date
       dateFormat: d/m/Y
       dateHour: at
-      datePrefix: ~
+      datePrefix: 'On'
       edit: Edit
       in: In
       lastMessage: "Last message"
       locked: Locked
       messages: Messages
-      new: New
+      new: "New"
       post: "Create a new thread"
       read: Read
       sticky: Sticky

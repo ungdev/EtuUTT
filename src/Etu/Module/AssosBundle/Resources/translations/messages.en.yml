@@ -1,11 +1,13 @@
---- 
-assos: 
-  main: 
-    index: 
-      meta: "Meet the associations & clubs of UTT !"
+assos:
+  main:
+    elus:
+      meta: "Students representatives"
+      title: "Students representatives"
+    index:
+      meta: "Discover the students clubs and societies of the UTT !"
       president: President
-      title: "The associations"
-    members: 
+      title: "The societies"
+    members:
       back: "Back to the list"
       contactMail: "E-mail contact"
       contactPhone: "Phone number"
@@ -14,17 +16,19 @@ assos:
       name: Name
       office: Board
       president: President
-      title: "Members of an assocation"
-      website: Website
-    menu: 
+      title: "Society members"
+      website: "Website"
+    menu:
       description: Description
+      elus: "Student representatives"
       members: Members
-    view: 
+      orgas: "Clubs and societies"
+    view:
       back: "Back to the list"
       contactMail: "E-mail contact"
       contactPhone: "Phone number"
       description: Description
       name: Name
       president: President
-      title: "Details of an association"
-      website: Website
+      title: "Society details"
+      website: "Website"
