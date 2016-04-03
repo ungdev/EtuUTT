@@ -12,6 +12,29 @@
 				{{ block('title') }}
 			</h2>
 
+			<div id="change-locale-choices">
+				<ul class="list-vertical list-vertical-linked overlay-menu">
+				  <li class="first">
+				    <a href="{{ path('change_locale', {'lang': 'fr'}) }}">
+				      <img src="{{ asset('src/img/lang/fr.png') }}"/>
+				      Français
+				    </a>
+				  </li>
+				  <li>
+				    <a href="{{ path('change_locale', {'lang': 'en'}) }}">
+				      <img src="{{ asset('src/img/lang/en.png') }}"/>
+				      English
+				    </a>
+				  </li>
+				  <li>
+				    <a href="{{ path('change_locale', {'lang': 'de'}) }}">
+				      <img src="{{ asset('src/img/lang/de.png') }}"/>
+				      Deutsh
+				    </a>
+				  </li>
+				</ul>
+			</div>
+
 			{% if message %}
 				<div class="page-alert-mobile alert alert-{{ message.type }}">
 					{{ message.message|trans }}
