@@ -1,7 +1,7 @@
 ---
 argentique:
   admin:
-    menu: "Gérer la gallerie Argentique"
+    menu: "Gérer la galerie Argentique"
     title: "Administration Argentique"
   error:
     no_collection: "Aucun classeur n'a été trouvé pour l'import"
