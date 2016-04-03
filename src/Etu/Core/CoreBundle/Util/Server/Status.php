@@ -103,6 +103,10 @@ class Status
 	{
 		exec('free -m', $output);
 
+		if(count($output) != 4) {
+			return;
+		}
+
 		$memoryUsage = preg_split('/\s+/', $output[1]);
 
 		$this->memory = array(
