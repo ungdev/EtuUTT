@@ -123,6 +123,7 @@
 
 	<div class="clear"></div>
 
+	{% if app.user and app.user.isStudent %}
 	<hr />
 
 	<div class="uv-view-reviews">
@@ -222,5 +223,6 @@
 			</div>
 		</form>
 	</div>
+	{% endif %}
 </div>
 {% endblock %}
