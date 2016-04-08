@@ -39,6 +39,7 @@ base:
             admin: Administration
             members: Members
             pages: Static pages
+            nutt: NUTT
 
         # Sex
         sex:

@@ -43,6 +43,7 @@ base:
             members: Membres
             pages: Pages statiques
             orgas: Mes associations
+            nutt: Le NUTT
 
         # Sex
         sex:

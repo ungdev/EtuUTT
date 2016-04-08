@@ -43,6 +43,7 @@ base:
             members: Mitglieder
             pages: Statische Seiten
             orgas: Meine Vereine
+            nutt: NUTT
 
         # Sex
         sex:
