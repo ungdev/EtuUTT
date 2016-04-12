@@ -137,7 +137,7 @@ nelmio_api_doc:
 
 # EtuUTT
 etu_core:
-    domain: etu.utt.fr
+    domain: %domain%
     translation:
         languages: ['en', 'fr', 'de']
 

@@ -16,3 +16,5 @@ parameters:
 
     locale:            fr
     secret:            YourSecretHere
+
+    domain:            etu.utt.fr
