@@ -31,6 +31,7 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
 		$admin->setLogin('admin');
 		$admin->setMail('admin@utt.fr');
 		$admin->setIsAdmin(true);
+		$admin->setPassword('OwsJMxEhQi83BQ=='); // 'admin' with the default secret key
 		$admin->setAvatar('admin.png');
 		$admin->setBirthday(new \DateTime());
 		$admin->setLastVisitHome(new \DateTime());
@@ -40,6 +41,7 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
 
 		$user->setFullName('User USER');
 		$user->setLogin('user');
+		$user->setPassword('Ox8JJBEpQjQ='); // 'user' with the default secret key
 		$user->setMail('user@utt.fr');
 		$user->setIsAdmin(false);
 		$user->setAvatar('user.png');
