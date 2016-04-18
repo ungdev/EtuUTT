@@ -122,6 +122,7 @@ fm_bbcode:
     filter_sets:
         default_filter:
             locale: %locale%
+            strict: false
             xhtml: true
             filters: [ default, block, text, code, image, list, table, quote, video, url ]
             hooks: [ clickable, emoticon ]
