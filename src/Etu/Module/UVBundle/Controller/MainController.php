@@ -37,7 +37,7 @@ class MainController extends Controller
 			->where('uv.code IN(\''.implode('\', \'', $this->getUser()->getUvsList()).'\')')
 			->getQuery();
 
-		$query->useResultCache(true, 3600*24*30);
+		$query->useResultCache(true, 3600*24);
 
 		/** @var UV[] $my */
 		$my = $query->getResult();
@@ -72,7 +72,7 @@ class MainController extends Controller
 			->orderBy('u.code', 'ASC')
 			->getQuery();
 
-		$query->useResultCache(true, 3600*24*30);
+		$query->useResultCache(true, 3600*24);
 
 		$pagination = $this->get('knp_paginator')->paginate($query, $page, 20);
 
@@ -111,7 +111,7 @@ class MainController extends Controller
 			->orderBy('u.code', 'ASC')
 			->getQuery();
 
-		$query->useResultCache(true, 3600*24*30);
+		$query->useResultCache(true, 3600*24);
 
 		$pagination = $this->get('knp_paginator')->paginate($query, $page, 20);
 

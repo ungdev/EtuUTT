@@ -222,6 +222,19 @@
 						{% else %}
 							{{ render_orga_menu() }}
 						{% endif %}
+
+						{% if app.request.session.has('logas-cookie-save') %}
+							<hr class="separator" />
+
+							<ul class="list-vertical list-vertical-linked">
+								<li>
+									<a href="{{ path('admin_log-as_back') }}">
+										<img src="{{ asset('src/img/icons/users.png') }}" class="etu-img-icon" />
+										{{ 'user.admin.logAs.loginBack'|trans }}
+									</a>
+								</li>
+							</ul>
+						{% endif %}
 					</div>
 					{% endif %}
 				</div>
@@ -286,16 +299,5 @@
 
 		{% block javascripts %}{% endblock %}
 
-		{% if app.environment == 'prod' %}
-            <script>
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-                ga('create', 'UA-43851564-1', 'utt.fr');
-                ga('send', 'pageview');
-            </script>
-        {% endif %}
 	</body>
 </html>

@@ -1,0 +1,93 @@
+[main]
+host = https://www.transifex.com/ung/site-etudiant/
+
+[site-etudiant.corebundle]
+source_file = src/Etu/Core/CoreBundle/Resources/translations/messages.fr.yml
+source_lang = fr
+type = YAML
+trans.en = src/Etu/Core/CoreBundle/Resources/translations/messages.en.yml
+trans.de = src/Etu/Core/CoreBundle/Resources/translations/messages.de.yml
+
+[site-etudiant.argentiquebundle]
+source_file = src/Etu/Module/ArgentiqueBundle/Resources/translations/messages.fr.yml
+source_lang = fr
+type = YAML
+trans.en = src/Etu/Module/ArgentiqueBundle/Resources/translations/messages.en.yml
+trans.de = src/Etu/Module/ArgentiqueBundle/Resources/translations/messages.de.yml
+
+[site-etudiant.assosbundle]
+source_file = src/Etu/Module/AssosBundle/Resources/translations/messages.fr.yml
+source_lang = fr
+type = YAML
+trans.en = src/Etu/Module/AssosBundle/Resources/translations/messages.en.yml
+trans.de = src/Etu/Module/AssosBundle/Resources/translations/messages.de.yml
+
+[site-etudiant.bugsbundle]
+source_file = src/Etu/Module/BugsBundle/Resources/translations/messages.fr.yml
+source_lang = fr
+type = YAML
+trans.en = src/Etu/Module/BugsBundle/Resources/translations/messages.en.yml
+trans.de = src/Etu/Module/BugsBundle/Resources/translations/messages.de.yml
+
+[site-etudiant.covoitbundle]
+source_file = src/Etu/Module/CovoitBundle/Resources/translations/messages.fr.yml
+source_lang = fr
+type = YAML
+trans.en = src/Etu/Module/CovoitBundle/Resources/translations/messages.en.yml
+trans.de = src/Etu/Module/CovoitBundle/Resources/translations/messages.de.yml
+
+[site-etudiant.covoitbundle-validators]
+source_file = src/Etu/Module/CovoitBundle/Resources/translations/validators.fr.yml
+source_lang = fr
+type = YAML
+trans.en = src/Etu/Module/CovoitBundle/Resources/translations/validators.en.yml
+trans.de = src/Etu/Module/CovoitBundle/Resources/translations/validators.de.yml
+
+[site-etudiant.cumulbundle]
+source_file = src/Etu/Module/CumulBundle/Resources/translations/messages.fr.yml
+source_lang = fr
+type = YAML
+trans.en = src/Etu/Module/CumulBundle/Resources/translations/messages.en.yml
+trans.de = src/Etu/Module/CumulBundle/Resources/translations/messages.de.yml
+
+[site-etudiant.daymailbundle]
+source_file = src/Etu/Module/DaymailBundle/Resources/translations/messages.fr.yml
+source_lang = fr
+type = YAML
+trans.en = src/Etu/Module/DaymailBundle/Resources/translations/messages.en.yml
+trans.de = src/Etu/Module/DaymailBundle/Resources/translations/messages.de.yml
+
+[site-etudiant.eventsbundle]
+source_file = src/Etu/Module/EventsBundle/Resources/translations/messages.fr.yml
+source_lang = fr
+type = YAML
+trans.en = src/Etu/Module/EventsBundle/Resources/translations/messages.en.yml
+trans.de = src/Etu/Module/EventsBundle/Resources/translations/messages.de.yml
+
+[site-etudiant.forumbundle]
+source_file = src/Etu/Module/ForumBundle/Resources/translations/messages.fr.yml
+source_lang = fr
+type = YAML
+trans.en = src/Etu/Module/ForumBundle/Resources/translations/messages.en.yml
+trans.de = src/Etu/Module/ForumBundle/Resources/translations/messages.de.yml
+
+[site-etudiant.trombibundle]
+source_file = src/Etu/Module/TrombiBundle/Resources/translations/messages.fr.yml
+source_lang = fr
+type = YAML
+trans.en = src/Etu/Module/TrombiBundle/Resources/translations/messages.en.yml
+trans.de = src/Etu/Module/TrombiBundle/Resources/translations/messages.de.yml
+
+[site-etudiant.uploadbundle]
+source_file = src/Etu/Module/UploadBundle/Resources/translations/messages.fr.yml
+source_lang = fr
+type = YAML
+trans.en = src/Etu/Module/UploadBundle/Resources/translations/messages.en.yml
+trans.de = src/Etu/Module/UploadBundle/Resources/translations/messages.de.yml
+
+[site-etudiant.uvbundle]
+source_file = src/Etu/Module/UVBundle/Resources/translations/messages.fr.yml
+source_lang = fr
+type = YAML
+trans.en = src/Etu/Module/UVBundle/Resources/translations/messages.en.yml
+trans.de = src/Etu/Module/UVBundle/Resources/translations/messages.de.yml

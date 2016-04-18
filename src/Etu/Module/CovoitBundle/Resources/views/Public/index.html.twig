@@ -108,7 +108,7 @@
                         {{ covoit.date|format_date }}
                     </span>
                     <br />
-                    {{ covoit.startHour|format_time(null, null, null, constant('IntlDateFormatter::SHORT')) }}
+                    {{ covoit.startHour|format_time(null, null, 'Europe/Paris', constant('IntlDateFormatter::SHORT')) }}
                 </div>
 
                 <div class="item-infos">

@@ -165,9 +165,8 @@ class MembershipsController extends Controller
 				'message' => '"end" parameter is required',
 			)));
 		}
-
-		$start = \DateTime::createFromFormat('U', $start);
-		$end = \DateTime::createFromFormat('U', $end);
+		$start = \DateTime::createFromFormat('Y-m-d', $start);
+		$end = \DateTime::createFromFormat('Y-m-d', $end);
 
 		/** @var Calendar $calendr */
 		$calendr = $this->get('calendr');
@@ -257,11 +256,20 @@ class MembershipsController extends Controller
 
 		$orga = $membership->getOrganization();
 
+		if(substr($start,12) == '00-00' && substr($end,12) == '00-00') {
+
+			$start = substr($start, 0, 12).'12-00';
+
+			$jour2 = str_pad((substr($end, 0, 2)-1), 2, '0', STR_PAD_LEFT);
+			$end = $jour2.substr($end, 2, 10).'13-00';
+		}
+
 		$event = new Event(
 			null,
 			\DateTime::createFromFormat('d-m-Y--H-i', $start),
 			\DateTime::createFromFormat('d-m-Y--H-i', $end)
 		);
+
 		$event->setOrga($orga)
 			->setIsAllDay($allDay);
 
@@ -273,6 +281,8 @@ class MembershipsController extends Controller
 
 		$form = $this->createFormBuilder($event)
 			->add('title')
+			->add('begin', 'datetime_picker')
+			->add('end', 'datetime_picker')
 			->add('category', 'choice', array('choices' => $categories))
 			->add('file', 'file')
 			->add('location', 'textarea')
@@ -292,7 +302,7 @@ class MembershipsController extends Controller
 
 			$event->upload();
 
-			$entity = array(
+			$entity = array( // @TODO WTF? Y U AN ARRAY?
 				'id' => $event->getId(),
 				'title' => $event->getTitle(),
 				'category' => $categories[$event->getCategory()],
@@ -306,7 +316,7 @@ class MembershipsController extends Controller
 			$notif = new Notification();
 
 			$notif
-				->setModule($this->getCurrentBundle()->getIdentifier())
+				->setModule('events')
 				->setHelper('event_created_all')
 				->setAuthorId($this->getUser()->getId())
 				->setEntityType('event')
@@ -323,7 +333,7 @@ class MembershipsController extends Controller
 			$keys = array_flip($availableCategories);
 
 			$notif
-				->setModule($this->getCurrentBundle()->getIdentifier())
+				->setModule('events')
 				->setHelper('event_created_category')
 				->setAuthorId($this->getUser()->getId())
 				->setEntityType('event-category')
@@ -435,6 +445,8 @@ class MembershipsController extends Controller
 
 		$form = $this->createFormBuilder($event)
 			->add('title')
+			->add('begin', 'datetime_picker')
+			->add('end', 'datetime_picker')
 			->add('category', 'choice', array('choices' => $categories))
 			->add('file', 'file', array('required' => false))
 			->add('privacy', 'choice', array(
@@ -655,7 +667,7 @@ class MembershipsController extends Controller
 			$notif = new Notification();
 
 			$notif
-				->setModule($this->getCurrentBundle()->getIdentifier())
+				->setModule('events')
 				->setHelper('event_deleted')
 				->setAuthorId($this->getUser()->getId())
 				->setEntityType('event')

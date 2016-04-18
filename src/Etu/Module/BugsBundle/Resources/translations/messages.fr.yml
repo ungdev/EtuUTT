@@ -63,11 +63,11 @@ bugs:
       message: "%adminName% a changé la criticité de ce bug de %before% à %after%"
       success: "La criticté du bug a bien été modifiée"
     delete:
-      false: "Non, annuler"
+      no: "Non, annuler"
       success: "Le bug a bien été supprimé"
       sure: "Voulez-vous vraiment supprimer le bug %bugName% ?"
       title: "Supprimer un bug"
-      true: "Oui, supprimer"
+      yes: "Oui, supprimer"
     open:
       message: "Réouvert par %adminName%"
       success: "Le bug a bien été réouvert"

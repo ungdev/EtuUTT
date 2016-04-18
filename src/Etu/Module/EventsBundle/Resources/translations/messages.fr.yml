@@ -58,10 +58,10 @@ events:
       oct: Oct
       sep: Sept
     subscribers:
-      false: "Non, je ne viendrai pas"
+      no: "Non, je ne viendrai pas"
       probably: "Je viendrai peut-être"
       title: "Participants à un évènement"
-      true: "Oui, je viendrai"
+      yes: "Oui, je viendrai"
     view:
       back: "Retour au calendrier"
       by: "organisé par"
@@ -101,9 +101,9 @@ events:
       title: Titre
     delete:
       confirm: "L'évènement a bien été supprimé"
-      false: "Non, annuler"
+      no: "Non, annuler"
       question: "Voulez-vous vraiment supprimer l'évènement %title% ?"
-      true: "Oui, supprimer"
+      yes: "Oui, supprimer"
     edit:
       back: "Retour au calendrier"
       begin: Début

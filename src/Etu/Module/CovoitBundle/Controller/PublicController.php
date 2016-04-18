@@ -140,7 +140,7 @@ class PublicController extends Controller
             $notif = new Notification();
 
             $notif
-                ->setModule($this->getCurrentBundle()->getIdentifier())
+                ->setModule('covoit')
                 ->setHelper('covoit_new_message')
                 ->setAuthorId($this->getUser()->getId())
                 ->setEntityType('covoit')

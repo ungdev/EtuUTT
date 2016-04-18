@@ -67,7 +67,7 @@ class ViewController extends Controller
 			$notif = new Notification();
 
 			$notif
-				->setModule($this->getCurrentBundle()->getIdentifier())
+				->setModule('uv')
 				->setHelper('uv_new_comment')
 				->setAuthorId($this->getUser()->getId())
 				->setEntityType('uv')
@@ -277,7 +277,7 @@ class ViewController extends Controller
 			$review->file = null;
 
 			$notif
-				->setModule($this->getCurrentBundle()->getIdentifier())
+				->setModule('uv')
 				->setHelper('uv_new_review')
 				->setAuthorId($this->getUser()->getId())
 				->setEntityType('uv')

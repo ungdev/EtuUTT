@@ -1,7 +1,6 @@
---- 
-upload: 
-  main: 
-    index: 
+upload:
+  main:
+    index:
       adress: "Recover adress"
       confirm: "You have sent a picture"
       error_size: "The file seems to be too big in size (maximum 2MB)"
@@ -11,9 +10,9 @@ upload:
       send: "Send a picture (jpg, png, gif, bmp, 2 MB maximum) :"
       send_submit: Send
       title: "Uploading a picture"
-    remove: 
+    remove:
       confirm: "You have deleted the picture"
-      false: "No, cancel"
+      'no': "No, cancel"
       question: "Do you really want to delete <strong>%name%</strong> from the server ?"
-      true: "Yes, delete"
+      'yes': "Yes, delete"
   upload_link: "Upload a picture"

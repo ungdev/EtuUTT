@@ -1,7 +1,6 @@
---- 
-trombi: 
-  main: 
-    index: 
+trombi:
+  main:
+    index:
       branche: Abteilung
       count: "%count% Ergebnis|%count% Ergebnisse"
       explainations: "Suchen Sie dank dieses Formulars"
@@ -9,12 +8,12 @@ trombi:
       name: "Name, Vorname oder Spitzname"
       no_results: "Kein Ergebnis"
       personnalMail: "Private E-mailadresse"
-      phone: Telefonnummer
+      phone: "Telefonnummer"
       search: Suchen
       search_title: "Einen Studenten suchen"
-      studentId: Studentennummer
+      studentId: "Studentennummer"
       title: Jahrbuch
-      uncomplete_profile: 
+      uncomplete_profile:
         desc: "Ihr Profil muss vollständig sein (privat oder öffentlich) um das Jahrbuch benutzen zu können"
         link: "Mein Account"
         title: "Ihr Profil ist unvollständig"

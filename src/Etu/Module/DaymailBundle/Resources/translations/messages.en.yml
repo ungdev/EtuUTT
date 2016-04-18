@@ -1,13 +1,13 @@
---- 
-daymail: 
-  memberships: 
-    daymail: 
-      body: 
+daymail:
+  memberships:
+    daymail:
+      body:
         label: Content
       confirm: "You have successfully edited this daymail"
-      date: 
+      create: "Create a daymail for the %day%"
+      date:
         label: "Date of publication"
-      days: 
+      days:
         fri: Friday
         mon: Monday
         sat: Saturday
@@ -15,7 +15,8 @@ daymail:
         thu: Thursday
         tue: Tuesday
         wed: Wednesday
-      months: 
+      edit: "Edit %day% daymail"
+      months:
         apr: april
         aug: august
         dec: december
@@ -28,7 +29,7 @@ daymail:
         nov: november
         oct: october
         sep: september
-      preview: Preview
-      submit: "Edit this daymail"
-      title: 
+      preview: "Preview"
+      remove: "Delete %day% daymail"
+      title:
         label: Subject

@@ -2,11 +2,15 @@
 ##########
 
 /app/config/parameters.yml
+/app/config/version.yml
 /app/cache/*
 /app/logs/*
 /app/check.php
 /app/bootstrap.php.cache
 /app/SymfonyRequirements.php
+/src/Etu/Module/UVBundle/Resources/objects/current-guide.pdf
+/src/Etu/Module/UVBundle/Resources/objects/current-guide.xml
+/src/Etu/Module/UVBundle/Resources/objects/registry.json
 /src/Etu/Module/LoggerBundle/Resources/objects/errors
 /src/Etu/Module/ArgentiqueBundle/Resources/photos/*
 

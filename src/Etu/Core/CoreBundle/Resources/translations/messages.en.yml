@@ -1,108 +1,104 @@
-
 core:
-    admin:
-        index:
-            title: Dashboard
-            server_status: Load server
-            load: Load
-            disk: Disk
-            processes: Processus
-        modules:
-            title: Modules
-            name: Name
-            author: Author
-            description: Description
-            is_not_ready: This module is not ready to be used
-            needed_by: Required by %needed_by%
-            need: Require %need%
-            enable_disable: Enable/disable
-            confirm: You have successfully changed the modules
-        pageCreate:
-            title: Create a page
-            name: Title
-            content: Content
-            submit: Create
-            confirm: You have successfully created the page
-        pageDelete:
-            title: Delete a page
-            question: Are you sure you want to delete the page "%title%" ?
-            yes: Yes, delete
-            no: No, cancel
-            confirm: You have successfully deleted the page
-        pageEdit:
-            title: Edit a page
-            name: Title
-            content: Content
-            submit: Edit
-            confirm: You have successfully edited the page
-        pages:
-            title: Static page
-            name: Name
-            actions: Actions
-            create: Create a page
-            edit: Edit
-            delete: Delete
-            no_page: No page at the moment
-        stats:
-            title: Statistics
-            mobile: The general statistics are the only ones available on smartphone.
-            general: General statistics
-            current_month: Statistics for this month
-            unique_visitors_count: Number of unique visitors
-            pages_calls_count: Number of pages called
-            average_visited_pages: Average number of pages visited after the first one
-            average_duration: Average time spent on the website
-            average_time_to_load: Average load time of a page
-            unique_visitors: Number of visitors for this month
-            pages_calls: Number of pages called for this month
-            browsers: Browser
-            visitors: Visitors
-            plaftorms: Operating system
-            most_used_browsers_versions: Most used browser version
-            browser_name: Name
-            browser_count: Number of pages called
-            browser_percentage: Percentage
-            most_used_routes: Most used routes
-            route_name: Name
-            route_count: Number of pages called
-            route_percentage: Percentage
-            no_info: No information available
-            traffic_sources: Traffic sources
-            visitors_sources: Visitors sources
-            source_domain: Domaine name
-            source_count: Number of pages called
-            source_percentage: Percentage
-            most_common_sources: Most common sources for the visitors
-
-    main:
-        index:
-            title: My news feed
-            new_notifs: new notification(s)
-            no_notif_message: You have no notifications !
-            no_notif_description: Subscribe to parts of EtuUTT to follow what you like in UTT !
-            learn_more: Learn more
-        indexAnonymous:
-            title: Home
-            welcome: Welcome to the student website of the University of Technology of Troyes
-            desc: |
-                L'association d'informatique de l'UTT, l'UTT Net Group (UNG) est fière de vous présenter
-                ce site créé par et pour les étudiants.<br />
-                Il connecte la communauté des UTTiens et offre de multiples
-                services aux étudiants en complément<br />des services officiels pour faciliter
-                leur intégration et leur vie étudiante.<br />
-                <strong>Bonne visite !</strong>
-            events: Coming soon
-            date: On %date%
-            allEvents: All the events
-        changeLocale:
-            confirm: You have successfully changed the language
-
-
-    subscriptions:
-        button:
-            follower: You are subscribed to this page
-            unfollow: Unsubscribe
-            follow: Subscribe
-        api:
-            confirm_follow: You are now subscribed to this page
-            confirm_unfollow: You have successfully unsubscried to this page
+  admin:
+    index:
+      title: Dashboard
+      server_status: Server status
+      load: Load
+      disk: Disc
+      processes: Process
+    modules:
+      title: Modules
+      name: Name
+      author: Author
+      description: Description
+      is_not_ready: This module is not ready for use
+      needed_by: Required by %needed_by%
+      need: Require %need%
+      enable_disable: Enable/Disable
+      confirm: You successfully changed the modules
+    pageCreate:
+      title: Create a page
+      name: Title
+      content: Contents
+      submit: Create
+      confirm: You successfully created the page
+    pageDelete:
+      title: Delete a page
+      question: Are you sure you to want to delete "%title%" page ?
+      'yes': Yes, delete
+      'no': No, cancel
+      confirm: You successfully deleted the page
+    pageEdit:
+      title: Modify a page
+      name: Title
+      content: Contents
+      submit: Modify
+      confirm: You successfully modified the page
+    pages:
+      title: Statistical pages
+      name: Name
+      actions: Actions
+      create: Create a page
+      edit: Edit
+      delete: Delete
+      no_page: No page currently
+    stats:
+      title: Statistics
+      mobile: Only general statistics are available on mobile devices
+      general: General statistics
+      current_month: Statistics for the current month
+      unique_visitors_count: Number of unique visitors
+      pages_calls_count: Number of page loadings
+      average_visited_pages: Average number of pages visited after the first one
+      average_duration: Average duration of a visit
+      average_time_to_load: Average duration of a page generation
+      unique_visitors: Number of unique visitors this month
+      pages_calls: Number of page loadings this month
+      browsers: Browsers
+      visitors: Visitors
+      plaftorms: Operating systems
+      most_used_browsers_versions: Most used browsers versions
+      browser_name: Name
+      browser_count: Number of loadings
+      browser_percentage: Percentage
+      most_used_routes: Most used roads
+      route_name: Name
+      route_count: Number of loadings
+      route_percentage: Percentage
+      no_info: No information available
+      traffic_sources: Traffic sources
+      visitors_sources: Visitors sources
+      source_domain: Domain name
+      source_count: Number of loadings
+      source_percentage: Percentage
+      most_common_sources: 'Largest sources of visitors '
+  main:
+    index:
+      title: My feed
+      new_notifs: New notification(s)
+      no_notif_message: You do not have any notification !
+      no_notif_description: Subscribe to EtuUTT's items to follow what you have an interest in at the UTT !
+      learn_more: Know more
+      loading: Loading ...
+      logo: The feed does not have any other item to display
+      top: Return to top
+    indexAnonymous:
+      title: Homepage
+      welcome: Welcome on the student web site of the University of Technology of Troyes
+      desc: |
+        The computing association of the UTT, the UTT Net Group (UNG) is pleased to present this website created by and for students.<br />
+        It connects the UTT's students community and offers multiple services to students including official services to enable their integration and their student life.<br />
+        <strong>Enjoy this website !</strong>
+      events: Soon at the UTT
+      date: The %date%
+      allEvents: All events
+    changeLocale:
+      confirm: You successfully switched language
+  subscriptions:
+    button:
+      follower: You have subscribed to this page
+      unfollow: Unsubscribe
+      follow: Subscribe
+    api:
+      confirm_follow: You have now subscribed to this item
+      confirm_unfollow: You have successfully subscribed to this item

@@ -1,7 +1,6 @@
---- 
-upload: 
-  main: 
-    index: 
+upload:
+  main:
+    index:
       adress: "Die Adresse wiederholen"
       confirm: "Sie haben ein Bild erfolgreich gesendet"
       error_size: "Die Datei die Sie gesendet haben scheint zu sperrig zu sein (maximum 2MB)"
@@ -11,9 +10,9 @@ upload:
       send: "Ein Bild senden (jpg, png, gif, bmp, 2 MB maximum) :"
       send_submit: Senden
       title: "Bilder senden"
-    remove: 
+    remove:
       confirm: "Sie haben dieses Bild erfolgreich gelöscht"
-      false: "Nein, abbrechen"
+      'no': "Nein, abbrechen"
       question: "Wollen Sie wirklich <strong>%name%</strong> vom Server löschen ?"
-      true: "Ja, löschen"
+      'yes': "Ja, löschen"
   upload_link: "Ein Bild senden"

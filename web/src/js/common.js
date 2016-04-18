@@ -22,6 +22,7 @@ var facebox = $('a[rel*=facebox]'),
     sceditor = $('.redactor'),
     sceditorLimited = $('.redactor-limited'),
 	usersAutocomplete = $('.user-autocomplete'),
+	orgasAutocomplete = $('.orga-autocomplete'),
 	changeLocale = {
 		link: $('.change-locale'),
 		box: $('#change-locale-choices')
@@ -228,6 +229,15 @@ $('.date-picker').datepicker({
     monthNamesShort: [ "Jan", "Fev", "Mar", "Avr", "Mai", "Juin", "Juil", "Aou", "Sep", "Oct", "Nov", "Dec" ]
 });
 
+$('.datetime-picker input:first-of-type').datepicker({
+    firstDay: 1,
+	dateFormat: 'dd/mm/yy',
+	changeMonth: true,
+	changeYear: true,
+    dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
+    monthNamesShort: [ "Jan", "Fev", "Mar", "Avr", "Mai", "Juin", "Juil", "Aou", "Sep", "Oct", "Nov", "Dec" ]
+});
+
 $('.birthday-picker').datepicker({
     firstDay: 1,
 	dateFormat: 'dd/mm/yy',
@@ -265,39 +275,39 @@ $(function() {
                 "|table|quote|link,unlink|image,youtube|maximize",
         emoticons: {
             dropdown: {
-                ">:(": "/src/img/emoticons/angry.png",
-                ":aw:": "/src/img/emoticons/aw.png",
-                "8)": "/src/img/emoticons/cool.png",
-                ":D": "/src/img/emoticons/ecstatic.png",
-                ">:D": "/src/img/emoticons/furious.png",
-                ":O": "/src/img/emoticons/gah.png",
-                ":)": "/src/img/emoticons/happy.png",
-                "<3": "/src/img/emoticons/heart.png",
-                ":/": "/src/img/emoticons/hm.png",
-                ":3": "/src/img/emoticons/kiss.png",
-                ":|": "/src/img/emoticons/meh.png",
-                ":x": "/src/img/emoticons/mmf.png",
-                ":(": "/src/img/emoticons/sad.png",
-                ":P": "/src/img/emoticons/tongue.png",
-                ":o": "/src/img/emoticons/what.png",
-                ";)": "/src/img/emoticons/wink.png"
+                ">:(": "src/img/emoticons/angry.png",
+                ":aw:": "src/img/emoticons/aw.png",
+                "8)": "src/img/emoticons/cool.png",
+                ":D": "src/img/emoticons/ecstatic.png",
+                ">:D": "src/img/emoticons/furious.png",
+                ":O": "src/img/emoticons/gah.png",
+                ":)": "src/img/emoticons/happy.png",
+                "<3": "src/img/emoticons/heart.png",
+                ":/": "src/img/emoticons/hm.png",
+                ":3": "src/img/emoticons/kiss.png",
+                ":|": "src/img/emoticons/meh.png",
+                ":x": "src/img/emoticons/mmf.png",
+                ":(": "src/img/emoticons/sad.png",
+                ":P": "src/img/emoticons/tongue.png",
+                ":o": "src/img/emoticons/what.png",
+                ";)": "src/img/emoticons/wink.png"
             },
             hidden: {
-                ">:[": "/src/img/emoticons/angry.png",
-                "8]": "/src/img/emoticons/cool.png",
-                "D:": "/src/img/emoticons/gah.png",
-                ":]": "/src/img/emoticons/happy.png",
-                ":\\": "/src/img/emoticons/hm.png",
-                "-.-": "/src/img/emoticons/meh.png",
-                "-_-": "/src/img/emoticons/meh.png",
-                ":X": "/src/img/emoticons/mmf.png",
-                ":[": "/src/img/emoticons/sad.png",
-                ":\'(": "/src/img/emoticons/sad.png",
-                ":\'[": "/src/img/emoticons/sad.png",
-                ":p": "/src/img/emoticons/tongue.png",
-                ":?": "/src/img/emoticons/what.png",
-                ";]": "/src/img/emoticons/wink.png",
-                ";D": "/src/img/emoticons/wink.png"
+                ">:[": "src/img/emoticons/angry.png",
+                "8]": "src/img/emoticons/cool.png",
+                "D:": "src/img/emoticons/gah.png",
+                ":]": "src/img/emoticons/happy.png",
+                ":\\": "src/img/emoticons/hm.png",
+                "-.-": "src/img/emoticons/meh.png",
+                "-_-": "src/img/emoticons/meh.png",
+                ":X": "src/img/emoticons/mmf.png",
+                ":[": "src/img/emoticons/sad.png",
+                ":\'(": "src/img/emoticons/sad.png",
+                ":\'[": "src/img/emoticons/sad.png",
+                ":p": "src/img/emoticons/tongue.png",
+                ":?": "src/img/emoticons/what.png",
+                ";]": "src/img/emoticons/wink.png",
+                ";D": "src/img/emoticons/wink.png"
             }
         }
     });
@@ -311,39 +321,39 @@ $(function() {
             "source|bold,italic,underline,strike|left,center,right,justify|link,unlink|maximize",
         emoticons: {
             dropdown: {
-                ">:(": "/src/img/emoticons/angry.png",
-                ":aw:": "/src/img/emoticons/aw.png",
-                "8)": "/src/img/emoticons/cool.png",
-                ":D": "/src/img/emoticons/ecstatic.png",
-                ">:D": "/src/img/emoticons/furious.png",
-                ":O": "/src/img/emoticons/gah.png",
-                ":)": "/src/img/emoticons/happy.png",
-                "<3": "/src/img/emoticons/heart.png",
-                ":/": "/src/img/emoticons/hm.png",
-                ":3": "/src/img/emoticons/kiss.png",
-                ":|": "/src/img/emoticons/meh.png",
-                ":x": "/src/img/emoticons/mmf.png",
-                ":(": "/src/img/emoticons/sad.png",
-                ":P": "/src/img/emoticons/tongue.png",
-                ":o": "/src/img/emoticons/what.png",
-                ";)": "/src/img/emoticons/wink.png"
+                ">:(": "src/img/emoticons/angry.png",
+                ":aw:": "src/img/emoticons/aw.png",
+                "8)": "src/img/emoticons/cool.png",
+                ":D": "src/img/emoticons/ecstatic.png",
+                ">:D": "src/img/emoticons/furious.png",
+                ":O": "src/img/emoticons/gah.png",
+                ":)": "src/img/emoticons/happy.png",
+                "<3": "src/img/emoticons/heart.png",
+                ":/": "src/img/emoticons/hm.png",
+                ":3": "src/img/emoticons/kiss.png",
+                ":|": "src/img/emoticons/meh.png",
+                ":x": "src/img/emoticons/mmf.png",
+                ":(": "src/img/emoticons/sad.png",
+                ":P": "src/img/emoticons/tongue.png",
+                ":o": "src/img/emoticons/what.png",
+                ";)": "src/img/emoticons/wink.png"
             },
             hidden: {
-                ">:[": "/src/img/emoticons/angry.png",
-                "8]": "/src/img/emoticons/cool.png",
-                "D:": "/src/img/emoticons/gah.png",
-                ":]": "/src/img/emoticons/happy.png",
-                ":\\": "/src/img/emoticons/hm.png",
-                "-.-": "/src/img/emoticons/meh.png",
-                "-_-": "/src/img/emoticons/meh.png",
-                ":X": "/src/img/emoticons/mmf.png",
-                ":[": "/src/img/emoticons/sad.png",
-                ":\'(": "/src/img/emoticons/sad.png",
-                ":\'[": "/src/img/emoticons/sad.png",
-                ":p": "/src/img/emoticons/tongue.png",
-                ":?": "/src/img/emoticons/what.png",
-                ";]": "/src/img/emoticons/wink.png",
-                ";D": "/src/img/emoticons/wink.png"
+                ">:[": "src/img/emoticons/angry.png",
+                "8]": "src/img/emoticons/cool.png",
+                "D:": "src/img/emoticons/gah.png",
+                ":]": "src/img/emoticons/happy.png",
+                ":\\": "src/img/emoticons/hm.png",
+                "-.-": "src/img/emoticons/meh.png",
+                "-_-": "src/img/emoticons/meh.png",
+                ":X": "src/img/emoticons/mmf.png",
+                ":[": "src/img/emoticons/sad.png",
+                ":\'(": "src/img/emoticons/sad.png",
+                ":\'[": "src/img/emoticons/sad.png",
+                ":p": "src/img/emoticons/tongue.png",
+                ":?": "src/img/emoticons/what.png",
+                ";]": "src/img/emoticons/wink.png",
+                ";D": "src/img/emoticons/wink.png"
             }
         }
     });
@@ -388,6 +398,62 @@ $(function() {
                     link = item.user._links[i];
 
                     if (link.rel == 'user.image') {
+                        imageLink = link;
+                    }
+                }
+
+				return $("<li style=\"margin-bottom: 3px;\">")
+					.append(
+						"<a>" +
+							"<img src=\" "+ imageLink.uri + "\" style=\"float: left; max-height: 25px; max-width: 25px; margin-right: 5px;\" />" +
+							"<span style=\"display: block; float: left; margin-top: 0;\">" + item.label + "</span>" +
+							"<div style=\"clear: both;\"></div>" +
+                        "</a>"
+					)
+					.appendTo(ul);
+			};
+		}
+	}
+
+	// Orga autocomplete
+	if (orgasAutocomplete) {
+		orgasAutocomplete.autocomplete({
+			minLength: 1,
+			source: function(request, response) {
+				$.getJSON(
+                    Routing.generate('orga_ajax_search'),
+                    {
+                        term: request.term
+                    },
+					function(data)
+                    {
+						var orgas = data.response.orgas;
+
+						response($.map(orgas, function(item) {
+							return {
+								label: item.name,
+								value: item.name,
+								orga: item
+							}
+						}));
+					}
+                );
+			},
+            select: function( event, ui ) {
+                var input = $(event.target);
+                input.attr('data-login', ui.item.orga.login);
+                input.attr('data-name', ui.item.orga.name);
+            }
+		});
+
+		if (orgasAutocomplete.data("ui-autocomplete")) {
+			orgasAutocomplete.data("ui-autocomplete")._renderItem = function(ul, item) {
+                var imageLink, link;
+
+                for (var i = 0; i < item.orga._links.length; i++) {
+                    link = item.orga._links[i];
+
+                    if (link.rel == 'orga.image') {
                         imageLink = link;
                     }
                 }

@@ -62,6 +62,54 @@ class AjaxController extends ApiController
     }
 
     /**
+     * @Route("/orga/ajax/search", name="orga_ajax_search", options={ "expose" = true })
+     */
+    public function orgasearchAction(Request $request)
+    {
+        if (! $this->getUserLayer()->isConnected()) {
+            return $this->format([
+                    'error' => 'Your must be connected to access this page'
+                ], 403);
+        }
+
+        $term = $request->query->get('term');
+
+        if (mb_strlen($term) < 1) {
+            return $this->format([
+                    'error' => 'Term provided is too short'
+                ], 400);
+        }
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $qb = $em->createQueryBuilder();
+
+        $qb ->select('o')
+            ->from('EtuUserBundle:Organization', 'o');
+
+        $keywords = explode(' ', $term);
+
+        foreach ($keywords as $i => $keyword) {
+            $qb->andWhere(implode(' OR ', [
+                        'o.login LIKE :k_' . $i,
+                        'o.name LIKE :k_' . $i,
+                        'o.contactMail LIKE :k_' . $i,
+                        'o.contactPhone LIKE :k_' . $i,
+                    ]));
+
+            $qb->setParameter('k_' . $i, '%' . $keyword . '%');
+        }
+
+        /** @var User[] $users */
+        $orgas = $qb->getQuery()->getResult();
+
+        return $this->format([
+            'orgas' => $this->get('etu.api.orga.transformer')->transform($orgas)
+        ]);
+    }
+
+    /**
      * @Route("/orga/{login}/remove-phone", name="orga_remove_phone", options={ "expose" = true })
      */
     public function orgaRemovePhoneAction($login)

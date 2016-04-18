@@ -1,0 +1,90 @@
+uvs:
+  admin:
+    back: Go back
+    deleteReview:
+      confirm: "This annal has been successfully deleted"
+    index:
+      actions: Actions
+      comments: "All comments"
+      delete: Delete
+      lastsComments: "Last comments"
+      lastsReviews: "Last annals"
+      review: Annal
+      reviews: "All annals"
+      sender: Author
+      title: "Manage courses"
+      unvalidate: Cancel
+      uv: course
+      validate: validate
+    menu_item: "Courses management"
+    unvalidateReview:
+      confirm: "You have successfully unvalidated this annal"
+    validateReview:
+      confirm: "You successfully validated this annal"
+  categories:
+    cs: "Scientific subjects"
+    ct: "Culture and technology"
+    ec: "Expression and communication"
+    me: "Company management"
+    other: Other
+    st: Internships
+    tm: "Technical subjects"
+  main:
+    category:
+      noResult: "No course in this category"
+      title: "Course category"
+    comment:
+      confirm: "Your review has been successfully sent. Thank you for sharing !"
+    courses:
+      title: "%uv% time slot"
+    index:
+      my: "My courses"
+      noResult: "It appears you do not follow any course !"
+      title: "Courses"
+    search:
+      noResult: "No result"
+      title: "Search for a course"
+    sendReview:
+      back: Go back
+      cancel: Cancel
+      confirm: "Your annal has been successfully sent. Thank you for sharing !"
+      file: "Files (enabled: pdf, jpg, jpeg, png)"
+      semester: "Semester of the annal"
+      submit: "Send the annal"
+      title: "Send an annal"
+      type: "Exam type"
+    view:
+      aims: Goals
+      approuved: "Approved by the team"
+      autumn: Fall
+      autumnAndSpring: "Fall and spring"
+      available: Availability
+      body: "Add a review"
+      cm: "Lecture"
+      comments: Reviews
+      content: Program
+      countReviews: "%count% annal %count% annals"
+      credits: Credits
+      dontExists: "This course does not exist anymore"
+      noComment: "No reviews yet"
+      pending: "Waiting for validation"
+      reviews: Annals
+      sendReview: "Send an annal"
+      spring: Spring
+      submit: Comment
+      td: "Tutorials"
+      the: "Personnal work"
+      title: "Course details - %code%"
+      tp: "Lab sessions"
+      viewCourses: "See time slots for this course"
+      winBadges: "Send annals to win badges "
+  notifs:
+    newComment: "New comment in the %uv% course (by %user%)"
+    newReview: "New annal in the %uv% course (by %user%)"
+  reviews:
+    dm: "Homework"
+    final: Final exam
+    midterm: Midterm
+    partiel: Exam
+    partiel_1: "Exam 1"
+    partiel_2: "Exam 2"

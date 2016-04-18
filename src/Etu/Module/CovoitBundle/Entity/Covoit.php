@@ -236,10 +236,10 @@ class Covoit
     {
         if (!empty($this->blablacarUrl)) {
             if (strpos($this->blablacarUrl, 'http') === false) {
-                $this->blablacarUrl = 'http://'.$this->blablacarUrl;
+                $this->blablacarUrl = 'https://'.$this->blablacarUrl;
             }
 
-            if (!in_array(parse_url($this->blablacarUrl, PHP_URL_HOST), ['www.covoiturage.fr', 'covoiturage.fr'])) {
+            if (!in_array(parse_url($this->blablacarUrl, PHP_URL_HOST), ['www.covoiturage.fr', 'covoiturage.fr', 'www.blablacar.fr', 'blablacar.fr'])) {
                 $context->buildViolation('Cette URL n\'est pas une URL BlaBlaCar valide')
                     ->atPath('blablacarUrl')
                     ->addViolation();

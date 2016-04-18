@@ -1,5 +1,6 @@
 imports:
     - { resource: parameters.yml }
+    - { resource: version.yml }
     - { resource: security.yml }
 
 framework:
@@ -14,7 +15,7 @@ framework:
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
-        assets_version: %assets_version%
+        assets_version: %version_id%
     default_locale:  "%locale%"
     trusted_proxies: ~
     session:         ~
@@ -121,6 +122,7 @@ fm_bbcode:
     filter_sets:
         default_filter:
             locale: %locale%
+            strict: false
             xhtml: true
             filters: [ default, block, text, code, image, list, table, quote, video, url ]
             hooks: [ clickable, emoticon ]
@@ -136,7 +138,7 @@ nelmio_api_doc:
 
 # EtuUTT
 etu_core:
-    domain: etu.utt.fr
+    domain: %domain%
     translation:
         languages: ['en', 'fr', 'de']
 
@@ -152,4 +154,10 @@ etu_user:
         path: '/cas/'
         change_session_id: false
 
-
+monolog:
+    channels: ['admin']
+    handlers:
+        admin:
+            type:     stream
+            path:     '%kernel.logs_dir%/admin.log'
+            channels: ['admin']

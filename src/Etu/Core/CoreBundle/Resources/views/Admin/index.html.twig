@@ -34,7 +34,7 @@
 			<strong>Load</strong> : {{ status.load }}<br />
 			<strong>CPU usage</strong> : {{ status.processor.usage }}
 		</p>
-
+		{% if status.memory and status.swap %}
 		<div class="row-fluid">
 			<div class="span6">
 				<h5>Memory</h5>
@@ -85,6 +85,7 @@
 				</table>
 			</div>
 		</div>
+		{% endif %}
 
 		<h4>{{ 'core.admin.index.disk'|trans }}</h4>
 

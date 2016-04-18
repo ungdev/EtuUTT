@@ -335,7 +335,7 @@ class BugsAdminController extends Controller
 		$notif = new Notification();
 
 		$notif
-			->setModule($this->getCurrentBundle()->getIdentifier())
+			->setModule('bugs')
 			->setHelper('bugs_closed')
 			->setAuthorId($this->getUser()->getId())
 			->setEntityType('issue')
@@ -507,7 +507,7 @@ class BugsAdminController extends Controller
 
 		$this->get('session')->getFlashBag()->set('message', array(
 			'type' => 'success',
-			'message' => 'bugs.admin.delete.success'
+			'message' => 'bugs.bugs_admin.delete.success'
 		));
 
 		return $this->redirect($this->generateUrl('bugs_index'));

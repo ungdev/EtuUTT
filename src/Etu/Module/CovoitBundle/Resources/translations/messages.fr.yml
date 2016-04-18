@@ -1,19 +1,19 @@
---- 
-covoit: 
-  alerts: 
-    create: 
+---
+covoit:
+  alerts:
+    create:
       explainations: "Laisez un champ vide pour ne pas inclure la condition"
       precise_date: "Ne renseignez que le champ \"Ayant lieu entre le ...\" pour indiquer une date précise"
       submit: Créer
       subtitle: "Créer une alerte pour les covoiturages ..."
       title: "Créer une alerte"
-    edit: 
+    edit:
       cancel: Annuler
       delete: Supprimer
       submit: Modifier
       subtitle: "Etre alerté pour les covoiturages ..."
       title: "Modifier une alerte"
-    index: 
+    index:
       currently: "Vous êtes actuellement alerté pour les covoiturages ..."
       dateBoth: "entre le %startDate% et le %endDate%"
       dateEnd: "avant le %date%"
@@ -21,22 +21,22 @@ covoit:
       endCity: "allant à %endCity%"
       priceMax: "coutant au maximum %price% €"
       startCity: "partant de %startCity%"
-    label: 
+    label:
       endCity: "Arrivant à ..."
       endDate: "et le ..."
       priceMax: "Dont le prix est inférieur à ..."
       startCity: "Partant de ..."
       startDate: "Ayant lieu entre le ..."
-  index: 
-    no_covoit: 
+  index:
+    no_covoit:
       link: "Proposez-en un !"
       text: "Aucun covoiturage pour le moment !"
     title: Covoiturage
-  menu: 
+  menu:
     alerts: "Mes alertes"
     home: "Les derniers"
     my: "Mes covoiturages"
-  messages: 
+  messages:
     alert_created: "Votre alerte a bien été crée"
     alert_deleted: "Votre alerte a bien été supprimée"
     alert_edited: "Votre alerte a bien été modifiée"
@@ -49,75 +49,75 @@ covoit:
     required_phone: "Vous devez indiquer un numéro de téléphone dans votre trombinoscope pour réserver un covoiturage"
     subscribed: "Vous avez bien réservé une place dans ce covoiturage"
     unsubscribed: "Vous avez bien annulé votre réservation dans ce covoiturage"
-  notifs: 
+  notifs:
     alert: "Le covoiturage %start% - %end% de %author% le %date% pourrait vous intéresser"
     canceled: "Le covoiturage %start% - %end% de %author% le %date% a été annulé par son créateur"
     edited: "Le covoiturage %start% - %end% de %author% le %date% a été modifié"
     new_message: "%author% a posté un message sur le covoiturage %start% - %end% du %date%"
     subscription: "%name% a réservé une place du covoiturage %start% - %end% le %date%"
-  private_alerts: 
+  private_alerts:
     create: "Créer une alerte"
-    no_alert: 
+    no_alert:
       text: "Vous n'avez configuré aucun alerte pour le moment."
     title: "Mes alertes"
-  private_delete: 
-    false: "Non, annuler"
+  private_delete:
+    no: "Non, annuler"
     question: "Voulez-vous vraiment supprimer le covoiturage %start% <i class=\"fa fa-angle-right\"></i> %end% du %date% ?<br />Cette action est irréversible."
     title: "Annuler un covoiturage"
-    true: "Oui, le supprimer"
-  private_edit: 
+    yes: "Oui, le supprimer"
+  private_edit:
     cancel: Annuler
     delete: "Annuler ce covoiturage"
     submit: Modifier
     title: "Modifier un covoiturage"
-  private_edit_message: 
+  private_edit_message:
     cancel: Annuler
     submit: "Modifier le message"
     title: "Modifier un message"
-  private_index: 
+  private_index:
     by: "par %name%"
     creator: Créateur
-    no_covoit: 
+    no_covoit:
       link: "Proposez-en un !"
       text: "Vous n'avez participé à aucun covoiturage pour le moment !"
     per_place: "par place"
     subscribed: Inscrit
     subscriptions_left: "none_or_one: place<br />restante|some: places<br />restantes"
     title: "Mes covoiturages"
-  proposal: 
-    blablacarUrl: 
+  proposal:
+    blablacarUrl:
       label: "URL de l'annonce BlaBlaCar (optionnel)"
-    capacity: 
+    capacity:
       label: "Capacité de votre véhicule (en vous excluant)"
-    date: 
+    date:
       label: Date
-    end: 
-      adress: 
+    end:
+      adress:
         label: "Adresse précise du point d'arrivée"
-      city: 
+      city:
         label: "Ville (ou grande ville la plus proche)"
-      hour: 
+      hour:
         label: "Heure approximative d'arrivée"
-    notes: 
+    notes:
       label: "Détails quant au voyage (description de la voiture, place pour la valise, ...) (optionnel)"
-    phone: 
+    phone:
       label: "Numéro de téléphone"
-    price: 
+    price:
       label: "Prix (par place)"
-    start: 
-      adress: 
+    start:
+      adress:
         label: "Adresse précise du point de rendez-vous"
-      city: 
+      city:
         label: "Ville (ou grande ville la plus proche)"
-      hour: 
+      hour:
         label: "Heure de départ"
     submit: "Proposer ce covoiturage"
     title: "Proposer un covoiturage"
-    titles: 
+    titles:
       details: Détails
       end: Arrivée
       start: Départ
-  public_view: 
+  public_view:
     blablacar: "Voir sur BlaBlaCar"
     cancel: "Annuler ma réservation"
     comment: "Ajouter le commentaire"
@@ -128,20 +128,20 @@ covoit:
     from_to: "%name% propose un covoiturage de %startCity% à %endCity%"
     no_comment: "Aucun commentaire pour le moment"
     notes: "Remarques de %name%"
-    places_left: 
+    places_left:
       label: "Places disponibles"
       value: "%placesLeft% / %capacity%"
     price: "Prix (par place)"
     startAdress: "Adresse de départ"
-    startHour: 
+    startHour:
       label: "Heure de départ"
-      value: 
+      value:
         end: "(pour une arrivée vers %endHour% à %endCity%)"
         start: "Le %date% à %startHour%"
     subscribe: "Réserver une place"
     subscriptions: "Personnes inscrites"
     title: "Détails d'un covoiturage"
-  search: 
+  search:
     date: Date
     date_before_after: "Inclure la veille et le lendemain"
     end_city: "Ville d'arrivée"

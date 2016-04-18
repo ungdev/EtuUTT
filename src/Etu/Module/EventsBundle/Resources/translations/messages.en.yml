@@ -1,4 +1,3 @@
----
 events:
   categories:
     all: "All the events"
@@ -58,10 +57,10 @@ events:
       oct: Oct
       sep: Sep
     subscribers:
-      false: "No, I will not come"
+      'no': "No, I will not come"
       probably: "I'm not sure if I will come"
       title: "Participants of an event"
-      true: "Yes, I will come"
+      'yes': "Yes, I will come"
     view:
       back: "Back to the calendar"
       by: "Organized by"
@@ -73,7 +72,7 @@ events:
         subscribers: Participants
       start: Start
       title: "Details of an event"
-      true: true
+      'true': The
       willYouCome: "Will you come ?"
     week:
       week: Week
@@ -83,6 +82,7 @@ events:
       begin: Start
       category: Category
       confirm: "The event has been created"
+      creation: "Creation of an event"
       description: Description
       end: End
       image:
@@ -90,16 +90,19 @@ events:
         label: Logo
       location: Location
       privacy:
-        label: Target
+        explain:
+          1: "Non students & students : everyone will see the event"
+          2: "Students only : only students will see the event"
+        label: "Target"
         private: "Only students"
         public: "Externals and students"
       submit: "Create the event"
       title: Title
     delete:
       confirm: "The event has been deleted"
-      false: "No, cancel"
+      'no': "No, cancel"
       question: "Do you really want to delete %title% ?"
-      true: "Yes, delete"
+      'yes': "Yes, delete"
     edit:
       back: "Back to the calender"
       begin: Start

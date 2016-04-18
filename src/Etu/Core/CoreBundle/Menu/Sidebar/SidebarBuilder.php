@@ -49,6 +49,14 @@ class SidebarBuilder
 					->setUrl($router->generate('contributors'))
 				->end()
 			->end()
+			->getBlock('base.sidebar.services.title')
+				->add('base.user.menu.nutt')
+					->setIcon('newspaper.png')
+					->setUrl('/nutt.pdf')
+					->setPosition(10)
+					->setLinkAttribute('target', '_blank')
+				->end()
+			->end()
 		;
 	}
 

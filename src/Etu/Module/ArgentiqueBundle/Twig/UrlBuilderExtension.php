@@ -28,8 +28,8 @@ class UrlBuilderExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'argentique_photo' => new \Twig_Function_Method($this, 'generatePhotoUrl'),
-            'argentique_collection' => new \Twig_Function_Method($this, 'generateCollectionUrl'),
+            new \Twig_SimpleFunction('argentique_photo', array($this, 'generatePhotoUrl')),
+            new \Twig_SimpleFunction('argentique_collection', array($this, 'generateCollectionUrl')),
         );
     }
 

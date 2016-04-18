@@ -41,47 +41,45 @@ $(function() {
 		selectHelper: true,
 		editable: true,
 		firstDay: 1,
+		height: 750,
 		monthNames: monthNames,
 		monthNamesShort: monthNamesShort,
 		dayNames: dayNames,
 		dayNamesShort: dayNamesShort,
+		themeButtonIcons: {
+			prev: 'circle-triangle-w',
+			next: 'circle-triangle-e',
+			prevYear: 'seek-prev',
+			nextYear: 'seek-next'
+		},
 		buttonText: {
-			prev: "<span class='fc-text-arrow'>&lsaquo;</span>",
-			next: "<span class='fc-text-arrow'>&rsaquo;</span>",
-			prevYear: "<span class='fc-text-arrow'>&laquo;</span>",
-			nextYear: "<span class='fc-text-arrow'>&raquo;</span>",
 			today: 'Aujourd\'hui',
 			month: 'Mois',
 			week: 'Semaine',
 			day: 'Jour'
 		},
+		defaultView:'agendaWeek',
 
 		// time formats
 		titleFormat: {
-			month: 'MMMM yyyy',
-			week: "dd MMM yyyy",
-			day: 'dddd dd MMM yyyy'
+			month: 'MMMM YYYY',
+			week: "DD MMM YYYY",
+			day: 'dddd DD MMM YYYY'
 		},
 		columnFormat: {
 			month: 'ddd',
-			week: 'ddd dd/MM',
-			day: 'dddd dd MMMM'
+			week: 'ddd DD/MM',
+			day: 'dddd DD MMMM'
 		},
-		allDaySlot: true,
-		allDayText: 'Journée<br />complète',
-		firstHour: 6,
-		slotMinutes: 30,
+		allDaySlot: false,
+		scrollTime: '08:00:00',
+		slotDuration: '00:30:00',
 		defaultEventMinutes: 120,
 		axisFormat: 'HH:mm',
-		timeFormat: {
-			agenda: 'HH:mm{ - HH:mm}',
-			'': 'HH:mm'
-		},
+		timeFormat: 'H:mm',
 		dragOpacity: {
 			agenda: .5
 		},
-		minTime: 0,
-		maxTime: 24,
 
 		events: source,
 
@@ -95,7 +93,7 @@ $(function() {
 			start = moment(start).format('DD-MM-YYYY--HH-mm');
 			end = moment(end).format('DD-MM-YYYY--HH-mm');
 
-			window.location.href = createUrl+'?s='+start+'&e='+end+'&a='+allDay;
+			window.location.href = createUrl+'?s='+start+'&e='+end;
 		}
 	});
 });
