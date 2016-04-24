@@ -218,7 +218,7 @@ class MainController extends Controller
             ->setParameter('slug', $slug)
             ->setMaxResults(1)
             ->getQuery();
-
+        $query->setResultCacheId('EtuCoreBundle/page:'.$slug);
         $query->useResultCache(true, 3600 * 24);
 
         /** @var $page Page */
