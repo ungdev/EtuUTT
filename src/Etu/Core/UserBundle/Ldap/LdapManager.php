@@ -247,9 +247,9 @@ class LdapManager
 			return;
 		}
 
-		$this->connection = ldap_connect($host, $port);
+		$this->connection = ldap_connect($this->host, $this->port);
 		if (! $this->connection) {
-			throw new \RuntimeException(sprintf('LDAP connection to %s:%s failed.', $host, $port));
+			throw new \RuntimeException(sprintf('LDAP connection to %s:%s failed.', $this->host, $this->port));
 		}
 	}
 }

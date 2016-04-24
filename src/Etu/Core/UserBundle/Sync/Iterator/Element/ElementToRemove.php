@@ -55,7 +55,9 @@ class ElementToRemove
 		$user->setBranch(null);
 		$user->setFiliere(null);
 		$user->setUvs(null);
-		$user->setMail(null);
+		if (substr($user->getMail(),-7) == '@utt.fr' && !preg_match('/^\.[0-9]{4}$/', substr($user->getMail(),-12,5))) {
+			$user->setMail(null);
+		}
 		$user->setRoom(null);
 		$user->setTitle(null);
 		$user->setIsInLDAP(false);
@@ -63,7 +65,7 @@ class ElementToRemove
 			$user->setPhoneNumber(null);
 		}
 
-		$this->doctrine->getManager()->persist($user);
+		// $this->doctrine->getManager()->persist($user);
 	}
 
 	/**
