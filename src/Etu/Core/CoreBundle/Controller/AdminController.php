@@ -241,8 +241,9 @@ class AdminController extends Controller
 
 		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
 
-			$cacheDriver = $em->getConfiguration()->getResultCacheImpl();
-			$cacheDriver->delete('EtuCoreBundle/page:'.$page->getSlug());
+			// $cacheDriver = $em->getConfiguration()->getResultCacheImpl();
+			// $cacheDriver->delete('EtuCoreBundle/page:'.$page->getSlug());
+
 			$em->persist($page);
 			$em->flush();
 
