@@ -68,7 +68,7 @@ class NewNotifsListener
 		}
 
 		$this->globalAccessor->set('notifs', new ArrayCollection());
-		// $this->globalAccessor->get('notifs')->set('subscriptions', $subscriptions);
+		$this->globalAccessor->get('notifs')->set('subscriptions', $subscriptions);
 		$this->globalAccessor->get('notifs')->set('new', []);
 		$this->globalAccessor->get('notifs')->set('new_count', 0);
 	}
