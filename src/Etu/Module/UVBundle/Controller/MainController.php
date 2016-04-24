@@ -131,7 +131,9 @@ class MainController extends Controller
 			->findOneBy(array('code' => $code));
 
 		if (! $uv) {
-			throw $this->createNotFoundException(sprintf('UV for code %s not found', $code));
+			return $this->redirect($this->generateUrl('uvs_search', array(
+				'q' => $code
+			)), 301);
 		}
 
 		return $this->redirect($this->generateUrl('uvs_view', array(

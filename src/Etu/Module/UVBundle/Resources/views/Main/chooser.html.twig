@@ -55,7 +55,7 @@
 
 	<form method="get" action="{{ path('uvs_search') }}">
 		<div class="input-append">
-			<input class="span3" type="text" name="q">
+			<input class="span3" type="text" name="q" value="{{ term|default('') }}">
 			<button class="btn" type="submit">Rechercher</button>
 		</div>
 	</form>
