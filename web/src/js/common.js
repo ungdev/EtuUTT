@@ -250,6 +250,8 @@ $('.birthday-picker').datepicker({
 
 
 $(function() {
+	$.facebox.settings.closeImage = '/vendor/facebox/src/closelabel.png'
+	$.facebox.settings.loadingImage = '/vendor/facebox/src/loading.gif'
     facebox.facebox();
 
 	tip.tipsy({
