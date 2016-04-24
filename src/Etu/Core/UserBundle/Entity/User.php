@@ -30,7 +30,8 @@ use Imagine\Image\Point;
  *
  * @ORM\Table(
  *	  name="etu_users",
- *	  uniqueConstraints={@ORM\UniqueConstraint(name="search", columns={"login", "mail"})}
+ *	  uniqueConstraints={@ORM\UniqueConstraint(name="search", columns={"login", "studentId"})},
+ *    indexes={@ORM\Index(name="mail_index", columns={"mail"})}
  * )
  * @ORM\Entity()
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
