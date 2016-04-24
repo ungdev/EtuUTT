@@ -192,9 +192,10 @@ class AdminController extends Controller
 
 		$page = new Page();
 
+		$page->setContent("<p>\n\tHello paragraph !\n</p>");
 		$form = $this->createFormBuilder($page)
 			->add('title')
-			->add('content', 'redactor')
+			->add('content')
 			->getForm();
 
 		$request = $this->getRequest();
