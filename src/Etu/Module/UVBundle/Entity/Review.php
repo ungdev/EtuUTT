@@ -147,16 +147,6 @@ class Review
 	}
 
 	/**
-	 * @deprecated Deprecated since version 10.0 Bêta1, to be removed in 10.1. Use
-	 *             {@link User::currentSemester()} instead.
-	 * @return string
-	 */
-	public static function currentSemester()
-	{
-		return User::currentSemester();
-	}
-
-	/**
 	 * Upload the file
 	 *
 	 * @return boolean

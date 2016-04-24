@@ -230,27 +230,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
 	/**
 	 * @var string
-	 * @deprecated
-	 *
-	 * @ORM\Column(type="string", length=100, nullable=true)
-	 * @Assert\Length(
-	 *      min = "2", max = "100",
-	 *      minMessage = "user.validation.address.length_min",
-	 *      minMessage = "user.validation.address.length_max"
-	 * )
-	 */
-	protected $adress;
-
-	/**
-	 * @var integer
-	 * @deprecated
-	 *
-	 * @ORM\Column(type="integer", nullable=true)
-	 */
-	protected $adressPrivacy;
-
-	/**
-	 * @var string
 	 *
 	 * @ORM\Column(type="string", length=100, nullable=true)
 	 * @Assert\Length(
@@ -468,47 +447,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
 	 * @ORM\Column(type="boolean")
 	 */
 	protected $isInLDAP;
-
-	/**
-	 * Keep active even if not found in LDAP (for old students, external users, etc.)
-	 * @deprecated Every account are now keeped. The LDAP information is transfered to $isInLDAP
-	 * @var boolean
-	 *
-	 * @ORM\Column(type="boolean", nullable=true)
-	 */
-	protected $keepActive;
-
-	/**
-	 * Added permissions
-	 *
-	 *	  => used for administration permissions
-	 * @deprecated Will be replaced by the role system
-	 * @var array
-	 *
-	 * @ORM\Column(type="array")
-	 */
-	protected $permissions = array();
-
-	/**
-	 * Removed permissions
-	 *	  => used for classic permissions that everyone but this specific user have
-	 *
-	 * @deprecated Will be replaced by the role system
-	 * @var array
-	 *
-	 * @ORM\Column(type="array")
-	 */
-	protected $removedPermissions = array();
-
-	/**
-	 * If the user is admin, he has all permissions, even from the new modules
-	 *
-	 * @deprecated Will be replaced by the role system
-	 * @var boolean
-	 *
-	 * @ORM\Column(type="boolean")
-	 */
-	protected $isAdmin = false;
 
 	/**
 	 * Read-only expiration date
