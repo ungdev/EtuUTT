@@ -83,7 +83,9 @@ This command helps you to synchronise database\'s with officials schedules.
 		foreach ($users as $key => $user) {
 			unset($users[$key]);
 
-			$users[$user->getStudentId()] = $user;
+			if(!empty($user->getStudentId())) {
+				$users[$user->getStudentId()] = $user;
+			}
 		}
 
 		$output->writeln('Creating schedules ...');
