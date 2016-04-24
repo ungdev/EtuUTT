@@ -7,16 +7,6 @@ use Etu\Core\CoreBundle\Framework\Definition\Module;
 class EtuModuleTrombiBundle extends Module
 {
 	/**
-	 * Must boot only for connected users
-	 *
-	 * @return bool|void
-	 */
-	public function mustBoot()
-	{
-		return $this->getSessionLayer()->isStudent() || $this->getSessionLayer()->isOrga();
-	}
-
-	/**
 	 * At module boot, update the sidebar
 	 */
 	public function onModuleBoot()
@@ -27,6 +17,7 @@ class EtuModuleTrombiBundle extends Module
 					->setPosition(2)
 					->setIcon('book.png')
 					->setUrl($this->router->generate('trombi_index'))
+					->setRole('ROLE_TROMBI')
 				->end()
 			->end();
 	}

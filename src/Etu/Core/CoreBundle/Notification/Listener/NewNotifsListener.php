@@ -55,18 +55,20 @@ class NewNotifsListener
      */
 	public function onKernelRequest()
 	{
-		$layer = new UserLayer($this->securityContext->getToken()->getUser());
+		if(!$this->securityContext->getToken())
+			return;
+
+		$user = $this->securityContext->getToken()->getUser();
 		$subscriptions = array();
 
-		if ($layer->isUser()) {
+		if ($this->securityContext->isGranted('ROLE_CORE_SUBSCRIBE')) {
 			/** @var $em EntityManager */
 			$em = $this->doctrine->getManager();
-
-            $subscriptions = $em->getRepository('EtuCoreBundle:Subscription')->findBy(array('user' => $layer->getUser()));
+            $subscriptions = $em->getRepository('EtuCoreBundle:Subscription')->findBy(array('user' => $user));
 		}
 
 		$this->globalAccessor->set('notifs', new ArrayCollection());
-		$this->globalAccessor->get('notifs')->set('subscriptions', $subscriptions);
+		// $this->globalAccessor->get('notifs')->set('subscriptions', $subscriptions);
 		$this->globalAccessor->get('notifs')->set('new', []);
 		$this->globalAccessor->get('notifs')->set('new_count', 0);
 	}

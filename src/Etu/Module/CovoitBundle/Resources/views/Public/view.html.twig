@@ -45,7 +45,7 @@
     {% include 'EtuModuleCovoitBundle::menu.html.twig' with {'active': 'none'} %}
 
     <div class="padding20-sides covoit-view">
-        {% if covoit.author.id == app.user.id %}
+        {% if is_granted('ROLE_COVOIT_EDIT') and covoit.author.id == app.user.id %}
             <span class="pull-right">
                 <a href="{{ path('covoiturage_my_edit', {'id': covoit.id}) }}" class="btn btn-default">
                     {{ 'covoit.public_view.edit'|trans }}
@@ -184,7 +184,7 @@
             </ul>
         {% endif %}
 
-        {% if not covoit.hasUser(app.user) %}
+        {% if not covoit.hasUser(app.user) and is_granted('ROLE_COVOIT_EDIT') %}
             <hr />
 
             <div class="align-center">
@@ -194,53 +194,56 @@
             </div>
         {% endif %}
 
-        <hr />
+        {% if is_granted('ROLE_BUGS_POST') %}
+            <hr />
 
-        <h4>{{ 'covoit.public_view.comments'|trans }}</h4>
+            <h4>{{ 'covoit.public_view.comments'|trans }}</h4>
 
-        {% for message in covoit.messages %}
-            <div class="etu-comment" id="{{ message.id }}">
-                <div class="etu-comment-avatar">
-                    <a href="{{ path('user_view', {'login': message.author.login}) }}">
-                        <img src="{{ asset('uploads/photos/' ~ message.author.avatar) }}"
-                             alt="{{ message.author.getFullName() }}"
-                             title="{{ message.author.getFullName() }}"/>
-                    </a>
-                </div>
-                <div class="etu-comment-infos">
-                    <div class="etu-comment-date">
-                        <small>
-                            <a href="#{{ message.id }}">#{{ message.id }}</a> -
-                            <a href="{{ path('user_view', {'login': message.author.login}) }}">
-                                {{ message.author.fullName }}
-                            </a>
-                        </small>
-                        <small class="pull-right">
-                            {% if app.user.id == message.author.id or app.user.isAdmin %}
-                                <a href="{{ path('covoiturage_my_edit_message', {'id': message.id}) }}" class="btn btn-small">
-                                    <i class="icon-edit"></i>
-                                    {{ 'forum.main.thread.edit'|trans }}
+            {% for message in covoit.messages %}
+                <div class="etu-comment" id="{{ message.id }}">
+                    <div class="etu-comment-avatar">
+                        <a href="{{ path('user_view', {'login': message.author.login}) }}">
+                            <img src="{{ asset('uploads/photos/' ~ message.author.avatar) }}"
+                                 alt="{{ message.author.getFullName() }}"
+                                 title="{{ message.author.getFullName() }}"/>
+                        </a>
+                    </div>
+                    <div class="etu-comment-infos">
+                        <div class="etu-comment-date">
+                            <small>
+                                <a href="#{{ message.id }}">#{{ message.id }}</a> -
+                                <a href="{{ path('user_view', {'login': message.author.login}) }}">
+                                    {{ message.author.fullName }}
                                 </a>
-                            {% endif %}
+                            </small>
+                            <small class="pull-right">
+                                {% if app.user.id == message.author.id or app.user.isAdmin %}
+                                    <a href="{{ path('covoiturage_my_edit_message', {'id': message.id}) }}" class="btn btn-small">
+                                        <i class="icon-edit"></i>
+                                        {{ 'forum.main.thread.edit'|trans }}
+                                    </a>
+                                {% endif %}
 
-                            {{ time_diff(message.createdAt)|ucfirst }}
-                        </small>
+                                {{ time_diff(message.createdAt)|ucfirst }}
+                            </small>
+                        </div>
+                        <div class="etu-comment-body">
+                            {{ message.text|bbcode_filter('default_filter') }}
+                        </div>
                     </div>
-                    <div class="etu-comment-body">
-                        {{ message.text|bbcode_filter('default_filter') }}
-                    </div>
+
+                    <div class="clear"></div>
                 </div>
-
-                <div class="clear"></div>
-            </div>
-        {% else %}
-            <p>
-                {{ 'covoit.public_view.no_comment'|trans }}
-            </p>
-        {% endfor %}
+            {% else %}
+                <p>
+                    {{ 'covoit.public_view.no_comment'|trans }}
+                </p>
+            {% endfor %}
+        {% endif %}
 
         <br />
 
+        {% if is_granted('ROLE_COVOIT_EDIT') %}
         <form method="post" action="">
             {{ form_widget(messageForm.text) }}
             {{ form_errors(messageForm.text) }}
@@ -253,5 +256,6 @@
                 <input type="submit" class="btn btn-default" value="{{ 'covoit.public_view.comment'|trans }}" />
             </p>
         </form>
+        {% endif %}
     </div>
 {% endblock %}

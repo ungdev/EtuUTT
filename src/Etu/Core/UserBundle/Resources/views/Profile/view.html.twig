@@ -45,7 +45,7 @@
 					{{ 'user.profile.view.back_trombi'|trans }}
 				</a>
 			</li>
-		{% elseif from == 'admin' and app.user.isAdmin %}
+		{% elseif from == 'admin' and is_granted('ROLE_CORE_ADMIN_PROFIL') %}
 			<li>
 				<a href="{{ path('admin_users_index') }}">
 					<i class="icon-chevron-left"></i>
@@ -93,7 +93,7 @@
 				<hr />
 
 				<div class="hidden-for-phones">
-					{% if app.user.isAdmin %}
+					{% if is_granted('ROLE_CORE_ADMIN_PROFIL') %}
 						<p>
 							<strong>{{ 'user.profile.view.admin'|trans }}</strong>
 						</p>
@@ -106,7 +106,7 @@
 							</a>
 						</p>
 						<p>
-							<a href="{{ path('admin_user_permissions', {'login': user.login}) }}" class="btn btn-small">
+							<a href="{{ path('admin_user_roles', {'login': user.login, 'from': 'profile'}) }}" class="btn btn-small">
 								{{ 'user.profile.view.admin_permissions'|trans }}
 							</a>
 						</p>
@@ -252,7 +252,7 @@
 				{% endif %}
 
 				{% if
-					(user.adress and is_public(user.adressPrivacy))
+					(user.address and is_public(user.addressPrivacy))
 					or
 					(user.postalCode and is_public(user.postalCodePrivacy))
 					or
@@ -262,11 +262,11 @@
 				%}
 					<div class="view-group">
 						<div class="view-icon"><i class="icon-map-marker"></i></div>
-						<div class="view-label">{{ 'user.profile.view.adress'|trans }}</div>
+						<div class="view-label">{{ 'user.profile.view.address'|trans }}</div>
 						<div class="view-value">
 
-							{% if is_public(user.adressPrivacy) and user.adress %}
-								{{ user.adress }}
+							{% if is_public(user.addressPrivacy) and user.address %}
+								{{ user.address }}
 								<br />
 							{% endif %}
 
@@ -306,33 +306,35 @@
 					</div>
 				{% endif %}
 
-				{% if user.surnom %}
-					<div class="view-group">
-						<div class="view-label">{{ 'user.profile.view.surname'|trans }}</div>
-						<div class="view-value">
-							{{ user.surnom }}
+				{% if is_granted('ROLE_CORE_PROFIL_HOBBIES') %}
+					{% if user.surnom %}
+						<div class="view-group">
+							<div class="view-label">{{ 'user.profile.view.surname'|trans }}</div>
+							<div class="view-value">
+								{{ user.surnom }}
+							</div>
 						</div>
-					</div>
-				{% endif %}
+					{% endif %}
 
-				{% if user.jadis %}
-					<div class="view-group">
-						<div class="view-icon"><i class="icon-edit"></i></div>
-						<div class="view-label">{{ 'user.profile.view.jadis'|trans }}</div>
-						<div class="view-value">
-							{{ user.jadis|e|nl2br }}
+					{% if user.jadis %}
+						<div class="view-group">
+							<div class="view-icon"><i class="icon-edit"></i></div>
+							<div class="view-label">{{ 'user.profile.view.jadis'|trans }}</div>
+							<div class="view-value">
+								{{ user.jadis|e|nl2br }}
+							</div>
 						</div>
-					</div>
-				{% endif %}
+					{% endif %}
 
-				{% if user.passions %}
-					<div class="view-group">
-						<div class="view-icon"><i class="icon-headphones"></i></div>
-						<div class="view-label">{{ 'user.profile.view.passions'|trans }}</div>
-						<div class="view-value">
-							{{ user.passions|e|nl2br }}
+					{% if user.passions %}
+						<div class="view-group">
+							<div class="view-icon"><i class="icon-headphones"></i></div>
+							<div class="view-label">{{ 'user.profile.view.passions'|trans }}</div>
+							<div class="view-value">
+								{{ user.passions|e|nl2br }}
+							</div>
 						</div>
-					</div>
+					{% endif %}
 				{% endif %}
 			</div>
 

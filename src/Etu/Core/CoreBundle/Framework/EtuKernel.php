@@ -67,27 +67,6 @@ abstract class EtuKernel extends Kernel
 	/**
 	 * @return PermissionsCollection
 	 */
-	public function getAvailablePermissions()
-	{
-		$permissions = array(
-			new Permission('pages.admin', Permission::DEFAULT_DISABLED, 'Peut administrer les pages statiques'),
-		);
-
-		/** @var Module $module */
-		foreach ($this->getModulesDefinitions() as $module) {
-			foreach ($module->getAvailablePermissions() as $permission) {
-				if (! $permission instanceof OrgaPermission) {
-					$permissions[] = $permission;
-				}
-			}
-		}
-
-		return new PermissionsCollection($permissions);
-	}
-
-	/**
-	 * @return PermissionsCollection
-	 */
 	public function getAvailableOrganizationsPermissions()
 	{
 		$permissions = array(
@@ -106,21 +85,5 @@ abstract class EtuKernel extends Kernel
 		}
 
 		return new PermissionsCollection($permissions);
-	}
-
-	/**
-	 * @return void
-	 */
-	public function freezePermissions()
-	{
-		self::$_availablePermissions = $this->getAvailablePermissions();
-	}
-
-	/**
-	 * @return PermissionsCollection
-	 */
-	public static function getFrozenPermissions()
-	{
-		return self::$_availablePermissions;
 	}
 }

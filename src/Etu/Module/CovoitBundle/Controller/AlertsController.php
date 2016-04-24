@@ -23,9 +23,7 @@ class AlertsController extends Controller
      */
     public function indexAction($page = 1)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_COVOIT_EDIT');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -54,9 +52,7 @@ class AlertsController extends Controller
      */
     public function createAction(Request $request)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_COVOIT_EDIT');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -90,18 +86,17 @@ class AlertsController extends Controller
      * @Route("/{id}/edit", name="covoiturage_my_alerts_edit")
      * @Template()
      */
-    public function editAction(Request $request, CovoitAlert $alert)
+    public function editAction(Request $request, $id)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_COVOIT_EDIT');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+        $alert = $em->getRepository('EtuModuleCovoitBundle:CovoitAlert')->find($id);
 
         $form = $this->createForm($this->get('etu.covoit.form.alert'), $alert);
 
-        if ($request->getMethod() == 'POST' && $form->submit($alert)->isValid()) {
+        if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
             $em->persist($alert);
             $em->flush();
 
@@ -122,14 +117,13 @@ class AlertsController extends Controller
     /**
      * @Route("/{id}/delete", name="covoiturage_my_alerts_delete")
      */
-    public function deleteAction(CovoitAlert $alert)
+    public function deleteAction($id)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_COVOIT_EDIT');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+        $alert = $em->getRepository('EtuModuleCovoitBundle:CovoitAlert')->find($id);
 
         // Add current user as subscriber of the specific alert
         $this->getSubscriptionsManager()->unsubscribe($this->getUser(), 'covoit-alert', $alert->getId());

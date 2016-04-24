@@ -48,23 +48,22 @@ class ElementToRemove
 	 */
 	public function remove()
 	{
-		if ($this->element->getKeepActive()) {
-			return;
+		$user = $this->element;
+		$user->addCureentSemesterToHistory();
+		$user->setFormation(null);
+		$user->setNiveau(null);
+		$user->setBranch(null);
+		$user->setFiliere(null);
+		$user->setUvs(null);
+		$user->setMail(null);
+		$user->setRoom(null);
+		$user->setTitle(null);
+		$user->setIsInLDAP(false);
+		if (substr($user->getPhoneNumber(),0,5) === '03257') {
+			$user->setPhoneNumber(null);
 		}
 
-		$this->element->setDeletedAt(new \DateTime());
-		$this->doctrine->getManager()->persist($this->element);
-	}
-
-	/**
-	 * Keep the user in the database and set a password for external connexion
-	 */
-	public function keep($encryptedPassword)
-	{
-		$this->element->setPassword($encryptedPassword);
-		$this->element->setKeepActive(true);
-
-		$this->doctrine->getManager()->persist($this->element);
+		$this->doctrine->getManager()->persist($user);
 	}
 
 	/**

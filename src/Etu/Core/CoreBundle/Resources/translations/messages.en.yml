@@ -2,8 +2,11 @@ core:
   admin:
     index:
       title: Dashboard
+      welcome: Welcome to EtuUTT's dashboard !
+      description: This dashboard let you administrate this website with the sidebar menu on the right. Please understand, that some administration fonctionnalities may cause damages on the website. So please think before doing something !
       server_status: Server status
       load: Load
+      setup: Server setup
       disk: Disc
       processes: Process
     modules:

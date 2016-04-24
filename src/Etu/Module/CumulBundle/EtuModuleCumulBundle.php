@@ -7,16 +7,6 @@ use Etu\Core\CoreBundle\Framework\Definition\Module;
 class EtuModuleCumulBundle extends Module
 {
 	/**
-	 * Must boot only for connected users
-	 *
-	 * @return bool|void
-	 */
-	public function mustBoot()
-	{
-		return $this->getSessionLayer()->isUser();
-	}
-
-	/**
 	 * At module boot, update the sidebar
 	 */
 	public function onModuleBoot()
@@ -27,6 +17,7 @@ class EtuModuleCumulBundle extends Module
 				->setIcon('table.png')
 				->setItemAttribute('class', 'hidden-phone')
 				->setUrl($this->router->generate('cumul_index'))
+				->setRole('ROLE_CUMUL')
 			->end();
 	}
 

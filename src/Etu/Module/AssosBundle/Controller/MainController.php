@@ -96,9 +96,7 @@ class MainController extends Controller
 	 */
 	public function membersAction($login)
 	{
-		if (! $this->getUserLayer()->isConnected()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_ASSOS_MEMBERS');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();

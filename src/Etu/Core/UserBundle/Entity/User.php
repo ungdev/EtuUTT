@@ -10,6 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use Etu\Core\CoreBundle\Framework\Definition\Permission;
@@ -34,7 +35,7 @@ use Imagine\Image\Point;
  * @ORM\Entity()
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface, EquatableInterface, \Serializable
 {
 	const SEX_MALE = 'male';
 	const SEX_FEMALE = 'female';
@@ -228,6 +229,7 @@ class User implements UserInterface, \Serializable
 
 	/**
 	 * @var string
+	 * @deprecated
 	 *
 	 * @ORM\Column(type="string", length=100, nullable=true)
 	 * @Assert\Length(
@@ -240,11 +242,31 @@ class User implements UserInterface, \Serializable
 
 	/**
 	 * @var integer
+	 * @deprecated
+	 *
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	protected $adressPrivacy;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string", length=100, nullable=true)
+	 * @Assert\Length(
+	 *      min = "2", max = "100",
+	 *      minMessage = "user.validation.address.length_min",
+	 *      minMessage = "user.validation.address.length_max"
+	 * )
+	 */
+	protected $address;
+
+	/**
+	 * @var integer
 	 *
 	 * @ORM\Column(type="integer")
 	 * @Assert\NotBlank()
 	 */
-	protected $adressPrivacy;
+	protected $addressPrivacy;
 
 	/**
 	 * @var string
@@ -348,13 +370,6 @@ class User implements UserInterface, \Serializable
 	protected $language;
 
 	/**
-	 * @var boolean
-	 *
-	 * @ORM\Column(type="boolean")
-	 */
-	protected $isStudent;
-
-	/**
 	 * @var string
 	 *	 > For trombi
 	 *
@@ -430,18 +445,43 @@ class User implements UserInterface, \Serializable
 	protected $uvs;
 
 	/**
-	 * Keep active even if not found in LDAP (for old students, external users, etc.)
-	 *
-	 * @var boolean
+	 * Is or was a student at the UTT
+	 * @var boolean $isStudent
 	 *
 	 * @ORM\Column(type="boolean")
+	 */
+	protected $isStudent;
+
+	/**
+	 * Is or was a member of the staff of the UTT
+	 * @var boolean $isStaffUTT
+	 *
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $isStaffUTT;
+
+	/**
+	 * Is true if in the last synchronization with LDAP, user was in LDAP
+	 * @var boolean $isInLDAP
+	 *
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $isInLDAP;
+
+	/**
+	 * Keep active even if not found in LDAP (for old students, external users, etc.)
+	 * @deprecated Every account are now keeped. The LDAP information is transfered to $isInLDAP
+	 * @var boolean
+	 *
+	 * @ORM\Column(type="boolean", nullable=true)
 	 */
 	protected $keepActive;
 
 	/**
 	 * Added permissions
-	 *	  => used for administration permissions
 	 *
+	 *	  => used for administration permissions
+	 * @deprecated Will be replaced by the role system
 	 * @var array
 	 *
 	 * @ORM\Column(type="array")
@@ -452,6 +492,7 @@ class User implements UserInterface, \Serializable
 	 * Removed permissions
 	 *	  => used for classic permissions that everyone but this specific user have
 	 *
+	 * @deprecated Will be replaced by the role system
 	 * @var array
 	 *
 	 * @ORM\Column(type="array")
@@ -461,6 +502,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * If the user is admin, he has all permissions, even from the new modules
 	 *
+	 * @deprecated Will be replaced by the role system
 	 * @var boolean
 	 *
 	 * @ORM\Column(type="boolean")
@@ -468,31 +510,32 @@ class User implements UserInterface, \Serializable
 	protected $isAdmin = false;
 
 	/**
-	 * If the user is banned
-	 *
-	 * @var boolean
-	 *
-	 * @ORM\Column(type="boolean")
-	 */
-	protected $isBanned = false;
-
-	/**
-	 * Read-only mode enabled fo this user?
-	 *
-	 * @var boolean
-	 *
-	 * @ORM\Column(type="boolean")
-	 */
-	protected $isReadOnly = false;
-
-	/**
 	 * Read-only expiration date
 	 *
-	 * @var \DateTime
+	 * @var mixed
 	 *
-	 * @ORM\Column(type="datetime")
+	 * @ORM\Column(type="datetime", nullable = true))
 	 */
 	protected $readOnlyExpirationDate;
+
+	/**
+	 * Banned expiration date
+	 *
+	 * @var mixed
+	 *
+	 * @ORM\Column(type="datetime", nullable = true))
+	 */
+	protected $bannedExpirationDate;
+
+	/**
+	 * Roles which are given especially to that user.
+	 * Roles generated like ROLE_USER or ROLE_STUDENT are not stored here.
+	 *
+	 * @var array
+	 *
+	 * @ORM\Column(type="array")
+	 */
+	protected $storedRoles;
 
 	/**
 	 * @var UserBadge[]
@@ -599,16 +642,17 @@ class User implements UserInterface, \Serializable
 	public function __construct()
 	{
 		$this->testingContext = false;
-		$this->keepActive = false;
-		$this->isStudent = true;
-		$this->isReadOnly = false;
-		$this->readOnlyExpirationDate = new \DateTime();
-		$this->isAdmin = false;
+		$this->isStudent = false;
+		$this->isStaffUTT = false;
+		$this->isInLDAP = false;
+		$this->readOnlyExpirationDate = null;
+		$this->bannedExpirationDate = null;
+		$this->storedRoles = array();
 		$this->avatar = 'default-avatar.png';
 		$this->phoneNumberPrivacy = self::PRIVACY_PUBLIC;
 		$this->sexPrivacy = self::PRIVACY_PUBLIC;
 		$this->nationalityPrivacy = self::PRIVACY_PUBLIC;
-		$this->adressPrivacy = self::PRIVACY_PUBLIC;
+		$this->addressPrivacy = self::PRIVACY_PUBLIC;
 		$this->postalCodePrivacy = self::PRIVACY_PUBLIC;
 		$this->cityPrivacy = self::PRIVACY_PUBLIC;
 		$this->countryPrivacy = self::PRIVACY_PUBLIC;
@@ -702,7 +746,7 @@ class User implements UserInterface, \Serializable
 	public function getProfileCompletion()
 	{
 		$infos = array(
-			$this->phoneNumber, $this->sex, $this->nationality, $this->adress, $this->postalCode, $this->city,
+			$this->phoneNumber, $this->sex, $this->nationality, $this->address, $this->postalCode, $this->city,
 			$this->country, $this->birthday, $this->personnalMail
 		);
 
@@ -763,160 +807,6 @@ class User implements UserInterface, \Serializable
 	public function getPassword()
 	{
 		return $this->password;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getRoles()
-	{
-		return array('ROLE_USER');
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function eraseCredentials()
-	{
-	}
-
-	/**
-	 * @see \Serializable::serialize()
-	 */
-	public function serialize()
-	{
-		return serialize(array(
-			$this->id,
-			$this->login,
-			$this->password,
-			$this->studentId,
-			$this->mail,
-			$this->fullName,
-			$this->firstName,
-			$this->lastName,
-			$this->formation,
-			$this->branch,
-			$this->niveau,
-			$this->filiere,
-			$this->phoneNumber,
-			$this->phoneNumberPrivacy,
-			$this->title,
-			$this->room,
-			$this->avatar,
-			$this->sex,
-			$this->sexPrivacy,
-			$this->nationality,
-			$this->nationalityPrivacy,
-			$this->adress,
-			$this->adressPrivacy,
-			$this->postalCode,
-			$this->postalCodePrivacy,
-			$this->city,
-			$this->cityPrivacy,
-			$this->country,
-			$this->countryPrivacy,
-			$this->birthday,
-			$this->birthdayPrivacy,
-			$this->birthdayDisplayOnlyAge,
-			$this->personnalMail,
-			$this->personnalMailPrivacy,
-			$this->language,
-			$this->isStudent,
-			$this->surnom,
-			$this->jadis,
-			$this->passions,
-			$this->website,
-			$this->facebook,
-			$this->twitter,
-			$this->linkedin,
-			$this->viadeo,
-			$this->uvs,
-			$this->keepActive,
-			$this->permissions,
-			$this->removedPermissions,
-			$this->isAdmin,
-			$this->isBanned,
-			$this->isReadOnly,
-			$this->readOnlyExpirationDate,
-			$this->badges,
-			$this->options,
-			$this->semestersHistory,
-			$this->lastVisitHome,
-			$this->createdAt,
-			$this->updatedAt,
-			$this->deletedAt,
-			$this->memberships,
-			$this->firstLogin,
-		));
-	}
-
-	/**
-	 * @see \Serializable::unserialize()
-	 */
-	public function unserialize($serialized)
-	{
-		list (
-			$this->id,
-			$this->login,
-			$this->password,
-			$this->studentId,
-			$this->mail,
-			$this->fullName,
-			$this->firstName,
-			$this->lastName,
-			$this->formation,
-			$this->branch,
-			$this->niveau,
-			$this->filiere,
-			$this->phoneNumber,
-			$this->phoneNumberPrivacy,
-			$this->title,
-			$this->room,
-			$this->avatar,
-			$this->sex,
-			$this->sexPrivacy,
-			$this->nationality,
-			$this->nationalityPrivacy,
-			$this->adress,
-			$this->adressPrivacy,
-			$this->postalCode,
-			$this->postalCodePrivacy,
-			$this->city,
-			$this->cityPrivacy,
-			$this->country,
-			$this->countryPrivacy,
-			$this->birthday,
-			$this->birthdayPrivacy,
-			$this->birthdayDisplayOnlyAge,
-			$this->personnalMail,
-			$this->personnalMailPrivacy,
-			$this->language,
-			$this->isStudent,
-			$this->surnom,
-			$this->jadis,
-			$this->passions,
-			$this->website,
-			$this->facebook,
-			$this->twitter,
-			$this->linkedin,
-			$this->viadeo,
-			$this->uvs,
-			$this->keepActive,
-			$this->permissions,
-			$this->removedPermissions,
-			$this->isAdmin,
-			$this->isBanned,
-			$this->isReadOnly,
-			$this->readOnlyExpirationDate,
-			$this->badges,
-			$this->options,
-			$this->semestersHistory,
-			$this->lastVisitHome,
-			$this->createdAt,
-			$this->updatedAt,
-			$this->deletedAt,
-			$this->memberships,
-		) = unserialize($serialized);
 	}
 
 	/**
@@ -1093,7 +983,7 @@ class User implements UserInterface, \Serializable
 	 */
 	public function setFormation($formation)
 	{
-		if ($formation == 'NC') {
+		if (strtolower($formation) == 'nc') {
 			$formation = null;
 		}
 
@@ -1398,49 +1288,49 @@ class User implements UserInterface, \Serializable
 	}
 
 	/**
-	 * Set adress
+	 * Set address
 	 *
-	 * @param string $adress
+	 * @param string $address
 	 * @return User
 	 */
-	public function setAdress($adress)
+	public function setAddress($address)
 	{
-		$this->adress = $adress;
+		$this->address = $address;
 
 		return $this;
 	}
 
 	/**
-	 * Get adress
+	 * Get address
 	 *
 	 * @return string
 	 */
-	public function getAdress()
+	public function getAddress()
 	{
-		return $this->adress;
+		return $this->address;
 	}
 
 	/**
-	 * Set adressPrivacy
+	 * Set addressPrivacy
 	 *
-	 * @param integer $adressPrivacy
+	 * @param integer $addressPrivacy
 	 * @return User
 	 */
-	public function setAdressPrivacy($adressPrivacy)
+	public function setAddressPrivacy($addressPrivacy)
 	{
-		$this->adressPrivacy = $adressPrivacy;
+		$this->addressPrivacy = $addressPrivacy;
 
 		return $this;
 	}
 
 	/**
-	 * Get adressPrivacy
+	 * Get addressPrivacy
 	 *
 	 * @return integer
 	 */
-	public function getAdressPrivacy()
+	public function getAddressPrivacy()
 	{
-		return $this->adressPrivacy;
+		return $this->addressPrivacy;
 	}
 
 	/**
@@ -1728,29 +1618,6 @@ class User implements UserInterface, \Serializable
 	}
 
 	/**
-	 * Set isStudent
-	 *
-	 * @param boolean $isStudent
-	 * @return User
-	 */
-	public function setIsStudent($isStudent)
-	{
-		$this->isStudent = $isStudent;
-
-		return $this;
-	}
-
-	/**
-	 * Get isStudent
-	 *
-	 * @return boolean
-	 */
-	public function getIsStudent()
-	{
-		return $this->isStudent;
-	}
-
-	/**
 	 * Set surnom
 	 *
 	 * @param string $surnom
@@ -1974,255 +1841,118 @@ class User implements UserInterface, \Serializable
 	}
 
 	/**
-	 * Set ldapInformations
+	 * Retrieves the currently set isInLDAP.
 	 *
-	 * @deprecated Deprecated since version 10.0 Bêta1, to be removed in 10.1
-	 * @param \stdClass $ldapInformations
-	 * @return User
+	 * @return bool
 	 */
-	public function setLdapInformations($ldapInformations)
+	public function getIsInLDAP(): bool
 	{
-		return $this;
+	    return $this->isInLDAP;
 	}
 
 	/**
-	 * Get ldapInformations
+	 * Sets the isInLDAP to use.
 	 *
-	 * @deprecated Deprecated since version 10.0 Bêta1, to be removed in 10.1
-	 * @return \stdClass
-	 */
-	public function getLdapInformations()
-	{
-		return new \stdClass();
-	}
-
-	/**
-	 * Set keepActive
+	 * @param bool $isInLDAP
 	 *
-	 * @param boolean $keepActive
-	 * @return User
+	 * @return $this
 	 */
-	public function setKeepActive($keepActive)
+	public function setIsInLDAP(bool $isInLDAP): self
 	{
-		$this->keepActive = $keepActive;
-
-		return $this;
+	    $this->isInLDAP = $isInLDAP;
+	    return $this;
 	}
 
 	/**
-	 * Get keepActive
+	 * Retrieves the currently set isStudent.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
-	public function getKeepActive()
+	public function getIsStudent(): bool
 	{
-		return $this->keepActive;
+	    return $this->isStudent;
 	}
 
 	/**
-	 * @return boolean
-	 */
-	public function getIsExternal()
-	{
-		return $this->keepActive;
-	}
-
-	/**
-	 * Set permissions
+	 * Sets the isStudent to use.
 	 *
-	 * @param array $permissions
-	 * @return User
+	 * @param bool $isStudent
+	 *
+	 * @return $this
 	 */
-	public function setPermissions($permissions)
+	public function setIsStudent(bool $isStudent): self
 	{
-		$this->permissions = $permissions;
-
-		return $this;
+	    $this->isStudent = $isStudent;
+	    return $this;
 	}
 
 	/**
-	 * Get permissions
+	 * Retrieves the currently set isStaffUTT.
+	 *
+	 * @return bool
+	 */
+	public function getIsStaffUTT(): bool
+	{
+	    return $this->isStaffUTT;
+	}
+
+	/**
+	 * Sets the isStaffUTT to use.
+	 *
+	 * @param bool $isStaffUTT
+	 *
+	 * @return $this
+	 */
+	public function setIsStaffUTT(bool $isStaffUTT): self
+	{
+	    $this->isStaffUTT = $isStaffUTT;
+	    return $this;
+	}
+
+	/**
+	 * Retrieves the currently set storedRoles.
 	 *
 	 * @return array
 	 */
-	public function getPermissions()
+	public function getStoredRoles(): array
 	{
-		return $this->permissions;
+	    return $this->storedRoles;
 	}
 
 	/**
-	 * @param string $permissionName
-	 * @param bool $defaultEnabled
-	 * @return bool
-	 */
-	public function hasPermission($permissionName, $defaultEnabled = false)
-	{
-		if ($this->isAdmin) {
-			return true;
-		}
-
-		if (EtuKernel::getFrozenPermissions() instanceof PermissionsCollection) {
-			$permission = EtuKernel::getFrozenPermissions()->get($permissionName);
-
-			if ($permission instanceof Permission) {
-				$defaultEnabled = $permission->getDefaultEnabled();
-			}
-		}
-
-		if (! $defaultEnabled) {
-			return in_array($permissionName, $this->permissions);
-		}
-
-		return ! in_array($permissionName, $this->removedPermissions);
-	}
-
-	/**
-	 * @param string $permission
-	 * @return User
-	 */
-	public function addPermission($permission)
-	{
-		if (! in_array($permission, $this->permissions)) {
-			$this->permissions[] = $permission;
-		}
-
-		return $this;
-	}
-
-	/**
-	 * @param string $permission
-	 * @return User
-	 */
-	public function removePermission($permission)
-	{
-		if (($key = array_search($permission, $this->permissions)) !== false) {
-			unset($this->permissions[$key]);
-		}
-
-		return $this;
-	}
-
-	/**
-	 * Set removedPermissions
+	 * Sets the storedRoles to use.
 	 *
-	 * @param array $removedPermissions
-	 * @return User
-	 */
-	public function setRemovedPermissions($removedPermissions)
-	{
-		$this->removedPermissions = $removedPermissions;
-
-		return $this;
-	}
-
-	/**
-	 * Get removedPermissions
+	 * @param array $storedRoles
 	 *
-	 * @return array
+	 * @return $this
 	 */
-	public function getRemovedPermissions()
+	public function setStoredRoles(array $storedRoles): self
 	{
-		return $this->removedPermissions;
+	    $this->storedRoles = $storedRoles;
+	    return $this;
 	}
 
 	/**
-	 * @param string $permission
-	 * @return bool
-	 */
-	public function hasRemovedPermission($permission)
-	{
-		return $this->isAdmin || in_array($permission, $this->removedPermissions);
-	}
-
-	/**
-	 * @param string $permission
-	 * @return User
-	 */
-	public function addRemovedPermission($permission)
-	{
-		if (! in_array($permission, $this->removedPermissions)) {
-			$this->removedPermissions[] = $permission;
-		}
-
-		return $this;
-	}
-
-	/**
-	 * @param string $permission
-	 * @return User
-	 */
-	public function removeRemovedPermission($permission)
-	{
-		if (($key = array_search($permission, $this->removedPermissions)) !== false) {
-			unset($this->removedPermissions[$key]);
-		}
-
-		return $this;
-	}
-
-	/**
-	 * Set isAdmin
+	 * Retrieves the currently set bannedExpirationDate.
 	 *
-	 * @param boolean $isAdmin
-	 * @return User
+	 * @return mixed
 	 */
-	public function setIsAdmin($isAdmin)
+	public function getBannedExpirationDate()
 	{
-		$this->isAdmin = $isAdmin;
-
-		return $this;
+	    return $this->bannedExpirationDate;
 	}
 
 	/**
-	 * Get isAdmin
+	 * Sets the bannedExpirationDate to use.
 	 *
-	 * @return boolean
-	 */
-	public function getIsAdmin()
-	{
-		return $this->isAdmin;
-	}
-
-	/**
-	 * Set isReadOnly
+	 * @param mixed $bannedExpirationDate
 	 *
-	 * @param boolean $isReadOnly
-	 * @return User
+	 * @return $this
 	 */
-	public function setIsReadOnly($isReadOnly)
+	public function setBannedExpirationDate( $bannedExpirationDate): self
 	{
-		$this->isReadOnly = $isReadOnly;
-
-		return $this;
-	}
-
-	/**
-	 * Get isReadOnly
-	 *
-	 * @return boolean
-	 */
-	public function getIsReadOnly()
-	{
-		return $this->isReadOnly;
-	}
-
-	/**
-	 * @param boolean $isBanned
-	 * @return User
-	 */
-	public function setIsBanned($isBanned)
-	{
-		$this->isBanned = $isBanned;
-
-		return $this;
-	}
-
-	/**
-	 * @return boolean
-	 */
-	public function getIsBanned()
-	{
-		return $this->isBanned;
+	    $this->bannedExpirationDate = $bannedExpirationDate;
+	    return $this;
 	}
 
 	/**
@@ -2234,22 +1964,6 @@ class User implements UserInterface, \Serializable
 	public function setReadOnlyExpirationDate($readOnlyExpirationDate)
 	{
 		$this->readOnlyExpirationDate = $readOnlyExpirationDate;
-
-		return $this;
-	}
-
-	/**
-	 * @param string $dateString
-	 * @return User
-	 */
-	public function setReadOnlyPeriod($dateString)
-	{
-		$interval = \DateInterval::createFromDateString($dateString);
-
-		$date = new \DateTime();
-		$date->add($interval);
-
-		$this->setReadOnlyExpirationDate($date);
 
 		return $this;
 	}
@@ -2741,4 +2455,152 @@ class User implements UserInterface, \Serializable
     {
         return is_object($this->getActiveMembership());
     }
+
+	/**
+	* Tell if user is currently in readonly mode
+	* @return bool
+	*/
+	public function isReadOnly() {
+		return ($this->getReadOnlyExpirationDate() !== null
+			&& $this->getReadOnlyExpirationDate() instanceof \DateTime
+			&& $this->getReadOnlyExpirationDate() > new \DateTime());
+	}
+	/**
+	* Tell if user is currently banned
+	* @return bool
+	*/
+	public function isBanned() {
+		return ($this->getBannedExpirationDate() !== null
+			&& $this->getBannedExpirationDate() instanceof \DateTime
+			&& $this->getBannedExpirationDate() > new \DateTime());
+	}
+
+	/**
+	 * Store a list of role in database for this user
+	 * @param array $roles An array of role
+	 */
+	public function storeRoles(array $roles) {
+		$this->storedRoles = array_merge($this->storedRoles, $roles);
+	}
+
+	/**
+	 * Remove a list of role from database for this user
+	 * @param array $roles An array of role
+	 */
+	public function removeRoles(array $roles) {
+		$this->storedRoles = array_diff($this->storedRoles, $roles);
+	}
+
+	/**
+	 * Store a role in database for this user
+	 * @param string $role A role
+	 */
+	public function storeRole(string $role) {
+		$this->storeRoles([$role]);
+	}
+
+	/**
+	 * Remove a role from database for this user
+	 * @param string $roles A role
+	 */
+	public function removeRole(string $role) {
+		$this->removeRoles([$role]);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getRoles()
+	{
+		$roles = ['ROLE_USER'];
+
+		if(!empty($this->password))
+			$roles[] = 'ROLE_EXTERNAL';
+		if($this->isInLDAP)
+			$roles[] = 'ROLE_CAS';
+
+		if($this->isBanned()) {
+			$roles[] = 'ROLE_BANNED';
+			return $roles;
+		}
+		if($this->isReadOnly()) {
+			$roles[] = 'ROLE_READONLY';
+			return $roles;
+		}
+
+		// Get roles from database
+		$roles = array_merge($this->storedRoles, $roles);
+
+		if($this->isStaffUTT)
+			$roles[] = 'ROLE_STAFFUTT';
+		if($this->isStudent)
+			$roles[] = 'ROLE_STUDENT';
+		return $roles;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function eraseCredentials()
+	{
+	}
+
+	/**
+	 * @see \Serializable::serialize()
+	 */
+	public function serialize()
+	{
+		//Serialize only attributs used in equals method
+		return serialize(array(
+			$this->id,
+			$this->login,
+			$this->password,
+			$this->isStudent,
+			$this->isStaffUTT,
+			$this->isInLDAP,
+			$this->readOnlyExpirationDate,
+			$this->bannedExpirationDate,
+			$this->storedRoles,
+		));
+	}
+
+	/**
+	 * @see \Serializable::unserialize()
+	 */
+	public function unserialize($serialized)
+	{
+		list (
+			$this->id,
+			$this->login,
+			$this->password,
+			$this->isStudent,
+			$this->isStaffUTT,
+			$this->isInLDAP,
+			$this->readOnlyExpirationDate,
+			$this->bannedExpirationDate,
+			$this->storedRoles
+		) = unserialize($serialized);
+	}
+
+	/**
+	 * The equality comparison is used to know when the token should be renewed.
+	 * So check only for equality of attributs that could change roles
+	 *
+	 * @param UserInterface $user
+	 *
+	 * @return bool
+	 */
+	public function isEqualTo(UserInterface $user)
+	{
+		return (($user instanceof User)
+			&& $this->getLogin() === $user->getLogin()
+			&& $this->getPassword() === $user->getPassword()
+			&& $this->getIsStudent() === $user->getIsStudent()
+			&& $this->getIsStaffUTT() === $user->getIsStaffUTT()
+			&& $this->getIsInLDAP() === $user->getIsInLDAP()
+			&& $this->getReadOnlyExpirationDate() == $user->getReadOnlyExpirationDate()
+			&& $this->getBannedExpirationDate() == $user->getBannedExpirationDate()
+			&& $this->getStoredRoles() == $user->getStoredRoles()
+		);
+	}
 }

@@ -29,7 +29,7 @@
 				{{ 'user.profile.view.back_trombi'|trans }}
 			</a>
 		</li>
-	{% elseif from == 'admin' and app.user.isAdmin %}
+	{% elseif from == 'admin' and is_granted('ROLE_CORE_ADMIN_PROFIL') %}
 		<li>
 			<a href="{{ path('admin_users_index') }}">
 				<i class="icon-chevron-left"></i>
@@ -77,7 +77,7 @@
 				<hr />
 
 				<div class="hidden-for-phones">
-					{% if app.user.isAdmin %}
+					{% if is_granted('ROLE_CORE_ADMIN_PROFIL') %}
 						<p>
 							<strong>{{ 'user.profile.view.admin'|trans }}</strong>
 						</p>
@@ -90,7 +90,7 @@
 							</a>
 						</p>
 						<p>
-							<a href="{{ path('admin_user_permissions', {'login': user.login}) }}" class="btn btn-small">
+							<a href="{{ path('admin_user_roles', {'login': user.login, 'from': 'schedule'}) }}" class="btn btn-small">
 								{{ 'user.profile.view.admin_permissions'|trans }}
 							</a>
 						</p>

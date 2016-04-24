@@ -115,7 +115,8 @@ class ElementToImport
 		$user->setStudentId($this->element->getStudentId());
 		$user->setTitle($this->element->getTitle());
 		$user->setIsStudent($this->element->getIsStudent());
-		$user->setKeepActive(false);
+		$user->setIsStaffUTT(!$this->element->getIsStudent());
+		$user->setIsInLDAP(true);
 		$user->setUvs(implode('|', $this->element->getUvs()));
 
 		$this->doctrine->getManager()->persist($user);

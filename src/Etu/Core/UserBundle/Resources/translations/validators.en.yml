@@ -11,8 +11,8 @@ user:
             length_min: Nationality must contain at least {{ limit }} caracters
             length_max: Nationality must contain {{ limit }} caracters maximum
         address:
-            length_min: Adress must contain at least {{ limit }} caracters
-            length_max: Adress must contain {{ limit }} caracters maximum
+            length_min: address must contain at least {{ limit }} caracters
+            length_max: address must contain {{ limit }} caracters maximum
         city:
             length_min: City must contain at least{{ limit }} caracters
             length_max: City must contain {{ limit }} caracters maximum

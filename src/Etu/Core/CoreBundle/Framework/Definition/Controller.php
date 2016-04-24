@@ -71,14 +71,6 @@ class Controller extends BaseController
 	}
 
 	/**
-	 * @return \Etu\Core\UserBundle\Security\Layer\UserLayer
-	 */
-	public function getUserLayer()
-	{
-		return new \Etu\Core\UserBundle\Security\Layer\UserLayer($this->getUser());
-	}
-
-	/**
 	 * Get a user from the Security Context
 	 *
 	 * @return User|Organization

@@ -95,7 +95,7 @@ class ImportAdmisCommand extends ContainerAwareCommand
 
                 $user = new User();
                 $user->setLogin($import->login);
-                $user->setPassword($this->getContainer()->get('etu.user.crypting')->encrypt($import->password));
+                $user->setPassword($this->getContainer()->get('security.password_encoder')->encodePassword($user, $import->password));
                 $user->setFullName($import->prenom . ' ' . $import->nom);
                 $user->setSex(($import->sexe == 'M') ? User::SEX_MALE : User::SEX_FEMALE);
                 $user->setSexPrivacy(User::PRIVACY_PRIVATE);
@@ -112,7 +112,7 @@ class ImportAdmisCommand extends ContainerAwareCommand
                 $user->setNiveau(intval($import->niveau));
                 $user->setFormation('Inconnue');
                 $user->setLanguage('fr');
-                $user->setKeepActive(false);
+                $user->setIsStudent(true);
 
                 $em->persist($user);
                 $em->flush();

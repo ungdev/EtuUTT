@@ -7,16 +7,6 @@ use Etu\Core\CoreBundle\Framework\Definition\Module;
 class EtuModuleAssosBundle extends Module
 {
 	/**
-	 * Must boot for everyone
-	 *
-	 * @return bool
-	 */
-	public function mustBoot()
-	{
-		return true;
-	}
-
-	/**
 	 * Module identifier (to be required by other modules)
 	 *
 	 * @return string

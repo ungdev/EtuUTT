@@ -7,6 +7,9 @@ parameters:
     etu.user.ldap.class: Etu\Core\UserBundle\Ldap\LdapManager
     etu.user.sync.class: Etu\Core\UserBundle\Sync\Synchronizer
     etu.user.badges_listener.class: Etu\Core\UserBundle\Model\BadgesManager
+    etu.user.cas.authentication.provider.class: Etu\Core\UserBundle\Security\Authentication\Provider\CasProvider
+    etu.user.cas.authentication.listener.class: Etu\Core\UserBundle\Security\Firewall\CasListener
+    etu.user.every_user.provider.class: Etu\Core\UserBundle\Security\UserProvider\EveryUserProvider
 
     etu.notifs.new_badge.class: Etu\Core\UserBundle\Notification\Helper\NewBadgeHelper
 
@@ -22,13 +25,6 @@ parameters:
     etu.api.orga.mapper.class: Etu\Core\UserBundle\Api\QueryMapper\OrgaListMapper
 
 services:
-
-    # Users authentication
-    etu.user.authentication_listener:
-        class: %etu.user.authentication_listener.class%
-        arguments: [@security.context, @session, @doctrine]
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 512 }
 
     # User autocomplete
     etu.user.user_type:
@@ -49,6 +45,21 @@ services:
     etu.user.crypting:
         class: %etu.user.crypting.class%
         arguments: [%secret%]
+
+    # Authentication
+    etu.user.cas.authentication.provider:
+        class: %etu.user.cas.authentication.provider.class%
+        arguments:
+            - '' # User Provider
+        public: false
+
+    etu.user.cas.authentication.listener:
+        class: %etu.user.cas.authentication.listener.class%
+        public: false
+
+    etu.user.every_user.provider:
+        class: %etu.user.every_user.provider.class%
+        arguments: [@doctrine , @etu.user.ldap]
 
     # Privacy
     etu.user.twig.privacy_extension:

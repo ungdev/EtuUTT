@@ -26,9 +26,7 @@ class AdminController extends Controller
 	 */
 	public function indexAction()
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('uvs.admin')) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_UV_REVIEW_ADMIN');
 
 		/** @var EntityManager $em */
 		$em = $this->getDoctrine()->getManager();
@@ -65,9 +63,7 @@ class AdminController extends Controller
 	 */
 	public function reviewsAction($page = 1)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('uvs.admin')) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_UV_REVIEW_ADMIN');
 
 		/** @var EntityManager $em */
 		$em = $this->getDoctrine()->getManager();
@@ -93,9 +89,7 @@ class AdminController extends Controller
 	 */
 	public function validateReviewAction(Review $review)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('uvs.admin')) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_UV_REVIEW_ADMIN');
 
 		/** @var EntityManager $em */
 		$em = $this->getDoctrine()->getManager();
@@ -119,9 +113,7 @@ class AdminController extends Controller
 	 */
 	public function unvalidateReviewAction(Review $review)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('uvs.admin')) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_UV_REVIEW_ADMIN');
 
 		/** @var EntityManager $em */
 		$em = $this->getDoctrine()->getManager();
@@ -145,9 +137,7 @@ class AdminController extends Controller
 	 */
 	public function deleteReviewAction(Review $review)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('uvs.admin')) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_UV_REVIEW_ADMIN');
 
 		/** @var EntityManager $em */
 		$em = $this->getDoctrine()->getManager();
@@ -171,9 +161,7 @@ class AdminController extends Controller
 	 */
 	public function commentsAction($page = 1)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('uvs.admin')) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_UV_REVIEW_ADMIN');
 
 		/** @var EntityManager $em */
 		$em = $this->getDoctrine()->getManager();
@@ -199,9 +187,7 @@ class AdminController extends Controller
 	 */
 	public function deleteCommentAction(Comment $comment)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('uvs.admin')) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_UV_REVIEW_ADMIN');
 
 		/** @var EntityManager $em */
 		$em = $this->getDoctrine()->getManager();
@@ -219,4 +205,3 @@ class AdminController extends Controller
 		return $this->redirect($this->generateUrl('admin_uvs_comments'));
 	}
 }
-

@@ -26,9 +26,7 @@ class BugsAdminController extends Controller
 	 */
 	public function assignAction($id, $slug)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('bugs.admin')) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_BUGS_ADMIN');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -109,9 +107,7 @@ class BugsAdminController extends Controller
 	 */
 	public function unassignAction($id, $slug)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('bugs.admin')) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_BUGS_ADMIN');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -175,9 +171,7 @@ class BugsAdminController extends Controller
 	 */
 	public function criticalityAction($id, $slug)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('bugs.admin')) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_BUGS_ADMIN');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -288,9 +282,7 @@ class BugsAdminController extends Controller
 	 */
 	public function closeAction($id, $slug)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('bugs.admin')) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_BUGS_ADMIN');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -361,9 +353,7 @@ class BugsAdminController extends Controller
 	 */
 	public function openAction($id, $slug)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('bugs.admin')) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_BUGS_ADMIN');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -422,9 +412,7 @@ class BugsAdminController extends Controller
 	 */
 	public function deleteAction($id, $slug)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('bugs.admin')) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_BUGS_ADMIN');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -460,9 +448,7 @@ class BugsAdminController extends Controller
 	 */
 	public function deleteConfirmAction($id, $slug)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('bugs.admin')) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_BUGS_ADMIN');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();

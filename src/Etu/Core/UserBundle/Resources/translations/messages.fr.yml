@@ -39,7 +39,7 @@ user:
             phoneNumber: Numéro de tél.
             sex: Sexe
             nationality: Nationalité
-            adress: Adresse
+            address: Adresse
             postalCode: Code postal
             city: Ville
             country: Pays
@@ -48,6 +48,10 @@ user:
             birthday_only_age_desc: Afficher seulement l'âge sur le profil (si la date de naissance est privée)
             back: Retour
             submit: Créer
+            is_student_label: Est étudiant
+            is_student_desc: Donne les droits d'un étudiant classique
+            is_staffutt_label: Personnel de l'UTT
+            is_staffutt_desc: Donne les droits d'un compte associé à un membre du personnel de l'UTT
         userDelete:
             title: Supprimer un utilisateur
             question: Voulez-vous vraiment supprimer l'utilisateur %username% ?
@@ -63,11 +67,6 @@ user:
             birthday_only_age_desc: Afficher seulement l'âge sur le profil (si la date de naissance est privée)
             confirm: Vous avez bien modifié le profil de cet utilisateur
             back: Retour sur le profil
-        userPermissions:
-            title: Modifier les permissions
-            back: Retour sur le profil
-            confirm: Vous avez bien modifié les permissions de cet utilisateur
-            submit: Modifier
         userIndex:
             title: Utilisateurs
             search_title: Rechercher un étudiant
@@ -83,6 +82,7 @@ user:
             explainations: Effectuez votre recherche en utilisant le formulaire ci-dessus
             no_results: Aucun résultat
             count: %count% résultat|%count% résultats
+            userRoles: Permissions assignées
         userReadOnly:
             confirm_set: L'utilisateur possède maintenant un accès en lecture seule.
             confirm_unset: L'utilisateur possède maintenant un accès complet.
@@ -119,6 +119,88 @@ user:
             badCookie: Reconnexion impossible. Veuillez vous reconnecter normalement.
             welcomeBack: Vous êtes bien connecté sur votre vrai compte
             loginBack: Retour à votre compte
+        userRolesList:
+            title: Gestion des permissions
+            back: Retour
+            edit: Modifier
+            assignedTitle: Permissions assignées
+            assignedDesc: Pour assigner des permissions à une nouvelle personne, rendez-vous sur son profile et cliquez sur 'Modifier ses permissions'.
+            hierarchyTitle: Groupes de permission
+            hierarchyDesc: Pour ajouter ou modifier les groupes de permissions définis, editez le fichier app/config/security.yml. Pour plus d'informations, reportez vous à la documentation sur Github.
+        userRoles:
+            title: Modifier les permissions
+            back: Retour
+            confirm: Vous avez bien modifié les permissions de cet utilisateur
+            submit: Modifier
+            introduction: Pour ajouter ou modifier les groupes de permissions prédéfinie, editez le fichier app/config/security.yml. Pour plus d'informations, reportez vous à la documentation sur Github.
+
+            ROLE_USER: Utilisateur connecté du site, peu importe le type de connexion
+            ROLE_ORGA: Association connectée au site
+            ROLE_STUDENT: Etudiant ou ancien étudiant à l'UTT
+            ROLE_STAFFUTT: Membre du personnel ou ancien membre du personnel de l'UTT
+            ROLE_CAS: Peut se connecter via le CAS car encore dans le LDAP, donc pas un ancien
+            ROLE_EXTERNAL: Peut se connecter via un compte externe (un mot de passe est présent)
+            ROLE_READONLY: Utilisateur ne pouvant plus écrire sur le site (sanction)
+            ROLE_BANNED: Utilisateur ne pouvant plus lire le site (sanction)
+
+            ROLE_ADMIN: Administrateur globale du site
+            ROLE_MODERATOR: Modérateur du forum et des annales d'UVs
+            ROLE_EDITOR: Rédacteur des pages statiques
+            ROLE_DEVELOPER: Administrateur des signalement de bugs
+            ROLE_ARGENTIQUE: Membre d'Argentique pouvant mettre à jour les photos
+
+            ROLE_CORE_ADMIN_HOME: Voir la page d'accueil d'administration
+            ROLE_CORE_ADMIN_SERVER: Voir l'état du serveur
+            ROLE_CORE_ADMIN_ROLES: Modifier les droits des utilisateurs
+            ROLE_CORE_ADMIN_PROFIL: Modifier le profil et bannir des utilisateurs
+            ROLE_ALLOWED_TO_SWITCH: Se connecter en tant que quelqu'un d'autre sans mot de passe
+            ROLE_CORE_ADMIN_MODULES: Modifier les modules (bundles) actuelement chargés par le site
+            ROLE_CORE_ADMIN_PAGES: Ajouter, Modifier et supprimer des pages statiques.
+
+            ROLE_CORE_SUBSCRIBE: Recevoir des notifications et utiliser les abonnements
+            ROLE_CORE_PROFIL: Voir les profils publiques (sauf Surnom, Passions et Jadis)
+            ROLE_CORE_PROFIL_HOBBIES: Voir Surnom, Passions et Jadis sur les profils publiques
+            ROLE_CORE_MEMBERSHIPS: Faire partie d'une association
+            ROLE_CORE_ORGAS: Voir la liste des associations d'un profil
+            ROLE_CORE_SCHEDULE: Voir les emplois des autres utilisateurs
+            ROLE_CORE_SCHEDULE_OWN: Voir son propre emplois du temps
+            ROLE_CORE_HOMEPAGE: Voir la page d'accueil pour utilisateur connecté
+
+            ROLE_API_USE: Utiliser des applications externes via l'API
+            ROLE_API_CREATE: Créer une application externe via l'API
+
+            ROLE_ARGENTIQUE_ADMIN: Voir la documentation pour ajouter des photos au site
+            ROLE_ARGENTIQUE: Voir les photos du site
+
+            ROLE_ASSOS_MEMBERS: Voir la liste des membres d'une association
+
+            ROLE_BUGS_POST: Signaler un bug
+            ROLE_BUGS_ADMIN: Administrer les signalement de bug
+
+            ROLE_COVOIT: Voir les covoiturages proposés
+            ROLE_COVOIT_EDIT: Proposer et se joindre aux covoiturages
+            ROLE_CUMUL: Cumuler des emplois du temps
+
+            ROLE_DAYMAIL_EDIT: Editer le daymail si son association l'autorise
+
+            ROLE_EVENTS_INTERNAL: Voir les événements à destination des UTTiens uniquement
+            ROLE_EVENTS_ANSWER: Lire la liste des participants à un événement
+            ROLE_EVENTS_ANSWER_POST: Envoyer sa participation à un événement
+            ROLE_EVENTS_EDIT: Modifier un événement si son association l'autorise
+
+            ROLE_FORUM: Lire le forum
+            ROLE_FORUM_POST: Poster sur le forum
+            ROLE_FORUM_ADMIN: Modérer le forum
+
+            ROLE_TROMBI: Rechercher sur le trombi
+
+            ROLE_UPLOAD: Mettre en lignes des images pour les daymails par exemple
+
+            ROLE_UV: Voir le guide des UVs
+            ROLE_UV_REVIEW: Voir les annales et commentaires des UVs
+            ROLE_UV_REVIEW_POST: Poster des annnales et commenter les UVs
+            ROLE_UV_REVIEW_ADMIN: Modérer les annales et commentaires d'UVs
+
     auth:
         connect:
             title: Connexion
@@ -128,6 +210,8 @@ user:
             external: En utilisant un compte exterieur
             confirm: Vous êtes bien connecté
             error: La connexion a échoué, vos identifiants semblent incorrects
+            unknownError: Une erreur sauvage est apparue, veuillez réessayer.
+            loggedOut: À bientôt !
             orga_exists_ldap: Cette association existe bien mais doit être autorisée à se connecter par l'UNG
             betaAssos: |
                 La connexion en tant qu'utilisateur est impossible pour le moment. Cette bêta est
@@ -277,7 +361,7 @@ user:
             sex: Sexe
             personnalMail: E-mail perso.
             phoneNumber: Numéro de tél.
-            adress: Adresse
+            address: Adresse
             birthday: Date de naissance
             age: %age% ans
             trombi: Trombinoscope
@@ -315,7 +399,7 @@ user:
             phoneNumber: Numéro de tél.
             sex: Sexe
             nationality: Nationalité
-            adress: Adresse
+            address: Adresse
             postalCode: Code postal
             city: Ville
             country: Pays
@@ -358,7 +442,7 @@ user:
             formation: Formation
             sex: Sexe
             nationality: Nationalité
-            adress: Adresse
+            address: Adresse
             birthday: Date de naissance
             age: Age
             age_display: %age% ans
@@ -402,4 +486,3 @@ user:
             desc: Créneau de %uv%, le %day% à %start%
             uv: Voir la description de l'UV
             students: %count% étudiant inscrit à ce créneau|%count% étudiants inscrits à ce créneau
-

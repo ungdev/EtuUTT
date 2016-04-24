@@ -81,7 +81,7 @@ class MainController extends Controller
 
 		/** @var \CalendR\Event\Collection\Basic $events */
 		$events = $calendr->getEvents(new Range($start, $end), array(
-			'connected' => $this->getUser() instanceof User
+			'connected' => $this->isGranted('ROLE_EVENTS_INTERNAL')
 		));
 
 		/** @var array $json */
@@ -131,6 +131,10 @@ class MainController extends Controller
 
 		if (! $event) {
 			throw $this->createNotFoundException('Event #'.$id.' not found');
+		}
+
+		if($event->getPrivacy() != Event::PRIVACY_PUBLIC) {
+			$this->denyAccessUnlessGranted('ROLE_EVENTS_INTERNAL');
 		}
 
 		if (StringManipulationExtension::slugify($event->getTitle()) != $slug) {
@@ -186,9 +190,7 @@ class MainController extends Controller
 	 */
 	public function membersAction($id, $slug)
 	{
-		if (! $this->getUserLayer()->isStudent()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_EVENTS_ANSWER');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -255,6 +257,8 @@ class MainController extends Controller
 	 */
 	public function answerAction($id, $answer)
 	{
+		$this->denyAccessUnlessGranted('ROLE_EVENTS_ANSWER_POST');
+
 		if (! in_array($answer, array(Answer::ANSWER_YES, Answer::ANSWER_NO, Answer::ANSWER_PROBABLY))) {
 			return new Response(json_encode(array(
 				'status' => 'error',

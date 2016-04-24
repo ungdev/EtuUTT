@@ -30,7 +30,7 @@ user:
             phoneNumber: Phone number.
             sex: Sex
             nationality: Nationality
-            adress: Adress
+            address: address
             postalCode: Postal code
             city: City
             country: Country
@@ -100,6 +100,7 @@ user:
             external: With a guest account
             confirm: You are logged in
             error: Authentification failed, your login / password is incorrect
+            loggedOut: Bye !
             orga_exists_ldap: This association exist but must be authorized to log in by the UNG
         connectExternal:
             title: Log in as a guest
@@ -161,7 +162,7 @@ user:
             sex: Sex
             personnalMail: Personal e-mail
             phoneNumber: Phone number
-            adress: Adress
+            address: address
             birthday: Date of birth
             age: %age% years old
             trombi: Group photo
@@ -197,7 +198,7 @@ user:
             phoneNumber: Phone number
             sex: Sex
             nationality: Nationality
-            adress: Adress
+            address: address
             postalCode: Postal code
             city: City
             country: Country
@@ -239,7 +240,7 @@ user:
             formation: Studies
             sex: Sex
             nationality: Nationality
-            adress: Adress
+            address: address
             birthday: Date of birth
             age: Age
             surname: Nickname

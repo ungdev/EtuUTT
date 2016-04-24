@@ -21,7 +21,6 @@ class MockUser
 		$user->setFullName('User USER');
 		$user->setLogin('user');
 		$user->setMail('user@utt.fr');
-		$user->setIsAdmin(false);
 		$user->setIsStudent(true);
 		$user->setAvatar('user.png');
 		$user->testingContext = true;
@@ -64,7 +63,7 @@ class MockUser
 		$user->setFullName('Admin ADMIN');
 		$user->setLogin('admin');
 		$user->setMail('admin@utt.fr');
-		$user->setIsAdmin(true);
+		$user->storeRole('ROLE_ADMIN');
 		$user->setAvatar('admin.png');
 		$user->testingContext = true;
 

@@ -34,7 +34,7 @@ class Synchronizer
 
 	/**
 	 * Create a process to synchronize users between the LDAP and the database
-	 * (import LDAP users and remove old databse users)
+	 * (import LDAP users and set old LDAP users as not in LDAP anymoe)
 	 *
 	 * @return Process
 	 */
@@ -79,10 +79,9 @@ class Synchronizer
 
 		foreach ($toRemoveFromDb as $key => $login) {
 			unset($toRemoveFromDb[$key]);
-
-            if (! $dbUsers[$login]->getKeepActive()) {
-                $toRemoveFromDb[$login] = $dbUsers[$login];
-            }
+			if ($dbUsers[$login]->getIsInLdap()) {
+				$toRemoveFromDb[$login] = $dbUsers[$login];
+			}
 		}
 
 		foreach ($toUpdate as $login => $dbUser) {

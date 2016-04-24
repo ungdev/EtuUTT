@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block sidebar %}
-	{% if app.user %}
+	{% if is_granted('ROLE_CORE_SUBSCRIBE') %}
 		{{ render_subscribe_button('event', event.id) }}
 	{% endif %}
 
@@ -22,7 +22,6 @@
 				{{ 'events.main.view.back'|trans }}
 			</a>
 		</li>
-		{% if app.user %}
 			<li class="active page-tabs-resolved-active pull-right">
 				<a href="{{ path('events_members', {'id': event.id, 'slug': event.title|slugify}) }}">
 					{{ 'events.main.view.menu.subscribers'|trans }}
@@ -33,7 +32,6 @@
 					{{ 'events.main.view.menu.description'|trans }}
 				</a>
 			</li>
-		{% endif %}
 	</ul>
 
 	<div class="padding20-sides">

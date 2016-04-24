@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block sidebar %}
-	{% if app.user %}
+	{% if is_granted('ROLE_CORE_SUBSCRIBE') %}
 		{% if currentCategory == 'all' %}
 			{{ render_subscribe_button('event', 0) }}
 		{% else %}
@@ -94,4 +94,3 @@
 		<div id="calendar"></div>
 	</div>
 {% endblock %}
-

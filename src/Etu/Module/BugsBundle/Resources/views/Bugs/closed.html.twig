@@ -19,7 +19,7 @@
 		<li class="active page-tabs-resolved-active">
 			<a href="{{ path('bugs_closed') }}">{{ 'bugs.bugs.state.resolved'|trans }}</a>
 		</li>
-		{% if app.user.hasPermission('bugs.add') %}
+		{% if is_granted('ROLE_BUGS_POST') %}
 			<li class="pull-right">
 				<a href="{{ path('bugs_create') }}">
 					<i class="icon-plus"></i>

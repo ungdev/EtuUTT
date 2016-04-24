@@ -32,7 +32,7 @@
 {% endblock %}
 
 {% block content %}
-	{% if not app.user.isOrga and app.user.profileCompletion < 1 and not app.user.isAdmin %}
+	{% if not app.user.isOrga and app.user.profileCompletion < 1 and not is_granted('ROLE_PROFIL_ADMIN') %}
 		<div class="no-notif padding20-all">
 			<h4>{{ 'trombi.main.index.uncomplete_profile.title'|trans }}</h4>
 			<p>
@@ -161,7 +161,7 @@
 							<img src="{{ asset('uploads/photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
 							<h5>
 								{{ user.fullName }}
-								{% if user.surnom %}
+								{% if user.surnom and is_granted('ROLE_CORE_PROFIL_HOBBIES') %}
 									<span class="muted">- {{ user.surnom }}</span>
 								{% endif %}
 							</h5>

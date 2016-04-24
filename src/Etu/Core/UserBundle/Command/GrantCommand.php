@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\ORM\EntityManager;
 
-class GrantUserPermissionCommand extends ContainerAwareCommand
+class GrantCommand extends ContainerAwareCommand
 {
 	/**
 	 * Configure the command
@@ -19,7 +19,7 @@ class GrantUserPermissionCommand extends ContainerAwareCommand
 	{
 		$this
 			->setName('etu:users:grant')
-			->setDescription('Grant a permission for an user')
+			->setDescription('Grant a role for an user')
 		;
 	}
 
@@ -36,8 +36,14 @@ class GrantUserPermissionCommand extends ContainerAwareCommand
 		$output->writeln('
 	Welcome to the EtuUTT users grant tool
 
-This command will help you to grant a permission for a given user.
+This command will help you to grant a role for a given user.
+
 ');
+
+		$output->writeln('================== Current role hierarchy ==================');
+		$output->writeln(print_r($this->getContainer()->getParameter('security.role_hierarchy.roles'),true));
+		$output->writeln('================== End of current role hierarchy ==================');
+		$output->writeln("\n");
 
 		$user = null;
 
@@ -54,13 +60,13 @@ This command will help you to grant a permission for a given user.
 			}
 		}
 
-		$permission = $dialog->ask($output, 'Permission: ');
+		$role = $dialog->ask($output, 'Role: ');
 
-		$user->addPermission($permission);
+		$user->storeRole($role);
 
 		$em->persist($user);
 		$em->flush();
 
-		$output->writeln("The user ".$login." has been granted of permission ".$permission."\n");
+		$output->writeln("The user ".$login." has been granted of role ".$role."\n");
 	}
 }

@@ -25,6 +25,7 @@ class CreateUserCommand extends ContainerAwareCommand
             ->addOption('password', 'pa', InputOption::VALUE_REQUIRED, 'Password')
             ->addOption('email', 'em', InputOption::VALUE_REQUIRED, 'Public e-mail')
             ->addOption('branch', 'br', InputOption::VALUE_REQUIRED, 'Branch')
+            ->addOption('isStudent', 'st', InputOption::VALUE_REQUIRED, 'Is it a student (y/n)', 'y')
 			->setDescription('Create a user')
 		;
 	}
@@ -47,17 +48,18 @@ class CreateUserCommand extends ContainerAwareCommand
         $lastName = ($input->getOption('lastName') !== null) ? $input->getOption('lastName') : $dialog->ask($output, 'Last name: ');
         $password = ($input->getOption('password') !== null) ? $input->getOption('password') : $dialog->ask($output, 'Password: ');
         $email = ($input->getOption('email') !== null) ? $input->getOption('email') : $dialog->ask($output, 'Public e-mail: ');
-        $branch = ($input->getOption('branch') !== null) ? $input->getOption('branch') : $dialog->ask($output, 'Branch: ');
+		$branch = ($input->getOption('branch') !== null) ? $input->getOption('branch') : $dialog->ask($output, 'Branch: ');
+		$isStudent = ($input->getOption('isStudent') === 'y' || $input->getOption('isStudent') === 'Y');
 
 		$user = new User();
-		$user->setKeepActive(true);
         $user->setLogin($login);
 		$user->setFirstName($firstName);
 		$user->setLastName($lastName);
 		$user->setFullName($user->getFirstName().' '.$user->getLastName());
-		$user->setPassword($this->getContainer()->get('etu.user.crypting')->encrypt($password));
+		$user->setPassword($this->getContainer()->get('security.password_encoder')->encodePassword($user, $password));
 		$user->setMail($email);
 		$user->setBranch($branch);
+		$user->setIsStudent($isStudent);
 
 		$em->persist($user);
 		$em->flush();

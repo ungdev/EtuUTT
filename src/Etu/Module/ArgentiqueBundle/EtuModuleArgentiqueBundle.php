@@ -8,16 +8,6 @@ use Etu\Core\CoreBundle\Framework\Definition\Permission;
 class EtuModuleArgentiqueBundle extends Module
 {
     /**
-     * Must boot only for connected users
-     *
-     * @return bool|void
-     */
-    public function mustBoot()
-    {
-        return $this->getSessionLayer()->isStudent() || $this->getSessionLayer()->isOrga();
-    }
-
-    /**
      * At module boot, update the sidebar
      */
     public function onModuleBoot()
@@ -28,6 +18,7 @@ class EtuModuleArgentiqueBundle extends Module
                     ->setPosition(99)
                     ->setIcon('argentique.png')
                     ->setUrl($this->router->generate('argentique_index'))
+                    ->setRole('ROLE_ARGENTIQUE')
                 ->end()
             ->end();
 
@@ -37,6 +28,7 @@ class EtuModuleArgentiqueBundle extends Module
 					->setIcon('argentique.png')
 					->setUrl($this->getRouter()->generate('argentique_admin'))
 					->setPosition(7)
+                    ->setRole('ROLE_ARGENTIQUE_ADMIN')
 				->end()
 			->end();
     }
@@ -90,16 +82,6 @@ class EtuModuleArgentiqueBundle extends Module
 	{
 		return array(
 			// Insert your requirements here
-		);
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getAvailablePermissions()
-	{
-		return array(
-			new Permission('argentique.admin', Permission::DEFAULT_DISABLED, 'Peut gérer les photos Argentique'),
 		);
 	}
 

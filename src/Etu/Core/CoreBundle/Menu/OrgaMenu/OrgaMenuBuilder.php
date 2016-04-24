@@ -47,13 +47,13 @@ class OrgaMenuBuilder
 			->end()
 			->add('base.user.menu.logout')
 				->setIcon('control-power.png')
-				->setUrl($router->generate('user_disconnect'))
+				->setUrl($router->generate('user_logout'))
 			->end()
-			->addSeparator()
-			->add('base.user.menu.help')
-				->setIcon('question.png')
-				->setUrl('')
-			->end()
+			// ->addSeparator()
+			// ->add('base.user.menu.help')
+			// 	->setIcon('question.png')
+			// 	->setUrl('')
+			// ->end()
 		;
 	}
 

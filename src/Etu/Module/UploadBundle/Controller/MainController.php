@@ -17,9 +17,7 @@ class MainController extends Controller
 	 */
 	public function indexAction()
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_UPLOAD');
 
 		$directory = $this->getKernel()->getRootDir().'/../web/uploads/users_files/'.$this->getUser()->getLogin();
 
@@ -103,9 +101,7 @@ class MainController extends Controller
 	 */
 	public function removeAction($id, $confirm = false)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_UPLOAD');
 
 		$directory = $this->getKernel()->getRootDir().'/../web/uploads/users_files/'.$this->getUser()->getLogin();
 

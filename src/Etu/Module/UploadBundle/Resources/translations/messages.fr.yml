@@ -2,7 +2,7 @@
 upload:
   main:
     index:
-      adress: "Récupérer l'adresse"
+      address: "Récupérer l'adresse"
       confirm: "Vous avez bien envoyé une image"
       error_size: "Le fichier que vous avez fourni semble être trop volumineux (maximum 2MB)"
       error_type: "Le fichier que vous avez fourni ne semble pas être une image (jpg, png, gif, bmp)"

@@ -99,17 +99,19 @@
 {% endblock %}
 
 {% block content %}
-    <div class="padding20-all">
-        <div class="row-fluid home-blocks">
-            <div class="row-fluid home-blocks">
-                {% for blocks in columns %}
-                    <div class="span6">
-                        {% for block in blocks %}
-                            {% include block.template with block.context %}
-                        {% endfor %}
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
+	<div class="padding20-all">
+		<div class="row-fluid home-blocks">
+			<div class="row-fluid home-blocks">
+				{% for blocks in columns %}
+					<div class="span6">
+						{% for block in blocks %}
+							{% if block.role is not defined or is_granted(block.role) %}
+								{% include block.template with block.context %}
+							{% endif %}
+						{% endfor %}
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
 {% endblock %}

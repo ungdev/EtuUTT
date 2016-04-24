@@ -2,6 +2,7 @@
 {% if items|count > 0 %}
 <ul class="list-vertical list-vertical-linked sidebar-menu">
 	{% for item in items %}
+		{% if item.role is empty or is_granted(item.role) %}
 		<li {{ item.itemAttributesString|raw }}>
 			<a href="{{ item.url }}" {{ item.linkAttributesString|raw }}>
 				{% if item.hasIcon %}
@@ -13,6 +14,7 @@
 				{{ item.translation|trans }}
 			</a>
 		</li>
+		{% endif %}
 	{% endfor %}
 </ul>
 {% endif %}

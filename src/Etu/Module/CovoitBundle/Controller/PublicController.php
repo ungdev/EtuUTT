@@ -26,9 +26,7 @@ class PublicController extends Controller
      */
     public function indexAction($page = 1)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_COVOIT');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -63,9 +61,7 @@ class PublicController extends Controller
      */
     public function searchAction(Request $request, $page = 1)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_COVOIT');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -96,9 +92,7 @@ class PublicController extends Controller
      */
     public function viewAction(Request $request, $id, $slug)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_COVOIT');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -132,7 +126,7 @@ class PublicController extends Controller
 
         $messageForm = $this->createForm($this->get('etu.covoit.form.message'), $message);
 
-        if ($request->getMethod() == 'POST' && $messageForm->submit($request)->isValid()) {
+        if ($this->isGranted('ROLE_COVOIT_EDIT') && $request->getMethod() == 'POST' && $messageForm->submit($request)->isValid()) {
             $em->persist($message);
             $em->flush();
 

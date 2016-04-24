@@ -23,9 +23,7 @@ class MainController extends Controller
 	 */
 	public function indexAction()
 	{
-		if (! $this->getUserLayer()->isStudent()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CUMUL');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -202,6 +200,8 @@ class MainController extends Controller
      */
     public function importAction(Request $request, $type)
     {
+		$this->denyAccessUnlessGranted('ROLE_CUMUL');
+
         $post = $request->request;
         $files = $request->files;
 
@@ -265,7 +265,7 @@ class MainController extends Controller
             ->from('EtuUserBundle:User', 'u')
             ->where($qb->expr()->in('u.'.$dataType, $dataItems))
             ->getQuery()
-            ->getArrayResult();
+            ->getResult();
 
         if (count($dataItems) > count($users)) {
             $dbItems = [];
@@ -299,7 +299,7 @@ class MainController extends Controller
         }
 
         foreach ($users as $user) {
-            $logins[] = $user['login'];
+            $logins[] = $user->getLogin();
         }
 
         return $this->redirect($this->generateUrl('cumul_index').'?q='.implode(':', $logins));

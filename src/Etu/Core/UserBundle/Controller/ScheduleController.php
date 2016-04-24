@@ -17,33 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ScheduleController extends Controller
 {
-	/**
-	 * @Route("/schedule/edit", name="user_schedule_edit")
-	 * @Template()
-	 */
-	public function scheduleEditAction()
-	{
-		if (! $this->getUserLayer()->isStudent()) {
-			return $this->createAccessDeniedResponse();
-		}
-
-		/** @var $em EntityManager */
-		$em = $this->getDoctrine()->getManager();
-
-		/** @var $myCourses Course[] */
-		$courses = $em->getRepository('EtuUserBundle:Course')->findByUser($this->getUser());
-
-		// Builder to create the schedule
-		$builder = new ScheduleBuilder();
-
-		foreach ($courses as $course) {
-			$builder->addCourse($course);
-		}
-
-		return array(
-			'courses' => $builder->build()
-		);
-	}
 
 	/**
 	 * @Route("/schedule/print", name="user_schedule_print")
@@ -51,9 +24,7 @@ class ScheduleController extends Controller
 	 */
 	public function schedulePrintAction()
 	{
-		if (! $this->getUserLayer()->isStudent()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_SCHEDULE_OWN');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -79,9 +50,7 @@ class ScheduleController extends Controller
 	 */
 	public function courseAction(Course $course)
 	{
-		if (! $this->getUserLayer()->isStudent()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_SCHEDULE');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -116,9 +85,7 @@ class ScheduleController extends Controller
 	 */
 	public function exportAction()
 	{
-		if (! $this->getUserLayer()->isStudent()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_SCHEDULE_OWN');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -177,9 +144,7 @@ class ScheduleController extends Controller
 	 */
 	public function scheduleAction($day = 'current')
 	{
-		if (! $this->getUserLayer()->isStudent()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_SCHEDULE_OWN');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();

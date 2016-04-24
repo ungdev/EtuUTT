@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\ORM\EntityManager;
 
-class KeepUserActiveCommand extends ContainerAwareCommand
+class setUserPasswordCommand extends ContainerAwareCommand
 {
 	/**
 	 * Configure the command
@@ -18,8 +18,8 @@ class KeepUserActiveCommand extends ContainerAwareCommand
 	protected function configure()
 	{
 		$this
-			->setName('etu:users:keep-active')
-			->setDescription('Keep given user as external user (defining a password)')
+			->setName('etu:users:set-password')
+			->setDescription('Set user password to let him connect as an external account')
 		;
 	}
 
@@ -36,7 +36,7 @@ class KeepUserActiveCommand extends ContainerAwareCommand
 		$output->writeln('
 	Welcome to the EtuUTT users manager
 
-This command will help you to keep a user as an external user and to define a password for this user.
+This command will help you to set the password of an user to let him connect as an external account.
 ');
 
 		$user = null;
@@ -53,7 +53,6 @@ This command will help you to keep a user as an external user and to define a pa
 				$output->writeln("The given login can not be found. Please retry.\n");
 			}
 		}
-
 		$password = null;
 		$confirm = null;
 
@@ -66,14 +65,13 @@ This command will help you to keep a user as an external user and to define a pa
 			}
 		}
 
-		$password = $this->getContainer()->get('etu.user.crypting')->encrypt($password);
+		$password = $this->getContainer()->get('security.password_encoder')->encodePassword($user, $password);
 
 		$user->setPassword($password);
-		$user->setKeepActive(true);
 
 		$em->persist($user);
 		$em->flush();
 
-		$output->writeln("The user ".$user->getLogin()." has been kept as external.\n");
+		$output->writeln("The user ".$user->getLogin()." has can now connect with his password as external.\n");
 	}
 }

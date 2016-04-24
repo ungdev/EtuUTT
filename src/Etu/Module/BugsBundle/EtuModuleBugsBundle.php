@@ -8,16 +8,6 @@ use Etu\Core\CoreBundle\Framework\Definition\Permission;
 class EtuModuleBugsBundle extends Module
 {
 	/**
-	 * Must boot only for connected users
-	 *
-	 * @return bool|void
-	 */
-	public function mustBoot()
-	{
-		return $this->getSessionLayer()->isUser();
-	}
-
-	/**
 	 * At module boot, update the sidebar
 	 */
 	public function onModuleBoot()
@@ -27,6 +17,7 @@ class EtuModuleBugsBundle extends Module
 				->add('bugs.menu.sidebar.bugs')
 					->setIcon('exclamation-red.png')
 					->setUrl($this->getRouter()->generate('bugs_index'))
+					->setRole('ROLE_BUGS')
 				->end();
 	}
 
@@ -58,17 +49,6 @@ class EtuModuleBugsBundle extends Module
 	public function getAuthor()
 	{
 		return 'Titouan Galopin';
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getAvailablePermissions()
-	{
-		return array(
-			new Permission('bugs.add', Permission::DEFAULT_ENABLED, 'Peut ajouter/commenter un bug'),
-			new Permission('bugs.admin', Permission::DEFAULT_DISABLED, 'Peut administrer les bugs'),
-		);
 	}
 
 	/**

@@ -30,9 +30,9 @@ class ViewController extends Controller
 	 */
 	public function viewAction(Request $request, $slug, $name, $page = 1)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_UV');
+
+		$rtn = [];
 
 		/** @var EntityManager $em */
 		$em = $this->getDoctrine()->getManager();
@@ -40,6 +40,7 @@ class ViewController extends Controller
 		/** @var UV $uv */
 		$uv = $em->getRepository('EtuModuleUVBundle:UV')
 			->findOneBy(array('slug' => $slug));
+		$rtn['uv'] = $uv;
 
 		if (! $uv) {
 			throw $this->createNotFoundException(sprintf('UV for slug %s not found', $slug));
@@ -51,106 +52,114 @@ class ViewController extends Controller
 			)), 301);
 		}
 
-		$comment = new Comment();
-		$comment->setUv($uv)
-			->setUser($this->getUser());
+		// UV review post submit
+		if($this->isGranted('ROLE_UV_REVIEW_POST')) {
+			$comment = new Comment();
+			$comment->setUv($uv)
+				->setUser($this->getUser());
 
-		$commentForm = $this->createFormBuilder($comment)
-			->add('body', 'redactor')
-			->getForm();
+			$commentForm = $this->createFormBuilder($comment)
+				->add('body', 'redactor')
+				->getForm();
 
-		if ($request->getMethod() == 'POST' && $commentForm->submit($request)->isValid()) {
-			$em->persist($comment);
-			$em->flush();
+			if ($request->getMethod() == 'POST' && $commentForm->submit($request)->isValid()) {
+				$em->persist($comment);
+				$em->flush();
 
-			// Notify subscribers
-			$notif = new Notification();
+				// Notify subscribers
+				$notif = new Notification();
 
-			$notif
-				->setModule('uv')
-				->setHelper('uv_new_comment')
-				->setAuthorId($this->getUser()->getId())
-				->setEntityType('uv')
-				->setEntityId($uv->getId())
-				->addEntity($comment);
+				$notif
+					->setModule('uv')
+					->setHelper('uv_new_comment')
+					->setAuthorId($this->getUser()->getId())
+					->setEntityType('uv')
+					->setEntityId($uv->getId())
+					->addEntity($comment);
 
-			$this->getNotificationsSender()->send($notif);
+				$this->getNotificationsSender()->send($notif);
 
-			$this->get('session')->getFlashBag()->set('message', array(
-				'type' => 'success',
-				'message' => 'uvs.main.comment.confirm'
-			));
+				$this->get('session')->getFlashBag()->set('message', array(
+					'type' => 'success',
+					'message' => 'uvs.main.comment.confirm'
+				));
 
-			return $this->redirect($this->generateUrl('uvs_view', array(
-				'slug' => $slug,
-				'name' => $name
-			)));
+				return $this->redirect($this->generateUrl('uvs_view', array(
+					'slug' => $slug,
+					'name' => $name
+				)));
+			}
+			$rtn['commentForm'] = $commentForm->createView();
 		}
 
-		/** @var Review[] $results */
-		$results = $em->createQueryBuilder()
-			->select('r, s')
-			->from('EtuModuleUVBundle:Review', 'r')
-			->leftJoin('r.sender', 's')
-			->where('r.uv = :uv')
-			->setParameter('uv', $uv->getId())
-			->getQuery()
-			->getResult();
+		if($this->isGranted('ROLE_UV_REVIEW')) {
 
-		$order = array();
+			// Get UV annals
 
-		// Order by semester: A13, P12, A12, P11, ...
-		foreach ($results as $review) {
-			$semester = (int) substr($review->getSemester(), 1);
-			$season = (substr($review->getSemester(), 0, 1)) == 'A' ? 1 : 0;
-			$order[] = $semester * 2 + $season;
+			/** @var Review[] $results */
+			$results = $em->createQueryBuilder()
+				->select('r, s')
+				->from('EtuModuleUVBundle:Review', 'r')
+				->leftJoin('r.sender', 's')
+				->where('r.uv = :uv')
+				->setParameter('uv', $uv->getId())
+				->getQuery()
+				->getResult();
+
+			$order = array();
+
+			// Order by semester: A13, P12, A12, P11, ...
+			foreach ($results as $review) {
+				$semester = (int) substr($review->getSemester(), 1);
+				$season = (substr($review->getSemester(), 0, 1)) == 'A' ? 1 : 0;
+				$order[] = $semester * 2 + $season;
+			}
+
+			array_multisort(
+				$order, SORT_DESC, SORT_NUMERIC,
+				$results
+			);
+
+			$reviews = array();
+			$reviewsCount = 0;
+
+			foreach ($results as $result) {
+				if (! isset($reviews[$result->getSemester()]['count'])) {
+					$reviews[$result->getSemester()]['count'] = 0;
+				}
+
+				if (! isset($reviews[$result->getSemester()]['validated'])) {
+					$reviews[$result->getSemester()]['validated'] = array();
+				}
+
+				if (! isset($reviews[$result->getSemester()]['pending'])) {
+					$reviews[$result->getSemester()]['pending'] = array();
+				}
+
+				$key = ($result->getValidated()) ? 'validated' : 'pending';
+				$reviews[$result->getSemester()][$key][] = $result;
+				$reviews[$result->getSemester()]['count']++;
+				$reviewsCount++;
+			}
+
+			// Get UV comments
+			$query = $em->createQueryBuilder()
+				->select('c, u')
+				->from('EtuModuleUVBundle:Comment', 'c')
+				->leftJoin('c.user', 'u')
+				->where('c.uv = :uv')
+				->setParameter('uv', $uv->getId())
+				->orderBy('c.createdAt', 'DESC')
+				->getQuery();
+
+			$pagination = $this->get('knp_paginator')->paginate($query, $page, 10);
+
+			$rtn['semesters'] = $reviews;
+			$rtn['reviewsCount'] = $reviewsCount;
+			$rtn['pagination'] = $pagination;
 		}
 
-		array_multisort(
-			$order, SORT_DESC, SORT_NUMERIC,
-			$results
-		);
-
-		$reviews = array();
-		$reviewsCount = 0;
-
-		foreach ($results as $result) {
-			if (! isset($reviews[$result->getSemester()]['count'])) {
-				$reviews[$result->getSemester()]['count'] = 0;
-			}
-
-			if (! isset($reviews[$result->getSemester()]['validated'])) {
-				$reviews[$result->getSemester()]['validated'] = array();
-			}
-
-			if (! isset($reviews[$result->getSemester()]['pending'])) {
-				$reviews[$result->getSemester()]['pending'] = array();
-			}
-
-			$key = ($result->getValidated()) ? 'validated' : 'pending';
-			$reviews[$result->getSemester()][$key][] = $result;
-			$reviews[$result->getSemester()]['count']++;
-			$reviewsCount++;
-		}
-
-		$query = $em->createQueryBuilder()
-			->select('c, u')
-			->from('EtuModuleUVBundle:Comment', 'c')
-			->leftJoin('c.user', 'u')
-			->where('c.uv = :uv')
-			->setParameter('uv', $uv->getId())
-			->orderBy('c.createdAt', 'DESC')
-			->getQuery();
-
-		$pagination = $this->get('knp_paginator')->paginate($query, $page, 10);
-
-		return array(
-			'uv' => $uv,
-			'semesters' => $reviews,
-			'reviewsCount' => $reviewsCount,
-			'pagination' => $pagination,
-			'commentForm' => $commentForm->createView(),
-		);
+		return $rtn;
 	}
 
 	/**
@@ -159,9 +168,7 @@ class ViewController extends Controller
 	 */
 	public function coursesAction($slug, $name)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_UV');
 
 		/** @var EntityManager $em */
 		$em = $this->getDoctrine()->getManager();
@@ -233,9 +240,7 @@ class ViewController extends Controller
 	 */
 	public function sendReviewAction(Request $request, $slug, $name)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_UV_REVIEW_POST');
 
 		/** @var EntityManager $em */
 		$em = $this->getDoctrine()->getManager();
@@ -342,4 +347,3 @@ class ViewController extends Controller
 		);
 	}
 }
-

@@ -1,7 +1,7 @@
 upload:
   main:
     index:
-      adress: "Recover adress"
+      address: "Recover address"
       confirm: "You have sent a picture"
       error_size: "The file seems to be too big in size (maximum 2MB)"
       error_type: "The file doesn't seem to be a picture (jpg, png, gif, bmp)"

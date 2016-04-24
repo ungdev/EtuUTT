@@ -26,7 +26,7 @@ class MainController extends Controller
      */
     public function indexAction()
     {
-        if ($this->getUserLayer()->isUser()) {
+        if($this->isGranted('ROLE_CORE_HOMEPAGE')) {
             return $this->indexUserAction();
         }
 
@@ -39,6 +39,8 @@ class MainController extends Controller
      */
     public function moreAction($page)
     {
+        $this->denyAccessUnlessGranted('ROLE_CORE_SUBSCRIBE');
+
         /** @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
 
@@ -121,12 +123,14 @@ class MainController extends Controller
      */
     public function changeLocaleAction($lang)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         // Change locale if the given locale is available
         if (in_array($lang, $this->container->getParameter('etu.translation.languages'))) {
             $this->get('session')->set('_locale', $lang);
 
             // Change user language
-            if ($this->getUserLayer()->isUser()) {
+            if ($this->isGranted('ROLE_USER')) {
                 /** @var $em EntityManager */
                 $em = $this->getDoctrine()->getManager();
 
@@ -268,6 +272,8 @@ class MainController extends Controller
      */
     protected function indexUserAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_CORE_HOMEPAGE');
+
         /** @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
 
@@ -285,81 +291,6 @@ class MainController extends Controller
         $user->setLastVisitHome(new \DateTime());
 
         if (! $user->getFirstLogin()) {
-            $user->setFirstLogin(true);
-        }
-
-        $em->persist($user);
-
-        if (! $user->testingContext) {
-            $em->flush();
-        }
-
-        return $view;
-    }
-
-    private function oldIndexUser()
-    {
-        /** @var $em EntityManager */
-        $em = $this->getDoctrine()->getManager();
-
-        // Load only notifications we should display, ie. notifications sent from
-        // currently enabled modules
-
-        /*
-         * Subscriptions
-         */
-        /** @var $subscriptions Subscription[] */
-        $subscriptions = $this->get('etu.twig.global_accessor')->get('notifs')->get('subscriptions');
-        $subscriptionsWhere = array();
-        $notifications = array();
-
-        if (! empty($subscriptions)) {
-
-            foreach ($subscriptions as $key => $subscription) {
-                $subscriptionsWhere[] =
-                    '(n.entityType = :type_'.$key.' AND n.entityId = :id_'.$key.' AND n.createdAt > :date_'.$key.')';
-
-                $query->setParameter('type_'.$key, $subscription->getEntityType());
-                $query->setParameter('id_'.$key, $subscription->getEntityId());
-                $query->setParameter('date_'.$key, $subscription->getCreatedAt());
-            }
-
-            if (! empty($subscriptionsWhere)) {
-                $query = $query->andWhere(implode(' OR ', $subscriptionsWhere));
-            }
-
-            /*
-             * Modules
-             */
-            $modulesWhere = array('n.module = \'core\'', 'n.module = \'user\'');
-
-            foreach ($this->getKernel()->getModulesDefinitions() as $module) {
-                $identifier = $module->getIdentifier();
-                $modulesWhere[] = 'n.module = :module_'.$identifier;
-
-                $query->setParameter('module_'.$identifier, $identifier);
-            }
-
-            if (! empty($modulesWhere)) {
-                $query = $query->andWhere(implode(' OR ', $modulesWhere));
-            }
-
-            // Query
-            /** @var $notifications Notification[] */
-            $notifications = $query->getQuery()->getResult();
-        }
-
-        $this->get('twig')->addGlobal('etu_count_new_notifs', 0);
-
-        $user = $this->getUser();
-
-        $view = $this->render('EtuCoreBundle:Main:index.html.twig', array(
-                'notifs' => $notifications,
-                'firstLogin' => $user->getFirstLogin()
-            ));
-        $user->setLastVisitHome(new \DateTime());
-
-        if (!$user->getFirstLogin()) {
             $user->setFirstLogin(true);
         }
 

@@ -26,9 +26,16 @@ class AdminController extends Controller
 	 */
 	public function indexAction()
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_HOME');
+		return array();
+	}
+	/**
+	 * @Route("/server", name="admin_server")
+	 * @Template()
+	 */
+	public function serverAction()
+	{
+		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_SERVER');
 
 		return array(
 			'status' => new Server\Status()
@@ -41,9 +48,7 @@ class AdminController extends Controller
 	 */
 	public function modulesAction()
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_MODULES');
 
 		// Modules
 		/** @var $modulesManager ModulesManager */
@@ -162,9 +167,7 @@ class AdminController extends Controller
 	 */
 	public function pagesAction()
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('pages.admin')) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PAGES');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -182,9 +185,7 @@ class AdminController extends Controller
 	 */
 	public function pageCreateAction()
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('pages.admin')) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PAGES');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -223,9 +224,7 @@ class AdminController extends Controller
 	 */
 	public function pageEditAction($id)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('pages.admin')) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PAGES');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -263,9 +262,7 @@ class AdminController extends Controller
 	 */
 	public function pageDeleteAction($id)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('pages.admin')) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PAGES');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -283,9 +280,7 @@ class AdminController extends Controller
 	 */
 	public function pageDeleteConfirmAction($id)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->hasPermission('pages.admin')) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PAGES');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -293,12 +288,13 @@ class AdminController extends Controller
 		$page = $em->getRepository('EtuCoreBundle:Page')->find($id);
 
 		$em->remove($page);
+		$em->flush();
 
 		$this->get('session')->getFlashBag()->set('message', array(
 			'type' => 'success',
 			'message' => 'core.admin.pageDelete.confirm'
 		));
 
-		return $this->redirect($this->generateUrl('admin_index'));
+		return $this->redirect($this->generateUrl('admin_pages'));
 	}
 }

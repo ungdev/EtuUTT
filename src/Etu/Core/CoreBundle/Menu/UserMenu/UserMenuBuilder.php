@@ -48,14 +48,22 @@ class UserMenuBuilder
 			->add('base.user.menu.table')
 				->setIcon('table.png')
 				->setUrl($router->generate('user_schedule'))
+				->setRole('ROLE_CORE_SCHEDULE_OWN')
 			->end()
 			->add('base.user.menu.orgas')
 				->setIcon('bank.png')
 				->setUrl($router->generate('memberships_index'))
+				->setRole('ROLE_CORE_MEMBERSHIPS')
 			->end()
 			->add('base.user.menu.logout')
 				->setIcon('control-power.png')
-				->setUrl($router->generate('user_disconnect'))
+				->setUrl($router->generate('user_logout'))
+			->end()
+			->addSeparator('ROLE_CORE_ADMIN_HOME')
+			->add('base.user.menu.admin')
+				->setIcon('gear.png')
+				->setUrl($router->generate('admin_index'))
+				->setRole('ROLE_CORE_ADMIN_HOME')
 			->end()
 		;
 	}
@@ -77,13 +85,16 @@ class UserMenuBuilder
 	/**
 	 * @return \Etu\Core\CoreBundle\Menu\UserMenu\UserMenuBuilder
 	 */
-	public function addSeparator()
+	public function addSeparator($role = '')
 	{
 		$this->lastPosition++;
 		$this->separatorCount++;
 
 		$item = new UserMenuSeparator($this);
 		$item->setPosition($this->lastPosition);
+		if(!empty($role)) {
+			$item->setRole($role);
+		}
 
 		$this->items['separator-'.$this->separatorCount] = $item;
 

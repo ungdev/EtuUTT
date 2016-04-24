@@ -54,7 +54,7 @@ This command will help you to promote given user as global admin.
 			}
 		}
 
-		$user->setIsAdmin(true);
+		$user->storeRole('ROLE_ADMIN');
 
 		$em->persist($user);
 		$em->flush();

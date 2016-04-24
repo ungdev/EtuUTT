@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block sidebar %}
-	{% if app.user %}
+	{% if is_granted('ROLE_CORE_SUBSCRIBE') %}
 		{{ render_subscribe_button('event', event.id) }}
 	{% endif %}
 
@@ -84,7 +84,7 @@
 				{{ 'events.main.view.back'|trans }}
 			</a>
 		</li>
-		{% if app.user and app.user.isStudent %}
+		{% if is_granted('ROLE_EVENTS_ANSWER') %}
 			<li class="pull-right">
 				<a href="{{ path('events_members', {'id': event.id, 'slug': event.title|slugify}) }}">
 					{{ 'events.main.view.menu.subscribers'|trans }}
@@ -99,7 +99,7 @@
 	</ul>
 
 	<div class="padding20-sides">
-		{% if app.user and app.user.isStudent %}
+		{% if is_granted('ROLE_EVENTS_ANSWER_POST') %}
 		<div class="pull-right">
 			<div class="btn-group">
 				<a class="btn dropdown-toggle" id="subscriber_button" data-event-id="{{ event.id }}" data-toggle="dropdown" href="#">

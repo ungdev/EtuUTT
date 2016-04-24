@@ -8,14 +8,6 @@ use Etu\Core\CoreBundle\Framework\Definition\OrgaPermission;
 class EtuModuleDaymailBundle extends Module
 {
 	/**
-	 * @return bool
-	 */
-	public function mustBoot()
-	{
-		return $this->getSessionLayer()->isUser();
-	}
-
-	/**
 	 * At module boot, update the sidebar
 	 */
 	public function onModuleBoot()

@@ -19,9 +19,7 @@ class OrgaController extends Controller
 	 */
 	public function indexAction()
 	{
-		if (! $this->getUserLayer()->isOrga()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_ORGA');
 
 		$orga = $this->getUser();
 
@@ -93,9 +91,7 @@ class OrgaController extends Controller
 	 */
 	public function avatarAction()
 	{
-		if (! $this->getUserLayer()->isOrga()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_ORGA');
 
 		$orga = $this->getUser();
 
@@ -134,9 +130,7 @@ class OrgaController extends Controller
 	 */
 	public function membersAction($page)
 	{
-		if (! $this->getUserLayer()->isOrga()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_ORGA');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -238,9 +232,7 @@ class OrgaController extends Controller
 	 */
 	public function memberEditAction($login)
 	{
-		if (! $this->getUserLayer()->isOrga()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_ORGA');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -347,9 +339,7 @@ class OrgaController extends Controller
 	 */
 	public function memberDeleteAction($login, $confirm = '')
 	{
-		if (! $this->getUserLayer()->isOrga()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_ORGA');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();

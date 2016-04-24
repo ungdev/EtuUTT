@@ -28,9 +28,7 @@ class PrivateController extends Controller
      */
     public function indexAction($page = 1)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_COVOIT_EDIT');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -61,9 +59,7 @@ class PrivateController extends Controller
      */
     public function proposeAction(Request $request)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_COVOIT_EDIT');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -114,9 +110,7 @@ class PrivateController extends Controller
      */
     public function editAction(Request $request, $id)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_COVOIT_EDIT');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -216,14 +210,12 @@ class PrivateController extends Controller
     }
 
     /**
-     * @Route("/edit/message/{id}", defaults={"id" = 1}, requirements={"id" = "\d+"}, name="covoiturage_my_edit_message")
+     * @Route("/edit/message/{id}", requirements={"id" = "\d+"}, name="covoiturage_my_edit_message")
      * @Template()
      */
     public function editMessageAction(Request $request, CovoitMessage $message)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_COVOIT_EDIT');
 
         if ($message->getAuthor()->getId() != $this->getUser()->getId()) {
             throw new AccessDeniedHttpException();
@@ -261,9 +253,7 @@ class PrivateController extends Controller
      */
     public function cancelAction($id, $confirm)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_COVOIT_EDIT');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -326,9 +316,7 @@ class PrivateController extends Controller
      */
     public function subscribeAction($id)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_COVOIT_EDIT');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -401,13 +389,11 @@ class PrivateController extends Controller
     }
 
     /**
-     * @Route("/{id}/unsubscribe", name="covoiturage_my_subscribe")
+     * @Route("/{id}/unsubscribe", name="covoiturage_my_unsubscribe")
      */
     public function unsubscribeAction(CovoitSubscription $subscription)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_COVOIT_EDIT');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();

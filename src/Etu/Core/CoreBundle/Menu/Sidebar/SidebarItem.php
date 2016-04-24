@@ -38,6 +38,11 @@ class SidebarItem
 	protected $position;
 
 	/**
+	 * @var string If not empty, item will be shown only if user has the role
+	 */
+	protected $role;
+
+	/**
 	 * @var SidebarBlockBuilder
 	 */
 	protected $builder;
@@ -253,6 +258,26 @@ class SidebarItem
 	public function getPosition()
 	{
 		return $this->position;
+	}
+
+	/**
+	 * Sets the role to use.
+	 * @param string $role
+	 * @return $this
+	 */
+	public function setRole($role)
+	{
+	    $this->role = $role;
+	    return $this;
+	}
+
+	/**
+	 * Retrieves the currently set role.
+	 * @return string
+	 */
+	public function getRole()
+	{
+	    return $this->role;
 	}
 
 	/**

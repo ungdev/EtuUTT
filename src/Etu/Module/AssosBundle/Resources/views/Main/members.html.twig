@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block sidebar %}
-	{% if app.user %}
+	{% if is_granted('ROLE_CORE_SUBSCRIBE') %}
 		{{ render_subscribe_button('orga', orga.id) }}
 	{% endif %}
 
@@ -22,13 +22,11 @@
 				{{ 'assos.main.view.back'|trans }}
 			</a>
 		</li>
-		{% if app.user %}
-			<li class="pull-right active page-tabs-resolved-active">
-				<a href="{{ path('orgas_members', {'login': orga.login}) }}">
-					{{ 'assos.main.menu.members'|trans }}
-				</a>
-			</li>
-		{% endif %}
+		<li class="pull-right active page-tabs-resolved-active">
+			<a href="{{ path('orgas_members', {'login': orga.login}) }}">
+				{{ 'assos.main.menu.members'|trans }}
+			</a>
+		</li>
 		<li class="pull-right">
 			<a href="{{ path('orgas_view', {'login': orga.login}) }}">
 				{{ 'assos.main.menu.description'|trans }}

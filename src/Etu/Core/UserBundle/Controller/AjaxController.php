@@ -18,9 +18,9 @@ class AjaxController extends ApiController
      */
     public function searchAction(Request $request)
     {
-        if (! $this->getUserLayer()->isConnected()) {
+        if (! $this->isGranted('ROLE_CORE_PROFIL')) {
             return $this->format([
-                    'error' => 'Your must be connected to access this page'
+                    'error' => 'Your must be connected and not be banned to access this page'
                 ], 403);
         }
 
@@ -66,7 +66,7 @@ class AjaxController extends ApiController
      */
     public function orgasearchAction(Request $request)
     {
-        if (! $this->getUserLayer()->isConnected()) {
+        if (! $this->isGranted('ROLE_CORE_PROFIL')) {
             return $this->format([
                     'error' => 'Your must be connected to access this page'
                 ], 403);

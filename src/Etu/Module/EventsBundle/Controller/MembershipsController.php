@@ -33,9 +33,7 @@ class MembershipsController extends Controller
 	 */
 	public function eventsAction($login, $day = 'current', $month = 'current', $year = 'current')
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_EVENTS_EDIT');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -111,9 +109,7 @@ class MembershipsController extends Controller
 	 */
 	public function ajaxEventsAction(Request $request, $login)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_EVENTS_EDIT');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -210,9 +206,7 @@ class MembershipsController extends Controller
 	 */
 	public function createAction(Request $request, $login)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_EVENTS_EDIT');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -374,9 +368,7 @@ class MembershipsController extends Controller
 	 */
 	public function editAction(Request $request, $login, $id, $slug)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_EVENTS_EDIT');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -500,9 +492,7 @@ class MembershipsController extends Controller
 	 */
 	public function ajaxEditAction(Request $request, $login, Event $event)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_EVENTS_EDIT');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -586,9 +576,7 @@ class MembershipsController extends Controller
 	 */
 	public function deleteAction(Request $request, $login, $id, $slug, $confirm = false)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_EVENTS_EDIT');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();

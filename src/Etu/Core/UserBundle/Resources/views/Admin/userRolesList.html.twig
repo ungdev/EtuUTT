@@ -1,0 +1,80 @@
+{% extends 'EtuCoreBundle:Admin:layout.html.twig' %}
+
+{% block title %}{{ 'user.admin.userRolesList.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('src/img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('src/js/bundles/user.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+	<ul class="nav nav-tabs page-tabs">
+		<li>
+			<a href="{{ path('admin_users_index') }}">
+				<i class="icon-chevron-left"></i>
+				{{ 'user.admin.userRolesList.back'|trans }}
+			</a>
+		</li>
+	</ul>
+
+	<div class="padding20-sides">
+		<h3>{{ 'user.admin.userRolesList.assignedTitle' |trans}}</h3>
+		<p>{{ 'user.admin.userRolesList.assignedDesc' |trans}}</p>
+		<hr/>
+		{% for user in users %}
+			<div class="row-fluid">
+				<div class="span2">
+					<div class="profileEdit-avatar" style="text-align:center;">
+						<img src="{{ asset('uploads/photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
+					</div>
+				</div>
+				<div class="span10">
+					<strong>{{ user.fullName }} ({{ user.login }})</strong>
+					<ul>
+					{% for role in user.storedRoles %}
+						<li><a data-toggle="collapse" data-parent="#roleParent" href="#roleCollapse{{ role }}" onclick="document.getElementById('roleCollapse{{ role }}').scrollIntoView();">
+							{{ ('user.admin.userRoles.'~role) |trans}} ({{ role }})
+						</a></li>
+					{% endfor %}
+					</ul>
+				</div>
+				<p class="pull-right">
+					<a href="{{ path('admin_user_roles', {'login': user.login, 'from': 'admin'}) }}" class="btn btn-primary">{{ 'user.admin.userRolesList.edit'|trans }}</a>
+				</p>
+			</div>
+			<hr/>
+		{% endfor %}
+	</div>
+	<div class="padding20-sides">
+		<h3>{{ 'user.admin.userRolesList.hierarchyTitle' |trans}}</h3>
+		<p>{{ 'user.admin.userRolesList.hierarchyDesc' |trans}}</p>
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="accordion" id="roleParent">
+						{% for role,subroles in hierarchy %}
+							<div class="accordion-group">
+								<div class="accordion-heading">
+									<a class="accordion-toggle" data-toggle="collapse" data-parent="#roleParent" href="#roleCollapse{{ role }}">
+										{{ ('user.admin.userRoles.'~role) |trans}} ({{ role }})
+									</a>
+								</div>
+								<div id="roleCollapse{{ role }}" class="accordion-body collapse">
+									<div class="accordion-inner">
+										<ul>
+											{% for subrole in subroles %}
+												<li>{{ ('user.admin.userRoles.'~subrole) |trans}} ({{ subrole }})</li>
+											{% endfor %}
+										</ul>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+{% endblock %}

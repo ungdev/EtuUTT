@@ -7,14 +7,6 @@ use Etu\Core\CoreBundle\Framework\Definition\Module;
 class EtuModuleForumBundle extends Module
 {
 	/**
-	 * @return bool
-	 */
-	public function mustBoot()
-	{
-		return true;
-	}
-	
-	/**
 	 * At module boot, update the sidebar
 	 */
 

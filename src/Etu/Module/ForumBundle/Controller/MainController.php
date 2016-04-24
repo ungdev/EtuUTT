@@ -33,7 +33,7 @@ class MainController extends Controller
 	 */
 	public function indexAction()
 	{
-		if(!$this->getUser()) return $this->createAccessDeniedResponse();
+		$this->denyAccessUnlessGranted('ROLE_FORUM');
 
 		$em = $this->getDoctrine()->getManager();
 		$categories = $em->createQueryBuilder()
@@ -55,7 +55,8 @@ class MainController extends Controller
 	 */
 	public function categoryAction($id, $slug, $page)
 	{
-		if(!$this->getUser()) return $this->createAccessDeniedResponse();
+		$this->denyAccessUnlessGranted('ROLE_FORUM');
+
 		$em = $this->getDoctrine()->getManager();
 
 		/** @var Category $category */
@@ -64,7 +65,7 @@ class MainController extends Controller
 
 		$checker = new PermissionsChecker($this->getUser());
 
-		if (!$checker->canRead($category)) {
+		if (!$checker->canRead($category) && !$this->isGranted('ROLE_FORUM_ADMIN')) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -119,7 +120,7 @@ class MainController extends Controller
 
 		$isSubCategories = false;
 		if(count($subCategories) > 0) $isSubCategories = true;
-		
+
 		$views = $em->createQueryBuilder()
 			->select('v')
 			->from('EtuModuleForumBundle:CategoryView', 'v')
@@ -147,7 +148,8 @@ class MainController extends Controller
 	 */
 	public function threadAction($id, $slug, $page)
 	{
-		if(!$this->getUser()) return $this->createAccessDeniedResponse();
+		$this->denyAccessUnlessGranted('ROLE_FORUM');
+
 		$em = $this->getDoctrine()->getManager();
 		$thread = $em->createQueryBuilder()
 			->select('t, c')
@@ -162,7 +164,7 @@ class MainController extends Controller
 		$category = $thread->getCategory();
 
 		$checker = new PermissionsChecker($this->getUser());
-		if (!$checker->canRead($category)) {
+		if (!$checker->canRead($category) && !$this->isGranted('ROLE_FORUM_ADMIN')) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -189,7 +191,7 @@ class MainController extends Controller
 
 		$messages = $this->get('knp_paginator')->paginate($messages, $page, 10);
 
-		$cantAnswer = (bool) ($thread->getState() == 200 && !$checker->canLock($category) && !$this->getUser()->getIsAdmin());
+		$cantAnswer = (bool) ($thread->getState() == 200 && !$checker->canLock($category) && !$this->isGranted('ROLE_FORUM_ADMIN'));
 
 		$views = $em->createQueryBuilder()
 			->select('v')
@@ -228,13 +230,14 @@ class MainController extends Controller
 	 */
 	public function postAction($id, $slug)
 	{
-		if(!$this->getUser()) return $this->createAccessDeniedResponse();
+		$this->denyAccessUnlessGranted('ROLE_FORUM_POST');
+
 		$em = $this->getDoctrine()->getManager();
 		$category = $em->getRepository('EtuModuleForumBundle:Category')
 			->find($id);
 
 		$checker = new PermissionsChecker($this->getUser());
-		if (!$checker->canPost($category)) {
+		if (!$checker->canPost($category) && !$this->isGranted('ROLE_FORUM_ADMIN')) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -250,7 +253,7 @@ class MainController extends Controller
 			->getResult();
 
 		$thread = new Thread();
-		if($checker->canSticky($category)) {
+		if($checker->canSticky($category) || $this->isGranted('ROLE_FORUM_ADMIN')) {
 			$form = $this->createForm(new ThreadType, $thread);
 		}
 		else {
@@ -261,7 +264,7 @@ class MainController extends Controller
 		if ($request->getMethod() == 'POST') {
 			$form->bind($request);
 			if ($form->isValid()) {
-				if($thread->getWeight() != 100 && !$checker->canSticky($category)) $thread->setWeight(100);
+				if($thread->getWeight() != 100 && !$checker->canSticky($category) && !$this->isGranted('ROLE_FORUM_ADMIN')) $thread->setWeight(100);
 				$thread->setAuthor($this->getUser())
 					->setCategory($category)
 					->setCountMessages(1)
@@ -281,13 +284,13 @@ class MainController extends Controller
 				}
 
 				$em->persist($thread);
-				
+
 				$cviews = $em->getRepository('EtuModuleForumBundle:CategoryView')
 					->findByCategory($category);
 				foreach($cviews as $cview) {
 					$em->remove($cview);
 				}
-				
+
 				$em->flush();
 
 				$this->giveBadges();
@@ -308,7 +311,8 @@ class MainController extends Controller
 	 */
 	public function answerAction($id, $slug)
 	{
-		if(!$this->getUser()) return $this->createAccessDeniedResponse();
+		$this->denyAccessUnlessGranted('ROLE_FORUM_POST');
+
 		$em = $this->getDoctrine()->getManager();
 		$thread = $em->createQueryBuilder()
 			->select('t, c')
@@ -323,7 +327,7 @@ class MainController extends Controller
 		$category = $thread->getCategory();
 
 		$checker = new PermissionsChecker($this->getUser());
-		if (!$checker->canAnswer($category) || ($thread->getState() == 200 && !$checker->canLock($category) && !$this->getUser()->getIsAdmin())) {
+		if ((!$checker->canAnswer($category) && !$this->isGranted('ROLE_FORUM_ADMIN')) || ($thread->getState() == 200 && !$checker->canLock($category) && !$this->isGranted('ROLE_FORUM_ADMIN'))) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -401,7 +405,8 @@ class MainController extends Controller
 	 */
 	public function editAction($messageId)
 	{
-		if(!$this->getUser()) return $this->createAccessDeniedResponse();
+		$this->denyAccessUnlessGranted('ROLE_FORUM_POST');
+
 		$em = $this->getDoctrine()->getManager();
 		$message = $em->createQueryBuilder()
 			->select('m, t')
@@ -417,7 +422,7 @@ class MainController extends Controller
 		$category = $message->getCategory();
 
 		$checker = new PermissionsChecker($this->getUser());
-		if (!$checker->canEdit($category) || ($thread->getState() == 200 && !$checker->canLock($category) && !$this->getUser()->getIsAdmin())) {
+		if ((!$checker->canEdit($category) && !$this->isGranted('ROLE_FORUM_ADMIN')) || ($thread->getState() == 200 && !$checker->canLock($category) && !$this->isGranted('ROLE_FORUM_ADMIN'))) {
 			return $this->createAccessDeniedResponse();
 		}
 
@@ -474,7 +479,8 @@ class MainController extends Controller
 	 */
 	public function modAction($action,$threadId,$messageId=null)
 	{
-		if(!$this->getUser()) return $this->createAccessDeniedResponse();
+		$this->denyAccessUnlessGranted('ROLE_FORUM_POST');
+
 		$em = $this->getDoctrine()->getManager();
 		$thread = $em->createQueryBuilder()
 			->select('t, c')
@@ -505,7 +511,7 @@ class MainController extends Controller
 		switch($action) {
 			case 'remove':
 				$checker = new PermissionsChecker($this->getUser());
-				if (!$checker->canDelete($category)) {
+				if (!$checker->canDelete($category) && !$this->isGranted('ROLE_FORUM_ADMIN')) {
 					$return = $this->createAccessDeniedResponse();
 				}
 				if($messageId == null) {
@@ -604,7 +610,7 @@ class MainController extends Controller
 				$category = $thread->getCategory();
 
 				$checker = new PermissionsChecker($this->getUser());
-				if (!$checker->canLock($category)) {
+				if (!$checker->canLock($category) && !$this->isGranted('ROLE_FORUM_ADMIN')) {
 					return $this->createAccessDeniedResponse();
 				}
 
@@ -625,7 +631,7 @@ class MainController extends Controller
 				$category = $thread->getCategory();
 
 				$checker = new PermissionsChecker($this->getUser());
-				if (!$checker->canMove($category)) {
+				if (!$checker->canMove($category) && !$this->isGranted('ROLE_FORUM_ADMIN')) {
 					$return = $this->createAccessDeniedResponse();
 				}
 
@@ -643,7 +649,7 @@ class MainController extends Controller
 
 						foreach($categories as $category) {
 							$checker = new PermissionsChecker($this->getUser());
-							if ($checker->canRead($category)) {
+							if ($checker->canRead($category) || $this->isGranted('ROLE_FORUM_ADMIN')) {
 								array_push($categoriesList, $category);
 							}
 						}
@@ -742,7 +748,7 @@ class MainController extends Controller
 			->getResult();
 
 		$nbThreads = count($threads);
-		
+
 		if($nbThreads >= 1) {
 			BadgesManager::userAddBadge($user, 'mysterion', 1);
 			BadgesManager::userPersistBadges($user);
@@ -759,7 +765,7 @@ class MainController extends Controller
 			BadgesManager::userAddBadge($user, 'mysterion', 4);
 			BadgesManager::userPersistBadges($user);
 		}
-		
+
 		$messages = $em->createQueryBuilder()
 			->select('m')
 			->from('EtuModuleForumBundle:Message', 'm')

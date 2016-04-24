@@ -6,15 +6,6 @@ use Etu\Core\CoreBundle\Framework\Definition\Module;
 
 class EtuModuleCovoitBundle extends Module
 {
-	/**
-	 * @return bool
-	 */
-	public function mustBoot()
-	{
-        // Everyone (even UTT members) but orgas
-		return $this->getSessionLayer()->isConnected() && ! $this->getSessionLayer()->isOrga();
-	}
-
     /**
      * At module boot, update the sidebar
      */
@@ -25,6 +16,7 @@ class EtuModuleCovoitBundle extends Module
                 ->add('covoit.index.title')
                 ->setIcon('car.png')
                 ->setUrl($this->getRouter()->generate('covoiturage_index'))
+                ->setRole('ROLE_COVOIT')
             ->end();
     }
 

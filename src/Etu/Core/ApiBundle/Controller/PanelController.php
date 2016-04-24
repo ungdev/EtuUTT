@@ -22,9 +22,7 @@ class PanelController extends Controller
      */
     public function indexAction()
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_API_CREATE');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -43,9 +41,7 @@ class PanelController extends Controller
      */
     public function createAppAction(Request $request)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_API_CREATE');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -89,9 +85,7 @@ class PanelController extends Controller
      */
     public function manageAppAction(OauthClient $client)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_API_CREATE');
 
         if ($client->getUser()->getId() != $this->getUser()->getId()) {
             throw new AccessDeniedHttpException();
@@ -115,9 +109,7 @@ class PanelController extends Controller
      */
     public function editAppAction(Request $request, OauthClient $client)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_API_CREATE');
 
         if ($client->getUser()->getId() != $this->getUser()->getId()) {
             throw new AccessDeniedHttpException();
@@ -158,9 +150,7 @@ class PanelController extends Controller
      */
     public function removeAppAction(Request $request, OauthClient $client)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_API_CREATE');
 
         if ($client->getUser()->getId() != $this->getUser()->getId()) {
             throw new AccessDeniedHttpException();

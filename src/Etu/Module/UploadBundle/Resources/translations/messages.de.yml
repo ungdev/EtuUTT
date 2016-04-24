@@ -1,7 +1,7 @@
 upload:
   main:
     index:
-      adress: "Die Adresse wiederholen"
+      address: "Die Adresse wiederholen"
       confirm: "Sie haben ein Bild erfolgreich gesendet"
       error_size: "Die Datei die Sie gesendet haben scheint zu sperrig zu sein (maximum 2MB)"
       error_type: "Die Datei die Sie gesendet haben scheint kein Bild zu sein (jpg, png, gif, bmp)"

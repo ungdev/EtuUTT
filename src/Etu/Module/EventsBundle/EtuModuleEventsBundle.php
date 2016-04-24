@@ -10,14 +10,6 @@ class EtuModuleEventsBundle extends Module
 	/**
 	 * @return bool
 	 */
-	public function mustBoot()
-	{
-		return true;
-	}
-
-	/**
-	 * @return bool
-	 */
 	public function isReadyToUse()
 	{
 		return true;

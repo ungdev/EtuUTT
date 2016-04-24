@@ -33,7 +33,7 @@
 {% endblock %}
 
 {% block sidebar %}
-	{% if app.user %}
+	{% if is_granted('ROLE_CORE_SUBSCRIBE') %}
 		{{ render_subscribe_button('message', thread.id) }}
 	{% endif %}
 
@@ -59,9 +59,9 @@
 	</ul>
 
 	<div class="padding20-sides">
-		{% if forum_can_lock(app.user, category) or forum_can_move(app.user, category) %}
+		{% if forum_can_lock(app.user, category) or forum_can_move(app.user, category)  or is_granted('ROLE_FORUM_ADMIN') %}
 			<p class="align-right">
-				{% if forum_can_lock(app.user, category) %}
+				{% if forum_can_lock(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
 					<a href="{{ path('forum_mod', {'action': 'lock', 'threadId': thread.id, slug: thread.slug}) }}"
 					   class="btn">
 						{% if thread.state == 100 %}
@@ -72,7 +72,7 @@
 					</a>
 				{% endif %}
 
-				{% if forum_can_move(app.user, category) %}
+				{% if forum_can_move(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
 					<a href="{{ path('forum_mod', {'action': 'move', 'threadId': thread.id, slug: thread.slug}) }}"
 					   class="btn">
 						{{ 'forum.main.mod.move'|trans }}
@@ -90,15 +90,12 @@
 		{% for message in messages %}
 			<div class="etu-comment" id="{{ message.id }}">
 				<div class="etu-comment-avatar">
-					{% if app.user %}
 					<a href="{{ path('user_view', {'login': message.author.login}) }}">
 						<img src="{{ asset('uploads/photos/'~message.author.avatar) }}"
 							 alt="{{ message.author.getFullName() }}"
 							 title="{{ message.author.getFullName() }}"/>
 					</a>
-					{% else %}
-						<div class="etu-comment-avatar-disconnected">{{ message.author.getFirstName()|slice(0,1) }}</div>
-					{% endif %}
+						<!-- <div class="etu-comment-avatar-disconnected">{{ message.author.getFirstName()|slice(0,1) }}</div> -->
 				</div>
 				<div class="etu-comment-infos">
 					<div class="etu-comment-date">
@@ -109,7 +106,7 @@
 							</a>
 						</small>
 						<small class="pull-right">
-							{% if forum_can_edit(app.user, category) %}
+							{% if forum_can_edit(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
 								<a href="{{ path('forum_edit', {'messageId': message.id, 'threadId': thread.id, 'slug': thread.slug}) }}"
 								   class="btn btn-small">
 									<i class="icon-edit"></i>
@@ -117,7 +114,7 @@
 								</a>
 							{% endif %}
 
-							{% if forum_can_delete(app.user, category) %}
+							{% if forum_can_delete(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
 								<a href="{{ path('forum_mod', {'messageId': message.id, 'threadId': thread.id, 'slug': thread.slug, 'action': 'remove'}) }}"
 								   class="btn btn-small" rel="{% if thread.createdAt == message.createdAt %}removeThreadWarning{% else %}removeMessage{% endif %}">
 									<i class="icon-remove"></i>
@@ -142,10 +139,10 @@
 			{{ knp_pagination_render(messages) }}
 		</div>
 
-		{% if forum_can_lock(app.user, category) or forum_can_move(app.user, category) %}
+		{% if forum_can_lock(app.user, category) or forum_can_move(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
 			<hr />
 			<p class="align-right">
-				{% if forum_can_lock(app.user, category) %}
+				{% if forum_can_lock(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
 					<a href="{{ path('forum_mod', {'action': 'lock', 'threadId': thread.id, slug: thread.slug}) }}"
 					   class="btn">
 						{% if thread.state == 100 %}
@@ -156,7 +153,7 @@
 					</a>
 				{% endif %}
 
-				{% if forum_can_move(app.user, category) %}
+				{% if forum_can_move(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
 					<a href="{{ path('forum_mod', {'action': 'move', 'threadId': thread.id, slug: thread.slug}) }}"
 					   class="btn">
 						{{ 'forum.main.mod.move'|trans }}
@@ -165,7 +162,7 @@
 			</p>
 		{% endif %}
 
-		{% if forum_can_answer(app.user, category) and cantAnswer == false %}
+		{% if (forum_can_answer(app.user, category) or is_granted('ROLE_FORUM_ADMIN')) and cantAnswer == false %}
 			<hr />
 
 			<form action="{{ path('forum_answer', {'id': thread.id, 'slug': thread.slug}) }}" method="post" {{ form_enctype(form) }}>

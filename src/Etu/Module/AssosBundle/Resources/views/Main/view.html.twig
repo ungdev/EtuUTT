@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block sidebar %}
-	{% if app.user %}
+	{% if is_granted('ROLE_CORE_SUBSCRIBE') %}
 		{{ render_subscribe_button('orga', orga.id) }}
 	{% endif %}
 
@@ -28,7 +28,7 @@
 				{{ 'assos.main.view.back'|trans }}
 			</a>
 		</li>
-		{% if app.user %}
+		{% if is_granted('ROLE_ASSOS_MEMBERS') %}
 		<li class="pull-right">
 			<a href="{{ path('orgas_members', {'login': orga.login}) }}">
 				{{ 'assos.main.menu.members'|trans }}
@@ -60,7 +60,7 @@
 				{% if orga.president %}
 					<p>
 						<strong>{{ 'assos.main.members.president'|trans }}</strong><br />
-						{% if app.user %}
+						{% if is_granted('ROLE_ASSOS_MEMBERS') %}
 							<a href="{{ path('user_view', {'login': orga.president.login}) }}">
 								{{ orga.president.fullName }}
 							</a>

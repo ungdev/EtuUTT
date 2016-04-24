@@ -27,7 +27,7 @@
 	</ul>
 
 	<div class="padding20-sides">
-		{% if forum_can_post(app.user, category) %}
+		{% if forum_can_post(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
 			<p class="align-right">
 				<a href="{{ path('forum_post', {'id': category.id, 'slug': category.slug}) }}" class="btn">
 					{{'forum.main.thread.post'|trans }}
@@ -45,7 +45,7 @@
 					<th class="forum-table-legend">{{ 'forum.main.index.lastMessage'|trans }}</th>
 				</tr>
 			{% for subCategory in subCategories %}
-				{% if forum_can_read(app.user, category) %}
+				{% if forum_can_read(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
 					<tr class="forum-table-list">
 						<td class="forum-table-category">
 							{% if app.user and subCategory.getCategoryViewed().count == 0 %}
@@ -137,7 +137,7 @@
 				{{ knp_pagination_render(threads) }}
 			</div>
 
-			{% if forum_can_post(app.user, category) %}
+			{% if forum_can_post(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
 				<hr />
 				<p class="align-right">
 					<a href="{{ path('forum_post', {'id': category.id, 'slug': category.slug}) }}" class="btn">

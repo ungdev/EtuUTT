@@ -123,7 +123,7 @@
 
 	<div class="clear"></div>
 
-	{% if app.user and app.user.isStudent %}
+	{% if is_granted('ROLE_UV_REVIEW') %}
 	<hr />
 
 	<div class="uv-view-reviews">
@@ -164,6 +164,7 @@
 			</div>
 		{% endfor %}
 
+		{% if is_granted('ROLE_UV_REVIEW_POST') %}
 		<p class="pull-right">
 			<a href="{{ path('uvs_view_send_review', {'slug': uv.slug, 'name': uv.name|slugify}) }}" class="btn">
 				<i class="icon-plus"></i> {{ 'uvs.main.view.sendReview'|trans }}
@@ -172,6 +173,7 @@
 		<p class="pull-right">
 			<small class="muted">{{ 'uvs.main.view.winBadges'|trans }}</small>
 		</p>
+		{% endif %}
 	</div>
 	<div class="uv-view-comments">
 		<h4>{{ 'uvs.main.view.comments'|trans }} ({{ pagination.totalItemCount }})</h4>
@@ -203,6 +205,7 @@
 
 		<hr />
 
+		{% if is_granted('ROLE_UV_REVIEW_POST') %}
 		<form method="post">
 			{{ form_errors(commentForm) }}
 
@@ -222,6 +225,7 @@
 				</div>
 			</div>
 		</form>
+		{% endif %}
 	</div>
 	{% endif %}
 </div>

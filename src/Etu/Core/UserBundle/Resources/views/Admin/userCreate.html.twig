@@ -113,12 +113,12 @@
 							</div>
 						</div>
 						<div class="control-group">
-							<label class="control-label">{{ form_label(form.phoneNumber, 'user.admin.userCreate.adress'|trans) }}</label>
+							<label class="control-label">{{ form_label(form.phoneNumber, 'user.admin.userCreate.address'|trans) }}</label>
 							<div class="controls">
-								{{ form_widget(form.adress) }}
-								{{ form_widget(form.adressPrivacy) }}
-								<span class="help-block">{{ form_errors(form.adress) }}</span>
-								<span class="help-block">{{ form_errors(form.adressPrivacy) }}</span>
+								{{ form_widget(form.address) }}
+								{{ form_widget(form.addressPrivacy) }}
+								<span class="help-block">{{ form_errors(form.address) }}</span>
+								<span class="help-block">{{ form_errors(form.addressPrivacy) }}</span>
 							</div>
 						</div>
 						<div class="control-group">
@@ -171,6 +171,20 @@
 								{{ form_widget(form.personnalMailPrivacy) }}
 								<span class="help-block">{{ form_errors(form.personnalMail) }}</span>
 								<span class="help-block">{{ form_errors(form.personnalMailPrivacy) }}</span>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">{{ 'user.admin.userCreate.is_student_label'|trans }}</label>
+							<div class="controls">
+								{{ form_widget(form.isStudent) }}
+								<span class="help-block">{{ 'user.admin.userCreate.is_student_desc'|trans }}</span>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">{{ 'user.admin.userCreate.is_staffutt_label'|trans }}</label>
+							<div class="controls">
+								{{ form_widget(form.isStaffUTT) }}
+								<span class="help-block">{{ 'user.admin.userCreate.is_staffutt_desc'|trans }}</span>
 							</div>
 						</div>
 						<div class="control-group">

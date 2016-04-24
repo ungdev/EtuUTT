@@ -21,13 +21,7 @@ class AdminController extends Controller
      */
     public function indexAction()
     {
-        if (! $this->getUserLayer()->isConnected()) {
-            return $this->createAccessDeniedResponse();
-        }
-
-        if (! $this->getUser()->hasPermission('argentique.admin')) {
-            throw new AccessDeniedHttpException();
-        }
+        $this->denyAccessUnlessGranted('ROLE_ARGENTIQUE_ADMIN');
 
         return [];
     }

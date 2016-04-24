@@ -31,9 +31,7 @@ class AdminController extends Controller
 	 */
 	public function usersIndexAction($page = 1)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PROFIL');
 
 		$user = new User();
 		$search = false;
@@ -69,8 +67,22 @@ class AdminController extends Controller
 			}
 
 			if ($user->getFullName()) {
-				$users->andWhere('u.fullName LIKE :fullName')
-					->setParameter('fullName', '%'.str_replace(' ', '%', $user->getFullName()).'%');
+				$where = 'u.login = :login ';
+				$users->setParameter('login', $user->getFullName());
+
+				$where .= 'OR u.surnom LIKE :surnom OR (';
+				$users->setParameter('surnom', '%'.$user->getFullName().'%');
+
+				$terms = explode(' ', $user->getFullName());
+
+				foreach ($terms as $key => $term) {
+					$where .= 'u.fullName LIKE :name_'.$key.' AND ';
+					$users->setParameter('name_'.$key, '%'.$term.'%');
+				}
+
+				$where = substr($where, 0, -5).')';
+
+				$users->andWhere($where);
 			}
 
 			if ($user->getStudentId()) {
@@ -125,9 +137,7 @@ class AdminController extends Controller
 	 */
 	public function userEditAction($login)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PROFIL');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -160,8 +170,8 @@ class AdminController extends Controller
 			->add('sexPrivacy', 'choice', $privacyChoice)
 			->add('nationality', null, array('required' => false))
 			->add('nationalityPrivacy', 'choice', $privacyChoice)
-			->add('adress', null, array('required' => false))
-			->add('adressPrivacy', 'choice', $privacyChoice)
+			->add('address', null, array('required' => false))
+			->add('addressPrivacy', 'choice', $privacyChoice)
 			->add('postalCode', null, array('required' => false))
 			->add('postalCodePrivacy', 'choice', $privacyChoice)
 			->add('city', null, array('required' => false))
@@ -228,15 +238,41 @@ class AdminController extends Controller
 		);
 	}
 
+
 	/**
-	 * @Route("/user/{login}/permissions", name="admin_user_permissions")
+	 * @Route("/users/permissions", name="admin_user_roles_list")
 	 * @Template()
 	 */
-	public function userPermissionsAction($login)
+	public function userRolesListAction()
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_ROLES');
+
+		/** @var $em EntityManager */
+		$em = $this->getDoctrine()->getManager();
+
+		$qb = $em->getRepository('EtuUserBundle:User')->createQueryBuilder('u');
+		$qb->where('u.storedRoles != \'a:0:{}\'');
+		$users = $qb->getQuery()->getResult();
+
+		// Retrieve role list
+		$predefinedRoles = ['ROLE_READONLY', 'ROLE_BANNED', 'ROLE_USER', 'ROLE_ORGA', 'ROLE_STUDENT', 'ROLE_STAFFUTT', 'ROLE_EXTERNAL', 'ROLE_CAS'];
+		$hierarchy = $this->getParameter('security.role_hierarchy.roles');
+		$roles = array_keys($hierarchy);
+		$roles = array_diff($roles, $predefinedRoles);
+
+		return array(
+			'users' => $users,
+			'hierarchy' => $hierarchy
+		);
+	}
+
+	/**
+	 * @Route("/user/{login}/permissions", name="admin_user_roles")
+	 * @Template()
+	 */
+	public function userRolesAction($login)
+	{
+		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_ROLES');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -248,113 +284,62 @@ class AdminController extends Controller
 			throw $this->createNotFoundException('Login "'.$login.'" not found');
 		}
 
-		/** @var Permission[] $availablePermissions */
-		$availablePermissions = $this->getKernel()->getAvailablePermissions()->toArray();
+		// Get 'from' to choose the right back button
+		$from = null;
+		if (in_array($this->getRequest()->get('from'), array('profile', 'admin', 'organizations', 'badges', 'schedule'))) {
+			$from = $this->getRequest()->get('from');
+		}
 
-		$permissions1 = array();
-		$permissions2 = array();
+		// Retrieve role list
+		$predefinedRoles = ['ROLE_READONLY', 'ROLE_BANNED', 'ROLE_USER', 'ROLE_ORGA', 'ROLE_STUDENT', 'ROLE_STAFFUTT', 'ROLE_EXTERNAL', 'ROLE_CAS'];
+		$hierarchy = $this->getParameter('security.role_hierarchy.roles');
+		$roles = array_keys($hierarchy);
+		$roles = array_diff($roles, $predefinedRoles);
 
-		$i = floor(count($availablePermissions) / 2);
-
-		foreach ($availablePermissions as $permission) {
-			if ($user->hasPermission($permission->getName(), $permission->getDefaultEnabled())) {
-				$permission = array('definition' => $permission, 'checked' => true);
-			} else {
-				$permission = array('definition' => $permission, 'checked' => false);
-			}
-
-			if ($i == 0) {
-				$permissions1[] = $permission;
-			} else {
-				$permissions2[] = $permission;
-				$i--;
-			}
+		// See what role user already have
+		$storedRoles = $user->getStoredRoles();
+		$roleArray = [];
+		foreach ($roles as $role) {
+			$roleArray[] = [
+				'role' => $role,
+				'checked' => (in_array($role, $storedRoles)),
+				'subroles' => $hierarchy[$role]
+			];
 		}
 
 		$request = $this->getRequest();
 
-		if ($request->getMethod() == 'POST' && $request->get('sent')) {
-			if ($request->get('isAdmin')) {
-				$user->setIsAdmin(true);
-			} elseif ($permissions = $request->get('permissions')) {
-				$user->setIsAdmin(false);
-
-				$userClassicPermissions = array();
-				$userRemovedPermissions = array();
-
-				foreach ($availablePermissions as $permission) {
-					if ($permission->getDefaultEnabled()) {
-						$userRemovedPermissions[$permission->getName()] = $permission;
-					}
-				}
-
-				foreach ($permissions as $permission => $value) {
-					if (isset($availablePermissions[$permission])) {
-						/** @var Permission $permission */
-						$permission = $availablePermissions[$permission];
-
-						if ($permission->getDefaultEnabled()) {
-							unset($userRemovedPermissions[$permission->getName()]);
-						} else {
-							$userClassicPermissions[$permission->getName()] = $permission;
-						}
-					}
-				}
-
-				foreach ($userClassicPermissions as $key => $permission) {
-					unset($userClassicPermissions[$key]);
-					$userClassicPermissions[] = $permission->getName();
-				}
-
-				foreach ($userRemovedPermissions as $key => $permission) {
-					unset($userRemovedPermissions[$key]);
-					$userRemovedPermissions[] = $permission->getName();
-				}
-
-				$user->setPermissions($userClassicPermissions);
-				$user->setRemovedPermissions($userRemovedPermissions);
-			} else {
-				$userClassicPermissions = array();
-				$userRemovedPermissions = array();
-
-				foreach ($availablePermissions as $permission) {
-					if ($permission->getDefaultEnabled()) {
-						$userRemovedPermissions[$permission->getName()] = $permission;
-					}
-				}
-
-				foreach ($userClassicPermissions as $key => $permission) {
-					unset($userClassicPermissions[$key]);
-					$userClassicPermissions[] = $permission->getName();
-				}
-
-				foreach ($userRemovedPermissions as $key => $permission) {
-					unset($userRemovedPermissions[$key]);
-					$userRemovedPermissions[] = $permission->getName();
-				}
-
-				$user->setPermissions($userClassicPermissions);
-				$user->setRemovedPermissions($userRemovedPermissions);
+		if ($request->getMethod() == 'POST') {
+			$roles = [];
+			$postedRoles = $request->get('role');
+			if(empty($postedRoles)) {
+				$postedRoles = [];
 			}
 
+			foreach ($postedRoles as $key => $value) {
+				if(isset($hierarchy[$key])) {
+					$roles[] = $key;
+				}
+			}
+			$user->setStoredRoles($roles);
 			$em->persist($user);
 			$em->flush();
 
 			$logger = $this->get('monolog.logger.admin');
-			$logger->warn('`'.$this->getUser()->getLogin().'` update permissions of `'.$user->getLogin().'`');
+			$logger->warn('`'.$this->getUser()->getLogin().'` update roles of `'.$user->getLogin().'`');
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
 				'message' => 'user.admin.userPermissions.confirm'
 			));
 
-			return $this->redirect($this->generateUrl('admin_user_permissions', array('login' => $user->getLogin())));
+			return $this->redirect($this->generateUrl('admin_user_roles', array('login' => $user->getLogin(), 'from' => $from)));
 		}
 
 		return array(
 			'user' => $user,
-			'permissions1' => $permissions1,
-			'permissions2' => $permissions2
+			'roles' => $roleArray,
+			'fromVar' => $from
 		);
 	}
 
@@ -365,9 +350,7 @@ class AdminController extends Controller
 	 */
 	public function userAvatarAction($login)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PROFIL');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -417,9 +400,7 @@ class AdminController extends Controller
 	 */
 	public function userReadOnlyAction($login)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PROFIL');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -431,21 +412,23 @@ class AdminController extends Controller
 			throw $this->createNotFoundException('Login "'.$login.'" not found');
 		}
 
-		if (! $user->getIsReadOnly()) {
-			$user->setIsReadOnly(true)->setReadOnlyPeriod('42 days');
+		if (! $user->isReadOnly()) {
+			$expiration = new \DateTime();
+			$expiration->add(new \DateInterval('P1Y'));
+			$user->setReadOnlyExpirationDate($expiration);
 
 			$logger = $this->get('monolog.logger.admin');
-			$logger->warn('`'.$this->getUser()->getLogin().'` put `'.$user->getLogin().'` on read only (ban)');
+			$logger->warn('`'.$this->getUser()->getLogin().'` put `'.$user->getLogin().'` on read only ');
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
 				'message' => 'user.admin.userReadOnly.confirm_set'
 			));
 		} else {
-			$user->setIsReadOnly(false);
+			$user->setReadOnlyExpirationDate(null);
 
 			$logger = $this->get('monolog.logger.admin');
-			$logger->warn('`'.$this->getUser()->getLogin().'` remove `'.$user->getLogin().'` from read only (unban)');
+			$logger->warn('`'.$this->getUser()->getLogin().'` remove `'.$user->getLogin().'` from read only');
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
@@ -466,12 +449,12 @@ class AdminController extends Controller
 	 */
 	public function userCreateAction()
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PROFIL');
 
 		/** @var $user User */
 		$user = new User();
+		$user->setIsStudent(true);
+		$user->setIsInLDAP(false);
 
 		$privacyChoice = array(
 			'choices' => array(
@@ -499,8 +482,8 @@ class AdminController extends Controller
 			->add('sexPrivacy', 'choice', $privacyChoice)
 			->add('nationality', null, array('required' => false))
 			->add('nationalityPrivacy', 'choice', $privacyChoice)
-			->add('adress', null, array('required' => false))
-			->add('adressPrivacy', 'choice', $privacyChoice)
+			->add('address', null, array('required' => false))
+			->add('addressPrivacy', 'choice', $privacyChoice)
 			->add('postalCode', null, array('required' => false))
 			->add('postalCodePrivacy', 'choice', $privacyChoice)
 			->add('city', null, array('required' => false))
@@ -521,6 +504,8 @@ class AdminController extends Controller
 			->add('twitter', null, array('required' => false))
 			->add('linkedin', null, array('required' => false))
 			->add('viadeo', null, array('required' => false))
+			->add('isStudent', null, array('required' => false))
+			->add('isStaffUTT', null, array('required' => false))
 			->getForm();
 
 		$request = $this->getRequest();
@@ -541,8 +526,8 @@ class AdminController extends Controller
 			}
 
 			BadgesManager::userPersistBadges($user);
-			$user->setPassword($this->get('etu.user.crypting')->encrypt($user->getPassword()));
-			$user->setKeepActive(true);
+			$user->setPassword($this->get('security.password_encoder')->encodePassword($user,$user->getPassword()));
+			$user->setIsInLDAP(false);
 
 			$em->persist($user);
 			$em->flush();
@@ -571,9 +556,7 @@ class AdminController extends Controller
 	 */
 	public function userDeleteAction($login, $confirm = '')
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PROFIL');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -613,9 +596,7 @@ class AdminController extends Controller
 	 */
 	public function orgasIndexAction($page = 1)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PROFIL');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -640,9 +621,7 @@ class AdminController extends Controller
 	 */
 	public function orgasCreateAction()
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PROFIL');
 
 		/** @var $orga Organization */
 		$orga = new Organization();
@@ -684,9 +663,7 @@ class AdminController extends Controller
 	 */
 	public function orgasDeleteAction($login)
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PROFIL');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -730,9 +707,7 @@ class AdminController extends Controller
 	 */
 	public function logAsAction()
 	{
-		if (! $this->getUserLayer()->isUser() || ! $this->getUser()->getIsAdmin()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_ALLOWED_TO_SWITCH');
 
 		$em = $this->getDoctrine()->getManager();
 		$request = $this->getRequest();
@@ -756,13 +731,6 @@ class AdminController extends Controller
 					));
 				}
 				else {
-					$session = new Session(Session::TYPE_ORGA, $orga->getId());
-					$session->createName($_SERVER);
-					$em->persist($session);
-					$em->flush();
-					setcookie(md5('etuutt-session-cookie-name'), $session->getToken(), $session->getExpireAt()->format('U'), '/');
-					$this->get('session')->set('logas-cookie-save', $request->cookies->get(md5('etuutt-session-cookie-name')));
-
 					$logger = $this->get('monolog.logger.admin');
 					$logger->warn('`'.$this->getUser()->getLogin().'` login as organization `'.$orga->getLogin().'`');
 
@@ -770,7 +738,7 @@ class AdminController extends Controller
 						'type' => 'success',
 						'message' => 'user.auth.connect.confirm'
 					));
-					return $this->redirect($this->generateUrl('homepage'));
+					return $this->redirect($this->generateUrl('homepage', ['_switch_user' => $orga->getLogin() ]));
 				}
 			}
 			else {
@@ -791,14 +759,6 @@ class AdminController extends Controller
 					));
 				}
 				else {
-					$session = new Session(Session::TYPE_USER, $user->getId());
-					$session->createName($_SERVER);
-					$em->persist($session);
-					$em->flush();
-					setcookie(md5('etuutt-session-cookie-name'), $session->getToken(), $session->getExpireAt()->format('U'), '/');
-					$this->get('session')->set('logas-cookie-save', $request->cookies->get(md5('etuutt-session-cookie-name')));
-
-
 					$logger = $this->get('monolog.logger.admin');
 					$logger->warn('`'.$this->getUser()->getLogin().'` login as an user `'.$user->getLogin().'`');
 
@@ -806,7 +766,7 @@ class AdminController extends Controller
 						'type' => 'success',
 						'message' => 'user.auth.connect.confirm'
 					));
-					return $this->redirect($this->generateUrl('homepage'));
+					return $this->redirect($this->generateUrl('homepage', ['_switch_user' => $user->getLogin() ]));
 				}
 			}
 		}
@@ -819,31 +779,13 @@ class AdminController extends Controller
 	 */
 	public function logAsBackAction()
 	{
-		if (! $this->get('session')->has('logas-cookie-save')) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_PREVIOUS_ADMIN');
 
-		$token = $this->get('session')->get('logas-cookie-save');
-		$this->get('session')->remove('logas-cookie-save');
+		$this->get('session')->getFlashBag()->set('message', array(
+			'type' => 'success',
+			'message' => 'user.admin.logAs.welcomeBack'
+		));
 
-		$em = $this->getDoctrine()->getManager();
-		$session = $em->getRepository('EtuUserBundle:Session')->findOneBy(array('token' => $token));
-
-		if(!$session) {
-			$this->get('session')->getFlashBag()->set('message', array(
-				'type' => 'error',
-				'message' => 'user.admin.logAs.badCookie'
-			));
-		}
-		else {
-			setcookie(md5('etuutt-session-cookie-name'), $session->getToken(), $session->getExpireAt()->format('U'), '/');
-
-			$this->get('session')->getFlashBag()->set('message', array(
-				'type' => 'success',
-				'message' => 'user.admin.logAs.welcomeBack'
-			));
-		}
-
-		return $this->redirect($this->generateUrl('homepage'));
+		return $this->redirect($this->generateUrl('homepage', ['_switch_user' => '_exit' ]));
 	}
 }

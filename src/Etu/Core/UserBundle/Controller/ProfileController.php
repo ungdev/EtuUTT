@@ -27,9 +27,7 @@ class ProfileController extends Controller
      */
     public function profileAction()
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+		$this->denyAccessUnlessGranted('ROLE_USER');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -55,9 +53,7 @@ class ProfileController extends Controller
      */
     public function appRevokeAction(OauthClient $client)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+		$this->denyAccessUnlessGranted('ROLE_USER');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -115,9 +111,7 @@ class ProfileController extends Controller
 	 */
 	public function profileEditAction()
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_USER');
 
 		/** @var $user User */
 		$user = $this->getUser();
@@ -143,8 +137,8 @@ class ProfileController extends Controller
 			->add('sexPrivacy', 'choice', $privacyChoice)
 			->add('nationality', null, array('required' => false))
 			->add('nationalityPrivacy', 'choice', $privacyChoice)
-			->add('adress', null, array('required' => false))
-			->add('adressPrivacy', 'choice', $privacyChoice)
+			->add('address', null, array('required' => false))
+			->add('addressPrivacy', 'choice', $privacyChoice)
 			->add('postalCode', null, array('required' => false))
 			->add('postalCodePrivacy', 'choice', $privacyChoice)
 			->add('city', null, array('required' => false))
@@ -203,9 +197,7 @@ class ProfileController extends Controller
 	 */
 	public function profileAvatarAction()
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_USER');
 
 		/** @var $user User */
 		$user = $this->getUser();
@@ -249,9 +241,7 @@ class ProfileController extends Controller
 	 */
 	public function trombiEditAction()
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_USER');
 
 		/** @var $user User */
 		$user = $this->getUser();
@@ -296,9 +286,7 @@ class ProfileController extends Controller
 	 */
 	public function viewAction($login)
 	{
-		if (! $this->getUserLayer()->isConnected()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_PROFIL');
 
 		if ($login != $this->getUser()->getLogin()) {
 			/** @var $em EntityManager */
@@ -332,9 +320,7 @@ class ProfileController extends Controller
 	 */
 	public function organizationsAction($login)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_ORGAS');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -376,9 +362,7 @@ class ProfileController extends Controller
 	 */
 	public function scheduleAction($login, $day = 'current')
 	{
-		if (! $this->getUserLayer()->isConnected()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_SCHEDULE');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -438,9 +422,7 @@ class ProfileController extends Controller
 	 */
 	public function badgesAction($login)
 	{
-		if (! $this->getUserLayer()->isConnected()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_PROFIL');
 
 		if ($login != $this->getUser()->getLogin()) {
 			/** @var $em EntityManager */

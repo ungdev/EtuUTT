@@ -27,9 +27,7 @@ class MainController extends Controller
      */
     public function viewAction($file)
     {
-        if (!$this->getUserLayer()->isConnected()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_ARGENTIQUE');
 
         /** @var string $root */
         $root = EtuModuleArgentiqueBundle::getPhotosRoot();
@@ -51,9 +49,7 @@ class MainController extends Controller
      */
     public function collectionImageAction(Request $request, $file)
     {
-        if (!$this->getUserLayer()->isConnected()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_ARGENTIQUE');
 
         /** @var string $root */
         $root = EtuModuleArgentiqueBundle::getPhotosRoot();
@@ -108,9 +104,7 @@ class MainController extends Controller
      */
     public function indexAction($directory = null)
     {
-        if (!$this->getUserLayer()->isConnected()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_ARGENTIQUE');
 
         /** @var string $root */
         $root = EtuModuleArgentiqueBundle::getPhotosRoot();

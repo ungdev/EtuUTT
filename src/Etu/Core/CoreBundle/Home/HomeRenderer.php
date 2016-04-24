@@ -47,7 +47,8 @@ class HomeRenderer
             'template' => 'EtuCoreBundle:Main/index_blocks:courses.html.twig',
             'context' => [
                 'nextCourses' => $this->builder->getNextCourses(),
-            ]
+            ],
+            'role' => 'ROLE_CORE_SCHEDULE_OWN'
         ];
 
         return $block;
@@ -69,7 +70,8 @@ class HomeRenderer
             'template' => 'EtuCoreBundle:Main/index_blocks:trombi.html.twig',
             'context' => [
                 'trombiForm' => $trombiFrom->createView(),
-            ]
+            ],
+            'role' => 'ROLE_TROMBI'
         ];
 
         return $block;
@@ -81,7 +83,8 @@ class HomeRenderer
             'template' => 'EtuCoreBundle:Main/index_blocks:notifications.html.twig',
             'context' => [
                 'notifications' => $this->builder->getNotifications($this->modulesManager->getEnabledModules()),
-            ]
+            ],
+            'role' => 'ROLE_CORE_SUBSCRIBE'
         ];
 
         return $block;
@@ -97,7 +100,8 @@ class HomeRenderer
                     'template' => 'EtuCoreBundle:Main/index_blocks:events.html.twig',
                     'context' => [
                         'events' => $events,
-                    ]
+                    ],
+                    'role' => ''
                 ];
             }
         }
@@ -115,7 +119,8 @@ class HomeRenderer
                     'template' => 'EtuCoreBundle:Main/index_blocks:reviews.html.twig',
                     'context' => [
                         'reviews' => $reviews,
-                    ]
+                    ],
+                    'role' => 'ROLE_UV_REVIEW'
                 ];
             }
         }
@@ -133,7 +138,8 @@ class HomeRenderer
                     'template' => 'EtuCoreBundle:Main/index_blocks:photos.html.twig',
                     'context' => [
                         'photos' => $photos,
-                    ]
+                    ],
+                    'role' => 'ROLE_ARGENTIQUE'
                 ];
             }
         }
@@ -150,7 +156,8 @@ class HomeRenderer
                 'template' => 'EtuCoreBundle:Main/index_blocks:birthdays.html.twig',
                 'context' => [
                     'birthdays' => $birthdays,
-                ]
+                ],
+                'role' => 'ROLE_CORE_PROFIL'
             ];
         }
 

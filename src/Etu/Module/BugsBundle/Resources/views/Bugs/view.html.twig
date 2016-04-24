@@ -20,7 +20,7 @@
 		<li>
 			<a href="{{ path('bugs_closed') }}">{{ 'bugs.bugs.state.resolved'|trans }}</a>
 		</li>
-		{% if app.user.hasPermission('bugs.add') %}
+		{% if is_granted('ROLE_BUGS_POST') %}
 			<li class="pull-right">
 				<a href="{{ path('bugs_create') }}">
 					<i class="icon-plus"></i>
@@ -76,7 +76,7 @@
 			<hr class="hidden-for-phones" />
 		{% endif %}
 
-		{% if app.user.hasPermission('bugs.admin') %}
+		{% if is_granted('ROLE_BUGS_ADMIN') %}
 			<div class="bugs-view-admin hidden-for-phones">
 				<div class="row-fluid">
 					<div class="span5">
@@ -146,7 +146,7 @@
 
 					<br /><br />
 
-					{% if bug.user.id == app.user.id or app.user.isAdmin %}
+					{% if bug.user.id == app.user.id or is_granted('ROLE_BUGS_ADMIN') %}
 						<p class="pull-right">
 							<a href="{{ path('bugs_edit', {'slug': bug.title|slugify, 'id': bug.id}) }}"
 							   class="btn btn-small">
@@ -154,7 +154,7 @@
 								{{ 'bugs.bugs.view.edit'|trans }}
 							</a>
 
-							{% if app.user.isAdmin %}
+							{% if is_granted('ROLE_BUGS_ADMIN') %}
 								<a href="{{ path('bugs_admin_delete', {'slug': bug.title|slugify, 'id': bug.id}) }}"
 								   class="btn btn-small">
 									<i class="icon-remove"></i>
@@ -208,7 +208,7 @@
 
 							<br /><br />
 
-							{% if comment.user.id == app.user.id or app.user.isAdmin %}
+							{% if comment.user.id == app.user.id or is_granted('ROLE_BUGS_ADMIN') %}
 								<p class="pull-right">
 									<a href="{{ path('bugs_edit_comment', {'issueId': bug.id, 'slug': bug.title|slugify, 'id': comment.id}) }}"
 									   class="btn btn-small">
@@ -228,7 +228,7 @@
 		{% endfor %}
 
 
-		{% if app.user.hasPermission('bugs.add') %}
+		{% if is_granted('ROLE_BUGS_POST') %}
 			<div class="bugs-view-comment">
 				<h4>{{ 'bugs.bugs.view.comment_title'|trans }}</h4>
 

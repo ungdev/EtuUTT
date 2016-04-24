@@ -35,7 +35,6 @@
 						{{ 'user.auth.connectExternal.desc'|trans }}
 						<br />
 						<br />
-						{{ form_errors(form) }}
 					</p>
 					<div class="row-fluid">
 						<div class="span2"></div>
@@ -43,26 +42,22 @@
 							<form method="post" class="form-horizontal">
 								<div class="control-group">
 									<label class="control-label">
-										{{ form_label(form.login, 'user.auth.connectExternal.identifier'|trans) }}
+										<label for="username">{{ 'user.auth.connectExternal.identifier'|trans }}</label>
 									</label>
 									<div class="controls">
-										{{ form_widget(form.login) }}
-										<span class="help-block">{{ form_errors(form.login) }}</span>
+										<input type="text" id="username" name="_username" value="{{ last_username }}" required/>
 									</div>
 								</div>
 								<div class="control-group">
 									<label class="control-label">
-										{{ form_label(form.password, 'user.auth.connectExternal.password'|trans) }}
+										<label for="password">{{ 'user.auth.connectExternal.password'|trans }}</label>
 									</label>
 									<div class="controls">
-										{{ form_widget(form.password) }}
-										<span class="help-block">{{ form_errors(form.password) }}</span>
+										<input type="password" id="password" name="_password" required/>
 									</div>
 								</div>
 								<div class="control-group">
 									<div class="controls">
-										{{ form_rest(form) }}
-
 										<button type="submit" class="btn">
 											{{ 'user.auth.connectExternal.submit'|trans }}
 										</button>

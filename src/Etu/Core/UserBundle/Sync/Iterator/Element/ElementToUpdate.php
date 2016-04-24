@@ -70,14 +70,6 @@ class ElementToUpdate
 	 */
 	public function update()
 	{
-		/*
-		 * Update:
-		 *      - formation
-		 *      - niveau
-		 *      - filiere
-		 *      - uvs
-		 *      - semesters history
-		 */
 
 		$persist = false;
 
@@ -119,6 +111,57 @@ class ElementToUpdate
 		if (implode('|', $this->ldap->getUvs()) != $this->database->getUvs()) {
 			$persist = true;
 			$user->setUvs(implode('|', $this->ldap->getUvs()));
+		}
+
+		if ($this->ldap->getFullName() != $this->database->getFullName()) {
+			$persist = true;
+			$user->setFullName($this->ldap->getFullName());
+		}
+
+		if ($this->ldap->getFirstName() != $this->database->getFirstName()) {
+			$persist = true;
+			$user->setFirstName($this->ldap->getFirstName());
+		}
+
+		if ($this->ldap->getLastName() != $this->database->getLastName()) {
+			$persist = true;
+			$user->setLastName($this->ldap->getLastName());
+		}
+
+		if ($this->ldap->getMail() != $this->database->getMail()) {
+			$persist = true;
+			$user->setMail($this->ldap->getMail());
+		}
+
+		if ($this->ldap->getRoom() != $this->database->getRoom()) {
+			$persist = true;
+			$user->setRoom($this->ldap->getRoom());
+		}
+
+		if ($this->ldap->getStudentId() != $this->database->getStudentId()) {
+			$persist = true;
+			$user->setStudentId($this->ldap->getStudentId());
+		}
+
+		if ($this->ldap->getTitle() != $this->database->getTitle()) {
+			$persist = true;
+			$user->setTitle($this->ldap->getTitle());
+		}
+
+		if ($this->ldap->getIsStudent() != $this->database->getIsStudent()) {
+			$persist = true;
+			$user->setIsStudent($this->ldap->getIsStudent());
+			$user->setIsStaffUTT(!$this->ldap->getIsStudent());
+		}
+
+		if (!empty($this->ldap->getPhoneNumber()) && $this->ldap->getPhoneNumber() != 'NC' && $this->ldap->getPhoneNumber() != $this->database->getPhoneNumber()) {
+			$persist = true;
+			$user->setPhoneNumber($this->ldap->getPhoneNumber());
+		}
+
+		if (!$this->database->getIsInLDAP()) {
+			$persist = true;
+			$user->setIsInLDAP(true);
 		}
 
 		/*

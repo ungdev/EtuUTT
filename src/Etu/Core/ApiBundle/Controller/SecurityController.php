@@ -109,26 +109,20 @@ class SecurityController extends ApiController
         }
 
         // Not logged in
-        if (! $this->getUserLayer()->isConnected()) {
+        if(!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
             $this->get('session')->getFlashBag()->set('message', array(
                 'type' => 'error',
                 'message' => $this->get('translator')->trans('user.api_login.login', [ '%name%' => $client->getName() ])
             ));
-
-            $this->get('session')->set('etu.last_url', $request->getRequestUri());
-
-            return $this->redirect($this->generateUrl('user_connect'));
         }
-
-        // Logged in but as organization
-        if ($this->getUserLayer()->isOrga()) {
+        else if(!$this->isGranted('ROLE_API_USE')) {
             $this->get('session')->getFlashBag()->set('message', array(
                 'type' => 'error',
                 'message' => $this->get('translator')->trans('user.api_login.orga')
             ));
-
             return $this->redirect($this->generateUrl('homepage'));
         }
+        $this->denyAccessUnlessGranted('ROLE_API_USE');
 
         $requestedScopes = [ 'public' ];
 

@@ -27,6 +27,7 @@ base:
         types:
             student: Etudiant
             orga: Association
+            staffutt: Personnel UTT
             external: Exterieur
 
         # User menu
@@ -75,6 +76,7 @@ base:
             orgas: Associations
             stats: Statistiques
             logger: Logs
+            server: État du serveur
 
     # Logo
     page_icon:

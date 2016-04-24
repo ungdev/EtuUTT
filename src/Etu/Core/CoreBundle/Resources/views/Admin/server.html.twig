@@ -1,0 +1,138 @@
+{% extends 'EtuCoreBundle:Admin:layout.html.twig' %}
+
+{% block title %}{{ 'core.admin.index.server_status'|trans }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('src/img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<div class="padding20-all">
+
+		<h4>{{ 'core.admin.index.setup'|trans }}</h4>
+		<p>
+			{{ status.name }}<br />
+			{{ status.processor.name }}<br />
+			PHP {{ status.versions.php }} -
+			Zend {{ status.versions.zend }} -
+			MySQL {{ status.versions.mysql }}
+		</p>
+
+		<p>
+			<strong>Uptime</strong> :
+			{{ status.upTime.days }} day(s),
+			{{ status.upTime.hours }} hour(s),
+			{{ status.upTime.min }} minute(s),
+			{{ status.upTime.sec }} second(s)
+		</p>
+
+		<hr />
+
+		<h4>{{ 'core.admin.index.load'|trans }}</h4>
+
+		<p>
+			<strong>Load</strong> : {{ status.load }}<br />
+			<strong>CPU usage</strong> : {{ status.processor.usage }}
+		</p>
+		{% if status.memory and status.swap %}
+		<div class="row-fluid">
+			<div class="span6">
+				<h5>Memory</h5>
+
+				<table class="table">
+					<tr>
+						<td>Total</td>
+						<td>{{ status.memory.total }} M</td>
+					</tr>
+					<tr>
+						<td>Used</td>
+						<td>{{ status.memory.used }} M</td>
+					</tr>
+					<tr>
+						<td>Free</td>
+						<td>{{ status.memory.free }} M</td>
+					</tr>
+					<tr>
+						<td>Shared</td>
+						<td>{{ status.memory.shared }} M</td>
+					</tr>
+					<tr>
+						<td>Buffers</td>
+						<td>{{ status.memory.buffers }} M</td>
+					</tr>
+					<tr>
+						<td>Cached</td>
+						<td>{{ status.memory.cached }} M</td>
+					</tr>
+				</table>
+			</div>
+			<div class="span6">
+				<h5>Swap</h5>
+
+				<table class="table">
+					<tr>
+						<td>Total</td>
+						<td>{{ status.swap.total }} M</td>
+					</tr>
+					<tr>
+						<td>Used</td>
+						<td>{{ status.swap.used }} M</td>
+					</tr>
+					<tr>
+						<td>Free</td>
+						<td>{{ status.swap.free }} M</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		{% endif %}
+
+		<h4>{{ 'core.admin.index.disk'|trans }}</h4>
+
+		<table class="table">
+			<tr>
+				<th>Name</th>
+				<th>Size</th>
+				<th>Used</th>
+				<th>Available</th>
+				<th>Used percentage</th>
+				<th>Mount point</th>
+			</tr>
+			{% for mountPoint in status.mountPoints %}
+				<tr>
+					<td>{{ mountPoint.name }}</td>
+					<td>{{ mountPoint.size }}</td>
+					<td>{{ mountPoint.used }}</td>
+					<td>{{ mountPoint.available }}</td>
+					<td>{{ mountPoint.usedPercentage }}</td>
+					<td>{{ mountPoint.mountPoint }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+
+		<h4>{{ 'core.admin.index.processes'|trans }}</h4>
+
+		<table class="table">
+			<tr>
+				<th>Id</th>
+				<th>User</th>
+				<th>Priority</th>
+				<th>CPU</th>
+				<th>Memory</th>
+				<th>Time</th>
+				<th>Command</th>
+			</tr>
+			{% for process in status.processes %}
+				<tr>
+					<td>{{ process.id }}</td>
+					<td>{{ process.user }}</td>
+					<td>{{ process.priority }}</td>
+					<td>{{ process.cpu }} %</td>
+					<td>{{ process.memory }} %</td>
+					<td>{{ process.time }}</td>
+					<td>{{ process.command }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+{% endblock %}

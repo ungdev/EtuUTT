@@ -23,9 +23,7 @@ class MembershipsController extends Controller
 	 */
 	public function daymailAction($login, $day)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_DAYMAIL_EDIT');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -180,9 +178,7 @@ class MembershipsController extends Controller
 	 */
 	public function previewAction($login, $day)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_DAYMAIL_EDIT');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -264,9 +260,7 @@ class MembershipsController extends Controller
 	 */
 	public function removeAction($login, $day)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_DAYMAIL_EDIT');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();

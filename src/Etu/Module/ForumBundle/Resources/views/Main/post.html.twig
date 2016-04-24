@@ -31,7 +31,7 @@
 				</div>
 			</div>
 
-			{% if forum_can_sticky(app.user, category) %}
+			{% if forum_can_sticky(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
 				<div class="control-group">
 					<label class="control-label">{{ form_label(form.weight, 'forum.main.post.sticky'|trans) }}</label>
 					<div class="controls">

@@ -18,6 +18,11 @@ class OrgaMenuSeparator
 	protected $builder;
 
 	/**
+	 * @var string
+	 */
+	protected $role;
+
+	/**
 	 * @param OrgaMenuBuilder $builder
 	 */
 	public function __construct(OrgaMenuBuilder $builder)
@@ -50,6 +55,26 @@ class OrgaMenuSeparator
 	public function getPosition()
 	{
 		return $this->position;
+	}
+
+	/**
+	 * Sets the role to use.
+	 * @param string $role
+	 * @return $this
+	 */
+	public function setRole($role)
+	{
+	    $this->role = $role;
+	    return $this;
+	}
+
+	/**
+	 * Retrieves the currently set role.
+	 * @return string
+	 */
+	public function getRole()
+	{
+	    return $this->role;
 	}
 
 	/**

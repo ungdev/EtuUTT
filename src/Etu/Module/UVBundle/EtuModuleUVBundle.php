@@ -7,16 +7,6 @@ use Etu\Core\CoreBundle\Framework\Definition\Module;
 class EtuModuleUVBundle extends Module
 {
 	/**
-	 * Must boot only for connected users
-	 *
-	 * @return bool|void
-	 */
-	public function mustBoot()
-	{
-		return $this->getSessionLayer()->isUser();
-	}
-
-	/**
 	 * At module boot, update the sidebar
 	 */
 	public function onModuleBoot()
@@ -27,6 +17,7 @@ class EtuModuleUVBundle extends Module
 					->setIcon('briefcase.png')
 					->setUrl($this->getRouter()->generate('uvs_index'))
 					->setPosition(0)
+					->setRole('ROLE_UV')
 				->end();
 
 		$this->getAdminMenuBuilder()
@@ -35,6 +26,7 @@ class EtuModuleUVBundle extends Module
 					->setIcon('briefcase.png')
 					->setUrl($this->getRouter()->generate('admin_uvs_index'))
 					->setPosition(5)
+					->setRole('ROLE_UV_REVIEW_ADMIN')
 				->end();
 	}
 

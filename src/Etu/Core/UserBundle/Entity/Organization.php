@@ -287,7 +287,7 @@ class Organization implements UserInterface, \Serializable
 	 */
 	public function getRoles()
 	{
-		return array('ROLE_ORGANIZATION');
+		return array('ROLE_ORGA');
 	}
 
 	/**
@@ -319,23 +319,6 @@ class Organization implements UserInterface, \Serializable
 			$this->contactPhone, $this->description, $this->descriptionShort, $this->website,
 			$this->logo, $this->countMembers, $this->createdAt, $this->updatedAt, $this->deletedAt,
 		) = unserialize($serialized);
-	}
-
-	/**
-	 * @param $permission
-	 * @return bool
-	 */
-	public function hasPermission($permission)
-	{
-		return false;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function getIsAdmin()
-	{
-		return false;
 	}
 
 	/**

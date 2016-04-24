@@ -19,9 +19,7 @@ class MainController extends Controller
 	 */
 	public function indexAction($page)
 	{
-		if (! $this->getUserLayer()->isStudent() && ! $this->getUserLayer()->isOrga()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_TROMBI');
 
 		$user = new User();
 		$search = false;

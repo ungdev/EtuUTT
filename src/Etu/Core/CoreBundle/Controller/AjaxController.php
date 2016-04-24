@@ -30,7 +30,7 @@ class AjaxController extends Controller
 	 */
 	public function subscribeAction($entityType, $entityId)
 	{
-		if (! $this->getUserLayer()->isUser()) {
+		if (! $this->isGranted('ROLE_CORE_SUBSCRIBE')) {
 			return new Response(json_encode(array(
 				'status' => 403,
 				'message' => 'You are not allowed to access this URL as anonymous or organization.'
@@ -95,7 +95,7 @@ class AjaxController extends Controller
 	 */
 	public function unsubscribeAction($entityType, $entityId)
 	{
-		if (! $this->getUserLayer()->isUser()) {
+		if (! $this->isGranted('ROLE_CORE_SUBSCRIBE')) {
 			return new Response(json_encode(array(
 				'status' => 403,
 				'message' => 'You are not allowed to access this URL as anonymous or organization.'
@@ -158,7 +158,7 @@ class AjaxController extends Controller
 	 */
 	public function newAction()
 	{
-		if (! $this->getUserLayer()->isUser()) {
+		if (! $this->isGranted('ROLE_CORE_SUBSCRIBE')) {
 			return new Response(json_encode(array(
 				'status' => 403,
 				'message' => 'You are not allowed to access this URL as anonymous or organization.'

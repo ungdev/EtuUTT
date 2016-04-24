@@ -28,9 +28,7 @@ class BugsController extends Controller
 	 */
 	public function indexAction($page = 1)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_BUGS');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -55,9 +53,7 @@ class BugsController extends Controller
 	 */
 	public function closedAction($page = 1)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_BUGS');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -68,8 +64,7 @@ class BugsController extends Controller
 			->leftJoin('i.user', 'u')
 			->leftJoin('i.assignee', 'a')
 			->where('i.isOpened = 0')
-			->orderBy('i.criticality', 'DESC')
-			->addOrderBy('i.createdAt', 'DESC')
+			->orderBy('i.closedAt', 'DESC')
 			->setMaxResults(20);
 
 		$pagination = $this->get('knp_paginator')->paginate($query, $page, 20);
@@ -83,9 +78,7 @@ class BugsController extends Controller
 	 */
 	public function viewAction($id, $slug)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_BUGS');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -132,37 +125,35 @@ class BugsController extends Controller
 
 		$request = $this->getRequest();
 
-		if ($request->getMethod() == 'POST') {
-			if ($form->submit($request)->isValid() && $this->getUser()->hasPermission('bugs.add')) {
-				$em->persist($comment);
-				$em->flush();
+		if ($request->getMethod() == 'POST' && $this->isGranted('ROLE_BUGS_POST') && $form->submit($request)->isValid()) {
+			$em->persist($comment);
+			$em->flush();
 
-				// Send notifications to subscribers
-				$notif = new Notification();
+			// Send notifications to subscribers
+			$notif = new Notification();
 
-				$notif
-					->setModule('bugs')
-					->setHelper('bugs_new_comment')
-					->setAuthorId($this->getUser()->getId())
-					->setEntityType('issue')
-					->setEntityId($bug->getId())
-					->addEntity($comment);
+			$notif
+				->setModule('bugs')
+				->setHelper('bugs_new_comment')
+				->setAuthorId($this->getUser()->getId())
+				->setEntityType('issue')
+				->setEntityId($bug->getId())
+				->addEntity($comment);
 
-				$this->getNotificationsSender()->send($notif);
+			$this->getNotificationsSender()->send($notif);
 
-				// Subscribe automatically the user
-				$this->getSubscriptionsManager()->subscribe($this->getUser(), 'issue', $bug->getId());
+			// Subscribe automatically the user
+			$this->getSubscriptionsManager()->subscribe($this->getUser(), 'issue', $bug->getId());
 
-				$this->get('session')->getFlashBag()->set('message', array(
-					'type' => 'success',
-					'message' => 'bugs.bugs.view.comment_confirm'
-				));
+			$this->get('session')->getFlashBag()->set('message', array(
+				'type' => 'success',
+				'message' => 'bugs.bugs.view.comment_confirm'
+			));
 
-				return $this->redirect($this->generateUrl('bugs_view', array(
-					'id' => $bug->getId(),
-					'slug' => StringManipulationExtension::slugify($bug->getTitle()),
-				)));
-			}
+			return $this->redirect($this->generateUrl('bugs_view', array(
+				'id' => $bug->getId(),
+				'slug' => StringManipulationExtension::slugify($bug->getTitle()),
+			)));
 		}
 
 		$updateForm = $this->createFormBuilder($bug)
@@ -192,13 +183,7 @@ class BugsController extends Controller
 	 */
 	public function createAction()
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
-
-		if (! $this->getUser()->hasPermission('bugs.add')) {
-			throw new AccessDeniedHttpException('Vous n\'avez pas la permission nécessaire pour signaler un problème.');
-		}
+		$this->denyAccessUnlessGranted('ROLE_BUGS_POST');
 
 		$bug = new Issue();
 		$bug->setUser($this->getUser());
@@ -264,9 +249,7 @@ class BugsController extends Controller
 	 */
 	public function editAction($id, $slug)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_BUGS_POST');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -291,7 +274,7 @@ class BugsController extends Controller
 			throw $this->createNotFoundException('Invalid slug');
 		}
 
-		if ($bug->getUser()->getId() != $this->getUser()->getId() && ! $this->getUser()->getIsAdmin()) {
+		if ($bug->getUser()->getId() != $this->getUser()->getId() && ! isGranted('ROLE_BUGS_ADMIN')) {
 			throw new AccessDeniedHttpException('Vous n\'avez pas le droit de modifier ce signalement.');
 		}
 
@@ -352,9 +335,7 @@ class BugsController extends Controller
 	 */
 	public function editCommentAction($slug, $id)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_BUGS_POST');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -381,7 +362,7 @@ class BugsController extends Controller
 			)), 301);
 		}
 
-		if ($comment->getUser()->getId() != $this->getUser()->getId() && ! $this->getUser()->getIsAdmin()) {
+		if ($comment->getUser()->getId() != $this->getUser()->getId() && ! isGranted('ROLE_BUGS_ADMIN')) {
 			throw new AccessDeniedHttpException('Vous n\'avez pas le droit de modifier ce commentaire.');
 		}
 

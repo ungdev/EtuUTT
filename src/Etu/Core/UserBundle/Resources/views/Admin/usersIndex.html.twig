@@ -15,9 +15,13 @@
 			</h4>
 
 			<p class="pull-right padding10-all">
-				<a href="{{ path('admin_log-as') }}" class="btn btn-success">
-					<i class="icon-user icon-white"></i>
+				<a href="{{ path('admin_log-as') }}" class="btn">
 					{{ 'user.admin.logAs.button'|trans }}
+				</a>
+
+				<a href="{{ path('admin_user_roles_list') }}" class="btn btn-success">
+					<i class="icon-user icon-white"></i>
+					{{ 'user.admin.userIndex.userRoles'|trans }}
 				</a>
 
 				<a href="{{ path('admin_user_create') }}" class="btn btn-primary">

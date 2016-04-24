@@ -47,8 +47,8 @@ class SyncProcessCommand extends ContainerAwareCommand
 
 This command helps you to synchronise database with LDAP.
 
-For each user that don\'t exit anymore in the LDAP, the command will
-ask you to keep or delete him/her.
+For each user that don\'t exit anymore in the LDAP, The command will keep them,
+but if they want to connect, you will have to set a password for them.
 ');
 
 		$container = $this->getContainer();
@@ -159,26 +159,8 @@ ask you to keep or delete him/her.
 					'There is 1 user (`%s`) which is not in the LDAP but in the database.',
 					$item->getElement()->getLogin()
 				));
-				$output->writeln("How do you want to deal with it?\n");
-
-				$output->writeln("1 - Delete it");
-				$output->writeln("2 - Keep it\n");
-
-				$choice = $dialog->ask($output, 'What do you choose [1]? ', '1');
-
-				if ($choice == 2) {
-					$password = $container->get('etu.user.crypting')->encrypt(
-						substr($item->getElement()->getSalt(), 0, 6)
-					);
-
-					$item->keep($password);
-
-					$output->writeln("\n1 user kept");
-				} else {
-					$item->remove();
-
-					$output->writeln("\n1 user removed");
-				}
+				$item->remove();
+				$output->writeln("\n1 flagged as not in LDAP anymore");
 			} else {
 				$logins = array();
 
@@ -199,78 +181,15 @@ ask you to keep or delete him/her.
 					));
 				}
 
-				$output->writeln("How do you want to deal with them?\n");
-
-				$choice = 0;
-
-				while (! in_array($choice, array(1, 2, 3))) {
-					$output->writeln("1 - Delete all of them");
-					$output->writeln("2 - Ask me for some to keep, delete the rest");
-					$output->writeln("3 - Keep all of them");
-					$output->writeln("4 - Display the list\n");
-
-					$choice = $dialog->ask($output, 'What do you choose [2]? ', '2');
-
-					if ($choice == 4) {
-						$names = array();
-
-						foreach ($usersRemoveIterator as $user) {
-							$names[] = $user->getElement()->getFullName().' ('.$user->getElement()->getLogin().')';
-						}
-
-						$output->writeln(implode("\n", $names)."\n");
-					}
-				}
-
-				$remove = array();
-				$keep = array();
-
-				if ($choice == 1) {
-					$remove = $usersRemoveIterator->all();
-				} elseif ($choice == 2) {
-					$remove = $usersRemoveIterator->all();
-
-					$output->writeln("Keep blank to finish the list\n");
-
-					$loginToKeep = null;
-
-					while (1) {
-						$loginToKeep = $dialog->ask($output, 'Login to keep: ');
-
-						if (empty($loginToKeep)) {
-							break;
-						}
-
-						if (($key = array_search($loginToKeep, $logins)) !== false) {
-							$keep[] = $usersRemoveIterator->get($key);
-							unset($remove[$key]);
-						} else {
-							$output->writeln("The login can not be found in the list. Please retry.\n");
-						}
-					}
-				} else {
-					$keep = $usersRemoveIterator->all();
-				}
-
-				// Keep
-				foreach ($keep as $item) {
-					$password = $container->get('etu.user.crypting')->encrypt(
-						substr($item->getElement()->getSalt(), 0, 6)
-					);
-
-					$item->keep($password);
-				}
-
-				$container->get('doctrine')->getManager()->flush();
-
-				// Remove
+				// Flag them as not in LDAP anymore
+				$remove = $usersRemoveIterator->all();
 				foreach ($remove as $item) {
 					$item->remove();
 				}
 
 				$container->get('doctrine')->getManager()->flush();
 
-				$output->writeln(sprintf("\n%s user(s) kept, %s user(s) removed", count($keep), count($remove)));
+				$output->writeln(sprintf("\n%s user(s) flagged as not in LDAP anymore", count($remove)));
 			}
 		}
 

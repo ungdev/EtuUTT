@@ -24,9 +24,7 @@ class MainController extends Controller
 	 */
 	public function indexAction()
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_UV');
 
 		/** @var EntityManager $em */
 		$em = $this->getDoctrine()->getManager();
@@ -53,9 +51,7 @@ class MainController extends Controller
 	 */
 	public function categoryAction($category, $page = 1)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_UV');
 
 		if (! in_array($category, UV::$categories)) {
 			throw $this->createNotFoundException('Invalid category');
@@ -88,9 +84,7 @@ class MainController extends Controller
 	 */
 	public function searchAction(Request $request, $page = 1)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_UV');
 
 		if (! $request->query->has('q')) {
 			throw $this->createNotFoundException('No term to search provided');
@@ -127,9 +121,7 @@ class MainController extends Controller
 	 */
 	public function goToAction($code)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_UV');
 
 		/** @var EntityManager $em */
 		$em = $this->getDoctrine()->getManager();
@@ -148,4 +140,3 @@ class MainController extends Controller
 		)), 301);
 	}
 }
-

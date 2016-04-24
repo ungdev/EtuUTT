@@ -3,6 +3,8 @@
 namespace Etu\Core\UserBundle;
 
 use Etu\Core\CoreBundle\Framework\Definition\Module;
+use Etu\Core\UserBundle\DependencyInjection\Security\Factory\CasFactory;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class EtuUserBundle extends Module
 {
@@ -11,13 +13,14 @@ class EtuUserBundle extends Module
 	 */
 	protected $enabled = true;
 
-	/**
-	 * @return bool
-	 */
-	public function mustBoot()
-	{
-		return true;
-	}
+
+    public function build(ContainerBuilder $container)
+    {
+        parent::build($container);
+
+        $extension = $container->getExtension('security');
+        $extension->addSecurityListenerFactory(new CasFactory());
+    }
 
 	/**
 	 * Module identifier (to be required by other modules)

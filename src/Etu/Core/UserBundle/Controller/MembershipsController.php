@@ -21,9 +21,7 @@ class MembershipsController extends Controller
 	 */
 	public function indexAction()
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_MEMBERSHIPS');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -54,9 +52,7 @@ class MembershipsController extends Controller
 	 */
 	public function orgaAction($login)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_MEMBERSHIPS');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -112,9 +108,7 @@ class MembershipsController extends Controller
 	 */
 	public function descAction($login)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_MEMBERSHIPS');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -190,9 +184,7 @@ class MembershipsController extends Controller
 	 */
 	public function permissionsAction($login, $page = 1)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_MEMBERSHIPS');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -258,9 +250,7 @@ class MembershipsController extends Controller
 	 */
 	public function permissionsEditAction($login, $user)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_MEMBERSHIPS');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();
@@ -379,9 +369,7 @@ class MembershipsController extends Controller
 	 */
 	public function notificationAction($login)
 	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+		$this->denyAccessUnlessGranted('ROLE_CORE_MEMBERSHIPS');
 
 		/** @var $em EntityManager */
 		$em = $this->getDoctrine()->getManager();

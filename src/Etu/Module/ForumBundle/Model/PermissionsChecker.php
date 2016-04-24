@@ -33,7 +33,6 @@ class PermissionsChecker
 		if($user == NULL)
 		{
 			$user = new User();
-			$user->setIsReadOnly(true);
 		}
 		$this->user = $user;
 		$this->memberships = ($this->user instanceof User) ? $this->user->getMemberships() : array();
@@ -45,10 +44,6 @@ class PermissionsChecker
 	 */
 	public function canRead(Category $category)
 	{
-
-		if ($this->user->getIsAdmin()) {
-			return true;
-		}
 
 		$permissions = new Permissions();
 
@@ -97,11 +92,7 @@ class PermissionsChecker
 			return false;
 		}
 
-		if ($this->user->getIsAdmin()) {
-			return true;
-		}
-
-		if(!$this->user->getIsReadOnly()) {
+		if(!$this->user->isReadOnly()) {
 			$permissions = new Permissions();
 
 			foreach($category->getPermissions() as $value) {
@@ -141,11 +132,7 @@ class PermissionsChecker
 			return false;
 		}
 
-		if ($this->user->getIsAdmin()) {
-			return true;
-		}
-
-		if(!$this->user->getIsReadOnly()) {
+		if(!$this->user->isReadOnly()) {
 			$permissions = new Permissions();
 
 			foreach($category->getPermissions() as $value) {
@@ -184,11 +171,7 @@ class PermissionsChecker
 			return false;
 		}
 
-		if ($this->user->getIsAdmin()) {
-			return true;
-		}
-
-		if(!$this->user->getIsReadOnly()) {
+		if(!$this->user->isReadOnly()) {
 			$permissions = new Permissions();
 
 			foreach($category->getPermissions() as $value) {
@@ -227,11 +210,7 @@ class PermissionsChecker
 			return false;
 		}
 
-		if ($this->user->getIsAdmin()) {
-			return true;
-		}
-
-		if(!$this->user->getIsReadOnly()) {
+		if(!$this->user->isReadOnly()) {
 			$permissions = new Permissions();
 
 			foreach($category->getPermissions() as $value) {
@@ -270,11 +249,7 @@ class PermissionsChecker
 			return false;
 		}
 
-		if ($this->user->getIsAdmin()) {
-			return true;
-		}
-
-		if(!$this->user->getIsReadOnly()) {
+		if(!$this->user->isReadOnly()) {
 			$permissions = new Permissions();
 
 			foreach($category->getPermissions() as $value) {
@@ -313,11 +288,7 @@ class PermissionsChecker
 			return false;
 		}
 
-		if ($this->user->getIsAdmin()) {
-			return true;
-		}
-
-		if(!$this->user->getIsReadOnly()) {
+		if(!$this->user->isReadOnly()) {
 			$permissions = new Permissions();
 
 			foreach($category->getPermissions() as $value) {
@@ -356,11 +327,7 @@ class PermissionsChecker
 			return false;
 		}
 
-		if ($this->user->getIsAdmin()) {
-			return true;
-		}
-
-		if(!$this->user->getIsReadOnly()) {
+		if(!$this->user->isReadOnly()) {
 			$permissions = new Permissions();
 
 			foreach($category->getPermissions() as $value) {
