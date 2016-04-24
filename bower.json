@@ -27,7 +27,8 @@
     "tinycarousel": "*",
     "jquery-cycle2": "*",
     "html5shiv": "~3.7.2",
-    "Justified-Gallery": "~3.5.1"
+    "Justified-Gallery": "~3.5.1",
+    "codemirror": "5.14.*"
   },
   "ignore": [
     "**/.*",
