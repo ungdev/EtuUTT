@@ -2,11 +2,9 @@
 
 namespace Etu\Module\ArgentiqueBundle\Test\Controller;
 
-use Etu\Core\CoreBundle\Framework\Tests\MockUser;
-use Etu\Core\UserBundle\Security\Authentication\UserToken;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Etu\Core\CoreBundle\Framework\Tests\EtuWebTestCase;
 
-class MainControllerTest extends WebTestCase
+class MainControllerTest extends EtuWebTestCase
 {
     public function testRestrictIndex()
     {
@@ -18,8 +16,7 @@ class MainControllerTest extends WebTestCase
 
     public function testIndex()
     {
-        $client = static::createClient();
-        $client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
+        $client = $this->createUserClient();
 
         $crawler = $client->request('GET', '/argentique');
 

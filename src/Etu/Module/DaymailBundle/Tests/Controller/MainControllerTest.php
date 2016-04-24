@@ -2,12 +2,9 @@
 
 namespace Etu\Module\DaymailBundle\Test\Controller;
 
-use Etu\Core\CoreBundle\Framework\Tests\MockUser;
-use Etu\Core\UserBundle\Security\Authentication\OrgaToken;
-use Etu\Core\UserBundle\Security\Authentication\UserToken;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Etu\Core\CoreBundle\Framework\Tests\EtuWebTestCase;
 
-class MembershipsControllerTest extends WebTestCase
+class MembershipsControllerTest extends EtuWebTestCase
 {
     public function testRestrictionDaymail()
     {
@@ -19,8 +16,7 @@ class MembershipsControllerTest extends WebTestCase
 
     public function testRestrictionDaymailOrga()
     {
-        $client = static::createClient();
-        $client->getContainer()->get('security.token_storage')->setToken(new OrgaToken(MockUser::createOrga()));
+        $client = $this->createOrgaClient();
 
         $client->request('GET', '/user/membership/orga/daymail');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
@@ -36,8 +32,7 @@ class MembershipsControllerTest extends WebTestCase
 
     public function testRestrictionPreviewOrga()
     {
-        $client = static::createClient();
-        $client->getContainer()->get('security.token_storage')->setToken(new OrgaToken(MockUser::createOrga()));
+        $client = $this->createOrgaClient();
 
         $client->request('GET', '/user/membership/orga/daymail/current/preview');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
@@ -45,8 +40,7 @@ class MembershipsControllerTest extends WebTestCase
 
     public function testDaymail()
     {
-        $client = static::createClient();
-        $client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
+        $client = $this->createUserClient();
 
         $crawler = $client->request('GET', '/user/membership/orga/daymail');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
@@ -54,8 +48,7 @@ class MembershipsControllerTest extends WebTestCase
 
     public function testPreview()
     {
-        $client = static::createClient();
-        $client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
+        $client = $this->createUserClient();
 
         $client->request('GET', '/user/membership/orga/daymail/current/preview');
 

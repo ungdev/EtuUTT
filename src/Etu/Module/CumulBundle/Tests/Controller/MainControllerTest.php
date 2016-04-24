@@ -2,13 +2,9 @@
 
 namespace Etu\Module\CumulBundle\Test\Controller;
 
-use Etu\Core\CoreBundle\Framework\Tests\MockUser;
-use Etu\Core\UserBundle\Security\Authentication\OrgaToken;
-use Etu\Core\UserBundle\Security\Authentication\UserToken;
+use Etu\Core\CoreBundle\Framework\Tests\EtuWebTestCase;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
-class MainControllerTest extends WebTestCase
+class MainControllerTest extends EtuWebTestCase
 {
 	public function testRestrictionIndex()
 	{
@@ -20,22 +16,9 @@ class MainControllerTest extends WebTestCase
 
 	public function testRestrictionIndexOrga()
 	{
-		$client = static::createClient();
-		$client->getContainer()->get('security.token_storage')->setToken(new OrgaToken(MockUser::createOrga()));
+		$client = $this->createOrgaClient();
 
 		$client->request('GET', '/cumul?q=user');
 		$this->assertEquals($client->getResponse()->getStatusCode(), 302);
-	}
-
-	/**
-	 * @todo
-	 */
-	public function testIndex()
-	{
-		$client = static::createClient();
-		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
-		$client->followRedirects(true);
-
-		$crawler = $client->request('GET', '/cumul', array('q' => 'user'));
 	}
 }

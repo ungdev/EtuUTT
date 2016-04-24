@@ -2,12 +2,9 @@
 
 namespace Etu\Core\UserBundle\Test\Controller;
 
-use Etu\Core\CoreBundle\Framework\Tests\MockUser;
+use Etu\Core\CoreBundle\Framework\Tests\EtuWebTestCase;
 
-use Etu\Core\UserBundle\Security\Authentication\OrgaToken;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
-class OrgaControllerTest extends WebTestCase
+class OrgaControllerTest extends EtuWebTestCase
 {
 	public function testRestrictionIndex()
 	{
@@ -35,18 +32,14 @@ class OrgaControllerTest extends WebTestCase
 
 	public function testIndex()
 	{
-		$client = static::createClient();
-		$client->getContainer()->get('security.token_storage')->setToken(new OrgaToken(MockUser::createOrga()));
-
+		$client = $this->createOrgaClient();
 		$crawler = $client->request('GET', '/orga');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Association")')->count());
 	}
 
 	public function testAvatar()
 	{
-		$client = static::createClient();
-		$client->getContainer()->get('security.token_storage')->setToken(new OrgaToken(MockUser::createOrga()));
-
+		$client = $this->createOrgaClient();
 		$crawler = $client->request('GET', '/orga/avatar');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier votre logo")')->count());
 	}

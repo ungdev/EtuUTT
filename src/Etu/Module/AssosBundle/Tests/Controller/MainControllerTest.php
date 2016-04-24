@@ -2,11 +2,9 @@
 
 namespace Etu\Module\AssosBundle\Test\Controller;
 
-use Etu\Core\CoreBundle\Framework\Tests\MockUser;
-use Etu\Core\UserBundle\Security\Authentication\UserToken;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Etu\Core\CoreBundle\Framework\Tests\EtuWebTestCase;
 
-class MainControllerTest extends WebTestCase
+class MainControllerTest extends EtuWebTestCase
 {
 	public function testIndex()
 	{
@@ -34,9 +32,7 @@ class MainControllerTest extends WebTestCase
 
     public function testMembers()
     {
-        $client = static::createClient();
-        $client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
-
+        $client = $this->createUserClient();
         $crawler = $client->request('GET', '/orgas/orga/members');
 
         $this->assertGreaterThan(0, $crawler->filter('h2:contains("Membres d\'une assocation")')->count());

@@ -2,15 +2,13 @@
 
 namespace Etu\Core\CoreBundle\Test\Controller;
 
-use Etu\Core\UserBundle\Security\Authentication\AnonymousToken;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Etu\Core\CoreBundle\Framework\Tests\EtuWebTestCase;
 
-class MainControllerTest extends WebTestCase
+class MainControllerTest extends EtuWebTestCase
 {
     public function testIndexAnonymous()
     {
         $client = static::createClient();
-        $client->getContainer()->get('security.token_storage')->setToken(new AnonymousToken());
 
         $crawler = $client->request('GET', '/');
 
@@ -20,7 +18,6 @@ class MainControllerTest extends WebTestCase
     public function testPages()
     {
         $client = static::createClient();
-        $client->getContainer()->get('security.token_storage')->setToken(new AnonymousToken());
 
         $crawler = $client->request('GET', '/page/developpeurs');
         $this->assertGreaterThan(0, $crawler->filter('h2:contains("Développeurs")')->count());
@@ -30,7 +27,6 @@ class MainControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $client->getContainer()->get('session')->set('_locale', 'en');
-        $client->getContainer()->get('security.token_storage')->setToken(new AnonymousToken());
 
         $client->followRedirects(true);
 

@@ -313,7 +313,7 @@
 		<div class="block">
 			<div class="block-title">{{ 'user.profile.profile.badges'|trans }}</div>
 
-            {% if app.user.badgesList %}
+            {% if etu.environment != 'test' and app.user.badgesList %}
                 {% for name, serie in app.user.badgesList %}
                     <ul class="badges-list">
                         {% for level, userBadge in serie %}

@@ -362,7 +362,7 @@ class BugsController extends Controller
 			)), 301);
 		}
 
-		if ($comment->getUser()->getId() != $this->getUser()->getId() && ! isGranted('ROLE_BUGS_ADMIN')) {
+		if ($comment->getUser()->getId() != $this->getUser()->getId() && ! $this->isGranted('ROLE_BUGS_ADMIN')) {
 			throw new AccessDeniedHttpException('Vous n\'avez pas le droit de modifier ce commentaire.');
 		}
 

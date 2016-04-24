@@ -2,35 +2,27 @@
 
 namespace Etu\Core\UserBundle\Test\Controller;
 
-use Etu\Core\CoreBundle\Framework\Tests\MockUser;
-use Etu\Core\UserBundle\Security\Authentication\UserToken;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Etu\Core\CoreBundle\Framework\Tests\EtuWebTestCase;
 
-class AuthControllerTest extends WebTestCase
+class AuthControllerTest extends EtuWebTestCase
 {
     public function testRestrictionConnect()
     {
-        $client = static::createClient();
-        $client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
-
+        $client = $this->createUserClient();
         $client->request('GET', '/user');
         $this->assertEquals($client->getResponse()->getStatusCode(), 302, $client->getResponse()->getContent());
     }
 
     public function testRestrictionConnectCAS()
     {
-        $client = static::createClient();
-        $client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
-
+        $client = $this->createUserClient();
         $client->request('GET', '/user/cas');
         $this->assertEquals($client->getResponse()->getStatusCode(), 302, $client->getResponse()->getContent());
     }
 
     public function testRestrictionConnectExternal()
     {
-        $client = static::createClient();
-        $client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
-
+        $client = $this->createUserClient();
         $client->request('GET', '/user/external');
         $this->assertEquals($client->getResponse()->getStatusCode(), 302, $client->getResponse()->getContent());
     }

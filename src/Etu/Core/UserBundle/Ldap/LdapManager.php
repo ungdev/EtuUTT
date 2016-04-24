@@ -8,6 +8,8 @@ class LdapManager
 	 * @var resource
 	 */
 	protected $connection;
+	protected $host;
+	protected $port;
 
 	public $logs;
 
@@ -18,12 +20,10 @@ class LdapManager
 	 */
 	public function __construct($host, $port)
 	{
-		$this->connection = ldap_connect($host, $port);
+		$this->connection = null;
+		$this->host = $host;
+		$this->port = $port;
 		$this->logs = array();
-
-		if (! $this->connection) {
-			throw new \RuntimeException(sprintf('LDAP connection to %s:%s failed.', $host, $port));
-		}
 	}
 
 	/**
@@ -31,6 +31,7 @@ class LdapManager
 	 */
 	public function getAll()
 	{
+		$this->connect();
 		$infos = ldap_get_entries(
 			$this->connection,
 			ldap_list(
@@ -58,6 +59,7 @@ class LdapManager
 	 */
 	public function getStudents()
 	{
+		$this->connect();
 		$result = array();
 		$users = $this->getAll();
 
@@ -75,6 +77,7 @@ class LdapManager
 	 */
 	public function getUsers()
 	{
+		$this->connect();
 		$result = array();
 		$users = $this->getAll();
 
@@ -92,6 +95,7 @@ class LdapManager
 	 */
 	public function getOrgas()
 	{
+		$this->connect();
 		$result = array();
 		$users = $this->getAll();
 
@@ -110,6 +114,7 @@ class LdapManager
 	 */
 	public function getUser($login)
 	{
+		$this->connect();
 		$infos = ldap_get_entries(
 			$this->connection,
 			ldap_list(
@@ -130,6 +135,7 @@ class LdapManager
 	 */
 	public function getOrga($login)
 	{
+		$this->connect();
 		$infos = ldap_get_entries(
 			$this->connection,
 			ldap_list(
@@ -234,5 +240,16 @@ class LdapManager
 		$orga->setIsStudent(false);
 
 		return $orga;
+	}
+
+	private function connect() {
+		if($this->connection) {
+			return;
+		}
+
+		$this->connection = ldap_connect($host, $port);
+		if (! $this->connection) {
+			throw new \RuntimeException(sprintf('LDAP connection to %s:%s failed.', $host, $port));
+		}
 	}
 }

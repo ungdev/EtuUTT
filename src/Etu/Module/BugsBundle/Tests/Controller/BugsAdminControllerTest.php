@@ -2,11 +2,9 @@
 
 namespace Etu\Module\BugsBundle\Test\Controller;
 
-use Etu\Core\CoreBundle\Framework\Tests\MockUser;
-use Etu\Core\UserBundle\Security\Authentication\UserToken;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Etu\Core\CoreBundle\Framework\Tests\EtuWebTestCase;
 
-class BugsAdminControllerTest extends WebTestCase
+class BugsAdminControllerTest extends EtuWebTestCase
 {
 	public function testRestrictionAssign()
 	{
@@ -66,9 +64,8 @@ class BugsAdminControllerTest extends WebTestCase
 
 	public function testDelete()
 	{
-		$client = static::createClient();
-		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createAdminUser()));
-
+		$client = $this->createAdminClient();
+		
 		$crawler = $client->request('GET', '/admin/bugs/1-issue-title/delete');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Supprimer un bug")')->count());
 	}

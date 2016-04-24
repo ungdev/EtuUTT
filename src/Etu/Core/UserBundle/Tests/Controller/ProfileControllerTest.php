@@ -2,11 +2,9 @@
 
 namespace Etu\Core\UserBundle\Test\Controller;
 
-use Etu\Core\CoreBundle\Framework\Tests\MockUser;
-use Etu\Core\UserBundle\Security\Authentication\UserToken;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Etu\Core\CoreBundle\Framework\Tests\EtuWebTestCase;
 
-class ProfileControllerTest extends WebTestCase
+class ProfileControllerTest extends EtuWebTestCase
 {
     public function testRestrictionProfile()
     {
@@ -50,37 +48,28 @@ class ProfileControllerTest extends WebTestCase
 
     public function testProfile()
     {
-        $client = static::createClient();
-        $client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
-
+        $client = $this->createUserClient();
         $crawler = $client->request('GET', '/user/profile');
-
         $this->assertGreaterThan(0, $crawler->filter('h2:contains("Mon profil")')->count());
     }
 
     public function testProfileEdit()
     {
-        $client = static::createClient();
-        $client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
-
+        $client = $this->createUserClient();
         $crawler = $client->request('GET', '/user/profile/edit');
         $this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier mes informations")')->count(), $client->getResponse()->getContent());
     }
 
     public function testTrombiEdit()
     {
-        $client = static::createClient();
-        $client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
-
+        $client = $this->createUserClient();
         $crawler = $client->request('GET', '/user/trombi/edit');
         $this->assertGreaterThan(0, $crawler->filter('h2:contains("Mon trombinoscope")')->count());
     }
 
     public function testView()
     {
-        $client = static::createClient();
-        $client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createUser()));
-
+        $client = $this->createUserClient();
         $crawler = $client->request('GET', '/user/admin');
         $this->assertGreaterThan(0, $crawler->filter('h2:contains("Détail d\'un profil")')->count());
     }

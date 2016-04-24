@@ -2,11 +2,9 @@
 
 namespace Etu\Core\UserBundle\Test\Controller;
 
-use Etu\Core\CoreBundle\Framework\Tests\MockUser;
-use Etu\Core\UserBundle\Security\Authentication\UserToken;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Etu\Core\CoreBundle\Framework\Tests\EtuWebTestCase;
 
-class AdminControllerTest extends WebTestCase
+class AdminControllerTest extends EtuWebTestCase
 {
 	public function testRestrictionUsers()
 	{
@@ -66,54 +64,42 @@ class AdminControllerTest extends WebTestCase
 
 	public function testUsers()
 	{
-		$client = static::createClient();
-		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createAdminUser()));
-
+		$client = $this->createAdminClient();
 		$crawler = $client->request('GET', '/admin/users');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Utilisateurs")')->count());
 	}
 
 	public function testUserCreate()
 	{
-		$client = static::createClient();
-		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createAdminUser()));
-
+		$client = $this->createAdminClient();
 		$crawler = $client->request('GET', '/admin/user/create');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Créer un utilisateur")')->count());
 	}
 
 	public function testUserEdit()
 	{
-		$client = static::createClient();
-		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createAdminUser()));
-
+		$client = $this->createAdminClient();
 		$crawler = $client->request('GET', '/admin/user/admin/edit');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier un utilisateur")')->count());
 	}
 
 	public function testUserAvatar()
 	{
-		$client = static::createClient();
-		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createAdminUser()));
-
+		$client = $this->createAdminClient();
 		$crawler = $client->request('GET', '/admin/user/admin/avatar');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier la photo")')->count());
 	}
 
 	public function testUserDelete()
 	{
-		$client = static::createClient();
-		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createAdminUser()));
-
+		$client = $this->createAdminClient();
 		$crawler = $client->request('GET', '/admin/user/admin/delete');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Supprimer un utilisateur")')->count());
 	}
 
 	public function testUserPermissions()
 	{
-		$client = static::createClient();
-		$client->getContainer()->get('security.token_storage')->setToken(new UserToken(MockUser::createAdminUser()));
-
+		$client = $this->createAdminClient();
 		$crawler = $client->request('GET', '/admin/user/admin/permissions');
 		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Modifier les permissions")')->count());
 	}

@@ -23,6 +23,7 @@ class MockUser
 		$user->setMail('user@utt.fr');
 		$user->setIsStudent(true);
 		$user->setAvatar('user.png');
+		$user->setIsStudent(true);
 		$user->testingContext = true;
 
 		$reflection = new \ReflectionObject($user);
@@ -64,6 +65,7 @@ class MockUser
 		$user->setLogin('admin');
 		$user->setMail('admin@utt.fr');
 		$user->storeRole('ROLE_ADMIN');
+		$user->setIsStudent(true);
 		$user->setAvatar('admin.png');
 		$user->testingContext = true;
 
