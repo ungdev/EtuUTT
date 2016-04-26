@@ -258,7 +258,7 @@ class HomeBuilder
 
         // Select collection
         while (count($collectionsRegistry) && empty($photos)) {
-            $collection = array_pop($collectionsRegistry);
+            $collection = array_shift($collectionsRegistry);
             if ($collection === null) {
                 break;
             }
@@ -276,7 +276,7 @@ class HomeBuilder
 
             // Select 'set'
             while (count($setsRegistry) && empty($photos)) {
-                $set = array_pop($setsRegistry);
+                $set = array_shift($setsRegistry);
                 if ($set === null) {
                     break;
                 }
@@ -299,7 +299,7 @@ class HomeBuilder
                     $pathinfo = pathinfo($path);
                     $photos[] = [
                         'extension' => $pathinfo['extension'],
-                        'pathname' => $pathinfo['dirname'].'/'.$pathinfo['basename'],
+                        'pathname' => str_replace($root . '/', '', $pathinfo['dirname'].'/'.$pathinfo['basename']),
                         'basename' => $pathinfo['basename'],
                         'filename' => $pathinfo['filename'],
                     ];
