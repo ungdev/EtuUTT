@@ -79,6 +79,8 @@ class ImportBadgesCommand extends ContainerAwareCommand
         array('serie' => 'mysterion','name' => 'Où vais-je ?','picture' => 'mysterion_03','description' => 'A initié 20 discussions sur les forums','level' => '3','countLevels' => '4','deletedAt' => NULL),
         array('serie' => 'mysterion','name' => 'Patrick, l\'homme qui posait des questions','picture' => 'mysterion_04','description' => 'A initié 40 discussions sur les forums','level' => '4','countLevels' => '4','deletedAt' => NULL),
         array('serie' => 'hipster','name' => 'Hipster','picture' => 'hipster_00','description' => 'A été parmi les premiers à visiter EtuUTT','level' => '1','countLevels' => '1','deletedAt' => NULL),
-        array('serie' => 'duck_hunter','name' => 'Duck Hunter','picture' => 'duck_hunt_00','description' => 'A trouvé le canard caché','level' => '1','countLevels' => '1','deletedAt' => NULL)
+		array('serie' => 'duck_hunter','name' => 'Duck Hunter','picture' => 'duck_hunt_00','description' => 'A trouvé le canard caché','level' => '1','countLevels' => '1','deletedAt' => NULL),
+		array('serie' => 'cereales','name' => 'Team Céréales','picture' => 'cereales_00','description' => 'A mangé des céréales','level' => '1','countLevels' => '1','deletedAt' => NULL),
+		array('serie' => 'aigri','name' => 'Aigri !','picture' => 'aigri_00','description' => 'A déjà fait partie du bureau d\'une association.','level' => '1','countLevels' => '1','deletedAt' => NULL)
     );
 }
