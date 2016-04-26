@@ -88,6 +88,7 @@ security:
             - ROLE_UV_REVIEW_ADMIN # Can moderate and remove UV review and old exams
 
         ROLE_ARGENTIQUE:
+            - ROLE_CORE_ADMIN_HOME # Can see admin homepage
             - ROLE_ARGENTIQUE_ADMIN
 
         # If readonly or ban is set, user will have only this role and :
