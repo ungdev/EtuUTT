@@ -133,11 +133,13 @@ class HomeRenderer
         if ($this->modulesManager->getModuleByIdentifier('argentique')->isEnabled()) {
             $photos = $this->builder->getPhotos();
 
-            if (count($photos) > 0) {
+            if (count($photos['list']) > 0) {
                 $block = [
                     'template' => 'EtuCoreBundle:Main/index_blocks:photos.html.twig',
                     'context' => [
-                        'photos' => $photos,
+                        'photos' => $photos['list'],
+                        'collection' => $photos['collection'],
+                        'set' => $photos['set'],
                     ],
                     'role' => 'ROLE_ARGENTIQUE_READ'
                 ];

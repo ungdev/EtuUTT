@@ -243,8 +243,9 @@ class HomeBuilder
         /*
          * Select most recent collection, find most recent set in it and get 5 random images from this set
          */
+        $photos = [];
 
-        // Collection
+        // Get and sort collection list
         $collections = glob($root . '/*', GLOB_ONLYDIR);
         $collectionsRegistry = [];
 
@@ -253,47 +254,55 @@ class HomeBuilder
         }
 
         arsort($collectionsRegistry);
-        $collectionsRegistry = array_flip($collectionsRegistry);
+        $collectionsRegistry = array_keys($collectionsRegistry);
 
-        $collection = reset($collectionsRegistry);
+        // Select collection
+        while (count($collectionsRegistry) && empty($photos)) {
+            $collection = array_pop($collectionsRegistry);
+            if ($collection === null) {
+                break;
+            }
 
+            // Get and sort 'set' list
+            $sets = glob($collection . '/*', GLOB_ONLYDIR);
+            $setsRegistry = [];
 
-        // Set
-        $sets = glob($collection . '/*', GLOB_ONLYDIR);
-        $setsRegistry = [];
+            foreach ($sets as $set) {
+                $setsRegistry[$set] = filemtime($set);
+            }
 
-        foreach ($sets as $set) {
-            $setsRegistry[$set] = filemtime($set);
-        }
+            arsort($setsRegistry);
+            $setsRegistry = array_keys($setsRegistry);
 
-        arsort($setsRegistry);
-        $setsRegistry = array_flip($setsRegistry);
-
-        $set = reset($setsRegistry);
-
-
-        // Random
-        /** @var \SplFileInfo[] $iterator */
-        $iterator = new \DirectoryIterator($set);
-
-        $i = 0;
-
-        /** @var array $photos */
-        $photos = [];
-
-        foreach ($iterator as $file) {
-            if ($file->getExtension() == 'jpg' || $file->getExtension() == 'jpeg') {
-                $photos[] = [
-                    'extension' => $file->getExtension(),
-                    'pathname' => str_replace($root . '/', '', $file->getPathname()),
-                    'basename' => $file->getBasename(),
-                    'filename' => $file->getBasename('.' . $file->getExtension()),
-                ];
-
-                $i++;
-
-                if ($i == 10) {
+            // Select 'set'
+            while (count($setsRegistry) && empty($photos)) {
+                $set = array_pop($setsRegistry);
+                if ($set === null) {
                     break;
+                }
+
+                // Find all pictures
+                $paths = glob($set . '/*.{jpg,jpeg,JPG,JPEG}', GLOB_BRACE);
+                if(count($paths) < 5) {
+                    continue;
+                }
+
+                // Select random pictures
+                $count = 10;
+                if(count($paths) < $count) {
+                    $count = count($paths);
+                }
+                $keys = array_rand($paths, $count);
+
+                foreach ($keys as $key) {
+                    $path = $paths[$key];
+                    $pathinfo = pathinfo($path);
+                    $photos[] = [
+                        'extension' => $pathinfo['extension'],
+                        'pathname' => $pathinfo['dirname'].'/'.$pathinfo['basename'],
+                        'basename' => $pathinfo['basename'],
+                        'filename' => $pathinfo['filename'],
+                    ];
                 }
             }
         }
@@ -302,7 +311,11 @@ class HomeBuilder
             $this->stopwatch->stop('block_photos');
         }
 
-        return $photos;
+        return [
+            'collection' => basename($collection),
+            'set' => basename($set),
+            'list' => $photos
+        ];
     }
 
     /**
