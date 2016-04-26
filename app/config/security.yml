@@ -22,7 +22,7 @@ security:
             - ROLE_CORE_SCHEDULE # Can read others schedule
             - ROLE_CORE_SCHEDULE_OWN # Can read his own schedule
             - ROLE_CORE_HOMEPAGE # Can see the private homepage
-            - ROLE_ARGENTIQUE # View pictures
+            - ROLE_ARGENTIQUE_READ # View pictures
             - ROLE_ASSOS_MEMBERS # Read assos member list
             - ROLE_BUGS # read bugs list
             - ROLE_BUGS_POST # Post on bugs list
@@ -106,7 +106,7 @@ security:
             - ROLE_CORE_SCHEDULE # Can read others schedule
             - ROLE_CORE_SCHEDULE_OWN # Can read his own schedule
             - ROLE_CORE_HOMEPAGE # Can see the private homepage
-            - ROLE_ARGENTIQUE # View pictures
+            - ROLE_ARGENTIQUE_READ # View pictures
             - ROLE_ASSOS_MEMBERS # Read assos member list
             - ROLE_BUGS # read bugs list
             - ROLE_COVOIT # Can read covoit bundle

@@ -139,7 +139,7 @@ class HomeRenderer
                     'context' => [
                         'photos' => $photos,
                     ],
-                    'role' => 'ROLE_ARGENTIQUE'
+                    'role' => 'ROLE_ARGENTIQUE_READ'
                 ];
             }
         }

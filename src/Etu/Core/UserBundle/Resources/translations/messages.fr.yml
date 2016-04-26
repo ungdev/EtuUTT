@@ -170,7 +170,7 @@ user:
             ROLE_API_CREATE: Créer une application externe via l'API
 
             ROLE_ARGENTIQUE_ADMIN: Voir la documentation pour ajouter des photos au site
-            ROLE_ARGENTIQUE: Voir les photos du site
+            ROLE_ARGENTIQUE_READ: Voir les photos du site
 
             ROLE_ASSOS_MEMBERS: Voir la liste des membres d'une association
 
