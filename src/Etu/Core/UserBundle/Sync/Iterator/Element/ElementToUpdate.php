@@ -7,6 +7,10 @@ use Etu\Core\UserBundle\Ldap\Model\User as LdapUser;
 use Etu\Core\UserBundle\Entity\User as DbUser;
 use Etu\Core\UserBundle\Model\BadgesManager;
 
+use Imagine\Gd\Image;
+use Imagine\Gd\Imagine;
+use Imagine\Image\Box;
+
 /**
  * Element to update in database
  */
@@ -164,6 +168,25 @@ class ElementToUpdate
 			$user->setIsInLDAP(true);
 		}
 
+		// Update official avatar
+		$imagine = new Imagine();
+		$webDirectory = __DIR__.'/../../../../../../../web';
+		$avatar = $this->ldap->getLogin().'_official.jpg';
+		try {
+			$image = $imagine->open('http://local-sig.utt.fr/Pub/trombi/individu/'.$this->ldap->getStudentId().'.jpg');
+
+			$image->copy()
+				->thumbnail(new Box(200, 200), Image::THUMBNAIL_OUTBOUND)
+				->save($webDirectory.'/uploads/photos/'.$this->ldap->getLogin().'_official.jpg');
+		} catch (\Exception $e) {
+			$avatar = 'default-avatar.png';
+		}
+
+		if($this->database->getAvatar() === $avatar || $this->database->getAvatar() === 'default-avatar.png') {
+			$persist = true;
+			$user->setAvatar($avatar);
+		}
+
 		/*
 		 * Add badges
 		 */
@@ -175,6 +198,7 @@ class ElementToUpdate
 		if ($persist) {
 			$this->doctrine->getManager()->persist($user);
 		}
+
 
 		return $persist;
 	}

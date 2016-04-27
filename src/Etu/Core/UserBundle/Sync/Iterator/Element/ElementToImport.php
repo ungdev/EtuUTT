@@ -74,19 +74,17 @@ class ElementToImport
 		$imagine = new Imagine();
 		$webDirectory = __DIR__.'/../../../../../../../web';
 
-		$avatar = $this->element->getLogin().'.jpg';
+		$avatar = $this->element->getLogin().'_official.jpg';
 
-		if (! file_exists($webDirectory.'/uploads/photos/'.$this->element->getLogin().'.jpg')) {
-			// Resize photo
-			try {
-				$image = $imagine->open('http://local-sig.utt.fr/Pub/trombi/individu/'.$this->element->getStudentId().'.jpg');
+		// Resize photo
+		try {
+			$image = $imagine->open('http://local-sig.utt.fr/Pub/trombi/individu/'.$this->element->getStudentId().'.jpg');
 
-				$image->copy()
-					->thumbnail(new Box(200, 200), Image::THUMBNAIL_OUTBOUND)
-					->save($webDirectory.'/uploads/photos/'.$this->element->getLogin().'.jpg');
-			} catch (\Exception $e) {
-				$avatar = 'default-avatar.png';
-			}
+			$image->copy()
+				->thumbnail(new Box(200, 200), Image::THUMBNAIL_OUTBOUND)
+				->save($webDirectory.'/uploads/photos/'.$this->element->getLogin().'_official.jpg');
+		} catch (\Exception $e) {
+			$avatar = 'default-avatar.png';
 		}
 
 		$niveau = null;
