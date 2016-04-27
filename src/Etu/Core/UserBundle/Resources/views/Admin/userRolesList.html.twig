@@ -36,7 +36,7 @@
 					<ul>
 					{% for role in user.storedRoles %}
 						<li><a data-toggle="collapse" data-parent="#roleParent" href="#roleCollapse{{ role }}" onclick="document.getElementById('roleCollapse{{ role }}').scrollIntoView();">
-							{{ ('user.admin.userRoles.'~role) |trans}} ({{ role }})
+							{{ ('role.'~role) |trans}} ({{ role }})
 						</a></li>
 					{% endfor %}
 					</ul>
@@ -58,14 +58,14 @@
 							<div class="accordion-group">
 								<div class="accordion-heading">
 									<a class="accordion-toggle" data-toggle="collapse" data-parent="#roleParent" href="#roleCollapse{{ role }}">
-										{{ ('user.admin.userRoles.'~role) |trans}} ({{ role }})
+										{{ ('role.'~role) |trans}} ({{ role }})
 									</a>
 								</div>
 								<div id="roleCollapse{{ role }}" class="accordion-body collapse">
 									<div class="accordion-inner">
 										<ul>
 											{% for subrole in subroles %}
-												<li>{{ ('user.admin.userRoles.'~subrole) |trans}} ({{ subrole }})</li>
+												<li>{{ ('role.'~subrole) |trans}} ({{ subrole }})</li>
 											{% endfor %}
 										</ul>
 									</div>

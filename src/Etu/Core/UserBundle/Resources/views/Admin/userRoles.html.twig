@@ -57,14 +57,14 @@
 								<div class="accordion-heading">
 									<input type="checkbox" name="role[{{ role.role }}]" {% if role.checked %} checked="checked"{% endif %} style="float:left; margin: 10px 5px 0px 10px;"/>
 									<a class="accordion-toggle" data-toggle="collapse" data-parent="#roleParent" href="#roleCollapse{{ role.role }}">
-										{{ ('user.admin.userRoles.'~role.role) |trans}} ({{ role.role }})
+										{{ ('role.'~role.role) |trans}} ({{ role.role }})
 									</a>
 								</div>
 								<div id="roleCollapse{{ role.role }}" class="accordion-body collapse">
 									<div class="accordion-inner">
 										<ul>
 											{% for subrole in role.subroles %}
-												<li>{{ ('user.admin.userRoles.'~subrole) |trans}} ({{ subrole }})</li>
+												<li>{{ ('role.'~subrole) |trans}} ({{ subrole }})</li>
 											{% endfor %}
 										</ul>
 									</div>
