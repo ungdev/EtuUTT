@@ -24,7 +24,7 @@ monolog:
         nested:
             type:  stream
             path:  %kernel.logs_dir%/%kernel.environment%.log
-            level: debug
+            level: notice
         sentry:
             type: raven
             dsn: %sentry_dsn%
