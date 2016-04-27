@@ -330,7 +330,7 @@ class AdminController extends Controller
 
 			$this->get('session')->getFlashBag()->set('message', array(
 				'type' => 'success',
-				'message' => 'user.admin.userPermissions.confirm'
+				'message' => 'user.admin.userRoles.confirm'
 			));
 
 			return $this->redirect($this->generateUrl('admin_user_roles', array('login' => $user->getLogin(), 'from' => $from)));
