@@ -25,7 +25,3 @@ monolog:
             type:  rotating_file
             path:  %kernel.logs_dir%/%kernel.environment%.log
             level: notice
-        sentry:
-            type: raven
-            dsn: %sentry_dsn%
-            level: notice
