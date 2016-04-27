@@ -33,6 +33,10 @@ class MainController extends Controller
         $root = EtuModuleArgentiqueBundle::getPhotosRoot();
         $cache_root = $this->get('kernel')->getRootDir().'/cache/';
 
+        if(!file_exists($root.'/'.$file)) {
+            throw $this->createNotFoundException('Picture not found');
+        }
+
         $glide = ServerFactory::create(
             [
                 'source' => $root,
@@ -62,6 +66,10 @@ class MainController extends Controller
         if (file_exists($cacheFile)) {
             $imagine->open($cacheFile)->show('png');
             exit;
+        }
+
+        if(!is_dir($root.'/'.$file)) {
+            throw $this->createNotFoundException('Directory not found');
         }
 
         /** @var \SplFileInfo[]|\RecursiveIteratorIterator $iterator */
@@ -142,6 +150,10 @@ class MainController extends Controller
                 'basename' => $part,
                 'pathname' => $pathname,
             ];
+        }
+
+        if(!is_dir($root.'/'.$directory)) {
+            throw $this->createNotFoundException('Collection not found');
         }
 
         /** @var \SplFileInfo[] $iterator */
