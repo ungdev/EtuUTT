@@ -101,7 +101,6 @@ class HomeRenderer
                     'context' => [
                         'events' => $events,
                     ],
-                    'role' => ''
                 ];
             }
         }
