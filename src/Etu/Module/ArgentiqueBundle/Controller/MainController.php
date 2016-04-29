@@ -120,6 +120,8 @@ class MainController extends Controller
         if (!file_exists($root)) {
             mkdir($root, 0777, true);
         }
+        
+        $directory = rtrim($directory, '/');
 
         if (strpos($directory, './') !== false) {
             return $this->redirect($this->generateUrl('argentique_index'));
