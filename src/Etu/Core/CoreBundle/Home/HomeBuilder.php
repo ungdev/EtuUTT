@@ -78,6 +78,24 @@ class HomeBuilder
     }
 
     /**
+     * @return User UV list
+     */
+    public function getUVs()
+    {
+        if ($this->stopwatch) {
+            $this->stopwatch->start('block_uv', 'home_blocks');
+        }
+
+        $result = explode('|', $this->user->getUvs());
+
+        if ($this->stopwatch) {
+            $this->stopwatch->stop('block_uv');
+        }
+
+        return $result;
+    }
+
+    /**
      * @param Module[] $enabledModules
      * @return \Etu\Core\CoreBundle\Entity\Notification[]
      */

@@ -47,6 +47,7 @@ class HomeRenderer
             'template' => 'EtuCoreBundle:Main/index_blocks:courses.html.twig',
             'context' => [
                 'nextCourses' => $this->builder->getNextCourses(),
+                'UVs' => $this->builder->getUVs(),
             ],
             'role' => 'ROLE_CORE_SCHEDULE_OWN'
         ];
@@ -185,10 +186,6 @@ class HomeRenderer
 
         if ($birthdays = $this->createBirthdaysBlock()) {
             $columns[0][] = $birthdays;
-        }
-
-        if ($reviewsBlock = $this->createReviewsBlock()) {
-            $columns[0][] = $reviewsBlock;
         }
 
         $columns[1][] = $this->createNotificationsBlock();

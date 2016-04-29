@@ -10,7 +10,7 @@
             {% if course|length == 1 %}
                 <div class="course-full">
                     <p>
-                        <strong>{{ course[0].uv }}</strong> - {{ course[0].type }}<br />
+                        <strong><a href="{{ path('uvs_goto', {'code': course[0].uv}) }}">{{ course[0].uv }}</a></strong> - {{ course[0].type }}<br />
                         <small class="muted">(à {{ course[0].start }} en {{ course[0].room }})</small>
                     </p>
                 </div>
@@ -19,7 +19,7 @@
                     <div class="span6">
                         <div class="course-half">
                             <p>
-                                <strong>{{ course[0].uv }}</strong> - {{ course[0].type }}<br />
+                                <strong><a href="{{ path('uvs_goto', {'code': course[0].uv}) }}">{{ course[0].uv }}</a></strong> - {{ course[0].type }}<br />
                                 <small class="muted">
                                     (à {{ course[0].start }} en {{ course[0].room }}, sem. {{ course[0].week }})
                                 </small>
@@ -29,7 +29,7 @@
                     <div class="span6">
                         <div class="course-half">
                             <p>
-                                <strong>{{ course[1].uv }}</strong> - {{ course[1].type }}<br />
+                                <strong><a href="{{ path('uvs_goto', {'code': course[1].uv}) }}">{{ course[1].uv }}</a></strong> - {{ course[1].type }}<br />
                                 <small class="muted">
                                     (à {{ course[1].start }} en {{ course[1].room }}, sem. {{ course[1].week }})
                                 </small>
@@ -41,6 +41,12 @@
         {% endfor %}
     {% endif %}
 
+    <h5>Toutes vos UV</h5>
+    <div class="uv-list">
+        {% for UV in UVs %}
+            <a  href="{{ path('uvs_goto', {'code': UV}) }}">{{ UV }}</a>
+        {% endfor %}
+    </div>
     <p class="more-link">
         <a href="{{ path('user_schedule') }}">
             Voir mon emploi du temps complet
