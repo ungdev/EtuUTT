@@ -416,6 +416,7 @@ user:
             title: Imprimer mon emploi du temps
         course:
             title: Créneau de cours
-            desc: Créneau de %uv%, le %day% à %start%
+            desc: Créneau de %type% de %uv%, le %day% à %start%
             uv: Voir la description de l'UV
+            other: Voir les autre créneaux
             students: %count% étudiant inscrit à ce créneau|%count% étudiants inscrits à ce créneau

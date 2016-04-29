@@ -54,7 +54,8 @@
 					<ul>
 						{% for course in dayCourses %}
 							<li class="course">
-								<span class="name">{{ course.type }} - {{ course.room }}</span><br />
+								<a href="{{ path('schedule_course', {'id': course.id}) }}">
+								<span class="name">{{ course.type }} - {{ course.room }}</span></a><br />
 								<span class="hours">{{ course.start }} - {{ course.end }}</span>
 							</li>
 						{% endfor %}

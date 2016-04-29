@@ -8,12 +8,12 @@
     {% else %}
         {% for course in nextCourses %}
             {% if course|length == 1 %}
-                <div class="course-full">
+                <a class="course-full" href="{{ path('schedule_course', { 'id': course[0].id }) }}">
                     <p>
-                        <strong><a href="{{ path('uvs_goto', {'code': course[0].uv}) }}">{{ course[0].uv }}</a></strong> - {{ course[0].type }}<br />
-                        <small class="muted">(à {{ course[0].start }} en {{ course[0].room }})</small>
+                        <strong>{{ course[0].uv }}</strong> - {{ course[0].type }}<br />
+                        <small class="muted">De {{ course[0].start }} à {{ course[0].end }} en {{ course[0].room }}</small>
                     </p>
-                </div>
+                </a>
             {% else %}
                 <div class="row-fluid">
                     <div class="span6">
@@ -21,7 +21,7 @@
                             <p>
                                 <strong><a href="{{ path('uvs_goto', {'code': course[0].uv}) }}">{{ course[0].uv }}</a></strong> - {{ course[0].type }}<br />
                                 <small class="muted">
-                                    (à {{ course[0].start }} en {{ course[0].room }}, sem. {{ course[0].week }})
+                                    De {{ course[0].start }} à {{ course[0].end }} en {{ course[0].room }}, sem. {{ course[0].week }}
                                 </small>
                             </p>
                         </div>
@@ -31,7 +31,7 @@
                             <p>
                                 <strong><a href="{{ path('uvs_goto', {'code': course[1].uv}) }}">{{ course[1].uv }}</a></strong> - {{ course[1].type }}<br />
                                 <small class="muted">
-                                    (à {{ course[1].start }} en {{ course[1].room }}, sem. {{ course[1].week }})
+                                    De {{ course[1].start }} à {{ course[1].end }} en {{ course[1].room }}, sem. {{ course[1].week }}
                                 </small>
                             </p>
                         </div>
@@ -41,12 +41,14 @@
         {% endfor %}
     {% endif %}
 
-    <h5>Toutes vos UV</h5>
-    <div class="uv-list">
-        {% for UV in UVs %}
-            <a  href="{{ path('uvs_goto', {'code': UV}) }}">{{ UV }}</a>
-        {% endfor %}
-    </div>
+    {% if UVs|length > 0 and UVs[0] is not empty %}
+        <h5>Toutes vos UV</h5>
+        <div class="uv-list">
+            {% for UV in UVs %}
+                <a  href="{{ path('uvs_goto', {'code': UV}) }}">{{ UV }}</a>
+            {% endfor %}
+        </div>
+    {% endif %}
     <p class="more-link">
         <a href="{{ path('user_schedule') }}">
             Voir mon emploi du temps complet

@@ -11,13 +11,17 @@
 		<p>
 			{{ 'user.schedule.course.desc'|trans({
 				'%uv%': course.uv,
+				'%type%': course.type,
 				'%day%': ('user.schedule.days_lower.'~course.day)|trans,
 				'%start%': course.start
 			}) }}
 
-			{#<span class="pull-right">
-				<a href=""{{ path('uvs_goto', {'code': course.uv}) }}>{{ 'user.schedule.course.uv'|trans }}</a>
-			</span>#}
+			<span class="pull-right">
+				<a href="{{ path('uvs_goto', {'code': course.uv}) }}">{{ 'user.schedule.course.uv'|trans }}</a>
+			</span>
+
+			<br/>
+			<a href="{{ path('uvs_goto_courses', {'code': course.uv}) }}">{{ 'user.schedule.course.other'|trans }}</a>
 		</p>
 
 		<p class="align-center">

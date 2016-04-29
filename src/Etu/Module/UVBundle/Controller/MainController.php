@@ -141,4 +141,31 @@ class MainController extends Controller
 			'name' => StringManipulationExtension::slugify($uv->getName())
 		)), 301);
 	}
+
+	/**
+	 * @Route("/goto/courses/{code}", name="uvs_goto_courses")
+	 * @Template()
+	 */
+	public function goToCoursesAction($code)
+	{
+		$this->denyAccessUnlessGranted('ROLE_UV');
+
+		/** @var EntityManager $em */
+		$em = $this->getDoctrine()->getManager();
+
+		/** @var UV $uv */
+		$uv = $em->getRepository('EtuModuleUVBundle:UV')
+			->findOneBy(array('code' => $code));
+
+		if (! $uv) {
+			return $this->redirect($this->generateUrl('uvs_search', array(
+				'q' => $code
+			)), 301);
+		}
+
+		return $this->redirect($this->generateUrl('uvs_view_courses', array(
+			'slug' => $uv->getSlug(),
+			'name' => StringManipulationExtension::slugify($uv->getName())
+		)), 301);
+	}
 }
