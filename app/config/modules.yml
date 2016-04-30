@@ -1,7 +1,6 @@
 modules:
   - Etu\Module\ArgentiqueBundle\EtuModuleArgentiqueBundle
   - Etu\Module\AssosBundle\EtuModuleAssosBundle
-  # Etu\Module\BuckUTTBundle\EtuModuleBuckUTTBundle
   - Etu\Module\BugsBundle\EtuModuleBugsBundle
   - Etu\Module\CumulBundle\EtuModuleCumulBundle
   - Etu\Module\CovoitBundle\EtuModuleCovoitBundle
