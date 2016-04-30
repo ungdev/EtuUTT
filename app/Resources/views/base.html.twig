@@ -260,6 +260,36 @@
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
+		<!-- Piwik -->
+		<script type="text/javascript">
+			var _paq = _paq || [];
+			_paq.push(["setDomains", ["*.etu.utt.fr"]]);
+			// you can set up to 5 custom variables for each visitor
+			{% if is_granted('ROLE_STUDENT') %}
+				_paq.push(["setCustomVariable", 1, "type", "student", "visit"]);
+			{% elseif is_granted('ROLE_STAFFUTT') %}
+				_paq.push(["setCustomVariable", 1, "type", "staffutt", "visit"]);
+			{% elseif is_granted('ROLE_ORGA') %}
+				_paq.push(["setCustomVariable", 1, "type", "orga", "visit"]);
+			{% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
+				_paq.push(["setCustomVariable", 1, "type", "other", "visit"]);
+			{% else %}
+				_paq.push(["setCustomVariable", 1, "type", "visitor", "visit"]);
+			{% endif %}
+			_paq.push(["setCustomVariable", 2, "action", "{{ app.request.attributes.get("_controller") }}", "visit"]);
+			_paq.push(['trackPageView']);
+			_paq.push(['enableLinkTracking']);
+			(function() {
+				var u="//piwik.uttnetgroup.fr/";
+				_paq.push(['setTrackerUrl', u+'piwik.php']);
+				_paq.push(['setSiteId', 1]);
+				var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+				g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+			})();
+		</script>
+		<noscript><p><img src="//piwik.uttnetgroup.fr/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
+		<!-- End Piwik Code -->
+
 		{% block js_libs %}{% endblock %}
 
 		{% block checkout_notifications %}{% endblock %}
