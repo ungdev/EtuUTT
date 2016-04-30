@@ -276,7 +276,6 @@
 			{% else %}
 				_paq.push(["setCustomVariable", 1, "type", "visitor", "visit"]);
 			{% endif %}
-			_paq.push(["setCustomVariable", 2, "action", "{{ app.request.attributes.get("_controller") }}", "visit"]);
 			_paq.push(['trackPageView']);
 			_paq.push(['enableLinkTracking']);
 			(function() {
