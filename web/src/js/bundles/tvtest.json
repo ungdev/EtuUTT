@@ -1,0 +1,79 @@
+{
+	"etuuttVersion": "Alabate",
+	"sidepanel" : {
+		"positionsUpdate" : "2016-10-20T12:12:42",
+		"positions" : [
+			[ 1, 2, 3, 4, 5 ],
+			[ 5 ],
+			[ 1, 2 ]
+		],
+		"block" : [
+			{
+				"id" : 1,
+				"update" : "2016-10-20T12:12:34",
+				"title" : "TCAT: Technopole",
+				"content" : "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" >        <tr height=\"5\" border=\"0\" >            <td width=\"100\" style=\"font-size: 4pt; color: white; background: rgb(0, 136, 55)\" align=\"center\"><font color=\"#FFFFFF\">&nbsp</font></td>            <td width=\"500\" bgcolor=\"#777777\" align=\"center\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>        </tr>            <tr height=\"30\" border=\"0\" >            <td width=\"100\" style=\"font-size: 12pt; color: white; background: rgb(0, 136, 55)\" align=\"center\"><font color=\"#FFFFFF\"><b>6</b></font></td>            <td width=\"500\" style=\"font-size: 10pt; color: white\" bgcolor=\"#777777\" align=\"center\">CHARTREUX PAR TECHNOPOLE</td>            <td width=\"120\" style=\"font-size: 12pt; color: white\" bgcolor=\"#777777\" align=\"right\"><b>2&nbsp</b></td>            <td width=\"120\" style=\"font-size: 12pt; color: white\" bgcolor=\"#777777\" align=\"right\"><b>22&nbsp</b></td>        </tr>        <tr height=\"5\" border=\"0\" >            <td width=\"100\" style=\"font-size: 4pt; color: white; background: rgb(0, 136, 55)\" align=\"center\"><font color=\"#FFFFFF\">&nbsp</font></td>            <td width=\"500\" bgcolor=\"#777777\" align=\"center\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>        </tr>        <tr height=\"5\" border=\"0\" >            <td width=\"100\" style=\"font-size: 4pt; color: white; background: rgb(0, 136, 55)\" align=\"center\"><font color=\"#FFFFFF\">&nbsp</font></td>            <td width=\"500\" bgcolor=\"#777777\" align=\"center\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>        </tr>            <tr height=\"30\" border=\"0\" >            <td width=\"100\" style=\"font-size: 12pt; color: white; background: rgb(0, 136, 55)\" align=\"center\"><font color=\"#FFFFFF\"><b>6</b></font></td>            <td width=\"500\" style=\"font-size: 10pt; color: white\" bgcolor=\"#777777\" align=\"center\">CHANTEREIGNE PAR TECHN.</td>            <td width=\"120\" style=\"font-size: 12pt; color: white\" bgcolor=\"#777777\" align=\"right\"><b>3&nbsp</b></td>            <td width=\"120\" style=\"font-size: 12pt; color: white\" bgcolor=\"#777777\" align=\"right\"><b>19&nbsp</b></td>        </tr>        <tr height=\"5\" border=\"0\" >            <td width=\"100\" style=\"font-size: 4pt; color: white; background: rgb(0, 136, 55)\" align=\"center\"><font color=\"#FFFFFF\">&nbsp</font></td>            <td width=\"500\" bgcolor=\"#777777\" align=\"center\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>        </tr>        <tr height=\"5\" border=\"0\" >            <td width=\"100\" style=\"font-size: 4pt; color: white; background: rgb(244, 68, 159)\" align=\"center\"><font color=\"#FFFFFF\">&nbsp</font></td>            <td width=\"500\" bgcolor=\"#777777\" align=\"center\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>        </tr>            <tr height=\"30\" border=\"0\" >            <td width=\"100\" style=\"font-size: 12pt; color: white; background: rgb(244, 68, 159)\" align=\"center\"><font color=\"#FFFFFF\"><b>11</b></font></td>            <td width=\"500\" style=\"font-size: 10pt; color: white\" bgcolor=\"#777777\" align=\"center\">ST JULIEN</td>            <td width=\"120\" style=\"font-size: 12pt; color: white\" bgcolor=\"#777777\" align=\"right\"><b>12&nbsp</b></td>            <td width=\"120\" style=\"font-size: 12pt; color: white\" bgcolor=\"#777777\" align=\"right\"><b>40&nbsp</b></td>        </tr>        <tr height=\"5\" border=\"0\" >            <td width=\"100\" style=\"font-size: 4pt; color: white; background: rgb(244, 68, 159)\" align=\"center\"><font color=\"#FFFFFF\">&nbsp</font></td>            <td width=\"500\" bgcolor=\"#777777\" align=\"center\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>        </tr>        <tr height=\"5\" border=\"0\" >            <td width=\"100\" style=\"font-size: 4pt; color: white; background: rgb(244, 68, 159)\" align=\"center\"><font color=\"#FFFFFF\">&nbsp</font></td>            <td width=\"500\" bgcolor=\"#777777\" align=\"center\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>        </tr>            <tr height=\"30\" border=\"0\" >            <td width=\"100\" style=\"font-size: 12pt; color: white; background: rgb(244, 68, 159)\" align=\"center\"><font color=\"#FFFFFF\"><b>11</b></font></td>            <td width=\"500\" style=\"font-size: 10pt; color: white\" bgcolor=\"#777777\" align=\"center\">CHAPELLE ST LUC</td>            <td width=\"120\" style=\"font-size: 12pt; color: white\" bgcolor=\"#777777\" align=\"right\"><b>3&nbsp</b></td>            <td width=\"120\" style=\"font-size: 12pt; color: white\" bgcolor=\"#777777\" align=\"right\"><b>15&nbsp</b></td>        </tr>        <tr height=\"5\" border=\"0\" >            <td width=\"100\" style=\"font-size: 4pt; color: white; background: rgb(244, 68, 159)\" align=\"center\"><font color=\"#FFFFFF\">&nbsp</font></td>            <td width=\"500\" bgcolor=\"#777777\" align=\"center\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>        </tr>        <tr height=\"5\" border=\"0\" >            <td width=\"100\" style=\"font-size: 4pt; color: white; background: rgb(200, 119, 185)\" align=\"center\"><font color=\"#FFFFFF\">&nbsp</font></td>            <td width=\"500\" bgcolor=\"#777777\" align=\"center\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>        </tr>            <tr height=\"30\" border=\"0\" >            <td width=\"100\" style=\"font-size: 12pt; color: white; background: rgb(200, 119, 185)\" align=\"center\"><font color=\"#FFFFFF\"><b>21</b></font></td>            <td width=\"500\" style=\"font-size: 10pt; color: white\" bgcolor=\"#777777\" align=\"center\">EUROPE</td>            <td width=\"120\" style=\"font-size: 12pt; color: white\" bgcolor=\"#777777\" align=\"right\"><b>> 1h&nbsp</b></td>            <td width=\"120\" style=\"font-size: 12pt; color: white\" bgcolor=\"#777777\" align=\"right\"><b>&nbsp</b></td>        </tr>        <tr height=\"5\" border=\"0\" >            <td width=\"100\" style=\"font-size: 4pt; color: white; background: rgb(200, 119, 185)\" align=\"center\"><font color=\"#FFFFFF\">&nbsp</font></td>            <td width=\"500\" bgcolor=\"#777777\" align=\"center\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>        </tr>        <tr height=\"5\" border=\"0\" >            <td width=\"100\" style=\"font-size: 4pt; color: white; background: rgb(200, 119, 185)\" align=\"center\"><font color=\"#FFFFFF\">&nbsp</font></td>            <td width=\"500\" bgcolor=\"#777777\" align=\"center\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>        </tr>            <tr height=\"30\" border=\"0\" >            <td width=\"100\" style=\"font-size: 12pt; color: white; background: rgb(200, 119, 185)\" align=\"center\"><font color=\"#FFFFFF\"><b>21</b></font></td>            <td width=\"500\" style=\"font-size: 10pt; color: white\" bgcolor=\"#777777\" align=\"center\">CHARTREUX</td>            <td width=\"120\" style=\"font-size: 12pt; color: white\" bgcolor=\"#777777\" align=\"right\"><b>58&nbsp</b></td>            <td width=\"120\" style=\"font-size: 12pt; color: white\" bgcolor=\"#777777\" align=\"right\"><b>&nbsp</b></td>        </tr>        <tr height=\"5\" border=\"0\" >            <td width=\"100\" style=\"font-size: 4pt; color: white; background: rgb(200, 119, 185)\" align=\"center\"><font color=\"#FFFFFF\">&nbsp</font></td>            <td width=\"500\" bgcolor=\"#777777\" align=\"center\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>            <td width=\"120\" bgcolor=\"#777777\" align=\"right\"></td>        </tr></table>",
+				"duration" : 10000
+			},
+			{
+				"id" : 2,
+				"update" : "2017-10-20T12:12:32",
+				"title" : "Block n°2",
+				"content" : "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+				"duration" : 1000
+			},
+			{
+				"id" : 3,
+				"update" : "2016-10-20T12:12:33",
+				"title" : "Block n°3",
+				"content" : "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+				"duration" : 5000
+			},
+			{
+				"id" : 4,
+				"update" : "2016-10-20T12:12:32",
+				"title" : "Block n°4",
+				"content" : "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+				"duration" : 5000
+			},
+			{
+				"id" : 5,
+				"update" : "2016-10-20T12:12:32",
+				"title" : "Foyer fermé",
+				"content" : "Le foyer sera fermé du <strong>10 mars</strong> au <strong>22 juillet</strong> pour permettre l'organisation du Gala.",
+				"duration" : 2000
+			}
+		]
+	},
+	"textpanelBottom" : {
+		"update" : "2016-10-20T12:12:49",
+		"show" : true,
+		"fontsize" : "20px",
+		"align" : "left",
+		"content" : "Je suis Alabate, <br/>roi des Alabate !"
+	},
+	"textpanelRight" : {
+		"update" : "2016-10-20T12:12:33",
+		"show" : false,
+		"fontsize" : "35px",
+		"align" : "center",
+		"content" : "Je suis Alabate, <br/>roi des Alabate !"
+	},
+	"main" : {
+		"orderUpdate" : "2016-10-20T12:12:34",
+		"slides" : [
+			{
+				"id" : 2,
+				"update" : "2016-10-20T12:12:36",
+				"content" : "<h1 class=\"source-sans-pro\"><span><i class=\"fa fa-graduation-cap\" aria-hidden=\"true\"></i></span>Alabate</h1>",
+				"duration" : 4000
+			},
+			{
+				"id" : 1,
+				"update" : "2016-10-20T12:12:36",
+				"content" : "<span style=\"display:inline-block;height:100%;vertical-align:middle\"></span><img src=\"https://gala.utt.fr/wp-content/uploads/2016/03/fondv2.jpg\" style=\"max-height:100%;max-width:100%;vertical-align:middle;\">",
+				"duration" : 3000
+			}
+		]
+	}
+}

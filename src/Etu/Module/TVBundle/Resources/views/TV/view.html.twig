@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+
+		<title>{% block title %}{{ 'upload.main.index.title'|trans }}{% endblock %} - {{ 'base.title'|trans }}</title>
+
+		<meta name="description" content="{{ 'upload.main.index.title'|trans }}" />
+
+		<link rel="stylesheet" href="{{ asset('min/etuutt.css') }}" type="text/css" />
+	</head>
+	<body id="tv">
+		{% set message = false %}
+
+		{% if app.session.flashBag.has('message') %}
+			{% set message = app.session.flashBag.get('message') %}
+
+			<div class="alert alert-{{ message.type }} hidden-for-1024">
+				{{ message.message|trans }}
+			</div>
+		{% endif %}
+
+		<div class="tv-sidepanel"></div>
+		<div class="tv-text-panel-right"></div>
+		<div class="tv-main">
+			<div class="tv-container"></div>
+			<div class="tv-text-panel-bottom"></div>
+		</div>
+
+		{% block javascripts %}{% endblock %}
+		{% javascripts
+            'vendor/jquery/jquery.min.js'
+            'vendor/jquery-ui/ui/minified/jquery-ui.custom.min.js'
+            'vendor/bootstrap/docs/assets/js/bootstrap.min.js'
+            'vendor/facebox/src/facebox.js'
+            'vendor/SCEditor/src/jquery.sceditor.js'
+            'vendor/SCEditor/src/plugins/bbcode.js'
+            'vendor/SCEditor/languages/fr.js'
+            'vendor/tipsy/src/javascripts/jquery.tipsy.js'
+            'vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js'
+            'vendor/jquery-cycle2/build/jquery.cycle2.min.js'
+            'vendor/jquery-cycle2/build/plugin/jquery.cycle2.center.min.js'
+            'vendor/moment/min/moment.min.js'
+            'vendor/moment/locale/fr.js'
+            'vendor/moment/locale/fr.js'
+            'bundles/fosjsrouting/js/router.js'
+            'src/js/routes.js'
+            'src/js/common.js'
+			'src/js/bundles/tv.js'
+
+            filter='?minifier_js'
+            output='min/etuutt_tv.js'
+        %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+		<script type="text/javascript">
+			var tv = new Tv(30, '{{ asset('src/js/bundles/tvtest.json') }}');
+		</script>
+
+	</body>
+</html>
