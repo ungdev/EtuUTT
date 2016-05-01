@@ -72,7 +72,7 @@ minifier:
 assetic:
     debug: "%kernel.debug%"
     use_controller: false
-    bundles: [ "EtuModuleTVBundle" ]
+    bundles: [ ]
     filters:
         cssrewrite: ~
         lessphp:
