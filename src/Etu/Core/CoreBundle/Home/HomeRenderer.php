@@ -133,7 +133,7 @@ class HomeRenderer
         if ($this->modulesManager->getModuleByIdentifier('argentique')->isEnabled()) {
             $photos = $this->builder->getPhotos();
 
-            if (count($photos['list']) > 0) {
+            if (isset($photos['list']) && count($photos['list']) > 0) {
                 $block = [
                     'template' => 'EtuCoreBundle:Main/index_blocks:photos.html.twig',
                     'context' => [
