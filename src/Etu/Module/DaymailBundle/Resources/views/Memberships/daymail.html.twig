@@ -30,6 +30,12 @@
 
 				if($(this).width() >= 25 && $(this).height() >= 25)
 				{
+					// Remove max-width to authorize resize
+					if($(this).css('max-width')) {
+						$(this).width($(this).css('max-width'));
+					}
+					$(this).css('max-width', 'none');
+
 					// Force to keep ratio
 					if(!$(this).data('ratio')) {
 						$(this).data('ratio', $(this).width() / $(this).height());
