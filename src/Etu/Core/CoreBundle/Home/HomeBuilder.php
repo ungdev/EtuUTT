@@ -262,6 +262,8 @@ class HomeBuilder
          * Select most recent collection, find most recent set in it and get 5 random images from this set
          */
         $photos = [];
+        $collection = '';
+        $set = '';
 
         // Get and sort collection list
         $collections = glob($root . '/*', GLOB_ONLYDIR);
