@@ -51,8 +51,8 @@ class BodyParser
                 if($height > 500) {
                     $width = 500*$width/$height;
                 }
-
-                $html = str_replace($image, '<img src="'.$src.'" style="'.$style.';width:100%; max-width:'.$width.'px; height:auto;" width="'.$width.'" />', $html);
+        
+                $html = str_replace($image, '<img src="'.$src.'" style="'.$style.';width:100%; max-width:'.$width.'px; height:auto;" width="'.$width.'" data-width="'.$width.'" data-height="'.$height.'" />', $html);
             }
             else if($src) {
                 $src = $src[1];
@@ -62,19 +62,6 @@ class BodyParser
             else {
                 // Remove image if we cannot find src field
                 $html = str_replace($image, '', $html);
-            }
-
-
-            if (stripos('/uploads/', $src)) {
-                $path = explode('/uploads/', $src);
-                $path = $path[1];
-
-                $size = $imagine->open($this->webDir.'/uploads/'.$path)->getSize();
-
-                if ($size->getWidth() > 600) {
-                    $replacement = '<img src="'.$src.'" style="width:600px; max-width: 100%;" width="600" />';
-                    $html = str_replace($image, $replacement, $html);
-                }
             }
         }
 
