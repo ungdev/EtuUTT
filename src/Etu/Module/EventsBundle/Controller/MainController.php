@@ -346,7 +346,7 @@ class MainController extends Controller
                 'begin' => $event->getBegin(),
                 'location' => $event->getLocation(),
             ];
-            if (count($array) >= 3) {
+            if (count($array) >= 4) {
                 break;
             }
         }
