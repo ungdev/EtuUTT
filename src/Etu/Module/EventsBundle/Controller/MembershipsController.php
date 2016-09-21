@@ -279,6 +279,8 @@ class MembershipsController extends Controller
                 'choices' => array(
                     Event::PRIVACY_PUBLIC => 'events.memberships.create.privacy.public',
                     Event::PRIVACY_PRIVATE => 'events.memberships.create.privacy.private',
+                    Event::PRIVACY_ORGAS => 'events.memberships.create.privacy.orgas',
+                    Event::PRIVACY_MEMBERS => 'events.memberships.create.privacy.members',
                 ),
                 'required' => true
             ))
@@ -291,45 +293,47 @@ class MembershipsController extends Controller
 
             $event->upload();
 
-            $entity = array( // @TODO WTF? Y U AN ARRAY?
-                'id' => $event->getId(),
-                'title' => $event->getTitle(),
-                'category' => $categories[$event->getCategory()],
-                'orga' => array(
-                    'id' => $event->getOrga()->getId(),
-                    'name' => $event->getOrga()->getName(),
-                )
-            );
+            if (!in_array($event->getPrivacy(), [Event::PRIVACY_ORGAS, Event::PRIVACY_MEMBERS])) {
+                $entity = array( // @TODO WTF? Y U AN ARRAY?
+                    'id' => $event->getId(),
+                    'title' => $event->getTitle(),
+                    'category' => $categories[$event->getCategory()],
+                    'orga' => array(
+                        'id' => $event->getOrga()->getId(),
+                        'name' => $event->getOrga()->getName(),
+                    )
+                );
 
-            // Send notifications to subscribers of all eventts
-            $notif = new Notification();
+                // Send notifications to subscribers of all eventts
+                $notif = new Notification();
 
-            $notif
-                ->setModule('events')
-                ->setHelper('event_created_all')
-                ->setAuthorId($this->getUser()->getId())
-                ->setEntityType('event')
-                ->setEntityId(0)
-                ->addEntity($entity);
+                $notif
+                    ->setModule('events')
+                    ->setHelper('event_created_all')
+                    ->setAuthorId($this->getUser()->getId())
+                    ->setEntityType('event')
+                    ->setEntityId(0)
+                    ->addEntity($entity);
 
-            $this->getNotificationsSender()->send($notif);
+                $this->getNotificationsSender()->send($notif);
 
-            // Send notifications to subscribers of specific category
-            $notif = new Notification();
+                // Send notifications to subscribers of specific category
+                $notif = new Notification();
 
-            $availableCategories = Event::$categories;
-            array_unshift($availableCategories, 'all');
-            $keys = array_flip($availableCategories);
+                $availableCategories = Event::$categories;
+                array_unshift($availableCategories, 'all');
+                $keys = array_flip($availableCategories);
 
-            $notif
-                ->setModule('events')
-                ->setHelper('event_created_category')
-                ->setAuthorId($this->getUser()->getId())
-                ->setEntityType('event-category')
-                ->setEntityId($keys[$event->getCategory()])
-                ->addEntity($entity);
+                $notif
+                    ->setModule('events')
+                    ->setHelper('event_created_category')
+                    ->setAuthorId($this->getUser()->getId())
+                    ->setEntityType('event-category')
+                    ->setEntityId($keys[$event->getCategory()])
+                    ->addEntity($entity);
 
-            $this->getNotificationsSender()->send($notif);
+                $this->getNotificationsSender()->send($notif);
+            }
 
             // Confirmation
             $this->get('session')->getFlashBag()->set('message', array(
@@ -440,6 +444,8 @@ class MembershipsController extends Controller
                 'choices' => array(
                     Event::PRIVACY_PUBLIC => 'events.memberships.create.privacy.public',
                     Event::PRIVACY_PRIVATE => 'events.memberships.create.privacy.private',
+                    Event::PRIVACY_ORGAS => 'events.memberships.create.privacy.orgas',
+                    Event::PRIVACY_MEMBERS => 'events.memberships.create.privacy.members',
                 ),
                 'required' => true
             ))

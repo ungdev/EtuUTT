@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class MainController extends Controller
 {
@@ -88,6 +89,21 @@ class MainController extends Controller
             if ($category != 'all' && $event->getCategory() != $category) {
                 continue;
             }
+            if ($event->getPrivacy() == Event::PRIVACY_ORGAS && $this->getUser()->getMemberships()->count() <= 0) {
+                continue;
+            }
+            if ($event->getPrivacy() == Event::PRIVACY_MEMBERS) {
+                $continue = true;
+                foreach ($this->getUser()->getMemberships() as $membership) {
+                    if ($membership->getOrganization()->getId() == $event->getOrga()->getId()) {
+                        $continue = false;
+                        break;
+                    }
+                }
+                if ($continue) {
+                    continue;
+                }
+            }
 
             $json[] = array(
                 'id' => $event->getId(),
@@ -131,6 +147,22 @@ class MainController extends Controller
 
         if ($event->getPrivacy() != Event::PRIVACY_PUBLIC) {
             $this->denyAccessUnlessGranted('ROLE_EVENTS_INTERNAL');
+        }
+
+        if ($event->getPrivacy() == Event::PRIVACY_ORGAS && $this->getUser()->getMemberships()->count() <= 0) {
+            throw new AccessDeniedHttpException;
+        }
+        if ($event->getPrivacy() == Event::PRIVACY_MEMBERS) {
+            $error = true;
+            foreach ($this->getUser()->getMemberships() as $membership) {
+                if ($membership->getOrganization()->getId() == $event->getOrga()->getId()) {
+                    $error = false;
+                    break;
+                }
+            }
+            if ($error) {
+                throw new AccessDeniedHttpException;
+            }
         }
 
         if (StringManipulationExtension::slugify($event->getTitle()) != $slug) {
@@ -340,6 +372,21 @@ class MainController extends Controller
 
         $array = [];
         foreach ($events->all() as $event) {
+            if ($event->getPrivacy() == Event::PRIVACY_ORGAS && $this->getUser()->getMemberships()->count() <= 0) {
+                continue;
+            }
+            if ($event->getPrivacy() == Event::PRIVACY_MEMBERS) {
+                $continue = true;
+                foreach ($this->getUser()->getMemberships() as $membership) {
+                    if ($membership->getOrganization()->getId() == $event->getOrga()->getId()) {
+                        $continue = false;
+                        break;
+                    }
+                }
+                if ($continue) {
+                    continue;
+                }
+            }
             $array[] = [
                 'id' => $event->getId(),
                 'title' => $event->getTitle(),

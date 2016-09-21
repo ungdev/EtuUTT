@@ -29,6 +29,8 @@ class Event extends AbstractEvent
 
     const PRIVACY_PUBLIC = 100;
     const PRIVACY_PRIVATE = 200;
+    const PRIVACY_ORGAS = 300;
+    const PRIVACY_MEMBERS = 400;
 
     public static $categories = array(
         self::CATEGORY_CULTURE, self::CATEGORY_SPORT, self::CATEGORY_FORMATION,
@@ -171,8 +173,6 @@ class Event extends AbstractEvent
     public function upload()
     {
         if (null === $this->file) {
-            echo 'non';
-            exit;
             if (file_exists(__DIR__ . '/../../../../../web/uploads/events/'.$this->getId().'.png')) {
                 return false;
             } elseif (file_exists(__DIR__.'/../../../../../web/uploads/logos/'.$this->getOrga()->getLogin().'.png')) {

@@ -98,6 +98,8 @@ events:
         label: "Public visé"
         private: "Etudiants seulement"
         public: "Exterieurs et étudiants"
+        orgas: "Membre d'au moins une association"
+        members: "Membre de l'association organisatrice"
       submit: "Créer l'évènement"
       title: Titre
     delete:
