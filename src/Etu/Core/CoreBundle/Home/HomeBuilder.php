@@ -253,6 +253,8 @@ class HomeBuilder
 
         /** @var string $root */
         $root = EtuModuleArgentiqueBundle::getPhotosRoot();
+        $collection = null;
+        $set = null;
 
         if (! file_exists($root)) {
             return [];
@@ -301,13 +303,13 @@ class HomeBuilder
 
                 // Find all pictures
                 $paths = glob($set . '/*.{jpg,jpeg,JPG,JPEG}', GLOB_BRACE);
-                if(count($paths) < 5) {
+                if (count($paths) < 5) {
                     continue;
                 }
 
                 // Select random pictures
                 $count = 10;
-                if(count($paths) < $count) {
+                if (count($paths) < $count) {
                     $count = count($paths);
                 }
                 $keys = array_rand($paths, $count);
