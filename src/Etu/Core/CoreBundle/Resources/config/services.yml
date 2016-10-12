@@ -73,7 +73,6 @@ services:
         arguments: [@etu.menu.user_builder, @etu.menu.user_renderer]
         tags:
             - { name: twig.extension }
-
     # Organizations menu
     etu.menu.orga_builder:
         class: %etu.menu.orga_builder.class%
@@ -134,6 +133,10 @@ services:
             - { name: twig.extension }
     etu.twig.array_manipulation:
         class: %etu.twig.array_manipulation.class%
+        tags:
+            - { name: twig.extension }
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
         tags:
             - { name: twig.extension }
 

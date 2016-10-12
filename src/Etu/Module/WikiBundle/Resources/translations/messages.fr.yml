@@ -1,0 +1,25 @@
+wiki:
+  main:
+    menu:
+      back: "Retour"
+      list: "Liste des pages"
+      view: "Lire"
+      edit: "Modifier"
+      infos: "Historique"
+    view:
+      last-edit: "Dernière modification par"
+      can-read: "Page visible par"
+      can-edit: "Page modifiable par"
+      locked: "Page verouillé en écriture"
+    right-orga:
+      0: "Administrateur du wiki"
+      100: "Administrateur du wiki de %orga%"
+      200: "Membre de %orga%"
+      300: "Etudiant"
+      400: "Etudiant et Exterieur"
+    right:
+      0: "Administrateur du wiki"
+      100: "Administrateur du wiki"
+      200: "Administrateur du wiki"
+      300: "Etudiant"
+      400: "Etudiant et Exterieur"
