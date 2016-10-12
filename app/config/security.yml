@@ -69,8 +69,6 @@ security:
             - ROLE_CORE_ADMIN_HOME # Can see admin homepage
             - ROLE_CORE_ADMIN_SERVER # Can access server status page
             - ROLE_CORE_ADMIN_PROFIL # Can edit others profil, put in read only mode
-            - ROLE_CORE_ADMIN_ROLES # Can give other peoples roles
-            - ROLE_ALLOWED_TO_SWITCH # Can connect as another user
             - ROLE_CORE_ADMIN_MODULES # Can edit loaded modules
             - ROLE_CORE_ADMIN_PAGES # Can edit static pages
             - ROLE_ARGENTIQUE_ADMIN # Read documentation to upload pictures
@@ -78,6 +76,11 @@ security:
             - ROLE_FORUM_ADMIN # Can moderate forum
             - ROLE_UV_REVIEW_ADMIN # Can moderate and remove UV review and old exams
             - ROLE_WIKI_ADMIN # Can lock, read and write on every admin page on the wiki
+
+        ROLE_SUPERADMIN:
+            - ROLE_ADMIN
+            - ROLE_ALLOWED_TO_SWITCH # Can connect as another user
+            - ROLE_CORE_ADMIN_ROLES # Can give other peoples roles
 
         ROLE_EDITOR:
             - ROLE_CORE_ADMIN_HOME # Can see admin homepage
