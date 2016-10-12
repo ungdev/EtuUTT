@@ -1,0 +1,62 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ page.title }}{% endblock %}
+
+{% block meta_desc %}{{ page.title }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('src/img/titles/page.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<ul class="nav nav-tabs page-tabs">
+		<!-- <li>
+			<a href="#">
+					<i class="icon-chevron-left"></i>
+				{{ 'wiki.main.menu.back'|trans }}
+			</a>
+			<a href="#">
+				<i class="icon-list"></i>
+				{{ 'wiki.main.menu.list'|trans }}
+			</a>
+		</li> -->
+		<li class="pull-right active page-tabs-resolved-active">
+			<a href="{{ path('wiki_view', {'slug': page.getSlug(), 'category': page.getCategory()})}}">
+				{{ 'wiki.main.menu.view'|trans }}
+			</a>
+		</li>
+		<!-- <li class="pull-right">
+			<a href="#">
+				{{ 'wiki.main.menu.edit'|trans }}
+			</a>
+		</li>
+		<li class="pull-right">
+			<a href="#">
+				{{ 'wiki.main.menu.infos'|trans }}
+			</a>
+		</li> -->
+	</ul>
+
+	<div class="padding20-all">
+		{{ page.content|bbcode_filter('default_filter') }}
+	</div>
+	<div class="muted align-right padding20-all">
+		<small>
+			{{ 'wiki.main.view.last-edit'|trans }} <a href="{{ path('user_view', { 'login' : page.getAuthor().getLogin() }) }}">{{ page.getAuthor().getFullName() }}</a> : {{ page.getCreatedAt()|localizeddate('short','short') }}<br/>
+			{% if page.getIsLocked() %}
+				{{ 'wiki.main.view.locked'|trans }}<br/>
+			{% elseif page.getOrganization() %}
+				{{ 'wiki.main.view.can-edit'|trans }} <em>{{ ('wiki.main.right-orga.'~page.getEditRight())|trans({'%orga%': page.getOrganization()}) }}</em><br/>
+			{% else %}
+				{{ 'wiki.main.view.can-edit'|trans }} <em>{{ ('wiki.main.right.'~page.getEditRight())|trans }}</em><br/>
+			{% endif %}
+
+			{% if page.getOrganization() %}
+				{{ 'wiki.main.view.can-read' |trans }} <em>{{ ('wiki.main.right-orga.'~page.getReadRight())|trans({'%orga%': page.getOrganization()}) }}</em>
+			{% else %}
+				{{ 'wiki.main.view.can-read' |trans }} <em>{{ ('wiki.main.right.'~page.getReadRight())|trans }}</em>
+			{% endif %}
+
+		</small>
+	</div>
+{% endblock %}

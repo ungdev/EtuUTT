@@ -73,7 +73,6 @@ services:
         arguments: [@etu.menu.user_builder, @etu.menu.user_renderer]
         tags:
             - { name: twig.extension }
-
     # Organizations menu
     etu.menu.orga_builder:
         class: %etu.menu.orga_builder.class%
@@ -136,6 +135,15 @@ services:
         class: %etu.twig.array_manipulation.class%
         tags:
             - { name: twig.extension }
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
+
+    etu.decoda.filter.videojs:
+        class: Etu\Core\CoreBundle\Framework\Twig\VideojsFilter
+        tags:
+            - { name: fm_bbcode.decoda.filter, id: videojs }
 
     # Global accessor
     etu.twig.global_accessor:
@@ -217,4 +225,3 @@ services:
     etu.core.home_renderer:
         class: %etu.core.home_renderer.class%
         arguments: [ @etu.core.home_builder, @etu.core.modules_manager, @form.factory ]
-

@@ -8,5 +8,6 @@ modules:
   - Etu\Module\EventsBundle\EtuModuleEventsBundle
   - Etu\Module\ForumBundle\EtuModuleForumBundle
   - Etu\Module\TrombiBundle\EtuModuleTrombiBundle
+  - Etu\Module\TVBundle\EtuModuleTVBundle
   - Etu\Module\UVBundle\EtuModuleUVBundle
   - Etu\Module\UploadBundle\EtuModuleUploadBundle

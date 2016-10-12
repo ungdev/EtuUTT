@@ -11,7 +11,6 @@
   "dependencies": {
     "bootstrap": "2.3.*",
     "facebox": "*",
-    "fontawesome": "4.0.*",
     "fullcalendar": "2.*",
     "gmaps": "0.4.*",
     "imgareaselect": "0.9.*",
@@ -28,7 +27,8 @@
     "jquery-cycle2": "*",
     "html5shiv": "~3.7.2",
     "Justified-Gallery": "~3.5.1",
-    "codemirror": "5.14.*"
+    "codemirror": "5.14.*",
+    "font-awesome": "4.6.0"
   },
   "ignore": [
     "**/.*",

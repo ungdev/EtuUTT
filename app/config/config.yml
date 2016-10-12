@@ -117,6 +117,9 @@ stof_doctrine_extensions:
 
 ## FMBbcode
 fm_bbcode:
+    config:
+        templates:
+            - path: @EtuCoreBundle/Resources/views/bbcodeTemplates
     emoticon:
         path: /src/img/emoticons/
     filter_sets:
@@ -124,7 +127,7 @@ fm_bbcode:
             locale: %locale%
             strict: false
             xhtml: true
-            filters: [ default, block, text, code, image, list, table, quote, video, url ]
+            filters: [ default, block, text, code, image, list, table, quote, video, url, videojs ]
             hooks: [ clickable, emoticon ]
 
 # API Doc
