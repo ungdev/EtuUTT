@@ -130,6 +130,7 @@ fm_bbcode:
             strict: false
             xhtml: true
             filters: [ default, block, text, code, image, list, table, quote, video, url, videojs ]
+            whitelist: [ 'b', 'i', 'u', 's', 'sub', 'sup', 'left', 'center', 'right', 'justify', 'font', 'size', 'h1','h2','h3','h4','h5','h6', 'ul', 'li', 'ol', 'table', 'tr', 'td', 'quote', 'url', 'img', 'video', 'videojs']
             hooks: [ clickable, emoticon ]
 
 # API Doc
