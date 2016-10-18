@@ -26,7 +26,6 @@ wiki:
     edit:
         title: Titre
         parentPage: Page superieur
-        parentPageNone: Aucune
         content: Contenu de la page
         readRight: Qui peut voir la page ?
         editRight: Qui peut modifier la page ?

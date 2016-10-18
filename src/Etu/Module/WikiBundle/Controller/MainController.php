@@ -86,21 +86,26 @@ class MainController extends Controller
         // Create pre-slug selection
         if ($new) {
             $em = $this->getDoctrine()->getManager();
-            $pagelist = $em->createQueryBuilder()
-                ->select('p.title, p.slug')
+            $result = $em->createQueryBuilder()
+                ->select('p.title, p.slug, p.readRight, IDENTITY(p.organization) as organization_id')
                 ->from('EtuModuleWikiBundle:WikiPage', 'p', 'p.slug')
                 ->leftJoin('EtuModuleWikiBundle:WikiPage', 'p2', 'WITH',  'p.slug = p2.slug AND p.createdAt < p2.createdAt')
                 ->where('p2.slug IS NULL')
                 ->orderBy('p.slug', 'ASC')
                 ->getQuery()
                 ->getResult();
-            // Formate array and add ↳ at the beggining of the title if necessary
-            array_walk($pagelist, function (&$item, $key) {
-                $item = $item['title'];
-                if (strpos($key, '/') !== false) {
-                    $item = '↳'.$item;
+            // Formate array, check rights and add ↳ at the beggining of the title if necessary
+            $rights = $this->get('etu.wiki.permissions_checker');
+            $pagelist = [];
+            foreach ($result as $key => $value) {
+                if ($rights->has($value['readRight'], $value['organization_id'])) {
+                    $pagelist[$key] = $value['title'];
+                    if (strpos($key, '/') !== false) {
+                        $pagelist[$key] = '↳'.$pagelist[$key];
+                    }
                 }
-            });
+            }
+
             // Add "none" item
             $form = $form->add('preslug', 'choice', array(
                 'choices' => $pagelist,
@@ -110,7 +115,7 @@ class MainController extends Controller
                     return ['class' => 'choice_level_'.$level];
                 },
                 'data' => $slug,
-                'placeholder' => 'wiki.main.edit.parentPageNone',
+                'placeholder' => '-',
                 'required' => false,
                 'label' => 'wiki.main.edit.parentPage',
                 'mapped' => false,
@@ -122,8 +127,9 @@ class MainController extends Controller
 
         // Create rights fields
         $choices = [];
+        $organization_id = ($rights->getOrganization($category)) ? $rights->getOrganization($category)->getId() : null;
         foreach (WikiPage::RIGHT as $right) {
-            if ($rights->has($right)) {
+            if ($rights->has($right, $organization_id)) {
                 $choices[$right] = 'wiki.main.right.'.$right;
             }
         }

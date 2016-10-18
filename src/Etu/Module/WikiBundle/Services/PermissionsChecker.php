@@ -63,7 +63,9 @@ class PermissionsChecker
      */
     public function canRead(WikiPage $page)
     {
-        return $this->has($page->getReadRight());
+        $organization_id = ($page->getOrganization()) ? $page->getOrganization()->getId() : null;
+
+        return $this->has($page->getReadRight(), $organization_id);
     }
 
     /**
@@ -77,7 +79,9 @@ class PermissionsChecker
             return false;
         }
 
-        return $this->has($page->getEditRight());
+        $organization_id = ($page->getOrganization()) ? $page->getOrganization()->getId() : null;
+
+        return $this->has($page->getEditRight(), $organization_id);
     }
 
     /**
@@ -146,11 +150,12 @@ class PermissionsChecker
     /**
      * Check if user has the given right.
      *
-     * @param int $right WikiPage::RIGHT['*']
+     * @param int $right           WikiPage::RIGHT['*']
+     * @param int $organization_id
      *
      * @return bool
      */
-    public function has($right)
+    public function has($right, $organization_id = null)
     {
         if ($this->authorizationChecker->isGranted('ROLE_WIKI_ADMIN')) {
             return true;
@@ -160,13 +165,13 @@ class PermissionsChecker
             case WikiPage::RIGHT['ADMIN']:
                 return false;
             case WikiPage::RIGHT['ORGA_ADMIN']:
-                $membership = $this->membership[$page->getOrganization()->getId()] ?? null;
+                $membership = $this->membership[$organization_id] ?? null;
                 if (count($membership) && $membership->hasPermission('wiki')) {
                     return true;
                 }
                 break;
             case WikiPage::RIGHT['ORGA_MEMBER']:
-                $membership = $this->membership[$page->getOrganization()->getId()] ?? null;
+                $membership = $this->membership[$organization_id] ?? null;
                 if (count($membership)) {
                     return true;
                 }
