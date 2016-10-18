@@ -16,7 +16,7 @@ class MainController extends Controller
      * @Route("/wiki/view/{category}/{slug}", requirements={"category" = "[a-z0-9-]+", "slug" = "[a-z0-9-/]+"}, name="wiki_view")
      * @Template()
      */
-    public function viewAction($slug, $category = '')
+    public function viewAction($slug, $category)
     {
         // Find last version of a page
         $repo = $this->getDoctrine()->getRepository('EtuModuleWikiBundle:WikiPage');
@@ -38,17 +38,17 @@ class MainController extends Controller
 
         return array(
             'page' => $page,
+            'rights' => $this->get('etu.wiki.permissions_checker'),
+            'parentSlug' => substr($slug, 0, strrpos($slug, '/')),
         );
     }
-
-    //TODO check si le slug existe déjà
 
     /**
      * @Route("/wiki/edit/{category}/{slug}", requirements={"category" = "[a-z0-9-]+", "slug" = "[a-z0-9-/]+"}, name="wiki_edit")
      * @Route("/wiki/new/{category}/{slug}", defaults={"new"=true}, requirements={"category" = "[a-z0-9-]+", "slug" = "[a-z0-9-/]*"}, name="wiki_new")
      * @Template()
      */
-    public function editAction($category, $slug = '', $new = false)
+    public function editAction($category, $slug, $new = false)
     {
         // Find last version of a page
         $repo = $this->getDoctrine()->getRepository('EtuModuleWikiBundle:WikiPage');
@@ -91,6 +91,7 @@ class MainController extends Controller
                 ->from('EtuModuleWikiBundle:WikiPage', 'p', 'p.slug')
                 ->leftJoin('EtuModuleWikiBundle:WikiPage', 'p2', 'WITH',  'p.slug = p2.slug AND p.createdAt < p2.createdAt')
                 ->where('p2.slug IS NULL')
+                ->where('p.category = :category')->setParameter(':category', $category)
                 ->orderBy('p.slug', 'ASC')
                 ->getQuery()
                 ->getResult();
@@ -206,6 +207,44 @@ class MainController extends Controller
         return array(
             'page' => $page,
             'form' => $form->createView(),
+            'rights' => $this->get('etu.wiki.permissions_checker'),
+        );
+    }
+
+    /**
+     * @Route("/wiki/list/{category}", requirements={"category" = "[a-z0-9-]+"}, name="wiki_list")
+     * @Template()
+     */
+    public function listAction($category)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $result = $em->createQueryBuilder()
+            ->select('p')
+            ->from('EtuModuleWikiBundle:WikiPage', 'p')
+            ->leftJoin('EtuModuleWikiBundle:WikiPage', 'p2', 'WITH',  'p.slug = p2.slug AND p.createdAt < p2.createdAt')
+            ->where('p2.slug IS NULL')
+            ->where('p.category = :category')->setParameter(':category', $category)
+            ->orderBy('p.slug', 'ASC')
+            ->getQuery()
+            ->getResult();
+        // Formate array, check rights and add ↳ at the beggining of the title if necessary
+        $rights = $this->get('etu.wiki.permissions_checker');
+        $pagelist = [];
+        foreach ($result as $value) {
+            $association_id = ($value->getOrganization()) ? $value->getOrganization()->getId() : null;
+            if ($rights->has($value->getReadRight(), $association_id)) {
+                $pagelist[$value->getSlug()] = [
+                    'title' => $value->getTitle(),
+                    'category' => $value->getCategory(),
+                    'level' => substr_count($value->getSlug(), '/'),
+                ];
+            }
+        }
+
+        return array(
+            'pagelist' => $pagelist,
+            'category' => $category,
+            'rights' => $this->get('etu.wiki.permissions_checker'),
         );
     }
 }

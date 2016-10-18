@@ -2,11 +2,11 @@ wiki:
   main:
     menu:
       view: "Lire"
-      new: "Créer"
+      new: "Nouvelle page"
       edit: "Modifier"
       back: "Retour"
-      list: "Liste des pages"
-      infos: "Historique"
+      list: "Index"
+      home: "Accueil"
     right-orga:
       0: "Administrateur du wiki"
       100: "Administrateur du wiki de %orga%"
@@ -25,7 +25,7 @@ wiki:
       can-edit: "Page modifiable par"
     edit:
         title: Titre
-        parentPage: Page superieur
+        parentPage: Page parent
         content: Contenu de la page
         readRight: Qui peut voir la page ?
         editRight: Qui peut modifier la page ?

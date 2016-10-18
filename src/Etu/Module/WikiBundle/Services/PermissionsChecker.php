@@ -47,13 +47,35 @@ class PermissionsChecker
         $this->authorizationChecker = $authorizationChecker;
         $this->em = $em;
 
-        if ($this->user == null) {
+        if (!($this->user instanceof User)) {
             $this->memberships = null;
         } else {
             foreach ($this->user->getMemberships() as $membership) {
                 $this->memberships[$membership->getOrganization()->getId()] = $membership;
             }
         }
+    }
+
+    /**
+     * Check if there is a home page in the category and if user can read it.
+     *
+     * @param string $category
+     *
+     * @return bool
+     */
+    public function canGoHome($category)
+    {
+        $repo = $this->em->getRepository('EtuModuleWikiBundle:WikiPage');
+        $page = $repo->findOneBy([
+            'slug' => 'home',
+            'category' => $category,
+        ], ['createdAt' => 'DESC']);
+
+        if (!$page) {
+            return false;
+        }
+
+        return $this->canRead($page);
     }
 
     /**
