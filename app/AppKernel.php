@@ -5,7 +5,6 @@ use Etu\Core\CoreBundle\Framework\EtuKernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Debug\Exception\FatalErrorException;
 
-
 /**
  * EtuUTT AppKernel. Redefine the way to load bundles for the modules system.
  */
@@ -15,6 +14,7 @@ class AppKernel extends EtuKernel
      * Register the bundles (and by the way the modules).
      *
      * @return array|\Symfony\Component\HttpKernel\Bundle\BundleInterface[]
+     *
      * @throws RuntimeException
      * @throws Symfony\Component\Debug\Exception\FatalErrorException
      */
@@ -73,6 +73,7 @@ class AppKernel extends EtuKernel
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+            $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
         }
 
         /*

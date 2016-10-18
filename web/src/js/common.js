@@ -9,7 +9,6 @@ $(function() {
 	setTimeout(function() { head.append(fontsCss); });
 });
 
-
 /*
  * jQuery selectors
  */
@@ -267,8 +266,10 @@ $(function() {
 	});
 
     // Load SCeditor
+	var defaultSceditorHeight = 400;
     sceditor.sceditor({
         plugins: "bbcode",
+		height: defaultSceditorHeight,
         style: "/vendor/SCEditor/minified/jquery.sceditor.default.min.css",
         emoticonsRoot: '/',
         toolbar:
@@ -317,6 +318,7 @@ $(function() {
     // Load SCeditor limited
     sceditorLimited.sceditor({
         plugins: "bbcode",
+		height: defaultSceditorHeight,
         style: "/vendor/SCEditor/minified/jquery.sceditor.default.min.css",
         emoticonsRoot: '/',
         toolbar:
@@ -359,6 +361,23 @@ $(function() {
             }
         }
     });
+
+	// Resize sceditors on window resize, because width: 100% doesn't work properlyv
+	var sceditorAutoresize = function() {
+		var win = $(this);
+		sceditor.each(function() {
+			var width = win.width()/2;
+			var height = defaultSceditorHeight;
+			sceditor.parent().width('99%');
+			sceditor.sceditor('instance').width(sceditor.parent().width());
+			sceditor.sceditor('instance').height(height);
+		})
+	}
+	sceditorAutoresize();
+	$(window).on('resize', function(){
+		sceditorAutoresize();
+	});
+
 
 	// Users autocomplete
 	if (usersAutocomplete) {

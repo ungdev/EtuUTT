@@ -25,6 +25,11 @@
 				{{ 'wiki.main.menu.view'|trans }}
 			</a>
 		</li>
+		<li class="pull-right">
+			<a href="{{ path('wiki_edit', {'slug': page.getSlug(), 'category': page.getCategory()})}}">
+				{{ 'wiki.main.menu.edit'|trans }}
+			</a>
+		</li>
 		<!-- <li class="pull-right">
 			<a href="#">
 				{{ 'wiki.main.menu.edit'|trans }}
@@ -43,9 +48,7 @@
 	<div class="muted align-right padding20-all">
 		<small>
 			{{ 'wiki.main.view.last-edit'|trans }} <a href="{{ path('user_view', { 'login' : page.getAuthor().getLogin() }) }}">{{ page.getAuthor().getFullName() }}</a> : {{ page.getCreatedAt()|localizeddate('short','short') }}<br/>
-			{% if page.getIsLocked() %}
-				{{ 'wiki.main.view.locked'|trans }}<br/>
-			{% elseif page.getOrganization() %}
+			{% if page.getOrganization() %}
 				{{ 'wiki.main.view.can-edit'|trans }} <em>{{ ('wiki.main.right-orga.'~page.getEditRight())|trans({'%orga%': page.getOrganization()}) }}</em><br/>
 			{% else %}
 				{{ 'wiki.main.view.can-edit'|trans }} <em>{{ ('wiki.main.right.'~page.getEditRight())|trans }}</em><br/>

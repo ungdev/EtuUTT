@@ -1,0 +1,57 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ page.title ?? 'Nouvelle page du wiki' }}{% endblock %}
+
+{% block meta_desc %}{{ page.title ?? 'Nouvelle page du wiki' }}{% endblock %}
+
+{% block titleIcon %}
+	<img src="{{ asset('src/img/titles/page.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+	<ul class="nav nav-tabs page-tabs">
+		<!-- <li>
+			<a href="#">
+					<i class="icon-chevron-left"></i>
+				{{ 'wiki.main.menu.back'|trans }}
+			</a>
+			<a href="#">
+				<i class="icon-list"></i>
+				{{ 'wiki.main.menu.list'|trans }}
+			</a>
+		</li> -->
+		{% if page.slug %}
+			<li class="pull-right">
+				<a href="{{ path('wiki_view', {'slug': page.getSlug(), 'category': page.getCategory()})}}">
+					{{ 'wiki.main.menu.view'|trans }}
+				</a>
+			</li>
+			<li class="pull-right active page-tabs-resolved-active">
+				<a href="{{ path('wiki_edit', {'slug': page.getSlug(), 'category': page.getCategory()})}}">
+					{{ 'wiki.main.menu.edit'|trans }}
+				</a>
+			</li>
+		{% else %}
+			<li class="pull-right active page-tabs-resolved-active">
+				<a href="{{ path('wiki_new', {'slug': app.request.get('slug'), 'category': app.request.get('category')})}}">
+					{{ 'wiki.main.menu.new'|trans }}
+				</a>
+			</li>
+		{% endif %}
+		<!--
+		<li class="pull-right">
+			<a href="#">
+				{{ 'wiki.main.menu.infos'|trans }}
+			</a>
+		</li> -->
+	</ul>
+
+
+		<div class="padding20-sides">
+
+		{{ form_start(form) }}
+		{{ form_widget(form) }}
+		{{ form_end(form) }}
+
+		</div>
+{% endblock %}

@@ -13,12 +13,14 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class WikiPage
 {
-
-    const RIGHT_ADMIN = 0;
-    const RIGHT_ORGA_ADMIN = 100;
-    const RIGHT_ORGA_MEMBER = 200;
-    const RIGHT_STUDENT = 300;
-    const RIGHT_ALL = 400;
+    /* List of rights sorted by most important to less */
+    const RIGHT = [
+        'ADMIN' => 0,
+        'ORGA_ADMIN' => 100,
+        'ORGA_MEMBER' => 200,
+        'STUDENT' => 300,
+        'ALL' => 400,
+    ];
 
     /**
      * @ORM\Id
@@ -31,6 +33,7 @@ class WikiPage
      * @var string
      *
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     protected $title;
 
@@ -51,12 +54,13 @@ class WikiPage
     /**
      * @var string
      *
+     * @Assert\NotBlank()
      * @ORM\Column(type="text", nullable = true)
      */
     protected $content;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @Assert\NotBlank()
@@ -64,7 +68,7 @@ class WikiPage
     protected $readRight;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @Assert\NotBlank()
@@ -72,14 +76,7 @@ class WikiPage
     protected $editRight;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $isLocked;
-
-    /**
-     * @var User $author
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
      * @ORM\JoinColumn()
@@ -87,7 +84,14 @@ class WikiPage
     protected $author;
 
     /**
-     * @var Organization $organization
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $validated;
+
+    /**
+     * @var Organization
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\Organization")
      * @ORM\JoinColumn()
@@ -95,7 +99,7 @@ class WikiPage
     protected $organization;
 
     /**
-     * @var \DateTime $createdAt
+     * @var \DateTime
      *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable = true)
@@ -103,9 +107,23 @@ class WikiPage
     protected $createdAt;
 
     /**
-     * Get id
+     * Set id.
      *
-     * @return integer
+     * @param int $id
+     *
+     * @return WikiPage
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get id.
+     *
+     * @return int
      */
     public function getId()
     {
@@ -113,7 +131,7 @@ class WikiPage
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
      *
@@ -127,7 +145,7 @@ class WikiPage
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -137,7 +155,7 @@ class WikiPage
     }
 
     /**
-     * Set slug
+     * Set slug.
      *
      * @param string $slug
      *
@@ -151,7 +169,7 @@ class WikiPage
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
      * @return string
      */
@@ -161,7 +179,7 @@ class WikiPage
     }
 
     /**
-     * Set category
+     * Set category.
      *
      * @param string $category
      *
@@ -175,7 +193,7 @@ class WikiPage
     }
 
     /**
-     * Get category
+     * Get category.
      *
      * @return string
      */
@@ -185,7 +203,7 @@ class WikiPage
     }
 
     /**
-     * Set content
+     * Set content.
      *
      * @param string $content
      *
@@ -199,7 +217,7 @@ class WikiPage
     }
 
     /**
-     * Get content
+     * Get content.
      *
      * @return string
      */
@@ -209,9 +227,9 @@ class WikiPage
     }
 
     /**
-     * Set readRight
+     * Set readRight.
      *
-     * @param integer $readRight
+     * @param int $readRight
      *
      * @return WikiPage
      */
@@ -223,9 +241,9 @@ class WikiPage
     }
 
     /**
-     * Get readRight
+     * Get readRight.
      *
-     * @return integer
+     * @return int
      */
     public function getReadRight()
     {
@@ -233,9 +251,9 @@ class WikiPage
     }
 
     /**
-     * Set editRight
+     * Set editRight.
      *
-     * @param integer $editRight
+     * @param int $editRight
      *
      * @return WikiPage
      */
@@ -247,9 +265,9 @@ class WikiPage
     }
 
     /**
-     * Get editRight
+     * Get editRight.
      *
-     * @return integer
+     * @return int
      */
     public function getEditRight()
     {
@@ -257,31 +275,7 @@ class WikiPage
     }
 
     /**
-     * Set isLocked
-     *
-     * @param boolean $isLocked
-     *
-     * @return WikiPage
-     */
-    public function setIsLocked($isLocked)
-    {
-        $this->isLocked = $isLocked;
-
-        return $this;
-    }
-
-    /**
-     * Get isLocked
-     *
-     * @return boolean
-     */
-    public function getIsLocked()
-    {
-        return $this->isLocked;
-    }
-
-    /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
      *
@@ -295,7 +289,7 @@ class WikiPage
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -305,7 +299,7 @@ class WikiPage
     }
 
     /**
-     * Set organization
+     * Set organization.
      *
      * @param \Etu\Core\UserBundle\Entity\Organization $organization
      *
@@ -319,7 +313,7 @@ class WikiPage
     }
 
     /**
-     * Get organization
+     * Get organization.
      *
      * @return \Etu\Core\UserBundle\Entity\Organization
      */
@@ -329,7 +323,7 @@ class WikiPage
     }
 
     /**
-     * Set author
+     * Set author.
      *
      * @param \Etu\Core\UserBundle\Entity\User $author
      *
@@ -343,12 +337,36 @@ class WikiPage
     }
 
     /**
-     * Get author
+     * Get author.
      *
      * @return \Etu\Core\UserBundle\Entity\User
      */
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    /**
+     * Set validated.
+     *
+     * @param bool $validated
+     *
+     * @return WikiPage
+     */
+    public function setValidated($validated)
+    {
+        $this->validated = $validated;
+
+        return $this;
+    }
+
+    /**
+     * Get validated.
+     *
+     * @return bool
+     */
+    public function isValidated()
+    {
+        return $this->validated;
     }
 }

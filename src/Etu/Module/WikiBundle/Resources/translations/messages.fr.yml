@@ -1,16 +1,12 @@
 wiki:
   main:
     menu:
+      view: "Lire"
+      new: "Créer"
+      edit: "Modifier"
       back: "Retour"
       list: "Liste des pages"
-      view: "Lire"
-      edit: "Modifier"
       infos: "Historique"
-    view:
-      last-edit: "Dernière modification par"
-      can-read: "Page visible par"
-      can-edit: "Page modifiable par"
-      locked: "Page verouillé en écriture"
     right-orga:
       0: "Administrateur du wiki"
       100: "Administrateur du wiki de %orga%"
@@ -19,7 +15,20 @@ wiki:
       400: "Etudiant et Exterieur"
     right:
       0: "Administrateur du wiki"
-      100: "Administrateur du wiki"
-      200: "Administrateur du wiki"
+      100: "Administrateur du wiki de l'association"
+      200: "Membre de l'association"
       300: "Etudiant"
       400: "Etudiant et Exterieur"
+    view:
+      last-edit: "Dernière modification par"
+      can-read: "Page visible par"
+      can-edit: "Page modifiable par"
+    edit:
+        title: Titre
+        parentPage: Page superieur
+        parentPageNone: Aucune
+        content: Contenu de la page
+        readRight: Qui peut voir la page ?
+        editRight: Qui peut modifier la page ?
+        submit: Sauvegarder les modifications
+        success: Votre modification a été enregistré

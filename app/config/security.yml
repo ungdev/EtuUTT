@@ -43,7 +43,7 @@ security:
             - ROLE_UV_REVIEW_POST # Can post UV review and old exams
             - ROLE_API_USE # Can use api with external applications
             - ROLE_API_CREATE # Can create external application
-            - ROLE_WIKI_WRITE # Can write on the wiki
+            - ROLE_WIKI_EDIT # Can write on the wiki
 
         ROLE_STAFFUTT:
             - ROLE_CORE_HOMEPAGE # Can see the private homepage

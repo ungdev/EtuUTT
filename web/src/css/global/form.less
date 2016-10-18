@@ -1,22 +1,18 @@
 
 /* Form with two columns of inputs */
 .form-2col {
-	button {
-		margin-top:15px;
-	}
-
 	.form-2col-field {
 		display:inline-block;
 
-		padding:5px;
+		padding:5px 0;
 		box-sizing: border-box;
 		border-radius: 4px;
-		min-width: 47%;
-		margin: 0 10px 10px 0;
+		min-width: 50%;
+		margin: 0 0 10px 0;
 		vertical-align: top;
 
 		input, select {
-			width: 100%;
+			width: 98%;
 			box-sizing: border-box;
 			height:35px;
 			margin:0;
@@ -38,6 +34,9 @@
 			display: inline;
 		}
 	}
+	.form-2col-button {
+		text-align:left;
+	}
 	.form-2col-help {
 		color: #777;
 		font-size: 0.9em;
@@ -54,5 +53,16 @@
 			color: #e32;
 		}
 	}
-
 }
+
+/* Indent in a select */
+.choice_level_0 { }
+.choice_level_1 { text-indent: 10px; }
+.choice_level_2 { text-indent: 20px; }
+.choice_level_3 { text-indent: 30px; }
+.choice_level_4 { text-indent: 40px; }
+.choice_level_5 { text-indent: 50px; }
+.choice_level_6 { text-indent: 60px; }
+.choice_level_7 { text-indent: 70px; }
+.choice_level_8 { text-indent: 80px; }
+.choice_level_9 { text-indent: 90px; }

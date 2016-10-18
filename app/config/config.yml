@@ -26,6 +26,8 @@ twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
     cache:            "%kernel.cache_dir%/twig"
+    form_themes:
+        - 'form/fields.html.twig'
 
 # Doctrine Configuration
 doctrine:
