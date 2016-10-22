@@ -4,12 +4,17 @@ namespace Etu\Module\EventsBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use CalendR\Calendar;
 use CalendR\Period\Range;
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
+use Etu\Core\CoreBundle\Form\RedactorType;
+use Etu\Core\CoreBundle\Form\DatetimePickerType;
 use Etu\Core\UserBundle\Entity\Member;
 use Etu\Module\EventsBundle\Entity\Event;
 // Import annotations
@@ -55,11 +60,11 @@ class MembershipsController extends Controller
             }
         }
 
-        if (! $membership) {
+        if (!$membership) {
             throw $this->createNotFoundException('Membership or organization not found for login '.$login);
         }
 
-        if (! $membership->hasPermission('events')) {
+        if (!$membership->hasPermission('events')) {
             return $this->createAccessDeniedResponse();
         }
 
@@ -76,8 +81,8 @@ class MembershipsController extends Controller
 
         $form = $this->createFormBuilder($event)
             ->add('title')
-            ->add('category', 'choice', array('choices' => $categories))
-            ->add('location', 'textarea')
+            ->add('category', ChoiceType::class, array('choices' => $categories))
+            ->add('location', TextareaType::class)
             ->getForm();
 
         $day = ($day == 'current') ? (int) date('d') : (int) $day;
@@ -91,7 +96,7 @@ class MembershipsController extends Controller
             'day' => $day,
             'month' => $month - 1,
             'year' => $year,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         );
     }
 
@@ -131,11 +136,11 @@ class MembershipsController extends Controller
             }
         }
 
-        if (! $membership) {
+        if (!$membership) {
             throw $this->createNotFoundException('Membership or organization not found for login '.$login);
         }
 
-        if (! $membership->hasPermission('events')) {
+        if (!$membership->hasPermission('events')) {
             return $this->createAccessDeniedResponse();
         }
 
@@ -144,14 +149,14 @@ class MembershipsController extends Controller
         $start = $request->query->get('start');
         $end = $request->query->get('end');
 
-        if (! $start) {
+        if (!$start) {
             return new Response(json_encode(array(
                 'status' => 'error',
                 'message' => '"start" parameter is required',
             )));
         }
 
-        if (! $end) {
+        if (!$end) {
             return new Response(json_encode(array(
                 'status' => 'error',
                 'message' => '"end" parameter is required',
@@ -185,7 +190,7 @@ class MembershipsController extends Controller
                     'login' => $orga->getLogin(),
                     'id' => $event->getId(),
                     'slug' => StringManipulationExtension::slugify($event->getTitle()),
-                ))
+                )),
             );
         }
 
@@ -228,11 +233,11 @@ class MembershipsController extends Controller
             }
         }
 
-        if (! $membership) {
+        if (!$membership) {
             throw $this->createNotFoundException('Membership or organization not found for login '.$login);
         }
 
-        if (! $membership->hasPermission('events')) {
+        if (!$membership->hasPermission('events')) {
             return $this->createAccessDeniedResponse();
         }
 
@@ -240,7 +245,7 @@ class MembershipsController extends Controller
         $end = $request->query->get('e');
         $allDay = ($request->query->get('a') == 'true') ? true : false;
 
-        if (! $start || ! $end) {
+        if (!$start || !$end) {
             throw $this->createNotFoundException();
         }
 
@@ -249,7 +254,7 @@ class MembershipsController extends Controller
         if (substr($start, 12) == '00-00' && substr($end, 12) == '00-00') {
             $start = substr($start, 0, 12).'12-00';
 
-            $jour2 = str_pad((substr($end, 0, 2)-1), 2, '0', STR_PAD_LEFT);
+            $jour2 = str_pad((substr($end, 0, 2) - 1), 2, '0', STR_PAD_LEFT);
             $end = $jour2.substr($end, 2, 10).'13-00';
         }
 
@@ -270,21 +275,21 @@ class MembershipsController extends Controller
 
         $form = $this->createFormBuilder($event)
             ->add('title')
-            ->add('begin', 'datetime_picker')
-            ->add('end', 'datetime_picker')
-            ->add('category', 'choice', array('choices' => $categories))
-            ->add('file', 'file', array('required' => false))
-            ->add('location', 'textarea')
-            ->add('privacy', 'choice', array(
+            ->add('begin', DatetimePickerType::class)
+            ->add('end', DatetimePickerType::class)
+            ->add('category', ChoiceType::class, array('choices' => $categories))
+            ->add('file', FileType::class, array('required' => false))
+            ->add('location', TextareaType::class)
+            ->add('privacy', ChoiceType::class, array(
                 'choices' => array(
                     Event::PRIVACY_PUBLIC => 'events.memberships.create.privacy.public',
                     Event::PRIVACY_PRIVATE => 'events.memberships.create.privacy.private',
                     Event::PRIVACY_ORGAS => 'events.memberships.create.privacy.orgas',
                     Event::PRIVACY_MEMBERS => 'events.memberships.create.privacy.members',
                 ),
-                'required' => true
+                'required' => true,
             ))
-            ->add('description', 'redactor')
+            ->add('description', RedactorType::class)
             ->getForm();
 
         if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
@@ -301,7 +306,7 @@ class MembershipsController extends Controller
                     'orga' => array(
                         'id' => $event->getOrga()->getId(),
                         'name' => $event->getOrga()->getName(),
-                    )
+                    ),
                 );
 
                 // Send notifications to subscribers of all eventts
@@ -338,14 +343,14 @@ class MembershipsController extends Controller
             // Confirmation
             $this->get('session')->getFlashBag()->set('message', array(
                 'type' => 'success',
-                'message' => 'events.memberships.create.confirm'
+                'message' => 'events.memberships.create.confirm',
             ));
 
             return $this->redirect($this->generateUrl('memberships_orga_events', array(
                 'login' => $login,
                 'day' => $event->getBegin()->format('d'),
                 'month' => $event->getBegin()->format('m'),
-                'year' => $event->getBegin()->format('Y')
+                'year' => $event->getBegin()->format('Y'),
             )));
         }
 
@@ -354,7 +359,7 @@ class MembershipsController extends Controller
             'membership' => $membership,
             'orga' => $orga,
             'form' => $form->createView(),
-            'event' => $event
+            'event' => $event,
         );
     }
 
@@ -393,11 +398,11 @@ class MembershipsController extends Controller
             }
         }
 
-        if (! $membership) {
+        if (!$membership) {
             throw $this->createNotFoundException('Membership or organization not found for login '.$login);
         }
 
-        if (! $membership->hasPermission('events')) {
+        if (!$membership->hasPermission('events')) {
             return $this->createAccessDeniedResponse();
         }
 
@@ -414,13 +419,13 @@ class MembershipsController extends Controller
             ->getQuery()
             ->getOneOrNullResult();
 
-        if (! $event) {
+        if (!$event) {
             throw $this->createNotFoundException('Event #'.$id.' not found');
         }
 
         if (StringManipulationExtension::slugify($event->getTitle()) != $slug) {
             return $this->redirect($this->generateUrl('events_view', array(
-                'id' => $id, 'slug' => StringManipulationExtension::slugify($event->getTitle())
+                'id' => $id, 'slug' => StringManipulationExtension::slugify($event->getTitle()),
             )), 301);
         }
 
@@ -436,21 +441,21 @@ class MembershipsController extends Controller
 
         $form = $this->createFormBuilder($event)
             ->add('title')
-            ->add('begin', 'datetime_picker')
-            ->add('end', 'datetime_picker')
-            ->add('category', 'choice', array('choices' => $categories))
-            ->add('file', 'file', array('required' => false))
-            ->add('privacy', 'choice', array(
+            ->add('begin', DatetimePickerType::class)
+            ->add('end', DatetimePickerType::class)
+            ->add('category', ChoiceType::class, array('choices' => $categories))
+            ->add('file', FileType::class, array('required' => false))
+            ->add('privacy', ChoiceType::class, array(
                 'choices' => array(
                     Event::PRIVACY_PUBLIC => 'events.memberships.create.privacy.public',
                     Event::PRIVACY_PRIVATE => 'events.memberships.create.privacy.private',
                     Event::PRIVACY_ORGAS => 'events.memberships.create.privacy.orgas',
                     Event::PRIVACY_MEMBERS => 'events.memberships.create.privacy.members',
                 ),
-                'required' => true
+                'required' => true,
             ))
-            ->add('location', 'textarea')
-            ->add('description', 'redactor')
+            ->add('location', TextareaType::class)
+            ->add('description', RedactorType::class)
             ->getForm();
 
         if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
@@ -462,13 +467,13 @@ class MembershipsController extends Controller
             // Confirmation
             $this->get('session')->getFlashBag()->set('message', array(
                 'type' => 'success',
-                'message' => 'events.memberships.edit.confirm'
+                'message' => 'events.memberships.edit.confirm',
             ));
 
             return $this->redirect($this->generateUrl('memberships_orga_events_edit', array(
                 'login' => $login,
                 'id' => $id,
-                'slug' => $slug
+                'slug' => $slug,
             )));
         }
 
@@ -519,11 +524,11 @@ class MembershipsController extends Controller
             }
         }
 
-        if (! $membership) {
+        if (!$membership) {
             throw $this->createNotFoundException('Membership or organization not found for login '.$login);
         }
 
-        if (! $membership->hasPermission('events')) {
+        if (!$membership->hasPermission('events')) {
             return $this->createAccessDeniedResponse();
         }
 
@@ -535,7 +540,7 @@ class MembershipsController extends Controller
 
         $eventUpdate = $request->request->get('event');
 
-        if (! $eventUpdate) {
+        if (!$eventUpdate) {
             throw $this->createNotFoundException('No event patch provided');
         }
 
@@ -603,11 +608,11 @@ class MembershipsController extends Controller
             }
         }
 
-        if (! $membership) {
+        if (!$membership) {
             throw $this->createNotFoundException('Membership or organization not found for login '.$login);
         }
 
-        if (! $membership->hasPermission('events')) {
+        if (!$membership->hasPermission('events')) {
             return $this->createAccessDeniedResponse();
         }
 
@@ -624,13 +629,13 @@ class MembershipsController extends Controller
             ->getQuery()
             ->getOneOrNullResult();
 
-        if (! $event) {
+        if (!$event) {
             throw $this->createNotFoundException('Event #'.$id.' not found');
         }
 
         if (StringManipulationExtension::slugify($event->getTitle()) != $slug) {
             return $this->redirect($this->generateUrl('events_view', array(
-                'id' => $id, 'slug' => StringManipulationExtension::slugify($event->getTitle())
+                'id' => $id, 'slug' => StringManipulationExtension::slugify($event->getTitle()),
             )), 301);
         }
 
@@ -648,7 +653,7 @@ class MembershipsController extends Controller
                 'orga' => array(
                     'id' => $event->getOrga()->getId(),
                     'name' => $event->getOrga()->getName(),
-                )
+                ),
             );
 
             // Send notifications to subscribers
@@ -678,11 +683,11 @@ class MembershipsController extends Controller
             // Confirmation
             $this->get('session')->getFlashBag()->set('message', array(
                 'type' => 'success',
-                'message' => 'events.memberships.delete.confirm'
+                'message' => 'events.memberships.delete.confirm',
             ));
 
             return $this->redirect($this->generateUrl('memberships_orga_events', array(
-                'login' => $login
+                'login' => $login,
             )));
         }
 
@@ -690,7 +695,7 @@ class MembershipsController extends Controller
             'memberships' => $memberships,
             'membership' => $membership,
             'orga' => $orga,
-            'event' => $event
+            'event' => $event,
         );
     }
 }

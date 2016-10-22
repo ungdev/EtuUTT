@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Validator\Constraints\EqualTo;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * @Route("/panel")
@@ -28,10 +29,10 @@ class PanelController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /** @var OauthClient[] $clients */
-        $clients = $em->getRepository('EtuCoreApiBundle:OauthClient')->findBy([ 'user' => $this->getUser() ]);
+        $clients = $em->getRepository('EtuCoreApiBundle:OauthClient')->findBy(['user' => $this->getUser()]);
 
         return [
-            'clients' => $clients
+            'clients' => $clients,
         ];
     }
 
@@ -49,7 +50,7 @@ class PanelController extends Controller
         $client = new OauthClient();
         $client->setUser($this->getUser());
 
-        $defaultScopes = $em->getRepository('EtuCoreApiBundle:OauthScope')->findBy([ 'isDefault' => true ]);
+        $defaultScopes = $em->getRepository('EtuCoreApiBundle:OauthScope')->findBy(['isDefault' => true]);
 
         foreach ($defaultScopes as $defaultScope) {
             $client->addScope($defaultScope);
@@ -68,14 +69,14 @@ class PanelController extends Controller
 
             $this->get('session')->getFlashBag()->set('message', array(
                 'type' => 'success',
-                'message' => 'Votre application a bien été crée'
+                'message' => 'Votre application a bien été crée',
             ));
 
             return $this->redirect($this->generateUrl('devs_panel_index'));
         }
 
         return [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ];
     }
 
@@ -95,7 +96,7 @@ class PanelController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /** @var OauthClient[] $clients */
-        $clients = $em->getRepository('EtuCoreApiBundle:OauthClient')->findBy([ 'user' => $this->getUser() ]);
+        $clients = $em->getRepository('EtuCoreApiBundle:OauthClient')->findBy(['user' => $this->getUser()]);
 
         return [
             'client' => $client,
@@ -128,19 +129,19 @@ class PanelController extends Controller
 
             $this->get('session')->getFlashBag()->set('message', array(
                 'type' => 'success',
-                'message' => 'Votre application a bien été modifiée'
+                'message' => 'Votre application a bien été modifiée',
             ));
 
-            return $this->redirect($this->generateUrl('devs_panel_manage_app', [ 'clientId' => $client->getClientId() ]));
+            return $this->redirect($this->generateUrl('devs_panel_manage_app', ['clientId' => $client->getClientId()]));
         }
 
         /** @var OauthClient[] $clients */
-        $clients = $em->getRepository('EtuCoreApiBundle:OauthClient')->findBy([ 'user' => $this->getUser() ]);
+        $clients = $em->getRepository('EtuCoreApiBundle:OauthClient')->findBy(['user' => $this->getUser()]);
 
         return [
             'client' => $client,
             'clients' => $clients,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ];
     }
 
@@ -160,10 +161,10 @@ class PanelController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $form = $this->createFormBuilder()
-            ->add('client_id', 'text', [
+            ->add('client_id', TextType::class, [
                 'required' => true,
                 'label' => 'Par sécurité, vous devez entrer le Client ID de cette application pour pouvoir la supprimer :',
-                'constraints' => new EqualTo([ 'value' => (string) $client->getClientId(), 'message' => 'Ce Client ID n\'est pas correct'])
+                'constraints' => new EqualTo(['value' => (string) $client->getClientId(), 'message' => 'Ce Client ID n\'est pas correct']),
             ])
             ->getForm();
 
@@ -173,19 +174,19 @@ class PanelController extends Controller
 
             $this->get('session')->getFlashBag()->set('message', array(
                 'type' => 'success',
-                'message' => 'L\' application ' . $client->getName() . ' a bien été supprimée'
+                'message' => 'L\' application '.$client->getName().' a bien été supprimée',
             ));
 
             return $this->redirect($this->generateUrl('devs_panel_index'));
         }
 
         /** @var OauthClient[] $clients */
-        $clients = $em->getRepository('EtuCoreApiBundle:OauthClient')->findBy([ 'user' => $this->getUser() ]);
+        $clients = $em->getRepository('EtuCoreApiBundle:OauthClient')->findBy(['user' => $this->getUser()]);
 
         return [
             'client' => $client,
             'clients' => $clients,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ];
     }
 }

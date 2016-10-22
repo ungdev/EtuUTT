@@ -6,22 +6,24 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Etu\Core\CoreBundle\Form\DatePickerType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class CovoitAlertType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('startDate', 'date_picker', ['label' => 'covoit.alerts.label.startDate', 'required' => false])
-            ->add('endDate', 'date_picker', ['label' => 'covoit.alerts.label.endDate', 'required' => false])
+            ->add('startDate', DatePickerType::class, ['label' => 'covoit.alerts.label.startDate', 'required' => false])
+            ->add('endDate', DatePickerType::class, ['label' => 'covoit.alerts.label.endDate', 'required' => false])
             ->add('priceMax', null, ['label' => 'covoit.alerts.label.priceMax', 'required' => false])
             ->add(
                 'startCity',
-                'entity',
+                EntityType::class,
                 [
                     'label' => 'covoit.alerts.label.startCity',
                     'required' => false,
@@ -33,7 +35,7 @@ class CovoitAlertType extends AbstractType
             )
             ->add(
                 'endCity',
-                'entity',
+                EntityType::class,
                 [
                     'label' => 'covoit.alerts.label.endCity',
                     'required' => false,

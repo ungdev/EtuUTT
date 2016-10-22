@@ -5,13 +5,14 @@ namespace Etu\Module\ForumBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Etu\Core\CoreBundle\Form\RedactorType;
 
 class MessageEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('content', 'redactor')
+            ->add('content', RedactorType::class)
             ->add('thread', new ThreadEditType());
     }
 

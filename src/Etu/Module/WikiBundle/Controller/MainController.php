@@ -4,8 +4,10 @@ namespace Etu\Module\WikiBundle\Controller;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
+use Etu\Core\CoreBundle\Form\RedactorType;
 use Etu\Module\WikiBundle\Entity\WikiPage;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -108,7 +110,7 @@ class MainController extends Controller
             }
 
             // Add "none" item
-            $form = $form->add('preslug', 'choice', array(
+            $form = $form->add('preslug', ChoiceType::class, array(
                 'choices' => $pagelist,
                 'choice_attr' => function ($val) {
                     $level = substr_count($val, '/');
@@ -124,7 +126,7 @@ class MainController extends Controller
         }
 
         // Create editor field
-        $form = $form->add('content', null, array('required' => true, 'label' => 'wiki.main.edit.content', 'attr' => ['class' => 'redactor']));
+        $form = $form->add('content', RedactorType::class, array('required' => true, 'label' => 'wiki.main.edit.content'));
 
         // Create rights fields
         $choices = [];
@@ -134,10 +136,10 @@ class MainController extends Controller
                 $choices[$right] = 'wiki.main.right.'.$right;
             }
         }
-        $form = $form->add('readRight', 'choice', array('choices' => $choices, 'required' => true, 'label' => 'wiki.main.edit.readRight'));
+        $form = $form->add('readRight', ChoiceType::class, array('choices' => $choices, 'required' => true, 'label' => 'wiki.main.edit.readRight'));
         unset($choices[WikiPage::RIGHT['ALL']]);
         if (count($choices) > 1) {
-            $form = $form->add('editRight', 'choice', array('choices' => $choices, 'required' => true, 'label' => 'wiki.main.edit.editRight'));
+            $form = $form->add('editRight', ChoiceType::class, array('choices' => $choices, 'required' => true, 'label' => 'wiki.main.edit.editRight'));
         }
 
         // Create submit

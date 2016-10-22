@@ -4,6 +4,8 @@ namespace Etu\Core\CoreBundle\Home;
 
 use Etu\Core\CoreBundle\Framework\Module\ModulesManager;
 use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class HomeRenderer
 {
@@ -28,9 +30,9 @@ class HomeRenderer
     protected $blocks;
 
     /**
-     * @param HomeBuilder $builder
+     * @param HomeBuilder    $builder
      * @param ModulesManager $modulesManager
-     * @param FormFactory $formFactory
+     * @param FormFactory    $formFactory
      */
     public function __construct(HomeBuilder $builder,
                                 ModulesManager $modulesManager,
@@ -49,7 +51,7 @@ class HomeRenderer
                 'nextCourses' => $this->builder->getNextCourses(),
                 'UVs' => $this->builder->getUVs(),
             ],
-            'role' => 'ROLE_CORE_SCHEDULE_OWN'
+            'role' => 'ROLE_CORE_SCHEDULE_OWN',
         ];
 
         return $block;
@@ -58,13 +60,13 @@ class HomeRenderer
     public function createTrombiBlock()
     {
         $trombiFrom = $this->formFactory->createBuilder()
-            ->add('fullName', 'text', array('required' => false))
-            ->add('studentId', 'hidden', array('required' => false))
-            ->add('phoneNumber', 'hidden', array('required' => false))
-            ->add('uvs', 'hidden', array('required' => false))
-            ->add('branch', 'hidden', array('required' => false))
-            ->add('niveau', 'hidden', array('required' => false))
-            ->add('personnalMail', 'hidden', array('required' => false))
+            ->add('fullName', TextType::class, array('required' => false))
+            ->add('studentId', HiddenType::class, array('required' => false))
+            ->add('phoneNumber', HiddenType::class, array('required' => false))
+            ->add('uvs', HiddenType::class, array('required' => false))
+            ->add('branch', HiddenType::class, array('required' => false))
+            ->add('niveau', HiddenType::class, array('required' => false))
+            ->add('personnalMail', HiddenType::class, array('required' => false))
             ->getForm();
 
         $block = [
@@ -72,7 +74,7 @@ class HomeRenderer
             'context' => [
                 'trombiForm' => $trombiFrom->createView(),
             ],
-            'role' => 'ROLE_TROMBI'
+            'role' => 'ROLE_TROMBI',
         ];
 
         return $block;
@@ -85,7 +87,7 @@ class HomeRenderer
             'context' => [
                 'notifications' => $this->builder->getNotifications($this->modulesManager->getEnabledModules()),
             ],
-            'role' => 'ROLE_CORE_SUBSCRIBE'
+            'role' => 'ROLE_CORE_SUBSCRIBE',
         ];
 
         return $block;
@@ -120,7 +122,7 @@ class HomeRenderer
                     'context' => [
                         'reviews' => $reviews,
                     ],
-                    'role' => 'ROLE_UV_REVIEW'
+                    'role' => 'ROLE_UV_REVIEW',
                 ];
             }
         }
@@ -141,7 +143,7 @@ class HomeRenderer
                         'collection' => $photos['collection'],
                         'set' => $photos['set'],
                     ],
-                    'role' => 'ROLE_ARGENTIQUE_READ'
+                    'role' => 'ROLE_ARGENTIQUE_READ',
                 ];
             }
         }
@@ -159,7 +161,7 @@ class HomeRenderer
                 'context' => [
                     'birthdays' => $birthdays,
                 ],
-                'role' => 'ROLE_CORE_PROFIL'
+                'role' => 'ROLE_CORE_PROFIL',
             ];
         }
 
