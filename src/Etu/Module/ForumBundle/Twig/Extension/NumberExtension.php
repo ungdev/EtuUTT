@@ -1,4 +1,5 @@
 <?php
+
 namespace Etu\Module\ForumBundle\Twig\Extension;
 
 class NumberExtension extends \Twig_Extension
@@ -6,7 +7,7 @@ class NumberExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            'ceil' => new \Twig_Filter_Method($this, 'ceil'),
+            'ceil' => new \Twig_SimpleFilter('ceil', [$this, 'ceil']),
         );
     }
 
@@ -20,4 +21,3 @@ class NumberExtension extends \Twig_Extension
         return 'etu.forum_number';
     }
 }
-?>
