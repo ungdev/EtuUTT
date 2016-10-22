@@ -58,8 +58,7 @@ services:
 
     etu.serializer:
         class: %etu.serializer.class%
-        factory_service: etu.serializer.builder
-        factory_method: createSerializer
+        factory: [@etu.serializer.builder, createSerializer]
 
     # Data formatter
     etu.formatter:
@@ -92,4 +91,3 @@ services:
 
     etu.api.form.client:
         class: %etu.api.form.client.class%
-
