@@ -10,11 +10,10 @@ use Etu\Core\CoreBundle\Framework\Definition\Module;
 use Etu\Core\CoreBundle\Framework\Twig\GlobalAccessorObject;
 use Etu\Core\UserBundle\Entity\Course;
 use Etu\Core\UserBundle\Entity\User;
-use Etu\Module\ArgentiqueBundle\Entity\Photo;
 use Etu\Module\ArgentiqueBundle\EtuModuleArgentiqueBundle;
 use Etu\Module\EventsBundle\Entity\Event;
 use Etu\Module\UVBundle\Entity\Review;
-use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 class HomeBuilder
@@ -40,18 +39,18 @@ class HomeBuilder
     protected $stopwatch;
 
     /**
-     * @param EntityManager $manager
-     * @param SecurityContext $context
+     * @param EntityManager        $manager
+     * @param TokenStorage         $tokenStorage
      * @param GlobalAccessorObject $globalAccessorObject
-     * @param Stopwatch $stopwatch
+     * @param Stopwatch            $stopwatch
      */
     public function __construct(EntityManager $manager,
-                                SecurityContext $context,
+                                TokenStorage $tokenStorage,
                                 GlobalAccessorObject $globalAccessorObject,
                                 Stopwatch $stopwatch = null)
     {
         $this->manager = $manager;
-        $this->user = $context->getToken()->getUser();
+        $this->user = $tokenStorage->getToken()->getUser();
         $this->globalAccessorObject = $globalAccessorObject;
         $this->stopwatch = $stopwatch;
     }
@@ -97,6 +96,7 @@ class HomeBuilder
 
     /**
      * @param Module[] $enabledModules
+     *
      * @return \Etu\Core\CoreBundle\Entity\Notification[]
      */
     public function getNotifications($enabledModules)
@@ -121,27 +121,27 @@ class HomeBuilder
         /** @var $notifications Notification[] */
         $notifications = [];
 
-        if (! empty($subscriptions)) {
+        if (!empty($subscriptions)) {
             if ($this->stopwatch) {
                 $this->stopwatch->start('block_notifications_filters', 'home_blocks');
             }
 
-            if (Apc::enabled() && Apc::has('etuutt_home_subscription_' . $this->user->getId())) {
-                $subscriptionsWhere = Apc::fetch('etuutt_home_subscription_' . $this->user->getId());
+            if (Apc::enabled() && Apc::has('etuutt_home_subscription_'.$this->user->getId())) {
+                $subscriptionsWhere = Apc::fetch('etuutt_home_subscription_'.$this->user->getId());
             } else {
                 foreach ($subscriptions as $key => $subscription) {
-                    $subscriptionsWhere[] =   '(n.entityType = \'' . $subscription->getEntityType() . '\'
-                                                AND n.entityId = ' . intval($subscription->getEntityId()) . ')';
+                    $subscriptionsWhere[] = '(n.entityType = \''.$subscription->getEntityType().'\'
+                                                AND n.entityId = ' .intval($subscription->getEntityId()).')';
                 }
 
                 $subscriptionsWhere = implode(' OR ', $subscriptionsWhere);
 
                 if (Apc::enabled()) {
-                    Apc::store('etuutt_home_subscription_' . $this->user->getId(), $subscriptionsWhere, 1200);
+                    Apc::store('etuutt_home_subscription_'.$this->user->getId(), $subscriptionsWhere, 1200);
                 }
             }
 
-            if (! empty($subscriptionsWhere)) {
+            if (!empty($subscriptionsWhere)) {
                 $query = $query->andWhere($subscriptionsWhere);
             }
 
@@ -157,7 +157,7 @@ class HomeBuilder
                 $query->setParameter('module_'.$identifier, $identifier);
             }
 
-            if (! empty($modulesWhere)) {
+            if (!empty($modulesWhere)) {
                 $query = $query->andWhere(implode(' OR ', $modulesWhere));
             }
 
@@ -256,7 +256,7 @@ class HomeBuilder
         $collection = null;
         $set = null;
 
-        if (! file_exists($root)) {
+        if (!file_exists($root)) {
             return [];
         }
 
@@ -268,7 +268,7 @@ class HomeBuilder
         $set = '';
 
         // Get and sort collection list
-        $collections = glob($root . '/*', GLOB_ONLYDIR);
+        $collections = glob($root.'/*', GLOB_ONLYDIR);
         $collectionsRegistry = [];
 
         foreach ($collections as $collection) {
@@ -286,7 +286,7 @@ class HomeBuilder
             }
 
             // Get and sort 'set' list
-            $sets = glob($collection . '/*', GLOB_ONLYDIR);
+            $sets = glob($collection.'/*', GLOB_ONLYDIR);
             $setsRegistry = [];
 
             foreach ($sets as $set) {
@@ -304,7 +304,7 @@ class HomeBuilder
                 }
 
                 // Find all pictures
-                $paths = glob($set . '/*.{jpg,jpeg,JPG,JPEG}', GLOB_BRACE);
+                $paths = glob($set.'/*.{jpg,jpeg,JPG,JPEG}', GLOB_BRACE);
                 if (count($paths) < 5) {
                     continue;
                 }
@@ -321,7 +321,7 @@ class HomeBuilder
                     $pathinfo = pathinfo($path);
                     $photos[] = [
                         'extension' => $pathinfo['extension'],
-                        'pathname' => str_replace($root . '/', '', $pathinfo['dirname'].'/'.$pathinfo['basename']),
+                        'pathname' => str_replace($root.'/', '', $pathinfo['dirname'].'/'.$pathinfo['basename']),
                         'basename' => $pathinfo['basename'],
                         'filename' => $pathinfo['filename'],
                     ];
@@ -336,7 +336,7 @@ class HomeBuilder
         return [
             'collection' => basename($collection),
             'set' => basename($set),
-            'list' => $photos
+            'list' => $photos,
         ];
     }
 
@@ -375,11 +375,11 @@ class HomeBuilder
             $usersWeights[$key] = 0;
 
             if ($user->getBranch() == $this->user->getBranch()) {
-                $usersWeights[$key]++;
+                ++$usersWeights[$key];
             }
 
             if ($user->getNiveau() == $this->user->getNiveau()) {
-                $usersWeights[$key]++;
+                ++$usersWeights[$key];
             }
         }
 

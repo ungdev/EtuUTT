@@ -182,7 +182,7 @@ services:
 
     etu.notifs.listener:
         class: %etu.notifs.listener.class%
-        arguments: [@security.context, @doctrine, @etu.twig.global_accessor, @kernel]
+        arguments: [@security.token_storage, @security.authorization_checker, @doctrine, @etu.twig.global_accessor, @kernel]
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelRequest }
 
@@ -220,7 +220,7 @@ services:
     # Home builder
     etu.core.home_builder:
         class: %etu.core.home_builder.class%
-        arguments: [ @doctrine.orm.entity_manager, @security.context, @etu.twig.global_accessor, @?debug.stopwatch ]
+        arguments: [ @doctrine.orm.entity_manager, @security.token_storage, @etu.twig.global_accessor, @?debug.stopwatch ]
 
     etu.core.home_renderer:
         class: %etu.core.home_renderer.class%
