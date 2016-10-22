@@ -54,6 +54,9 @@
 
 		{{ form_start(form) }}
 		{{ form_widget(form) }}
+		<span class="pull-right">
+			{% include 'EtuModuleUploadBundle::upload_link.html.twig' %}
+		</span>
 		{{ form_end(form) }}
 
 		</div>

@@ -36,6 +36,8 @@
             'vendor/facebox/src/facebox.css'
             'vendor/swipebox/src/css/swipebox.min.css'
             'vendor/jquery-impromptu/dist/jquery-impromptu.min.css'
+			'vendor/highlightjs/styles/solarized-dark.css'
+            'vendor/videojs/dist/video-js.css'
             'src/css/sceditor.less'
             'src/css/boot.less'
 
@@ -59,7 +61,7 @@
 			<script type="text/javascript" src="{{ asset('vendor/html5shiv/dist/html5shiv.min.js') }}"></script>
 		<![endif]-->
 	</head>
-	<body class="bg-soft-grey">
+	<body class="bg-soft-grey no-mathjax">
 		<div id="loader" class="overlay">
 			<div class="loader">
 				<img src="{{ asset('src/img/loader-big.gif') }}" />
@@ -236,6 +238,7 @@
 
 		{% block page %}{% endblock %}
 
+		<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
         {% javascripts
             'vendor/jquery/jquery.min.js'
             'vendor/jquery-ui/ui/minified/jquery-ui.custom.min.js'
@@ -250,15 +253,19 @@
             'vendor/jquery-cycle2/build/plugin/jquery.cycle2.center.min.js'
             'vendor/moment/min/moment.min.js'
             'vendor/moment/locale/fr.js'
+			'vendor/highlightjs/highlight.pack.min.js'
+			'vendor/videojs/dist/video.js'
             'bundles/fosjsrouting/js/router.js'
             'src/js/routes.js'
             'src/js/common.js'
+            'src/js/bbcode.js'
 
             filter='?minifier_js'
             output='min/etuutt.js'
         %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
+
 
 		<!-- Piwik -->
 		<script type="text/javascript">

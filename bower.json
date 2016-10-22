@@ -28,7 +28,9 @@
     "html5shiv": "~3.7.2",
     "Justified-Gallery": "~3.5.1",
     "codemirror": "5.14.*",
-    "font-awesome": "4.6.0"
+    "font-awesome": "4.6.0",
+    "highlightjs": "9.7.0",
+    "videojs": "5.11.7"
   },
   "ignore": [
     "**/.*",

@@ -18,8 +18,6 @@ var facebox = $('a[rel*=facebox]'),
 	overlay = $('#overlay'),
 	more = $('#more'),
 	page = $('body'),
-    sceditor = $('.redactor'),
-    sceditorLimited = $('.redactor-limited'),
 	usersAutocomplete = $('.user-autocomplete'),
 	orgasAutocomplete = $('.orga-autocomplete'),
 	changeLocale = {
@@ -265,118 +263,6 @@ $(function() {
 		opacity: 0.5
 	});
 
-    // Load SCeditor
-	var defaultSceditorHeight = 400;
-    sceditor.sceditor({
-        plugins: "bbcode",
-		height: defaultSceditorHeight,
-        style: "/vendor/SCEditor/minified/jquery.sceditor.default.min.css",
-        emoticonsRoot: '/',
-        toolbar:
-            "source|bold,italic,underline,strike,subscript,superscript|left,center,right,justify" +
-                "|font,size,removeformat|bulletlist,orderedlist" +
-                "|table|quote|link,unlink|image,youtube|maximize",
-        emoticons: {
-            dropdown: {
-                ">:(": "src/img/emoticons/angry.png",
-                ":aw:": "src/img/emoticons/aw.png",
-                "8)": "src/img/emoticons/cool.png",
-                ":D": "src/img/emoticons/ecstatic.png",
-                ">:D": "src/img/emoticons/furious.png",
-                ":O": "src/img/emoticons/gah.png",
-                ":)": "src/img/emoticons/happy.png",
-                "<3": "src/img/emoticons/heart.png",
-                ":/": "src/img/emoticons/hm.png",
-                ":3": "src/img/emoticons/kiss.png",
-                ":|": "src/img/emoticons/meh.png",
-                ":x": "src/img/emoticons/mmf.png",
-                ":(": "src/img/emoticons/sad.png",
-                ":P": "src/img/emoticons/tongue.png",
-                ":o": "src/img/emoticons/what.png",
-                ";)": "src/img/emoticons/wink.png"
-            },
-            hidden: {
-                ">:[": "src/img/emoticons/angry.png",
-                "8]": "src/img/emoticons/cool.png",
-                "D:": "src/img/emoticons/gah.png",
-                ":]": "src/img/emoticons/happy.png",
-                ":\\": "src/img/emoticons/hm.png",
-                "-.-": "src/img/emoticons/meh.png",
-                "-_-": "src/img/emoticons/meh.png",
-                ":X": "src/img/emoticons/mmf.png",
-                ":[": "src/img/emoticons/sad.png",
-                ":\'(": "src/img/emoticons/sad.png",
-                ":\'[": "src/img/emoticons/sad.png",
-                ":p": "src/img/emoticons/tongue.png",
-                ":?": "src/img/emoticons/what.png",
-                ";]": "src/img/emoticons/wink.png",
-                ";D": "src/img/emoticons/wink.png"
-            }
-        }
-    });
-
-    // Load SCeditor limited
-    sceditorLimited.sceditor({
-        plugins: "bbcode",
-		height: defaultSceditorHeight,
-        style: "/vendor/SCEditor/minified/jquery.sceditor.default.min.css",
-        emoticonsRoot: '/',
-        toolbar:
-            "source|bold,italic,underline,strike|left,center,right,justify|link,unlink|maximize",
-        emoticons: {
-            dropdown: {
-                ">:(": "src/img/emoticons/angry.png",
-                ":aw:": "src/img/emoticons/aw.png",
-                "8)": "src/img/emoticons/cool.png",
-                ":D": "src/img/emoticons/ecstatic.png",
-                ">:D": "src/img/emoticons/furious.png",
-                ":O": "src/img/emoticons/gah.png",
-                ":)": "src/img/emoticons/happy.png",
-                "<3": "src/img/emoticons/heart.png",
-                ":/": "src/img/emoticons/hm.png",
-                ":3": "src/img/emoticons/kiss.png",
-                ":|": "src/img/emoticons/meh.png",
-                ":x": "src/img/emoticons/mmf.png",
-                ":(": "src/img/emoticons/sad.png",
-                ":P": "src/img/emoticons/tongue.png",
-                ":o": "src/img/emoticons/what.png",
-                ";)": "src/img/emoticons/wink.png"
-            },
-            hidden: {
-                ">:[": "src/img/emoticons/angry.png",
-                "8]": "src/img/emoticons/cool.png",
-                "D:": "src/img/emoticons/gah.png",
-                ":]": "src/img/emoticons/happy.png",
-                ":\\": "src/img/emoticons/hm.png",
-                "-.-": "src/img/emoticons/meh.png",
-                "-_-": "src/img/emoticons/meh.png",
-                ":X": "src/img/emoticons/mmf.png",
-                ":[": "src/img/emoticons/sad.png",
-                ":\'(": "src/img/emoticons/sad.png",
-                ":\'[": "src/img/emoticons/sad.png",
-                ":p": "src/img/emoticons/tongue.png",
-                ":?": "src/img/emoticons/what.png",
-                ";]": "src/img/emoticons/wink.png",
-                ";D": "src/img/emoticons/wink.png"
-            }
-        }
-    });
-
-	// Resize sceditors on window resize, because width: 100% doesn't work properlyv
-	var sceditorAutoresize = function() {
-		var win = $(this);
-		sceditor.each(function() {
-			var width = win.width()/2;
-			var height = defaultSceditorHeight;
-			sceditor.parent().width('99%');
-			sceditor.sceditor('instance').width(sceditor.parent().width());
-			sceditor.sceditor('instance').height(height);
-		})
-	}
-	sceditorAutoresize();
-	$(window).on('resize', function(){
-		sceditorAutoresize();
-	});
 
 
 	// Users autocomplete
