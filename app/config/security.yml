@@ -156,3 +156,8 @@ security:
                 login_path: user_connect
                 check_path: user_connect_external
                 provider: passwords
+            remember_me:
+                secret:   '%secret%'
+                lifetime: 3600*24*365.25 # 1 year in seconds
+                path:     /
+                always_remember_me: true
