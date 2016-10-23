@@ -35,6 +35,7 @@ class AdminController extends Controller
         $users = array();
 
         $form = $this->createFormBuilder($user)
+            ->setMethod('get')
             ->add('fullName', null, array('required' => false))
             ->add('studentId', null, array('required' => false))
             ->add('phoneNumber', null, array('required' => false))
@@ -44,7 +45,7 @@ class AdminController extends Controller
             ->add('personnalMail', null, array('required' => false))
             ->getForm();
 
-        if ($form->handleRequest($request)->isValid()) {
+        if ($request->query->has('form') && $form->handleRequest($request)->isValid()) {
             $search = true;
 
             /** @var $em EntityManager */
@@ -146,8 +147,8 @@ class AdminController extends Controller
 
         $privacyChoice = array(
             'choices' => array(
-                User::PRIVACY_PUBLIC => 'user.privacy.public',
-                User::PRIVACY_PRIVATE => 'user.privacy.private',
+                'user.privacy.public' => User::PRIVACY_PUBLIC,
+                'user.privacy.private' => User::PRIVACY_PRIVATE,
             ),
             'attr' => array(
                 'class' => 'profileEdit-privacy-select',
@@ -159,8 +160,8 @@ class AdminController extends Controller
             ->add('phoneNumber', null, array('required' => false))
             ->add('phoneNumberPrivacy', ChoiceType::class, $privacyChoice)
             ->add('sex', ChoiceType::class, array('choices' => array(
-                User::SEX_MALE => 'base.user.sex.male',
-                User::SEX_FEMALE => 'base.user.sex.female',
+                'base.user.sex.male' => User::SEX_MALE,
+                'base.user.sex.female' => User::SEX_FEMALE,
             ), 'required' => false))
             ->add('sexPrivacy', ChoiceType::class, $privacyChoice)
             ->add('nationality', null, array('required' => false))

@@ -26,6 +26,7 @@ class MainController extends Controller
         $users = array();
 
         $form = $this->createFormBuilder($user)
+            ->setMethod('get')
             ->add('fullName', null, array('required' => false))
             ->add('studentId', null, array('required' => false))
             ->add('phoneNumber', null, array('required' => false))
@@ -35,7 +36,7 @@ class MainController extends Controller
             ->add('personnalMail', null, array('required' => false))
             ->getForm();
 
-        if ($request->query->has('form') && $form->submit($request)->isValid()) {
+        if ($request->query->has('form') && $form->handleRequest($request)->isValid()) {
             $search = true;
 
             /** @var $em EntityManager */

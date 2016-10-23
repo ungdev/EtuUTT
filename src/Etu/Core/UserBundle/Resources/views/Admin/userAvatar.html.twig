@@ -17,7 +17,7 @@
     </ul>
 
     <div class="padding20-sides profile-avatar">
-        <form method="post" {{ form_enctype(form) }}>
+        {{ form_start(form) }}
             {{ form_errors(form) }}
 
             <img src="{{ asset('uploads/photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
@@ -35,6 +35,6 @@
 
                 <button type="submit" class="btn">{{ 'user.admin.userAvatar.submit'|trans }}</button>
             </div>
-        </form>
+        {{ form_end(form) }}
     </div>
 {% endblock %}

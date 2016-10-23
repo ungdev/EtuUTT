@@ -3,6 +3,7 @@
 namespace Etu\Core\CoreBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BirthdayPickerType extends AbstractType
@@ -18,6 +19,6 @@ class BirthdayPickerType extends AbstractType
 
     public function getParent()
     {
-        return 'date';
+        return DateType::class;
     }
 }

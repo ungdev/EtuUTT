@@ -23,7 +23,7 @@
     <div class="padding20-sides">
         <div class="hidden" id="avatarUploadBox">
             <div class="avatarUploadBox-form">
-                <form method="post" action="{{ path('admin_user_edit_avatar', {'login': user.login}) }}" {{ form_enctype(avatarForm) }}>
+                {{ form_start(avatarForm) }}
                     <h4>{{ 'user.admin.userEdit.avatar'|trans }}</h4>
 
                     <img src="{{ asset('uploads/photos/'~user.avatar) }}" style="max-width: 100px;" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
@@ -38,7 +38,7 @@
 
                         <button type="submit" class="btn">{{ 'user.profile.edit'|trans }}</button>
                     </div>
-                </form>
+                {{ form_end(avatarForm) }}
             </div>
         </div>
 

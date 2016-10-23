@@ -23,7 +23,7 @@
     <div class="padding20-all">
         <div class="hidden" id="avatarUploadBox">
             <div class="avatarUploadBox-form">
-                <form method="post" action="{{ path('orga_admin_avatar') }}" {{ form_enctype(avatarForm) }}>
+                {{ form_start(avatarForm) }}
                     <h4>{{ 'user.orga.avatar.title'|trans }}</h4>
 
                     <img src="{{ asset('uploads/logos/'~app.user.logo) }}?{{ rand }}" style="max-width: 100px;" alt="{{ app.user.fullName }}" title="{{ app.user.fullName }}" />
@@ -38,7 +38,7 @@
 
                         <button type="submit" class="btn">{{ 'user.orga.avatar.submit'|trans }}</button>
                     </div>
-                </form>
+                {{ form_end(avatarForm) }}
             </div>
         </div>
 

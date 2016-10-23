@@ -12,7 +12,7 @@
 
 {% block content %}
     <div style="display: none;">
-        <form id="avatar-upload-form" action="{{ path('user_profile_avatar') }}" {{ form_enctype(avatarForm) }} target="avatar-upload-frame" method="post">
+        <form id="avatar-upload-form" action="{{ path('user_profile_avatar') }}" enctype="multipart/form-data" target="avatar-upload-frame" method="post">
             {{ form_rest(avatarForm) }}
             <input id="avatar-upload-submit" type="submit" value="Upload" />
         </form>

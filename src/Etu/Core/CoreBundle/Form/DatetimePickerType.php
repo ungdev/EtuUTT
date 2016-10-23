@@ -3,6 +3,7 @@
 namespace Etu\Core\CoreBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DatetimePickerType extends AbstractType
@@ -19,6 +20,6 @@ class DatetimePickerType extends AbstractType
 
     public function getParent()
     {
-        return 'datetime';
+        return DateTimeType::class;
     }
 }

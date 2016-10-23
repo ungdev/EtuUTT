@@ -3,6 +3,7 @@
 namespace Etu\Core\CoreBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RedactorLimitedType extends AbstractType
@@ -16,6 +17,6 @@ class RedactorLimitedType extends AbstractType
 
     public function getParent()
     {
-        return 'textarea';
+        return TextareaType::class;
     }
 }

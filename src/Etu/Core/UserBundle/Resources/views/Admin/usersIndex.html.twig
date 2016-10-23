@@ -9,7 +9,7 @@
 {% block content %}
 
     <div class="trombi-search-box">
-        <form method="get" action="{{ path('admin_users_index') }}">
+        {{ form_start(form) }}
             <h4 class="pull-left">
                 {{ 'user.admin.userIndex.search_title'|trans }}
             </h4>
@@ -97,7 +97,7 @@
                 {{ form_rest(form) }}
                 <button type="submit" class="btn">{{ 'user.admin.userIndex.search'|trans }}</button>
             </div>
-        </form>
+        {{ form_end(form) }}
     </div>
 
     <div class="trombi-search-results">
