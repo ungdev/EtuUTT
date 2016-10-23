@@ -12,9 +12,8 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
 
-    sentry_dsn:        http://xx:xx@host/id
-
-    locale:            fr
     secret:            YourSecretHere
 
     domain:            etu.utt.fr
+
+    version_id: local

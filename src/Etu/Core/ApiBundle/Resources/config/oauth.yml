@@ -1,36 +1,31 @@
 
 parameters:
-    etu.oauth.server.class: Etu\Core\ApiBundle\Oauth\OauthServer
-    etu.oauth.grant_type.client_credentials.class: Etu\Core\ApiBundle\Oauth\GrantType\ClientCredentialsGrantType
-    etu.oauth.grant_type.authorization_code.class: Etu\Core\ApiBundle\Oauth\GrantType\AuthorizationCodeGrantType
-    etu.oauth.grant_type.refresh_token.class: Etu\Core\ApiBundle\Oauth\GrantType\RefreshTokenGrantType
-    etu.oauth.security.class: Etu\Core\ApiBundle\Listener\SecurityListener
 
 services:
     etu.oauth.server:
-        class: %etu.oauth.server.class%
-        arguments: [ @doctrine.orm.default_entity_manager ]
+        class: Etu\Core\ApiBundle\Oauth\OauthServer
+        arguments: [ "@doctrine.orm.default_entity_manager" ]
 
     etu.oauth.grant_type.client_credentials:
-        class: %etu.oauth.grant_type.client_credentials.class%
-        arguments: [ @doctrine.orm.default_entity_manager ]
+        class: Etu\Core\ApiBundle\Oauth\GrantType\ClientCredentialsGrantType
+        arguments: [ "@doctrine.orm.default_entity_manager" ]
         tags:
             - { name: etu.oauth.grant_type }
 
     etu.oauth.grant_type.authorization_code:
-        class: %etu.oauth.grant_type.authorization_code.class%
-        arguments: [ @doctrine.orm.default_entity_manager ]
+        class: Etu\Core\ApiBundle\Oauth\GrantType\AuthorizationCodeGrantType
+        arguments: [ "@doctrine.orm.default_entity_manager" ]
         tags:
             - { name: etu.oauth.grant_type }
 
     etu.oauth.grant_type.refresh_token:
-        class: %etu.oauth.grant_type.refresh_token.class%
-        arguments: [ @doctrine.orm.default_entity_manager ]
+        class: Etu\Core\ApiBundle\Oauth\GrantType\RefreshTokenGrantType
+        arguments: [ "@doctrine.orm.default_entity_manager" ]
         tags:
             - { name: etu.oauth.grant_type }
 
     etu.oauth.security:
-        class: %etu.oauth.security.class%
-        arguments: [ @etu.oauth.server, @annotation_reader, @etu.formatter ]
+        class: Etu\Core\ApiBundle\Listener\SecurityListener
+        arguments: [ "@etu.oauth.server", "@annotation_reader", "@etu.formatter" ]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Etu\Core\CoreBundle\Test\Controller;
+namespace Test\Etu\Core\CoreBundle\Test\Controller;
 
 use Etu\Core\CoreBundle\Framework\Tests\EtuWebTestCase;
 

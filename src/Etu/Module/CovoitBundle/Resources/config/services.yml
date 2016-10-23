@@ -1,71 +1,57 @@
 
 parameters:
-    etu.covoit.form.proposal.class: Etu\Module\CovoitBundle\Form\CovoitType
-    etu.covoit.form.message.class: Etu\Module\CovoitBundle\Form\CovoitMessageType
-    etu.covoit.form.search.class: Etu\Module\CovoitBundle\Form\SearchType
-    etu.covoit.form.alert.class: Etu\Module\CovoitBundle\Form\CovoitAlertType
-
-    etu.covoit.query_mapper.search.class: Etu\Module\CovoitBundle\QueryMapper\SearchMapper
-
-    etu.covoit.notifs_dispatcher.class: Etu\Module\CovoitBundle\Alerts\NotificationsDispatcher
-
-    etu.covoit.notifs.new_message.class: Etu\Module\CovoitBundle\Notification\Helper\NewMessageHelper
-    etu.covoit.notifs.edited.class: Etu\Module\CovoitBundle\Notification\Helper\EditedHelper
-    etu.covoit.notifs.canceled.class: Etu\Module\CovoitBundle\Notification\Helper\CanceledHelper
-    etu.covoit.notifs.alert.class: Etu\Module\CovoitBundle\Notification\Helper\AlertHelper
-    etu.covoit.notifs.subscription.class: Etu\Module\CovoitBundle\Notification\Helper\SubscriptionHelper
 
 services:
 
     # Forms
     etu.covoit.form.proposal:
-        class: %etu.covoit.form.proposal.class%
+        class: Etu\Module\CovoitBundle\Form\CovoitType
 
     etu.covoit.form.message:
-        class: %etu.covoit.form.message.class%
+        class: Etu\Module\CovoitBundle\Form\CovoitMessageType
 
     etu.covoit.form.search:
-        class: %etu.covoit.form.search.class%
+        class: Etu\Module\CovoitBundle\Form\SearchType
 
     etu.covoit.form.alert:
-        class: %etu.covoit.form.alert.class%
+        class: Etu\Module\CovoitBundle\Form\CovoitAlertType
 
     # Searh query mapper
     etu.covoit.query_mapper.search:
-        class: %etu.covoit.query_mapper.search.class%
+        class: Etu\Module\CovoitBundle\QueryMapper\SearchMapper
 
     # Notifications dispatcher
     etu.covoit.notifs_dispatcher:
-        class: %etu.covoit.notifs_dispatcher.class%
-        arguments: [@doctrine, @etu.notifs.sender]
+        class: Etu\Module\CovoitBundle\Alerts\NotificationsDispatcher
+        arguments: ["@doctrine", "@etu.notifs.sender"]
 
     # Notifications helper
     etu.covoit.notifs.new_message:
-        class: %etu.covoit.notifs.new_message.class%
-        arguments: [@twig]
+        class: Etu\Module\CovoitBundle\Notification\Helper\NewMessageHelper
+        arguments: ["@twig"]
         tags:
             - { name: etu.notifs_helper }
 
     etu.covoit.notifs.edited:
-        class: %etu.covoit.notifs.edited.class%
-        arguments: [@twig]
+        class: Etu\Module\CovoitBundle\Notification\Helper\EditedHelper
+        arguments: ["@twig"]
         tags:
             - { name: etu.notifs_helper }
 
     etu.covoit.notifs.canceled:
-        class: %etu.covoit.notifs.canceled.class%
-        arguments: [@twig]
+        class: Etu\Module\CovoitBundle\Notification\Helper\CanceledHelper
+        arguments: ["@twig"]
         tags:
             - { name: etu.notifs_helper }
 
     etu.covoit.notifs.alert:
-        class: %etu.covoit.notifs.alert.class%
-        arguments: [@twig]
+        class: Etu\Module\CovoitBundle\Notification\Helper\AlertHelper
+        arguments: ["@twig"]
         tags:
             - { name: etu.notifs_helper }
 
     etu.covoit.notifs.subscription:
-        class: %etu.covoit.notifs.subscription.class%
-        arguments: [@twig]
+        class: Etu\Module\CovoitBundle\Notification\Helper\SubscriptionHelper
+        arguments: ["@twig"]
         tags:
             - { name: etu.notifs_helper }

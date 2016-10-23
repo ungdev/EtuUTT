@@ -1,93 +1,75 @@
 
 parameters:
-    etu.serializer.collection.class: Etu\Core\ApiBundle\Serializer\SerializerCollection
-
-    etu.serializer.array_normalizer.class: Etu\Core\ApiBundle\Serializer\Normalizer\ArrayNormalizer
-    etu.serializer.properties_normalizer.class: Etu\Core\ApiBundle\Serializer\Normalizer\PropertiesNormalizer
-    etu.serializer.get_set_normalizer.class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
-
-    etu.serializer.json_encoder.class: Symfony\Component\Serializer\Encoder\JsonEncoder
-    etu.serializer.xml_encoder.class: Symfony\Component\Serializer\Encoder\XmlEncoder
-
-    etu.serializer.builder.class: Etu\Core\ApiBundle\Serializer\SerializerBuilder
-    etu.serializer.class: Symfony\Component\Serializer\Serializer
-
-    etu.formatter.class: Etu\Core\ApiBundle\Formatter\DataFormatter
-
-    etu.api.exception_listener.class: Etu\Core\ApiBundle\Listener\ExceptionListener
-    etu.api.routing_loader.class: Etu\Core\ApiBundle\Framework\Routing\ApiResourcesRoutingLoader
-    etu.api.form.scopes.class: Etu\Core\ApiBundle\Form\ScopesType
-    etu.api.form.client.class: Etu\Core\ApiBundle\Form\ClientType
 
 services:
     # Serializer collection
     etu.serializer.collection:
-        class: %etu.serializer.collection.class%
+        class: Etu\Core\ApiBundle\Serializer\SerializerCollection
 
     # Serializer normalizers
     etu.serializer.array_normalizer:
-        class: %etu.serializer.array_normalizer.class%
+        class: Etu\Core\ApiBundle\Serializer\Normalizer\ArrayNormalizer
         tags:
             - { name: etu.serializer_normalizer }
 
     etu.serializer.properties_normalizer:
-        class: %etu.serializer.properties_normalizer.class%
+        class: Etu\Core\ApiBundle\Serializer\Normalizer\PropertiesNormalizer
         tags:
             - { name: etu.serializer_normalizer }
 
     etu.serializer.get_set_normalizer:
-        class: %etu.serializer.get_set_normalizer.class%
+        class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
         tags:
             - { name: etu.serializer_normalizer }
 
     # Serializer encoders
     etu.serializer.json_encoder:
-        class: %etu.serializer.json_encoder.class%
+        class: Symfony\Component\Serializer\Encoder\JsonEncoder
         tags:
             - { name: etu.serializer_encoder }
 
     etu.serializer.xml_encoder:
-        class: %etu.serializer.xml_encoder.class%
+        class: Symfony\Component\Serializer\Encoder\XmlEncoder
         tags:
             - { name: etu.serializer_encoder }
 
     # Serializer
     etu.serializer.builder:
-        class: %etu.serializer.builder.class%
-        arguments: [@etu.serializer.collection]
+        class: Etu\Core\ApiBundle\Serializer\SerializerBuilder
+        arguments: ["@etu.serializer.collection"]
 
     etu.serializer:
-        class: %etu.serializer.class%
-        factory: [@etu.serializer.builder, createSerializer]
+        class: Symfony\Component\Serializer\Serializer
+        factory: ["@etu.serializer.builder", createSerializer]
 
     # Data formatter
     etu.formatter:
-        class: %etu.formatter.class%
-        arguments: [ @etu.serializer ]
+        class: Etu\Core\ApiBundle\Formatter\DataFormatter
+        arguments: [ "@etu.serializer" ]
 
 
     # Exception listener
     etu.api.exception_listener:
-        class: %etu.api.exception_listener.class%
-        arguments: [ @etu.formatter ]
+        class: Etu\Core\ApiBundle\Listener\ExceptionListener
+        arguments: [ "@etu.formatter" ]
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
 
 
     # Routing loader
     etu.api.routing_loader:
-        class: %etu.api.routing_loader.class%
-        arguments: [@kernel]
+        class: Etu\Core\ApiBundle\Framework\Routing\ApiResourcesRoutingLoader
+        arguments: ["@kernel"]
         tags:
             - { name: routing.loader }
 
 
     # Form
     etu.api.form.scopes:
-        class: %etu.api.form.scopes.class%
-        arguments: [ @doctrine.orm.entity_manager ]
+        class: Etu\Core\ApiBundle\Form\ScopesType
+        arguments: [ "@doctrine.orm.entity_manager" ]
         tags:
             - { name: form.type, alias: scopes }
 
     etu.api.form.client:
-        class: %etu.api.form.client.class%
+        class: Etu\Core\ApiBundle\Form\ClientType

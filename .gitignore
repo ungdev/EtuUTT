@@ -4,24 +4,20 @@
 /app/config/parameters.yml
 /app/config/version.yml
 /app/config/modules.yml
-/app/cache/*
-/app/logs/*
 /app/check.php
-/app/bootstrap.php.cache
-/app/SymfonyRequirements.php
 /src/Etu/Module/UVBundle/Resources/objects/current-guide.pdf
 /src/Etu/Module/UVBundle/Resources/objects/current-guide.xml
 /src/Etu/Module/UVBundle/Resources/objects/registry.json
 /src/Etu/Module/LoggerBundle/Resources/objects/errors
 /src/Etu/Module/ArgentiqueBundle/Resources/photos/*
 
+/var
+
 /web/vendor/
 /web/min/
 /web/bundles/
 /web/uploads/
 /web/argentique/cache/
-/web/app.php
-/web/etu_dev.php
 /web/config.php
 
 /vendor/
@@ -29,9 +25,12 @@
 /composer.phar
 *.php~
 
-# IDE #
-/src/Etu/Core/UserBundle/Resources/temp
+/tmp
+
 # Used to store schedules
+/src/Etu/Core/UserBundle/Resources/temp
+
+# IDE #
 #######
 
 .idea/

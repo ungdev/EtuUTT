@@ -6,7 +6,7 @@ EtuUTT est la nouvelle version (2013) du site étudiant de l'Université de Tech
 Originellement développé par [Titouan Galopin](https://github.com/tgalopin) au sein de l'association UTT Net Group (l'association étudiante d'informatique de l'UTT), le site étudiant propose des outils et des services à tous les étudiants pour faciliter leur intégration et leur vie de tous les jours. Il contient aussi des espaces d'échange et des raccourcis vers les différentes plateformes en ligne de l'école.
 
 Cette refonte de 2013 a pour vocation d'améliorer les performances, le design et la qualité du code.
-Ce projet utilise Symfony 2.x.
+Ce projet utilise Symfony 3.1
 
 Documentation
 -------------
