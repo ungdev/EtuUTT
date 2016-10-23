@@ -4,34 +4,38 @@ sudo: false
 php:
 - 7.0
 
+env:
+    - SYMFONY_ENV=test
+    - SYMFONY_DEBUG=1
+
 matrix:
-  fast_finish: true
-  allow_failures:
-  - php: nightly
+    fast_finish: true
+    allow_failures:
+        - php: nightly
 
 cache:
-   directories:
-     - vendor
-     - $HOME/.composer/cache
+    directories:
+        - vendor
+        - $HOME/.composer/cache
 
 before_script:
-- cp app/config/parameters.yml.dist app/config/parameters.yml
-- cp app/config/modules.yml.dist app/config/modules.yml
-- composer self-update
-- composer install --ignore-platform-reqs --no-interaction --prefer-dist
+    - cp app/config/parameters.yml.dist app/config/parameters.yml
+    - cp app/config/modules.yml.dist app/config/modules.yml
+    - composer self-update
+    - composer install --ignore-platform-reqs --no-interaction --prefer-dist
 
 script:
-- phpunit
+    - phpunit
 
 notifications:
-  email:
-  - uttnetgroup@gmail.com
-  slack:
-    secure: DtA5ucKly5MJiE0h8aAi+DmhMzopaHAUa6IU9izyb5KkkfDwFPhS9Ve63w3X3mW5kB9N08Nn9KDCYGUbMr44Nasyq9nfzjQPRya1xH+Skn+hmRId2ezMwX/viZN3m7OQ0qskWjX2Kjn/CTbiIvpBgYjNEDegEDuWRG6ynk+zIfI=
-  webhooks:
-    urls:
-      #- https://ungdev.utt.fr/deploy
-      - https://etu.utt.fr/deploy
-    on_failure: never
-    on_start: never
-    on_pull_requests: false
+    email:
+        - uttnetgroup@gmail.com
+    slack:
+        secure: DtA5ucKly5MJiE0h8aAi+DmhMzopaHAUa6IU9izyb5KkkfDwFPhS9Ve63w3X3mW5kB9N08Nn9KDCYGUbMr44Nasyq9nfzjQPRya1xH+Skn+hmRId2ezMwX/viZN3m7OQ0qskWjX2Kjn/CTbiIvpBgYjNEDegEDuWRG6ynk+zIfI=
+    webhooks:
+        urls:
+            #- https://ungdev.utt.fr/deploy
+            - https://etu.utt.fr/deploy
+        on_failure: never
+        on_start: never
+        on_pull_requests: false
