@@ -198,7 +198,7 @@ class BugsController extends Controller
             ->add('body')
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
             /** @var $em EntityManager */
             $em = $this->getDoctrine()->getManager();
 
@@ -286,7 +286,7 @@ class BugsController extends Controller
             ->add('body')
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($bug);
@@ -362,7 +362,7 @@ class BugsController extends Controller
             ->add('body')
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($comment);

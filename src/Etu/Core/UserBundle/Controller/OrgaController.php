@@ -64,7 +64,7 @@ class OrgaController extends Controller
             ->add('website', null, array('required' => false))
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
             $em->persist($orga);
             $em->flush();
 
@@ -103,7 +103,7 @@ class OrgaController extends Controller
             ->add('file', FileType::class)
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
             /** @var $em EntityManager */
             $em = $this->getDoctrine()->getManager();
 

@@ -263,7 +263,7 @@ class MainController extends Controller
 
         $request = $this->get('request');
         if ($request->getMethod() == 'POST') {
-            $form->bind($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 if ($thread->getWeight() != 100 && !$checker->canSticky($category) && !$this->isGranted('ROLE_FORUM_ADMIN')) {
                     $thread->setWeight(100);
@@ -351,7 +351,7 @@ class MainController extends Controller
 
         $request = $this->get('request');
         if ($request->getMethod() == 'POST') {
-            $form->bind($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 $message->setAuthor($this->getUser())
                     ->setCategory($category)
@@ -452,7 +452,7 @@ class MainController extends Controller
 
         $request = $this->get('request');
         if ($request->getMethod() == 'POST') {
-            $form->bind($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 $em->persist($message);
                 $em->flush();
@@ -670,7 +670,7 @@ class MainController extends Controller
 
                 $request = $this->get('request');
                 if ($request->getMethod() == 'POST') {
-                    $form->bind($request);
+                    $form->handleRequest($request);
                     if ($form->isValid()) {
                         $category->setCountThreads($category->getCountThreads() - 1)
                             ->setCountMessages($category->getCountMessages() - $thread->getCountMessages());

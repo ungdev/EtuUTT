@@ -157,7 +157,7 @@ class ProfileController extends Controller
             ->add('viadeo', null, array('required' => false))
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             if ($user->getProfileCompletion() == 100) {
@@ -204,7 +204,7 @@ class ProfileController extends Controller
             ->add('file', FileType::class)
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $file = $user->upload();
@@ -248,7 +248,7 @@ class ProfileController extends Controller
             ->add('passions', null, array('required' => false, 'attr' => array('class' => 'trombi-textarea')))
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             if ($user->getTrombiCompletion() == 100) {

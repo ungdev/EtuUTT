@@ -159,7 +159,7 @@ class MembershipsController extends Controller
             ->add('website', null, array('required' => false))
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
             $em->persist($orga);
             $em->flush();
 
@@ -417,7 +417,7 @@ class MembershipsController extends Controller
             ->add('content', TextareaType::class, array('required' => true, 'max_length' => 140))
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
             $notification = new Notification();
             $notification->setEntityType('orga')
                 ->setEntityId($orga->getId())

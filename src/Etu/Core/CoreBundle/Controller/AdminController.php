@@ -195,7 +195,7 @@ class AdminController extends Controller
             ->add('content')
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
             $page->setSlug(StringManipulationExtension::slugify($page->getTitle()));
 
             $em->persist($page);
@@ -232,7 +232,7 @@ class AdminController extends Controller
             ->add('content')
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
 
             // $cacheDriver = $em->getConfiguration()->getResultCacheImpl();
             // $cacheDriver->delete('EtuCoreBundle/page:'.$page->getSlug());

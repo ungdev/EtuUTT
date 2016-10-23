@@ -224,7 +224,7 @@ class BugsAdminController extends Controller
             $label, $this->get('translator')->trans($criticalities[$bug->getCriticality()])
         );
 
-        if ($request->getMethod() == 'POST' && $updateForm->bind($request)->isValid()) {
+        if ($request->getMethod() == 'POST' && $updateForm->handleRequest($request)->isValid()) {
             $bug->setUpdatedAt(new \DateTime());
 
             $em->persist($bug);

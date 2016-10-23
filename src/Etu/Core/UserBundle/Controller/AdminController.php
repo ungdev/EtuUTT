@@ -44,7 +44,7 @@ class AdminController extends Controller
             ->add('personnalMail', null, array('required' => false))
             ->getForm();
 
-        if ($form->bind($request)->isValid()) {
+        if ($form->handleRequest($request)->isValid()) {
             $search = true;
 
             /** @var $em EntityManager */
@@ -189,7 +189,7 @@ class AdminController extends Controller
             ->add('viadeo', null, array('required' => false))
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             if ($user->getProfileCompletion() == 100) {
@@ -355,7 +355,7 @@ class AdminController extends Controller
             ->add('file', FileType::class)
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $user->upload();
@@ -493,7 +493,7 @@ class AdminController extends Controller
             ->add('isStaffUTT', null, array('required' => false))
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             if ($user->getProfileCompletion() == 100) {
@@ -614,7 +614,7 @@ class AdminController extends Controller
             ->add('descriptionShort', TextareaType::class, array('required' => true))
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($orga);
