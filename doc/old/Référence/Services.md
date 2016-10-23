@@ -135,14 +135,6 @@ Fournit des filtres de chaines de caractères pour Twig et PHP.
 
 Listener de kernel.request pour récupérer les informations utilisateur de la base de données.
 
-### Crypting
-
-**etu.user.crypting**
-*Etu\Core\UserBundle\Security\Encrypt\Encrypt*
-
-Objet utilisant le chiffrement Vernam et la clé de Symfony pour chiffrer et déchiffrer des chaines
-de caractères de manière sécurisée.
-
 ### LDAP manager
 
 **etu.user.ldap**
