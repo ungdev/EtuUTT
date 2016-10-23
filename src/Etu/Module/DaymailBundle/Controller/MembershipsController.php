@@ -7,8 +7,7 @@ use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Form\RedactorHtmlType;
 use Etu\Core\UserBundle\Entity\Member;
 use Etu\Module\DaymailBundle\Entity\DaymailPart;
-
-// Import annotations
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -23,7 +22,7 @@ class MembershipsController extends Controller
      * )
      * @Template()
      */
-    public function daymailAction($login, $day)
+    public function daymailAction($login, $day, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_DAYMAIL_EDIT');
 
@@ -128,8 +127,6 @@ class MembershipsController extends Controller
             ->add('title', TextType::class, array('required' => true, 'max_length' => 100))
             ->add('body', RedactorHtmlType::class, array('required' => true))
             ->getForm();
-
-        $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST' && $form->submit($request)->isValid() && $canEdit) {
             $daymailPart->setBody($this->get('etu_daymail.body_parser')->parse($daymailPart->getBody()));

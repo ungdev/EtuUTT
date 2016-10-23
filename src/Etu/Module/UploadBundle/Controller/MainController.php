@@ -3,8 +3,7 @@
 namespace Etu\Module\UploadBundle\Controller;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
-
-// Import annotations
+use Symfony\Component\HttpFoundation\Request;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -16,7 +15,7 @@ class MainController extends Controller
      * @Route("/upload", name="upload_index")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_UPLOAD');
 
@@ -42,8 +41,6 @@ class MainController extends Controller
         $form = $this->createFormBuilder()
             ->add('file', FileType, array('required' => true))
             ->getForm();
-
-        $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
 

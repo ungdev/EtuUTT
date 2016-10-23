@@ -6,8 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\User;
-
-// Import annotations
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -18,7 +17,7 @@ class MainController extends Controller
      * @Route("/trombi/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="trombi_index")
      * @Template()
      */
-    public function indexAction($page)
+    public function indexAction($page, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_TROMBI');
 
@@ -36,7 +35,7 @@ class MainController extends Controller
             ->add('personnalMail', null, array('required' => false))
             ->getForm();
 
-        if ($this->getRequest()->query->has('form') && $form->submit($this->getRequest())->isValid()) {
+        if ($request->query->has('form') && $form->submit($request)->isValid()) {
             $search = true;
 
             /** @var $em EntityManager */

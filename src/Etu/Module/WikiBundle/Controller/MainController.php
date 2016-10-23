@@ -8,7 +8,7 @@ use Etu\Core\CoreBundle\Form\RedactorType;
 use Etu\Module\WikiBundle\Entity\WikiPage;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-// Import annotations
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -50,7 +50,7 @@ class MainController extends Controller
      * @Route("/wiki/new/{category}/{slug}", defaults={"new"=true}, requirements={"category" = "[a-z0-9-]+", "slug" = "[a-z0-9-/]*"}, name="wiki_new")
      * @Template()
      */
-    public function editAction($category, $slug, $new = false)
+    public function editAction($category, $slug, $new, Request $request)
     {
         // Find last version of a page
         $repo = $this->getDoctrine()->getRepository('EtuModuleWikiBundle:WikiPage');
@@ -147,7 +147,7 @@ class MainController extends Controller
             ->getForm();
 
         // Submit form
-        if ($this->getRequest()->isMethod('POST') && $form->handleRequest($this->getRequest())->isValid()) {
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             // Force insert
             $page->setId(null);
 

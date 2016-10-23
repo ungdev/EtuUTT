@@ -11,8 +11,7 @@ use Etu\Core\CoreBundle\Home\HomeRenderer;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Module\EventsBundle\Entity\Event;
 use Symfony\Component\HttpFoundation\Response;
-
-// Import @Route() and @Template() annotations
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -118,7 +117,7 @@ class MainController extends Controller
      * @Route("/change-locale/{lang}", name="change_locale")
      * @Template()
      */
-    public function changeLocaleAction($lang)
+    public function changeLocaleAction($lang, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -139,7 +138,7 @@ class MainController extends Controller
             }
         }
 
-        $url = $this->getRequest()->server->get('HTTP_REFERER');
+        $url = $request->server->get('HTTP_REFERER');
 
         $this->get('session')->getFlashBag()->set('message', array(
             'type' => 'success',
@@ -158,11 +157,11 @@ class MainController extends Controller
      * @Route("/desktop-version", name="desktop_version")
      * @Template()
      */
-    public function desktopAction()
+    public function desktopAction(Request $request)
     {
         setcookie('disable_responsive', true, time() + 3600 * 24 * 365);
 
-        $url = $this->getRequest()->server->get('HTTP_REFERER');
+        $url = $request->server->get('HTTP_REFERER');
 
         // Redirect wisely
         if ($this->container->getParameter('etu.domain') == parse_url($url, PHP_URL_HOST)) {
@@ -176,11 +175,11 @@ class MainController extends Controller
      * @Route("/mobile-version", name="mobile_version")
      * @Template()
      */
-    public function mobileAction()
+    public function mobileAction(Request $request)
     {
         setcookie('disable_responsive', false, time() - 10);
 
-        $url = $this->getRequest()->server->get('HTTP_REFERER');
+        $url = $request->server->get('HTTP_REFERER');
 
         // Redirect wisely
         if ($this->container->getParameter('etu.domain') == parse_url($url, PHP_URL_HOST)) {

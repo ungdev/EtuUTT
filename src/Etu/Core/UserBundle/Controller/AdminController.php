@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -25,7 +26,7 @@ class AdminController extends Controller
      * @Route("/users/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="admin_users_index")
      * @Template()
      */
-    public function usersIndexAction($page = 1)
+    public function usersIndexAction($page, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PROFIL');
 
@@ -43,7 +44,7 @@ class AdminController extends Controller
             ->add('personnalMail', null, array('required' => false))
             ->getForm();
 
-        if ($form->bind($this->getRequest())->isValid()) {
+        if ($form->bind($request)->isValid()) {
             $search = true;
 
             /** @var $em EntityManager */
@@ -129,7 +130,7 @@ class AdminController extends Controller
      * @Route("/user/{login}/edit", name="admin_user_edit")
      * @Template()
      */
-    public function userEditAction($login)
+    public function userEditAction($login, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PROFIL');
 
@@ -187,8 +188,6 @@ class AdminController extends Controller
             ->add('linkedin', null, array('required' => false))
             ->add('viadeo', null, array('required' => false))
             ->getForm();
-
-        $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -263,7 +262,7 @@ class AdminController extends Controller
      * @Route("/user/{login}/permissions", name="admin_user_roles")
      * @Template()
      */
-    public function userRolesAction($login)
+    public function userRolesAction($login, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_ROLES');
 
@@ -279,8 +278,8 @@ class AdminController extends Controller
 
         // Get 'from' to choose the right back button
         $from = null;
-        if (in_array($this->getRequest()->get('from'), array('profile', 'admin', 'organizations', 'badges', 'schedule'))) {
-            $from = $this->getRequest()->get('from');
+        if (in_array($request->get('from'), array('profile', 'admin', 'organizations', 'badges', 'schedule'))) {
+            $from = $request->get('from');
         }
 
         // Retrieve role list
@@ -299,8 +298,6 @@ class AdminController extends Controller
                 'subroles' => $hierarchy[$role],
             ];
         }
-
-        $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST') {
             $roles = [];
@@ -340,7 +337,7 @@ class AdminController extends Controller
      * @Route("/user/{login}/avatar", name="admin_user_edit_avatar", options={"expose"=true})
      * @Template()
      */
-    public function userAvatarAction($login)
+    public function userAvatarAction($login, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PROFIL');
 
@@ -357,8 +354,6 @@ class AdminController extends Controller
         $form = $this->createFormBuilder($user)
             ->add('file', FileType::class)
             ->getForm();
-
-        $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -437,7 +432,7 @@ class AdminController extends Controller
      * @Route("/user/create", name="admin_user_create")
      * @Template()
      */
-    public function userCreateAction()
+    public function userCreateAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PROFIL');
 
@@ -497,8 +492,6 @@ class AdminController extends Controller
             ->add('isStudent', null, array('required' => false))
             ->add('isStaffUTT', null, array('required' => false))
             ->getForm();
-
-        $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -608,7 +601,7 @@ class AdminController extends Controller
      * @Route("/orgas/create", name="admin_orgas_create")
      * @Template()
      */
-    public function orgasCreateAction()
+    public function orgasCreateAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PROFIL');
 
@@ -620,8 +613,6 @@ class AdminController extends Controller
             ->add('name', null, array('required' => true))
             ->add('descriptionShort', TextareaType::class, array('required' => true))
             ->getForm();
-
-        $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -693,12 +684,11 @@ class AdminController extends Controller
      * @Route("/log-as", name="admin_log-as")
      * @Template()
      */
-    public function logAsAction()
+    public function logAsAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_ALLOWED_TO_SWITCH');
 
         $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST') {
             if (!empty($request->get('orga'))) {

@@ -11,8 +11,7 @@ use Etu\Module\BugsBundle\Entity\Issue;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-
-// Import annotations
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -75,7 +74,7 @@ class BugsController extends Controller
      * @Route("/{id}-{slug}", requirements = {"id" = "\d+"}, name="bugs_view")
      * @Template()
      */
-    public function viewAction($id, $slug)
+    public function viewAction($id, $slug, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_BUGS');
 
@@ -121,8 +120,6 @@ class BugsController extends Controller
         $form = $this->createFormBuilder($comment)
             ->add('body')
             ->getForm();
-
-        $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST' && $this->isGranted('ROLE_BUGS_POST') && $form->submit($request)->isValid()) {
             $em->persist($comment);
@@ -180,7 +177,7 @@ class BugsController extends Controller
      * @Route("/create", name="bugs_create")
      * @Template()
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_BUGS_POST');
 
@@ -200,8 +197,6 @@ class BugsController extends Controller
                 ), ))
             ->add('body')
             ->getForm();
-
-        $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
             /** @var $em EntityManager */
@@ -246,7 +241,7 @@ class BugsController extends Controller
      * @Route("/{id}-{slug}/edit", requirements = {"id" = "\d+"}, name="bugs_edit")
      * @Template()
      */
-    public function editAction($id, $slug)
+    public function editAction($id, $slug, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_BUGS_POST');
 
@@ -291,8 +286,6 @@ class BugsController extends Controller
             ->add('body')
             ->getForm();
 
-        $request = $this->getRequest();
-
         if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
@@ -332,7 +325,7 @@ class BugsController extends Controller
      * )
      * @Template()
      */
-    public function editCommentAction($slug, $id)
+    public function editCommentAction($slug, $id, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_BUGS_POST');
 
@@ -368,8 +361,6 @@ class BugsController extends Controller
         $form = $this->createFormBuilder($comment)
             ->add('body')
             ->getForm();
-
-        $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();

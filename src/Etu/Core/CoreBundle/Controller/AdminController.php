@@ -9,10 +9,9 @@ use Etu\Core\CoreBundle\Framework\Definition\Module;
 use Etu\Core\CoreBundle\Framework\Module\ModulesManager;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Core\CoreBundle\Util\Server;
-
-// Import @Route() and @Template() annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/admin")
@@ -46,7 +45,7 @@ class AdminController extends Controller
      * @Route("/modules", name="admin_modules")
      * @Template()
      */
-    public function modulesAction()
+    public function modulesAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_MODULES');
 
@@ -79,8 +78,6 @@ class AdminController extends Controller
                 }
             }
         }
-
-        $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST') {
             if ($request->get('modules')) {
@@ -183,7 +180,7 @@ class AdminController extends Controller
      * @Route("/page/create", name="admin_page_create")
      * @Template()
      */
-    public function pageCreateAction()
+    public function pageCreateAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PAGES');
 
@@ -197,8 +194,6 @@ class AdminController extends Controller
             ->add('title')
             ->add('content')
             ->getForm();
-
-        $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
             $page->setSlug(StringManipulationExtension::slugify($page->getTitle()));
@@ -223,7 +218,7 @@ class AdminController extends Controller
      * @Route("/page/edit/{id}", name="admin_page_edit")
      * @Template()
      */
-    public function pageEditAction($id)
+    public function pageEditAction($id, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PAGES');
 
@@ -236,8 +231,6 @@ class AdminController extends Controller
             ->add('title')
             ->add('content')
             ->getForm();
-
-        $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
 

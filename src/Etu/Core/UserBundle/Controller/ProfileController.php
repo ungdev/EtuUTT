@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 
 class ProfileController extends Controller
 {
@@ -108,7 +109,7 @@ class ProfileController extends Controller
      * @Route("/user/profile/edit", name="user_profile_edit")
      * @Template()
      */
-    public function profileEditAction()
+    public function profileEditAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -156,8 +157,6 @@ class ProfileController extends Controller
             ->add('viadeo', null, array('required' => false))
             ->getForm();
 
-        $request = $this->getRequest();
-
         if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
@@ -194,7 +193,7 @@ class ProfileController extends Controller
      * @Route("/user/profile/avatar", name="user_profile_avatar")
      * @Template()
      */
-    public function profileAvatarAction()
+    public function profileAvatarAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -204,8 +203,6 @@ class ProfileController extends Controller
         $form = $this->createFormBuilder($user)
             ->add('file', FileType::class)
             ->getForm();
-
-        $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -238,7 +235,7 @@ class ProfileController extends Controller
      * @Route("/user/trombi/edit", name="user_trombi_edit")
      * @Template()
      */
-    public function trombiEditAction()
+    public function trombiEditAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -250,8 +247,6 @@ class ProfileController extends Controller
             ->add('jadis', null, array('required' => false, 'attr' => array('class' => 'trombi-textarea')))
             ->add('passions', null, array('required' => false, 'attr' => array('class' => 'trombi-textarea')))
             ->getForm();
-
-        $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -283,7 +278,7 @@ class ProfileController extends Controller
      * @Route("/user/{login}", name="user_view")
      * @Template()
      */
-    public function viewAction($login)
+    public function viewAction($login, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_CORE_PROFIL');
 
@@ -303,8 +298,8 @@ class ProfileController extends Controller
 
         $from = null;
 
-        if (in_array($this->getRequest()->get('from'), array('search', 'profile', 'trombi', 'admin'))) {
-            $from = $this->getRequest()->get('from');
+        if (in_array($request->get('from'), array('search', 'profile', 'trombi', 'admin'))) {
+            $from = $request->get('from');
         }
 
         return array(
@@ -317,7 +312,7 @@ class ProfileController extends Controller
      * @Route("/user/{login}/organizations", name="user_organizations")
      * @Template()
      */
-    public function organizationsAction($login)
+    public function organizationsAction($login, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_CORE_ORGAS');
 
@@ -344,8 +339,8 @@ class ProfileController extends Controller
 
         $from = null;
 
-        if (in_array($this->getRequest()->get('from'), array('search', 'profile', 'trombi', 'admin'))) {
-            $from = $this->getRequest()->get('from');
+        if (in_array($request->get('from'), array('search', 'profile', 'trombi', 'admin'))) {
+            $from = $request->get('from');
         }
 
         return array(
@@ -359,7 +354,7 @@ class ProfileController extends Controller
      * @Route("/user/{login}/schedule/{day}", defaults={"day" = "current"}, name="user_view_schedule")
      * @Template()
      */
-    public function scheduleAction($login, $day = 'current')
+    public function scheduleAction($login, $day, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_CORE_SCHEDULE');
 
@@ -380,8 +375,8 @@ class ProfileController extends Controller
 
         $from = null;
 
-        if (in_array($this->getRequest()->get('from'), array('search', 'profile', 'trombi', 'admin'))) {
-            $from = $this->getRequest()->get('from');
+        if (in_array($request->get('from'), array('search', 'profile', 'trombi', 'admin'))) {
+            $from = $request->get('from');
         }
 
         /** @var $courses Course[] */
@@ -439,8 +434,8 @@ class ProfileController extends Controller
 
         $from = null;
 
-        if (in_array($this->getRequest()->get('from'), array('search', 'profile', 'trombi', 'admin'))) {
-            $from = $this->getRequest()->get('from');
+        if (in_array($request->get('from'), array('search', 'profile', 'trombi', 'admin'))) {
+            $from = $request->get('from');
         }
 
         return array(

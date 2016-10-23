@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\HttpFoundation\Request;
 
 class MembershipsController extends Controller
 {
@@ -108,7 +109,7 @@ class MembershipsController extends Controller
      * @Route("/user/membership/{login}/description", name="memberships_orga_desc")
      * @Template()
      */
-    public function descAction($login)
+    public function descAction($login, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_CORE_MEMBERSHIPS');
 
@@ -157,8 +158,6 @@ class MembershipsController extends Controller
             ->add('descriptionShort', TextareaType::class)
             ->add('website', null, array('required' => false))
             ->getForm();
-
-        $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
             $em->persist($orga);
@@ -250,7 +249,7 @@ class MembershipsController extends Controller
      * @Route("/user/membership/{login}/permissions/{user}/edit", name="memberships_orga_permissions_edit")
      * @Template()
      */
-    public function permissionsEditAction($login, $user)
+    public function permissionsEditAction($login, $user, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_CORE_MEMBERSHIPS');
 
@@ -328,8 +327,6 @@ class MembershipsController extends Controller
             }
         }
 
-        $request = $this->getRequest();
-
         if ($request->getMethod() == 'POST') {
             if (is_array($request->get('permissions'))) {
                 $userPermissions = array();
@@ -369,7 +366,7 @@ class MembershipsController extends Controller
      * @Route("/user/membership/{login}/notification", name="memberships_orga_notifications")
      * @Template()
      */
-    public function notificationAction($login)
+    public function notificationAction($login, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_CORE_MEMBERSHIPS');
 
@@ -419,8 +416,6 @@ class MembershipsController extends Controller
             ->add('link', UrlType::class, array('required' => false))
             ->add('content', TextareaType::class, array('required' => true, 'max_length' => 140))
             ->getForm();
-
-        $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
             $notification = new Notification();

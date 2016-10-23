@@ -9,8 +9,7 @@ use Etu\Core\UserBundle\Entity\User;
 use Etu\Module\BugsBundle\Entity\Comment;
 use Etu\Module\BugsBundle\Entity\Issue;
 use Doctrine\ORM\EntityManager;
-
-// Import annotations
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -24,7 +23,7 @@ class BugsAdminController extends Controller
      * @Route("/{id}-{slug}/assign", requirements = {"id" = "\d+"}, name="bugs_admin_assign")
      * @Template()
      */
-    public function assignAction($id, $slug)
+    public function assignAction($id, $slug, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_BUGS_ADMIN');
 
@@ -56,7 +55,7 @@ class BugsAdminController extends Controller
             ->select('u')
             ->from('EtuUserBundle:User', 'u')
             ->where('u.fullName = :fullName')
-            ->setParameter('fullName', $this->getRequest()->get('assignee'))
+            ->setParameter('fullName', $request->get('assignee'))
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
@@ -169,7 +168,7 @@ class BugsAdminController extends Controller
      * @Route("/{id}-{slug}/criticality", requirements = {"id" = "\d+"}, name="bugs_admin_criticality")
      * @Template()
      */
-    public function criticalityAction($id, $slug)
+    public function criticalityAction($id, $slug, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_BUGS_ADMIN');
 
@@ -208,8 +207,6 @@ class BugsAdminController extends Controller
         $updateForm = $this->createFormBuilder($bug)
             ->add('criticality', ChoiceType::class, array('choices' => $criticalities))
             ->getForm();
-
-        $request = $this->getRequest();
 
         // Comment genration: before update
         $label = 'label';

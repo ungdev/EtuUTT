@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\HttpFoundation\Request;
 
 class OrgaController extends Controller
 {
@@ -21,7 +22,7 @@ class OrgaController extends Controller
      * @Route("/orga", name="orga_admin")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_ORGA');
 
@@ -63,8 +64,6 @@ class OrgaController extends Controller
             ->add('website', null, array('required' => false))
             ->getForm();
 
-        $request = $this->getRequest();
-
         if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
             $em->persist($orga);
             $em->flush();
@@ -93,7 +92,7 @@ class OrgaController extends Controller
      * @Route("/orga/avatar", name="orga_admin_avatar")
      * @Template()
      */
-    public function avatarAction()
+    public function avatarAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_ORGA');
 
@@ -103,8 +102,6 @@ class OrgaController extends Controller
         $form = $this->createFormBuilder($orga)
             ->add('file', FileType::class)
             ->getForm();
-
-        $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
             /** @var $em EntityManager */
@@ -132,7 +129,7 @@ class OrgaController extends Controller
      * @Route("/orga/members/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="orga_admin_members")
      * @Template()
      */
-    public function membersAction($page)
+    public function membersAction($page, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_ORGA');
 
@@ -164,8 +161,6 @@ class OrgaController extends Controller
             ->add('user', UserAutocompleteType::class)
             ->add('role', ChoiceType::class, array('choices' => $roles))
             ->getForm();
-
-        $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
             /** @var $user User */
@@ -234,7 +229,7 @@ class OrgaController extends Controller
      * @Route("/orga/members/{login}", name="orga_admin_members_edit")
      * @Template()
      */
-    public function memberEditAction($login)
+    public function memberEditAction($login, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_ORGA');
 
@@ -289,8 +284,6 @@ class OrgaController extends Controller
                 --$i;
             }
         }
-
-        $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST') {
             if ($request->get('role') != null && in_array(intval($request->get('role')), Member::getAvailableRoles())) {
