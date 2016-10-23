@@ -15,8 +15,7 @@ cache:
      - $HOME/.composer/cache
 
 before_script:
-- cp app/config/parameters.yml.test app/config/parameters.yml
-- cp app/config/version.yml.dist app/config/version.yml
+- cp app/config/parameters.yml.dist app/config/parameters.yml
 - cp app/config/modules.yml.dist app/config/modules.yml
 - composer self-update
 - composer install --ignore-platform-reqs --no-interaction --prefer-dist
