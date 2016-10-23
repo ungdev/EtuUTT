@@ -3,14 +3,12 @@
 namespace Etu\Core\CoreBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-
 use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Entity\Page;
 use Etu\Core\CoreBundle\Entity\Subscription;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Home\HomeRenderer;
 use Etu\Core\UserBundle\Entity\User;
-
 use Etu\Module\EventsBundle\Entity\Event;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -26,7 +24,7 @@ class MainController extends Controller
      */
     public function indexAction()
     {
-        if($this->isGranted('ROLE_CORE_HOMEPAGE')) {
+        if ($this->isGranted('ROLE_CORE_HOMEPAGE')) {
             return $this->indexUserAction();
         }
 
@@ -65,8 +63,7 @@ class MainController extends Controller
         $subscriptionsWhere = array();
         $notifications = array();
 
-        if (! empty($subscriptions)) {
-
+        if (!empty($subscriptions)) {
             foreach ($subscriptions as $key => $subscription) {
                 $subscriptionsWhere[] = '(n.entityType = :type_'.$key.' AND n.entityId = :id_'.$key.')';
 
@@ -74,7 +71,7 @@ class MainController extends Controller
                 $query->setParameter('id_'.$key, $subscription->getEntityId());
             }
 
-            if (! empty($subscriptionsWhere)) {
+            if (!empty($subscriptionsWhere)) {
                 $query = $query->andWhere(implode(' OR ', $subscriptionsWhere));
             }
 
@@ -90,7 +87,7 @@ class MainController extends Controller
                 $query->setParameter('module_'.$identifier, $identifier);
             }
 
-            if (! empty($modulesWhere)) {
+            if (!empty($modulesWhere)) {
                 $query = $query->andWhere(implode(' OR ', $modulesWhere));
             }
 
@@ -104,7 +101,7 @@ class MainController extends Controller
 
         $em->persist($user);
 
-        if (! $user->testingContext) {
+        if (!$user->testingContext) {
             $em->flush();
         }
 
@@ -113,7 +110,7 @@ class MainController extends Controller
         }
 
         return $this->render('EtuCoreBundle:Main:more.html.twig', array(
-            'notifs' => $notifications
+            'notifs' => $notifications,
         ));
     }
 
@@ -146,7 +143,7 @@ class MainController extends Controller
 
         $this->get('session')->getFlashBag()->set('message', array(
             'type' => 'success',
-            'message' => 'core.main.changeLocale.confirm'
+            'message' => 'core.main.changeLocale.confirm',
         ));
 
         // Redirect wisely
@@ -225,7 +222,7 @@ class MainController extends Controller
         /** @var $page Page */
         $page = $query->getOneOrNullResult();
 
-        if (! $page) {
+        if (!$page) {
             throw $this->createNotFoundException('Invalid slug');
         }
 
@@ -264,7 +261,7 @@ class MainController extends Controller
         }
 
         return $this->render('EtuCoreBundle:Main:indexAnonymous.html.twig', array(
-            'events' => $events
+            'events' => $events,
         ));
     }
 
@@ -286,18 +283,18 @@ class MainController extends Controller
 
         $view = $this->render('EtuCoreBundle:Main:index.html.twig', [
             'columns' => $homeRenderer->renderBlocks(),
-            'firstLogin' => $user->getFirstLogin()
+            'firstLogin' => $user->getFirstLogin(),
         ]);
 
         $user->setLastVisitHome(new \DateTime());
 
-        if (! $user->getFirstLogin()) {
+        if (!$user->getFirstLogin()) {
             $user->setFirstLogin(true);
         }
 
         $em->persist($user);
 
-        if (! $user->testingContext) {
+        if (!$user->testingContext) {
             $em->flush();
         }
 

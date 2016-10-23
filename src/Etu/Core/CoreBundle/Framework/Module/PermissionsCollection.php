@@ -10,33 +10,35 @@ use Etu\Core\CoreBundle\Framework\Definition\Permission;
  */
 class PermissionsCollection extends ArrayCollection
 {
-	/**
-	 * @param array $permissions
-	 * @throws \RuntimeException
-	 */
-	public function __construct(array $permissions = array())
-	{
-		$constructed = array();
+    /**
+     * @param array $permissions
+     *
+     * @throws \RuntimeException
+     */
+    public function __construct(array $permissions = array())
+    {
+        $constructed = array();
 
-		foreach ($permissions as $permission) {
-			if (! $permission instanceof Permission) {
-				throw new \RuntimeException(sprintf(
-					'PermissionsCollection must contains only Permission objects (%s given)', gettype($permission)
-				));
-			}
+        foreach ($permissions as $permission) {
+            if (!$permission instanceof Permission) {
+                throw new \RuntimeException(sprintf(
+                    'PermissionsCollection must contains only Permission objects (%s given)', gettype($permission)
+                ));
+            }
 
-			$constructed[$permission->getName()] = $permission;
-		}
+            $constructed[$permission->getName()] = $permission;
+        }
 
-		parent::__construct($constructed);
-	}
+        parent::__construct($constructed);
+    }
 
-	/**
-	 * @param string $identifier
-	 * @return bool
-	 */
-	public function has($identifier)
-	{
-		return $this->containsKey($identifier);
-	}
+    /**
+     * @param string $identifier
+     *
+     * @return bool
+     */
+    public function has($identifier)
+    {
+        return $this->containsKey($identifier);
+    }
 }

@@ -10,57 +10,57 @@ Il faut configurer Nginx en utilisant la configuration classique pour les applic
 
 ```
 server {
-	listen 80;
+    listen 80;
 
-	server_name etu.utt.fr;
+    server_name etu.utt.fr;
 
-	root /usr/share/nginx/www/web/;
+    root /usr/share/nginx/www/web/;
 
-	access_log /var/log/nginx/etu.utt.fr.access_log;
-	error_log /var/log/nginx/etu.utt.fr.error_log;
+    access_log /var/log/nginx/etu.utt.fr.access_log;
+    error_log /var/log/nginx/etu.utt.fr.error_log;
 
-	# Enlève app.php/ ou app_dev.php/ si il est présent
-	rewrite ^/app\.php/?(.*)$ /$1 permanent;
-	rewrite ^/app_dev\.php/?(.*)$ /$1 permanent;
+    # Enlève app.php/ ou app_dev.php/ si il est présent
+    rewrite ^/app\.php/?(.*)$ /$1 permanent;
+    rewrite ^/app_dev\.php/?(.*)$ /$1 permanent;
 
-	# Pour la launch
-	# rewrite ^/launch$ /launch/index.php last;
-	# rewrite ^/launcher$ /launch/launcher.php last;
+    # Pour la launch
+    # rewrite ^/launch$ /launch/index.php last;
+    # rewrite ^/launcher$ /launch/launcher.php last;
 
-	rewrite ^/mail/?$ /mail/index.php last;
+    rewrite ^/mail/?$ /mail/index.php last;
 
-	# Production: index.php app.php
-	index index.php app.php;
+    # Production: index.php app.php
+    index index.php app.php;
 
-	location / {
-		if (-f $request_filename) {
-			break;
-		}
+    location / {
+        if (-f $request_filename) {
+            break;
+        }
 
-		rewrite ^(.*)$ /app.php/$1 last;
-	}
+        rewrite ^(.*)$ /app.php/$1 last;
+    }
 
-	location ~ \.php($|/) {
-		include fastcgi_params;
+    location ~ \.php($|/) {
+        include fastcgi_params;
 
-		set $script $uri;
-		set $path_info "";
+        set $script $uri;
+        set $path_info "";
 
-		if ($uri ~ "^(.+\.php)($|/)") {
-			set $script $1;
-		}
+        if ($uri ~ "^(.+\.php)($|/)") {
+            set $script $1;
+        }
 
-		if ($uri ~ "^(.+\.php)(/.+)") {
-			set $script $1;
-			set $path_info $2;
-		}
+        if ($uri ~ "^(.+\.php)(/.+)") {
+            set $script $1;
+            set $path_info $2;
+        }
 
-		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-		fastcgi_intercept_errors on;
-		fastcgi_pass 127.0.0.1:9000;
-		fastcgi_param SCRIPT_NAME $script;
-		fastcgi_param PATH_INFO $path_info;
-	}
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_intercept_errors on;
+        fastcgi_pass 127.0.0.1:9000;
+        fastcgi_param SCRIPT_NAME $script;
+        fastcgi_param PATH_INFO $path_info;
+    }
 }
 ```
 
@@ -68,7 +68,7 @@ server {
 /usr/share/nginx/nginx.conf :
 
 http {
-	client_max_body_size 2M;
+    client_max_body_size 2M;
 }
 ```
 

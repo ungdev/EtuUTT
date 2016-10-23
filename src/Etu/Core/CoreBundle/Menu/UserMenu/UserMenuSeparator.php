@@ -7,89 +7,95 @@ namespace Etu\Core\CoreBundle\Menu\UserMenu;
  */
 class UserMenuSeparator
 {
-	/**
-	 * @var integer
-	 */
-	protected $position;
+    /**
+     * @var int
+     */
+    protected $position;
 
-	/**
-	 * @var UserMenuBuilder
-	 */
-	protected $builder;
+    /**
+     * @var UserMenuBuilder
+     */
+    protected $builder;
 
-	/**
-	 * @var string
-	 */
-	protected $role;
+    /**
+     * @var string
+     */
+    protected $role;
 
-	/**
-	 * @param UserMenuBuilder $builder
-	 */
-	public function __construct(UserMenuBuilder $builder)
-	{
-		$this->builder = $builder;
-		$this->position = 0;
-	}
+    /**
+     * @param UserMenuBuilder $builder
+     */
+    public function __construct(UserMenuBuilder $builder)
+    {
+        $this->builder = $builder;
+        $this->position = 0;
+    }
 
-	/**
-	 * @return UserMenuBuilder
-	 */
-	public function getBuilder()
-	{
-		return $this->builder;
-	}
+    /**
+     * @return UserMenuBuilder
+     */
+    public function getBuilder()
+    {
+        return $this->builder;
+    }
 
-	/**
-	 * @param int $position
-	 * @return UserMenuItem
-	 */
-	public function setPosition($position)
-	{
-		$this->position = (integer) $position;
-		return $this;
-	}
+    /**
+     * @param int $position
+     *
+     * @return UserMenuItem
+     */
+    public function setPosition($position)
+    {
+        $this->position = (int) $position;
 
-	/**
-	 * @return int
-	 */
-	public function getPosition()
-	{
-		return $this->position;
-	}
+        return $this;
+    }
 
-	/**
-	 * Sets the role to use.
-	 * @param string $role
-	 * @return $this
-	 */
-	public function setRole($role)
-	{
-	    $this->role = $role;
-	    return $this;
-	}
+    /**
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
 
-	/**
-	 * Retrieves the currently set role.
-	 * @return string
-	 */
-	public function getRole()
-	{
-	    return $this->role;
-	}
+    /**
+     * Sets the role to use.
+     *
+     * @param string $role
+     *
+     * @return $this
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
 
-	/**
-	 * @return bool
-	 */
-	public function isSeparator()
-	{
-		return true;
-	}
+        return $this;
+    }
 
-	/**
-	 * @return UserMenuBuilder
-	 */
-	public function end()
-	{
-		return $this->builder;
-	}
+    /**
+     * Retrieves the currently set role.
+     *
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSeparator()
+    {
+        return true;
+    }
+
+    /**
+     * @return UserMenuBuilder
+     */
+    public function end()
+    {
+        return $this->builder;
+    }
 }

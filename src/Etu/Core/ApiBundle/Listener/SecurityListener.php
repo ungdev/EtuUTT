@@ -25,8 +25,8 @@ class SecurityListener
     protected $formatter;
 
     /**
-     * @param OauthServer $server
-     * @param Reader $reader
+     * @param OauthServer   $server
+     * @param Reader        $reader
      * @param DataFormatter $formatter
      */
     public function __construct(OAuthServer $server, Reader $reader, DataFormatter $formatter)
@@ -38,7 +38,9 @@ class SecurityListener
 
     /**
      * @param GetResponseEvent $event
+     *
      * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     *
      * @return bool
      */
     public function onKernelRequest(GetResponseEvent $event)
@@ -57,7 +59,7 @@ class SecurityListener
                 $requiredScope = null;
             }
 
-            if (! $requiredScope) {
+            if (!$requiredScope) {
                 $requiredScope = 'public';
             }
 
@@ -74,7 +76,7 @@ class SecurityListener
 
             $access = $this->server->checkAccess($token, $requiredScope);
 
-            if (! $access->isGranted()) {
+            if (!$access->isGranted()) {
                 $event->setResponse($this->formatter->format($event->getRequest(), [
                     'error' => $access->getError(),
                     'error_message' => $access->getErrorMessage(),

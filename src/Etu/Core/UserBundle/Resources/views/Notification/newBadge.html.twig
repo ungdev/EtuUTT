@@ -1,17 +1,17 @@
 
 <a class="notif{% if notif.isSuper %} super-notif{% elseif notif.isNew(app.user.lastVisitHome) %} notif-new{% endif %}"
    href="{{ path('user_profile') }}">
-	<img src="{{ asset('src/img/icons-big/bug.png') }}" />
+    <img src="{{ asset('src/img/icons-big/bug.png') }}" />
 
-	<h4 class="notif-title">
-		{{ 'user.notifs.newBadge'|trans({
-			'%badge%': highlight_notif_data(notif.firstEntity.name)
-		})|raw }}
-	</h4>
+    <h4 class="notif-title">
+        {{ 'user.notifs.newBadge'|trans({
+            '%badge%': highlight_notif_data(notif.firstEntity.name)
+        })|raw }}
+    </h4>
 
-	<div class="notif-date">
-		{{ time_diff(notif.date)|ucfirst }}
-	</div>
+    <div class="notif-date">
+        {{ time_diff(notif.date)|ucfirst }}
+    </div>
 
-	<div class="clear"></div>
+    <div class="clear"></div>
 </a>

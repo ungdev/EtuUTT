@@ -9,7 +9,6 @@ use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Core\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class AjaxController extends ApiController
 {
@@ -18,9 +17,9 @@ class AjaxController extends ApiController
      */
     public function searchAction(Request $request)
     {
-        if (! $this->isGranted('ROLE_CORE_PROFIL')) {
+        if (!$this->isGranted('ROLE_CORE_PROFIL')) {
             return $this->format([
-                    'error' => 'Your must be connected and not be banned to access this page'
+                    'error' => 'Your must be connected and not be banned to access this page',
                 ], 403);
         }
 
@@ -28,7 +27,7 @@ class AjaxController extends ApiController
 
         if (mb_strlen($term) < 3) {
             return $this->format([
-                    'error' => 'Term provided is too short'
+                    'error' => 'Term provided is too short',
                 ], 400);
         }
 
@@ -37,27 +36,27 @@ class AjaxController extends ApiController
 
         $qb = $em->createQueryBuilder();
 
-        $qb ->select('u')
+        $qb->select('u')
             ->from('EtuUserBundle:User', 'u');
 
         $keywords = explode(' ', $term);
 
         foreach ($keywords as $i => $keyword) {
             $qb->andWhere(implode(' OR ', [
-                        'u.firstName LIKE :k_' . $i,
-                        'u.lastName LIKE :k_' . $i,
-                        'u.login LIKE :k_' . $i,
-                        'u.studentId LIKE :k_' . $i,
+                        'u.firstName LIKE :k_'.$i,
+                        'u.lastName LIKE :k_'.$i,
+                        'u.login LIKE :k_'.$i,
+                        'u.studentId LIKE :k_'.$i,
                     ]));
 
-            $qb->setParameter('k_' . $i, '%' . $keyword . '%');
+            $qb->setParameter('k_'.$i, '%'.$keyword.'%');
         }
 
         /** @var User[] $users */
         $users = $qb->getQuery()->getResult();
 
         return $this->format([
-            'users' => $this->get('etu.api.user.transformer')->transform($users)
+            'users' => $this->get('etu.api.user.transformer')->transform($users),
         ]);
     }
 
@@ -66,9 +65,9 @@ class AjaxController extends ApiController
      */
     public function orgasearchAction(Request $request)
     {
-        if (! $this->isGranted('ROLE_CORE_PROFIL')) {
+        if (!$this->isGranted('ROLE_CORE_PROFIL')) {
             return $this->format([
-                    'error' => 'Your must be connected to access this page'
+                    'error' => 'Your must be connected to access this page',
                 ], 403);
         }
 
@@ -76,7 +75,7 @@ class AjaxController extends ApiController
 
         if (mb_strlen($term) < 1) {
             return $this->format([
-                    'error' => 'Term provided is too short'
+                    'error' => 'Term provided is too short',
                 ], 400);
         }
 
@@ -85,27 +84,27 @@ class AjaxController extends ApiController
 
         $qb = $em->createQueryBuilder();
 
-        $qb ->select('o')
+        $qb->select('o')
             ->from('EtuUserBundle:Organization', 'o');
 
         $keywords = explode(' ', $term);
 
         foreach ($keywords as $i => $keyword) {
             $qb->andWhere(implode(' OR ', [
-                        'o.login LIKE :k_' . $i,
-                        'o.name LIKE :k_' . $i,
-                        'o.contactMail LIKE :k_' . $i,
-                        'o.contactPhone LIKE :k_' . $i,
+                        'o.login LIKE :k_'.$i,
+                        'o.name LIKE :k_'.$i,
+                        'o.contactMail LIKE :k_'.$i,
+                        'o.contactPhone LIKE :k_'.$i,
                     ]));
 
-            $qb->setParameter('k_' . $i, '%' . $keyword . '%');
+            $qb->setParameter('k_'.$i, '%'.$keyword.'%');
         }
 
         /** @var User[] $users */
         $orgas = $qb->getQuery()->getResult();
 
         return $this->format([
-            'orgas' => $this->get('etu.api.orga.transformer')->transform($orgas)
+            'orgas' => $this->get('etu.api.orga.transformer')->transform($orgas),
         ]);
     }
 
@@ -143,31 +142,31 @@ class AjaxController extends ApiController
                 }
             }
 
-            if (! $membership) {
+            if (!$membership) {
                 return $this->format([
-                        'error' => 'Membership not found'
+                        'error' => 'Membership not found',
                     ], 403);
             }
 
-            if (! $membership->hasPermission('edit_desc')) {
+            if (!$membership->hasPermission('edit_desc')) {
                 return $this->format([
-                        'error' => 'Membership does not have required access'
+                        'error' => 'Membership does not have required access',
                     ], 403);
             }
         } else {
             if ($login != $this->getUser()->getLogin()) {
                 return $this->format([
-                        'error' => 'You can not edit the description of this organization'
+                        'error' => 'You can not edit the description of this organization',
                     ], 403);
             }
         }
 
         /** @var Organization $orga */
-        $orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy([ 'login' => $login ]);
+        $orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(['login' => $login]);
 
-        if (! $orga) {
+        if (!$orga) {
             return $this->format([
-                    'error' => 'Orga not found'
+                    'error' => 'Orga not found',
                 ], 404);
         }
 
@@ -176,7 +175,7 @@ class AjaxController extends ApiController
         $em->persist($orga);
         $em->flush();
 
-        return $this->format([ 'phone' => null ]);
+        return $this->format(['phone' => null]);
     }
 
     /**
@@ -213,31 +212,31 @@ class AjaxController extends ApiController
                 }
             }
 
-            if (! $membership) {
+            if (!$membership) {
                 return $this->format([
-                        'error' => 'Membership not found'
+                        'error' => 'Membership not found',
                     ], 403);
             }
 
-            if (! $membership->hasPermission('edit_desc')) {
+            if (!$membership->hasPermission('edit_desc')) {
                 return $this->format([
-                        'error' => 'Membership does not have required access'
+                        'error' => 'Membership does not have required access',
                     ], 403);
             }
         } else {
             if ($login != $this->getUser()->getLogin()) {
                 return $this->format([
-                        'error' => 'You can not edit the description of this organization'
+                        'error' => 'You can not edit the description of this organization',
                     ], 403);
             }
         }
 
         /** @var Organization $orga */
-        $orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy([ 'login' => $login ]);
+        $orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(['login' => $login]);
 
-        if (! $orga) {
+        if (!$orga) {
             return $this->format([
-                    'error' => 'Orga not found'
+                    'error' => 'Orga not found',
                 ], 404);
         }
 
@@ -246,6 +245,6 @@ class AjaxController extends ApiController
         $em->persist($orga);
         $em->flush();
 
-        return $this->format([ 'website' => null ]);
+        return $this->format(['website' => null]);
     }
 }

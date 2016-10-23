@@ -8,11 +8,10 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class EtuUserBundle extends Module
 {
-	/**
-	 * @var boolean
-	 */
-	protected $enabled = true;
-
+    /**
+     * @var bool
+     */
+    protected $enabled = true;
 
     public function build(ContainerBuilder $container)
     {
@@ -22,51 +21,51 @@ class EtuUserBundle extends Module
         $extension->addSecurityListenerFactory(new CasFactory());
     }
 
-	/**
-	 * Module identifier (to be required by other modules)
-	 *
-	 * @return string
-	 */
-	public function getIdentifier()
-	{
-		return 'users';
-	}
+    /**
+     * Module identifier (to be required by other modules).
+     *
+     * @return string
+     */
+    public function getIdentifier()
+    {
+        return 'users';
+    }
 
-	/**
-	 * Module title (describe shortly its aim)
-	 *
-	 * @return string
-	 */
-	public function getTitle()
-	{
-		return 'Utilisateurs';
-	}
+    /**
+     * Module title (describe shortly its aim).
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return 'Utilisateurs';
+    }
 
-	/**
-	 * Module author
-	 *
-	 * @return string
-	 */
-	public function getAuthor()
-	{
-		return 'Titouan Galopin';
-	}
+    /**
+     * Module author.
+     *
+     * @return string
+     */
+    public function getAuthor()
+    {
+        return 'Titouan Galopin';
+    }
 
-	/**
-	 * Module description
-	 *
-	 * @return string
-	 */
-	public function getDescription()
-	{
-		return 'Gestion des utilisateurs, nécessaire au reste du site';
-	}
+    /**
+     * Module description.
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return 'Gestion des utilisateurs, nécessaire au reste du site';
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getRequirements()
-	{
-		return array();
-	}
+    /**
+     * @return array
+     */
+    public function getRequirements()
+    {
+        return array();
+    }
 }

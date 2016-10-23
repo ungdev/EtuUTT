@@ -3,20 +3,20 @@
 {% block title %}{{ 'core.admin.pageDelete.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('src/img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
-	<div class="padding20-all">
-		<p>{{ 'core.admin.pageDelete.question'|trans({'%title%': page.title}) }}</p>
+    <div class="padding20-all">
+        <p>{{ 'core.admin.pageDelete.question'|trans({'%title%': page.title}) }}</p>
 
-		<p>
-			<a href="{{ path('admin_page_delete_confirm', {'id': page.id}) }}" class="btn btn-primary">
-				{{ 'core.admin.pageDelete.yes'|trans }}
-			</a>
-			<a href="{{ path('admin_index') }}" class="btn">
-				{{ 'core.admin.pageDelete.no'|trans }}
-			</a>
-		</p>
-	</div>
+        <p>
+            <a href="{{ path('admin_page_delete_confirm', {'id': page.id}) }}" class="btn btn-primary">
+                {{ 'core.admin.pageDelete.yes'|trans }}
+            </a>
+            <a href="{{ path('admin_index') }}" class="btn">
+                {{ 'core.admin.pageDelete.no'|trans }}
+            </a>
+        </p>
+    </div>
 {% endblock %}

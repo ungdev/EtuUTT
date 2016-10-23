@@ -7,316 +7,338 @@ namespace Etu\Core\CoreBundle\Menu\OrgaMenu;
  */
 class OrgaMenuItem
 {
-	/**
-	 * @var string
-	 */
-	protected $icon;
+    /**
+     * @var string
+     */
+    protected $icon;
 
-	/**
-	 * @var string
-	 */
-	protected $url;
+    /**
+     * @var string
+     */
+    protected $url;
 
-	/**
-	 * @var integer
-	 */
-	protected $alertsCount;
+    /**
+     * @var int
+     */
+    protected $alertsCount;
 
-	/**
-	 * @var string
-	 */
-	protected $role;
+    /**
+     * @var string
+     */
+    protected $role;
 
-	/**
-	 * @var string
-	 */
-	protected $translation;
+    /**
+     * @var string
+     */
+    protected $translation;
 
-	/**
-	 * @var array
-	 */
-	protected $linkAttributes;
+    /**
+     * @var array
+     */
+    protected $linkAttributes;
 
-	/**
-	 * @var array
-	 */
-	protected $itemAttributes;
+    /**
+     * @var array
+     */
+    protected $itemAttributes;
 
-	/**
-	 * @var integer
-	 */
-	protected $position;
+    /**
+     * @var int
+     */
+    protected $position;
 
-	/**
-	 * @var OrgaMenuBuilder
-	 */
-	protected $builder;
+    /**
+     * @var OrgaMenuBuilder
+     */
+    protected $builder;
 
-	/**
-	 * @param OrgaMenuBuilder $builder
-	 * @param string $translation
-	 */
-	public function __construct(OrgaMenuBuilder $builder, $translation = '')
-	{
-		$this->builder = $builder;
-		$this->icon = false;
-		$this->alertsCount = 0;
-		$this->position = 0;
-		$this->linkAttributes = array();
-		$this->itemAttributes = array();
+    /**
+     * @param OrgaMenuBuilder $builder
+     * @param string          $translation
+     */
+    public function __construct(OrgaMenuBuilder $builder, $translation = '')
+    {
+        $this->builder = $builder;
+        $this->icon = false;
+        $this->alertsCount = 0;
+        $this->position = 0;
+        $this->linkAttributes = array();
+        $this->itemAttributes = array();
 
-		$this->setTranslation($translation);
-	}
+        $this->setTranslation($translation);
+    }
 
-	/**
-	 * @return OrgaMenuBuilder
-	 */
-	public function getBuilder()
-	{
-		return $this->builder;
-	}
+    /**
+     * @return OrgaMenuBuilder
+     */
+    public function getBuilder()
+    {
+        return $this->builder;
+    }
 
-	/**
-	 * @param string $icon
-	 * @return OrgaMenuItem
-	 */
-	public function setIcon($icon)
-	{
-		$this->icon = (string) $icon;
-		return $this;
-	}
+    /**
+     * @param string $icon
+     *
+     * @return OrgaMenuItem
+     */
+    public function setIcon($icon)
+    {
+        $this->icon = (string) $icon;
 
-	/**
-	 * @return bool
-	 */
-	public function hasIcon()
-	{
-		return $this->icon !== false;
-	}
+        return $this;
+    }
 
-	/**
-	 * @return bool|string
-	 */
-	public function getIcon()
-	{
-		return $this->icon;
-	}
+    /**
+     * @return bool
+     */
+    public function hasIcon()
+    {
+        return $this->icon !== false;
+    }
 
-	/**
-	 * @param int $alertsCount
-	 * @return OrgaMenuItem
-	 */
-	public function setAlertsCount($alertsCount)
-	{
-		$this->alertsCount = (integer) $alertsCount;
-		return $this;
-	}
+    /**
+     * @return bool|string
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
 
-	/**
-	 * @return int
-	 */
-	public function getAlertsCount()
-	{
-		return $this->alertsCount;
-	}
+    /**
+     * @param int $alertsCount
+     *
+     * @return OrgaMenuItem
+     */
+    public function setAlertsCount($alertsCount)
+    {
+        $this->alertsCount = (int) $alertsCount;
 
-	/**
-	 * Sets the role to use.
-	 * @param string $role
-	 * @return $this
-	 */
-	public function setRole($role)
-	{
-	    $this->role = $role;
-	    return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Retrieves the currently set role.
-	 * @return string
-	 */
-	public function getRole()
-	{
-	    return $this->role;
-	}
+    /**
+     * @return int
+     */
+    public function getAlertsCount()
+    {
+        return $this->alertsCount;
+    }
 
-	/**
-	 * @param $key
-	 * @param $value
-	 * @return OrgaMenuItem
-	 */
-	public function setItemAttribute($key, $value)
-	{
-		$this->itemAttributes[(string) $key] = $value;
-		return $this;
-	}
+    /**
+     * Sets the role to use.
+     *
+     * @param string $role
+     *
+     * @return $this
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
 
-	/**
-	 * @param $key
-	 * @return bool
-	 */
-	public function hasItemAttribute($key)
-	{
-		return isset($this->itemAttributes[(string) $key]);
-	}
+        return $this;
+    }
 
-	/**
-	 * @param $key
-	 * @return mixed
-	 */
-	public function getItemAttribute($key)
-	{
-		if (! $this->hasItemAttribute((string) $key)) {
-			return null;
-		}
+    /**
+     * Retrieves the currently set role.
+     *
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
 
-		return $this->itemAttributes[(string) $key];
-	}
+    /**
+     * @param $key
+     * @param $value
+     *
+     * @return OrgaMenuItem
+     */
+    public function setItemAttribute($key, $value)
+    {
+        $this->itemAttributes[(string) $key] = $value;
 
-	/**
-	 * @return array
-	 */
-	public function getItemAttributes()
-	{
-		return $this->itemAttributes;
-	}
+        return $this;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getItemAttributesString()
-	{
-		$string = '';
+    /**
+     * @param $key
+     *
+     * @return bool
+     */
+    public function hasItemAttribute($key)
+    {
+        return isset($this->itemAttributes[(string) $key]);
+    }
 
-		foreach ($this->itemAttributes as $name => $value) {
-			$string .= $name.'="'.$value.'" ';
-		}
+    /**
+     * @param $key
+     *
+     * @return mixed
+     */
+    public function getItemAttribute($key)
+    {
+        if (!$this->hasItemAttribute((string) $key)) {
+            return null;
+        }
 
-		return trim($string);
-	}
+        return $this->itemAttributes[(string) $key];
+    }
 
-	/**
-	 * @param $key
-	 * @param $value
-	 * @return OrgaMenuItem
-	 */
-	public function setLinkAttribute($key, $value)
-	{
-		$this->linkAttributes[(string) $key] = $value;
-		return $this;
-	}
+    /**
+     * @return array
+     */
+    public function getItemAttributes()
+    {
+        return $this->itemAttributes;
+    }
 
-	/**
-	 * @param $key
-	 * @return bool
-	 */
-	public function hasLinkAttribute($key)
-	{
-		return isset($this->linkAttributes[(string) $key]);
-	}
+    /**
+     * @return string
+     */
+    public function getItemAttributesString()
+    {
+        $string = '';
 
-	/**
-	 * @param $key
-	 * @return mixed
-	 */
-	public function getLinkAttribute($key)
-	{
-		if (! $this->hasLinkAttribute((string) $key)) {
-			return null;
-		}
+        foreach ($this->itemAttributes as $name => $value) {
+            $string .= $name.'="'.$value.'" ';
+        }
 
-		return $this->linkAttributes[$key];
-	}
+        return trim($string);
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getLinkAttributes()
-	{
-		return $this->linkAttributes;
-	}
+    /**
+     * @param $key
+     * @param $value
+     *
+     * @return OrgaMenuItem
+     */
+    public function setLinkAttribute($key, $value)
+    {
+        $this->linkAttributes[(string) $key] = $value;
 
-	/**
-	 * @return string
-	 */
-	public function getLinkAttributesString()
-	{
-		$string = '';
+        return $this;
+    }
 
-		foreach ($this->linkAttributes as $name => $value) {
-			$string .= $name.'="'.$value.'" ';
-		}
+    /**
+     * @param $key
+     *
+     * @return bool
+     */
+    public function hasLinkAttribute($key)
+    {
+        return isset($this->linkAttributes[(string) $key]);
+    }
 
-		return trim($string);
-	}
+    /**
+     * @param $key
+     *
+     * @return mixed
+     */
+    public function getLinkAttribute($key)
+    {
+        if (!$this->hasLinkAttribute((string) $key)) {
+            return null;
+        }
 
-	/**
-	 * @param string $translation
-	 * @return OrgaMenuItem
-	 */
-	public function setTranslation($translation)
-	{
-		$this->translation = (string) $translation;
-		return $this;
-	}
+        return $this->linkAttributes[$key];
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getTranslation()
-	{
-		return $this->translation;
-	}
+    /**
+     * @return array
+     */
+    public function getLinkAttributes()
+    {
+        return $this->linkAttributes;
+    }
 
-	/**
-	 * @param string $url
-	 * @return OrgaMenuItem
-	 */
-	public function setUrl($url)
-	{
-		$this->url = (string) $url;
-		return $this;
-	}
+    /**
+     * @return string
+     */
+    public function getLinkAttributesString()
+    {
+        $string = '';
 
-	/**
-	 * @return string
-	 */
-	public function getUrl()
-	{
-		return $this->url;
-	}
+        foreach ($this->linkAttributes as $name => $value) {
+            $string .= $name.'="'.$value.'" ';
+        }
 
-	/**
-	 * @param int $position
-	 * @return OrgaMenuItem
-	 */
-	public function setPosition($position)
-	{
-		$this->position = (integer) $position;
-		return $this;
-	}
+        return trim($string);
+    }
 
-	/**
-	 * @return int
-	 */
-	public function getPosition()
-	{
-		return $this->position;
-	}
+    /**
+     * @param string $translation
+     *
+     * @return OrgaMenuItem
+     */
+    public function setTranslation($translation)
+    {
+        $this->translation = (string) $translation;
 
-	/**
-	 * @return bool
-	 */
-	public function isSeparator()
-	{
-		return false;
-	}
+        return $this;
+    }
 
-	/**
-	 * @return OrgaMenuBuilder
-	 */
-	public function end()
-	{
-		return $this->builder;
-	}
+    /**
+     * @return string
+     */
+    public function getTranslation()
+    {
+        return $this->translation;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return OrgaMenuItem
+     */
+    public function setUrl($url)
+    {
+        $this->url = (string) $url;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param int $position
+     *
+     * @return OrgaMenuItem
+     */
+    public function setPosition($position)
+    {
+        $this->position = (int) $position;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSeparator()
+    {
+        return false;
+    }
+
+    /**
+     * @return OrgaMenuBuilder
+     */
+    public function end()
+    {
+        return $this->builder;
+    }
 }

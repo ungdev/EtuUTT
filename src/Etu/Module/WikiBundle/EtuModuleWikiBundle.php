@@ -8,7 +8,7 @@ use Etu\Core\CoreBundle\Framework\Definition\OrgaPermission;
 class EtuModuleWikiBundle extends Module
 {
     /**
-     * At module boot, update the sidebar
+     * At module boot, update the sidebar.
      */
     public function onModuleBoot()
     {
@@ -20,7 +20,7 @@ class EtuModuleWikiBundle extends Module
 //            ->setPosition(0)
 //            ->setRole('ROLE_UV')
 //            ->end();
-//
+
 //        $this->getAdminMenuBuilder()
 //            ->getBlock('base.admin_menu.title')
 //            ->add('uvs.admin.menu_item')
@@ -32,7 +32,7 @@ class EtuModuleWikiBundle extends Module
     }
 
     /**
-     * Module identifier (to be required by other modules)
+     * Module identifier (to be required by other modules).
      *
      * @return string
      */
@@ -42,7 +42,7 @@ class EtuModuleWikiBundle extends Module
     }
 
     /**
-     * Module title (describe shortly its aim)
+     * Module title (describe shortly its aim).
      *
      * @return string
      */
@@ -52,7 +52,7 @@ class EtuModuleWikiBundle extends Module
     }
 
     /**
-     * Module author
+     * Module author.
      *
      * @return string
      */
@@ -62,7 +62,7 @@ class EtuModuleWikiBundle extends Module
     }
 
     /**
-     * Module description
+     * Module description.
      *
      * @return string
      */
@@ -70,7 +70,6 @@ class EtuModuleWikiBundle extends Module
     {
         return 'Module de Wiki';
     }
-
 
     /**
      * @return array
@@ -82,7 +81,7 @@ class EtuModuleWikiBundle extends Module
         );
     }
     /**
-     * Define the modules requirements (the other required modules) using their identifiers
+     * Define the modules requirements (the other required modules) using their identifiers.
      *
      * @return array
      */

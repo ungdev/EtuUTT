@@ -6,8 +6,7 @@ use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Core\UserBundle\Entity\User;
 
 /**
- * Class MockUser
- * @package Etu\Core\CoreBundle\Framework\Tests
+ * Class MockUser.
  */
 class MockUser
 {

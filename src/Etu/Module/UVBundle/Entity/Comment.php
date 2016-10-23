@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 /**
  * @ORM\Entity
  * @ORM\Table(name="etu_uvs_comments")
@@ -16,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Comment
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -24,58 +23,58 @@ class Comment
      */
     protected $id;
 
-	/**
-	 * @var User $user
-	 *
-	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
-	 * @ORM\JoinColumn()
-	 */
-	protected $user;
-
-	/**
-	 * @var UV $uv
-	 *
-	 * @ORM\ManyToOne(targetEntity="UV", inversedBy="comments")
-	 * @ORM\JoinColumn()
-	 */
-	protected $uv;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(type="text")
-	 * @Assert\NotBlank()
-	 * @Assert\Length(min = "15")
-	 */
-	protected $body;
-
-	/**
-	 * @var \DateTime
-	 *
-	 * @Gedmo\Timestampable(on="create")
-	 * @ORM\Column(type="datetime")
-	 */
-	protected $createdAt;
-
-	/**
-	 * @var \DateTime
-	 *
-	 * @Gedmo\Timestampable(on="update")
-	 * @ORM\Column(type="datetime")
-	 */
-	protected $updatedAt;
-
-	/**
-	 * @var \DateTime $deletedAt
-	 *
-	 * @ORM\Column(type="datetime", nullable = true)
-	 */
-	protected $deletedAt;
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
+     * @ORM\JoinColumn()
+     */
+    protected $user;
 
     /**
-     * Get id
+     * @var UV
      *
-     * @return integer
+     * @ORM\ManyToOne(targetEntity="UV", inversedBy="comments")
+     * @ORM\JoinColumn()
+     */
+    protected $uv;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text")
+     * @Assert\NotBlank()
+     * @Assert\Length(min = "15")
+     */
+    protected $body;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    protected $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+     */
+    protected $updatedAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable = true)
+     */
+    protected $deletedAt;
+
+    /**
+     * Get id.
+     *
+     * @return int
      */
     public function getId()
     {
@@ -83,9 +82,10 @@ class Comment
     }
 
     /**
-     * Set body
+     * Set body.
      *
      * @param string $body
+     *
      * @return Comment
      */
     public function setBody($body)
@@ -96,7 +96,7 @@ class Comment
     }
 
     /**
-     * Get body
+     * Get body.
      *
      * @return string
      */
@@ -106,9 +106,10 @@ class Comment
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
+     *
      * @return Comment
      */
     public function setCreatedAt($createdAt)
@@ -119,7 +120,7 @@ class Comment
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -129,9 +130,10 @@ class Comment
     }
 
     /**
-     * Set updatedAt
+     * Set updatedAt.
      *
      * @param \DateTime $updatedAt
+     *
      * @return Comment
      */
     public function setUpdatedAt($updatedAt)
@@ -142,7 +144,7 @@ class Comment
     }
 
     /**
-     * Get updatedAt
+     * Get updatedAt.
      *
      * @return \DateTime
      */
@@ -152,9 +154,10 @@ class Comment
     }
 
     /**
-     * Set deletedAt
+     * Set deletedAt.
      *
      * @param \DateTime $deletedAt
+     *
      * @return Comment
      */
     public function setDeletedAt($deletedAt)
@@ -165,7 +168,7 @@ class Comment
     }
 
     /**
-     * Get deletedAt
+     * Get deletedAt.
      *
      * @return \DateTime
      */
@@ -175,9 +178,10 @@ class Comment
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param User $user
+     *
      * @return Comment
      */
     public function setUser(User $user = null)
@@ -188,7 +192,7 @@ class Comment
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return User
      */
@@ -198,9 +202,10 @@ class Comment
     }
 
     /**
-     * Set uv
+     * Set uv.
      *
      * @param UV $uv
+     *
      * @return Comment
      */
     public function setUv(UV $uv = null)
@@ -211,7 +216,7 @@ class Comment
     }
 
     /**
-     * Get uv
+     * Get uv.
      *
      * @return UV
      */

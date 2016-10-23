@@ -33,6 +33,6 @@ class CreateScopeCommand extends ContainerAwareCommand
         $em->persist($scope);
         $em->flush();
 
-        $output->writeln('<fg=green>Scope ' . $scope->getScope() . ' created</fg=green>');
+        $output->writeln('<fg=green>Scope '.$scope->getScope().' created</fg=green>');
     }
 }

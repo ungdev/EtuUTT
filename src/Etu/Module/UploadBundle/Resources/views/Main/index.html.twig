@@ -3,42 +3,42 @@
 
 {% block javascripts %}
 <script type="text/javascript">
-	$(function() {
-		var inputs = $('.upload-list-url'),
-			links = $('.upload-list-url-link');
+    $(function() {
+        var inputs = $('.upload-list-url'),
+            links = $('.upload-list-url-link');
 
-		inputs.hide();
+        inputs.hide();
 
-		links.click(function() {
-			inputs.hide();
-			var id = $(this).attr('id');
-			$('#' + id + '-input').toggle().focus();
-			return false;
-		});
+        links.click(function() {
+            inputs.hide();
+            var id = $(this).attr('id');
+            $('#' + id + '-input').toggle().focus();
+            return false;
+        });
 
-		inputs.click(function() {
-			return false;
-		});
+        inputs.click(function() {
+            return false;
+        });
 
-		$('body').click(function() {
-			inputs.hide();
-		});
-	});
+        $('body').click(function() {
+            inputs.hide();
+        });
+    });
 </script>
 {% endblock %}
 
 {% block body %}
-	<div class="upload-form">
-		<form class="form-inline" method="post" action="" {{ form_enctype(form) }}>
-			<label for="image">{{ 'upload.main.index.send'|trans }}</label><br />
-			{{ form_widget(form.file) }}
+    <div class="upload-form">
+        <form class="form-inline" method="post" action="" {{ form_enctype(form) }}>
+            <label for="image">{{ 'upload.main.index.send'|trans }}</label><br />
+            {{ form_widget(form.file) }}
 
-			{{ form_rest(form) }}
-			<button type="submit" class="btn">{{ 'upload.main.index.send_submit'|trans }}</button>
-		</form>
-	</div>
+            {{ form_rest(form) }}
+            <button type="submit" class="btn">{{ 'upload.main.index.send_submit'|trans }}</button>
+        </form>
+    </div>
 
-	<hr />
+    <hr />
 
     {% if images|length > 0 %}
         {% for image in images %}

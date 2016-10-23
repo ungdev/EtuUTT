@@ -42,7 +42,7 @@ class AlertsController extends Controller
 
         return [
             'pagination' => $covoits,
-            'today' => new \DateTime()
+            'today' => new \DateTime(),
         ];
     }
 
@@ -71,7 +71,7 @@ class AlertsController extends Controller
 
             $this->get('session')->getFlashBag()->set('message', array(
                 'type' => 'success',
-                'message' => 'covoit.messages.alert_created'
+                'message' => 'covoit.messages.alert_created',
             ));
 
             return $this->redirect($this->generateUrl('covoiturage_my_alerts'));
@@ -102,7 +102,7 @@ class AlertsController extends Controller
 
             $this->get('session')->getFlashBag()->set('message', array(
                     'type' => 'success',
-                    'message' => 'covoit.messages.alert_edited'
+                    'message' => 'covoit.messages.alert_edited',
                 ));
 
             return $this->redirect($this->generateUrl('covoiturage_my_alerts'));
@@ -133,7 +133,7 @@ class AlertsController extends Controller
 
         $this->get('session')->getFlashBag()->set('message', array(
             'type' => 'success',
-            'message' => 'covoit.messages.alert_deleted'
+            'message' => 'covoit.messages.alert_deleted',
         ));
 
         return $this->redirect($this->generateUrl('covoiturage_my_alerts'));

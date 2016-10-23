@@ -13,7 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class UserBde
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -22,7 +22,7 @@ class UserBde
     protected $id;
 
     /**
-     * @var User $user
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User", inversedBy="bdeMemberships")
      * @ORM\JoinColumn()
@@ -30,21 +30,21 @@ class UserBde
     protected $user;
 
     /**
-     * @var \DateTime $start
+     * @var \DateTime
      *
      * @ORM\Column(type="datetime")
      */
     protected $start;
 
     /**
-     * @var \DateTime $start
+     * @var \DateTime
      *
      * @ORM\Column(type="datetime")
      */
     protected $end;
 
     /**
-     * @var \DateTime $deletedAt
+     * @var \DateTime
      *
      * @ORM\Column(type="datetime", nullable = true)
      */
@@ -53,18 +53,20 @@ class UserBde
     /**
      * @param User $user
      */
-    function __construct(User $user)
+    public function __construct(User $user)
     {
         $this->user = $user;
     }
 
     /**
      * @param \DateTime $deletedAt
+     *
      * @return $this
      */
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
+
         return $this;
     }
 
@@ -78,11 +80,13 @@ class UserBde
 
     /**
      * @param \DateTime $end
+     *
      * @return $this
      */
     public function setEnd($end)
     {
         $this->end = $end;
+
         return $this;
     }
 
@@ -96,11 +100,13 @@ class UserBde
 
     /**
      * @param int $id
+     *
      * @return $this
      */
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -114,11 +120,13 @@ class UserBde
 
     /**
      * @param \DateTime $start
+     *
      * @return $this
      */
     public function setStart($start)
     {
         $this->start = $start;
+
         return $this;
     }
 
@@ -132,11 +140,13 @@ class UserBde
 
     /**
      * @param \Etu\Core\UserBundle\Entity\User $user
+     *
      * @return $this
      */
     public function setUser($user)
     {
         $this->user = $user;
+
         return $this;
     }
 

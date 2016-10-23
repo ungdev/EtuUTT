@@ -25,7 +25,7 @@ class ArrayNormalizer extends SerializerAwareNormalizer implements NormalizerInt
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supportsNormalization($data, $format = null)
     {
@@ -33,7 +33,7 @@ class ArrayNormalizer extends SerializerAwareNormalizer implements NormalizerInt
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supportsDenormalization($data, $type, $format = null)
     {

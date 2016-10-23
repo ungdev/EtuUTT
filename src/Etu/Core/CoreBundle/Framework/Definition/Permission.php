@@ -3,97 +3,99 @@
 namespace Etu\Core\CoreBundle\Framework\Definition;
 
 /**
- * Definition for a module permission
+ * Definition for a module permission.
  */
 class Permission
 {
-	const DEFAULT_ENABLED = true;
-	const DEFAULT_DISABLED = false;
+    const DEFAULT_ENABLED = true;
+    const DEFAULT_DISABLED = false;
 
-	/**
-	 * @var string
-	 */
-	protected $name;
+    /**
+     * @var string
+     */
+    protected $name;
 
-	/**
-	 * @var string
-	 */
-	protected $description;
+    /**
+     * @var string
+     */
+    protected $description;
 
-	/**
-	 * @var boolean
-	 */
-	protected $defaultEnabled;
+    /**
+     * @var bool
+     */
+    protected $defaultEnabled;
 
+    /**
+     * Constructor.
+     *
+     * @param string $name
+     * @param bool   $defaultEnabled
+     * @param string $description
+     */
+    public function __construct($name, $defaultEnabled, $description)
+    {
+        $this->name = $name;
+        $this->defaultEnabled = $defaultEnabled;
+        $this->description = $description;
+    }
 
-	/**
-	 * Constructor
-	 *
-	 * @param string $name
-	 * @param boolean $defaultEnabled
-	 * @param string $description
-	 */
-	public function __construct($name, $defaultEnabled, $description)
-	{
-		$this->name = $name;
-		$this->defaultEnabled = $defaultEnabled;
-		$this->description = $description;
-	}
+    /**
+     * @param bool $defaultEnabled
+     *
+     * @return Permission
+     */
+    public function setDefaultEnabled($defaultEnabled)
+    {
+        $this->defaultEnabled = $defaultEnabled;
 
-	/**
-	 * @param boolean $defaultEnabled
-	 * @return Permission
-	 */
-	public function setDefaultEnabled($defaultEnabled)
-	{
-		$this->defaultEnabled = $defaultEnabled;
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * @return bool
+     */
+    public function getDefaultEnabled()
+    {
+        return $this->defaultEnabled;
+    }
 
-	/**
-	 * @return boolean
-	 */
-	public function getDefaultEnabled()
-	{
-		return $this->defaultEnabled;
-	}
+    /**
+     * @param string $description
+     *
+     * @return Permission
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
 
-	/**
-	 * @param string $description
-	 * @return Permission
-	 */
-	public function setDescription($description)
-	{
-		$this->description = $description;
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getDescription()
-	{
-		return $this->description;
-	}
+    /**
+     * @param string $name
+     *
+     * @return Permission
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
 
-	/**
-	 * @param string $name
-	 * @return Permission
-	 */
-	public function setName($name)
-	{
-		$this->name = $name;
+        return $this;
+    }
 
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getName()
-	{
-		return $this->name;
-	}
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 }

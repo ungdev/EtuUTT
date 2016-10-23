@@ -14,7 +14,7 @@ class Session
     const TYPE_USER = 'user';
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -30,7 +30,7 @@ class Session
     protected $entityType;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
@@ -58,21 +58,21 @@ class Session
     protected $expireAt;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct($type, $id)
     {
         $this->entityType = $type;
         $this->entityId = $id;
         $this->expireAt = new \DateTime('+1 year');
-        $this->token = hash('sha256', time() . uniqid('', true));
+        $this->token = hash('sha256', time().uniqid('', true));
     }
 
     public function createName()
     {
-        if (! empty($_SERVER['HTTP_CLIENT_IP'])) {
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             $ip = $_SERVER['HTTP_CLIENT_IP'];
-        } elseif (! empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
         } else {
             $ip = $_SERVER['REMOTE_ADDR'];
@@ -90,7 +90,7 @@ class Session
             $name[] = 'Unknown browser';
         }
 
-        $name[] = '('. gethostbyaddr($ip) .')';
+        $name[] = '('.gethostbyaddr($ip).')';
 
         $this->name = implode(' ', $name);
     }
@@ -105,11 +105,13 @@ class Session
 
     /**
      * @param int $entityId
+     *
      * @return $this
      */
     public function setEntityId($entityId)
     {
         $this->entityId = $entityId;
+
         return $this;
     }
 
@@ -123,11 +125,13 @@ class Session
 
     /**
      * @param string $entityType
+     *
      * @return $this
      */
     public function setEntityType($entityType)
     {
         $this->entityType = $entityType;
+
         return $this;
     }
 
@@ -141,11 +145,13 @@ class Session
 
     /**
      * @param \DateTime $expireAt
+     *
      * @return $this
      */
     public function setExpireAt($expireAt)
     {
         $this->expireAt = $expireAt;
+
         return $this;
     }
 
@@ -159,11 +165,13 @@ class Session
 
     /**
      * @param string $token
+     *
      * @return $this
      */
     public function setToken($token)
     {
         $this->token = $token;
+
         return $this;
     }
 
@@ -177,11 +185,13 @@ class Session
 
     /**
      * @param string $name
+     *
      * @return $this
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 

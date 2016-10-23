@@ -241,19 +241,19 @@
 
 {%- block form_row -%}
     <div class="form-2col-field{% if errors|length > 0 %} form-2col-error{% endif %}{% if required %} form-2col-required{% endif %}">
-		{%- if form.vars.block_prefixes.1 is defined and form.vars.block_prefixes.1 == 'checkbox' -%}
-			{{- form_widget(form) -}}
-	        {{- form_label(form) -}}
-		{%- else -%}
-	        {{- form_label(form) -}}
-	        {{- form_widget(form) -}}
-		{%- endif -%}
+        {%- if form.vars.block_prefixes.1 is defined and form.vars.block_prefixes.1 == 'checkbox' -%}
+            {{- form_widget(form) -}}
+            {{- form_label(form) -}}
+        {%- else -%}
+            {{- form_label(form) -}}
+            {{- form_widget(form) -}}
+        {%- endif -%}
 
-	    {%- if attr.help is defined and attr.help is not empty -%}
-		    <div class="form-2col-help">
-		    	{{ attr.help }}
-		    </div>
-	    {%- endif -%}
+        {%- if attr.help is defined and attr.help is not empty -%}
+            <div class="form-2col-help">
+                {{ attr.help }}
+            </div>
+        {%- endif -%}
         {{- form_errors(form) -}}
     </div>
 {%- endblock form_row -%}
@@ -283,7 +283,7 @@
     {%- else -%}
         {% set form_method = "POST" %}
     {%- endif -%}
-	<div class="form-2col">
+    <div class="form-2col">
     <form name="{{ name }}" method="{{ form_method|lower }}"{% if action != '' %} action="{{ action }}"{% endif %}{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
     {%- if form_method != method -%}
         <input type="hidden" name="_method" value="{{ method }}" />
@@ -295,7 +295,7 @@
         {{ form_rest(form) }}
     {%- endif -%}
     </form>
-	</div>
+    </div>
 {%- endblock form_end -%}
 
 {%- block form_errors -%}

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Etu\Core\UserBundle\Entity\User;
 
 /**
- * OauthAuthorization
+ * OauthAuthorization.
  *
  * @ORM\Table(name="oauth_authorizations")
  * @ORM\Entity
@@ -15,7 +15,7 @@ use Etu\Core\UserBundle\Entity\User;
 class OauthAuthorization
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -24,7 +24,7 @@ class OauthAuthorization
     private $id;
 
     /**
-     * @var OauthClient $client
+     * @var OauthClient
      *
      * @ORM\ManyToOne(targetEntity="OauthClient")
      * @ORM\JoinColumn()
@@ -32,7 +32,7 @@ class OauthAuthorization
     private $client;
 
     /**
-     * @var User $user
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
      * @ORM\JoinColumn()
@@ -47,7 +47,7 @@ class OauthAuthorization
     private $createdAt;
 
     /**
-     * @var OauthScope[] $scopes
+     * @var OauthScope[]
      *
      * @ORM\ManyToMany(targetEntity="OauthScope")
      * @ORM\JoinTable(name="oauth_authorizations_scopes")
@@ -55,10 +55,10 @@ class OauthAuthorization
     private $scopes;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param OauthClient $client
-     * @param User $user
+     * @param OauthClient      $client
+     * @param User             $user
      * @param array|Collection $scopes
      */
     public function __construct(OauthClient $client, User $user, $scopes)
@@ -71,17 +71,18 @@ class OauthAuthorization
 
     /**
      * @param OauthAuthorizationCode $code
+     *
      * @return OauthAuthorization
      */
     public static function createFromAuthorizationCode(OauthAuthorizationCode $code)
     {
         return new self($code->getClient(), $code->getUser(), $code->getScopes());
     }
-    
+
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -89,22 +90,23 @@ class OauthAuthorization
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
+     *
      * @return OauthAuthorization
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -112,20 +114,21 @@ class OauthAuthorization
     }
 
     /**
-     * Set client
+     * Set client.
      *
      * @param OauthClient $client
+     *
      * @return OauthAuthorization
      */
     public function setClient(OauthClient $client = null)
     {
         $this->client = $client;
-    
+
         return $this;
     }
 
     /**
-     * Get client
+     * Get client.
      *
      * @return OauthClient
      */
@@ -135,20 +138,21 @@ class OauthAuthorization
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param User $user
+     *
      * @return OauthAuthorization
      */
     public function setUser(User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return User
      */
@@ -158,20 +162,21 @@ class OauthAuthorization
     }
 
     /**
-     * Add scopes
+     * Add scopes.
      *
      * @param OauthScope $scopes
+     *
      * @return OauthAuthorization
      */
     public function addScope(OauthScope $scopes)
     {
         $this->scopes[] = $scopes;
-    
+
         return $this;
     }
 
     /**
-     * Remove scopes
+     * Remove scopes.
      *
      * @param OauthScope $scopes
      */
@@ -181,7 +186,7 @@ class OauthAuthorization
     }
 
     /**
-     * Get scopes
+     * Get scopes.
      *
      * @return \Doctrine\Common\Collections\Collection|OauthScope[]
      */

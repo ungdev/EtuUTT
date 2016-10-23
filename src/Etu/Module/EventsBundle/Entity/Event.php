@@ -34,11 +34,11 @@ class Event extends AbstractEvent
 
     public static $categories = array(
         self::CATEGORY_CULTURE, self::CATEGORY_SPORT, self::CATEGORY_FORMATION,
-        self::CATEGORY_NIGHT, self::CATEGORY_OTHER
+        self::CATEGORY_NIGHT, self::CATEGORY_OTHER,
     );
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -47,7 +47,7 @@ class Event extends AbstractEvent
     protected $uid;
 
     /**
-     * @var Organization $orga
+     * @var Organization
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\Organization")
      * @ORM\JoinColumn()
@@ -87,7 +87,7 @@ class Event extends AbstractEvent
     protected $end;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
@@ -110,7 +110,7 @@ class Event extends AbstractEvent
     protected $description;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @Assert\NotBlank()
@@ -118,14 +118,14 @@ class Event extends AbstractEvent
     protected $privacy = self::PRIVACY_PUBLIC;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
     protected $countMembers;
 
     /**
-     * @var \DateTime $created
+     * @var \DateTime
      *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
@@ -133,14 +133,14 @@ class Event extends AbstractEvent
     protected $createdAt;
 
     /**
-     * @var \DateTime $deletedAt
+     * @var \DateTime
      *
      * @ORM\Column(type="datetime", nullable = true)
      */
     protected $deletedAt;
 
     /**
-     * Temporary variable to store uploaded file during photo update
+     * Temporary variable to store uploaded file during photo update.
      *
      * @var UploadedFile
      *
@@ -148,9 +148,8 @@ class Event extends AbstractEvent
      */
     public $file;
 
-
     /**
-     * Constructor
+     * Constructor.
      *
      * @param $uid
      * @param \DateTime $start
@@ -166,20 +165,22 @@ class Event extends AbstractEvent
     }
 
     /**
-     * Upload the picture
+     * Upload the picture.
      *
      * @return bool
      */
     public function upload()
     {
         if (null === $this->file) {
-            if (file_exists(__DIR__ . '/../../../../../web/uploads/events/'.$this->getId().'.png')) {
+            if (file_exists(__DIR__.'/../../../../../web/uploads/events/'.$this->getId().'.png')) {
                 return false;
             } elseif (file_exists(__DIR__.'/../../../../../web/uploads/logos/'.$this->getOrga()->getLogin().'.png')) {
-                copy(__DIR__ . '/../../../../../web/uploads/logos/'.$this->getOrga()->getLogin().'.png', __DIR__ . '/../../../../../web/uploads/events/'.$this->getId().'.png');
+                copy(__DIR__.'/../../../../../web/uploads/logos/'.$this->getOrga()->getLogin().'.png', __DIR__.'/../../../../../web/uploads/events/'.$this->getId().'.png');
+
                 return true;
             } else {
-                copy(__DIR__ . '/../../../../../web/uploads/logos/default-logo.png', __DIR__ . '/../../../../../web/uploads/events/'.$this->getId().'.png');
+                copy(__DIR__.'/../../../../../web/uploads/logos/default-logo.png', __DIR__.'/../../../../../web/uploads/events/'.$this->getId().'.png');
+
                 return true;
             }
         }
@@ -205,13 +206,13 @@ class Event extends AbstractEvent
         // Paste the thumbnail in the transparent image
         $image->paste($thumbnail, $pastePoint);
 
-        if (! file_exists(__DIR__ . '/../../../../../web/uploads/events/')) {
-            mkdir(__DIR__ . '/../../../../../web/uploads/events/', 0777, true);
+        if (!file_exists(__DIR__.'/../../../../../web/uploads/events/')) {
+            mkdir(__DIR__.'/../../../../../web/uploads/events/', 0777, true);
         }
 
         // Save the result
         $image->save(
-            __DIR__ . '/../../../../../web/uploads/events/'.$this->getId().'.png'
+            __DIR__.'/../../../../../web/uploads/events/'.$this->getId().'.png'
         );
 
         return true;
@@ -219,6 +220,7 @@ class Event extends AbstractEvent
 
     /**
      * @param \DateTime $begin
+     *
      * @return Event
      */
     public function setBegin($begin)
@@ -238,6 +240,7 @@ class Event extends AbstractEvent
 
     /**
      * @param string $category
+     *
      * @return Event
      */
     public function setCategory($category)
@@ -257,6 +260,7 @@ class Event extends AbstractEvent
 
     /**
      * @param int $countMembers
+     *
      * @return Event
      */
     public function setCountMembers($countMembers)
@@ -276,6 +280,7 @@ class Event extends AbstractEvent
 
     /**
      * @param string $description
+     *
      * @return Event
      */
     public function setDescription($description)
@@ -295,6 +300,7 @@ class Event extends AbstractEvent
 
     /**
      * @param \DateTime $end
+     *
      * @return Event
      */
     public function setEnd($end)
@@ -313,7 +319,8 @@ class Event extends AbstractEvent
     }
 
     /**
-     * @param boolean $isAllDay
+     * @param bool $isAllDay
+     *
      * @return Event
      */
     public function setIsAllDay($isAllDay)
@@ -324,7 +331,7 @@ class Event extends AbstractEvent
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getIsAllDay()
     {
@@ -333,6 +340,7 @@ class Event extends AbstractEvent
 
     /**
      * @param $location
+     *
      * @return $this
      */
     public function setLocation($location)
@@ -384,6 +392,7 @@ class Event extends AbstractEvent
 
     /**
      * @param \Etu\Core\UserBundle\Entity\Organization $orga
+     *
      * @return Event
      */
     public function setOrga($orga)
@@ -403,6 +412,7 @@ class Event extends AbstractEvent
 
     /**
      * @param string $title
+     *
      * @return Event
      */
     public function setTitle($title)
@@ -422,6 +432,7 @@ class Event extends AbstractEvent
 
     /**
      * @param int $uid
+     *
      * @return Event
      */
     public function setId($uid)
@@ -448,9 +459,10 @@ class Event extends AbstractEvent
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
+     *
      * @return $this
      */
     public function setCreatedAt($createdAt)
@@ -461,7 +473,7 @@ class Event extends AbstractEvent
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -471,9 +483,10 @@ class Event extends AbstractEvent
     }
 
     /**
-     * Set deletedAt
+     * Set deletedAt.
      *
      * @param \DateTime $deletedAt
+     *
      * @return $this
      */
     public function setDeletedAt($deletedAt)
@@ -484,7 +497,7 @@ class Event extends AbstractEvent
     }
 
     /**
-     * Get deletedAt
+     * Get deletedAt.
      *
      * @return \DateTime
      */
@@ -495,6 +508,7 @@ class Event extends AbstractEvent
 
     /**
      * @param int $privacy
+     *
      * @return Event
      */
     public function setPrivacy($privacy)

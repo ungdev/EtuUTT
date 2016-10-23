@@ -24,6 +24,7 @@ class OrgaMemberTransformer extends AbstractTransformer
     /**
      * @param $member
      * @param EmbedBag $includes
+     *
      * @return array|mixed
      */
     public function transformUnique($member, EmbedBag $includes)
@@ -33,6 +34,7 @@ class OrgaMemberTransformer extends AbstractTransformer
 
     /**
      * @param Member $member
+     *
      * @return array
      */
     private function getData(Member $member)
@@ -44,6 +46,7 @@ class OrgaMemberTransformer extends AbstractTransformer
 
     /**
      * @param Member $member
+     *
      * @return array
      */
     private function getLinks(Member $member)
@@ -52,15 +55,16 @@ class OrgaMemberTransformer extends AbstractTransformer
             '_links' => [
                 [
                     'rel' => 'member.user',
-                    'uri' => '/api/public/users/' . $member->getUser()->getLogin()
+                    'uri' => '/api/public/users/'.$member->getUser()->getLogin(),
                 ],
-            ]
+            ],
         ];
     }
 
     /**
-     * @param Member $member
+     * @param Member   $member
      * @param EmbedBag $includes
+     *
      * @return array
      */
     private function getIncludes(Member $member, EmbedBag $includes)
@@ -76,7 +80,7 @@ class OrgaMemberTransformer extends AbstractTransformer
         }
 
         return [
-            '_embed' => $embed
+            '_embed' => $embed,
         ];
     }
 }

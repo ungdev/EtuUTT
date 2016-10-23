@@ -2,7 +2,7 @@
 
 namespace Etu\Install\Requirement;
 
-class RequirementCollection
+class RequirementsCollection
 {
     /**
      * @var Requirement[]
@@ -11,6 +11,7 @@ class RequirementCollection
 
     /**
      * @param Requirement $requirement
+     *
      * @return $this
      */
     public function add(Requirement $requirement)
@@ -26,7 +27,7 @@ class RequirementCollection
     public function isFulfilled()
     {
         foreach ($this->requirements as $requirement) {
-            if (! $requirement->isFulfilled()) {
+            if (!$requirement->isFulfilled()) {
                 return false;
             }
         }
@@ -34,9 +35,6 @@ class RequirementCollection
         return true;
     }
 
-    /**
-     * @return void
-     */
     public function display()
     {
         foreach ($this->requirements as $requirement) {
@@ -48,7 +46,7 @@ class RequirementCollection
                 $line .= '[ERROR] ';
             }
 
-            $line .= $requirement->getDescription() . "\n";
+            $line .= $requirement->getDescription()."\n";
 
             echo $line;
         }

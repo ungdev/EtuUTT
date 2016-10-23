@@ -25,7 +25,7 @@ class NotificationsDispatcher
     protected $sender;
 
     /**
-     * @param Registry $doctrine
+     * @param Registry           $doctrine
      * @param NotificationSender $sender
      */
     public function __construct(Registry $doctrine, NotificationSender $sender)
@@ -91,7 +91,8 @@ class NotificationsDispatcher
      * Does the given alert match the given covoit.
      *
      * @param CovoitAlert $alert
-     * @param Covoit $covoit
+     * @param Covoit      $covoit
+     *
      * @return bool
      */
     private function match(CovoitAlert $alert, Covoit $covoit)
@@ -112,11 +113,11 @@ class NotificationsDispatcher
             if ($alert->getStartDate() > $covoit->getDate() || $alert->getEndDate() < $covoit->getDate()) {
                 return false;
             }
-        } elseif ($alert->getStartDate() && ! $alert->getEndDate()) {
+        } elseif ($alert->getStartDate() && !$alert->getEndDate()) {
             if ($alert->getStartDate() != $covoit->getDate()) {
                 return false;
             }
-        } elseif (! $alert->getStartDate() && $alert->getEndDate()) {
+        } elseif (!$alert->getStartDate() && $alert->getEndDate()) {
             if ($alert->getEndDate() < $covoit->getDate()) {
                 return false;
             }
@@ -127,6 +128,7 @@ class NotificationsDispatcher
 
     /**
      * @param Covoit $covoit
+     *
      * @return Notification
      */
     private function createNotification(Covoit $covoit)

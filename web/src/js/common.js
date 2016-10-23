@@ -3,44 +3,44 @@
  * Add CSS on page load to display fonts
  */
 var fontsCss = $('<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro" type="text/css" />'),
-	head = $('head');
+    head = $('head');
 
 $(function() {
-	setTimeout(function() { head.append(fontsCss); });
+    setTimeout(function() { head.append(fontsCss); });
 });
 
 /*
  * jQuery selectors
  */
 var facebox = $('a[rel*=facebox]'),
-	tip = $('.tip'),
-	tipTransparent = $('.tip-transparent'),
-	overlay = $('#overlay'),
-	more = $('#more'),
-	page = $('body'),
-	usersAutocomplete = $('.user-autocomplete'),
-	orgasAutocomplete = $('.orga-autocomplete'),
-	changeLocale = {
-		link: $('.change-locale'),
-		box: $('#change-locale-choices')
-	},
-	userbox = {
-		box: $('.userbox'),
-		link: $('.userbox-link'),
-		menu: $('.userbox-menu'),
+    tip = $('.tip'),
+    tipTransparent = $('.tip-transparent'),
+    overlay = $('#overlay'),
+    more = $('#more'),
+    page = $('body'),
+    usersAutocomplete = $('.user-autocomplete'),
+    orgasAutocomplete = $('.orga-autocomplete'),
+    changeLocale = {
+        link: $('.change-locale'),
+        box: $('#change-locale-choices')
+    },
+    userbox = {
+        box: $('.userbox'),
+        link: $('.userbox-link'),
+        menu: $('.userbox-menu'),
         avatar: $('.userbox-avatar-link')
-	},
-	menu = {
-		head: {
-			list: $('#head-menu-list'),
-			items: $('#head-menu-list li')
-		},
-		mobile: $('#menu-mobile')
-	},
-	subscriptions = {
-		follow: $('.subscription-subscribe'),
-		unfollow: $('.subscription-unsubscribe')
-	};
+    },
+    menu = {
+        head: {
+            list: $('#head-menu-list'),
+            items: $('#head-menu-list li')
+        },
+        mobile: $('#menu-mobile')
+    },
+    subscriptions = {
+        follow: $('.subscription-subscribe'),
+        unfollow: $('.subscription-unsubscribe')
+    };
 
 
 /*
@@ -50,21 +50,21 @@ var facebox = $('a[rel*=facebox]'),
 var title = document.title;
 
 function setCountTitle(count) {
-	if (/\([\d]+\)/.test(title)) {
-		title = title.split(') ');
-		document.title = '(' + count + ') ' + title[1];
-	} else {
-		document.title = '(' + count + ') ' + title;
-	}
+    if (/\([\d]+\)/.test(title)) {
+        title = title.split(') ');
+        document.title = '(' + count + ') ' + title[1];
+    } else {
+        document.title = '(' + count + ') ' + title;
+    }
 }
 
 function removeCountTitle() {
-	if (/\([\d]+\)/.test(title)) {
-		title = title.split(') ');
-		document.title = title[1];
-	} else {
-		document.title =title;
-	}
+    if (/\([\d]+\)/.test(title)) {
+        title = title.split(') ');
+        document.title = title[1];
+    } else {
+        document.title =title;
+    }
 }
 
 userbox.avatar.click(function() {
@@ -73,232 +73,232 @@ userbox.avatar.click(function() {
 });
 
 userbox.link.click(function() {
-	userbox.box.toggleClass('userbox-clicked');
-	userbox.menu.toggleClass('userbox-menu-clicked');
-	userbox.menu.toggle();
-	return false;
+    userbox.box.toggleClass('userbox-clicked');
+    userbox.menu.toggleClass('userbox-menu-clicked');
+    userbox.menu.toggle();
+    return false;
 });
 
 more.click(function() {
-	if (! $(this).hasClass('active')) {
-		menu.head.items.each(function() {
-			if ($(this).hasClass('active')) {
-				$(this).removeClass('active').addClass('old-active');
-			}
-		});
+    if (! $(this).hasClass('active')) {
+        menu.head.items.each(function() {
+            if ($(this).hasClass('active')) {
+                $(this).removeClass('active').addClass('old-active');
+            }
+        });
 
-		$(this).addClass('active');
-	} else {
-		menu.head.items.each(function() {
-			if ($(this).hasClass('old-active')) {
-				$(this).removeClass('old-active').addClass('active');
-			}
-		});
+        $(this).addClass('active');
+    } else {
+        menu.head.items.each(function() {
+            if ($(this).hasClass('old-active')) {
+                $(this).removeClass('old-active').addClass('active');
+            }
+        });
 
-		$(this).removeClass('active');
-	}
+        $(this).removeClass('active');
+    }
 
-	overlay.toggle();
-	menu.mobile.toggle();
+    overlay.toggle();
+    menu.mobile.toggle();
 
-	return false;
+    return false;
 });
 
 changeLocale.link.click(function() {
-	menu.head.items.each(function() {
-		if ($(this).hasClass('old-active')) {
-			$(this).removeClass('old-active').addClass('active');
-		}
-	});
+    menu.head.items.each(function() {
+        if ($(this).hasClass('old-active')) {
+            $(this).removeClass('old-active').addClass('active');
+        }
+    });
 
-	$(this).removeClass('active');
-	menu.mobile.hide();
+    $(this).removeClass('active');
+    menu.mobile.hide();
 
-	overlay.show();
-	changeLocale.box.show();
+    overlay.show();
+    changeLocale.box.show();
 
-	return false;
+    return false;
 });
 
 page.on('click', function(e) {
-	userbox.box.removeClass('userbox-clicked');
-	userbox.menu.removeClass('userbox-menu-clicked');
-	userbox.menu.hide();
+    userbox.box.removeClass('userbox-clicked');
+    userbox.menu.removeClass('userbox-menu-clicked');
+    userbox.menu.hide();
 
-	menu.head.items.each(function() {
-		if ($(this).hasClass('old-active')) {
-			$(this).removeClass('old-active').addClass('active');
-		}
-	});
+    menu.head.items.each(function() {
+        if ($(this).hasClass('old-active')) {
+            $(this).removeClass('old-active').addClass('active');
+        }
+    });
 
-	$(this).removeClass('active');
+    $(this).removeClass('active');
 
-	overlay.hide();
-	menu.mobile.hide();
-	changeLocale.box.hide();
+    overlay.hide();
+    menu.mobile.hide();
+    changeLocale.box.hide();
 });
 
 $(document).keypress(function(event) {
-	if (event.keyCode == 27) {
-		userbox.box.removeClass('userbox-clicked');
-		userbox.menu.removeClass('userbox-menu-clicked');
-		userbox.menu.hide();
+    if (event.keyCode == 27) {
+        userbox.box.removeClass('userbox-clicked');
+        userbox.menu.removeClass('userbox-menu-clicked');
+        userbox.menu.hide();
 
-		menu.head.items.each(function() {
-			if ($(this).hasClass('old-active')) {
-				$(this).removeClass('old-active').addClass('active');
-			}
-		});
+        menu.head.items.each(function() {
+            if ($(this).hasClass('old-active')) {
+                $(this).removeClass('old-active').addClass('active');
+            }
+        });
 
-		$(this).removeClass('active');
+        $(this).removeClass('active');
 
-		overlay.hide();
-		menu.mobile.hide();
-		changeLocale.box.hide();
-	}
+        overlay.hide();
+        menu.mobile.hide();
+        changeLocale.box.hide();
+    }
 });
 
 $('.userbox a, #menu-mobile a, #change-locale-choices a').click(function() {
-	return true;
+    return true;
 });
 
 // Suscribe
 subscriptions.follow.click(function() {
-	var url = Routing.generate('notifs_subscribe', {
-		'entityType': $(this).attr('data-entityType'),
-		'entityId': $(this).attr('data-entityId')
-	});
+    var url = Routing.generate('notifs_subscribe', {
+        'entityType': $(this).attr('data-entityType'),
+        'entityId': $(this).attr('data-entityId')
+    });
 
-	var id = $(this).attr('id').replace('-subscribe', '');
+    var id = $(this).attr('id').replace('-subscribe', '');
 
-	$('#'+ id +'-subscribe').hide();
-	$('#'+ id +'-loader').show();
+    $('#'+ id +'-subscribe').hide();
+    $('#'+ id +'-loader').show();
 
-	$.getJSON(url, function(data) {
-		$('#'+ id +'-loader').hide();
+    $.getJSON(url, function(data) {
+        $('#'+ id +'-loader').hide();
 
-		if (typeof data.status != 'undefined' && data.status == 200) {
-			$('#'+ id +'-unsubscribe').show();
-		} else {
-			$('#'+ id +'-subscribe').show();
+        if (typeof data.status != 'undefined' && data.status == 200) {
+            $('#'+ id +'-unsubscribe').show();
+        } else {
+            $('#'+ id +'-subscribe').show();
 
-			alert('Une erreur s\'est produite. Veuillez réessayer ou signaler le problème.');
-		}
-	});
+            alert('Une erreur s\'est produite. Veuillez réessayer ou signaler le problème.');
+        }
+    });
 
-	return false;
+    return false;
 });
 
 
 // Unsubscribe
 subscriptions.unfollow.click(function() {
-	var url = Routing.generate('notifs_unsubscribe', {
-		'entityType': $(this).attr('data-entityType'),
-		'entityId': $(this).attr('data-entityId')
-	});
+    var url = Routing.generate('notifs_unsubscribe', {
+        'entityType': $(this).attr('data-entityType'),
+        'entityId': $(this).attr('data-entityId')
+    });
 
-	var id = $(this).attr('id').replace('-unsubscribe', '');
+    var id = $(this).attr('id').replace('-unsubscribe', '');
 
-	$('#'+ id +'-unsubscribe').hide();
-	$('#'+ id +'-loader').show();
+    $('#'+ id +'-unsubscribe').hide();
+    $('#'+ id +'-loader').show();
 
-	$.getJSON(url, function(data) {
-		$('#'+ id +'-loader').hide();
+    $.getJSON(url, function(data) {
+        $('#'+ id +'-loader').hide();
 
-		if (typeof data.status != 'undefined' && data.status == 200) {
-			$('#'+ id +'-subscribe').show();
-		} else {
-			$('#'+ id +'-unsubscribe').show();
+        if (typeof data.status != 'undefined' && data.status == 200) {
+            $('#'+ id +'-subscribe').show();
+        } else {
+            $('#'+ id +'-unsubscribe').show();
 
-			alert('Une erreur s\'est produite. Veuillez réessayer ou signaler le problème.');
-		}
-	});
+            alert('Une erreur s\'est produite. Veuillez réessayer ou signaler le problème.');
+        }
+    });
 
-	return false;
+    return false;
 });
 
 $('.date-picker').datepicker({
     firstDay: 1,
-	dateFormat: 'dd/mm/yy',
-	changeMonth: true,
-	changeYear: true,
+    dateFormat: 'dd/mm/yy',
+    changeMonth: true,
+    changeYear: true,
     dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
     monthNamesShort: [ "Jan", "Fev", "Mar", "Avr", "Mai", "Juin", "Juil", "Aou", "Sep", "Oct", "Nov", "Dec" ]
 });
 
 $('.datetime-picker input:first-of-type').datepicker({
     firstDay: 1,
-	dateFormat: 'dd/mm/yy',
-	changeMonth: true,
-	changeYear: true,
+    dateFormat: 'dd/mm/yy',
+    changeMonth: true,
+    changeYear: true,
     dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
     monthNamesShort: [ "Jan", "Fev", "Mar", "Avr", "Mai", "Juin", "Juil", "Aou", "Sep", "Oct", "Nov", "Dec" ]
 });
 
 $('.birthday-picker').datepicker({
     firstDay: 1,
-	dateFormat: 'dd/mm/yy',
-	changeMonth: true,
-	changeYear: true,
-	yearRange: "-100:-10",
+    dateFormat: 'dd/mm/yy',
+    changeMonth: true,
+    changeYear: true,
+    yearRange: "-100:-10",
     dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
     monthNamesShort: [ "Jan", "Fev", "Mar", "Avr", "Mai", "Juin", "Juil", "Aou", "Sep", "Oct", "Nov", "Dec" ]
 });
 
 
 $(function() {
-	$.facebox.settings.closeImage = '/vendor/facebox/src/closelabel.png'
-	$.facebox.settings.loadingImage = '/vendor/facebox/src/loading.gif'
+    $.facebox.settings.closeImage = '/vendor/facebox/src/closelabel.png'
+    $.facebox.settings.loadingImage = '/vendor/facebox/src/loading.gif'
     facebox.facebox();
 
-	tip.tipsy({
-		gravity: 's',
-		html: true,
-		opacity: 1
-	});
+    tip.tipsy({
+        gravity: 's',
+        html: true,
+        opacity: 1
+    });
 
-	tipTransparent.tipsy({
-		gravity: 's',
-		html: true,
-		opacity: 0.5
-	});
+    tipTransparent.tipsy({
+        gravity: 's',
+        html: true,
+        opacity: 0.5
+    });
 
 
 
-	// Users autocomplete
-	if (usersAutocomplete) {
-		usersAutocomplete.autocomplete({
-			minLength: 3,
-			source: function(request, response) {
-				$.getJSON(
+    // Users autocomplete
+    if (usersAutocomplete) {
+        usersAutocomplete.autocomplete({
+            minLength: 3,
+            source: function(request, response) {
+                $.getJSON(
                     Routing.generate('user_ajax_search'),
                     {
                         term: request.term
                     },
-					function(data)
+                    function(data)
                     {
-						var users = data.response.users;
+                        var users = data.response.users;
 
-						response($.map(users, function(item) {
-							return {
-								label: item.firstName + ' ' + item.lastName,
-								value: item.firstName + ' ' + item.lastName,
-								user: item
-							}
-						}));
-					}
+                        response($.map(users, function(item) {
+                            return {
+                                label: item.firstName + ' ' + item.lastName,
+                                value: item.firstName + ' ' + item.lastName,
+                                user: item
+                            }
+                        }));
+                    }
                 );
-			},
+            },
             select: function( event, ui ) {
                 var input = $(event.target);
 
                 input.attr('data-login', ui.item.user.login);
                 input.attr('data-name', ui.item.user.fullName);
             }
-		});
+        });
 
-		if (usersAutocomplete.data("ui-autocomplete")) {
-			usersAutocomplete.data("ui-autocomplete")._renderItem = function(ul, item) {
+        if (usersAutocomplete.data("ui-autocomplete")) {
+            usersAutocomplete.data("ui-autocomplete")._renderItem = function(ul, item) {
                 var imageLink, link;
 
                 for (var i = 0; i < item.user._links.length; i++) {
@@ -309,52 +309,52 @@ $(function() {
                     }
                 }
 
-				return $("<li style=\"margin-bottom: 3px;\">")
-					.append(
-						"<a>" +
-							"<img src=\" "+ imageLink.uri + "\" style=\"float: left; max-height: 25px; max-width: 25px; margin-right: 5px;\" />" +
-							"<span style=\"display: block; float: left; margin-top: 0;\">" + item.label + "</span>" +
-							"<div style=\"clear: both;\"></div>" +
+                return $("<li style=\"margin-bottom: 3px;\">")
+                    .append(
+                        "<a>" +
+                            "<img src=\" "+ imageLink.uri + "\" style=\"float: left; max-height: 25px; max-width: 25px; margin-right: 5px;\" />" +
+                            "<span style=\"display: block; float: left; margin-top: 0;\">" + item.label + "</span>" +
+                            "<div style=\"clear: both;\"></div>" +
                         "</a>"
-					)
-					.appendTo(ul);
-			};
-		}
-	}
+                    )
+                    .appendTo(ul);
+            };
+        }
+    }
 
-	// Orga autocomplete
-	if (orgasAutocomplete) {
-		orgasAutocomplete.autocomplete({
-			minLength: 1,
-			source: function(request, response) {
-				$.getJSON(
+    // Orga autocomplete
+    if (orgasAutocomplete) {
+        orgasAutocomplete.autocomplete({
+            minLength: 1,
+            source: function(request, response) {
+                $.getJSON(
                     Routing.generate('orga_ajax_search'),
                     {
                         term: request.term
                     },
-					function(data)
+                    function(data)
                     {
-						var orgas = data.response.orgas;
+                        var orgas = data.response.orgas;
 
-						response($.map(orgas, function(item) {
-							return {
-								label: item.name,
-								value: item.name,
-								orga: item
-							}
-						}));
-					}
+                        response($.map(orgas, function(item) {
+                            return {
+                                label: item.name,
+                                value: item.name,
+                                orga: item
+                            }
+                        }));
+                    }
                 );
-			},
+            },
             select: function( event, ui ) {
                 var input = $(event.target);
                 input.attr('data-login', ui.item.orga.login);
                 input.attr('data-name', ui.item.orga.name);
             }
-		});
+        });
 
-		if (orgasAutocomplete.data("ui-autocomplete")) {
-			orgasAutocomplete.data("ui-autocomplete")._renderItem = function(ul, item) {
+        if (orgasAutocomplete.data("ui-autocomplete")) {
+            orgasAutocomplete.data("ui-autocomplete")._renderItem = function(ul, item) {
                 var imageLink, link;
 
                 for (var i = 0; i < item.orga._links.length; i++) {
@@ -365,16 +365,16 @@ $(function() {
                     }
                 }
 
-				return $("<li style=\"margin-bottom: 3px;\">")
-					.append(
-						"<a>" +
-							"<img src=\" "+ imageLink.uri + "\" style=\"float: left; max-height: 25px; max-width: 25px; margin-right: 5px;\" />" +
-							"<span style=\"display: block; float: left; margin-top: 0;\">" + item.label + "</span>" +
-							"<div style=\"clear: both;\"></div>" +
+                return $("<li style=\"margin-bottom: 3px;\">")
+                    .append(
+                        "<a>" +
+                            "<img src=\" "+ imageLink.uri + "\" style=\"float: left; max-height: 25px; max-width: 25px; margin-right: 5px;\" />" +
+                            "<span style=\"display: block; float: left; margin-top: 0;\">" + item.label + "</span>" +
+                            "<div style=\"clear: both;\"></div>" +
                         "</a>"
-					)
-					.appendTo(ul);
-			};
-		}
-	}
+                    )
+                    .appendTo(ul);
+            };
+        }
+    }
 });

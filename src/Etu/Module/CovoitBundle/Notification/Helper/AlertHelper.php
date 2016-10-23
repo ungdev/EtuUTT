@@ -6,7 +6,7 @@ use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Notification\Helper\HelperInterface;
 
 /**
- * Notification for an alert
+ * Notification for an alert.
  */
 class AlertHelper implements HelperInterface
 {
@@ -33,12 +33,13 @@ class AlertHelper implements HelperInterface
 
     /**
      * @param Notification $notification
+     *
      * @return string
      */
     public function render(Notification $notification)
     {
         return $this->twig->render('EtuModuleCovoitBundle:Notification:alert.html.twig', array(
-            'notif' => $notification
+            'notif' => $notification,
         ));
     }
 }

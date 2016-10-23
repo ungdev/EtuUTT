@@ -3,34 +3,34 @@
 {% block title %}{{ 'user.admin.userDelete.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('src/img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block javascripts %}
-	<script src="{{ asset('src/js/bundles/user.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('src/js/bundles/user.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block content %}
-	<ul class="nav nav-tabs page-tabs">
-		<li>
-			<a href="{{ path('user_view', {'login': user.login}) }}?from=admin">
-				<i class="icon-chevron-left"></i>
-				{{ 'user.admin.userDelete.back'|trans }}
-			</a>
-		</li>
-	</ul>
+    <ul class="nav nav-tabs page-tabs">
+        <li>
+            <a href="{{ path('user_view', {'login': user.login}) }}?from=admin">
+                <i class="icon-chevron-left"></i>
+                {{ 'user.admin.userDelete.back'|trans }}
+            </a>
+        </li>
+    </ul>
 
-	<div class="padding20-sides">
-		<p>
-			{{ 'user.admin.userDelete.question'|trans({'%username%': user.fullName}) }}
-		</p>
-		<p>
-			<a href="{{ path('admin_user_delete', {'login': user.login, 'confirm': 'confirm'}) }}" class="btn btn-primary">
-				{{ 'user.admin.userDelete.yes'|trans }}
-			</a>
-			<a href="{{ path('user_view', {'login': user.login}) }}?from=admin" class="btn">
-				{{ 'user.admin.userDelete.no'|trans }}
-			</a>
-		</p>
-	</div>
+    <div class="padding20-sides">
+        <p>
+            {{ 'user.admin.userDelete.question'|trans({'%username%': user.fullName}) }}
+        </p>
+        <p>
+            <a href="{{ path('admin_user_delete', {'login': user.login, 'confirm': 'confirm'}) }}" class="btn btn-primary">
+                {{ 'user.admin.userDelete.yes'|trans }}
+            </a>
+            <a href="{{ path('user_view', {'login': user.login}) }}?from=admin" class="btn">
+                {{ 'user.admin.userDelete.no'|trans }}
+            </a>
+        </p>
+    </div>
 {% endblock %}

@@ -5,65 +5,65 @@
 {% block meta_desc %}{{ 'Nouvelle page du wiki' }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/page.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('src/img/titles/page.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
-	<ul class="nav nav-tabs page-tabs">
-		{% if rights.canGoHome(app.request.get('category')) %}
-			<li>
-				<a href="{{ path('wiki_view', {'slug': 'home', 'category': app.request.get('category')})}}">
-					<i class="fa fa-home" aria-hidden="true"></i>
-					{{ 'wiki.main.menu.home'|trans }}
-				</a>
-			</li>
-		{%endif%}
-		<li class="active page-tabs-resolved-active">
-			<a href="{{ path('wiki_list', {'category': app.request.get('category')})}}">
-				<i class="fa fa-list" aria-hidden="true"></i>
-				{{ 'wiki.main.menu.list'|trans }}
-			</a>
-		</li>
-		{% if rights.canCreate(app.request.get('category')) %}
-			<li class="pull-right">
-				<a href="{{ path('wiki_new', {'slug': '', 'category': app.request.get('category')})}}">
-					<i class="fa fa-plus" aria-hidden="true"></i>
-					{{ 'wiki.main.menu.new'|trans }}
-				</a>
-			</li>
-		{% endif %}
-	</ul>
+    <ul class="nav nav-tabs page-tabs">
+        {% if rights.canGoHome(app.request.get('category')) %}
+            <li>
+                <a href="{{ path('wiki_view', {'slug': 'home', 'category': app.request.get('category')})}}">
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                    {{ 'wiki.main.menu.home'|trans }}
+                </a>
+            </li>
+        {%endif%}
+        <li class="active page-tabs-resolved-active">
+            <a href="{{ path('wiki_list', {'category': app.request.get('category')})}}">
+                <i class="fa fa-list" aria-hidden="true"></i>
+                {{ 'wiki.main.menu.list'|trans }}
+            </a>
+        </li>
+        {% if rights.canCreate(app.request.get('category')) %}
+            <li class="pull-right">
+                <a href="{{ path('wiki_new', {'slug': '', 'category': app.request.get('category')})}}">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    {{ 'wiki.main.menu.new'|trans }}
+                </a>
+            </li>
+        {% endif %}
+    </ul>
 
 
-		<div class="padding20-sides">
-			<h3>Liste des pages du wiki <em>{{app.request.get('category')}}</em></h3>
+        <div class="padding20-sides">
+            <h3>Liste des pages du wiki <em>{{app.request.get('category')}}</em></h3>
 
-			<ul>
-				{% set lvl = 0 %}
-				{% set li = 0 %}
-				{% for slug, array in pagelist %}
-					{% if lvl == array.level %}
-						{% if li %} </li> {% endif %}
-						<li><a href="{{ path('wiki_view', {'slug': slug, 'category': array.category})}}">{{array.title}}</a>
-						{% set li = 1 %}
-					{% elseif lvl > array.level %}
-						{% for i in (array.level+1)..lvl %}
-							{% if li %} </li> {% set li = 0 %}{% endif %}
-							</ul>
-						{% endfor %}
-						{% set lvl = array.level %}
-						<li><a href="{{ path('wiki_view', {'slug': slug, 'category': array.category})}}">{{array.title}}</a>
-					{% elseif lvl < array.level %}
-						{% for i in (lvl+1)..array.level %}
-							<ul>
-						{% endfor %}
-						{% set lvl = array.level %}
-						<li><a href="{{ path('wiki_view', {'slug': slug, 'category': array.category})}}">{{array.title}}</a>
-						{% set li = 1 %}
-					{% endif %}
-				{% endfor %}
-			</ul>
+            <ul>
+                {% set lvl = 0 %}
+                {% set li = 0 %}
+                {% for slug, array in pagelist %}
+                    {% if lvl == array.level %}
+                        {% if li %} </li> {% endif %}
+                        <li><a href="{{ path('wiki_view', {'slug': slug, 'category': array.category})}}">{{array.title}}</a>
+                        {% set li = 1 %}
+                    {% elseif lvl > array.level %}
+                        {% for i in (array.level+1)..lvl %}
+                            {% if li %} </li> {% set li = 0 %}{% endif %}
+                            </ul>
+                        {% endfor %}
+                        {% set lvl = array.level %}
+                        <li><a href="{{ path('wiki_view', {'slug': slug, 'category': array.category})}}">{{array.title}}</a>
+                    {% elseif lvl < array.level %}
+                        {% for i in (lvl+1)..array.level %}
+                            <ul>
+                        {% endfor %}
+                        {% set lvl = array.level %}
+                        <li><a href="{{ path('wiki_view', {'slug': slug, 'category': array.category})}}">{{array.title}}</a>
+                        {% set li = 1 %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
 
 
-		</div>
+        </div>
 {% endblock %}

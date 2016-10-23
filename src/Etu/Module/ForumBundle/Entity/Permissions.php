@@ -20,7 +20,7 @@ class Permissions
     protected $id;
 
     /**
-     * @var Category $category
+     * @var Category
      *
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="permissions")
      * @ORM\JoinColumn(onDelete="SET NULL")
@@ -28,7 +28,7 @@ class Permissions
     protected $category;
 
     /**
-     * @var Organization $organization
+     * @var Organization
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\Organization")
      * @ORM\JoinColumn(onDelete="SET NULL")
@@ -36,7 +36,7 @@ class Permissions
     protected $organization;
 
     /**
-     * @var User $user
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
      * @ORM\JoinColumn(onDelete="SET NULL")
@@ -44,71 +44,70 @@ class Permissions
     protected $user;
 
     /**
-     * @var integer $read
+     * @var int
      *
      * @ORM\Column(name="read", type="integer")
      */
     protected $read;
 
     /**
-     * @var integer $post
+     * @var int
      *
      * @ORM\Column(name="post", type="integer")
      */
     protected $post;
 
     /**
-     * @var integer $answer
+     * @var int
      *
      * @ORM\Column(name="answer", type="integer")
      */
     protected $answer;
 
     /**
-     * @var integer $edit
+     * @var int
      *
      * @ORM\Column(name="edit", type="integer")
      */
     protected $edit;
 
     /**
-     * @var integer $sticky
+     * @var int
      *
      * @ORM\Column(name="sticky", type="integer")
      */
     protected $sticky;
 
     /**
-     * @var integer $lock
+     * @var int
      *
      * @ORM\Column(name="lock", type="integer")
      */
     protected $lock;
 
     /**
-     * @var integer $move
+     * @var int
      *
      * @ORM\Column(name="move", type="integer")
      */
     protected $move;
 
     /**
-     * @var integer $delete
+     * @var int
      *
      * @ORM\Column(name="delete", type="integer")
      */
     protected $delete;
 
     /**
-     * @var integer $type
+     * @var int
      *
      * @ORM\Column(name="type", type="integer")
      */
     protected $type;
 
-
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {

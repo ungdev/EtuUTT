@@ -3,85 +3,85 @@
 {% block title %}{{ 'user.admin.userRoles.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('src/img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block javascripts %}
-	<script src="{{ asset('src/js/bundles/user.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('src/js/bundles/user.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block content %}
-	<ul class="nav nav-tabs page-tabs">
-		<li>
-			{% if fromVar == 'admin' %}
-				<a href="{{ path('admin_user_roles_list') }}">
-			{% elseif fromVar == 'profile'%}
-				<a href="{{ path('user_view', {'login': user.login, 'from': 'admin'}) }}">
-			{% elseif fromVar == 'badges'%}
-				<a href="{{ path('user_view_badges', {'login': user.login, 'from': 'admin'}) }}">
-			{% elseif fromVar == 'schedule'%}
-				<a href="{{ path('user_view_schedule', {'login': user.login, 'from': 'admin'}) }}">
-			{% elseif fromVar == 'organizations'%}
-				<a href="{{ path('user_organizations', {'login': user.login, 'from': 'admin'}) }}">
-			{% endif %}
-				<i class="icon-chevron-left"></i>
-				{{ 'user.admin.userRoles.back'|trans }}
-			</a>
-		</li>
-	</ul>
+    <ul class="nav nav-tabs page-tabs">
+        <li>
+            {% if fromVar == 'admin' %}
+                <a href="{{ path('admin_user_roles_list') }}">
+            {% elseif fromVar == 'profile'%}
+                <a href="{{ path('user_view', {'login': user.login, 'from': 'admin'}) }}">
+            {% elseif fromVar == 'badges'%}
+                <a href="{{ path('user_view_badges', {'login': user.login, 'from': 'admin'}) }}">
+            {% elseif fromVar == 'schedule'%}
+                <a href="{{ path('user_view_schedule', {'login': user.login, 'from': 'admin'}) }}">
+            {% elseif fromVar == 'organizations'%}
+                <a href="{{ path('user_organizations', {'login': user.login, 'from': 'admin'}) }}">
+            {% endif %}
+                <i class="icon-chevron-left"></i>
+                {{ 'user.admin.userRoles.back'|trans }}
+            </a>
+        </li>
+    </ul>
 
-	<div class="padding20-sides">
-		<form method="post" class="form-horizontal">
-			<div class="row-fluid">
-				<div class="span4">
-					<div class="profileEdit-avatar">
-						<img src="{{ asset('uploads/photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
-					</div>
-				</div>
-				<div class="span8">
-					<p>
-						<strong>{{ user.fullName }} ({{ user.login }})</strong>
-					</p>
-				</div>
-			</div>
+    <div class="padding20-sides">
+        <form method="post" class="form-horizontal">
+            <div class="row-fluid">
+                <div class="span4">
+                    <div class="profileEdit-avatar">
+                        <img src="{{ asset('uploads/photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
+                    </div>
+                </div>
+                <div class="span8">
+                    <p>
+                        <strong>{{ user.fullName }} ({{ user.login }})</strong>
+                    </p>
+                </div>
+            </div>
 
-			<hr />
+            <hr />
 
-			<p>{{ ('user.admin.userRoles.introduction') |trans}}</p>
+            <p>{{ ('user.admin.userRoles.introduction') |trans}}</p>
 
-			<div class="row-fluid">
-				<div class="span12">
-					<div class="accordion" id="roleParent">
-						{% for role in roles %}
-							<div class="accordion-group">
-								<div class="accordion-heading">
-									<input type="checkbox" name="role[{{ role.role }}]" {% if role.checked %} checked="checked"{% endif %} style="float:left; margin: 10px 5px 0px 10px;"/>
-									<a class="accordion-toggle" data-toggle="collapse" data-parent="#roleParent" href="#roleCollapse{{ role.role }}">
-										{{ ('role.'~role.role) |trans}} ({{ role.role }})
-									</a>
-								</div>
-								<div id="roleCollapse{{ role.role }}" class="accordion-body collapse">
-									<div class="accordion-inner">
-										<ul>
-											{% for subrole in role.subroles %}
-												<li>{{ ('role.'~subrole) |trans}} ({{ subrole }})</li>
-											{% endfor %}
-										</ul>
-									</div>
-								</div>
-							</div>
-						{% endfor %}
-					</div>
-				</div>
-			</div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="accordion" id="roleParent">
+                        {% for role in roles %}
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <input type="checkbox" name="role[{{ role.role }}]" {% if role.checked %} checked="checked"{% endif %} style="float:left; margin: 10px 5px 0px 10px;"/>
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#roleParent" href="#roleCollapse{{ role.role }}">
+                                        {{ ('role.'~role.role) |trans}} ({{ role.role }})
+                                    </a>
+                                </div>
+                                <div id="roleCollapse{{ role.role }}" class="accordion-body collapse">
+                                    <div class="accordion-inner">
+                                        <ul>
+                                            {% for subrole in role.subroles %}
+                                                <li>{{ ('role.'~subrole) |trans}} ({{ subrole }})</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
 
-			<div class="row-fluid">
-				<div class="span12">
-					<p class="pull-right">
-						<button type="submit" class="btn btn-primary">{{ 'user.admin.userRoles.submit'|trans }}</button>
-					</p>
-				</div>
-			</div>
-		</form>
-	</div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <p class="pull-right">
+                        <button type="submit" class="btn btn-primary">{{ 'user.admin.userRoles.submit'|trans }}</button>
+                    </p>
+                </div>
+            </div>
+        </form>
+    </div>
 {% endblock %}

@@ -18,7 +18,7 @@ class CategoryView
     protected $id;
 
     /**
-     * @var User $user
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
      * @ORM\JoinColumn(onDelete="SET NULL")
@@ -26,23 +26,22 @@ class CategoryView
     protected $user;
 
     /**
-     * @var Category $category
+     * @var Category
      *
      * @ORM\ManyToOne(targetEntity="category", inversedBy="categoryViewed")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     protected $category;
 
-
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -51,6 +50,7 @@ class CategoryView
 
     /**
      * @param int $user
+     *
      * @return View
      */
     public function setUser($user)
@@ -70,6 +70,7 @@ class CategoryView
 
     /**
      * @param int $category
+     *
      * @return CategoryView
      */
     public function setCategory($category)

@@ -3,43 +3,43 @@
 {% block title %}{{ 'user.memberships.index.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('src/img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
-	<div class="padding20-all">
-		<div class="row-fluid">
-			<div class="span3 memberships">
-				<ul class="nav nav-list">
-					{% for membership in memberships %}
-						<li>
-							<a href="{{ path('memberships_orga', {'login': membership.organization.login}) }}">
-								{{ membership.organization.name }}<br />
-								<span class="muted">{{ ('user.orga.role.'~membership.role)|trans }}</span>
-							</a>
-						</li>
-					{% endfor %}
-				</ul>
-			</div>
+    <div class="padding20-all">
+        <div class="row-fluid">
+            <div class="span3 memberships">
+                <ul class="nav nav-list">
+                    {% for membership in memberships %}
+                        <li>
+                            <a href="{{ path('memberships_orga', {'login': membership.organization.login}) }}">
+                                {{ membership.organization.name }}<br />
+                                <span class="muted">{{ ('user.orga.role.'~membership.role)|trans }}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
 
-			<div class="span9">
-				<h4>{{ 'user.memberships.index.desc_1'|transchoice(memberships|length, {'%count%': memberships|length}) }}</h4>
+            <div class="span9">
+                <h4>{{ 'user.memberships.index.desc_1'|transchoice(memberships|length, {'%count%': memberships|length}) }}</h4>
 
-				<hr />
+                <hr />
 
-				<p>
-					{{ 'user.memberships.index.desc_2'|trans }}
-				</p>
-				{% if memberships|count > 0 %}
-				<p>
-					{{ 'user.memberships.index.desc_3'|trans }}
-				</p>
-				{% else %}
-				<p>
-					{{ 'user.memberships.index.desc_no_orga'|trans }}
-				</p>
-				{% endif %}
-			</div>
-		</div>
-	</div>
+                <p>
+                    {{ 'user.memberships.index.desc_2'|trans }}
+                </p>
+                {% if memberships|count > 0 %}
+                <p>
+                    {{ 'user.memberships.index.desc_3'|trans }}
+                </p>
+                {% else %}
+                <p>
+                    {{ 'user.memberships.index.desc_no_orga'|trans }}
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

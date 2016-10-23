@@ -31,7 +31,7 @@ class PropertiesNormalizer extends SerializerAwareNormalizer implements Normaliz
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supportsNormalization($data, $format = null)
     {
@@ -39,7 +39,7 @@ class PropertiesNormalizer extends SerializerAwareNormalizer implements Normaliz
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supportsDenormalization($data, $type, $format = null)
     {

@@ -1,4 +1,5 @@
 <?php
+
 $symfonyDir = __DIR__.'/../vendor/symfony/symfony/src';
 $etuUttDir = __DIR__.'/../src';
 

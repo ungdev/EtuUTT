@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\CovoitBundle\Entity\Covoit;
-use Etu\Module\CovoitBundle\Entity\CovoitAlert;
 use Etu\Module\CovoitBundle\Entity\CovoitMessage;
 use Etu\Module\CovoitBundle\Entity\CovoitSubscription;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,7 +48,7 @@ class PrivateController extends Controller
 
         return [
             'pagination' => $covoits,
-            'today' => new \DateTime()
+            'today' => new \DateTime(),
         ];
     }
 
@@ -90,17 +89,17 @@ class PrivateController extends Controller
 
             $this->get('session')->getFlashBag()->set('message', array(
                 'type' => 'success',
-                'message' => 'covoit.messages.created'
+                'message' => 'covoit.messages.created',
             ));
 
             return $this->redirect($this->generateUrl('covoiturage_view', [
                 'id' => $proposal->getId(),
-                'slug' => $proposal->getStartCity()->getSlug() . '-' . $proposal->getEndCity()->getSlug()
+                'slug' => $proposal->getStartCity()->getSlug().'-'.$proposal->getEndCity()->getSlug(),
             ]));
         }
 
         return [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ];
     }
 
@@ -126,7 +125,7 @@ class PrivateController extends Controller
             ->getQuery()
             ->getOneOrNullResult();
 
-        if (! $covoit) {
+        if (!$covoit) {
             throw $this->createNotFoundException();
         }
 
@@ -194,12 +193,12 @@ class PrivateController extends Controller
             // Flash message
             $this->get('session')->getFlashBag()->set('message', array(
                 'type' => 'success',
-                'message' => 'covoit.messages.edited'
+                'message' => 'covoit.messages.edited',
             ));
 
             return $this->redirect($this->generateUrl('covoiturage_view', [
                 'id' => $covoit->getId(),
-                'slug' => $covoit->getStartCity()->getSlug() . '-' . $covoit->getEndCity()->getSlug()
+                'slug' => $covoit->getStartCity()->getSlug().'-'.$covoit->getEndCity()->getSlug(),
             ]));
         }
 
@@ -232,18 +231,18 @@ class PrivateController extends Controller
 
             $this->get('session')->getFlashBag()->set('message', array(
                 'type' => 'success',
-                'message' => 'covoit.messages.message_edited'
+                'message' => 'covoit.messages.message_edited',
             ));
 
             return $this->redirect($this->generateUrl('covoiturage_view', [
                 'id' => $message->getCovoit()->getId(),
-                'slug' => $message->getCovoit()->getStartCity()->getSlug() . '-' . $message->getCovoit()->getEndCity()->getSlug()
+                'slug' => $message->getCovoit()->getStartCity()->getSlug().'-'.$message->getCovoit()->getEndCity()->getSlug(),
             ]));
         }
 
         return [
             'form' => $form->createView(),
-            'covoitMessage' => $message
+            'covoitMessage' => $message,
         ];
     }
 
@@ -270,7 +269,7 @@ class PrivateController extends Controller
             ->getQuery()
             ->getOneOrNullResult();
 
-        if (! $covoit) {
+        if (!$covoit) {
             throw $this->createNotFoundException('Covoit not found');
         }
 
@@ -300,7 +299,7 @@ class PrivateController extends Controller
             // Flash message
             $this->get('session')->getFlashBag()->set('message', array(
                 'type' => 'success',
-                'message' => 'covoit.messages.canceled'
+                'message' => 'covoit.messages.canceled',
             ));
 
             return $this->redirect($this->generateUrl('covoiturage_my_index'));
@@ -334,19 +333,19 @@ class PrivateController extends Controller
             ->getQuery()
             ->getOneOrNullResult();
 
-        if (! $covoit) {
+        if (!$covoit) {
             throw $this->createNotFoundException();
         }
 
-        if (! $this->getUser()->getPhoneNumber()) {
+        if (!$this->getUser()->getPhoneNumber()) {
             $this->get('session')->getFlashBag()->set('message', array(
                     'type' => 'error',
-                    'message' => 'covoit.messages.required_phone'
+                    'message' => 'covoit.messages.required_phone',
                 ));
         } elseif ($covoit->hasUser($this->getUser())) {
             $this->get('session')->getFlashBag()->set('message', array(
                     'type' => 'error',
-                    'message' => 'covoit.messages.already_subscribed'
+                    'message' => 'covoit.messages.already_subscribed',
                 ));
         } else {
             $subscription = new CovoitSubscription();
@@ -378,13 +377,13 @@ class PrivateController extends Controller
 
             $this->get('session')->getFlashBag()->set('message', array(
                     'type' => 'success',
-                    'message' => 'covoit.messages.subscribed'
+                    'message' => 'covoit.messages.subscribed',
                 ));
         }
 
         return $this->redirect($this->generateUrl('covoiturage_view', [
                     'id' => $covoit->getId(),
-                    'slug' => $covoit->getStartCity()->getSlug() . '-' . $covoit->getEndCity()->getSlug()
+                    'slug' => $covoit->getStartCity()->getSlug().'-'.$covoit->getEndCity()->getSlug(),
                 ]));
     }
 
@@ -403,12 +402,12 @@ class PrivateController extends Controller
 
         $this->get('session')->getFlashBag()->set('message', array(
             'type' => 'success',
-            'message' => 'covoit.messages.unsubscribed'
+            'message' => 'covoit.messages.unsubscribed',
         ));
 
         return $this->redirect($this->generateUrl('covoiturage_view', [
             'id' => $subscription->getCovoit()->getId(),
-            'slug' => $subscription->getCovoit()->getStartCity()->getSlug() . '-' . $subscription->getCovoit()->getEndCity()->getSlug()
+            'slug' => $subscription->getCovoit()->getStartCity()->getSlug().'-'.$subscription->getCovoit()->getEndCity()->getSlug(),
         ]));
     }
 }

@@ -1,182 +1,182 @@
 <!DOCTYPE html>
 <html lang="fr" class="bg-soft-grey">
-	<head>
-		<meta charset="utf-8" />
+    <head>
+        <meta charset="utf-8" />
 
-		<title>Prochains événements</title>
-
-
-		<link rel="stylesheet" href="{{ asset('min/etuutt_font-awesome.min_4.css') }}" type="text/css" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-		<meta http-equiv="refresh" content="60">
-
-		<style>
-			#tv {
-				margin: 0;
-				padding: 0;
-				height: 100vh;
-				background-color: #f5f5f5;
-				background-image: url("{{ asset('src/img/tv/background.png') }}");
-				background-repeat: no-repeat;
-				background-position: top right;
-				box-sizing: border-box;
-				overflow: hidden;
-				line-height: normal;
-			}
-
-			#tv h1 {
-				position:absolute;
-				top: 20px;
-				left: 0;
-				font-size: 50px;
-				margin: 0 0 0 52px;
-				padding: 15px 0 0 0;
-				font-weight:normal;
-				text-shadow: 0 0 4px #f5f5f5;
-				line-height: 100px;
-			}
-
-			#tv h1 span {
-				vertical-align: top;
-				text-shadow: none;
-				display:inline-block;
-				margin-right:30px;
-				width: 100px;
-				height: 100px;
-				border-radius: 50%;
-				background-color:blue;
-				text-align:center;
-				line-height:90px;
-				font-size: 90%;
-				color: white;
-				background: radial-gradient(#292e35,#262a31, #14171a);
-			}
-
-			#tv #logo {
-				position:absolute;
-				bottom: 10px;
-				right: 0px;
-			}
-
-			#tv .event-container {
-				position:absolute;
-				top: 170px;
-				width:100%;
-			}
-
-			#tv .event {
-				height: 180px;
-				margin-bottom:15px;
-				width:100%;
-			}
-
-			#tv .event .day {
-				float:left;
-				height:60px;
-				width: 200px;
-				background-color: #292E35;
-				line-height:60px;
-				color: white;
-				text-align:center;
-				font-size: 36px;
-				z-index: 300;
-			}
-
-			#tv .event .eventborder {
-				height:180px;
-				width: 15px;
-				float:left;
-				left:200px;
-				top:0;
-				background-color: #292E35;
-				font-size: 36px;
-				border-bottom-left-radius: 8px;
-				z-index: 200;
-			}
-
-			#tv .event .eventblock {
-				height:100%;
-				margin-left: 215px;
-				margin-right: 260px;
-				width: auto;
-				background-color: #fff;
-				font-size: 36px;
-				box-shadow: 1px 1px 12px #999;
-				border-bottom-right-radius: 8px;
-				border-top-right-radius: 8px;
-				overflow: hidden;
-				white-space:nowrap;
-			}
-
-			#tv .imgcontainer {
-				float:left;
-				height:160px;
-				width: 160px;
-				padding:10px;
-				line-height: 150px;
-
-			}
-
-			#tv .eventblock img {
-				max-height: 100%;
-				max-width: 100%;
-				vertical-align: middle;
-			}
-
-			#tv .eventblock h2 {
-				font-size: 40px;
-				margin: 10px 0 10px 0;
-			}
-			#tv .eventblock .date {
-				display:block;
-			}
-			#tv .eventblock .location {
-				display:block;
-			}
-
-			#tv .nothing {
-				text-align:center;
-				font-size: 50px;
-				margin-top:150px;
-				color: #555;
-			}
-		</style>
-	</head>
-	<body id="tv">
-		<h1><span><i class="fa fa-calendar" aria-hidden="true"></i></span>Événements associatifs</h1>
-
-		<div class="event-container">
-
-			{% if (events|count) <= 0 %}
-			<div class="nothing">
-				Aucun événement prévu pour les prochains jours
-			</div>
-			{% else %}
-				{% for event in events %}
-				<div class="event">
-					<div class="day">{{ ('events.main.days.' ~ (event.begin|date('D')|lower)) | trans }}</div>
-					<div class="eventborder"></div>
-					<div class="eventblock">
-						<div class="imgcontainer">
-							<img src="{{ asset('uploads/events/'~event.id~'.png') }}" alt="Logo" />
-						</div>
-						<h2>{{ event.title }}</h2>
-						<span class="date">
-							{{ ('events.main.days.' ~ (event.begin|date('D')|lower)) | trans }}
-							{{ event.begin|date('j') }}
-							{{ ('events.main.months.' ~ (event.begin|date('M')|lower)) | trans }}
-							-
-							{{ event.begin|date('G') }}h{{ event.begin|date('i') }}
-						</span>
-						<span class="location">{{ event.location }}</span>
-					</div>
-				</div>
-				{% endfor %}
-
-			{% endif %}
-		</div>
+        <title>Prochains événements</title>
 
 
-		<img src="{{ asset('src/img/tv/logo.png') }}" alt="logo" id="logo"/>
-	</body>
+        <link rel="stylesheet" href="{{ asset('min/etuutt_font-awesome.min_4.css') }}" type="text/css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta http-equiv="refresh" content="60">
+
+        <style>
+            #tv {
+                margin: 0;
+                padding: 0;
+                height: 100vh;
+                background-color: #f5f5f5;
+                background-image: url("{{ asset('src/img/tv/background.png') }}");
+                background-repeat: no-repeat;
+                background-position: top right;
+                box-sizing: border-box;
+                overflow: hidden;
+                line-height: normal;
+            }
+
+            #tv h1 {
+                position:absolute;
+                top: 20px;
+                left: 0;
+                font-size: 50px;
+                margin: 0 0 0 52px;
+                padding: 15px 0 0 0;
+                font-weight:normal;
+                text-shadow: 0 0 4px #f5f5f5;
+                line-height: 100px;
+            }
+
+            #tv h1 span {
+                vertical-align: top;
+                text-shadow: none;
+                display:inline-block;
+                margin-right:30px;
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                background-color:blue;
+                text-align:center;
+                line-height:90px;
+                font-size: 90%;
+                color: white;
+                background: radial-gradient(#292e35,#262a31, #14171a);
+            }
+
+            #tv #logo {
+                position:absolute;
+                bottom: 10px;
+                right: 0px;
+            }
+
+            #tv .event-container {
+                position:absolute;
+                top: 170px;
+                width:100%;
+            }
+
+            #tv .event {
+                height: 180px;
+                margin-bottom:15px;
+                width:100%;
+            }
+
+            #tv .event .day {
+                float:left;
+                height:60px;
+                width: 200px;
+                background-color: #292E35;
+                line-height:60px;
+                color: white;
+                text-align:center;
+                font-size: 36px;
+                z-index: 300;
+            }
+
+            #tv .event .eventborder {
+                height:180px;
+                width: 15px;
+                float:left;
+                left:200px;
+                top:0;
+                background-color: #292E35;
+                font-size: 36px;
+                border-bottom-left-radius: 8px;
+                z-index: 200;
+            }
+
+            #tv .event .eventblock {
+                height:100%;
+                margin-left: 215px;
+                margin-right: 260px;
+                width: auto;
+                background-color: #fff;
+                font-size: 36px;
+                box-shadow: 1px 1px 12px #999;
+                border-bottom-right-radius: 8px;
+                border-top-right-radius: 8px;
+                overflow: hidden;
+                white-space:nowrap;
+            }
+
+            #tv .imgcontainer {
+                float:left;
+                height:160px;
+                width: 160px;
+                padding:10px;
+                line-height: 150px;
+
+            }
+
+            #tv .eventblock img {
+                max-height: 100%;
+                max-width: 100%;
+                vertical-align: middle;
+            }
+
+            #tv .eventblock h2 {
+                font-size: 40px;
+                margin: 10px 0 10px 0;
+            }
+            #tv .eventblock .date {
+                display:block;
+            }
+            #tv .eventblock .location {
+                display:block;
+            }
+
+            #tv .nothing {
+                text-align:center;
+                font-size: 50px;
+                margin-top:150px;
+                color: #555;
+            }
+        </style>
+    </head>
+    <body id="tv">
+        <h1><span><i class="fa fa-calendar" aria-hidden="true"></i></span>Événements associatifs</h1>
+
+        <div class="event-container">
+
+            {% if (events|count) <= 0 %}
+            <div class="nothing">
+                Aucun événement prévu pour les prochains jours
+            </div>
+            {% else %}
+                {% for event in events %}
+                <div class="event">
+                    <div class="day">{{ ('events.main.days.' ~ (event.begin|date('D')|lower)) | trans }}</div>
+                    <div class="eventborder"></div>
+                    <div class="eventblock">
+                        <div class="imgcontainer">
+                            <img src="{{ asset('uploads/events/'~event.id~'.png') }}" alt="Logo" />
+                        </div>
+                        <h2>{{ event.title }}</h2>
+                        <span class="date">
+                            {{ ('events.main.days.' ~ (event.begin|date('D')|lower)) | trans }}
+                            {{ event.begin|date('j') }}
+                            {{ ('events.main.months.' ~ (event.begin|date('M')|lower)) | trans }}
+                            -
+                            {{ event.begin|date('G') }}h{{ event.begin|date('i') }}
+                        </span>
+                        <span class="location">{{ event.location }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+
+            {% endif %}
+        </div>
+
+
+        <img src="{{ asset('src/img/tv/logo.png') }}" alt="logo" id="logo"/>
+    </body>
 </html>

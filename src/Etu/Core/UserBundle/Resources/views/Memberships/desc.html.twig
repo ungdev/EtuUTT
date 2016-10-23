@@ -38,106 +38,106 @@
 {% endblock %}
 
 {% block content %}
-	<div class="padding20-all">
-		<div class="row-fluid">
-			<div class="span3 memberships">
-				<ul class="nav nav-list">
-					{% for m in memberships %}
-						<li{% if membership.id == m.id %} class="active"{% endif %}>
-							<a href="{{ path('memberships_orga', {'login': m.organization.login}) }}">
-								{{ m.organization.name }}<br />
-								{% if membership.id == m.id %}
-									{{ ('user.orga.role.'~m.role)|trans }}
-								{% else %}
-									<span class="muted">{{ ('user.orga.role.'~m.role)|trans }}</span>
-								{% endif %}
-							</a>
-						</li>
-					{% endfor %}
-				</ul>
-			</div>
+    <div class="padding20-all">
+        <div class="row-fluid">
+            <div class="span3 memberships">
+                <ul class="nav nav-list">
+                    {% for m in memberships %}
+                        <li{% if membership.id == m.id %} class="active"{% endif %}>
+                            <a href="{{ path('memberships_orga', {'login': m.organization.login}) }}">
+                                {{ m.organization.name }}<br />
+                                {% if membership.id == m.id %}
+                                    {{ ('user.orga.role.'~m.role)|trans }}
+                                {% else %}
+                                    <span class="muted">{{ ('user.orga.role.'~m.role)|trans }}</span>
+                                {% endif %}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
 
-			<div class="span9">
-				<div class="navbar navbar-etu-membership">
-					<div class="navbar-inner">
-						<button type="button" class="btn btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-						<div class="nav-collapse collapse" style="height: 0;">
-							<ul class="nav">
-								<li>
-									<a href="{{ path('memberships_orga', {'login': membership.organization.login}) }}">
-										{{ 'user.memberships.menu.position'|trans }}
-									</a>
-								</li>
-								{% if membership.hasPermission('edit_desc') %}
-									<li class="active">
-										<a href="{{ path('memberships_orga_desc', {'login': membership.organization.login}) }}">
-											{{ 'user.memberships.menu.orga'|trans }}
-										</a>
-									</li>
-								{% endif %}
+            <div class="span9">
+                <div class="navbar navbar-etu-membership">
+                    <div class="navbar-inner">
+                        <button type="button" class="btn btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <div class="nav-collapse collapse" style="height: 0;">
+                            <ul class="nav">
+                                <li>
+                                    <a href="{{ path('memberships_orga', {'login': membership.organization.login}) }}">
+                                        {{ 'user.memberships.menu.position'|trans }}
+                                    </a>
+                                </li>
+                                {% if membership.hasPermission('edit_desc') %}
+                                    <li class="active">
+                                        <a href="{{ path('memberships_orga_desc', {'login': membership.organization.login}) }}">
+                                            {{ 'user.memberships.menu.orga'|trans }}
+                                        </a>
+                                    </li>
+                                {% endif %}
 
-								{% if membership.hasPermission('deleguate') %}
-									<li>
-										<a href="{{ path('memberships_orga_permissions', {'login': membership.organization.login}) }}">
-											{{ 'user.memberships.menu.permissions'|trans }}
-										</a>
-									</li>
-								{% endif %}
+                                {% if membership.hasPermission('deleguate') %}
+                                    <li>
+                                        <a href="{{ path('memberships_orga_permissions', {'login': membership.organization.login}) }}">
+                                            {{ 'user.memberships.menu.permissions'|trans }}
+                                        </a>
+                                    </li>
+                                {% endif %}
 
-								{% if membership.hasPermission('notify') %}
-									<li>
-										<a href="{{ path('memberships_orga_notifications', {'login': membership.organization.login}) }}">
-											{{ 'user.memberships.menu.notifications'|trans }}
-										</a>
-									</li>
-								{% endif %}
+                                {% if membership.hasPermission('notify') %}
+                                    <li>
+                                        <a href="{{ path('memberships_orga_notifications', {'login': membership.organization.login}) }}">
+                                            {{ 'user.memberships.menu.notifications'|trans }}
+                                        </a>
+                                    </li>
+                                {% endif %}
 
-								{% if membership.hasPermission('events') %}
-									<li>
-										<a href="{{ path('memberships_orga_events', {'login': membership.organization.login}) }}">
-											{{ 'user.memberships.menu.event'|trans }}
-										</a>
-									</li>
-								{% endif %}
+                                {% if membership.hasPermission('events') %}
+                                    <li>
+                                        <a href="{{ path('memberships_orga_events', {'login': membership.organization.login}) }}">
+                                            {{ 'user.memberships.menu.event'|trans }}
+                                        </a>
+                                    </li>
+                                {% endif %}
 
-								{% if membership.hasPermission('daymail') and etu.modules.isEnabled('daymail') %}
-									<li>
-										<a href="{{ path('memberships_orga_daymail', {'login': membership.organization.login}) }}">
-											{{ 'user.memberships.menu.daymail'|trans }}
-										</a>
-									</li>
-								{% endif %}
+                                {% if membership.hasPermission('daymail') and etu.modules.isEnabled('daymail') %}
+                                    <li>
+                                        <a href="{{ path('memberships_orga_daymail', {'login': membership.organization.login}) }}">
+                                            {{ 'user.memberships.menu.daymail'|trans }}
+                                        </a>
+                                    </li>
+                                {% endif %}
 
-								{% if etu.modules.isEnabled('assos') %}
-									<li>
-										<a href="{{ path('orgas_view', {'login': membership.organization.login}) }}">
-											{{ 'user.memberships.menu.public'|trans }}
-										</a>
-									</li>
-								{% endif %}
-							</ul>
-						</div>
-					</div>
-				</div>
+                                {% if etu.modules.isEnabled('assos') %}
+                                    <li>
+                                        <a href="{{ path('orgas_view', {'login': membership.organization.login}) }}">
+                                            {{ 'user.memberships.menu.public'|trans }}
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-				<form method="post" class="form-horizontal">
-					{{ form_errors(form) }}
+                <form method="post" class="form-horizontal">
+                    {{ form_errors(form) }}
 
-					<div class="control-group">
-						<label class="control-label">{{ 'user.orga.index.contactMail.label'|trans }}</label>
-						<div class="controls">
-							{{ form_widget(form.contactMail) }}
-						</div>
-						<span class="help-block">{{ form_errors(form.contactMail) }}</span>
-					</div>
-					<div class="control-group">
-						<label class="control-label">{{ 'user.orga.index.contactPhone.label'|trans }}</label>
-						<div class="controls">
-							{{ form_widget(form.contactPhone) }}
+                    <div class="control-group">
+                        <label class="control-label">{{ 'user.orga.index.contactMail.label'|trans }}</label>
+                        <div class="controls">
+                            {{ form_widget(form.contactMail) }}
+                        </div>
+                        <span class="help-block">{{ form_errors(form.contactMail) }}</span>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">{{ 'user.orga.index.contactPhone.label'|trans }}</label>
+                        <div class="controls">
+                            {{ form_widget(form.contactPhone) }}
 
                             {% if membership.organization.contactPhone is not null %}
                                 <a href="#" data-href="{{ path('orga_remove_phone', { 'login': membership.organization.login }) }}"
@@ -145,13 +145,13 @@
                                     {{ 'user.memberships.desc.remove'|trans }}
                                 </a>
                             {% endif %}
-						</div>
-						<span class="help-block">{{ form_errors(form.contactPhone) }}</span>
-					</div>
-					<div class="control-group">
-						<label class="control-label">{{ 'user.orga.index.website.label'|trans }}</label>
-						<div class="controls">
-							{{ form_widget(form.website) }}
+                        </div>
+                        <span class="help-block">{{ form_errors(form.contactPhone) }}</span>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">{{ 'user.orga.index.website.label'|trans }}</label>
+                        <div class="controls">
+                            {{ form_widget(form.website) }}
 
                             {% if membership.organization.website is not null %}
                                 <a href="#" data-href="{{ path('orga_remove_website', { 'login': membership.organization.login }) }}"
@@ -159,34 +159,34 @@
                                     {{ 'user.memberships.desc.remove'|trans }}
                                 </a>
                             {% endif %}
-						</div>
-						<span class="help-block">{{ form_errors(form.website) }}</span>
-					</div>
-					<div class="control-group">
-						<label class="control-label">{{ 'user.orga.index.descriptionShort.label'|trans }}</label>
-						<div class="controls">
-							{{ form_widget(form.descriptionShort) }}
-							<span class="help-block">{{ 'user.orga.index.descriptionShort.desc'|trans }}</span>
-						</div>
-						<span class="help-block">{{ form_errors(form.descriptionShort) }}</span>
-					</div>
-					<div class="control-group">
-						<label class="control-label">{{ 'user.orga.index.description.label'|trans }}</label>
-						<div class="controls">
-							{{ form_widget(form.description) }}
-							<span class="help-block">{{ 'user.orga.index.description.desc'|trans }}</span>
-						</div>
-						<span class="help-block">{{ form_errors(form.description) }}</span>
-					</div>
-					<div class="control-group">
-						<div class="controls">
-							{{ form_rest(form) }}
+                        </div>
+                        <span class="help-block">{{ form_errors(form.website) }}</span>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">{{ 'user.orga.index.descriptionShort.label'|trans }}</label>
+                        <div class="controls">
+                            {{ form_widget(form.descriptionShort) }}
+                            <span class="help-block">{{ 'user.orga.index.descriptionShort.desc'|trans }}</span>
+                        </div>
+                        <span class="help-block">{{ form_errors(form.descriptionShort) }}</span>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">{{ 'user.orga.index.description.label'|trans }}</label>
+                        <div class="controls">
+                            {{ form_widget(form.description) }}
+                            <span class="help-block">{{ 'user.orga.index.description.desc'|trans }}</span>
+                        </div>
+                        <span class="help-block">{{ form_errors(form.description) }}</span>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            {{ form_rest(form) }}
 
-							<button type="submit" class="btn">{{ 'user.orga.index.submit'|trans }}</button>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+                            <button type="submit" class="btn">{{ 'user.orga.index.submit'|trans }}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}

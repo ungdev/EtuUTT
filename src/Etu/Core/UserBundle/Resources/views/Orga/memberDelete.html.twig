@@ -3,30 +3,30 @@
 {% block title %}{{ 'user.orga.memberDelete.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('src/img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
-	<ul class="nav nav-tabs page-tabs">
-		<li>
-			<a href="{{ path('orga_admin_members_edit', {'login': user.login}) }}">
-				<i class="icon-chevron-left"></i>
-				{{ 'user.orga.memberDelete.back'|trans }}
-			</a>
-		</li>
-	</ul>
+    <ul class="nav nav-tabs page-tabs">
+        <li>
+            <a href="{{ path('orga_admin_members_edit', {'login': user.login}) }}">
+                <i class="icon-chevron-left"></i>
+                {{ 'user.orga.memberDelete.back'|trans }}
+            </a>
+        </li>
+    </ul>
 
-	<div class="padding20-sides">
-		<p>
-			{{ 'user.orga.memberDelete.question'|trans({'%username%': user.fullName}) }}
-		</p>
-		<p>
-			<a href="{{ path('orga_admin_members_delete', {'login': user.login, 'confirm': 'confirm'}) }}" class="btn btn-primary">
-				{{ 'user.orga.memberDelete.yes'|trans }}
-			</a>
-			<a href="{{ path('orga_admin_members_edit', {'login': user.login}) }}" class="btn">
-				{{ 'user.orga.memberDelete.no'|trans }}
-			</a>
-		</p>
-	</div>
+    <div class="padding20-sides">
+        <p>
+            {{ 'user.orga.memberDelete.question'|trans({'%username%': user.fullName}) }}
+        </p>
+        <p>
+            <a href="{{ path('orga_admin_members_delete', {'login': user.login, 'confirm': 'confirm'}) }}" class="btn btn-primary">
+                {{ 'user.orga.memberDelete.yes'|trans }}
+            </a>
+            <a href="{{ path('orga_admin_members_edit', {'login': user.login}) }}" class="btn">
+                {{ 'user.orga.memberDelete.no'|trans }}
+            </a>
+        </p>
+    </div>
 {% endblock %}

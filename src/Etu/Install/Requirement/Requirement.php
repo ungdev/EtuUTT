@@ -5,7 +5,7 @@ namespace Etu\Install\Requirement;
 class Requirement
 {
     /**
-     * @var boolean
+     * @var bool
      */
     protected $fulfilled;
 
@@ -15,7 +15,7 @@ class Requirement
     protected $description;
 
     /**
-     * @param boolean $fulfilled
+     * @param bool   $fulfilled
      * @param string $description
      */
     public function __construct($fulfilled, $description)
@@ -33,7 +33,7 @@ class Requirement
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isFulfilled()
     {

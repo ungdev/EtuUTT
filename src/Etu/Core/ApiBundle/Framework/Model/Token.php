@@ -15,7 +15,7 @@ class Token
     protected $client;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $user;
 

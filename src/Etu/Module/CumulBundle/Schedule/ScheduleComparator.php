@@ -22,6 +22,7 @@ class ScheduleComparator
 
     /**
      * @param ScheduleBuilder $builder
+     *
      * @return $this
      */
     public function addBuilder(ScheduleBuilder $builder)
@@ -33,6 +34,7 @@ class ScheduleComparator
 
     /**
      * @param ScheduleBuilder $builders
+     *
      * @return $this
      */
     public function setBuilders($builders)
@@ -88,8 +90,8 @@ class ScheduleComparator
             $avWeek[$day] = array();
 
             foreach ($hours as $hour) {
-                $avWeek[$day][(int)$hour.'00'] = [];
-                $avWeek[$day][(int)$hour.'30'] = [];
+                $avWeek[$day][(int) $hour.'00'] = [];
+                $avWeek[$day][(int) $hour.'30'] = [];
             }
         }
 

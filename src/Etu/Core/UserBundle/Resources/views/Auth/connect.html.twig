@@ -5,65 +5,65 @@
 {% block meta_desc %}{{ 'user.auth.connect.meta'|trans }}{% endblock %}
 
 {% block page %}
-	<section class="page">
-		<div class="container page-container">
+    <section class="page">
+        <div class="container page-container">
 
-			<h2 class="page-title source-sans-pro">
-				<img src="{{ asset('src/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+            <h2 class="page-title source-sans-pro">
+                <img src="{{ asset('src/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 
-				{{ block('title') }}
-			</h2>
+                {{ block('title') }}
+            </h2>
 
-			{% if message %}
-				<div class="page-alert-mobile alert alert-{{ message.type }}">
-					{{ message.message|trans }}
-				</div>
-			{% endif %}
+            {% if message %}
+                <div class="page-alert-mobile alert alert-{{ message.type }}">
+                    {{ message.message|trans }}
+                </div>
+            {% endif %}
 
-			<div class="content content-connect">
-				<div class="padding20-all">
-					<p>
-						{{ 'user.auth.connect.desc'|trans }}
-					</p>
-					<ul class="connect-choices">
-						<li>
-							<a href="{{ path('user_connect_cas') }}">
-								<img src="{{ asset('src/img/connect/cas.png') }}" /><br />
-								{{ 'user.auth.connect.cas'|trans }}
-							</a>
-						</li>
-						<li>
-							<a href="{{ path('user_connect_external') }}">
-								<img src="{{ asset('src/img/connect/external.png') }}" /><br />
-								{{ 'user.auth.connect.external'|trans }}
-							</a>
-						</li>
-					</ul>
-				</div>
+            <div class="content content-connect">
+                <div class="padding20-all">
+                    <p>
+                        {{ 'user.auth.connect.desc'|trans }}
+                    </p>
+                    <ul class="connect-choices">
+                        <li>
+                            <a href="{{ path('user_connect_cas') }}">
+                                <img src="{{ asset('src/img/connect/cas.png') }}" /><br />
+                                {{ 'user.auth.connect.cas'|trans }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('user_connect_external') }}">
+                                <img src="{{ asset('src/img/connect/external.png') }}" /><br />
+                                {{ 'user.auth.connect.external'|trans }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
 
-				<div class="clear"></div>
-			</div>
+                <div class="clear"></div>
+            </div>
 
-		</div>
-	</section>
+        </div>
+    </section>
 
-	<footer class="container footer-bottom">
-		<p>
-			<a href="#" class="footer-link change-locale">
-				{{ 'base.footer.change_locale'|trans }}
-			</a>
-			<a href="" id="next-change-locale-link" class="footer-link">
-				{{ 'base.footer.legalities'|trans }}
-			</a>
-			<a href="" class="footer-link">
-				{{ 'base.footer.help_us'|trans }}
-			</a>
-			<a href="" class="footer-link">
-				{{ 'base.footer.developers'|trans }}
-			</a>
-			<span class="pull-right">
-				{{ 'base.footer.1col_text'|trans|raw }} - {% include '::version.html.twig' %}
-			</span>
-		</p>
-	</footer>
+    <footer class="container footer-bottom">
+        <p>
+            <a href="#" class="footer-link change-locale">
+                {{ 'base.footer.change_locale'|trans }}
+            </a>
+            <a href="" id="next-change-locale-link" class="footer-link">
+                {{ 'base.footer.legalities'|trans }}
+            </a>
+            <a href="" class="footer-link">
+                {{ 'base.footer.help_us'|trans }}
+            </a>
+            <a href="" class="footer-link">
+                {{ 'base.footer.developers'|trans }}
+            </a>
+            <span class="pull-right">
+                {{ 'base.footer.1col_text'|trans|raw }} - {% include '::version.html.twig' %}
+            </span>
+        </p>
+    </footer>
 {% endblock %}

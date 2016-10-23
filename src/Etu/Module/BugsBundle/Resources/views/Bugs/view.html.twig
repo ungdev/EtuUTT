@@ -3,249 +3,249 @@
 {% block title %}{{ 'bugs.bugs.view.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/bugs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('src/img/titles/bugs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block sidebar %}
-	{{ render_subscribe_button('issue', bug.id) }}
+    {{ render_subscribe_button('issue', bug.id) }}
 
-	{{ parent() }}
+    {{ parent() }}
 {% endblock %}
 
 {% block content %}
-	<ul class="nav nav-tabs page-tabs">
-		<li>
-			<a href="{{ path('bugs_index') }}">{{ 'bugs.bugs.state.opened'|trans }}</a>
-		</li>
-		<li>
-			<a href="{{ path('bugs_closed') }}">{{ 'bugs.bugs.state.resolved'|trans }}</a>
-		</li>
-		{% if is_granted('ROLE_BUGS_POST') %}
-			<li class="pull-right">
-				<a href="{{ path('bugs_create') }}">
-					<i class="icon-plus"></i>
-					{{ 'bugs.bugs.create.title'|trans }}
-				</a>
-			</li>
-		{% endif %}
-	</ul>
+    <ul class="nav nav-tabs page-tabs">
+        <li>
+            <a href="{{ path('bugs_index') }}">{{ 'bugs.bugs.state.opened'|trans }}</a>
+        </li>
+        <li>
+            <a href="{{ path('bugs_closed') }}">{{ 'bugs.bugs.state.resolved'|trans }}</a>
+        </li>
+        {% if is_granted('ROLE_BUGS_POST') %}
+            <li class="pull-right">
+                <a href="{{ path('bugs_create') }}">
+                    <i class="icon-plus"></i>
+                    {{ 'bugs.bugs.create.title'|trans }}
+                </a>
+            </li>
+        {% endif %}
+    </ul>
 
-	<div class="padding20-sides">
+    <div class="padding20-sides">
 
-		<h3>
-			{{ bug.title }}
+        <h3>
+            {{ bug.title }}
 
-			{% if bug.criticality == 60 %}
-				<span class="label label-important">
-					{{ ('bugs.criticality.'~bug.criticality)|trans }}
-				</span>
-			{% elseif bug.criticality == 50 or bug.criticality == 40 %}
-				<span class="label label-warning">
-					{{ ('bugs.criticality.'~bug.criticality)|trans }}
-				</span>
-			{% elseif bug.criticality == 30 %}
-				<span class="label label-info">
-					{{ ('bugs.criticality.'~bug.criticality)|trans }}
-				</span>
-			{% else %}
-				<span class="label">
-					{{ ('bugs.criticality.'~bug.criticality)|trans }}
-				</span>
-			{% endif %}
-		</h3>
+            {% if bug.criticality == 60 %}
+                <span class="label label-important">
+                    {{ ('bugs.criticality.'~bug.criticality)|trans }}
+                </span>
+            {% elseif bug.criticality == 50 or bug.criticality == 40 %}
+                <span class="label label-warning">
+                    {{ ('bugs.criticality.'~bug.criticality)|trans }}
+                </span>
+            {% elseif bug.criticality == 30 %}
+                <span class="label label-info">
+                    {{ ('bugs.criticality.'~bug.criticality)|trans }}
+                </span>
+            {% else %}
+                <span class="label">
+                    {{ ('bugs.criticality.'~bug.criticality)|trans }}
+                </span>
+            {% endif %}
+        </h3>
 
-		<hr class="hidden-for-phones" />
+        <hr class="hidden-for-phones" />
 
-		{% if bug.assignee and bug.isOpen %}
-			<div class="alert alert-info">
-				{{ 'bugs.bugs.view.assigned_to'|trans({'%name%': bug.assignee.fullName}) }}
-			</div>
+        {% if bug.assignee and bug.isOpen %}
+            <div class="alert alert-info">
+                {{ 'bugs.bugs.view.assigned_to'|trans({'%name%': bug.assignee.fullName}) }}
+            </div>
 
-			<hr class="hidden-for-phones" />
-		{% elseif bug.assignee and not bug.isOpen %}
-			<div class="alert alert-success">
-				{{ 'bugs.bugs.view.resolved_by'|trans({'%name%': bug.assignee.fullName}) }}
-			</div>
+            <hr class="hidden-for-phones" />
+        {% elseif bug.assignee and not bug.isOpen %}
+            <div class="alert alert-success">
+                {{ 'bugs.bugs.view.resolved_by'|trans({'%name%': bug.assignee.fullName}) }}
+            </div>
 
-			<hr class="hidden-for-phones" />
-		{% elseif not bug.isOpen %}
-			<div class="alert alert-success">
-				{{ 'bugs.bugs.view.resolved'|trans }}
-			</div>
+            <hr class="hidden-for-phones" />
+        {% elseif not bug.isOpen %}
+            <div class="alert alert-success">
+                {{ 'bugs.bugs.view.resolved'|trans }}
+            </div>
 
-			<hr class="hidden-for-phones" />
-		{% endif %}
+            <hr class="hidden-for-phones" />
+        {% endif %}
 
-		{% if is_granted('ROLE_BUGS_ADMIN') %}
-			<div class="bugs-view-admin hidden-for-phones">
-				<div class="row-fluid">
-					<div class="span5">
-						<h5>{{ 'bugs.bugs.view.admin_assign'|trans }}</h5>
+        {% if is_granted('ROLE_BUGS_ADMIN') %}
+            <div class="bugs-view-admin hidden-for-phones">
+                <div class="row-fluid">
+                    <div class="span5">
+                        <h5>{{ 'bugs.bugs.view.admin_assign'|trans }}</h5>
 
-						{% if bug.assignee %}
-							<a href="{{ path('bugs_admin_unassign', {'id': bug.id, 'slug': bug.title|slugify}) }}">
-								{{ 'bugs.bugs.view.admin_unassign'|trans({'%name%': bug.assignee.fullName}) }}
-							</a>
-						{% else %}
-							<form method="post" action="{{ path('bugs_admin_assign', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="form-inline">
-								<input name="assignee" class="user-autocomplete" type="text" placeholder="{{ 'bugs.bugs.view.admin_assign_placeholder'|trans }}" />
-								<button type="submit" class="btn">{{ 'bugs.bugs.view.admin_assign'|trans }}</button>
-							</form>
-						{% endif %}
-					</div>
+                        {% if bug.assignee %}
+                            <a href="{{ path('bugs_admin_unassign', {'id': bug.id, 'slug': bug.title|slugify}) }}">
+                                {{ 'bugs.bugs.view.admin_unassign'|trans({'%name%': bug.assignee.fullName}) }}
+                            </a>
+                        {% else %}
+                            <form method="post" action="{{ path('bugs_admin_assign', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="form-inline">
+                                <input name="assignee" class="user-autocomplete" type="text" placeholder="{{ 'bugs.bugs.view.admin_assign_placeholder'|trans }}" />
+                                <button type="submit" class="btn">{{ 'bugs.bugs.view.admin_assign'|trans }}</button>
+                            </form>
+                        {% endif %}
+                    </div>
 
-					<div class="span5">
-						<h5>{{ 'bugs.bugs.view.admin_edit_criticality'|trans }}</h5>
+                    <div class="span5">
+                        <h5>{{ 'bugs.bugs.view.admin_edit_criticality'|trans }}</h5>
 
-						<form method="post" action="{{ path('bugs_admin_criticality', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="form-inline">
-							{{ form_widget(updateForm.criticality) }}
-							{{ form_rest(updateForm) }}
-							<button type="submit" class="btn">{{ 'bugs.bugs.view.admin_edit'|trans }}</button>
-						</form>
-					</div>
+                        <form method="post" action="{{ path('bugs_admin_criticality', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="form-inline">
+                            {{ form_widget(updateForm.criticality) }}
+                            {{ form_rest(updateForm) }}
+                            <button type="submit" class="btn">{{ 'bugs.bugs.view.admin_edit'|trans }}</button>
+                        </form>
+                    </div>
 
-					<div class="span2">
-						<h5>{{ 'bugs.bugs.view.admin_state'|trans }}</h5>
+                    <div class="span2">
+                        <h5>{{ 'bugs.bugs.view.admin_state'|trans }}</h5>
 
-						{% if bug.isOpen %}
-							<a href="{{ path('bugs_admin_close', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="btn">
-								{{ 'bugs.bugs.view.admin_fix'|trans }}
-							</a>
-						{% else %}
-							<a href="{{ path('bugs_admin_open', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="btn">
-								{{ 'bugs.bugs.view.admin_unfix'|trans }}
-							</a>
-						{% endif %}
-					</div>
-				</div>
-			</div>
+                        {% if bug.isOpen %}
+                            <a href="{{ path('bugs_admin_close', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="btn">
+                                {{ 'bugs.bugs.view.admin_fix'|trans }}
+                            </a>
+                        {% else %}
+                            <a href="{{ path('bugs_admin_open', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="btn">
+                                {{ 'bugs.bugs.view.admin_unfix'|trans }}
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
 
-			<hr class="hidden-for-phones" />
-		{% endif %}
+            <hr class="hidden-for-phones" />
+        {% endif %}
 
-		<div class="etu-comment" id="1">
-			<div class="etu-comment-avatar">
-				<a href="{{ path('user_view', {'login': bug.user.login}) }}">
-					<img src="{{ asset('uploads/photos/'~bug.user.avatar) }}" />
-				</a>
-			</div>
-			<div class="etu-comment-infos">
-				<div class="etu-comment-date">
-					<small>
-						<a href="#1">#1</a> -
-						<a href="{{ path('user_view', {'login': bug.user.login}) }}">
-							{{ bug.user.fullName }}
-						</a>
-					</small>
-					<small class="pull-right">
-						{{ time_diff(bug.createdAt)|ucfirst }}
-					</small>
-				</div>
-				<div class="etu-comment-body">
-					{{ bug.body|bbcode_filter('default_filter') }}
+        <div class="etu-comment" id="1">
+            <div class="etu-comment-avatar">
+                <a href="{{ path('user_view', {'login': bug.user.login}) }}">
+                    <img src="{{ asset('uploads/photos/'~bug.user.avatar) }}" />
+                </a>
+            </div>
+            <div class="etu-comment-infos">
+                <div class="etu-comment-date">
+                    <small>
+                        <a href="#1">#1</a> -
+                        <a href="{{ path('user_view', {'login': bug.user.login}) }}">
+                            {{ bug.user.fullName }}
+                        </a>
+                    </small>
+                    <small class="pull-right">
+                        {{ time_diff(bug.createdAt)|ucfirst }}
+                    </small>
+                </div>
+                <div class="etu-comment-body">
+                    {{ bug.body|bbcode_filter('default_filter') }}
 
-					<br /><br />
+                    <br /><br />
 
-					{% if bug.user.id == app.user.id or is_granted('ROLE_BUGS_ADMIN') %}
-						<p class="pull-right">
-							<a href="{{ path('bugs_edit', {'slug': bug.title|slugify, 'id': bug.id}) }}"
-							   class="btn btn-small">
-								<i class="icon-edit"></i>
-								{{ 'bugs.bugs.view.edit'|trans }}
-							</a>
+                    {% if bug.user.id == app.user.id or is_granted('ROLE_BUGS_ADMIN') %}
+                        <p class="pull-right">
+                            <a href="{{ path('bugs_edit', {'slug': bug.title|slugify, 'id': bug.id}) }}"
+                               class="btn btn-small">
+                                <i class="icon-edit"></i>
+                                {{ 'bugs.bugs.view.edit'|trans }}
+                            </a>
 
-							{% if is_granted('ROLE_BUGS_ADMIN') %}
-								<a href="{{ path('bugs_admin_delete', {'slug': bug.title|slugify, 'id': bug.id}) }}"
-								   class="btn btn-small">
-									<i class="icon-remove"></i>
-									{{ 'bugs.bugs.view.delete'|trans }}
-								</a>
-							{% endif %}
-						</p>
-					{% endif %}
-				</div>
-			</div>
+                            {% if is_granted('ROLE_BUGS_ADMIN') %}
+                                <a href="{{ path('bugs_admin_delete', {'slug': bug.title|slugify, 'id': bug.id}) }}"
+                                   class="btn btn-small">
+                                    <i class="icon-remove"></i>
+                                    {{ 'bugs.bugs.view.delete'|trans }}
+                                </a>
+                            {% endif %}
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
 
-			<div class="clear"></div>
-		</div>
+            <div class="clear"></div>
+        </div>
 
-		{% set count = 2 %}
+        {% set count = 2 %}
 
-		{% for comment in comments %}
-			{% if comment.isStateUpdate %}
-				<div class="etu-comment-state-update">
-					<strong class="pull-left">
-						{{ comment.body|raw }}
-					</strong>
+        {% for comment in comments %}
+            {% if comment.isStateUpdate %}
+                <div class="etu-comment-state-update">
+                    <strong class="pull-left">
+                        {{ comment.body|raw }}
+                    </strong>
 
-					<small class="muted pull-right">
-						{{ time_diff(comment.createdAt)|ucfirst }}
-					</small>
+                    <small class="muted pull-right">
+                        {{ time_diff(comment.createdAt)|ucfirst }}
+                    </small>
 
-					<div class="clear"></div>
-				</div>
-			{% else %}
-				<div class="etu-comment" id="{{ count }}">
-					<div class="etu-comment-avatar">
-						<a href="{{ path('user_view', {'login': comment.user.login}) }}">
-							<img src="{{ asset('uploads/photos/'~comment.user.avatar) }}" />
-						</a>
-					</div>
-					<div class="etu-comment-infos">
-						<div class="etu-comment-date">
-							<small>
-								<a href="#{{ count }}">#{{ count }}</a> -
-								<a href="{{ path('user_view', {'login': comment.user.login}) }}">
-									{{ comment.user.fullName }}
-								</a>
-							</small>
-							<small class="pull-right">
-								{{ time_diff(comment.createdAt)|ucfirst }}
-							</small>
-						</div>
-						<div class="etu-comment-body">
-							{{ comment.body|bbcode_filter('default_filter') }}
+                    <div class="clear"></div>
+                </div>
+            {% else %}
+                <div class="etu-comment" id="{{ count }}">
+                    <div class="etu-comment-avatar">
+                        <a href="{{ path('user_view', {'login': comment.user.login}) }}">
+                            <img src="{{ asset('uploads/photos/'~comment.user.avatar) }}" />
+                        </a>
+                    </div>
+                    <div class="etu-comment-infos">
+                        <div class="etu-comment-date">
+                            <small>
+                                <a href="#{{ count }}">#{{ count }}</a> -
+                                <a href="{{ path('user_view', {'login': comment.user.login}) }}">
+                                    {{ comment.user.fullName }}
+                                </a>
+                            </small>
+                            <small class="pull-right">
+                                {{ time_diff(comment.createdAt)|ucfirst }}
+                            </small>
+                        </div>
+                        <div class="etu-comment-body">
+                            {{ comment.body|bbcode_filter('default_filter') }}
 
-							<br /><br />
+                            <br /><br />
 
-							{% if comment.user.id == app.user.id or is_granted('ROLE_BUGS_ADMIN') %}
-								<p class="pull-right">
-									<a href="{{ path('bugs_edit_comment', {'issueId': bug.id, 'slug': bug.title|slugify, 'id': comment.id}) }}"
-									   class="btn btn-small">
-										<i class="icon-edit"></i>
-										{{ 'bugs.bugs.view.edit'|trans }}
-									</a>
-								</p>
-							{% endif %}
-						</div>
-					</div>
+                            {% if comment.user.id == app.user.id or is_granted('ROLE_BUGS_ADMIN') %}
+                                <p class="pull-right">
+                                    <a href="{{ path('bugs_edit_comment', {'issueId': bug.id, 'slug': bug.title|slugify, 'id': comment.id}) }}"
+                                       class="btn btn-small">
+                                        <i class="icon-edit"></i>
+                                        {{ 'bugs.bugs.view.edit'|trans }}
+                                    </a>
+                                </p>
+                            {% endif %}
+                        </div>
+                    </div>
 
-					<div class="clear"></div>
-				</div>
-			{% endif %}
+                    <div class="clear"></div>
+                </div>
+            {% endif %}
 
-			{% set count = count + 1 %}
-		{% endfor %}
+            {% set count = count + 1 %}
+        {% endfor %}
 
 
-		{% if is_granted('ROLE_BUGS_POST') %}
-			<div class="bugs-view-comment">
-				<h4>{{ 'bugs.bugs.view.comment_title'|trans }}</h4>
+        {% if is_granted('ROLE_BUGS_POST') %}
+            <div class="bugs-view-comment">
+                <h4>{{ 'bugs.bugs.view.comment_title'|trans }}</h4>
 
-				<form method="post">
-					<div class="control-group">
-						<div class="hidden">{{ form_label(form.body, 'bugs.bugs.view.comment_body'|trans) }}</div>
-						<div>{{ form_widget(form.body, {'attr': {'class': 'bugs-view-comment-textarea redactor'}}) }}</div>
-						<p class="text-error">
-							{{ form_errors(form.body) }}
-						</p>
-					</div>
-					<div class="control-group">
-						{{ form_rest(form) }}
-						<input type="submit" class="btn pull-right" value="{{ 'bugs.bugs.view.comment_submit'|trans }}" />
-					</div>
-				</form>
-			</div>
-		{% endif %}
-	</div>
+                <form method="post">
+                    <div class="control-group">
+                        <div class="hidden">{{ form_label(form.body, 'bugs.bugs.view.comment_body'|trans) }}</div>
+                        <div>{{ form_widget(form.body, {'attr': {'class': 'bugs-view-comment-textarea redactor'}}) }}</div>
+                        <p class="text-error">
+                            {{ form_errors(form.body) }}
+                        </p>
+                    </div>
+                    <div class="control-group">
+                        {{ form_rest(form) }}
+                        <input type="submit" class="btn pull-right" value="{{ 'bugs.bugs.view.comment_submit'|trans }}" />
+                    </div>
+                </form>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

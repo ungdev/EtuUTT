@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class OauthScope
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -27,21 +27,21 @@ class OauthScope
     private $name;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="string", length=200, nullable=true)
      */
     private $description;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $isDefault;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="smallint", nullable=true)
      */
@@ -56,9 +56,9 @@ class OauthScope
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -66,22 +66,23 @@ class OauthScope
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return OauthScope
      */
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
-     * Get name
+     * Get name.
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -89,22 +90,23 @@ class OauthScope
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
+     *
      * @return OauthScope
      */
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
-     * Get description
+     * Get description.
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -112,22 +114,23 @@ class OauthScope
     }
 
     /**
-     * Set isDefault
+     * Set isDefault.
      *
-     * @param boolean $isDefault
+     * @param bool $isDefault
+     *
      * @return OauthScope
      */
     public function setIsDefault($isDefault)
     {
         $this->isDefault = $isDefault;
-    
+
         return $this;
     }
 
     /**
-     * Get isDefault
+     * Get isDefault.
      *
-     * @return boolean 
+     * @return bool
      */
     public function getIsDefault()
     {
@@ -135,22 +138,23 @@ class OauthScope
     }
 
     /**
-     * Set weight
+     * Set weight.
      *
-     * @param integer $weight
+     * @param int $weight
+     *
      * @return OauthScope
      */
     public function setWeight($weight)
     {
         $this->weight = $weight;
-    
+
         return $this;
     }
 
     /**
-     * Get weight
+     * Get weight.
      *
-     * @return integer 
+     * @return int
      */
     public function getWeight()
     {

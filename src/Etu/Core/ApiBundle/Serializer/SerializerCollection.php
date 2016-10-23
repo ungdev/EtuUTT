@@ -19,7 +19,7 @@ class SerializerCollection
     protected $normalizers;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * Remove input access to element
      */

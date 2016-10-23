@@ -3,55 +3,55 @@
 {% block title %}{{ 'core.admin.modules.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('src/img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
-	<div class="padding20-all">
-		<form method="post" action="">
-			<table class="table table-hover">
-				<thead>
-				<tr>
-					<th style="width: 50px;">#</th>
-					<th>{{ 'core.admin.modules.name'|trans }}</th>
-					<th class="hidden-phone">{{ 'core.admin.modules.author'|trans }}</th>
-					<th class="hidden-phone">{{ 'core.admin.modules.description'|trans }}</th>
-				</tr>
-				</thead>
-				<tbody>
-				{% for module in modules %}
-					<tr {% if not module.isReadyToUse %}class="muted"{% endif %}>
-						<td>
-							{% if module.needed %}
-								<input type="checkbox" disabled="disabled" name="modules[{{ module.identifier }}]" checked="checked" />
-							{% elseif module.isReadyToUse %}
-								<input type="checkbox" name="modules[{{ module.identifier }}]" {% if not module.canBeEnabled %} disabled="disabled"{% endif %}{% if module.enabled %} checked="checked"{% endif %} />
-							{% else %}
-								<input type="checkbox" disabled="disabled" />
-							{% endif %}
-						</td>
-						<td>{{ module.title }}</td>
-						<td>{{ module.author }}</td>
-						<td class="hidden-phone">
-							{{ module.description }}
-							{% if not module.isReadyToUse %}
-								<br /><span class="text-warning">{{ 'core.admin.modules.is_not_ready'|trans }}</span>
-							{% endif %}
+    <div class="padding20-all">
+        <form method="post" action="">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th style="width: 50px;">#</th>
+                    <th>{{ 'core.admin.modules.name'|trans }}</th>
+                    <th class="hidden-phone">{{ 'core.admin.modules.author'|trans }}</th>
+                    <th class="hidden-phone">{{ 'core.admin.modules.description'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for module in modules %}
+                    <tr {% if not module.isReadyToUse %}class="muted"{% endif %}>
+                        <td>
+                            {% if module.needed %}
+                                <input type="checkbox" disabled="disabled" name="modules[{{ module.identifier }}]" checked="checked" />
+                            {% elseif module.isReadyToUse %}
+                                <input type="checkbox" name="modules[{{ module.identifier }}]" {% if not module.canBeEnabled %} disabled="disabled"{% endif %}{% if module.enabled %} checked="checked"{% endif %} />
+                            {% else %}
+                                <input type="checkbox" disabled="disabled" />
+                            {% endif %}
+                        </td>
+                        <td>{{ module.title }}</td>
+                        <td>{{ module.author }}</td>
+                        <td class="hidden-phone">
+                            {{ module.description }}
+                            {% if not module.isReadyToUse %}
+                                <br /><span class="text-warning">{{ 'core.admin.modules.is_not_ready'|trans }}</span>
+                            {% endif %}
 
-							{% if module.needed %}
-								<br /><span class="text-warning">{{ 'core.admin.modules.needed_by'|trans({'%needed_by%': module.neededBy}) }}</span>
-							{% endif %}
+                            {% if module.needed %}
+                                <br /><span class="text-warning">{{ 'core.admin.modules.needed_by'|trans({'%needed_by%': module.neededBy}) }}</span>
+                            {% endif %}
 
-							{% if not module.canBeEnabled and module.need %}
-								<br /><span class="text-warning">{{ 'core.admin.modules.need'|trans({'%need%': module.need}) }}</span>
-							{% endif %}
-						</td>
-					</tr>
-				{% endfor %}
-				</tbody>
-			</table>
+                            {% if not module.canBeEnabled and module.need %}
+                                <br /><span class="text-warning">{{ 'core.admin.modules.need'|trans({'%need%': module.need}) }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
 
-			<button type="sumbit" class="btn">{{ 'core.admin.modules.enable_disable'|trans }}</button>
-		</form>
-	</div>
+            <button type="sumbit" class="btn">{{ 'core.admin.modules.enable_disable'|trans }}</button>
+        </form>
+    </div>
 {% endblock %}

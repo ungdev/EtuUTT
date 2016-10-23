@@ -48,7 +48,7 @@ class PrivateUserController extends ApiController
         $user = $em->getRepository('EtuUserBundle:User')->find($this->getAccessToken()->getUser());
 
         return $this->format([
-            'data' => $this->get('etu.api.user.private_transformer')->transform($user)
+            'data' => $this->get('etu.api.user.private_transformer')->transform($user),
         ]);
     }
 
@@ -69,7 +69,7 @@ class PrivateUserController extends ApiController
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $courses = $em->getRepository('EtuUserBundle:Course')->findBy([ 'user' => $this->getAccessToken()->getUser() ]);
+        $courses = $em->getRepository('EtuUserBundle:Course')->findBy(['user' => $this->getAccessToken()->getUser()]);
 
         // Order results
         $days = [];
@@ -102,7 +102,7 @@ class PrivateUserController extends ApiController
         );
 
         return $this->format([
-            'data' => $this->get('etu.api.course.transformer')->transform($courses)
+            'data' => $this->get('etu.api.course.transformer')->transform($courses),
         ]);
     }
 
@@ -129,7 +129,7 @@ class PrivateUserController extends ApiController
         $user = $em->getRepository('EtuUserBundle:User')->find($this->getAccessToken()->getUser());
 
         return $this->format([
-            'data' => $this->get('etu.api.user_orgas_private.transformer')->transform($user->getMemberships()->toArray(), EmbedBag::createFromRequest($request))
+            'data' => $this->get('etu.api.user_orgas_private.transformer')->transform($user->getMemberships()->toArray(), EmbedBag::createFromRequest($request)),
         ]);
     }
 }

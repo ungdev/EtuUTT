@@ -1,14 +1,14 @@
 --- 
-daymail: 
-  memberships: 
-    daymail: 
-      body: 
+daymail:
+  memberships:
+    daymail:
+      body:
         label: Contenu
       confirm: "Vous avez bien modifié ce daymail"
       create: "Créer un daymail pour le %day%"
-      date: 
+      date:
         label: "Date de publication"
-      days: 
+      days:
         fri: Vendredi
         mon: Lundi
         sat: Samedi
@@ -17,7 +17,7 @@ daymail:
         tue: Mardi
         wed: Mercredi
       edit: "Modifier le daymail du %day%"
-      months: 
+      months:
         apr: avril
         aug: août
         dec: décembre
@@ -32,5 +32,5 @@ daymail:
         sep: septembre
       preview: "Prévisualiser le daymail du %day%"
       remove: "Supprimer le daymail du %day%"
-      title: 
+      title:
         label: Sujet

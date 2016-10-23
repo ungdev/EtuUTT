@@ -3,224 +3,224 @@
 {% block title %}{{ 'user.admin.userEdit.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('src/img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block javascripts %}
-	<script src="{{ asset('src/js/bundles/user.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('src/js/bundles/user.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block content %}
-	<ul class="nav nav-tabs page-tabs">
-		<li>
-			<a href="{{ path('user_view', {'login': user.login}) }}?from=admin">
-				<i class="icon-chevron-left"></i>
-				{{ 'user.admin.userEdit.back'|trans }}
-			</a>
-		</li>
-	</ul>
+    <ul class="nav nav-tabs page-tabs">
+        <li>
+            <a href="{{ path('user_view', {'login': user.login}) }}?from=admin">
+                <i class="icon-chevron-left"></i>
+                {{ 'user.admin.userEdit.back'|trans }}
+            </a>
+        </li>
+    </ul>
 
-	<div class="padding20-sides">
-		<div class="hidden" id="avatarUploadBox">
-			<div class="avatarUploadBox-form">
-				<form method="post" action="{{ path('admin_user_edit_avatar', {'login': user.login}) }}" {{ form_enctype(avatarForm) }}>
-					<h4>{{ 'user.admin.userEdit.avatar'|trans }}</h4>
+    <div class="padding20-sides">
+        <div class="hidden" id="avatarUploadBox">
+            <div class="avatarUploadBox-form">
+                <form method="post" action="{{ path('admin_user_edit_avatar', {'login': user.login}) }}" {{ form_enctype(avatarForm) }}>
+                    <h4>{{ 'user.admin.userEdit.avatar'|trans }}</h4>
 
-					<img src="{{ asset('uploads/photos/'~user.avatar) }}" style="max-width: 100px;" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
+                    <img src="{{ asset('uploads/photos/'~user.avatar) }}" style="max-width: 100px;" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
 
-					<p>
-						<br />
-						{{ form_widget(avatarForm.file) }}
-					</p>
+                    <p>
+                        <br />
+                        {{ form_widget(avatarForm.file) }}
+                    </p>
 
-					<div class="controls">
-						{{ form_rest(avatarForm) }}
+                    <div class="controls">
+                        {{ form_rest(avatarForm) }}
 
-						<button type="submit" class="btn">{{ 'user.profile.edit'|trans }}</button>
-					</div>
-				</form>
-			</div>
-		</div>
+                        <button type="submit" class="btn">{{ 'user.profile.edit'|trans }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-		<form method="post">
-			{{ form_errors(form) }}
+        <form method="post">
+            {{ form_errors(form) }}
 
-			<div class="row-fluid">
-				<div class="span3">
-					<div class="profileEdit-avatar">
-						<img src="{{ asset('uploads/photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
+            <div class="row-fluid">
+                <div class="span3">
+                    <div class="profileEdit-avatar">
+                        <img src="{{ asset('uploads/photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
 
-						<p>
-							<br />
-							<a href="{{ path('admin_user_edit_avatar', {'login': user.login}) }}" id="avatarUploadLink" rel="facebox" class="btn">
-								{{ 'user.admin.userEdit.avatar'|trans }}
-							</a>
-						</p>
+                        <p>
+                            <br />
+                            <a href="{{ path('admin_user_edit_avatar', {'login': user.login}) }}" id="avatarUploadLink" rel="facebox" class="btn">
+                                {{ 'user.admin.userEdit.avatar'|trans }}
+                            </a>
+                        </p>
 
-						<p class="display-for-phones">
-							<br />
-							<strong>{{ user.fullName }} ({{ user.studentId }})</strong><br />
-							<strong>{{ user.mail }}</strong>
-						</p>
-					</div>
+                        <p class="display-for-phones">
+                            <br />
+                            <strong>{{ user.fullName }} ({{ user.studentId }})</strong><br />
+                            <strong>{{ user.mail }}</strong>
+                        </p>
+                    </div>
 
-					<hr />
+                    <hr />
 
-					<label>{{ form_label(form.website, 'user.profile.profileEdit.website'|trans) }}</label>
-					{{ form_widget(form.website) }}
-					<span class="help-block">{{ form_errors(form.website) }}</span>
+                    <label>{{ form_label(form.website, 'user.profile.profileEdit.website'|trans) }}</label>
+                    {{ form_widget(form.website) }}
+                    <span class="help-block">{{ form_errors(form.website) }}</span>
 
-					<label>{{ form_label(form.facebook, 'user.profile.profileEdit.facebook'|trans) }}</label>
-					{{ form_widget(form.facebook) }}
-					<span class="help-block">{{ form_errors(form.facebook) }}</span>
+                    <label>{{ form_label(form.facebook, 'user.profile.profileEdit.facebook'|trans) }}</label>
+                    {{ form_widget(form.facebook) }}
+                    <span class="help-block">{{ form_errors(form.facebook) }}</span>
 
-					<label>{{ form_label(form.twitter, 'user.profile.profileEdit.twitter'|trans) }}</label>
-					{{ form_widget(form.twitter) }}
-					<span class="help-block">{{ form_errors(form.twitter) }}</span>
+                    <label>{{ form_label(form.twitter, 'user.profile.profileEdit.twitter'|trans) }}</label>
+                    {{ form_widget(form.twitter) }}
+                    <span class="help-block">{{ form_errors(form.twitter) }}</span>
 
-					<label>{{ form_label(form.linkedin, 'user.profile.profileEdit.linkedin'|trans) }}</label>
-					{{ form_widget(form.linkedin) }}
-					<span class="help-block">{{ form_errors(form.linkedin) }}</span>
+                    <label>{{ form_label(form.linkedin, 'user.profile.profileEdit.linkedin'|trans) }}</label>
+                    {{ form_widget(form.linkedin) }}
+                    <span class="help-block">{{ form_errors(form.linkedin) }}</span>
 
-					<label>{{ form_label(form.viadeo, 'user.profile.profileEdit.viadeo'|trans) }}</label>
-					{{ form_widget(form.viadeo) }}
-					<span class="help-block">{{ form_errors(form.viadeo) }}</span>
-				</div>
+                    <label>{{ form_label(form.viadeo, 'user.profile.profileEdit.viadeo'|trans) }}</label>
+                    {{ form_widget(form.viadeo) }}
+                    <span class="help-block">{{ form_errors(form.viadeo) }}</span>
+                </div>
 
-				<div class="span9">
-					<div class="form-horizontal">
-						<div class="control-group hidden-for-phones">
-							<label class="control-label">{{ 'user.profile.profileEdit.name'|trans }}</label>
-							<div class="controls profileEdit-fixedValue">
-								{{ user.fullName }} ({{ user.login }})
-							</div>
-						</div>
+                <div class="span9">
+                    <div class="form-horizontal">
+                        <div class="control-group hidden-for-phones">
+                            <label class="control-label">{{ 'user.profile.profileEdit.name'|trans }}</label>
+                            <div class="controls profileEdit-fixedValue">
+                                {{ user.fullName }} ({{ user.login }})
+                            </div>
+                        </div>
 
-						{% if user.studentId %}
-							<div class="control-group hidden-for-phones">
-								<label class="control-label">{{ 'user.profile.profileEdit.studentId'|trans }}</label>
-								<div class="controls profileEdit-fixedValue">
-									{{ user.studentId }}
-								</div>
-							</div>
-						{% endif %}
+                        {% if user.studentId %}
+                            <div class="control-group hidden-for-phones">
+                                <label class="control-label">{{ 'user.profile.profileEdit.studentId'|trans }}</label>
+                                <div class="controls profileEdit-fixedValue">
+                                    {{ user.studentId }}
+                                </div>
+                            </div>
+                        {% endif %}
 
-						{% if user.mail %}
-							<div class="control-group hidden-for-phones">
-								<label class="control-label">{{ 'user.profile.profileEdit.mail'|trans }}</label>
-								<div class="controls profileEdit-fixedValue">
-									{{ user.mail }}
-								</div>
-							</div>
-						{% endif %}
+                        {% if user.mail %}
+                            <div class="control-group hidden-for-phones">
+                                <label class="control-label">{{ 'user.profile.profileEdit.mail'|trans }}</label>
+                                <div class="controls profileEdit-fixedValue">
+                                    {{ user.mail }}
+                                </div>
+                            </div>
+                        {% endif %}
 
-						{% if user.niveau or user.filiere or user.formation %}
-							<div class="control-group hidden-for-phones">
-								<label class="control-label">{{ 'user.profile.profileEdit.formation'|trans }}</label>
-								<div class="controls profileEdit-fixedValue">
-									{{ user.branch~user.niveau }} {{ user.filiere }} ({{ user.formation }})
-								</div>
-							</div>
-						{% endif %}
+                        {% if user.niveau or user.filiere or user.formation %}
+                            <div class="control-group hidden-for-phones">
+                                <label class="control-label">{{ 'user.profile.profileEdit.formation'|trans }}</label>
+                                <div class="controls profileEdit-fixedValue">
+                                    {{ user.branch~user.niveau }} {{ user.filiere }} ({{ user.formation }})
+                                </div>
+                            </div>
+                        {% endif %}
 
-						<div class="control-group">
-							<label class="control-label">{{ form_label(form.phoneNumber, 'user.profile.profileEdit.phoneNumber'|trans) }}</label>
-							<div class="controls">
-								{{ form_widget(form.phoneNumber) }}
-								{{ form_widget(form.phoneNumberPrivacy) }}
-								<span class="help-block">{{ form_errors(form.phoneNumber) }}</span>
-								<span class="help-block">{{ form_errors(form.phoneNumberPrivacy) }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ form_label(form.sex, 'user.profile.profileEdit.sex'|trans) }}</label>
-							<div class="controls">
-								{{ form_widget(form.sex) }}
-								{{ form_widget(form.sexPrivacy) }}
-								<span class="help-block">{{ form_errors(form.sex) }}</span>
-								<span class="help-block">{{ form_errors(form.sexPrivacy) }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ form_label(form.nationality, 'user.profile.profileEdit.nationality'|trans) }}</label>
-							<div class="controls">
-								{{ form_widget(form.nationality) }}
-								{{ form_widget(form.nationalityPrivacy) }}
-								<span class="help-block">{{ form_errors(form.nationality) }}</span>
-								<span class="help-block">{{ form_errors(form.nationalityPrivacy) }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ form_label(form.phoneNumber, 'user.profile.profileEdit.address'|trans) }}</label>
-							<div class="controls">
-								{{ form_widget(form.address) }}
-								{{ form_widget(form.addressPrivacy) }}
-								<span class="help-block">{{ form_errors(form.address) }}</span>
-								<span class="help-block">{{ form_errors(form.addressPrivacy) }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ form_label(form.postalCode, 'user.profile.profileEdit.postalCode'|trans) }}</label>
-							<div class="controls">
-								{{ form_widget(form.postalCode) }}
-								{{ form_widget(form.postalCodePrivacy) }}
-								<span class="help-block">{{ form_errors(form.postalCode) }}</span>
-								<span class="help-block">{{ form_errors(form.postalCodePrivacy) }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ form_label(form.city, 'user.profile.profileEdit.city'|trans) }}</label>
-							<div class="controls">
-								{{ form_widget(form.city) }}
-								{{ form_widget(form.cityPrivacy) }}
-								<span class="help-block">{{ form_errors(form.city) }}</span>
-								<span class="help-block">{{ form_errors(form.cityPrivacy) }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ form_label(form.country, 'user.profile.profileEdit.country'|trans) }}</label>
-							<div class="controls">
-								{{ form_widget(form.country) }}
-								{{ form_widget(form.countryPrivacy) }}
-								<span class="help-block">{{ form_errors(form.country) }}</span>
-								<span class="help-block">{{ form_errors(form.countryPrivacy) }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ form_label(form.birthday, 'user.profile.profileEdit.birthday'|trans) }}</label>
-							<div class="controls">
-								{{ form_widget(form.birthday) }}
-								{{ form_widget(form.birthdayPrivacy) }}
-								<span class="help-block">{{ form_errors(form.birthday) }}</span>
-								<span class="help-block">{{ form_errors(form.birthdayPrivacy) }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ 'user.profile.profileEdit.birthdayOnlyAge.label'|trans }}</label>
-							<div class="controls">
-								{{ form_widget(form.birthdayDisplayOnlyAge) }}
-								<span class="help-block">{{ 'user.profile.profileEdit.birthdayOnlyAge.desc'|trans }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ form_label(form.personnalMail, 'user.profile.profileEdit.personnalMail'|trans) }}</label>
-							<div class="controls">
-								{{ form_widget(form.personnalMail) }}
-								{{ form_widget(form.personnalMailPrivacy) }}
-								<span class="help-block">{{ form_errors(form.personnalMail) }}</span>
-								<span class="help-block">{{ form_errors(form.personnalMailPrivacy) }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<div class="controls">
-								{{ form_rest(form) }}
+                        <div class="control-group">
+                            <label class="control-label">{{ form_label(form.phoneNumber, 'user.profile.profileEdit.phoneNumber'|trans) }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.phoneNumber) }}
+                                {{ form_widget(form.phoneNumberPrivacy) }}
+                                <span class="help-block">{{ form_errors(form.phoneNumber) }}</span>
+                                <span class="help-block">{{ form_errors(form.phoneNumberPrivacy) }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ form_label(form.sex, 'user.profile.profileEdit.sex'|trans) }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.sex) }}
+                                {{ form_widget(form.sexPrivacy) }}
+                                <span class="help-block">{{ form_errors(form.sex) }}</span>
+                                <span class="help-block">{{ form_errors(form.sexPrivacy) }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ form_label(form.nationality, 'user.profile.profileEdit.nationality'|trans) }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.nationality) }}
+                                {{ form_widget(form.nationalityPrivacy) }}
+                                <span class="help-block">{{ form_errors(form.nationality) }}</span>
+                                <span class="help-block">{{ form_errors(form.nationalityPrivacy) }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ form_label(form.phoneNumber, 'user.profile.profileEdit.address'|trans) }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.address) }}
+                                {{ form_widget(form.addressPrivacy) }}
+                                <span class="help-block">{{ form_errors(form.address) }}</span>
+                                <span class="help-block">{{ form_errors(form.addressPrivacy) }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ form_label(form.postalCode, 'user.profile.profileEdit.postalCode'|trans) }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.postalCode) }}
+                                {{ form_widget(form.postalCodePrivacy) }}
+                                <span class="help-block">{{ form_errors(form.postalCode) }}</span>
+                                <span class="help-block">{{ form_errors(form.postalCodePrivacy) }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ form_label(form.city, 'user.profile.profileEdit.city'|trans) }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.city) }}
+                                {{ form_widget(form.cityPrivacy) }}
+                                <span class="help-block">{{ form_errors(form.city) }}</span>
+                                <span class="help-block">{{ form_errors(form.cityPrivacy) }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ form_label(form.country, 'user.profile.profileEdit.country'|trans) }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.country) }}
+                                {{ form_widget(form.countryPrivacy) }}
+                                <span class="help-block">{{ form_errors(form.country) }}</span>
+                                <span class="help-block">{{ form_errors(form.countryPrivacy) }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ form_label(form.birthday, 'user.profile.profileEdit.birthday'|trans) }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.birthday) }}
+                                {{ form_widget(form.birthdayPrivacy) }}
+                                <span class="help-block">{{ form_errors(form.birthday) }}</span>
+                                <span class="help-block">{{ form_errors(form.birthdayPrivacy) }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ 'user.profile.profileEdit.birthdayOnlyAge.label'|trans }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.birthdayDisplayOnlyAge) }}
+                                <span class="help-block">{{ 'user.profile.profileEdit.birthdayOnlyAge.desc'|trans }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ form_label(form.personnalMail, 'user.profile.profileEdit.personnalMail'|trans) }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.personnalMail) }}
+                                {{ form_widget(form.personnalMailPrivacy) }}
+                                <span class="help-block">{{ form_errors(form.personnalMail) }}</span>
+                                <span class="help-block">{{ form_errors(form.personnalMailPrivacy) }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+                                {{ form_rest(form) }}
 
-								<button type="submit" class="btn">{{ 'user.profile.edit'|trans }}</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</form>
-	</div>
+                                <button type="submit" class="btn">{{ 'user.profile.edit'|trans }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 {% endblock %}

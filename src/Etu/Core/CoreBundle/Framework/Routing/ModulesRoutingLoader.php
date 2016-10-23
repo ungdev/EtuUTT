@@ -34,8 +34,10 @@ class ModulesRoutingLoader implements LoaderInterface
 
     /**
      * @param mixed $resource
-     * @param null $type
+     * @param null  $type
+     *
      * @return \Symfony\Component\Routing\RouteCollection
+     *
      * @throws \RuntimeException
      */
     public function load($resource, $type = null)
@@ -60,8 +62,9 @@ class ModulesRoutingLoader implements LoaderInterface
     }
 
     /**
-     * @param mixed $resource
+     * @param mixed       $resource
      * @param string|null $type
+     *
      * @return bool
      */
     public function supports($resource, $type = null)
@@ -79,6 +82,7 @@ class ModulesRoutingLoader implements LoaderInterface
 
     /**
      * @param \Symfony\Component\Config\Loader\LoaderResolverInterface $resolver
+     *
      * @return ModulesRoutingLoader
      */
     public function setResolver(LoaderResolverInterface $resolver)

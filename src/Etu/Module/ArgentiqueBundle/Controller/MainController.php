@@ -14,7 +14,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 
-
 // Import annotations
 
 /**
@@ -33,7 +32,7 @@ class MainController extends Controller
         $root = EtuModuleArgentiqueBundle::getPhotosRoot();
         $cache_root = $this->get('kernel')->getRootDir().'/cache/';
 
-        if(!file_exists($root.'/'.$file)) {
+        if (!file_exists($root.'/'.$file)) {
             throw $this->createNotFoundException('Picture not found');
         }
 
@@ -68,7 +67,7 @@ class MainController extends Controller
             exit;
         }
 
-        if(!is_dir($root.'/'.$file)) {
+        if (!is_dir($root.'/'.$file)) {
             throw $this->createNotFoundException('Directory not found');
         }
 
@@ -120,7 +119,7 @@ class MainController extends Controller
         if (!file_exists($root)) {
             mkdir($root, 0777, true);
         }
-        
+
         $directory = rtrim($directory, '/');
 
         if (strpos($directory, './') !== false) {
@@ -154,7 +153,7 @@ class MainController extends Controller
             ];
         }
 
-        if(!is_dir($root.'/'.$directory)) {
+        if (!is_dir($root.'/'.$directory)) {
             throw $this->createNotFoundException('Collection not found');
         }
 
@@ -209,8 +208,8 @@ class MainController extends Controller
 
         usort(
             $directories, function ($a, $b) {
-            return ($a['score'] > $b['score']) ? -1 : 1;
-        }
+                return ($a['score'] > $b['score']) ? -1 : 1;
+            }
         );
 
         return [

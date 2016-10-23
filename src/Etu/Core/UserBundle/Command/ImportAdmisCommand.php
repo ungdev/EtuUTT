@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ImportAdmisCommand extends ContainerAwareCommand
 {
     /**
-     * Configure the command
+     * Configure the command.
      */
     protected function configure()
     {
@@ -23,9 +23,9 @@ class ImportAdmisCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Input\InputInterface   $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return void
+     *
      * @throws \RuntimeException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -40,7 +40,7 @@ class ImportAdmisCommand extends ContainerAwareCommand
         $user = $dialog->ask($output, 'User: ');
         $pass = $dialog->ask($output, 'Pass: ');
 
-        $pdo = new \PDO('mysql:host=' . $host . ';dbname=' . $name, $user, $pass);
+        $pdo = new \PDO('mysql:host='.$host.';dbname='.$name, $user, $pass);
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
         $output->writeln("\nFinding users differences ...");
@@ -61,7 +61,6 @@ class ImportAdmisCommand extends ContainerAwareCommand
             $importedRegistry[$import->login] = $import;
             $importedLogins[] = $import->login;
         }
-
 
         /*
          * Database
@@ -90,13 +89,13 @@ class ImportAdmisCommand extends ContainerAwareCommand
             $bar->update(0);
             $i = 1;
 
-            foreach($toImport as $loginToImport) {
+            foreach ($toImport as $loginToImport) {
                 $import = $importedRegistry[$loginToImport];
 
                 $user = new User();
                 $user->setLogin($import->login);
                 $user->setPassword($this->getContainer()->get('security.password_encoder')->encodePassword($user, $import->password));
-                $user->setFullName($import->prenom . ' ' . $import->nom);
+                $user->setFullName($import->prenom.' '.$import->nom);
                 $user->setSex(($import->sexe == 'M') ? User::SEX_MALE : User::SEX_FEMALE);
                 $user->setSexPrivacy(User::PRIVACY_PRIVATE);
                 $user->setCity(ucfirst(strtolower($import->ville)));
@@ -118,10 +117,10 @@ class ImportAdmisCommand extends ContainerAwareCommand
                 $em->flush();
 
                 $bar->update($i);
-                $i++;
+                ++$i;
             }
         }
 
         $output->write("\nDone\n");
-	}
+    }
 }

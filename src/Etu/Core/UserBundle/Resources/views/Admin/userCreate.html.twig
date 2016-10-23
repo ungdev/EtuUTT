@@ -3,200 +3,200 @@
 {% block title %}{{ 'user.admin.userCreate.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('src/img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block javascripts %}
-	<script src="{{ asset('src/js/bundles/user.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('src/js/bundles/user.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block content %}
-	<ul class="nav nav-tabs page-tabs">
-		<li>
-			<a href="{{ path('admin_users_index') }}">
-				<i class="icon-chevron-left"></i>
-				{{ 'user.admin.userCreate.back'|trans }}
-			</a>
-		</li>
-	</ul>
+    <ul class="nav nav-tabs page-tabs">
+        <li>
+            <a href="{{ path('admin_users_index') }}">
+                <i class="icon-chevron-left"></i>
+                {{ 'user.admin.userCreate.back'|trans }}
+            </a>
+        </li>
+    </ul>
 
-	<div class="padding20-sides">
-		<form method="post">
-			{{ form_errors(form) }}
+    <div class="padding20-sides">
+        <form method="post">
+            {{ form_errors(form) }}
 
-			<div class="row-fluid">
-				<div class="span3">
-					<label>{{ form_label(form.website, 'user.admin.userCreate.website'|trans) }}</label>
-					{{ form_widget(form.website) }}
-					<span class="help-block">{{ form_errors(form.website) }}</span>
+            <div class="row-fluid">
+                <div class="span3">
+                    <label>{{ form_label(form.website, 'user.admin.userCreate.website'|trans) }}</label>
+                    {{ form_widget(form.website) }}
+                    <span class="help-block">{{ form_errors(form.website) }}</span>
 
-					<label>{{ form_label(form.facebook, 'user.admin.userCreate.facebook'|trans) }}</label>
-					{{ form_widget(form.facebook) }}
-					<span class="help-block">{{ form_errors(form.facebook) }}</span>
+                    <label>{{ form_label(form.facebook, 'user.admin.userCreate.facebook'|trans) }}</label>
+                    {{ form_widget(form.facebook) }}
+                    <span class="help-block">{{ form_errors(form.facebook) }}</span>
 
-					<label>{{ form_label(form.twitter, 'user.admin.userCreate.twitter'|trans) }}</label>
-					{{ form_widget(form.twitter) }}
-					<span class="help-block">{{ form_errors(form.twitter) }}</span>
+                    <label>{{ form_label(form.twitter, 'user.admin.userCreate.twitter'|trans) }}</label>
+                    {{ form_widget(form.twitter) }}
+                    <span class="help-block">{{ form_errors(form.twitter) }}</span>
 
-					<label>{{ form_label(form.linkedin, 'user.admin.userCreate.linkedin'|trans) }}</label>
-					{{ form_widget(form.linkedin) }}
-					<span class="help-block">{{ form_errors(form.linkedin) }}</span>
+                    <label>{{ form_label(form.linkedin, 'user.admin.userCreate.linkedin'|trans) }}</label>
+                    {{ form_widget(form.linkedin) }}
+                    <span class="help-block">{{ form_errors(form.linkedin) }}</span>
 
-					<label>{{ form_label(form.viadeo, 'user.admin.userCreate.viadeo'|trans) }}</label>
-					{{ form_widget(form.viadeo) }}
-					<span class="help-block">{{ form_errors(form.viadeo) }}</span>
-				</div>
+                    <label>{{ form_label(form.viadeo, 'user.admin.userCreate.viadeo'|trans) }}</label>
+                    {{ form_widget(form.viadeo) }}
+                    <span class="help-block">{{ form_errors(form.viadeo) }}</span>
+                </div>
 
-				<div class="span9">
-					<div class="form-horizontal">
-						<div class="control-group">
-							<label class="control-label">{{ form_label(form.login, 'user.admin.userCreate.login'|trans) }}</label>
-							<div class="controls">
-								{{ form_widget(form.login) }}
-								<span class="help-block">{{ form_errors(form.login) }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ form_label(form.password, 'user.admin.userCreate.password'|trans) }}</label>
-							<div class="controls">
-								{{ form_widget(form.password) }}
-								<span class="help-block">{{ form_errors(form.password) }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ form_label(form.fullName, 'user.admin.userCreate.name'|trans) }}</label>
-							<div class="controls">
-								{{ form_widget(form.fullName) }}
-								<span class="help-block">{{ form_errors(form.fullName) }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ form_label(form.mail, 'user.admin.userCreate.mail'|trans) }}</label>
-							<div class="controls">
-								{{ form_widget(form.mail) }}
-								<span class="help-block">{{ form_errors(form.mail) }}</span>
-							</div>
-						</div>
+                <div class="span9">
+                    <div class="form-horizontal">
+                        <div class="control-group">
+                            <label class="control-label">{{ form_label(form.login, 'user.admin.userCreate.login'|trans) }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.login) }}
+                                <span class="help-block">{{ form_errors(form.login) }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ form_label(form.password, 'user.admin.userCreate.password'|trans) }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.password) }}
+                                <span class="help-block">{{ form_errors(form.password) }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ form_label(form.fullName, 'user.admin.userCreate.name'|trans) }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.fullName) }}
+                                <span class="help-block">{{ form_errors(form.fullName) }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ form_label(form.mail, 'user.admin.userCreate.mail'|trans) }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.mail) }}
+                                <span class="help-block">{{ form_errors(form.mail) }}</span>
+                            </div>
+                        </div>
 
-						<div class="control-group">
-							<label class="control-label">{{ form_label(form.studentId, 'user.admin.userCreate.studentId'|trans) }}</label>
-							<div class="controls">
-								{{ form_widget(form.studentId) }}
-								<span class="help-block">{{ form_errors(form.studentId) }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ form_label(form.phoneNumber, 'user.admin.userCreate.phoneNumber'|trans) }}</label>
-							<div class="controls">
-								{{ form_widget(form.phoneNumber) }}
-								{{ form_widget(form.phoneNumberPrivacy) }}
-								<span class="help-block">{{ form_errors(form.phoneNumber) }}</span>
-								<span class="help-block">{{ form_errors(form.phoneNumberPrivacy) }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ form_label(form.sex, 'user.admin.userCreate.sex'|trans) }}</label>
-							<div class="controls">
-								{{ form_widget(form.sex) }}
-								{{ form_widget(form.sexPrivacy) }}
-								<span class="help-block">{{ form_errors(form.sex) }}</span>
-								<span class="help-block">{{ form_errors(form.sexPrivacy) }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ form_label(form.nationality, 'user.admin.userCreate.nationality'|trans) }}</label>
-							<div class="controls">
-								{{ form_widget(form.nationality) }}
-								{{ form_widget(form.nationalityPrivacy) }}
-								<span class="help-block">{{ form_errors(form.nationality) }}</span>
-								<span class="help-block">{{ form_errors(form.nationalityPrivacy) }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ form_label(form.phoneNumber, 'user.admin.userCreate.address'|trans) }}</label>
-							<div class="controls">
-								{{ form_widget(form.address) }}
-								{{ form_widget(form.addressPrivacy) }}
-								<span class="help-block">{{ form_errors(form.address) }}</span>
-								<span class="help-block">{{ form_errors(form.addressPrivacy) }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ form_label(form.postalCode, 'user.admin.userCreate.postalCode'|trans) }}</label>
-							<div class="controls">
-								{{ form_widget(form.postalCode) }}
-								{{ form_widget(form.postalCodePrivacy) }}
-								<span class="help-block">{{ form_errors(form.postalCode) }}</span>
-								<span class="help-block">{{ form_errors(form.postalCodePrivacy) }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ form_label(form.city, 'user.admin.userCreate.city'|trans) }}</label>
-							<div class="controls">
-								{{ form_widget(form.city) }}
-								{{ form_widget(form.cityPrivacy) }}
-								<span class="help-block">{{ form_errors(form.city) }}</span>
-								<span class="help-block">{{ form_errors(form.cityPrivacy) }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ form_label(form.country, 'user.admin.userCreate.country'|trans) }}</label>
-							<div class="controls">
-								{{ form_widget(form.country) }}
-								{{ form_widget(form.countryPrivacy) }}
-								<span class="help-block">{{ form_errors(form.country) }}</span>
-								<span class="help-block">{{ form_errors(form.countryPrivacy) }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ form_label(form.birthday, 'user.admin.userCreate.birthday'|trans) }}</label>
-							<div class="controls">
-								{{ form_widget(form.birthday) }}
-								{{ form_widget(form.birthdayPrivacy) }}
-								<span class="help-block">{{ form_errors(form.birthday) }}</span>
-								<span class="help-block">{{ form_errors(form.birthdayPrivacy) }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ 'user.admin.userCreate.birthday_only_age_label'|trans }}</label>
-							<div class="controls">
-								{{ form_widget(form.birthdayDisplayOnlyAge) }}
-								<span class="help-block">{{ 'user.admin.userCreate.birthday_only_age_desc'|trans }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ form_label(form.personnalMail, 'user.admin.userCreate.personnalMail'|trans) }}</label>
-							<div class="controls">
-								{{ form_widget(form.personnalMail) }}
-								{{ form_widget(form.personnalMailPrivacy) }}
-								<span class="help-block">{{ form_errors(form.personnalMail) }}</span>
-								<span class="help-block">{{ form_errors(form.personnalMailPrivacy) }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ 'user.admin.userCreate.is_student_label'|trans }}</label>
-							<div class="controls">
-								{{ form_widget(form.isStudent) }}
-								<span class="help-block">{{ 'user.admin.userCreate.is_student_desc'|trans }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">{{ 'user.admin.userCreate.is_staffutt_label'|trans }}</label>
-							<div class="controls">
-								{{ form_widget(form.isStaffUTT) }}
-								<span class="help-block">{{ 'user.admin.userCreate.is_staffutt_desc'|trans }}</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<div class="controls">
-								{{ form_rest(form) }}
+                        <div class="control-group">
+                            <label class="control-label">{{ form_label(form.studentId, 'user.admin.userCreate.studentId'|trans) }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.studentId) }}
+                                <span class="help-block">{{ form_errors(form.studentId) }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ form_label(form.phoneNumber, 'user.admin.userCreate.phoneNumber'|trans) }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.phoneNumber) }}
+                                {{ form_widget(form.phoneNumberPrivacy) }}
+                                <span class="help-block">{{ form_errors(form.phoneNumber) }}</span>
+                                <span class="help-block">{{ form_errors(form.phoneNumberPrivacy) }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ form_label(form.sex, 'user.admin.userCreate.sex'|trans) }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.sex) }}
+                                {{ form_widget(form.sexPrivacy) }}
+                                <span class="help-block">{{ form_errors(form.sex) }}</span>
+                                <span class="help-block">{{ form_errors(form.sexPrivacy) }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ form_label(form.nationality, 'user.admin.userCreate.nationality'|trans) }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.nationality) }}
+                                {{ form_widget(form.nationalityPrivacy) }}
+                                <span class="help-block">{{ form_errors(form.nationality) }}</span>
+                                <span class="help-block">{{ form_errors(form.nationalityPrivacy) }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ form_label(form.phoneNumber, 'user.admin.userCreate.address'|trans) }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.address) }}
+                                {{ form_widget(form.addressPrivacy) }}
+                                <span class="help-block">{{ form_errors(form.address) }}</span>
+                                <span class="help-block">{{ form_errors(form.addressPrivacy) }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ form_label(form.postalCode, 'user.admin.userCreate.postalCode'|trans) }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.postalCode) }}
+                                {{ form_widget(form.postalCodePrivacy) }}
+                                <span class="help-block">{{ form_errors(form.postalCode) }}</span>
+                                <span class="help-block">{{ form_errors(form.postalCodePrivacy) }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ form_label(form.city, 'user.admin.userCreate.city'|trans) }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.city) }}
+                                {{ form_widget(form.cityPrivacy) }}
+                                <span class="help-block">{{ form_errors(form.city) }}</span>
+                                <span class="help-block">{{ form_errors(form.cityPrivacy) }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ form_label(form.country, 'user.admin.userCreate.country'|trans) }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.country) }}
+                                {{ form_widget(form.countryPrivacy) }}
+                                <span class="help-block">{{ form_errors(form.country) }}</span>
+                                <span class="help-block">{{ form_errors(form.countryPrivacy) }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ form_label(form.birthday, 'user.admin.userCreate.birthday'|trans) }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.birthday) }}
+                                {{ form_widget(form.birthdayPrivacy) }}
+                                <span class="help-block">{{ form_errors(form.birthday) }}</span>
+                                <span class="help-block">{{ form_errors(form.birthdayPrivacy) }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ 'user.admin.userCreate.birthday_only_age_label'|trans }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.birthdayDisplayOnlyAge) }}
+                                <span class="help-block">{{ 'user.admin.userCreate.birthday_only_age_desc'|trans }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ form_label(form.personnalMail, 'user.admin.userCreate.personnalMail'|trans) }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.personnalMail) }}
+                                {{ form_widget(form.personnalMailPrivacy) }}
+                                <span class="help-block">{{ form_errors(form.personnalMail) }}</span>
+                                <span class="help-block">{{ form_errors(form.personnalMailPrivacy) }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ 'user.admin.userCreate.is_student_label'|trans }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.isStudent) }}
+                                <span class="help-block">{{ 'user.admin.userCreate.is_student_desc'|trans }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">{{ 'user.admin.userCreate.is_staffutt_label'|trans }}</label>
+                            <div class="controls">
+                                {{ form_widget(form.isStaffUTT) }}
+                                <span class="help-block">{{ 'user.admin.userCreate.is_staffutt_desc'|trans }}</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+                                {{ form_rest(form) }}
 
-								<button type="submit" class="btn">{{ 'user.admin.userCreate.submit'|trans }}</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</form>
-	</div>
+                                <button type="submit" class="btn">{{ 'user.admin.userCreate.submit'|trans }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 {% endblock %}

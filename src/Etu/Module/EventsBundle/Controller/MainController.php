@@ -3,9 +3,7 @@
 namespace Etu\Module\EventsBundle\Controller;
 
 use CalendR\Calendar;
-use CalendR\Period\Month;
 use CalendR\Period\Range;
-use CalendR\Period\Week;
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
@@ -30,7 +28,7 @@ class MainController extends Controller
         $availableCategories = Event::$categories;
         array_unshift($availableCategories, 'all');
 
-        if (! in_array($category, $availableCategories)) {
+        if (!in_array($category, $availableCategories)) {
             throw $this->createNotFoundException(sprintf('Invalid category "%s"', $category));
         }
 
@@ -56,14 +54,14 @@ class MainController extends Controller
         $start = $request->query->get('start');
         $end = $request->query->get('end');
 
-        if (! $start) {
+        if (!$start) {
             return new Response(json_encode(array(
                 'status' => 'error',
                 'message' => '"start" parameter is required',
             )));
         }
 
-        if (! $end) {
+        if (!$end) {
             return new Response(json_encode(array(
                 'status' => 'error',
                 'message' => '"end" parameter is required',
@@ -78,7 +76,7 @@ class MainController extends Controller
 
         /** @var \CalendR\Event\Collection\Basic $events */
         $events = $calendr->getEvents(new Range($start, $end), array(
-            'connected' => $this->isGranted('ROLE_EVENTS_INTERNAL')
+            'connected' => $this->isGranted('ROLE_EVENTS_INTERNAL'),
         ));
 
         /** @var array $json */
@@ -114,7 +112,7 @@ class MainController extends Controller
                 'url' => $this->generateUrl('events_view', array(
                     'id' => $event->getId(),
                     'slug' => StringManipulationExtension::slugify($event->getTitle()),
-                ))
+                )),
             );
         }
 
@@ -141,7 +139,7 @@ class MainController extends Controller
             ->getQuery()
             ->getOneOrNullResult();
 
-        if (! $event) {
+        if (!$event) {
             throw $this->createNotFoundException('Event #'.$id.' not found');
         }
 
@@ -150,7 +148,7 @@ class MainController extends Controller
         }
 
         if ($event->getPrivacy() == Event::PRIVACY_ORGAS && $this->getUser()->getMemberships()->count() <= 0) {
-            throw new AccessDeniedHttpException;
+            throw new AccessDeniedHttpException();
         }
         if ($event->getPrivacy() == Event::PRIVACY_MEMBERS) {
             $error = true;
@@ -161,13 +159,13 @@ class MainController extends Controller
                 }
             }
             if ($error) {
-                throw new AccessDeniedHttpException;
+                throw new AccessDeniedHttpException();
             }
         }
 
         if (StringManipulationExtension::slugify($event->getTitle()) != $slug) {
             return $this->redirect($this->generateUrl('events_view', array(
-                'id' => $id, 'slug' => StringManipulationExtension::slugify($event->getTitle())
+                'id' => $id, 'slug' => StringManipulationExtension::slugify($event->getTitle()),
             )), 301);
         }
 
@@ -234,13 +232,13 @@ class MainController extends Controller
             ->getQuery()
             ->getOneOrNullResult();
 
-        if (! $event) {
+        if (!$event) {
             throw $this->createNotFoundException('Event #'.$id.' not found');
         }
 
         if (StringManipulationExtension::slugify($event->getTitle()) != $slug) {
             return $this->redirect($this->generateUrl('events_view', array(
-                'id' => $id, 'slug' => StringManipulationExtension::slugify($event->getTitle())
+                'id' => $id, 'slug' => StringManipulationExtension::slugify($event->getTitle()),
             )), 301);
         }
 
@@ -287,10 +285,10 @@ class MainController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_EVENTS_ANSWER_POST');
 
-        if (! in_array($answer, array(Answer::ANSWER_YES, Answer::ANSWER_NO, Answer::ANSWER_PROBABLY))) {
+        if (!in_array($answer, array(Answer::ANSWER_YES, Answer::ANSWER_NO, Answer::ANSWER_PROBABLY))) {
             return new Response(json_encode(array(
                 'status' => 'error',
-                'message' => 'Invalid answer'
+                'message' => 'Invalid answer',
             )), 500);
         }
 
@@ -308,10 +306,10 @@ class MainController extends Controller
             ->getQuery()
             ->getOneOrNullResult();
 
-        if (! $event) {
+        if (!$event) {
             return new Response(json_encode(array(
                 'status' => 'error',
-                'message' => 'Event #'.$id.' not found'
+                'message' => 'Event #'.$id.' not found',
             )), 404);
         }
 
@@ -327,7 +325,7 @@ class MainController extends Controller
             ->getQuery()
             ->getOneOrNullResult();
 
-        if (! $userAnswer) {
+        if (!$userAnswer) {
             $userAnswer = new Answer($event, $this->getUser(), $answer);
         } else {
             $userAnswer->setAnswer($answer);
@@ -344,7 +342,7 @@ class MainController extends Controller
 
         return new Response(json_encode(array(
             'status' => 'success',
-            'message' => 'Ok'
+            'message' => 'Ok',
         )), 200);
     }
 
@@ -365,10 +363,8 @@ class MainController extends Controller
 
         /** @var \CalendR\Event\Collection\Basic $events */
         $events = $calendr->getEvents(new Range($start, $end), array(
-            'connected' => true // TODO add better security with private events
+            'connected' => true, // TODO add better security with private events
         ));
-
-
 
         $array = [];
         foreach ($events->all() as $event) {
@@ -397,6 +393,7 @@ class MainController extends Controller
                 break;
             }
         }
+
         return array(
             'events' => $array,
         );

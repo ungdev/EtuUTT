@@ -9,9 +9,10 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class ApiController extends Controller
 {
     /**
-     * @param array $data
-     * @param int $status
+     * @param array  $data
+     * @param int    $status
      * @param string $message
+     *
      * @return Response
      */
     protected function format($data = array(), $status = 200, $message = null)
@@ -24,7 +25,7 @@ abstract class ApiController extends Controller
      */
     protected function getAccessToken()
     {
-        if (! $this->getRequest()->attributes->get('_oauth_token')) {
+        if (!$this->getRequest()->attributes->get('_oauth_token')) {
             return false;
         }
 

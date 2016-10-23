@@ -3,53 +3,53 @@
 {% block title %}{{ 'error.other.title'|trans }}{% endblock %}
 
 {% block page %}
-	<section class="page">
-		<div class="container page-container">
+    <section class="page">
+        <div class="container page-container">
 
-			<h2 class="page-title source-sans-pro">
-				<img src="{{ asset('src/img/titles/flux.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+            <h2 class="page-title source-sans-pro">
+                <img src="{{ asset('src/img/titles/flux.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 
-				{{ block('title') }}
-			</h2>
+                {{ block('title') }}
+            </h2>
 
-			{% if message %}
-				<div class="page-alert-mobile alert alert-{{ message.type }} display-for-1024">
-					{{ message.message|trans }}
-				</div>
-			{% endif %}
+            {% if message %}
+                <div class="page-alert-mobile alert alert-{{ message.type }} display-for-1024">
+                    {{ message.message|trans }}
+                </div>
+            {% endif %}
 
-			<div class="content-error">
-				<img src="{{ asset('src/img/homer-suprised.png') }}" />
+            <div class="content-error">
+                <img src="{{ asset('src/img/homer-suprised.png') }}" />
 
-				<div class="error-text">
-					<h1 class="error-doh">{{ 'error.other.subtitle'|trans }}</h1>
+                <div class="error-text">
+                    <h1 class="error-doh">{{ 'error.other.subtitle'|trans }}</h1>
 
-					<h4>{{ 'error.other.content'|trans }}</h4>
-				</div>
+                    <h4>{{ 'error.other.content'|trans }}</h4>
+                </div>
 
-				<div class="clear"></div>
-			</div>
+                <div class="clear"></div>
+            </div>
 
-		</div>
-	</section>
+        </div>
+    </section>
 
-	<footer class="container footer-bottom">
-		<p>
-			<a href="#" class="footer-link change-locale">
-				{{ 'base.footer.change_locale'|trans }}
-			</a>
-			<a href="" id="next-change-locale-link" class="footer-link">
-				{{ 'base.footer.legalities'|trans }}
-			</a>
-			<a href="" class="footer-link">
-				{{ 'base.footer.help_us'|trans }}
-			</a>
-			<a href="" class="footer-link">
-				{{ 'base.footer.developers'|trans }}
-			</a>
-			<span class="pull-right">
-				{{ 'base.footer.1col_text'|trans|raw }}
-			</span>
-		</p>
-	</footer>
+    <footer class="container footer-bottom">
+        <p>
+            <a href="#" class="footer-link change-locale">
+                {{ 'base.footer.change_locale'|trans }}
+            </a>
+            <a href="" id="next-change-locale-link" class="footer-link">
+                {{ 'base.footer.legalities'|trans }}
+            </a>
+            <a href="" class="footer-link">
+                {{ 'base.footer.help_us'|trans }}
+            </a>
+            <a href="" class="footer-link">
+                {{ 'base.footer.developers'|trans }}
+            </a>
+            <span class="pull-right">
+                {{ 'base.footer.1col_text'|trans|raw }}
+            </span>
+        </p>
+    </footer>
 {% endblock %}

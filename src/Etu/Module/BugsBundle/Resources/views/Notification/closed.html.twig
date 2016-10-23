@@ -1,24 +1,24 @@
 
 <a class="notif{% if notif.isSuper %} super-notif{% elseif notif.isNew(app.user.lastVisitHome) %} notif-new{% endif %}"
    href="{{ path('bugs_view', {'id': notif.firstEntity.id, 'slug': notif.firstEntity.title|slugify}) }}">
-	<img src="{{ asset('src/img/icons-big/bug.png') }}" />
+    <img src="{{ asset('src/img/icons-big/bug.png') }}" />
 
-	<h4 class="notif-title">
-		{% if notif.firstEntity.assignee %}
-			{{ 'bugs.notifs.closed.by'|trans({
-				'%bugName%': highlight_notif_data(notif.firstEntity.title),
-				'%userName%': highlight_notif_data(notif.firstEntity.assignee.fullName)
-			})|raw }}
-		{% else %}
-			{{ 'bugs.notifs.closed.anyone'|trans({
-				'%bugName%': highlight_notif_data(notif.firstEntity.title)
-			})|raw }}
-		{% endif %}
-	</h4>
+    <h4 class="notif-title">
+        {% if notif.firstEntity.assignee %}
+            {{ 'bugs.notifs.closed.by'|trans({
+                '%bugName%': highlight_notif_data(notif.firstEntity.title),
+                '%userName%': highlight_notif_data(notif.firstEntity.assignee.fullName)
+            })|raw }}
+        {% else %}
+            {{ 'bugs.notifs.closed.anyone'|trans({
+                '%bugName%': highlight_notif_data(notif.firstEntity.title)
+            })|raw }}
+        {% endif %}
+    </h4>
 
-	<div class="notif-date">
-		{{ time_diff(notif.date)|ucfirst }}
-	</div>
+    <div class="notif-date">
+        {{ time_diff(notif.date)|ucfirst }}
+    </div>
 
-	<div class="clear"></div>
+    <div class="clear"></div>
 </a>

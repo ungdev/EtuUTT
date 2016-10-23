@@ -23,8 +23,9 @@ class DataFormatter
     /**
      * @param $request
      * @param array $data
-     * @param int $status
-     * @param null $message
+     * @param int   $status
+     * @param null  $message
+     *
      * @return Response
      */
     public function format($request, $data = array(), $status = 200, $message = null)
@@ -33,20 +34,20 @@ class DataFormatter
             'http' => [ // @TODO: remove this when everything is OAuth2 compatible
                 'status' => $status,
                 'message' => ($message) ? $message : Response::$statusTexts[$status],
-                '_note' => 'http and response fields are deprecated'
+                '_note' => 'http and response fields are deprecated',
             ],
-            'response' => $data
+            'response' => $data,
         ]);
 
         $format = 'json';
 
         if ($request->query->has('format')) {
             $format = $request->query->get('format');
-        } else if ($request->headers->has('format')) {
+        } elseif ($request->headers->has('format')) {
             $format = $request->headers->get('format');
         }
 
-        if (! in_array($format, ['xml', 'json'])) {
+        if (!in_array($format, ['xml', 'json'])) {
             $format = 'json';
         }
 

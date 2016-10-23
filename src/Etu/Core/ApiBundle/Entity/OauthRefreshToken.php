@@ -13,7 +13,7 @@ use Etu\Core\UserBundle\Entity\User;
 class OauthRefreshToken
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -22,7 +22,7 @@ class OauthRefreshToken
     private $id;
 
     /**
-     * @var OauthClient $client
+     * @var OauthClient
      *
      * @ORM\ManyToOne(targetEntity="OauthClient")
      * @ORM\JoinColumn()
@@ -30,7 +30,7 @@ class OauthRefreshToken
     private $client;
 
     /**
-     * @var User $user
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
      * @ORM\JoinColumn()
@@ -59,7 +59,7 @@ class OauthRefreshToken
     private $expireAt;
 
     /**
-     * @var OauthScope[] $scopes
+     * @var OauthScope[]
      *
      * @ORM\ManyToMany(targetEntity="OauthScope")
      * @ORM\JoinTable(name="oauth_refresh_tokens_scopes")
@@ -67,7 +67,7 @@ class OauthRefreshToken
     private $scopes;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -83,11 +83,11 @@ class OauthRefreshToken
     {
         return $this->token = md5(uniqid(time(), true));
     }
-    
+
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -95,22 +95,23 @@ class OauthRefreshToken
     }
 
     /**
-     * Set token
+     * Set token.
      *
      * @param string $token
+     *
      * @return OauthRefreshToken
      */
     public function setToken($token)
     {
         $this->token = $token;
-    
+
         return $this;
     }
 
     /**
-     * Get token
+     * Get token.
      *
-     * @return string 
+     * @return string
      */
     public function getToken()
     {
@@ -118,22 +119,23 @@ class OauthRefreshToken
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
+     *
      * @return OauthRefreshToken
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -141,22 +143,23 @@ class OauthRefreshToken
     }
 
     /**
-     * Set expireAt
+     * Set expireAt.
      *
      * @param \DateTime $expireAt
+     *
      * @return OauthRefreshToken
      */
     public function setExpireAt($expireAt)
     {
         $this->expireAt = $expireAt;
-    
+
         return $this;
     }
 
     /**
-     * Get expireAt
+     * Get expireAt.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getExpireAt()
     {
@@ -164,20 +167,21 @@ class OauthRefreshToken
     }
 
     /**
-     * Set client
+     * Set client.
      *
      * @param OauthClient $client
+     *
      * @return OauthRefreshToken
      */
     public function setClient(OauthClient $client = null)
     {
         $this->client = $client;
-    
+
         return $this;
     }
 
     /**
-     * Get client
+     * Get client.
      *
      * @return OauthClient
      */
@@ -187,20 +191,21 @@ class OauthRefreshToken
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param User $user
+     *
      * @return OauthRefreshToken
      */
     public function setUser(User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return User
      */
@@ -210,20 +215,21 @@ class OauthRefreshToken
     }
 
     /**
-     * Add scopes
+     * Add scopes.
      *
      * @param OauthScope $scopes
+     *
      * @return OauthRefreshToken
      */
     public function addScope(OauthScope $scopes)
     {
         $this->scopes[] = $scopes;
-    
+
         return $this;
     }
 
     /**
-     * Remove scopes
+     * Remove scopes.
      *
      * @param OauthScope $scopes
      */
@@ -233,9 +239,9 @@ class OauthRefreshToken
     }
 
     /**
-     * Get scopes
+     * Get scopes.
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getScopes()
     {

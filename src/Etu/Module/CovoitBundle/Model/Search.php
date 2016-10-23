@@ -26,7 +26,7 @@ class Search
     public $date;
 
     /**
-     * @var boolean
+     * @var bool
      * @Assert\Type(type="boolean")
      */
     public $dateBeforeAfter;
@@ -38,7 +38,7 @@ class Search
     public $priceMax;
 
     /**
-     * @var integer
+     * @var int
      * @Assert\Type(type="integer")
      */
     public $placesLeft;
@@ -62,7 +62,7 @@ class Search
     public $keywords;
 
     /**
-     * @var boolean
+     * @var bool
      * @Assert\Type(type="boolean")
      */
     public $olds;

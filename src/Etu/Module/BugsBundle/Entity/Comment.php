@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Etu\Core\UserBundle\Entity\User;
 
 /**
- * Comment
+ * Comment.
  *
  * @ORM\Table(name="etu_issues_comments")
  * @ORM\Entity()
@@ -17,7 +17,7 @@ use Etu\Core\UserBundle\Entity\User;
 class Comment
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -25,21 +25,21 @@ class Comment
      */
     protected $id;
 
-	/**
-	 * @var User $user
-	 *
-	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
-	 * @ORM\JoinColumn()
-	 */
-	protected $user;
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
+     * @ORM\JoinColumn()
+     */
+    protected $user;
 
-	/**
-	 * @var Issue $user
-	 *
-	 * @ORM\ManyToOne(targetEntity="Issue")
-	 * @ORM\JoinColumn()
-	 */
-	protected $issue;
+    /**
+     * @var Issue
+     *
+     * @ORM\ManyToOne(targetEntity="Issue")
+     * @ORM\JoinColumn()
+     */
+    protected $issue;
 
     /**
      * @var string
@@ -58,34 +58,34 @@ class Comment
      */
     protected $createdAt;
 
-	/**
-	 * @var \DateTime
-	 *
-	 * @Gedmo\Timestampable(on="update")
-	 * @ORM\Column(type="datetime")
-	 */
-	protected $updatedAt;
-
-	/**
-	 * @var \DateTime $deletedAt
-	 *
-	 * @ORM\Column(type="datetime", nullable = true)
-	 */
-	protected $deletedAt;
-
-	/**
-	 * Is this comment and update of the issue or a real user comment?
-	 *
-	 * @var boolean
-	 *
-	 * @ORM\Column(type="boolean")
-	 */
-	protected $isStateUpdate = false;
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+     */
+    protected $updatedAt;
 
     /**
-     * Get id
+     * @var \DateTime
      *
-     * @return integer
+     * @ORM\Column(type="datetime", nullable = true)
+     */
+    protected $deletedAt;
+
+    /**
+     * Is this comment and update of the issue or a real user comment?
+     *
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $isStateUpdate = false;
+
+    /**
+     * Get id.
+     *
+     * @return int
      */
     public function getId()
     {
@@ -93,9 +93,10 @@ class Comment
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param \stdClass $user
+     *
      * @return Comment
      */
     public function setUser($user)
@@ -106,7 +107,7 @@ class Comment
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return \Etu\Core\UserBundle\Entity\User
      */
@@ -115,29 +116,31 @@ class Comment
         return $this->user;
     }
 
-	/**
-	 * @return \Etu\Module\BugsBundle\Entity\Issue
-	 */
-	public function getIssue()
-	{
-		return $this->issue;
-	}
-
-	/**
-	 * @param \Etu\Module\BugsBundle\Entity\Issue $issue
-	 * @return Comment
-	 */
-	public function setIssue($issue)
-	{
-		$this->issue = $issue;
-
-		return $this;
-	}
+    /**
+     * @return \Etu\Module\BugsBundle\Entity\Issue
+     */
+    public function getIssue()
+    {
+        return $this->issue;
+    }
 
     /**
-     * Set body
+     * @param \Etu\Module\BugsBundle\Entity\Issue $issue
+     *
+     * @return Comment
+     */
+    public function setIssue($issue)
+    {
+        $this->issue = $issue;
+
+        return $this;
+    }
+
+    /**
+     * Set body.
      *
      * @param string $body
+     *
      * @return Comment
      */
     public function setBody($body)
@@ -148,7 +151,7 @@ class Comment
     }
 
     /**
-     * Get body
+     * Get body.
      *
      * @return string
      */
@@ -158,9 +161,10 @@ class Comment
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
+     *
      * @return Comment
      */
     public function setCreatedAt($createdAt)
@@ -171,7 +175,7 @@ class Comment
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -181,9 +185,10 @@ class Comment
     }
 
     /**
-     * Set updatedAt
+     * Set updatedAt.
      *
      * @param \DateTime $updatedAt
+     *
      * @return Comment
      */
     public function setUpdatedAt($updatedAt)
@@ -194,7 +199,7 @@ class Comment
     }
 
     /**
-     * Get updatedAt
+     * Get updatedAt.
      *
      * @return \DateTime
      */
@@ -203,45 +208,47 @@ class Comment
         return $this->updatedAt;
     }
 
-	/**
-	 * @param boolean $isStateUpdate
-	 * @return Comment
-	 */
-	public function setIsStateUpdate($isStateUpdate)
-	{
-		$this->isStateUpdate = $isStateUpdate;
+    /**
+     * @param bool $isStateUpdate
+     *
+     * @return Comment
+     */
+    public function setIsStateUpdate($isStateUpdate)
+    {
+        $this->isStateUpdate = $isStateUpdate;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @return boolean
-	 */
-	public function getIsStateUpdate()
-	{
-		return $this->isStateUpdate;
-	}
+    /**
+     * @return bool
+     */
+    public function getIsStateUpdate()
+    {
+        return $this->isStateUpdate;
+    }
 
-	/**
-	 * Set deletedAt
-	 *
-	 * @param \DateTime $deletedAt
-	 * @return $this
-	 */
-	public function setDeletedAt($deletedAt)
-	{
-		$this->deletedAt = $deletedAt;
+    /**
+     * Set deletedAt.
+     *
+     * @param \DateTime $deletedAt
+     *
+     * @return $this
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Get deletedAt
-	 *
-	 * @return \DateTime
-	 */
-	public function getDeletedAt()
-	{
-		return $this->deletedAt;
-	}
+    /**
+     * Get deletedAt.
+     *
+     * @return \DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
 }

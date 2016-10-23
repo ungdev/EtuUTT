@@ -14,6 +14,7 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('etu_wiki');
+
         return $treeBuilder;
     }
 }

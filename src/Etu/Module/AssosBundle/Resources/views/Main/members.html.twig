@@ -3,124 +3,124 @@
 {% block title %}{{ 'assos.main.members.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/assos.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('src/img/titles/assos.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block sidebar %}
-	{% if is_granted('ROLE_CORE_SUBSCRIBE') %}
-		{{ render_subscribe_button('orga', orga.id) }}
-	{% endif %}
+    {% if is_granted('ROLE_CORE_SUBSCRIBE') %}
+        {{ render_subscribe_button('orga', orga.id) }}
+    {% endif %}
 
-	{{ parent() }}
+    {{ parent() }}
 {% endblock %}
 
 {% block content %}
-	<ul class="nav nav-tabs page-tabs">
-		<li>
-			<a href="{{ path('orgas_index') }}">
-				<i class="icon-chevron-left"></i>
-				{{ 'assos.main.view.back'|trans }}
-			</a>
-		</li>
-		<li class="pull-right active page-tabs-resolved-active">
-			<a href="{{ path('orgas_members', {'login': orga.login}) }}">
-				{{ 'assos.main.menu.members'|trans }}
-			</a>
-		</li>
-		<li class="pull-right">
-			<a href="{{ path('orgas_view', {'login': orga.login}) }}">
-				{{ 'assos.main.menu.description'|trans }}
-			</a>
-		</li>
-	</ul>
+    <ul class="nav nav-tabs page-tabs">
+        <li>
+            <a href="{{ path('orgas_index') }}">
+                <i class="icon-chevron-left"></i>
+                {{ 'assos.main.view.back'|trans }}
+            </a>
+        </li>
+        <li class="pull-right active page-tabs-resolved-active">
+            <a href="{{ path('orgas_members', {'login': orga.login}) }}">
+                {{ 'assos.main.menu.members'|trans }}
+            </a>
+        </li>
+        <li class="pull-right">
+            <a href="{{ path('orgas_view', {'login': orga.login}) }}">
+                {{ 'assos.main.menu.description'|trans }}
+            </a>
+        </li>
+    </ul>
 
-	<div class="padding20-all">
+    <div class="padding20-all">
 
-		<div class="row-fluid">
-			<div class="span3">
-				<div class="profileEdit-avatar">
-					<img src="{{ asset('uploads/logos/'~orga.logo) }}" alt="{{ orga.name }}" title="{{ orga.name }}" />
-				</div>
+        <div class="row-fluid">
+            <div class="span3">
+                <div class="profileEdit-avatar">
+                    <img src="{{ asset('uploads/logos/'~orga.logo) }}" alt="{{ orga.name }}" title="{{ orga.name }}" />
+                </div>
 
-				<hr />
+                <hr />
 
-				<p>
-					<strong>{{ 'assos.main.members.name'|trans }}</strong><br />
-					{{ orga.name }}
-				</p>
+                <p>
+                    <strong>{{ 'assos.main.members.name'|trans }}</strong><br />
+                    {{ orga.name }}
+                </p>
 
-				{% if orga.president %}
-					<p>
-						<strong>{{ 'assos.main.members.president'|trans }}</strong><br />
-						<a href="{{ path('user_view', {'login': orga.president.login}) }}">
-							{{ orga.president.fullName }}
-						</a>
-					</p>
-				{% endif %}
+                {% if orga.president %}
+                    <p>
+                        <strong>{{ 'assos.main.members.president'|trans }}</strong><br />
+                        <a href="{{ path('user_view', {'login': orga.president.login}) }}">
+                            {{ orga.president.fullName }}
+                        </a>
+                    </p>
+                {% endif %}
 
-				<p>
-					<strong>{{ 'assos.main.members.contactMail'|trans }}</strong><br />
-					<a href="mailto:{{ orga.contactMail }}">{{ orga.contactMail }}</a>
-				</p>
+                <p>
+                    <strong>{{ 'assos.main.members.contactMail'|trans }}</strong><br />
+                    <a href="mailto:{{ orga.contactMail }}">{{ orga.contactMail }}</a>
+                </p>
 
-				{% if orga.website %}
-					<p>
-						<strong>{{ 'assos.main.members.website'|trans }}</strong><br />
-						<a href="{{ orga.website }}">{{ orga.website }}</a>
-					</p>
-				{% endif %}
+                {% if orga.website %}
+                    <p>
+                        <strong>{{ 'assos.main.members.website'|trans }}</strong><br />
+                        <a href="{{ orga.website }}">{{ orga.website }}</a>
+                    </p>
+                {% endif %}
 
-				{% if orga.contactPhone %}
-					<p>
-						<strong>{{ 'assos.main.members.contactPhone'|trans }}</strong><br />
-						{{ orga.contactPhone }}
-					</p>
-				{% endif %}
-			</div>
-			<div class="span9">
-				<h4>{{ 'assos.main.members.office'|trans }}</h4>
+                {% if orga.contactPhone %}
+                    <p>
+                        <strong>{{ 'assos.main.members.contactPhone'|trans }}</strong><br />
+                        {{ orga.contactPhone }}
+                    </p>
+                {% endif %}
+            </div>
+            <div class="span9">
+                <h4>{{ 'assos.main.members.office'|trans }}</h4>
 
-				<ul class="asso-members">
-					{% for member in office %}
-						<li class="asso-members-item asso-members-item-office">
-							<a href="{{ path('user_view', {'login': member.user.login}) }}">
-								<img src="{{ asset('uploads/photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
-								<h5>{{ member.user.fullName }}</h5>
-								<p>
-									{{ ('user.orga.role.'~member.role)|trans }}<br />
-									{{ member.user.branch~member.user.niveau }} {{ member.user.filiere }}
-								</p>
+                <ul class="asso-members">
+                    {% for member in office %}
+                        <li class="asso-members-item asso-members-item-office">
+                            <a href="{{ path('user_view', {'login': member.user.login}) }}">
+                                <img src="{{ asset('uploads/photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
+                                <h5>{{ member.user.fullName }}</h5>
+                                <p>
+                                    {{ ('user.orga.role.'~member.role)|trans }}<br />
+                                    {{ member.user.branch~member.user.niveau }} {{ member.user.filiere }}
+                                </p>
 
-								<div class="clear"></div>
-							</a>
-						</li>
-					{% endfor %}
-				</ul>
+                                <div class="clear"></div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
 
-				<div class="clear"></div>
+                <div class="clear"></div>
 
-				<hr />
+                <hr />
 
-				<h4>{{ 'assos.main.members.members'|trans }}</h4>
+                <h4>{{ 'assos.main.members.members'|trans }}</h4>
 
-				<ul class="asso-members">
-					{% for member in members %}
-						<li class="asso-members-item asso-members-item-member">
-							<a href="{{ path('user_view', {'login': member.user.login}) }}">
-								<img src="{{ asset('uploads/photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
-								<h5>{{ member.user.fullName }}</h5>
-								<p>
-									{{ member.user.branch~member.user.niveau }} {{ member.user.filiere }}
-								</p>
+                <ul class="asso-members">
+                    {% for member in members %}
+                        <li class="asso-members-item asso-members-item-member">
+                            <a href="{{ path('user_view', {'login': member.user.login}) }}">
+                                <img src="{{ asset('uploads/photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
+                                <h5>{{ member.user.fullName }}</h5>
+                                <p>
+                                    {{ member.user.branch~member.user.niveau }} {{ member.user.filiere }}
+                                </p>
 
-								<div class="clear"></div>
-							</a>
-						</li>
-					{% endfor %}
-				</ul>
+                                <div class="clear"></div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
 
-				<div class="clear"></div>
-			</div>
-		</div>
-	</div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

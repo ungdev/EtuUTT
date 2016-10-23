@@ -3,65 +3,65 @@
 {% block title %}{{ 'uvs.main.courses.title'|trans({'%uv%': uv.code}) }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/uvs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('src/img/titles/uvs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block sidebar %}
-	{{ render_subscribe_button('uv', uv.id) }}
-	{{ parent() }}
+    {{ render_subscribe_button('uv', uv.id) }}
+    {{ parent() }}
 {% endblock %}
 
 {% block content %}
-	<ul class="nav nav-tabs page-tabs">
-		<li>
-			<a href="{{ path('uvs_view', {'slug': uv.slug, 'name': uv.name|slugify}) }}">
-				<img src="{{ asset('src/img/uvs/'~uv.category~'.png') }}"
-					 class="uvs-list-icon"
-					 alt="({{ uv.category|upper }})"
-					 title="{{ uv.category|upper }}" />
-				{{ uv.code }} - {{ uv.name }}
-			</a>
-		</li>
-	</ul>
+    <ul class="nav nav-tabs page-tabs">
+        <li>
+            <a href="{{ path('uvs_view', {'slug': uv.slug, 'name': uv.name|slugify}) }}">
+                <img src="{{ asset('src/img/uvs/'~uv.category~'.png') }}"
+                     class="uvs-list-icon"
+                     alt="({{ uv.category|upper }})"
+                     title="{{ uv.category|upper }}" />
+                {{ uv.code }} - {{ uv.name }}
+            </a>
+        </li>
+    </ul>
 
-	<div class="padding20-sides">
-		<div class="row-fluid course-courses hidden-phone">
-			<div class="span2 day">
-				{{ 'user.schedule.days.monday'|trans }}
-			</div>
-			<div class="span2 day">
-				{{ 'user.schedule.days.tuesday'|trans }}
-			</div>
-			<div class="span2 day">
-				{{ 'user.schedule.days.wednesday'|trans }}
-			</div>
-			<div class="span2 day">
-				{{ 'user.schedule.days.thursday'|trans }}
-			</div>
-			<div class="span2 day">
-				{{ 'user.schedule.days.friday'|trans }}
-			</div>
-			<div class="span2 day">
-				{{ 'user.schedule.days.sathurday'|trans }}
-			</div>
-		</div>
+    <div class="padding20-sides">
+        <div class="row-fluid course-courses hidden-phone">
+            <div class="span2 day">
+                {{ 'user.schedule.days.monday'|trans }}
+            </div>
+            <div class="span2 day">
+                {{ 'user.schedule.days.tuesday'|trans }}
+            </div>
+            <div class="span2 day">
+                {{ 'user.schedule.days.wednesday'|trans }}
+            </div>
+            <div class="span2 day">
+                {{ 'user.schedule.days.thursday'|trans }}
+            </div>
+            <div class="span2 day">
+                {{ 'user.schedule.days.friday'|trans }}
+            </div>
+            <div class="span2 day">
+                {{ 'user.schedule.days.sathurday'|trans }}
+            </div>
+        </div>
 
-		<div class="clear"></div>
+        <div class="clear"></div>
 
-		<div class="row-fluid course-courses">
-			{% for day, dayCourses in courses %}
-				<div class="span2">
-					<ul>
-						{% for course in dayCourses %}
-							<li class="course">
-								<a href="{{ path('schedule_course', {'id': course.id}) }}">
-								<span class="name">{{ course.type }} - {{ course.room }}</span></a><br />
-								<span class="hours">{{ course.start }} - {{ course.end }}</span>
-							</li>
-						{% endfor %}
-					</ul>
-				</div>
-			{% endfor %}
-		</div>
-	</div>
+        <div class="row-fluid course-courses">
+            {% for day, dayCourses in courses %}
+                <div class="span2">
+                    <ul>
+                        {% for course in dayCourses %}
+                            <li class="course">
+                                <a href="{{ path('schedule_course', {'id': course.id}) }}">
+                                <span class="name">{{ course.type }} - {{ course.room }}</span></a><br />
+                                <span class="hours">{{ course.start }} - {{ course.end }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

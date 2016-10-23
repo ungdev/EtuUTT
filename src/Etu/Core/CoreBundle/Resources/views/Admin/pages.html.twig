@@ -3,57 +3,57 @@
 {% block title %}{{ 'core.admin.pages.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('src/img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
-	<div class="padding20-all">
-		<table class="table table-hover">
-			<thead>
-			<tr>
-				<th style="width: 50px;" class="hidden-phone">#</th>
-				<th style="width: 50%;">{{ 'core.admin.pages.name'|trans }}</th>
-				<th>{{ 'core.admin.pages.actions'|trans }}</th>
-			</tr>
-			</thead>
-			<tbody>
-			{% for key, page in pages %}
-				<tr>
-					<td class="hidden-phone">{{ key + 1 }}</td>
-					<td>
-						<a href="{{ path('page_view', {'slug': page.slug}) }}">
-							{{ page.title }}
-						</a>
-					</td>
-					<td>
-						<div class="hidden-phone">
-							<a href="{{ path('admin_page_edit', {'id': page.id}) }}" class="btn">
-								<i class="icon-edit"></i> {{ 'core.admin.pages.edit'|trans }}
-							</a>
-							<a href="{{ path('admin_page_delete', {'id': page.id}) }}" class="btn">
-								<i class="icon-remove"></i> {{ 'core.admin.pages.delete'|trans }}
-							</a>
-						</div>
-						<div class="visible-phone">
-							<a href="{{ path('admin_page_edit', {'id': page.id}) }}" class="btn">
-								<i class="icon-edit"></i>
-							</a>
-							<a href="{{ path('admin_page_delete', {'id': page.id}) }}" class="btn">
-								<i class="icon-remove"></i>
-							</a>
-						</div>
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="3">{{ 'core.admin.pages.no_page'|trans }}</td>
-				</tr>
-			{% endfor %}
-			</tbody>
-		</table>
+    <div class="padding20-all">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th style="width: 50px;" class="hidden-phone">#</th>
+                <th style="width: 50%;">{{ 'core.admin.pages.name'|trans }}</th>
+                <th>{{ 'core.admin.pages.actions'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for key, page in pages %}
+                <tr>
+                    <td class="hidden-phone">{{ key + 1 }}</td>
+                    <td>
+                        <a href="{{ path('page_view', {'slug': page.slug}) }}">
+                            {{ page.title }}
+                        </a>
+                    </td>
+                    <td>
+                        <div class="hidden-phone">
+                            <a href="{{ path('admin_page_edit', {'id': page.id}) }}" class="btn">
+                                <i class="icon-edit"></i> {{ 'core.admin.pages.edit'|trans }}
+                            </a>
+                            <a href="{{ path('admin_page_delete', {'id': page.id}) }}" class="btn">
+                                <i class="icon-remove"></i> {{ 'core.admin.pages.delete'|trans }}
+                            </a>
+                        </div>
+                        <div class="visible-phone">
+                            <a href="{{ path('admin_page_edit', {'id': page.id}) }}" class="btn">
+                                <i class="icon-edit"></i>
+                            </a>
+                            <a href="{{ path('admin_page_delete', {'id': page.id}) }}" class="btn">
+                                <i class="icon-remove"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">{{ 'core.admin.pages.no_page'|trans }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-		<a href="{{ path('admin_page_create') }}" class="btn">
-			<i class="icon-plus"></i> {{ 'core.admin.pages.create'|trans }}
-		</a>
-	</div>
+        <a href="{{ path('admin_page_create') }}" class="btn">
+            <i class="icon-plus"></i> {{ 'core.admin.pages.create'|trans }}
+        </a>
+    </div>
 {% endblock %}

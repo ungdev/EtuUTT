@@ -23,68 +23,68 @@ class Process
                 'firstName' => '',
                 'lastName' => '',
                 'email' => '',
-            ]
+            ],
         ];
 
         $correct = false;
 
-        while (! $correct) {
+        while (!$correct) {
             /*
              * Database
              */
             echo " Database parameters:\n\n";
 
             // Driver
-            echo "    Driver [pdo_mysql]: ";
+            echo '    Driver [pdo_mysql]: ';
 
             $dbDriver = self::prompt();
 
-            if (! empty($dbHost)) {
+            if (!empty($dbHost)) {
                 $config['database']['driver'] = $dbDriver;
             }
 
             // Host
-            echo "    Host [127.0.0.1]: ";
+            echo '    Host [127.0.0.1]: ';
 
             $dbHost = self::prompt();
 
-            if (! empty($dbHost)) {
+            if (!empty($dbHost)) {
                 $config['database']['host'] = $dbHost;
             }
 
             // Port
-            echo "    Port [3306]: ";
+            echo '    Port [3306]: ';
 
             $dbPort = self::prompt();
 
-            if (! empty($dbPort)) {
+            if (!empty($dbPort)) {
                 $config['database']['port'] = $dbPort;
             }
 
             // Name
-            echo "    Database name [etuutt]: ";
+            echo '    Database name [etuutt]: ';
 
             $dbName = self::prompt();
 
-            if (! empty($dbName)) {
+            if (!empty($dbName)) {
                 $config['database']['name'] = $dbName;
             }
 
             // User
-            echo "    Username [root]: ";
+            echo '    Username [root]: ';
 
             $dbUser = self::prompt();
 
-            if (! empty($dbUser)) {
+            if (!empty($dbUser)) {
                 $config['database']['user'] = $dbUser;
             }
 
             // Password
-            echo "    Password []: ";
+            echo '    Password []: ';
 
             $dbPass = self::prompt();
 
-            if (! empty($dbPass)) {
+            if (!empty($dbPass)) {
                 $config['database']['pass'] = $dbPass;
             }
 
@@ -95,7 +95,7 @@ class Process
 
             // User
             do {
-                echo "    Login: ";
+                echo '    Login: ';
                 $fuLogin = self::prompt();
             } while (empty($fuLogin));
 
@@ -103,7 +103,7 @@ class Process
 
             // Password
             do {
-                echo "    Password: ";
+                echo '    Password: ';
                 $fuPassword = self::prompt();
             } while (empty($fuPassword));
 
@@ -111,7 +111,7 @@ class Process
 
             // First name
             do {
-                echo "    First name: ";
+                echo '    First name: ';
                 $fuFirstName = self::prompt();
             } while (empty($fuFirstName));
 
@@ -119,7 +119,7 @@ class Process
 
             // Last name
             do {
-                echo "    Last name: ";
+                echo '    Last name: ';
                 $fuLastName = self::prompt();
             } while (empty($fuLastName));
 
@@ -127,7 +127,7 @@ class Process
 
             // Last name
             do {
-                echo "    Public e-mail: ";
+                echo '    Public e-mail: ';
                 $fuMail = self::prompt();
             } while (empty($fuMail));
 
@@ -140,7 +140,7 @@ class Process
 
             $correct = (self::prompt() != 'n');
 
-            if (! $correct) {
+            if (!$correct) {
                 echo "\n";
             }
         }
@@ -148,7 +148,7 @@ class Process
         /*
          * Generate secret
          */
-        $config['secret'] = md5(time() . uniqid() . $config['first_user']['password']);
+        $config['secret'] = md5(time().uniqid().$config['first_user']['password']);
 
         return $config;
     }
@@ -160,7 +160,7 @@ class Process
 
     public static function requireDependencies($rootDir)
     {
-        require $rootDir . '/vendor/autoload.php';
+        require $rootDir.'/vendor/autoload.php';
     }
 
     public static function clearCache()
@@ -170,7 +170,7 @@ class Process
 
     public static function buildConfig($config, $rootDir)
     {
-        $dist = Yaml::parse($rootDir . '/app/config/parameters.yml.dist');
+        $dist = Yaml::parse($rootDir.'/app/config/parameters.yml.dist');
 
         $dist['parameters']['database_driver'] = $config['database']['driver'];
         $dist['parameters']['database_host'] = $config['database']['host'];
@@ -180,44 +180,44 @@ class Process
         $dist['parameters']['database_password'] = $config['database']['pass'];
         $dist['parameters']['secret'] = $config['secret'];
 
-        file_put_contents($rootDir . '/app/config/parameters.yml', Yaml::dump($dist));
+        file_put_contents($rootDir.'/app/config/parameters.yml', Yaml::dump($dist));
     }
 
     public static function buildDefaultFiles($rootDir)
     {
-        $webDir = $rootDir . '/web';
+        $webDir = $rootDir.'/web';
 
-        self::recursiveCopy($webDir . '/uploads.dist', $webDir . '/uploads');
+        self::recursiveCopy($webDir.'/uploads.dist', $webDir.'/uploads');
 
-        copy($webDir . '/app.php.dist',         $webDir . '/app.php');
-        copy($webDir . '/etu_dev.php.dist',     $webDir . '/etu_dev.php');
+        copy($webDir.'/app.php.dist',         $webDir.'/app.php');
+        copy($webDir.'/etu_dev.php.dist',     $webDir.'/etu_dev.php');
 
         echo "Done\n";
     }
 
     public static function changePermissions($rootDir)
     {
-        $appDir = $rootDir . '/app';
-        $webDir = $rootDir . '/web';
+        $appDir = $rootDir.'/app';
+        $webDir = $rootDir.'/web';
 
         // Cache
-        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($appDir . '/cache'));
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($appDir.'/cache'));
 
-        foreach($iterator as $item) {
+        foreach ($iterator as $item) {
             chmod($item, 0777);
         }
 
         // Logs
-        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($appDir . '/logs'));
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($appDir.'/logs'));
 
-        foreach($iterator as $item) {
+        foreach ($iterator as $item) {
             chmod($item, 0777);
         }
 
         // Uploads
-        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($webDir . '/uploads'));
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($webDir.'/uploads'));
 
-        foreach($iterator as $item) {
+        foreach ($iterator as $item) {
             chmod($item, 0777);
         }
 
@@ -242,7 +242,7 @@ class Process
     {
         echo "Creating first user ...\n";
         passthru(sprintf(
-            'php app/console etu:users:create --env=dev --login="%s" --firstName="%s" ' .
+            'php app/console etu:users:create --env=dev --login="%s" --firstName="%s" '.
             '--lastName="%s" --password="%s" --email="%s"',
             $config['first_user']['login'],
             $config['first_user']['firstName'],
@@ -265,10 +265,8 @@ class Process
         passthru('php app/console assetic:dump --env=dev');
     }
 
-
-
-
-    private static function recursiveCopy($source, $destination) {
+    private static function recursiveCopy($source, $destination)
+    {
         if (is_dir($source)) {
             @mkdir($destination);
             $directory = dir($source);
@@ -278,14 +276,14 @@ class Process
                     continue;
                 }
 
-                $pathDir = $source . '/' . $readdirectory;
+                $pathDir = $source.'/'.$readdirectory;
 
                 if (is_dir($pathDir)) {
-                    self::recursiveCopy( $pathDir, $destination . '/' . $readdirectory );
+                    self::recursiveCopy($pathDir, $destination.'/'.$readdirectory);
                     continue;
                 }
 
-                copy($pathDir, $destination . '/' . $readdirectory);
+                copy($pathDir, $destination.'/'.$readdirectory);
             }
 
             $directory->close();

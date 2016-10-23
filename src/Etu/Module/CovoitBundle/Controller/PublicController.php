@@ -51,7 +51,7 @@ class PublicController extends Controller
         return [
             'pagination' => $covoits,
             'searchForm' => $searchForm->createView(),
-            'today' => new \DateTime()
+            'today' => new \DateTime(),
         ];
     }
 
@@ -82,7 +82,7 @@ class PublicController extends Controller
         return [
             'pagination' => $pagination,
             'searchForm' => $searchForm->createView(),
-            'today' => new \DateTime()
+            'today' => new \DateTime(),
         ];
     }
 
@@ -108,15 +108,15 @@ class PublicController extends Controller
             ->getQuery()
             ->getOneOrNullResult();
 
-        if (! $covoit) {
+        if (!$covoit) {
             throw $this->createNotFoundException('Covoit not found');
         }
 
         // One URL to rule them all
-        if ($slug != $covoit->getStartCity()->getSlug() . '-' . $covoit->getEndCity()->getSlug()) {
+        if ($slug != $covoit->getStartCity()->getSlug().'-'.$covoit->getEndCity()->getSlug()) {
             return $this->redirect($this->generateUrl('covoiturage_view', [
                 'id' => $covoit->getId(),
-                'slug' => $covoit->getStartCity()->getSlug() . '-' . $covoit->getEndCity()->getSlug()
+                'slug' => $covoit->getStartCity()->getSlug().'-'.$covoit->getEndCity()->getSlug(),
             ]), 301);
         }
 
@@ -148,18 +148,18 @@ class PublicController extends Controller
 
             $this->get('session')->getFlashBag()->set('message', array(
                 'type' => 'success',
-                'message' => 'covoit.messages.message_sent'
+                'message' => 'covoit.messages.message_sent',
             ));
 
             return $this->redirect($this->generateUrl('covoiturage_view', [
                 'id' => $covoit->getId(),
-                'slug' => $covoit->getStartCity()->getSlug() . '-' . $covoit->getEndCity()->getSlug()
+                'slug' => $covoit->getStartCity()->getSlug().'-'.$covoit->getEndCity()->getSlug(),
             ]));
         }
 
         return [
             'covoit' => $covoit,
-            'messageForm' => $messageForm->createView()
+            'messageForm' => $messageForm->createView(),
         ];
     }
 }

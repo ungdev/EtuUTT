@@ -1,38 +1,38 @@
 {% extends '::page-2cols.html.twig' %}
 
 {% block javascripts %}
-	<script type="text/javascript">
-	$(function()
-		{
-			$('#etu_module_forumbundle_messagetype_content').redactor();
-		});
-	</script>
+    <script type="text/javascript">
+    $(function()
+        {
+            $('#etu_module_forumbundle_messagetype_content').redactor();
+        });
+    </script>
 {% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/forum.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('src/img/titles/forum.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block title %}{{ 'forum.main.answer.title'|trans }}{% endblock %}
 
 {% block content %}
-	<ul class="breadcrumb">
-		<li>
-			<a href="{{ path('forum_index') }}">Forum</a>
-			<span class="divider">/</span>
-		</li>
-		{% for parent in parents %}
-			<li>
-				<a href="{{ path('forum_category', {'id': parent.id, 'slug': parent.slug}) }}">
-					{{ parent.title }}</a>
-				<span class="divider">/</span>
-			</li>
-		{% endfor %}
-		<li class="active">
-			{{ thread.title }}
-		</li>
-	</ul>
+    <ul class="breadcrumb">
+        <li>
+            <a href="{{ path('forum_index') }}">Forum</a>
+            <span class="divider">/</span>
+        </li>
+        {% for parent in parents %}
+            <li>
+                <a href="{{ path('forum_category', {'id': parent.id, 'slug': parent.slug}) }}">
+                    {{ parent.title }}</a>
+                <span class="divider">/</span>
+            </li>
+        {% endfor %}
+        <li class="active">
+            {{ thread.title }}
+        </li>
+    </ul>
 
-	<div class="padding20-sides">
-	</div>
+    <div class="padding20-sides">
+    </div>
 {% endblock %}

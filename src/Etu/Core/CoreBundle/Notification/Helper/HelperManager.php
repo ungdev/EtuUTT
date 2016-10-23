@@ -3,58 +3,62 @@
 namespace Etu\Core\CoreBundle\Notification\Helper;
 
 /**
- * Helper manager
+ * Helper manager.
  */
 class HelperManager
 {
-	/**
-	 * @var array
-	 */
-	protected $helpers = array();
+    /**
+     * @var array
+     */
+    protected $helpers = array();
 
-	/**
-	 * @param array $helpers
-	 * @return HelperManager
-	 */
-	public function setHelpers($helpers)
-	{
-		$this->helpers = $helpers;
+    /**
+     * @param array $helpers
+     *
+     * @return HelperManager
+     */
+    public function setHelpers($helpers)
+    {
+        $this->helpers = $helpers;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param HelperInterface $helper
-	 * @return $this
-	 */
-	public function addHelper(HelperInterface $helper)
-	{
-		$this->helpers[$helper->getName()] = $helper;
+    /**
+     * @param HelperInterface $helper
+     *
+     * @return $this
+     */
+    public function addHelper(HelperInterface $helper)
+    {
+        $this->helpers[$helper->getName()] = $helper;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param string $helperName
-	 * @return HelperInterface
-	 * @throws \InvalidArgumentException
-	 */
-	public function getHelper($helperName)
-	{
-		if (isset($this->helpers[$helperName])) {
-			return $this->helpers[$helperName];
-		}
+    /**
+     * @param string $helperName
+     *
+     * @return HelperInterface
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function getHelper($helperName)
+    {
+        if (isset($this->helpers[$helperName])) {
+            return $this->helpers[$helperName];
+        }
 
-		throw new \InvalidArgumentException(sprintf(
-			'Render helper "%s" not found', $helperName
-		));
-	}
+        throw new \InvalidArgumentException(sprintf(
+            'Render helper "%s" not found', $helperName
+        ));
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getHelpers()
-	{
-		return $this->helpers;
-	}
+    /**
+     * @return array
+     */
+    public function getHelpers()
+    {
+        return $this->helpers;
+    }
 }

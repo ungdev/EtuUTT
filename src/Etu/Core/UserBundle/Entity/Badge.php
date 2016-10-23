@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Badge
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -24,256 +24,273 @@ class Badge
      */
     protected $id;
 
-	/**
-	 * The serie is the link between badges of same thing at differents levels
-	 *
-	 * @var string
-	 *
-	 * @ORM\Column(type="string", length=50, nullable=true)
-	 */
-	protected $serie;
+    /**
+     * The serie is the link between badges of same thing at differents levels.
+     *
+     * @var string
+     *
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    protected $serie;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(type="string", length=50)
-	 * @Assert\NotBlank()
-	 */
-	protected $name;
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank()
+     */
+    protected $name;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(type="string", length=50)
-	 * @Assert\NotBlank()
-	 */
-	protected $picture;
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank()
+     */
+    protected $picture;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(type="string", length=100)
-	 * @Assert\Length(min = "5")
-	 */
-	protected $description;
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=100)
+     * @Assert\Length(min = "5")
+     */
+    protected $description;
 
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(type="smallint")
-	 */
-	protected $level;
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="smallint")
+     */
+    protected $level;
 
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(type="smallint")
-	 */
-	protected $countLevels;
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="smallint")
+     */
+    protected $countLevels;
 
-	/**
-	 * @var \DateTime $deletedAt
-	 *
-	 * @ORM\Column(type="datetime", nullable = true)
-	 */
-	protected $deletedAt;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable = true)
+     */
+    protected $deletedAt;
 
-	/**
-	 * Temporary variable to store uploaded file during photo update
-	 *
-	 * @var UploadedFile
-	 *
-	 * @Assert\Image(maxSize = "4M", minWidth = 80, minHeight = 80)
-	 */
-	public $file;
+    /**
+     * Temporary variable to store uploaded file during photo update.
+     *
+     * @var UploadedFile
+     *
+     * @Assert\Image(maxSize = "4M", minWidth = 80, minHeight = 80)
+     */
+    public $file;
 
+    /**
+     * @param $serie
+     * @param $name
+     * @param $desc
+     * @param $picture
+     * @param int $level
+     * @param int $countLevels
+     */
+    public function __construct($serie, $name, $desc, $picture, $level = 1, $countLevels = 1)
+    {
+        $this->serie = $serie;
+        $this->name = $name;
+        $this->description = $desc;
+        $this->picture = $picture;
+        $this->level = $level;
+        $this->countLevels = $countLevels;
+        $this->users = new ArrayCollection();
+    }
 
-	/**
-	 * @param $serie
-	 * @param $name
-	 * @param $desc
-	 * @param $picture
-	 * @param int $level
-	 * @param int $countLevels
-	 */
-	public function __construct($serie, $name, $desc, $picture, $level = 1, $countLevels = 1)
-	{
-		$this->serie = $serie;
-		$this->name = $name;
-		$this->description = $desc;
-		$this->picture = $picture;
-		$this->level = $level;
-		$this->countLevels = $countLevels;
-		$this->users = new ArrayCollection();
-	}
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->picture;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function __toString()
-	{
-		return $this->picture;
-	}
+    /**
+     * @param int $countLevels
+     *
+     * @return $this
+     */
+    public function setCountLevels($countLevels)
+    {
+        $this->countLevels = $countLevels;
 
-	/**
-	 * @param int $countLevels
-	 * @return $this
-	 */
-	public function setCountLevels($countLevels)
-	{
-		$this->countLevels = $countLevels;
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @return int
-	 */
-	public function getCountLevels()
-	{
-		return $this->countLevels;
-	}
+    /**
+     * @return int
+     */
+    public function getCountLevels()
+    {
+        return $this->countLevels;
+    }
 
-	/**
-	 * @param \DateTime $deletedAt
-	 * @return $this
-	 */
-	public function setDeletedAt($deletedAt)
-	{
-		$this->deletedAt = $deletedAt;
-		return $this;
-	}
+    /**
+     * @param \DateTime $deletedAt
+     *
+     * @return $this
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
 
-	/**
-	 * @return \DateTime
-	 */
-	public function getDeletedAt()
-	{
-		return $this->deletedAt;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param string $description
-	 * @return $this
-	 */
-	public function setDescription($description)
-	{
-		$this->description = $description;
-		return $this;
-	}
+    /**
+     * @return \DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getDescription()
-	{
-		return $this->description;
-	}
+    /**
+     * @param string $description
+     *
+     * @return $this
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
 
-	/**
-	 * @param int $id
-	 * @return $this
-	 */
-	public function setId($id)
-	{
-		$this->id = $id;
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @return int
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
 
-	/**
-	 * @param int $level
-	 * @return $this
-	 */
-	public function setLevel($level)
-	{
-		$this->level = $level;
-		return $this;
-	}
+    /**
+     * @param int $id
+     *
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
 
-	/**
-	 * @return int
-	 */
-	public function getLevel()
-	{
-		return $this->level;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param string $name
-	 * @return $this
-	 */
-	public function setName($name)
-	{
-		$this->name = $name;
-		return $this;
-	}
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getName()
-	{
-		return $this->name;
-	}
+    /**
+     * @param int $level
+     *
+     * @return $this
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
 
-	/**
-	 * @param string $serie
-	 * @return $this
-	 */
-	public function setSerie($serie)
-	{
-		$this->serie = $serie;
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getSerie()
-	{
-		return $this->serie;
-	}
+    /**
+     * @return int
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
 
-	/**
-	 * @param string $picture
-	 * @return $this
-	 */
-	public function setPicture($picture)
-	{
-		$this->picture = $picture;
-		return $this;
-	}
+    /**
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
 
-	/**
-	 * @return string
-	 */
-	public function getPicture()
-	{
-		return $this->picture;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param mixed $users
-	 * @return $this
-	 */
-	public function setUsers($users)
-	{
-		$this->users = $users;
-		return $this;
-	}
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
-	/**
-	 * @return mixed
-	 */
-	public function getUsers()
-	{
-		return $this->users;
-	}
+    /**
+     * @param string $serie
+     *
+     * @return $this
+     */
+    public function setSerie($serie)
+    {
+        $this->serie = $serie;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSerie()
+    {
+        return $this->serie;
+    }
+
+    /**
+     * @param string $picture
+     *
+     * @return $this
+     */
+    public function setPicture($picture)
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    /**
+     * @param mixed $users
+     *
+     * @return $this
+     */
+    public function setUsers($users)
+    {
+        $this->users = $users;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
 }

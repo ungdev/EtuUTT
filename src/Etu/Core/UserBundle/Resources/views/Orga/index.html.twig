@@ -5,112 +5,112 @@
 {% block main_menu_link_homepage %} active{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('src/img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block javascripts %}
-	<script src="{{ asset('vendor/facebox/src/facebox.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('vendor/facebox/src/facebox.js') }}" type="text/javascript"></script>
 
-	<script type="text/javascript">
-		jQuery(document).ready(function($) {
-			$('#avatarUploadLink').attr('href', '#avatarUploadBox');
-			$('a[rel*=facebox]').facebox();
-		})
-	</script>
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $('#avatarUploadLink').attr('href', '#avatarUploadBox');
+            $('a[rel*=facebox]').facebox();
+        })
+    </script>
 {% endblock %}
 
 {% block content %}
-	<div class="padding20-all">
-		<div class="hidden" id="avatarUploadBox">
-			<div class="avatarUploadBox-form">
-				<form method="post" action="{{ path('orga_admin_avatar') }}" {{ form_enctype(avatarForm) }}>
-					<h4>{{ 'user.orga.avatar.title'|trans }}</h4>
+    <div class="padding20-all">
+        <div class="hidden" id="avatarUploadBox">
+            <div class="avatarUploadBox-form">
+                <form method="post" action="{{ path('orga_admin_avatar') }}" {{ form_enctype(avatarForm) }}>
+                    <h4>{{ 'user.orga.avatar.title'|trans }}</h4>
 
-					<img src="{{ asset('uploads/logos/'~app.user.logo) }}?{{ rand }}" style="max-width: 100px;" alt="{{ app.user.fullName }}" title="{{ app.user.fullName }}" />
+                    <img src="{{ asset('uploads/logos/'~app.user.logo) }}?{{ rand }}" style="max-width: 100px;" alt="{{ app.user.fullName }}" title="{{ app.user.fullName }}" />
 
-					<p>
-						<br />
-						{{ form_widget(avatarForm.file) }}
-					</p>
+                    <p>
+                        <br />
+                        {{ form_widget(avatarForm.file) }}
+                    </p>
 
-					<div class="controls">
-						{{ form_rest(avatarForm) }}
+                    <div class="controls">
+                        {{ form_rest(avatarForm) }}
 
-						<button type="submit" class="btn">{{ 'user.orga.avatar.submit'|trans }}</button>
-					</div>
-				</form>
-			</div>
-		</div>
+                        <button type="submit" class="btn">{{ 'user.orga.avatar.submit'|trans }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-		<form method="post" action="{{ path('orga_admin') }}">
-			{{ form_errors(form) }}
+        <form method="post" action="{{ path('orga_admin') }}">
+            {{ form_errors(form) }}
 
-			<div class="row-fluid">
-				<div class="span3">
-					<div class="profileEdit-avatar">
-						<img src="{{ asset('uploads/logos/'~app.user.logo) }}?{{ rand }}" alt="{{ app.user.fullName }}" title="{{ app.user.fullName }}" />
+            <div class="row-fluid">
+                <div class="span3">
+                    <div class="profileEdit-avatar">
+                        <img src="{{ asset('uploads/logos/'~app.user.logo) }}?{{ rand }}" alt="{{ app.user.fullName }}" title="{{ app.user.fullName }}" />
 
-						<p>
-							<br />
-							<a href="{{ path('orga_admin_avatar') }}" id="avatarUploadLink" rel="facebox" class="btn">
-								{{ 'user.orga.avatar.title'|trans }}
-							</a>
-						</p>
-					</div>
-				</div>
-				<div class="span9 form-horizontal">
-					<div class="control-group">
-						<label class="control-label">{{ 'user.orga.index.name.label'|trans }}</label>
-						<div class="controls">
-							{{ form_widget(form.name) }}
-						</div>
-						<span class="help-block">{{ form_errors(form.name) }}</span>
-					</div>
-					<div class="control-group">
-						<label class="control-label">{{ 'user.orga.index.contactMail.label'|trans }}</label>
-						<div class="controls">
-							{{ form_widget(form.contactMail) }}
-						</div>
-						<span class="help-block">{{ form_errors(form.contactMail) }}</span>
-					</div>
-					<div class="control-group">
-						<label class="control-label">{{ 'user.orga.index.contactPhone.label'|trans }}</label>
-						<div class="controls">
-							{{ form_widget(form.contactPhone) }}
-						</div>
-						<span class="help-block">{{ form_errors(form.contactPhone) }}</span>
-					</div>
-					<div class="control-group">
-						<label class="control-label">{{ 'user.orga.index.website.label'|trans }}</label>
-						<div class="controls">
-							{{ form_widget(form.website) }}
-						</div>
-						<span class="help-block">{{ form_errors(form.website) }}</span>
-					</div>
-					<div class="control-group">
-						<label class="control-label">{{ 'user.orga.index.descriptionShort.label'|trans }}</label>
-						<div class="controls">
-							{{ form_widget(form.descriptionShort) }}
-							<span class="help-block">{{ 'user.orga.index.descriptionShort.desc'|trans }}</span>
-						</div>
-						<span class="help-block">{{ form_errors(form.descriptionShort) }}</span>
-					</div>
-					<div class="control-group">
-						<label class="control-label">{{ 'user.orga.index.description.label'|trans }}</label>
-						<div class="controls">
-							{{ form_widget(form.description) }}
-						</div>
-						<span class="help-block">{{ form_errors(form.description) }}</span>
-					</div>
-					<div class="control-group">
-						<div class="controls">
-							{{ form_rest(form) }}
+                        <p>
+                            <br />
+                            <a href="{{ path('orga_admin_avatar') }}" id="avatarUploadLink" rel="facebox" class="btn">
+                                {{ 'user.orga.avatar.title'|trans }}
+                            </a>
+                        </p>
+                    </div>
+                </div>
+                <div class="span9 form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label">{{ 'user.orga.index.name.label'|trans }}</label>
+                        <div class="controls">
+                            {{ form_widget(form.name) }}
+                        </div>
+                        <span class="help-block">{{ form_errors(form.name) }}</span>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">{{ 'user.orga.index.contactMail.label'|trans }}</label>
+                        <div class="controls">
+                            {{ form_widget(form.contactMail) }}
+                        </div>
+                        <span class="help-block">{{ form_errors(form.contactMail) }}</span>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">{{ 'user.orga.index.contactPhone.label'|trans }}</label>
+                        <div class="controls">
+                            {{ form_widget(form.contactPhone) }}
+                        </div>
+                        <span class="help-block">{{ form_errors(form.contactPhone) }}</span>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">{{ 'user.orga.index.website.label'|trans }}</label>
+                        <div class="controls">
+                            {{ form_widget(form.website) }}
+                        </div>
+                        <span class="help-block">{{ form_errors(form.website) }}</span>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">{{ 'user.orga.index.descriptionShort.label'|trans }}</label>
+                        <div class="controls">
+                            {{ form_widget(form.descriptionShort) }}
+                            <span class="help-block">{{ 'user.orga.index.descriptionShort.desc'|trans }}</span>
+                        </div>
+                        <span class="help-block">{{ form_errors(form.descriptionShort) }}</span>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">{{ 'user.orga.index.description.label'|trans }}</label>
+                        <div class="controls">
+                            {{ form_widget(form.description) }}
+                        </div>
+                        <span class="help-block">{{ form_errors(form.description) }}</span>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            {{ form_rest(form) }}
 
-							<button type="submit" class="btn">{{ 'user.orga.index.submit'|trans }}</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</form>
-	</div>
+                            <button type="submit" class="btn">{{ 'user.orga.index.submit'|trans }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 {% endblock %}

@@ -8,52 +8,54 @@ namespace Etu\Core\UserBundle\Command\Util;
 class ProgressBar
 {
     /**
-     * Skeleton for use with sprintf
+     * Skeleton for use with sprintf.
      */
     protected $_skeleton;
     /**
-     * The bar gets filled with this
+     * The bar gets filled with this.
      */
     protected $_bar;
     /**
-     * The width of the bar
+     * The width of the bar.
      */
     protected $_blen;
     /**
-     * The total width of the display
+     * The total width of the display.
      */
     protected $_tlen;
     /**
-     * The position of the counter when the job is `done'
+     * The position of the counter when the job is `done'.
      */
     protected $_target_num;
     /**
-     * Options, like the precision used to display the numbers
+     * Options, like the precision used to display the numbers.
      */
     protected $_options = array();
     /**
-     * Length to erase
+     * Length to erase.
      */
     protected $_rlen = 0;
     /**
-     * When the progress started
+     * When the progress started.
      */
     protected $_start_time = null;
     protected $_rate_datapoints = array();
     /**
-     * Time when the bar was last drawn
+     * Time when the bar was last drawn.
      */
     protected $_last_update_time = 0.0;
 
     /**
      * Constructor, sets format and size
      * See the reset() method for documentation.
+     *
      * @param string       The format string
      * @param string       The string filling the progress bar
      * @param string       The string filling empty space in the bar
      * @param int          The width of the display
      * @param float        The target number for the bar
      * @param array        Options for the progress bar
+     *
      * @see reset
      */
     public function __construct($formatstring, $bar, $prefill, $width, $target_num, $options = array())
@@ -130,13 +132,15 @@ class ProgressBar
      *     min_draw_interval  | 0.0   |  If the last call to update() was less
      *                        |       |  than this amount of seconds ago,
      *                        |       |  don't update.
-     * </pre>
-     * @param string $formatString The format string
-     * @param string $bar The string filling the progress bar
-     * @param string $prefill The string filling empty space in the bar
-     * @param int $width The width of the display
-     * @param float $target_num The target number for the bar
-     * @param array $optionsOptions for the progress bar
+     * </pre>.
+     *
+     * @param string $formatString   The format string
+     * @param string $bar            The string filling the progress bar
+     * @param string $prefill        The string filling empty space in the bar
+     * @param int    $width          The width of the display
+     * @param float  $target_num     The target number for the bar
+     * @param array  $optionsOptions for the progress bar
+     *
      * @return bool
      */
     public function reset($formatstring, $bar, $prefill, $width, $target_num, $options = array())
@@ -176,7 +180,8 @@ class ProgressBar
         $this->_options = $options = $intopts;
 
         // placeholder
-        $cur = '%2$\''.$options['fraction_pad']{0}.strlen((int)$target_num).'.'.$options['fraction_precision'].'f';
+        $cur = '%2$\''.$options['fraction_pad']{0}
+        .strlen((int) $target_num).'.'.$options['fraction_precision'].'f';
 
         $max = $cur;
         $max{1} = 3;
@@ -189,7 +194,8 @@ class ProgressBar
             $padding = 3;
         }
 
-        $perc = '%4$\''.$options['percent_pad']{0}.$padding.'.'.$options['percent_precision'].'f';
+        $perc = '%4$\''.$options['percent_pad']{0}
+        .$padding.'.'.$options['percent_precision'].'f';
 
         $transitions = array(
             '%%' => '%%',
@@ -222,13 +228,14 @@ class ProgressBar
         $this->_tlen = $tlen;
         $this->_first = true;
 
-
         return true;
     }
 
     /**
-     * Updates the bar with new progress information
+     * Updates the bar with new progress information.
+     *
      * @param int current position of the progress counter
+     *
      * @return bool
      */
     public function update($current)
@@ -237,7 +244,6 @@ class ProgressBar
         $this->_addDatapoint($current, $time);
 
         if ($this->_first) {
-
             if ($this->_options['ansi_terminal']) {
                 echo "\x1b[s"; // save cursor position
             }
@@ -250,7 +256,6 @@ class ProgressBar
         }
 
         if ($time - $this->_last_update_time < $this->_options['min_draw_interval'] and $current != $this->_target_num) {
-
             return;
         }
 
@@ -278,14 +283,16 @@ class ProgressBar
             array_shift($this->_rate_datapoints);
         }
 
-        $this->_rate_datapoints[] = array('time' => $time, 'value' => $val,);
+        $this->_rate_datapoints[] = array('time' => $time, 'value' => $val);
     }
 
     /**
      * Prints the bar. Usually, you don't need this method, just use update()
      * which handles erasing the previously printed bar also. If you use a
      * custom function (for whatever reason) to erase the bar, use this method.
+     *
      * @param int current position of the progress counter
+     *
      * @return bool
      */
     public function display($current)
@@ -321,8 +328,10 @@ class ProgressBar
     }
 
     /**
-     * Returns a string containing the formatted number of seconds
+     * Returns a string containing the formatted number of seconds.
+     *
      * @param float The number of seconds
+     *
      * @return string
      */
     protected function _formatSeconds($seconds)
@@ -360,8 +369,10 @@ class ProgressBar
 
     /**
      * Erases a previously printed bar.
+     *
      * @param bool if the bar should be cleared in addition to resetting the
      *             cursor position
+     *
      * @return bool
      */
     public function erase($clear = false)
@@ -383,4 +394,3 @@ class ProgressBar
         }
     }
 }
-

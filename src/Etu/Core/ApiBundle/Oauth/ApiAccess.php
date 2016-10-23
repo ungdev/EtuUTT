@@ -59,7 +59,7 @@ class ApiAccess
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isGranted()
     {
@@ -67,7 +67,7 @@ class ApiAccess
     }
 
     /**
-     * @param boolean $isGranted
+     * @param bool $isGranted
      */
     public function setIsGranted($isGranted)
     {

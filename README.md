@@ -11,12 +11,12 @@ Ce projet utilise Symfony 2.x.
 Documentation
 -------------
 
-La documentation est disponible sur [https://github.com/ungdev/EtuUTT/wiki](https://github.com/ungdev/EtuUTT/wiki). 
+La documentation est disponible sur [https://github.com/ungdev/EtuUTT/wiki](https://github.com/ungdev/EtuUTT/wiki).
 C'est un travail en cours, n'hésitez pas à nous contacter si jamais la ressource recherchée est manquante…
 
 Traduction
 ----------
-Tous les jours, les différentes chaînes pouvant être traduites sont importées sur [notre projet Transifex](https://www.transifex.com/ung/site-etudiant). 
+Tous les jours, les différentes chaînes pouvant être traduites sont importées sur [notre projet Transifex](https://www.transifex.com/ung/site-etudiant).
 
 Vous pouvez alors en traduire, remonter des erreurs, demander de nouveaux langages… La création du compte est bien sûr gratuite ! Ouvrez juste une issue ou envoyez-nous un message quand vous voulez que l'on intègre vos modifications sur Github.
 

@@ -3,31 +3,31 @@
 {% block title %}{{ 'uvs.main.index.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/uvs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('src/img/titles/uvs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
-	<div class="padding20-all">
-		{% include 'EtuModuleUVBundle:Main:chooser.html.twig' %}
+    <div class="padding20-all">
+        {% include 'EtuModuleUVBundle:Main:chooser.html.twig' %}
 
-		<h4>{{ 'uvs.main.index.my'|trans }}</h4>
+        <h4>{{ 'uvs.main.index.my'|trans }}</h4>
 
-		<br />
+        <br />
 
-		<ul class="uvs-list">
-			{% for uv in my %}
-				<li>
-					<a href="{{ path('uvs_view', {'slug': uv.slug, 'name': uv.name|slugify}) }}">
-						<img src="{{ asset('src/img/uvs/'~uv.category~'.png') }}"
-							 class="uvs-list-icon"
-							 alt="({{ uv.category|upper }})"
-							 title="{{ uv.category|upper }}" />
-						{{ uv.code }} - {{ uv.name }}
-					</a>
-				</li>
-			{% else %}
-				<li>{{ 'uvs.main.index.noResult'|trans }}</li>
-			{% endfor %}
-		</ul>
-	</div>
+        <ul class="uvs-list">
+            {% for uv in my %}
+                <li>
+                    <a href="{{ path('uvs_view', {'slug': uv.slug, 'name': uv.name|slugify}) }}">
+                        <img src="{{ asset('src/img/uvs/'~uv.category~'.png') }}"
+                             class="uvs-list-icon"
+                             alt="({{ uv.category|upper }})"
+                             title="{{ uv.category|upper }}" />
+                        {{ uv.code }} - {{ uv.name }}
+                    </a>
+                </li>
+            {% else %}
+                <li>{{ 'uvs.main.index.noResult'|trans }}</li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

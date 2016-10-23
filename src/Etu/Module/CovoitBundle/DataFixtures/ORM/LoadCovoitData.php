@@ -10,22 +10,22 @@ use Faker\Factory;
 
 class LoadCovoitData extends AbstractFixture implements OrderedFixtureInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getOrder()
-	{
-		return 5;
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function getOrder()
+    {
+        return 5;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function load(ObjectManager $manager)
-	{
+    /**
+     * {@inheritdoc}
+     */
+    public function load(ObjectManager $manager)
+    {
         $faker = Factory::create('fr_FR');
 
-		$covoit = new Covoit();
+        $covoit = new Covoit();
         $covoit->setAuthor($this->getReference('user_user'));
         $covoit->setStartCity($this->getReference('city_troyes'));
         $covoit->setEndCity($this->getReference('city_paris'));
@@ -39,7 +39,7 @@ class LoadCovoitData extends AbstractFixture implements OrderedFixtureInterface
         $covoit->setPrice(rand(15, 35));
         $covoit->setNotes($faker->text(250));
 
-		$manager->persist($covoit);
-		$manager->flush();
-	}
+        $manager->persist($covoit);
+        $manager->flush();
+    }
 }

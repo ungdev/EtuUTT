@@ -3,53 +3,53 @@
 {% block title %}{{ 'uvs.admin.index.title'|trans }}{% endblock %}
 
 {% block content %}
-	<ul class="nav nav-tabs page-tabs">
-		<li>
-			<a href="{{ path('admin_uvs_index') }}">
-				{{ 'uvs.admin.back'|trans }}
-			</a>
-		</li>
-	</ul>
+    <ul class="nav nav-tabs page-tabs">
+        <li>
+            <a href="{{ path('admin_uvs_index') }}">
+                {{ 'uvs.admin.back'|trans }}
+            </a>
+        </li>
+    </ul>
 
-	<div class="padding20-sides">
-		<div class="navigation">
-			{{ knp_pagination_render(pagination) }}
-		</div>
+    <div class="padding20-sides">
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
 
-		<hr />
+        <hr />
 
-		{% for comment in pagination %}
-			<div class="uv-view-comment">
-				<a href="{{ path('user_view', {'login': comment.user.login}) }}">
-					<img src="{{ asset('uploads/photos/'~comment.user.avatar) }}" class="uv-view-comment-avatar" />
-				</a>
-				<div class="uv-view-comment-author">
-					<a href="{{ path('user_view', {'login': comment.user.login}) }}">
-						{{ comment.user.fullName }}
-					</a>
-					-
-					<a href="{{ path('uvs_view', {'slug': comment.uv.slug, 'name': comment.uv.name|slugify}) }}">
-						{{ comment.uv.code }}
-					</a>
+        {% for comment in pagination %}
+            <div class="uv-view-comment">
+                <a href="{{ path('user_view', {'login': comment.user.login}) }}">
+                    <img src="{{ asset('uploads/photos/'~comment.user.avatar) }}" class="uv-view-comment-avatar" />
+                </a>
+                <div class="uv-view-comment-author">
+                    <a href="{{ path('user_view', {'login': comment.user.login}) }}">
+                        {{ comment.user.fullName }}
+                    </a>
+                    -
+                    <a href="{{ path('uvs_view', {'slug': comment.uv.slug, 'name': comment.uv.name|slugify}) }}">
+                        {{ comment.uv.code }}
+                    </a>
 
-					<a href="{{ path('admin_uvs_comment_delete', {'id': comment.id}) }}"
-					   class="pull-right" style="font-weight: lighter;">
-						{{ 'uvs.admin.index.delete'|trans }}
-					</a>
-				</div>
-				<div class="uv-view-comment-date">
-					{{ comment.createdAt|date('d/m/Y H:i') }}
-				</div>
-				<div class="uv-view-comment-content">
-					{{ comment.body|bbcode_filter('default_filter') }}
-				</div>
-			</div>
-		{% endfor %}
+                    <a href="{{ path('admin_uvs_comment_delete', {'id': comment.id}) }}"
+                       class="pull-right" style="font-weight: lighter;">
+                        {{ 'uvs.admin.index.delete'|trans }}
+                    </a>
+                </div>
+                <div class="uv-view-comment-date">
+                    {{ comment.createdAt|date('d/m/Y H:i') }}
+                </div>
+                <div class="uv-view-comment-content">
+                    {{ comment.body|bbcode_filter('default_filter') }}
+                </div>
+            </div>
+        {% endfor %}
 
-		<hr />
+        <hr />
 
-		<div class="navigation">
-			{{ knp_pagination_render(pagination) }}
-		</div>
-	</div>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
 {% endblock %}

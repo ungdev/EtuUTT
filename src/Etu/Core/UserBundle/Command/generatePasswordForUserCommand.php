@@ -4,16 +4,14 @@ namespace Etu\Core\UserBundle\Command;
 
 use Etu\Core\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\ORM\EntityManager;
 
 class generatePasswordForUserCommand extends ContainerAwareCommand
 {
     /**
-     * Configure the command
+     * Configure the command.
      */
     protected function configure()
     {
@@ -24,9 +22,9 @@ class generatePasswordForUserCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Input\InputInterface   $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return void
+     *
      * @throws \RuntimeException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -44,18 +42,18 @@ This command will help you to set generate a random password for an user to let 
         /** @var $mailer \Swift_Mailer */
         $mailer = $this->getContainer()->get('mailer');
 
-        /** @var $twig     wig_Environment */
+        /** @var $twig wig_Environment */
         $twig = $this->getContainer()->get('twig');
 
         /** @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine')->getManager();
 
-        while (! $user instanceof User) {
+        while (!$user instanceof User) {
             $login = $dialog->ask($output, 'User login: ');
 
             $user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
 
-            if (! $user) {
+            if (!$user) {
                 $output->writeln("The given login can not be found. Please retry.\n");
             }
         }
@@ -72,7 +70,7 @@ This command will help you to set generate a random password for an user to let 
         $countV = mb_strlen($vowel);
         $result = '';
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 5; ++$i) {
             $index = mt_rand(0, $countC - 1);
             $result .= mb_substr($consonant, $index, 1);
 
@@ -89,7 +87,7 @@ This command will help you to set generate a random password for an user to let 
         $content = $twig->render('EtuUserBundle:Mail:password.html.twig', array(
            'fullName' => $user->getFirstName().' '.$user->getLastName(),
            'login' => $user->getLogin(),
-           'password' => $result
+           'password' => $result,
         ));
 
         $message = \Swift_Message::newInstance($subject)
@@ -99,7 +97,7 @@ This command will help you to set generate a random password for an user to let 
         $result = $mailer->send($message);
 
         if ($result > 0) {
-            $output->writeln("The user ".$user->getLogin()." can now connect with a password that has been sent to him via email.\n");
+            $output->writeln('The user '.$user->getLogin()." can now connect with a password that has been sent to him via email.\n");
         } else {
             $output->writeln("Fail to send email to user. Please try again.\n");
         }

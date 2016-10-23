@@ -1,24 +1,24 @@
 
 <ul class="list-vertical list-vertical-linked">
-	{% for item in items %}
-		{% if item.role is empty or is_granted(item.role) %}
-			{% if item.isSeparator %}
-				</ul>
-				<hr class="separator" />
-				<ul class="list-vertical list-vertical-linked">
-			{% else %}
-				<li {{ item.itemAttributesString }}>
-					<a href="{{ item.url }}" {{ item.linkAttributesString }}>
-						{% if item.hasIcon %}
-							<img src="{{ asset('src/img/icons/'~item.icon) }}" class="etu-img-icon" />
-						{% else %}
-							<i class="etu-no-icon"></i>
-						{% endif %}
+    {% for item in items %}
+        {% if item.role is empty or is_granted(item.role) %}
+            {% if item.isSeparator %}
+                </ul>
+                <hr class="separator" />
+                <ul class="list-vertical list-vertical-linked">
+            {% else %}
+                <li {{ item.itemAttributesString }}>
+                    <a href="{{ item.url }}" {{ item.linkAttributesString }}>
+                        {% if item.hasIcon %}
+                            <img src="{{ asset('src/img/icons/'~item.icon) }}" class="etu-img-icon" />
+                        {% else %}
+                            <i class="etu-no-icon"></i>
+                        {% endif %}
 
-						{{ item.translation|trans }}
-					</a>
-				</li>
-			{% endif %}
-		{% endif %}
-	{% endfor %}
+                        {{ item.translation|trans }}
+                    </a>
+                </li>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
 </ul>

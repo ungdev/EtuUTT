@@ -1,9 +1,7 @@
 {% set message = false %}
-
 {% if app.session.flashBag.has('message') %}
     {% set message = app.session.flashBag.get('message') %}
 {% endif %}
-
 <!DOCTYPE html>
     <html lang="fr" class="bg-soft-grey">
     <head>
@@ -138,8 +136,8 @@
                     </a>
                 {% endif %}
                 <span class="pull-right">
-				{{ 'base.footer.1col_text'|trans|raw }} - {% include '::version.html.twig' %}
-			</span>
+                {{ 'base.footer.1col_text'|trans|raw }} - {% include '::version.html.twig' %}
+            </span>
             </p>
         </footer>
 

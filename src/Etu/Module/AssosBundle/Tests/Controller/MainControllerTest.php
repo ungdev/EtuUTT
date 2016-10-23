@@ -6,21 +6,21 @@ use Etu\Core\CoreBundle\Framework\Tests\EtuWebTestCase;
 
 class MainControllerTest extends EtuWebTestCase
 {
-	public function testIndex()
-	{
-		$client = static::createClient();
+    public function testIndex()
+    {
+        $client = static::createClient();
 
-		$crawler = $client->request('GET', '/orgas');
-		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Les associations")')->count());
-	}
+        $crawler = $client->request('GET', '/orgas');
+        $this->assertGreaterThan(0, $crawler->filter('h2:contains("Les associations")')->count());
+    }
 
-	public function testView()
-	{
-		$client = static::createClient();
+    public function testView()
+    {
+        $client = static::createClient();
 
-		$crawler = $client->request('GET', '/orgas/orga');
-		$this->assertGreaterThan(0, $crawler->filter('h2:contains("Détail d\'une association")')->count());
-	}
+        $crawler = $client->request('GET', '/orgas/orga');
+        $this->assertGreaterThan(0, $crawler->filter('h2:contains("Détail d\'une association")')->count());
+    }
 
     public function testRestrictMembers()
     {

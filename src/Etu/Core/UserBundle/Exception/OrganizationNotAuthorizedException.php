@@ -10,56 +10,56 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
  */
 class OrganizationNotAuthorizedException extends AuthenticationException
 {
-	private $login;
+    private $login;
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getMessageKey()
-	{
-		return 'Organization exist but is not authorized to log in.';
-	}
-	/**
-	 * Get the organization login.
-	 *
-	 * @return string
-	 */
-	public function getLogin()
-	{
-		return $this->login;
-	}
-	/**
-	 * Set the organization login.
-	 *
-	 * @param string $login
-	 */
-	public function setUsername($login)
-	{
-		$this->login = $login;
-	}
-	/**
-	 * {@inheritdoc}
-	 */
-	public function serialize()
-	{
-		return serialize(array(
-			$this->login,
-			parent::serialize(),
-		));
-	}
-	/**
-	 * {@inheritdoc}
-	 */
-	public function unserialize($str)
-	{
-		list($this->login, $parentData) = unserialize($str);
-		parent::unserialize($parentData);
-	}
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getMessageData()
-	{
-		return array('{{ login }}' => $this->login);
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function getMessageKey()
+    {
+        return 'Organization exist but is not authorized to log in.';
+    }
+    /**
+     * Get the organization login.
+     *
+     * @return string
+     */
+    public function getLogin()
+    {
+        return $this->login;
+    }
+    /**
+     * Set the organization login.
+     *
+     * @param string $login
+     */
+    public function setUsername($login)
+    {
+        $this->login = $login;
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->login,
+            parent::serialize(),
+        ));
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function unserialize($str)
+    {
+        list($this->login, $parentData) = unserialize($str);
+        parent::unserialize($parentData);
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function getMessageData()
+    {
+        return array('{{ login }}' => $this->login);
+    }
 }

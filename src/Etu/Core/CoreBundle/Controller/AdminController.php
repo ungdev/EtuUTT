@@ -3,7 +3,6 @@
 namespace Etu\Core\CoreBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-
 use Etu\Core\CoreBundle\Entity\Page;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Framework\Definition\Module;
@@ -20,286 +19,287 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 class AdminController extends Controller
 {
-	/**
-	 * @Route("", name="admin_index")
-	 * @Template()
-	 */
-	public function indexAction()
-	{
-		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_HOME');
-		return array();
-	}
-	/**
-	 * @Route("/server", name="admin_server")
-	 * @Template()
-	 */
-	public function serverAction()
-	{
-		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_SERVER');
+    /**
+     * @Route("", name="admin_index")
+     * @Template()
+     */
+    public function indexAction()
+    {
+        $this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_HOME');
 
-		return array(
-			'status' => new Server\Status()
-		);
-	}
+        return array();
+    }
+    /**
+     * @Route("/server", name="admin_server")
+     * @Template()
+     */
+    public function serverAction()
+    {
+        $this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_SERVER');
 
-	/**
-	 * @Route("/modules", name="admin_modules")
-	 * @Template()
-	 */
-	public function modulesAction()
-	{
-		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_MODULES');
+        return array(
+            'status' => new Server\Status(),
+        );
+    }
 
-		// Modules
-		/** @var $modulesManager ModulesManager */
-		$modulesManager = $this->get('etu.core.modules_manager');
-		$modules = $modulesManager->getModules();
+    /**
+     * @Route("/modules", name="admin_modules")
+     * @Template()
+     */
+    public function modulesAction()
+    {
+        $this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_MODULES');
 
-		/** @var $module Module */
-		foreach ($modules as $module) {
-			$modules->get($module->getIdentifier())->needed = false;
-			$modules->get($module->getIdentifier())->neededBy = array();
-			$modules->get($module->getIdentifier())->canBeEnabled = true;
-			$modules->get($module->getIdentifier())->need = array();
-		}
+        // Modules
+        /** @var $modulesManager ModulesManager */
+        $modulesManager = $this->get('etu.core.modules_manager');
+        $modules = $modulesManager->getModules();
 
-		/** @var $module Module */
-		foreach ($modules as $module) {
-			if ($module->isEnabled()) {
-				foreach ($module->getRequirements() as $requirement) {
-					$modules->get($requirement)->needed = true;
-					$modules->get($requirement)->neededBy[] = $module->getTitle();
-				}
-			}
+        /** @var $module Module */
+        foreach ($modules as $module) {
+            $modules->get($module->getIdentifier())->needed = false;
+            $modules->get($module->getIdentifier())->neededBy = array();
+            $modules->get($module->getIdentifier())->canBeEnabled = true;
+            $modules->get($module->getIdentifier())->need = array();
+        }
 
-			foreach ($module->getRequirements() as $requirement) {
-				if (! $modules->get($requirement)->isEnabled()) {
-					$modules->get($module->getIdentifier())->canBeEnabled = false;
-					$modules->get($module->getIdentifier())->need[] = $modules->get($requirement)->getTitle();
-				}
-			}
-		}
+        /** @var $module Module */
+        foreach ($modules as $module) {
+            if ($module->isEnabled()) {
+                foreach ($module->getRequirements() as $requirement) {
+                    $modules->get($requirement)->needed = true;
+                    $modules->get($requirement)->neededBy[] = $module->getTitle();
+                }
+            }
 
-		$request = $this->getRequest();
+            foreach ($module->getRequirements() as $requirement) {
+                if (!$modules->get($requirement)->isEnabled()) {
+                    $modules->get($module->getIdentifier())->canBeEnabled = false;
+                    $modules->get($module->getIdentifier())->need[] = $modules->get($requirement)->getTitle();
+                }
+            }
+        }
 
-		if ($request->getMethod() == 'POST') {
-			if ($request->get('modules')) {
-				$enabledModules = array_keys((array) $request->get('modules'));
-			} else {
-				$enabledModules = array();
-			}
+        $request = $this->getRequest();
 
-			foreach ($enabledModules as $key => $module) {
-				if ($module = $modulesManager->getModuleByIdentifier($module)) {
-					$enabledModules[$key] = get_class($module);
-				} else {
-					unset($enabledModules[$key]);
-				}
-			}
+        if ($request->getMethod() == 'POST') {
+            if ($request->get('modules')) {
+                $enabledModules = array_keys((array) $request->get('modules'));
+            } else {
+                $enabledModules = array();
+            }
 
-			foreach ($modules as $module) {
-				if ($module->needed) {
-					$enabledModules[] = get_class($module);
-				}
-			}
+            foreach ($enabledModules as $key => $module) {
+                if ($module = $modulesManager->getModuleByIdentifier($module)) {
+                    $enabledModules[$key] = get_class($module);
+                } else {
+                    unset($enabledModules[$key]);
+                }
+            }
 
-			$yaml = \Symfony\Component\Yaml\Yaml::dump(array('modules' => $enabledModules));
-			$configFile = $this->getKernel()->getRootDir().'/config/modules.yml';
+            foreach ($modules as $module) {
+                if ($module->needed) {
+                    $enabledModules[] = get_class($module);
+                }
+            }
 
-			file_put_contents($configFile, $yaml);
+            $yaml = \Symfony\Component\Yaml\Yaml::dump(array('modules' => $enabledModules));
+            $configFile = $this->getKernel()->getRootDir().'/config/modules.yml';
 
-			// Clear routes cache (production)
-			if (file_exists($this->getKernel()->getRootDir().'/cache/prod')) {
-				$iterator = new \DirectoryIterator($this->getKernel()->getRootDir().'/cache/prod');
+            file_put_contents($configFile, $yaml);
 
-				foreach ($iterator as $file) {
-					if ($file->isFile() &&
-						(strpos($file->getBasename(), 'UrlGenerator') !== false)
-						|| (strpos($file->getBasename(), 'UrlMatcher') !== false)
-					) {
-						unlink($file->getPathname());
-					}
-				}
-			}
+            // Clear routes cache (production)
+            if (file_exists($this->getKernel()->getRootDir().'/cache/prod')) {
+                $iterator = new \DirectoryIterator($this->getKernel()->getRootDir().'/cache/prod');
 
-			// Clear routes cache (development)
-			if (file_exists($this->getKernel()->getRootDir().'/cache/dev')) {
-				$iterator = new \DirectoryIterator($this->getKernel()->getRootDir().'/cache/dev');
+                foreach ($iterator as $file) {
+                    if ($file->isFile() &&
+                        (strpos($file->getBasename(), 'UrlGenerator') !== false)
+                        || (strpos($file->getBasename(), 'UrlMatcher') !== false)
+                    ) {
+                        unlink($file->getPathname());
+                    }
+                }
+            }
 
-				foreach ($iterator as $file) {
-					if ($file->isFile() &&
-						(strpos($file->getBasename(), 'UrlGenerator') !== false)
-						|| (strpos($file->getBasename(), 'UrlMatcher') !== false)
-					) {
-						unlink($file->getPathname());
-					}
-				}
-			}
+            // Clear routes cache (development)
+            if (file_exists($this->getKernel()->getRootDir().'/cache/dev')) {
+                $iterator = new \DirectoryIterator($this->getKernel()->getRootDir().'/cache/dev');
 
-			$logger = $this->get('monolog.logger.admin');
-			$logger->warn('`'.$this->getUser()->getLogin().'` edit enabled modules');
+                foreach ($iterator as $file) {
+                    if ($file->isFile() &&
+                        (strpos($file->getBasename(), 'UrlGenerator') !== false)
+                        || (strpos($file->getBasename(), 'UrlMatcher') !== false)
+                    ) {
+                        unlink($file->getPathname());
+                    }
+                }
+            }
 
-			$this->get('session')->getFlashBag()->set('message', array(
-				'type' => 'success',
-				'message' => 'core.admin.modules.confirm'
-			));
+            $logger = $this->get('monolog.logger.admin');
+            $logger->warn('`'.$this->getUser()->getLogin().'` edit enabled modules');
 
-			return $this->redirect($this->generateUrl('admin_modules'));
-		}
+            $this->get('session')->getFlashBag()->set('message', array(
+                'type' => 'success',
+                'message' => 'core.admin.modules.confirm',
+            ));
 
-		/** @var $module Module */
-		foreach ($modules as $module) {
-			$modules->get($module->getIdentifier())->neededBy =
-				implode(', ', $modules->get($module->getIdentifier())->neededBy);
+            return $this->redirect($this->generateUrl('admin_modules'));
+        }
 
-			$modules->get($module->getIdentifier())->need =
-				implode(', ', $modules->get($module->getIdentifier())->need);
-		}
+        /** @var $module Module */
+        foreach ($modules as $module) {
+            $modules->get($module->getIdentifier())->neededBy =
+                implode(', ', $modules->get($module->getIdentifier())->neededBy);
 
-		return array(
-			'modules' => $modules,
-		);
-	}
+            $modules->get($module->getIdentifier())->need =
+                implode(', ', $modules->get($module->getIdentifier())->need);
+        }
 
-	/**
-	 * @Route("/pages", name="admin_pages")
-	 * @Template()
-	 */
-	public function pagesAction()
-	{
-		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PAGES');
+        return array(
+            'modules' => $modules,
+        );
+    }
 
-		/** @var $em EntityManager */
-		$em = $this->getDoctrine()->getManager();
+    /**
+     * @Route("/pages", name="admin_pages")
+     * @Template()
+     */
+    public function pagesAction()
+    {
+        $this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PAGES');
 
-		$pages = $em->getRepository('EtuCoreBundle:Page')->findBy(array(), array('title' => 'ASC'));
+        /** @var $em EntityManager */
+        $em = $this->getDoctrine()->getManager();
 
-		return array(
-			'pages' => $pages,
-		);
-	}
+        $pages = $em->getRepository('EtuCoreBundle:Page')->findBy(array(), array('title' => 'ASC'));
 
-	/**
-	 * @Route("/page/create", name="admin_page_create")
-	 * @Template()
-	 */
-	public function pageCreateAction()
-	{
-		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PAGES');
+        return array(
+            'pages' => $pages,
+        );
+    }
 
-		/** @var $em EntityManager */
-		$em = $this->getDoctrine()->getManager();
+    /**
+     * @Route("/page/create", name="admin_page_create")
+     * @Template()
+     */
+    public function pageCreateAction()
+    {
+        $this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PAGES');
 
-		$page = new Page();
+        /** @var $em EntityManager */
+        $em = $this->getDoctrine()->getManager();
 
-		$page->setContent("<p>\n\tHello paragraph !\n</p>");
-		$form = $this->createFormBuilder($page)
-			->add('title')
-			->add('content')
-			->getForm();
+        $page = new Page();
 
-		$request = $this->getRequest();
+        $page->setContent("<p>\n\tHello paragraph !\n</p>");
+        $form = $this->createFormBuilder($page)
+            ->add('title')
+            ->add('content')
+            ->getForm();
 
-		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
-			$page->setSlug(StringManipulationExtension::slugify($page->getTitle()));
+        $request = $this->getRequest();
 
-			$em->persist($page);
-			$em->flush();
+        if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+            $page->setSlug(StringManipulationExtension::slugify($page->getTitle()));
 
-			$this->get('session')->getFlashBag()->set('message', array(
-				'type' => 'success',
-				'message' => 'core.admin.pageCreate.confirm'
-			));
+            $em->persist($page);
+            $em->flush();
 
-			return $this->redirect($this->generateUrl('admin_pages'));
-		}
+            $this->get('session')->getFlashBag()->set('message', array(
+                'type' => 'success',
+                'message' => 'core.admin.pageCreate.confirm',
+            ));
 
-		return array(
-			'form' => $form->createView()
-		);
-	}
+            return $this->redirect($this->generateUrl('admin_pages'));
+        }
 
-	/**
-	 * @Route("/page/edit/{id}", name="admin_page_edit")
-	 * @Template()
-	 */
-	public function pageEditAction($id)
-	{
-		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PAGES');
+        return array(
+            'form' => $form->createView(),
+        );
+    }
 
-		/** @var $em EntityManager */
-		$em = $this->getDoctrine()->getManager();
+    /**
+     * @Route("/page/edit/{id}", name="admin_page_edit")
+     * @Template()
+     */
+    public function pageEditAction($id)
+    {
+        $this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PAGES');
 
-		$page = $em->getRepository('EtuCoreBundle:Page')->find($id);
+        /** @var $em EntityManager */
+        $em = $this->getDoctrine()->getManager();
 
-		$form = $this->createFormBuilder($page)
-			->add('title')
-			->add('content')
-			->getForm();
+        $page = $em->getRepository('EtuCoreBundle:Page')->find($id);
 
-		$request = $this->getRequest();
+        $form = $this->createFormBuilder($page)
+            ->add('title')
+            ->add('content')
+            ->getForm();
 
-		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
+        $request = $this->getRequest();
 
-			// $cacheDriver = $em->getConfiguration()->getResultCacheImpl();
-			// $cacheDriver->delete('EtuCoreBundle/page:'.$page->getSlug());
+        if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
 
-			$em->persist($page);
-			$em->flush();
+            // $cacheDriver = $em->getConfiguration()->getResultCacheImpl();
+            // $cacheDriver->delete('EtuCoreBundle/page:'.$page->getSlug());
 
-			$this->get('session')->getFlashBag()->set('message', array(
-				'type' => 'success',
-				'message' => 'core.admin.pageEdit.confirm'
-			));
+            $em->persist($page);
+            $em->flush();
 
-			return $this->redirect($this->generateUrl('admin_pages'));
-		}
+            $this->get('session')->getFlashBag()->set('message', array(
+                'type' => 'success',
+                'message' => 'core.admin.pageEdit.confirm',
+            ));
 
-		return array(
-			'page' => $page,
-			'form' => $form->createView()
-		);
-	}
+            return $this->redirect($this->generateUrl('admin_pages'));
+        }
 
-	/**
-	 * @Route("/page/delete/{id}", name="admin_page_delete")
-	 * @Template()
-	 */
-	public function pageDeleteAction($id)
-	{
-		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PAGES');
+        return array(
+            'page' => $page,
+            'form' => $form->createView(),
+        );
+    }
 
-		/** @var $em EntityManager */
-		$em = $this->getDoctrine()->getManager();
+    /**
+     * @Route("/page/delete/{id}", name="admin_page_delete")
+     * @Template()
+     */
+    public function pageDeleteAction($id)
+    {
+        $this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PAGES');
 
-		$page = $em->getRepository('EtuCoreBundle:Page')->find($id);
+        /** @var $em EntityManager */
+        $em = $this->getDoctrine()->getManager();
 
-		return array(
-			'page' => $page
-		);
-	}
+        $page = $em->getRepository('EtuCoreBundle:Page')->find($id);
 
-	/**
-	 * @Route("/page/delete/{id}/confirm", name="admin_page_delete_confirm")
-	 * @Template()
-	 */
-	public function pageDeleteConfirmAction($id)
-	{
-		$this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PAGES');
+        return array(
+            'page' => $page,
+        );
+    }
 
-		/** @var $em EntityManager */
-		$em = $this->getDoctrine()->getManager();
+    /**
+     * @Route("/page/delete/{id}/confirm", name="admin_page_delete_confirm")
+     * @Template()
+     */
+    public function pageDeleteConfirmAction($id)
+    {
+        $this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_PAGES');
 
-		$page = $em->getRepository('EtuCoreBundle:Page')->find($id);
+        /** @var $em EntityManager */
+        $em = $this->getDoctrine()->getManager();
 
-		$em->remove($page);
-		$em->flush();
+        $page = $em->getRepository('EtuCoreBundle:Page')->find($id);
 
-		$this->get('session')->getFlashBag()->set('message', array(
-			'type' => 'success',
-			'message' => 'core.admin.pageDelete.confirm'
-		));
+        $em->remove($page);
+        $em->flush();
 
-		return $this->redirect($this->generateUrl('admin_pages'));
-	}
+        $this->get('session')->getFlashBag()->set('message', array(
+            'type' => 'success',
+            'message' => 'core.admin.pageDelete.confirm',
+        ));
+
+        return $this->redirect($this->generateUrl('admin_pages'));
+    }
 }

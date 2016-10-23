@@ -9,6 +9,7 @@ abstract class AbstractTransformer
     /**
      * @param $object
      * @param EmbedBag $includes
+     *
      * @return mixed
      */
     abstract public function transformUnique($object, EmbedBag $includes);
@@ -16,6 +17,7 @@ abstract class AbstractTransformer
     /**
      * @param $collection
      * @param EmbedBag $includes
+     *
      * @return array
      */
     public function transformCollection($collection, EmbedBag $includes)
@@ -31,15 +33,17 @@ abstract class AbstractTransformer
 
     /**
      * @param object|array $input
-     * @param EmbedBag $includes
+     * @param EmbedBag     $includes
+     *
      * @return array
+     *
      * @throws \InvalidArgumentException
      */
     public function transform($input, EmbedBag $includes = null)
     {
         if (is_object($input)) {
             return $this->transformUnique($input, ($includes) ? $includes : new EmbedBag());
-        } else if (is_array($input)) {
+        } elseif (is_array($input)) {
             return $this->transformCollection($input, ($includes) ? $includes : new EmbedBag());
         }
 

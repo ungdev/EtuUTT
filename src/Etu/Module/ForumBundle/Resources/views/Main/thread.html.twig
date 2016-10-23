@@ -1,27 +1,27 @@
 {% extends '::page-2cols.html.twig' %}
 
 {% block javascripts %}
-	<script type="text/javascript">
-		$(".remove").click(function() {
-			switch($(this).attr("rel")) {
-				case 'removeMessage':
-					if(!confirm("{{ 'forum.main.mod.removeMessage'|trans }}")) {
-						return false;
-					}
-					break;
-				case 'removeThread':
-					if(!confirm("{{ 'forum.main.mod.removeThread'|trans }}")) {
-						return false;
-					}
-					break;
-				case 'removeThreadWarning':
-					if(!confirm("{{ 'forum.main.mod.removeThreadWarning'|trans }}")) {
-						return false;
-					}
-					break;
-			}
-		});
-	</script>
+    <script type="text/javascript">
+        $(".remove").click(function() {
+            switch($(this).attr("rel")) {
+                case 'removeMessage':
+                    if(!confirm("{{ 'forum.main.mod.removeMessage'|trans }}")) {
+                        return false;
+                    }
+                    break;
+                case 'removeThread':
+                    if(!confirm("{{ 'forum.main.mod.removeThread'|trans }}")) {
+                        return false;
+                    }
+                    break;
+                case 'removeThreadWarning':
+                    if(!confirm("{{ 'forum.main.mod.removeThreadWarning'|trans }}")) {
+                        return false;
+                    }
+                    break;
+            }
+        });
+    </script>
 {% endblock %}
 
 {% block title %}{{ thread.title }}{% endblock %}
@@ -29,160 +29,160 @@
 {% block meta_desc %}{{ 'forum.meta'|trans }} : {{ thread.title }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/forum.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('src/img/titles/forum.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block sidebar %}
-	{% if is_granted('ROLE_CORE_SUBSCRIBE') %}
-		{{ render_subscribe_button('message', thread.id) }}
-	{% endif %}
+    {% if is_granted('ROLE_CORE_SUBSCRIBE') %}
+        {{ render_subscribe_button('message', thread.id) }}
+    {% endif %}
 
-	{{ parent() }}
+    {{ parent() }}
 {% endblock %}
 
 {% block content %}
-	<ul class="breadcrumb">
-		<li>
-			<a href="{{ path('forum_index') }}">Forum</a>
-			<span class="divider">/</span>
-		</li>
-		{% for parent in parents %}
-			<li>
-				<a href="{{ path('forum_category', {'id': parent.id, 'slug': parent.slug}) }}">
-					{{ parent.title }}</a>
-				<span class="divider">/</span>
-			</li>
-		{% endfor %}
-		<li class="active">
-			{{ thread.title }}
-		</li>
-	</ul>
+    <ul class="breadcrumb">
+        <li>
+            <a href="{{ path('forum_index') }}">Forum</a>
+            <span class="divider">/</span>
+        </li>
+        {% for parent in parents %}
+            <li>
+                <a href="{{ path('forum_category', {'id': parent.id, 'slug': parent.slug}) }}">
+                    {{ parent.title }}</a>
+                <span class="divider">/</span>
+            </li>
+        {% endfor %}
+        <li class="active">
+            {{ thread.title }}
+        </li>
+    </ul>
 
-	<div class="padding20-sides">
-		{% if forum_can_lock(app.user, category) or forum_can_move(app.user, category)  or is_granted('ROLE_FORUM_ADMIN') %}
-			<p class="align-right">
-				{% if forum_can_lock(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
-					<a href="{{ path('forum_mod', {'action': 'lock', 'threadId': thread.id, slug: thread.slug}) }}"
-					   class="btn">
-						{% if thread.state == 100 %}
-							{{ 'forum.main.mod.lock'|trans }}
-						{% elseif thread.state == 200 %}
-							{{ 'forum.main.mod.unlock'|trans }}
-						{% endif %}
-					</a>
-				{% endif %}
+    <div class="padding20-sides">
+        {% if forum_can_lock(app.user, category) or forum_can_move(app.user, category)  or is_granted('ROLE_FORUM_ADMIN') %}
+            <p class="align-right">
+                {% if forum_can_lock(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
+                    <a href="{{ path('forum_mod', {'action': 'lock', 'threadId': thread.id, slug: thread.slug}) }}"
+                       class="btn">
+                        {% if thread.state == 100 %}
+                            {{ 'forum.main.mod.lock'|trans }}
+                        {% elseif thread.state == 200 %}
+                            {{ 'forum.main.mod.unlock'|trans }}
+                        {% endif %}
+                    </a>
+                {% endif %}
 
-				{% if forum_can_move(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
-					<a href="{{ path('forum_mod', {'action': 'move', 'threadId': thread.id, slug: thread.slug}) }}"
-					   class="btn">
-						{{ 'forum.main.mod.move'|trans }}
-					</a>
-				{% endif %}
-			</p>
-			<hr />
-		{% endif %}
+                {% if forum_can_move(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
+                    <a href="{{ path('forum_mod', {'action': 'move', 'threadId': thread.id, slug: thread.slug}) }}"
+                       class="btn">
+                        {{ 'forum.main.mod.move'|trans }}
+                    </a>
+                {% endif %}
+            </p>
+            <hr />
+        {% endif %}
 
-		{# display navigation #}
-		<div class="navigation">
-			{{ knp_pagination_render(messages) }}
-		</div>
+        {# display navigation #}
+        <div class="navigation">
+            {{ knp_pagination_render(messages) }}
+        </div>
 
-		{% for message in messages %}
-			<div class="etu-comment" id="{{ message.id }}">
-				<div class="etu-comment-avatar">
-					<a href="{{ path('user_view', {'login': message.author.login}) }}">
-						<img src="{{ asset('uploads/photos/'~message.author.avatar) }}"
-							 alt="{{ message.author.getFullName() }}"
-							 title="{{ message.author.getFullName() }}"/>
-					</a>
-						<!-- <div class="etu-comment-avatar-disconnected">{{ message.author.getFirstName()|slice(0,1) }}</div> -->
-				</div>
-				<div class="etu-comment-infos">
-					<div class="etu-comment-date">
-						<small>
-							<a href="#{{ message.id }}">#{{ message.id }}</a> -
-							<a href="{{ path('user_view', {'login': message.author.login}) }}">
-								{{ message.author.fullName }}
-							</a>
-						</small>
-						<small class="pull-right">
-							{% if forum_can_edit(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
-								<a href="{{ path('forum_edit', {'messageId': message.id, 'threadId': thread.id, 'slug': thread.slug}) }}"
-								   class="btn btn-small">
-									<i class="icon-edit"></i>
-									{{ 'forum.main.thread.edit'|trans }}
-								</a>
-							{% endif %}
+        {% for message in messages %}
+            <div class="etu-comment" id="{{ message.id }}">
+                <div class="etu-comment-avatar">
+                    <a href="{{ path('user_view', {'login': message.author.login}) }}">
+                        <img src="{{ asset('uploads/photos/'~message.author.avatar) }}"
+                             alt="{{ message.author.getFullName() }}"
+                             title="{{ message.author.getFullName() }}"/>
+                    </a>
+                        <!-- <div class="etu-comment-avatar-disconnected">{{ message.author.getFirstName()|slice(0,1) }}</div> -->
+                </div>
+                <div class="etu-comment-infos">
+                    <div class="etu-comment-date">
+                        <small>
+                            <a href="#{{ message.id }}">#{{ message.id }}</a> -
+                            <a href="{{ path('user_view', {'login': message.author.login}) }}">
+                                {{ message.author.fullName }}
+                            </a>
+                        </small>
+                        <small class="pull-right">
+                            {% if forum_can_edit(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
+                                <a href="{{ path('forum_edit', {'messageId': message.id, 'threadId': thread.id, 'slug': thread.slug}) }}"
+                                   class="btn btn-small">
+                                    <i class="icon-edit"></i>
+                                    {{ 'forum.main.thread.edit'|trans }}
+                                </a>
+                            {% endif %}
 
-							{% if forum_can_delete(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
-								<a href="{{ path('forum_mod', {'messageId': message.id, 'threadId': thread.id, 'slug': thread.slug, 'action': 'remove'}) }}"
-								   class="btn btn-small" rel="{% if thread.createdAt == message.createdAt %}removeThreadWarning{% else %}removeMessage{% endif %}">
-									<i class="icon-remove"></i>
-									{{ 'forum.main.mod.remove'|trans }}
-								</a>
-							{% endif %}
+                            {% if forum_can_delete(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
+                                <a href="{{ path('forum_mod', {'messageId': message.id, 'threadId': thread.id, 'slug': thread.slug, 'action': 'remove'}) }}"
+                                   class="btn btn-small" rel="{% if thread.createdAt == message.createdAt %}removeThreadWarning{% else %}removeMessage{% endif %}">
+                                    <i class="icon-remove"></i>
+                                    {{ 'forum.main.mod.remove'|trans }}
+                                </a>
+                            {% endif %}
 
-							{{ time_diff(message.createdAt)|ucfirst }}
-						</small>
-					</div>
-					<div class="etu-comment-body">
-						{{ message.content|bbcode_filter('default_filter') }}
-					</div>
-				</div>
+                            {{ time_diff(message.createdAt)|ucfirst }}
+                        </small>
+                    </div>
+                    <div class="etu-comment-body">
+                        {{ message.content|bbcode_filter('default_filter') }}
+                    </div>
+                </div>
 
-				<div class="clear"></div>
-			</div>
-		{% endfor %}
+                <div class="clear"></div>
+            </div>
+        {% endfor %}
 
-		{# display navigation #}
-		<div class="navigation">
-			{{ knp_pagination_render(messages) }}
-		</div>
+        {# display navigation #}
+        <div class="navigation">
+            {{ knp_pagination_render(messages) }}
+        </div>
 
-		{% if forum_can_lock(app.user, category) or forum_can_move(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
-			<hr />
-			<p class="align-right">
-				{% if forum_can_lock(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
-					<a href="{{ path('forum_mod', {'action': 'lock', 'threadId': thread.id, slug: thread.slug}) }}"
-					   class="btn">
-						{% if thread.state == 100 %}
-							{{ 'forum.main.mod.lock'|trans }}
-						{% elseif thread.state == 200 %}
-							{{ 'forum.main.mod.unlock'|trans }}
-						{% endif %}
-					</a>
-				{% endif %}
+        {% if forum_can_lock(app.user, category) or forum_can_move(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
+            <hr />
+            <p class="align-right">
+                {% if forum_can_lock(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
+                    <a href="{{ path('forum_mod', {'action': 'lock', 'threadId': thread.id, slug: thread.slug}) }}"
+                       class="btn">
+                        {% if thread.state == 100 %}
+                            {{ 'forum.main.mod.lock'|trans }}
+                        {% elseif thread.state == 200 %}
+                            {{ 'forum.main.mod.unlock'|trans }}
+                        {% endif %}
+                    </a>
+                {% endif %}
 
-				{% if forum_can_move(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
-					<a href="{{ path('forum_mod', {'action': 'move', 'threadId': thread.id, slug: thread.slug}) }}"
-					   class="btn">
-						{{ 'forum.main.mod.move'|trans }}
-					</a>
-				{% endif %}
-			</p>
-		{% endif %}
+                {% if forum_can_move(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
+                    <a href="{{ path('forum_mod', {'action': 'move', 'threadId': thread.id, slug: thread.slug}) }}"
+                       class="btn">
+                        {{ 'forum.main.mod.move'|trans }}
+                    </a>
+                {% endif %}
+            </p>
+        {% endif %}
 
-		{% if (forum_can_answer(app.user, category) or is_granted('ROLE_FORUM_ADMIN')) and cantAnswer == false %}
-			<hr />
+        {% if (forum_can_answer(app.user, category) or is_granted('ROLE_FORUM_ADMIN')) and cantAnswer == false %}
+            <hr />
 
-			<form action="{{ path('forum_answer', {'id': thread.id, 'slug': thread.slug}) }}" method="post" {{ form_enctype(form) }}>
-				<fieldset class="forum-post">
-					{{ form_errors(form) }}
-					<div class="control-group">
-						<div class="control-label">
-							{{ form_label(form.content, 'forum.main.post.content'|trans) }}
-						</div>
-						<div>
-							{{ form_widget(form.content) }}
-							{{ form_errors(form.content) }}
-						</div>
-					</div>
-					<div class="control-group">
-						{{ form_rest(form) }}
-						<input type="submit" value="{{ 'forum.main.thread.answer'|trans }}" class="btn" />
-					</div>
-				</fieldset>
-			</form>
-		{% endif %}
-	</div>
+            <form action="{{ path('forum_answer', {'id': thread.id, 'slug': thread.slug}) }}" method="post" {{ form_enctype(form) }}>
+                <fieldset class="forum-post">
+                    {{ form_errors(form) }}
+                    <div class="control-group">
+                        <div class="control-label">
+                            {{ form_label(form.content, 'forum.main.post.content'|trans) }}
+                        </div>
+                        <div>
+                            {{ form_widget(form.content) }}
+                            {{ form_errors(form.content) }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_rest(form) }}
+                        <input type="submit" value="{{ 'forum.main.thread.answer'|trans }}" class="btn" />
+                    </div>
+                </fieldset>
+            </form>
+        {% endif %}
+    </div>
 {% endblock %}

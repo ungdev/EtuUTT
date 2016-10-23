@@ -3,300 +3,300 @@
 {% block title %}{{ 'user.profile.view.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('src/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
-	<ul class="nav nav-tabs page-tabs">
-	{% if from == 'search' %}
-		<li>
-			<a href="">
-				<i class="icon-chevron-left"></i>
-				{{ 'user.profile.view.back_search'|trans }}
-			</a>
-		</li>
-	{% elseif from == 'profile' %}
-		<li>
-			<a href="{{ path('user_profile') }}">
-				<i class="icon-chevron-left"></i>
-				{{ 'user.profile.view.back_profile'|trans }}
-			</a>
-		</li>
-	{% elseif from == 'trombi' and etu.modules.isEnabled('trombi') %}
-		<li>
-			<a href="{{ path('trombi_index') }}">
-				<i class="icon-chevron-left"></i>
-				{{ 'user.profile.view.back_trombi'|trans }}
-			</a>
-		</li>
-	{% elseif from == 'admin' and is_granted('ROLE_CORE_ADMIN_PROFIL') %}
-		<li>
-			<a href="{{ path('admin_users_index') }}">
-				<i class="icon-chevron-left"></i>
-				{{ 'user.profile.view.back_admin'|trans }}
-			</a>
-		</li>
-	{% endif %}
-		<li class="pull-right">
-			<a href="{{ path('user_view_badges', {'login': user.login}) }}?from={{ from }}">
-				{{ 'user.profile.menu.badges'|trans }}
-			</a>
-		</li>
-		<li class="pull-right active page-tabs-resolved-active">
-			<a href="{{ path('user_view_schedule', {'login': user.login}) }}?from={{ from }}">
-				{{ 'user.profile.menu.schedule'|trans }}
-			</a>
-		</li>
-		<li class="pull-right">
-			<a href="{{ path('user_organizations', {'login': user.login}) }}?from={{ from }}">
-				{{ 'user.profile.menu.organizations'|trans }}
-			</a>
-		</li>
-		<li class="pull-right">
-			<a href="{{ path('user_view', {'login': user.login}) }}?from={{ from }}">
-				{{ 'user.profile.menu.profile'|trans }}
-			</a>
-		</li>
-	</ul>
+    <ul class="nav nav-tabs page-tabs">
+    {% if from == 'search' %}
+        <li>
+            <a href="">
+                <i class="icon-chevron-left"></i>
+                {{ 'user.profile.view.back_search'|trans }}
+            </a>
+        </li>
+    {% elseif from == 'profile' %}
+        <li>
+            <a href="{{ path('user_profile') }}">
+                <i class="icon-chevron-left"></i>
+                {{ 'user.profile.view.back_profile'|trans }}
+            </a>
+        </li>
+    {% elseif from == 'trombi' and etu.modules.isEnabled('trombi') %}
+        <li>
+            <a href="{{ path('trombi_index') }}">
+                <i class="icon-chevron-left"></i>
+                {{ 'user.profile.view.back_trombi'|trans }}
+            </a>
+        </li>
+    {% elseif from == 'admin' and is_granted('ROLE_CORE_ADMIN_PROFIL') %}
+        <li>
+            <a href="{{ path('admin_users_index') }}">
+                <i class="icon-chevron-left"></i>
+                {{ 'user.profile.view.back_admin'|trans }}
+            </a>
+        </li>
+    {% endif %}
+        <li class="pull-right">
+            <a href="{{ path('user_view_badges', {'login': user.login}) }}?from={{ from }}">
+                {{ 'user.profile.menu.badges'|trans }}
+            </a>
+        </li>
+        <li class="pull-right active page-tabs-resolved-active">
+            <a href="{{ path('user_view_schedule', {'login': user.login}) }}?from={{ from }}">
+                {{ 'user.profile.menu.schedule'|trans }}
+            </a>
+        </li>
+        <li class="pull-right">
+            <a href="{{ path('user_organizations', {'login': user.login}) }}?from={{ from }}">
+                {{ 'user.profile.menu.organizations'|trans }}
+            </a>
+        </li>
+        <li class="pull-right">
+            <a href="{{ path('user_view', {'login': user.login}) }}?from={{ from }}">
+                {{ 'user.profile.menu.profile'|trans }}
+            </a>
+        </li>
+    </ul>
 
-	<div class="padding20-all">
-		<div class="row-fluid">
-			<div class="span3">
-				<div class="align-center">
-					<img src="{{ asset('uploads/photos/'~user.avatar) }}" class="view-avatar hidden-phone"
-						 alt="{{ user.fullName }}" title="{{ user.fullName }}" />
+    <div class="padding20-all">
+        <div class="row-fluid">
+            <div class="span3">
+                <div class="align-center">
+                    <img src="{{ asset('uploads/photos/'~user.avatar) }}" class="view-avatar hidden-phone"
+                         alt="{{ user.fullName }}" title="{{ user.fullName }}" />
 
-					<hr />
+                    <hr />
 
-					<strong>{{ user.fullName }}</strong><br />
-					{% if user.formation %}
-						<em>{{ user.branch~user.niveau }} {{ user.filiere }} ({{ user.formation }})</em>
-					{% endif %}
-				</div>
+                    <strong>{{ user.fullName }}</strong><br />
+                    {% if user.formation %}
+                        <em>{{ user.branch~user.niveau }} {{ user.filiere }} ({{ user.formation }})</em>
+                    {% endif %}
+                </div>
 
-				<hr />
+                <hr />
 
-				<div class="hidden-for-phones">
-					{% if is_granted('ROLE_CORE_ADMIN_PROFIL') %}
-						<p>
-							<strong>{{ 'user.profile.view.admin'|trans }}</strong>
-						</p>
-						<p>
-							<a href="{{ path('admin_user_edit', {'login': user.login}) }}" class="btn btn-small">
-								{{ 'user.profile.view.admin_edit'|trans }}
-							</a>
-							<a href="{{ path('admin_user_delete', {'login': user.login}) }}" class="btn btn-small">
-								{{ 'user.profile.view.admin_delete'|trans }}
-							</a>
-						</p>
-						<p>
-							<a href="{{ path('admin_user_roles', {'login': user.login, 'from': 'schedule'}) }}" class="btn btn-small">
-								{{ 'user.profile.view.admin_permissions'|trans }}
-							</a>
-						</p>
-						<p>
-							<a href="{{ path('admin_user_toggle_readonly', {'login': user.login}) }}" class="btn btn-small">
-								{% if user.isReadOnly %}
-									{{ 'user.profile.view.admin_disable_readonly'|trans }}
-								{% else %}
-									{{ 'user.profile.view.admin_enable_readonly'|trans }}
-								{% endif %}
-							</a>
-						</p>
-					{% endif %}
+                <div class="hidden-for-phones">
+                    {% if is_granted('ROLE_CORE_ADMIN_PROFIL') %}
+                        <p>
+                            <strong>{{ 'user.profile.view.admin'|trans }}</strong>
+                        </p>
+                        <p>
+                            <a href="{{ path('admin_user_edit', {'login': user.login}) }}" class="btn btn-small">
+                                {{ 'user.profile.view.admin_edit'|trans }}
+                            </a>
+                            <a href="{{ path('admin_user_delete', {'login': user.login}) }}" class="btn btn-small">
+                                {{ 'user.profile.view.admin_delete'|trans }}
+                            </a>
+                        </p>
+                        <p>
+                            <a href="{{ path('admin_user_roles', {'login': user.login, 'from': 'schedule'}) }}" class="btn btn-small">
+                                {{ 'user.profile.view.admin_permissions'|trans }}
+                            </a>
+                        </p>
+                        <p>
+                            <a href="{{ path('admin_user_toggle_readonly', {'login': user.login}) }}" class="btn btn-small">
+                                {% if user.isReadOnly %}
+                                    {{ 'user.profile.view.admin_disable_readonly'|trans }}
+                                {% else %}
+                                    {{ 'user.profile.view.admin_enable_readonly'|trans }}
+                                {% endif %}
+                            </a>
+                        </p>
+                    {% endif %}
 
-					{% if user.website %}
-						<p>
-							<strong>{{ 'user.profile.view.website'|trans }}</strong><br />
-							{{ user.website }}
-						</p>
-					{% endif %}
+                    {% if user.website %}
+                        <p>
+                            <strong>{{ 'user.profile.view.website'|trans }}</strong><br />
+                            {{ user.website }}
+                        </p>
+                    {% endif %}
 
-					{% if user.facebook %}
-						<p>
-							<strong>{{ 'user.profile.view.facebook'|trans }}</strong><br />
-							{{ user.facebook }}
-						</p>
-					{% endif %}
+                    {% if user.facebook %}
+                        <p>
+                            <strong>{{ 'user.profile.view.facebook'|trans }}</strong><br />
+                            {{ user.facebook }}
+                        </p>
+                    {% endif %}
 
-					{% if user.twitter %}
-						<p>
-							<strong>{{ 'user.profile.view.twitter'|trans }}</strong><br />
-							{{ user.twitter }}
-						</p>
-					{% endif %}
+                    {% if user.twitter %}
+                        <p>
+                            <strong>{{ 'user.profile.view.twitter'|trans }}</strong><br />
+                            {{ user.twitter }}
+                        </p>
+                    {% endif %}
 
-					{% if user.linkedin %}
-						<p>
-							<strong>{{ 'user.profile.view.linkedin'|trans }}</strong><br />
-							{{ user.linkedin }}
-						</p>
-					{% endif %}
+                    {% if user.linkedin %}
+                        <p>
+                            <strong>{{ 'user.profile.view.linkedin'|trans }}</strong><br />
+                            {{ user.linkedin }}
+                        </p>
+                    {% endif %}
 
-					{% if user.viadeo %}
-						<p>
-							<strong>{{ 'user.profile.view.viadeo'|trans }}</strong><br />
-							{{ user.viadeo }}
-						</p>
-					{% endif %}
-				</div>
-			</div>
+                    {% if user.viadeo %}
+                        <p>
+                            <strong>{{ 'user.profile.view.viadeo'|trans }}</strong><br />
+                            {{ user.viadeo }}
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
 
-			<div class="span9">
-				<div class="row-fluid schedule schedule-days">
-					<div class="span2 day hidden-phone">
-						{{ 'user.schedule.days.monday'|trans }}
-					</div>
-					<div class="span2 day hidden-phone">
-						{{ 'user.schedule.days.tuesday'|trans }}
-					</div>
-					<div class="span2 day hidden-phone">
-						{{ 'user.schedule.days.wednesday'|trans }}
-					</div>
-					<div class="span2 day hidden-phone">
-						{{ 'user.schedule.days.thursday'|trans }}
-					</div>
-					<div class="span2 day hidden-phone">
-						{{ 'user.schedule.days.friday'|trans }}
-					</div>
-					<div class="span2 day hidden-phone">
-						{{ 'user.schedule.days.sathurday'|trans }}
-					</div>
-					<div class="span12 day schedule-days-choose visible-phone">
-						<div class="dropdown">
-							<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-								<i class="icon-calendar"></i>
-								{{ ('user.schedule.days.'~currentDay)|trans }}
-								<span class="caret"></span>
-							</a>
-							<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-								<li>
-									<a href="{{ path('user_view_schedule', {'login': user.login, 'day': 'monday'}) }}">
-										{{ 'user.schedule.days.monday'|trans }}
-									</a>
-								</li>
-								<li>
-									<a href="{{ path('user_view_schedule', {'login': user.login, 'day': 'tuesday'}) }}">
-										{{ 'user.schedule.days.tuesday'|trans }}
-									</a>
-								</li>
-								<li>
-									<a href="{{ path('user_view_schedule', {'login': user.login, 'day': 'wednesday'}) }}">
-										{{ 'user.schedule.days.wednesday'|trans }}
-									</a>
-								</li>
-								<li>
-									<a href="{{ path('user_view_schedule', {'login': user.login, 'day': 'thursday'}) }}">
-										{{ 'user.schedule.days.thursday'|trans }}
-									</a>
-								</li>
-								<li>
-									<a href="{{ path('user_view_schedule', {'login': user.login, 'day': 'friday'}) }}">
-										{{ 'user.schedule.days.friday'|trans }}
-									</a>
-								</li>
-								<li>
-									<a href="{{ path('user_view_schedule', {'login': user.login, 'day': 'sathurday'}) }}">
-										{{ 'user.schedule.days.sathurday'|trans }}
-									</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
+            <div class="span9">
+                <div class="row-fluid schedule schedule-days">
+                    <div class="span2 day hidden-phone">
+                        {{ 'user.schedule.days.monday'|trans }}
+                    </div>
+                    <div class="span2 day hidden-phone">
+                        {{ 'user.schedule.days.tuesday'|trans }}
+                    </div>
+                    <div class="span2 day hidden-phone">
+                        {{ 'user.schedule.days.wednesday'|trans }}
+                    </div>
+                    <div class="span2 day hidden-phone">
+                        {{ 'user.schedule.days.thursday'|trans }}
+                    </div>
+                    <div class="span2 day hidden-phone">
+                        {{ 'user.schedule.days.friday'|trans }}
+                    </div>
+                    <div class="span2 day hidden-phone">
+                        {{ 'user.schedule.days.sathurday'|trans }}
+                    </div>
+                    <div class="span12 day schedule-days-choose visible-phone">
+                        <div class="dropdown">
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="icon-calendar"></i>
+                                {{ ('user.schedule.days.'~currentDay)|trans }}
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <li>
+                                    <a href="{{ path('user_view_schedule', {'login': user.login, 'day': 'monday'}) }}">
+                                        {{ 'user.schedule.days.monday'|trans }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('user_view_schedule', {'login': user.login, 'day': 'tuesday'}) }}">
+                                        {{ 'user.schedule.days.tuesday'|trans }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('user_view_schedule', {'login': user.login, 'day': 'wednesday'}) }}">
+                                        {{ 'user.schedule.days.wednesday'|trans }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('user_view_schedule', {'login': user.login, 'day': 'thursday'}) }}">
+                                        {{ 'user.schedule.days.thursday'|trans }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('user_view_schedule', {'login': user.login, 'day': 'friday'}) }}">
+                                        {{ 'user.schedule.days.friday'|trans }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('user_view_schedule', {'login': user.login, 'day': 'sathurday'}) }}">
+                                        {{ 'user.schedule.days.sathurday'|trans }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-				<div class="clear"></div>
+                <div class="clear"></div>
 
-				<div class="schedule-hours">
-					<div class="hour">08:00</div>
-					<div class="hour">09:00</div>
-					<div class="hour">10:00</div>
-					<div class="hour">11:00</div>
-					<div class="hour">12:00</div>
-					<div class="hour">13:00</div>
-					<div class="hour">14:00</div>
-					<div class="hour">15:00</div>
-					<div class="hour">16:00</div>
-					<div class="hour">17:00</div>
-					<div class="hour">18:00</div>
-					<div class="hour">19:00</div>
-					<div class="hour">20:00</div>
-				</div>
-				<div class="row-fluid schedule">
-					{% for day, dayCourses in courses %}
-						<div class="span2 schedule-col schedule-col-{{ loop.index % 2 == 0 ? 'odd' : 'even' }}
-							{% if day != currentDay %}
-								hidden-phone
-							{% else %}
-								phoneDay
-							{% endif %}
-						">
-							{% for hour, item in dayCourses %}
-								{% if item.type == 'void' %}
-									<div class="item item-void item1 {% if loop.index == 1 %} item-first{% endif %}"></div>
-								{% elseif item.type == 'course' %}
-									<div class="item item-course item{{ item.size }}
-									{% if loop.index == 1 %} item-first{% endif %}">
-										<a href="{{ path('schedule_course', {'id': item.course.id}) }}">
-											<span class="schedule-course-uv">{{ item.course.uv }}</span>
-											<br />
-											<span class="schedule-course-room">{{ item.course.room }}</span>
-											<span class="schedule-course-type">- {{ item.course.type }}</span>
-										</a>
-									</div>
-								{% elseif item.type == 'course_half' %}
-									{% if item.courses.hasCourseBothWeeks %}
-										<div class="item item-half item-half-left item-course item-half-course item{{ item.size }}
-									{% if loop.index == 1 %} item-first{% endif %}">
-											<a href="{{ path('schedule_course', {'id': item.courses.courseWeekA.id}) }}">
-												<span class="schedule-course-uv">{{ item.courses.courseWeekA.uv }} (A)</span>
-												<br />
-												<span class="schedule-course-room">{{ item.courses.courseWeekA.room }}</span>
-												<span class="schedule-course-type">- {{ item.courses.courseWeekA.type }}</span>
-											</a>
-										</div>
-										<div class="item item-half item-half-right item-course item-half-course item{{ item.size }}
-									{% if loop.index == 1 %} item-first{% endif %}">
-											<a href="{{ path('schedule_course', {'id': item.courses.courseWeekB.id}) }}">
-												<span class="schedule-course-uv">{{ item.courses.courseWeekB.uv }} (B)</span>
-												<br />
-												<span class="schedule-course-room">{{ item.courses.courseWeekB.room }}</span>
-												<span class="schedule-course-type">- {{ item.courses.courseWeekB.type }}</span>
-											</a>
-										</div>
-										<div class="clear-right"></div>
-									{% elseif item.courses.hasCourseWeekA %}
-										<div class="item item-half item-half-left item-course item-half-course item{{ item.size }}
-									{% if loop.index == 1 %} item-first{% endif %}">
-											<a href="{{ path('schedule_course', {'id': item.courses.courseWeekA.id}) }}">
-												<span class="schedule-course-uv">{{ item.courses.courseWeekA.uv }} (A)</span>
-												<br />
-												<span class="schedule-course-room">{{ item.courses.courseWeekA.room }}</span>
-												<span class="schedule-course-type">- {{ item.courses.courseWeekA.type }}</span>
-											</a>
-										</div>
-										<div class="item item-half item-half-right item-void item{{ item.size }}
-									{% if loop.index == 1 %} item-first{% endif %}"></div>
-										<div class="clear-right"></div>
-									{% elseif item.courses.hasCourseWeekB %}
-										<div class="item item-half item-half-left item-void item{{ item.size }}
-									{% if loop.index == 1 %} item-first{% endif %}"></div>
-										<div class="item item-half item-half-right item-course item-half-course item{{ item.size }}
-									{% if loop.index == 1 %} item-first{% endif %}">
-											<a href="{{ path('schedule_course', {'id': item.courses.courseWeekB.id}) }}">
-												<span class="schedule-course-uv">{{ item.courses.courseWeekB.uv }} (B)</span>
-												<br />
-												<span class="schedule-course-room">{{ item.courses.courseWeekB.room }}</span>
-												<span class="schedule-course-type">- {{ item.courses.courseWeekB.type }}</span>
-											</a>
-										</div>
-										<div class="clear-right"></div>
-									{% endif %}
-								{% endif %}
-							{% endfor %}
-						</div>
-					{% endfor %}
-			</div>
-		</div>
-	</div>
+                <div class="schedule-hours">
+                    <div class="hour">08:00</div>
+                    <div class="hour">09:00</div>
+                    <div class="hour">10:00</div>
+                    <div class="hour">11:00</div>
+                    <div class="hour">12:00</div>
+                    <div class="hour">13:00</div>
+                    <div class="hour">14:00</div>
+                    <div class="hour">15:00</div>
+                    <div class="hour">16:00</div>
+                    <div class="hour">17:00</div>
+                    <div class="hour">18:00</div>
+                    <div class="hour">19:00</div>
+                    <div class="hour">20:00</div>
+                </div>
+                <div class="row-fluid schedule">
+                    {% for day, dayCourses in courses %}
+                        <div class="span2 schedule-col schedule-col-{{ loop.index % 2 == 0 ? 'odd' : 'even' }}
+                            {% if day != currentDay %}
+                                hidden-phone
+                            {% else %}
+                                phoneDay
+                            {% endif %}
+                        ">
+                            {% for hour, item in dayCourses %}
+                                {% if item.type == 'void' %}
+                                    <div class="item item-void item1 {% if loop.index == 1 %} item-first{% endif %}"></div>
+                                {% elseif item.type == 'course' %}
+                                    <div class="item item-course item{{ item.size }}
+                                    {% if loop.index == 1 %} item-first{% endif %}">
+                                        <a href="{{ path('schedule_course', {'id': item.course.id}) }}">
+                                            <span class="schedule-course-uv">{{ item.course.uv }}</span>
+                                            <br />
+                                            <span class="schedule-course-room">{{ item.course.room }}</span>
+                                            <span class="schedule-course-type">- {{ item.course.type }}</span>
+                                        </a>
+                                    </div>
+                                {% elseif item.type == 'course_half' %}
+                                    {% if item.courses.hasCourseBothWeeks %}
+                                        <div class="item item-half item-half-left item-course item-half-course item{{ item.size }}
+                                    {% if loop.index == 1 %} item-first{% endif %}">
+                                            <a href="{{ path('schedule_course', {'id': item.courses.courseWeekA.id}) }}">
+                                                <span class="schedule-course-uv">{{ item.courses.courseWeekA.uv }} (A)</span>
+                                                <br />
+                                                <span class="schedule-course-room">{{ item.courses.courseWeekA.room }}</span>
+                                                <span class="schedule-course-type">- {{ item.courses.courseWeekA.type }}</span>
+                                            </a>
+                                        </div>
+                                        <div class="item item-half item-half-right item-course item-half-course item{{ item.size }}
+                                    {% if loop.index == 1 %} item-first{% endif %}">
+                                            <a href="{{ path('schedule_course', {'id': item.courses.courseWeekB.id}) }}">
+                                                <span class="schedule-course-uv">{{ item.courses.courseWeekB.uv }} (B)</span>
+                                                <br />
+                                                <span class="schedule-course-room">{{ item.courses.courseWeekB.room }}</span>
+                                                <span class="schedule-course-type">- {{ item.courses.courseWeekB.type }}</span>
+                                            </a>
+                                        </div>
+                                        <div class="clear-right"></div>
+                                    {% elseif item.courses.hasCourseWeekA %}
+                                        <div class="item item-half item-half-left item-course item-half-course item{{ item.size }}
+                                    {% if loop.index == 1 %} item-first{% endif %}">
+                                            <a href="{{ path('schedule_course', {'id': item.courses.courseWeekA.id}) }}">
+                                                <span class="schedule-course-uv">{{ item.courses.courseWeekA.uv }} (A)</span>
+                                                <br />
+                                                <span class="schedule-course-room">{{ item.courses.courseWeekA.room }}</span>
+                                                <span class="schedule-course-type">- {{ item.courses.courseWeekA.type }}</span>
+                                            </a>
+                                        </div>
+                                        <div class="item item-half item-half-right item-void item{{ item.size }}
+                                    {% if loop.index == 1 %} item-first{% endif %}"></div>
+                                        <div class="clear-right"></div>
+                                    {% elseif item.courses.hasCourseWeekB %}
+                                        <div class="item item-half item-half-left item-void item{{ item.size }}
+                                    {% if loop.index == 1 %} item-first{% endif %}"></div>
+                                        <div class="item item-half item-half-right item-course item-half-course item{{ item.size }}
+                                    {% if loop.index == 1 %} item-first{% endif %}">
+                                            <a href="{{ path('schedule_course', {'id': item.courses.courseWeekB.id}) }}">
+                                                <span class="schedule-course-uv">{{ item.courses.courseWeekB.uv }} (B)</span>
+                                                <br />
+                                                <span class="schedule-course-room">{{ item.courses.courseWeekB.room }}</span>
+                                                <span class="schedule-course-type">- {{ item.courses.courseWeekB.type }}</span>
+                                            </a>
+                                        </div>
+                                        <div class="clear-right"></div>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

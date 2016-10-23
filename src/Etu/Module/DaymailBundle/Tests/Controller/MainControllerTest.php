@@ -4,7 +4,7 @@ namespace Etu\Module\DaymailBundle\Test\Controller;
 
 use Etu\Core\CoreBundle\Framework\Tests\EtuWebTestCase;
 
-class MembershipsControllerTest extends EtuWebTestCase
+class MainControllerTest extends EtuWebTestCase
 {
     public function testRestrictionDaymail()
     {

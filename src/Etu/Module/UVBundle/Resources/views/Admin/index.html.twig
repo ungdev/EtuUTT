@@ -3,84 +3,84 @@
 {% block title %}{{ 'uvs.admin.index.title'|trans }}{% endblock %}
 
 {% block content %}
-	<div class="padding20-all">
-		<div class="row-fluid">
-			<div class="span6">
-				<h4>{{ 'uvs.admin.index.lastsReviews'|trans }}</h4>
+    <div class="padding20-all">
+        <div class="row-fluid">
+            <div class="span6">
+                <h4>{{ 'uvs.admin.index.lastsReviews'|trans }}</h4>
 
-				<a href="{{ path('admin_uvs_reviews') }}">{{ 'uvs.admin.index.reviews'|trans }}</a>
+                <a href="{{ path('admin_uvs_reviews') }}">{{ 'uvs.admin.index.reviews'|trans }}</a>
 
-				<hr />
+                <hr />
 
-				<table class="table">
-					<thead>
-					<tr>
-						<th>{{ 'uvs.admin.index.review'|trans }}</th>
-						<th>{{ 'uvs.admin.index.actions'|trans }}</th>
-					</tr>
-					</thead>
-					<tbody>
-					{% for review in reviews %}
-						<tr class="{% if review.validated %}alert-success{% else %}alert-error{% endif %}">
-							<td>
-								<a href="{{ asset('uploads/uvs/'~review.filename) }}">
-									{{ ('uvs.reviews.'~review.type)|trans }}
-									{{ review.semester }}
-									{{ review.uv.code }}
-								</a>
-							</td>
-							<td>
-								{% if not review.validated %}
-								<a href="{{ path('admin_uvs_review_validate', {'id': review.id}) }}">
-									{{ 'uvs.admin.index.validate'|trans }}</a> -
-								{% else %}
-									<a href="{{ path('admin_uvs_review_unvalidate', {'id': review.id}) }}">
-										{{ 'uvs.admin.index.unvalidate'|trans }}</a> -
-								{% endif %}
-								<a href="{{ path('admin_uvs_review_delete', {'id': review.id}) }}">
-									{{ 'uvs.admin.index.delete'|trans }}
-								</a>
-							</td>
-						</tr>
-					{% endfor %}
-					</tbody>
-				</table>
-			</div>
-			<div class="span6">
-				<h4>{{ 'uvs.admin.index.lastsComments'|trans }}</h4>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>{{ 'uvs.admin.index.review'|trans }}</th>
+                        <th>{{ 'uvs.admin.index.actions'|trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for review in reviews %}
+                        <tr class="{% if review.validated %}alert-success{% else %}alert-error{% endif %}">
+                            <td>
+                                <a href="{{ asset('uploads/uvs/'~review.filename) }}">
+                                    {{ ('uvs.reviews.'~review.type)|trans }}
+                                    {{ review.semester }}
+                                    {{ review.uv.code }}
+                                </a>
+                            </td>
+                            <td>
+                                {% if not review.validated %}
+                                <a href="{{ path('admin_uvs_review_validate', {'id': review.id}) }}">
+                                    {{ 'uvs.admin.index.validate'|trans }}</a> -
+                                {% else %}
+                                    <a href="{{ path('admin_uvs_review_unvalidate', {'id': review.id}) }}">
+                                        {{ 'uvs.admin.index.unvalidate'|trans }}</a> -
+                                {% endif %}
+                                <a href="{{ path('admin_uvs_review_delete', {'id': review.id}) }}">
+                                    {{ 'uvs.admin.index.delete'|trans }}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="span6">
+                <h4>{{ 'uvs.admin.index.lastsComments'|trans }}</h4>
 
-				<a href="{{ path('admin_uvs_comments') }}">{{ 'uvs.admin.index.comments'|trans }}</a>
+                <a href="{{ path('admin_uvs_comments') }}">{{ 'uvs.admin.index.comments'|trans }}</a>
 
-				<hr />
+                <hr />
 
-				{% for comment in comments %}
-					<div class="uv-view-comment">
-						<a href="{{ path('user_view', {'login': comment.user.login}) }}">
-							<img src="{{ asset('uploads/photos/'~comment.user.avatar) }}" class="uv-view-comment-avatar" />
-						</a>
-						<div class="uv-view-comment-author">
-							<a href="{{ path('user_view', {'login': comment.user.login}) }}">
-								{{ comment.user.fullName }}
-							</a>
-							-
-							<a href="{{ path('uvs_view', {'slug': comment.uv.slug, 'name': comment.uv.name|slugify}) }}">
-								{{ comment.uv.code }}
-							</a>
+                {% for comment in comments %}
+                    <div class="uv-view-comment">
+                        <a href="{{ path('user_view', {'login': comment.user.login}) }}">
+                            <img src="{{ asset('uploads/photos/'~comment.user.avatar) }}" class="uv-view-comment-avatar" />
+                        </a>
+                        <div class="uv-view-comment-author">
+                            <a href="{{ path('user_view', {'login': comment.user.login}) }}">
+                                {{ comment.user.fullName }}
+                            </a>
+                            -
+                            <a href="{{ path('uvs_view', {'slug': comment.uv.slug, 'name': comment.uv.name|slugify}) }}">
+                                {{ comment.uv.code }}
+                            </a>
 
-							<a href="{{ path('admin_uvs_comment_delete', {'id': comment.id}) }}"
-							   class="pull-right" style="font-weight: lighter;">
-								{{ 'uvs.admin.index.delete'|trans }}
-							</a>
-						</div>
-						<div class="uv-view-comment-date">
-							{{ comment.createdAt|date('d/m/Y H:i') }}
-						</div>
-						<div class="uv-view-comment-content">
-							{{ comment.body|bbcode_filter('default_filter') }}
-						</div>
-					</div>
-				{% endfor %}
-			</div>
-		</div>
-	</div>
+                            <a href="{{ path('admin_uvs_comment_delete', {'id': comment.id}) }}"
+                               class="pull-right" style="font-weight: lighter;">
+                                {{ 'uvs.admin.index.delete'|trans }}
+                            </a>
+                        </div>
+                        <div class="uv-view-comment-date">
+                            {{ comment.createdAt|date('d/m/Y H:i') }}
+                        </div>
+                        <div class="uv-view-comment-content">
+                            {{ comment.body|bbcode_filter('default_filter') }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

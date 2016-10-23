@@ -9,8 +9,9 @@ use Etu\Core\UserBundle\Entity\Course;
 class CourseTransformer extends AbstractTransformer
 {
     /**
-     * @param Course $course
+     * @param Course   $course
      * @param EmbedBag $includes
+     *
      * @return array
      */
     public function transformUnique($course, EmbedBag $includes)
@@ -20,6 +21,7 @@ class CourseTransformer extends AbstractTransformer
 
     /**
      * @param Course $course
+     *
      * @return array
      */
     private function getData(Course $course)
@@ -29,8 +31,8 @@ class CourseTransformer extends AbstractTransformer
 
         return [
             'day' => $course->getDay(),
-            'start' => [ 'hour' => (int) $start[0], 'minute' => (int) $start[1] ],
-            'end' => [ 'hour' => (int) $end[0], 'minute' => (int) $end[1] ],
+            'start' => ['hour' => (int) $start[0], 'minute' => (int) $start[1]],
+            'end' => ['hour' => (int) $end[0], 'minute' => (int) $end[1]],
             'week' => $course->getWeek(),
             'uv' => $course->getUv(),
             'type' => $course->getType(),

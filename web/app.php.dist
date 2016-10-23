@@ -1,7 +1,7 @@
 <?php
 if(file_exists('.maintenance')){
-	echo file_get_contents(__DIR__.'/maintenance.html');
-	exit;
+    echo file_get_contents(__DIR__.'/maintenance.html');
+    exit;
 }
 
 use Symfony\Component\ClassLoader\ApcClassLoader;

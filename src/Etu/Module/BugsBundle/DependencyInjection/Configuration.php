@@ -12,8 +12,9 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
-	    $treeBuilder = new TreeBuilder();
-	    $rootNode = $treeBuilder->root('etu_bugs');
-		return $treeBuilder;
+        $treeBuilder = new TreeBuilder();
+        $rootNode = $treeBuilder->root('etu_bugs');
+
+        return $treeBuilder;
     }
 }

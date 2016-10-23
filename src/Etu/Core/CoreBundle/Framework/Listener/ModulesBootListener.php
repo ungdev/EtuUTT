@@ -31,7 +31,6 @@ class ModulesBootListener
      */
     protected $container;
 
-
     public function __construct(
         Router $router,
         ModulesManager $modulesManager,

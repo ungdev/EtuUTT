@@ -10,36 +10,37 @@ use Etu\Core\UserBundle\Schedule\Model\Course;
  */
 class ScheduleApi
 {
-	/**
-	 * @var CriBrowser
-	 */
-	protected $browser;
+    /**
+     * @var CriBrowser
+     */
+    protected $browser;
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		$this->browser = new CriBrowser();
-	}
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->browser = new CriBrowser();
+    }
 
-	/**
-	 * @param integer $page
-	 * @return bool
-	 */
-	public function findPage($page)
-	{
-		$result = json_decode($this->browser->request(array('all' => '1', 'page' => $page)));
+    /**
+     * @param int $page
+     *
+     * @return bool
+     */
+    public function findPage($page)
+    {
+        $result = json_decode($this->browser->request(array('all' => '1', 'page' => $page)));
 
-		$courses = array();
+        $courses = array();
 
-		foreach ($result->body->courses as $values) {
-			$courses[] = new Course($values);
-		}
+        foreach ($result->body->courses as $values) {
+            $courses[] = new Course($values);
+        }
 
-		return array(
-			'paging' => $result->body->paging,
-			'courses' => $courses,
-		);
-	}
+        return array(
+            'paging' => $result->body->paging,
+            'courses' => $courses,
+        );
+    }
 }

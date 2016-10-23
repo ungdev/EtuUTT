@@ -4,10 +4,9 @@ namespace Etu\Core\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Organization
+ * Organization.
  *
  * @ORM\Table(name="etu_organizations_members")
  * @ORM\Entity()
@@ -15,32 +14,32 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Member
 {
-	const ROLE_PRESIDENT = 40;
-	const ROLE_V_PRESIDENT = 39;
+    const ROLE_PRESIDENT = 40;
+    const ROLE_V_PRESIDENT = 39;
 
-	const ROLE_TREASURER = 30;
-	const ROLE_V_TREASURER = 29;
+    const ROLE_TREASURER = 30;
+    const ROLE_V_TREASURER = 29;
 
-	const ROLE_SECRETARY = 20;
-	const ROLE_V_SECRETARY = 19;
+    const ROLE_SECRETARY = 20;
+    const ROLE_V_SECRETARY = 19;
 
-	const ROLE_MEMBER = 10;
+    const ROLE_MEMBER = 10;
 
     public static $roles = [
-        self::ROLE_PRESIDENT        => 'president',
-        self::ROLE_V_PRESIDENT      => 'vice_president',
+        self::ROLE_PRESIDENT => 'president',
+        self::ROLE_V_PRESIDENT => 'vice_president',
 
-        self::ROLE_TREASURER        => 'treasurer',
-        self::ROLE_V_TREASURER      => 'vice_treasurer',
+        self::ROLE_TREASURER => 'treasurer',
+        self::ROLE_V_TREASURER => 'vice_treasurer',
 
-        self::ROLE_SECRETARY        => 'secretary',
-        self::ROLE_V_SECRETARY      => 'vice_secretary',
+        self::ROLE_SECRETARY => 'secretary',
+        self::ROLE_V_SECRETARY => 'vice_secretary',
 
-        self::ROLE_MEMBER           => 'member',
+        self::ROLE_MEMBER => 'member',
     ];
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -48,271 +47,280 @@ class Member
      */
     protected $id;
 
-	/**
-	 * @var User $president
-	 *
-	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User", inversedBy="memberships")
-	 * @ORM\JoinColumn()
-	 */
-	protected $user;
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User", inversedBy="memberships")
+     * @ORM\JoinColumn()
+     */
+    protected $user;
 
-	/**
-	 * @var Organization $organization
-	 *
-	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\Organization", inversedBy="memberships")
-	 * @ORM\JoinColumn()
-	 */
-	protected $organization;
+    /**
+     * @var Organization
+     *
+     * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\Organization", inversedBy="memberships")
+     * @ORM\JoinColumn()
+     */
+    protected $organization;
 
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(type="smallint")
-	 */
-	protected $role;
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="smallint")
+     */
+    protected $role;
 
-	/**
-	 * @var \DateTime $created
-	 *
-	 * @Gedmo\Timestampable(on="create")
-	 * @ORM\Column(type="datetime")
-	 */
-	protected $createdAt;
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    protected $createdAt;
 
-	/**
-	 * @var \DateTime $deletedAt
-	 *
-	 * @ORM\Column(type="datetime", nullable = true)
-	 */
-	protected $deletedAt;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable = true)
+     */
+    protected $deletedAt;
 
-	/**
-	 * @var array
-	 *
-	 * @ORM\Column(type="array")
-	 */
-	protected $permissions;
+    /**
+     * @var array
+     *
+     * @ORM\Column(type="array")
+     */
+    protected $permissions;
 
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->role = self::ROLE_MEMBER;
+        $this->permissions = array();
+    }
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		$this->role = self::ROLE_MEMBER;
-		$this->permissions = array();
-	}
+    /**
+     * @return int
+     */
+    public function isFromBureau()
+    {
+        return in_array($this->role, array(
+            self::ROLE_PRESIDENT, self::ROLE_SECRETARY, self::ROLE_TREASURER,
+            self::ROLE_V_PRESIDENT, self::ROLE_V_SECRETARY, self::ROLE_V_TREASURER,
+        ));
+    }
 
-	/**
-	 * @return int
-	 */
-	public function isFromBureau()
-	{
-		return in_array($this->role, array(
-			self::ROLE_PRESIDENT, self::ROLE_SECRETARY, self::ROLE_TREASURER,
-			self::ROLE_V_PRESIDENT, self::ROLE_V_SECRETARY, self::ROLE_V_TREASURER
-		));
-	}
+    /**
+     * @return array
+     */
+    public static function getAvailableRoles()
+    {
+        return array(
+            self::ROLE_MEMBER => self::ROLE_MEMBER,
+            self::ROLE_PRESIDENT => self::ROLE_PRESIDENT,
+            self::ROLE_SECRETARY => self::ROLE_SECRETARY,
+            self::ROLE_TREASURER => self::ROLE_TREASURER,
+            self::ROLE_V_PRESIDENT => self::ROLE_V_PRESIDENT,
+            self::ROLE_V_SECRETARY => self::ROLE_V_SECRETARY,
+            self::ROLE_V_TREASURER => self::ROLE_V_TREASURER,
+        );
+    }
 
-	/**
-	 * @return array
-	 */
-	public static function getAvailableRoles()
-	{
-		return array(
-			self::ROLE_MEMBER => self::ROLE_MEMBER,
-			self::ROLE_PRESIDENT => self::ROLE_PRESIDENT,
-			self::ROLE_SECRETARY => self::ROLE_SECRETARY,
-			self::ROLE_TREASURER => self::ROLE_TREASURER,
-			self::ROLE_V_PRESIDENT => self::ROLE_V_PRESIDENT,
-			self::ROLE_V_SECRETARY => self::ROLE_V_SECRETARY,
-			self::ROLE_V_TREASURER => self::ROLE_V_TREASURER
-		);
-	}
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	/**
-	 * @return int
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+    /**
+     * @param \DateTime $date
+     *
+     * @return Member
+     */
+    public function setDate(\DateTime $date)
+    {
+        $this->createdAt = $date;
 
-	/**
-	 * @param \DateTime $date
-	 * @return Member
-	 */
-	public function setDate(\DateTime $date)
-	{
-		$this->createdAt = $date;
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->createdAt;
+    }
 
-	/**
-	 * @return \DateTime
-	 */
-	public function getDate()
-	{
-		return $this->createdAt;
-	}
+    /**
+     * @param \Etu\Core\UserBundle\Entity\Organization $organization
+     *
+     * @return Member
+     */
+    public function setOrganization(Organization $organization)
+    {
+        $this->organization = $organization;
 
-	/**
-	 * @param \Etu\Core\UserBundle\Entity\Organization $organization
-	 * @return Member
-	 */
-	public function setOrganization(Organization $organization)
-	{
-		$this->organization = $organization;
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * @return \Etu\Core\UserBundle\Entity\Organization
+     */
+    public function getOrganization()
+    {
+        return $this->organization;
+    }
 
-	/**
-	 * @return \Etu\Core\UserBundle\Entity\Organization
-	 */
-	public function getOrganization()
-	{
-		return $this->organization;
-	}
+    /**
+     * @param array $permissions
+     *
+     * @return Member
+     */
+    public function setPermissions(array $permissions)
+    {
+        $this->permissions = $permissions;
 
-	/**
-	 * @param array $permissions
-	 * @return Member
-	 */
-	public function setPermissions(array $permissions)
-	{
-		$this->permissions = $permissions;
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * @param string $permissionName
+     *
+     * @return bool
+     */
+    public function hasPermission($permissionName)
+    {
+        return in_array($permissionName, $this->permissions);
+    }
 
-	/**
-	 * @param string $permissionName
-	 * @return bool
-	 */
-	public function hasPermission($permissionName)
-	{
-		return in_array($permissionName, $this->permissions);
-	}
+    /**
+     * @param string $permission
+     *
+     * @return Member
+     */
+    public function addPermission($permission)
+    {
+        if (!in_array($permission, $this->permissions)) {
+            $this->permissions[] = $permission;
+        }
 
-	/**
-	 * @param string $permission
-	 * @return Member
-	 */
-	public function addPermission($permission)
-	{
-		if (! in_array($permission, $this->permissions)) {
-			$this->permissions[] = $permission;
-		}
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * @param string $permission
+     *
+     * @return Member
+     */
+    public function removePermission($permission)
+    {
+        if (($key = array_search($permission, $this->permissions)) !== false) {
+            unset($this->permissions[$key]);
+        }
 
-	/**
-	 * @param string $permission
-	 * @return Member
-	 */
-	public function removePermission($permission)
-	{
-		if (($key = array_search($permission, $this->permissions)) !== false) {
-			unset($this->permissions[$key]);
-		}
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * @return array
+     */
+    public function getPermissions()
+    {
+        return $this->permissions;
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getPermissions()
-	{
-		return $this->permissions;
-	}
+    /**
+     * @param string $role
+     *
+     * @return Member
+     */
+    public function setRole($role)
+    {
+        if (in_array($role, self::getAvailableRoles())) {
+            $this->role = $role;
+        }
 
-	/**
-	 * @param string $role
-	 * @return Member
-	 */
-	public function setRole($role)
-	{
-		if (in_array($role, self::getAvailableRoles())) {
-			$this->role = $role;
-		}
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getRole()
-	{
-		return $this->role;
-	}
+    /**
+     * @param \Etu\Core\UserBundle\Entity\User $user
+     *
+     * @return Member
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
 
-	/**
-	 * @param \Etu\Core\UserBundle\Entity\User $user
-	 * @return Member
-	 */
-	public function setUser($user)
-	{
-		$this->user = $user;
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * @return \Etu\Core\UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 
-	/**
-	 * @return \Etu\Core\UserBundle\Entity\User
-	 */
-	public function getUser()
-	{
-		return $this->user;
-	}
+    /**
+     * Set createdAt.
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return $this
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
 
-	/**
-	 * Set createdAt
-	 *
-	 * @param \DateTime $createdAt
-	 * @return $this
-	 */
-	public function setCreatedAt($createdAt)
-	{
-		$this->createdAt = $createdAt;
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * Get createdAt.
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
 
-	/**
-	 * Get createdAt
-	 *
-	 * @return \DateTime
-	 */
-	public function getCreatedAt()
-	{
-		return $this->createdAt;
-	}
+    /**
+     * Set deletedAt.
+     *
+     * @param \DateTime $deletedAt
+     *
+     * @return $this
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
 
-	/**
-	 * Set deletedAt
-	 *
-	 * @param \DateTime $deletedAt
-	 * @return $this
-	 */
-	public function setDeletedAt($deletedAt)
-	{
-		$this->deletedAt = $deletedAt;
+        return $this;
+    }
 
-		return $this;
-	}
-
-	/**
-	 * Get deletedAt
-	 *
-	 * @return \DateTime
-	 */
-	public function getDeletedAt()
-	{
-		return $this->deletedAt;
-	}
+    /**
+     * Get deletedAt.
+     *
+     * @return \DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
 }

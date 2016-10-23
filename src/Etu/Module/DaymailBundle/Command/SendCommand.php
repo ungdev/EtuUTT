@@ -5,9 +5,7 @@ namespace Etu\Module\DaymailBundle\Command;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Etu\Module\DaymailBundle\Entity\DaymailPart;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Doctrine\ORM\EntityManager;
@@ -16,7 +14,7 @@ use Symfony\Component\Translation\Translator;
 class SendCommand extends ContainerAwareCommand
 {
     /**
-     * Configure the command
+     * Configure the command.
      */
     protected function configure()
     {
@@ -27,9 +25,9 @@ class SendCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Input\InputInterface   $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return void
+     *
      * @throws \RuntimeException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -80,7 +78,7 @@ class SendCommand extends ContainerAwareCommand
 
             $content = $twig->render('EtuModuleDaymailBundle:Mail:daymail.html.twig', array(
                 'daymail' => $daymailParts[0],
-                'parts' => $daymailParts
+                'parts' => $daymailParts,
             ));
 
             $to = 'daymail@utt.fr';
@@ -93,8 +91,8 @@ class SendCommand extends ContainerAwareCommand
             $result = $mailer->send($message);
 
             if ($result > 0) {
-                $output->writeln("Daymail for ".date('d-m-Y')." sent to ".$to." (".count($daymailParts)
-                    ." part".(count($daymailParts) > 1 ? 's' : '').").\n");
+                $output->writeln('Daymail for '.date('d-m-Y').' sent to '.$to.' ('.count($daymailParts)
+                    .' part'.(count($daymailParts) > 1 ? 's' : '').").\n");
             } else {
                 $output->writeln("An error occured.\n");
 

@@ -11,7 +11,7 @@ class GrantTypeCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if (! $container->hasDefinition('etu.oauth.server')) {
+        if (!$container->hasDefinition('etu.oauth.server')) {
             return;
         }
 

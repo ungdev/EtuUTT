@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * OauthClients
+ * OauthClients.
  *
  * @ORM\Table(name="oauth_clients", indexes={ @ORM\Index(name="client_index", columns={ "clientId" }) })
  * @ORM\Entity
@@ -22,7 +22,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class OauthClient
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -31,7 +31,7 @@ class OauthClient
     private $id;
 
     /**
-     * @var User $user
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
      * @ORM\JoinColumn()
@@ -74,14 +74,14 @@ class OauthClient
     private $createdAt;
 
     /**
-     * @var \DateTime $deletedAt
+     * @var \DateTime
      *
      * @ORM\Column(type="datetime", nullable = true)
      */
     protected $deletedAt;
 
     /**
-     * @var OauthScope[] $scopes
+     * @var OauthScope[]
      *
      * @ORM\ManyToMany(targetEntity="OauthScope")
      * @ORM\JoinTable(name="oauth_clients_scopes")
@@ -96,7 +96,7 @@ class OauthClient
     public $file;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -105,13 +105,13 @@ class OauthClient
     }
 
     /**
-     * Upload the photo
+     * Upload the photo.
      *
-     * @return boolean
+     * @return bool
      */
     public function upload()
     {
-        $rootDir = __DIR__ . '/../../../../../web/uploads/apps';
+        $rootDir = __DIR__.'/../../../../../web/uploads/apps';
 
         /*
          * Upload and resize
@@ -120,7 +120,7 @@ class OauthClient
 
         // Create the logo thumbnail in a 200x200 box
         if (null === $this->file) {
-            $thumbnail = $imagine->open($rootDir . '/default.png')
+            $thumbnail = $imagine->open($rootDir.'/default.png')
                 ->thumbnail(new Box(200, 200), Image::THUMBNAIL_OUTBOUND);
         } else {
             $thumbnail = $imagine->open($this->file->getPathname())
@@ -128,7 +128,7 @@ class OauthClient
         }
 
         // Save the result
-        $thumbnail->save($rootDir . '/' . $this->getClientId().'.png');
+        $thumbnail->save($rootDir.'/'.$this->getClientId().'.png');
     }
 
     /**
@@ -148,9 +148,9 @@ class OauthClient
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -158,32 +158,33 @@ class OauthClient
     }
 
     /**
-     * Get client icon
+     * Get client icon.
      *
      * @return string
      */
     public function getIcon()
     {
-        return $this->clientId . '.png';
+        return $this->clientId.'.png';
     }
 
     /**
-     * Set clientId
+     * Set clientId.
      *
      * @param string $clientId
+     *
      * @return OauthClient
      */
     public function setClientId($clientId)
     {
         $this->clientId = $clientId;
-    
+
         return $this;
     }
 
     /**
-     * Get clientId
+     * Get clientId.
      *
-     * @return string 
+     * @return string
      */
     public function getClientId()
     {
@@ -191,22 +192,23 @@ class OauthClient
     }
 
     /**
-     * Set clientSecret
+     * Set clientSecret.
      *
      * @param string $clientSecret
+     *
      * @return OauthClient
      */
     public function setClientSecret($clientSecret)
     {
         $this->clientSecret = $clientSecret;
-    
+
         return $this;
     }
 
     /**
-     * Get clientSecret
+     * Get clientSecret.
      *
-     * @return string 
+     * @return string
      */
     public function getClientSecret()
     {
@@ -214,22 +216,23 @@ class OauthClient
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return OauthClient
      */
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
-     * Get name
+     * Get name.
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -237,22 +240,23 @@ class OauthClient
     }
 
     /**
-     * Set redirectUri
+     * Set redirectUri.
      *
      * @param string $redirectUri
+     *
      * @return OauthClient
      */
     public function setRedirectUri($redirectUri)
     {
         $this->redirectUri = $redirectUri;
-    
+
         return $this;
     }
 
     /**
-     * Get redirectUri
+     * Get redirectUri.
      *
-     * @return string 
+     * @return string
      */
     public function getRedirectUri()
     {
@@ -260,22 +264,23 @@ class OauthClient
     }
 
     /**
-     * Set grantTypes
+     * Set grantTypes.
      *
      * @param string $grantTypes
+     *
      * @return OauthClient
      */
     public function setGrantTypes($grantTypes)
     {
         $this->grantTypes = $grantTypes;
-    
+
         return $this;
     }
 
     /**
-     * Get grantTypes
+     * Get grantTypes.
      *
-     * @return string 
+     * @return string
      */
     public function getGrantTypes()
     {
@@ -283,22 +288,23 @@ class OauthClient
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
+     *
      * @return OauthClient
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -306,20 +312,21 @@ class OauthClient
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param User $user
+     *
      * @return OauthClient
      */
     public function setUser(User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return User
      */
@@ -329,20 +336,21 @@ class OauthClient
     }
 
     /**
-     * Add scopes
+     * Add scopes.
      *
      * @param OauthScope $scopes
+     *
      * @return OauthClient
      */
     public function addScope(OauthScope $scopes)
     {
         $this->scopes[] = $scopes;
-    
+
         return $this;
     }
 
     /**
-     * Remove scopes
+     * Remove scopes.
      *
      * @param OauthScope $scopes
      */
@@ -352,9 +360,9 @@ class OauthClient
     }
 
     /**
-     * Get scopes
+     * Get scopes.
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getScopes()
     {

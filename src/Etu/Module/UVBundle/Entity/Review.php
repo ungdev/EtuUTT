@@ -3,11 +3,8 @@
 namespace Etu\Module\UVBundle\Entity;
 
 use Etu\Core\UserBundle\Entity\User;
-
 use Doctrine\ORM\Mapping as ORM;
-
 use Gedmo\Mapping\Annotation as Gedmo;
-
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -22,20 +19,20 @@ class Review
     const TYPE_PARTIEL_1 = 'partiel_1';
     const TYPE_PARTIEL_2 = 'partiel_2';
     const TYPE_DM = 'dm';
-	const TYPE_MIDTERM = 'midterm';
-	const TYPE_FINAL = 'final';
+    const TYPE_MIDTERM = 'midterm';
+    const TYPE_FINAL = 'final';
 
-	public static $types = array(
+    public static $types = array(
         self::TYPE_PARTIEL => 'uvs.reviews.partiel',
         self::TYPE_PARTIEL_1 => 'uvs.reviews.partiel_1',
         self::TYPE_PARTIEL_2 => 'uvs.reviews.partiel_2',
         self::TYPE_DM => 'uvs.reviews.dm',
-		self::TYPE_MIDTERM => 'uvs.reviews.midterm',
-		self::TYPE_FINAL => 'uvs.reviews.final',
-	);
+        self::TYPE_MIDTERM => 'uvs.reviews.midterm',
+        self::TYPE_FINAL => 'uvs.reviews.final',
+    );
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -43,127 +40,127 @@ class Review
      */
     protected $id;
 
-	/**
-	 * @var UV $uv
-	 *
-	 * @ORM\ManyToOne(targetEntity="UV", inversedBy="reviews")
-	 * @ORM\JoinColumn()
-	 */
-	protected $uv;
+    /**
+     * @var UV
+     *
+     * @ORM\ManyToOne(targetEntity="UV", inversedBy="reviews")
+     * @ORM\JoinColumn()
+     */
+    protected $uv;
 
-	/**
-	 * @var User $sender
-	 *
-	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
-	 * @ORM\JoinColumn()
-	 */
-	protected $sender;
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
+     * @ORM\JoinColumn()
+     */
+    protected $sender;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(type="string", length=20)
-	 *
-	 * @Assert\NotBlank()
-	 */
-	protected $type = self::TYPE_PARTIEL;
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=20)
+     *
+     * @Assert\NotBlank()
+     */
+    protected $type = self::TYPE_PARTIEL;
 
-	/**
-	 * @var \DateTime
-	 *
-	 * @Gedmo\Timestampable(on="create")
-	 * @ORM\Column(type="datetime")
-	 */
-	protected $createdAt;
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    protected $createdAt;
 
-	/**
-	 * @var \DateTime
-	 *
-	 * @Gedmo\Timestampable(on="update")
-	 * @ORM\Column(type="datetime")
-	 */
-	protected $updatedAt;
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+     */
+    protected $updatedAt;
 
-	/**
-	 * @var \DateTime $deletedAt
-	 *
-	 * @ORM\Column(type="datetime", nullable = true)
-	 */
-	protected $deletedAt;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable = true)
+     */
+    protected $deletedAt;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(type="string", length=10, nullable = true)
-	 *
-	 * @Assert\NotBlank()
-	 */
-	protected $semester;
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=10, nullable = true)
+     *
+     * @Assert\NotBlank()
+     */
+    protected $semester;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(type="string", length=50, nullable = true)
-	 */
-	protected $filename;
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=50, nullable = true)
+     */
+    protected $filename;
 
-	/**
-	 * @var boolean
-	 *
-	 * @ORM\Column(type="boolean")
-	 */
-	protected $validated = false;
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $validated = false;
 
-	/**
-	 * Temporary variable to store uploaded file during update
-	 *
-	 * @var UploadedFile
-	 *
-	 * @Assert\File(maxSize="10M", mimeTypes={
-	 *      "application/pdf",
-	 *      "application/x-pdf",
-	 *      "image/*"
-	 * })
-	 */
-	public $file;
+    /**
+     * Temporary variable to store uploaded file during update.
+     *
+     * @var UploadedFile
+     *
+     * @Assert\File(maxSize="10M", mimeTypes={
+     *      "application/pdf",
+     *      "application/x-pdf",
+     *      "image/*"
+     * })
+     */
+    public $file;
 
-	/**
-	 * @return array
-	 */
-	public static function availableSemesters()
-	{
-		$semesters = array();
+    /**
+     * @return array
+     */
+    public static function availableSemesters()
+    {
+        $semesters = array();
 
-		for ($i = date('Y'); $i >= date('Y') - 15; $i--) {
-			$semesters['P'.$i] = 'P'.$i;
-			$semesters['A'.$i] = 'A'.$i;
-		}
+        for ($i = date('Y'); $i >= date('Y') - 15; --$i) {
+            $semesters['P'.$i] = 'P'.$i;
+            $semesters['A'.$i] = 'A'.$i;
+        }
 
-		if (User::currentSemester() == 'P'.date('Y')) {
-			unset($semesters['A'.date('Y')]);
-		}
+        if (User::currentSemester() == 'P'.date('Y')) {
+            unset($semesters['A'.date('Y')]);
+        }
 
-		return $semesters;
-	}
+        return $semesters;
+    }
 
-	/**
-	 * Upload the file
-	 *
-	 * @return boolean
-	 */
-	public function upload()
-	{
-		if (null === $this->file) {
-			return false;
-		}
+    /**
+     * Upload the file.
+     *
+     * @return bool
+     */
+    public function upload()
+    {
+        if (null === $this->file) {
+            return false;
+        }
 
-		if (! file_exists(__DIR__.'/../../../../../web/uploads/uvs')) {
-			mkdir(__DIR__.'/../../../../../web/uploads/uvs', 0777, true);
-		}
+        if (!file_exists(__DIR__.'/../../../../../web/uploads/uvs')) {
+            mkdir(__DIR__.'/../../../../../web/uploads/uvs', 0777, true);
+        }
 
-		if ($this->type == self::TYPE_FINAL) {
-			$name = 'final';
-		} elseif ($this->type == self::TYPE_MIDTERM) {
+        if ($this->type == self::TYPE_FINAL) {
+            $name = 'final';
+        } elseif ($this->type == self::TYPE_MIDTERM) {
             $name = 'median';
         } elseif ($this->type == self::TYPE_PARTIEL_1) {
             $name = 'partiel-1';
@@ -172,32 +169,32 @@ class Review
         } elseif ($this->type == self::TYPE_DM) {
             $name = 'dm';
         } else {
-			$name = 'partiel';
-		}
+            $name = 'partiel';
+        }
 
-		$name .= '-'.$this->semester;
-		$name .= '-'.$this->getUv()->getSlug();
-		$name .= '-'.substr(md5(uniqid(true)), 0, 3);
+        $name .= '-'.$this->semester;
+        $name .= '-'.$this->getUv()->getSlug();
+        $name .= '-'.substr(md5(uniqid(true)), 0, 3);
 
-		$ext = $this->file->guessExtension();
+        $ext = $this->file->guessExtension();
 
-		if (! $ext) {
-			$ext = $this->file->getClientOriginalExtension();
-		}
+        if (!$ext) {
+            $ext = $this->file->getClientOriginalExtension();
+        }
 
-		$name .= '.'.$ext;
+        $name .= '.'.$ext;
 
-		$this->file->move(__DIR__.'/../../../../../web/uploads/uvs', $name);
+        $this->file->move(__DIR__.'/../../../../../web/uploads/uvs', $name);
 
-		$this->filename = $name;
+        $this->filename = $name;
 
-		return true;
-	}
+        return true;
+    }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -205,9 +202,10 @@ class Review
     }
 
     /**
-     * Set type
+     * Set type.
      *
      * @param string $type
+     *
      * @return Review
      */
     public function setType($type)
@@ -218,7 +216,7 @@ class Review
     }
 
     /**
-     * Get type
+     * Get type.
      *
      * @return string
      */
@@ -228,7 +226,7 @@ class Review
     }
 
     /**
-     * Get type
+     * Get type.
      *
      * @return string
      */
@@ -238,9 +236,10 @@ class Review
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
+     *
      * @return Review
      */
     public function setCreatedAt($createdAt)
@@ -251,7 +250,7 @@ class Review
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -261,9 +260,10 @@ class Review
     }
 
     /**
-     * Set updatedAt
+     * Set updatedAt.
      *
      * @param \DateTime $updatedAt
+     *
      * @return Review
      */
     public function setUpdatedAt($updatedAt)
@@ -274,7 +274,7 @@ class Review
     }
 
     /**
-     * Get updatedAt
+     * Get updatedAt.
      *
      * @return \DateTime
      */
@@ -284,9 +284,10 @@ class Review
     }
 
     /**
-     * Set deletedAt
+     * Set deletedAt.
      *
      * @param \DateTime $deletedAt
+     *
      * @return Review
      */
     public function setDeletedAt($deletedAt)
@@ -297,7 +298,7 @@ class Review
     }
 
     /**
-     * Get deletedAt
+     * Get deletedAt.
      *
      * @return \DateTime
      */
@@ -307,9 +308,10 @@ class Review
     }
 
     /**
-     * Set semester
+     * Set semester.
      *
      * @param string $semester
+     *
      * @return Review
      */
     public function setSemester($semester)
@@ -320,7 +322,7 @@ class Review
     }
 
     /**
-     * Get semester
+     * Get semester.
      *
      * @return string
      */
@@ -330,9 +332,10 @@ class Review
     }
 
     /**
-     * Set filename
+     * Set filename.
      *
      * @param string $filename
+     *
      * @return Review
      */
     public function setFilename($filename)
@@ -343,7 +346,7 @@ class Review
     }
 
     /**
-     * Get filename
+     * Get filename.
      *
      * @return string
      */
@@ -353,9 +356,10 @@ class Review
     }
 
     /**
-     * Set validated
+     * Set validated.
      *
-     * @param boolean $validated
+     * @param bool $validated
+     *
      * @return Review
      */
     public function setValidated($validated)
@@ -366,9 +370,9 @@ class Review
     }
 
     /**
-     * Get validated
+     * Get validated.
      *
-     * @return boolean
+     * @return bool
      */
     public function getValidated()
     {
@@ -376,9 +380,10 @@ class Review
     }
 
     /**
-     * Set uv
+     * Set uv.
      *
      * @param UV $uv
+     *
      * @return Review
      */
     public function setUv(UV $uv = null)
@@ -389,7 +394,7 @@ class Review
     }
 
     /**
-     * Get uv
+     * Get uv.
      *
      * @return UV
      */
@@ -398,26 +403,27 @@ class Review
         return $this->uv;
     }
 
-	/**
-	 * Set sender
-	 *
-	 * @param User $sender
-	 * @return Review
-	 */
-	public function setSender(User $sender = null)
-	{
-		$this->sender = $sender;
+    /**
+     * Set sender.
+     *
+     * @param User $sender
+     *
+     * @return Review
+     */
+    public function setSender(User $sender = null)
+    {
+        $this->sender = $sender;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Get sender
-	 *
-	 * @return User
-	 */
-	public function getSender()
-	{
-		return $this->sender;
-	}
+    /**
+     * Get sender.
+     *
+     * @return User
+     */
+    public function getSender()
+    {
+        return $this->sender;
+    }
 }

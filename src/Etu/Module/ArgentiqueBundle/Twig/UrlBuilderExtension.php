@@ -5,7 +5,7 @@ namespace Etu\Module\ArgentiqueBundle\Twig;
 use Etu\Module\ArgentiqueBundle\Glide\UrlBuilder;
 
 /**
- * Twig extension to compare privacies and to fetch them
+ * Twig extension to compare privacies and to fetch them.
  */
 class UrlBuilderExtension extends \Twig_Extension
 {
@@ -35,7 +35,8 @@ class UrlBuilderExtension extends \Twig_Extension
 
     /**
      * @param string $path
-     * @param array $options
+     * @param array  $options
+     *
      * @return string
      */
     public function generatePhotoUrl($path, $options = [])
@@ -45,11 +46,12 @@ class UrlBuilderExtension extends \Twig_Extension
 
     /**
      * @param $path
+     *
      * @return string
      */
     public function generateCollectionUrl($path)
     {
-        return $this->builder->getWebPath() . '/argentique/directory/' . $path;
+        return $this->builder->getWebPath().'/argentique/directory/'.$path;
     }
 
     /**

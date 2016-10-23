@@ -7,49 +7,49 @@
 {% block main_menu_link_assos %} active{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/assos.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('src/img/titles/assos.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
-	<ul class="nav nav-tabs page-tabs">
-		<li class="pull-right active page-tabs-resolved-active">
-			<a href="{{ path('elus_index') }}">
-				{{ 'assos.main.menu.elus'|trans }}
-			</a>
-		</li>
-		<li class="pull-right">
-			<a href="{{ path('orgas_index') }}">
-				{{ 'assos.main.menu.orgas'|trans }}
-			</a>
-		</li>
-	</ul>
+    <ul class="nav nav-tabs page-tabs">
+        <li class="pull-right active page-tabs-resolved-active">
+            <a href="{{ path('elus_index') }}">
+                {{ 'assos.main.menu.elus'|trans }}
+            </a>
+        </li>
+        <li class="pull-right">
+            <a href="{{ path('orgas_index') }}">
+                {{ 'assos.main.menu.orgas'|trans }}
+            </a>
+        </li>
+    </ul>
 
-	<div class="padding20-sides">
-		<div class="navigation">
-			{{ knp_pagination_render(pagination) }}
-		</div>
+    <div class="padding20-sides">
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
 
-		{% for key, orga in pagination %}
-			<a href="{{ path('orgas_view', {'login': orga.login}) }}" class="asso{% if key == 0 %} asso-first{% endif %}">
-				<img src="{{ asset('uploads/logos/'~orga.logo) }}" alt="{{ orga.name }}" title="{{ orga.name }}" class="asso-logo" />
+        {% for key, orga in pagination %}
+            <a href="{{ path('orgas_view', {'login': orga.login}) }}" class="asso{% if key == 0 %} asso-first{% endif %}">
+                <img src="{{ asset('uploads/logos/'~orga.logo) }}" alt="{{ orga.name }}" title="{{ orga.name }}" class="asso-logo" />
 
-				<h5 class="asso-name asso-info">
-					{{ orga.name }}
-				</h5>
+                <h5 class="asso-name asso-info">
+                    {{ orga.name }}
+                </h5>
 
-				{% if orga.president %}
-					<p class="muted asso-info">{{ 'assos.main.index.president'|trans }}: {{ orga.president.fullName }}</p>
-				{% endif %}
+                {% if orga.president %}
+                    <p class="muted asso-info">{{ 'assos.main.index.president'|trans }}: {{ orga.president.fullName }}</p>
+                {% endif %}
 
-				<p class="muted asso-info hidden-phone">{{ orga.descriptionShort }}</p>
+                <p class="muted asso-info hidden-phone">{{ orga.descriptionShort }}</p>
 
-				<div class="clear"></div>
-			</a>
-		{% endfor %}
+                <div class="clear"></div>
+            </a>
+        {% endfor %}
 
-		{# display navigation #}
-		<div class="navigation">
-			{{ knp_pagination_render(pagination) }}
-		</div>
-	</div>
+        {# display navigation #}
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
 {% endblock %}

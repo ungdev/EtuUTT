@@ -3,43 +3,43 @@
 {% block title %}{{ 'uvs.main.search.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/uvs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('src/img/titles/uvs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
-	<div class="padding20-all">
-		{% include 'EtuModuleUVBundle:Main:chooser.html.twig' %}
+    <div class="padding20-all">
+        {% include 'EtuModuleUVBundle:Main:chooser.html.twig' %}
 
-		<h4>{{ term }}</h4>
+        <h4>{{ term }}</h4>
 
-		<div class="navigation">
-			{{ knp_pagination_render(pagination) }}
-		</div>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
 
-		<hr />
+        <hr />
 
-		<ul class="uvs-list">
-			{% for uv in pagination %}
-				<li>
-					<a href="{{ path('uvs_view', {'slug': uv.slug, 'name': uv.name|slugify}) }}">
-						<img src="{{ asset('src/img/uvs/'~uv.category~'.png') }}"
-							 class="uvs-list-icon"
-							 alt="({{ uv.category|upper }})"
-							 title="{{ uv.category|upper }}" />
-						{{ uv.code }} - {{ uv.name }}
-					</a>
-				</li>
-			{% else %}
-				<li>{{ 'uvs.main.search.noResult'|trans }}</li>
-			{% endfor %}
-		</ul>
+        <ul class="uvs-list">
+            {% for uv in pagination %}
+                <li>
+                    <a href="{{ path('uvs_view', {'slug': uv.slug, 'name': uv.name|slugify}) }}">
+                        <img src="{{ asset('src/img/uvs/'~uv.category~'.png') }}"
+                             class="uvs-list-icon"
+                             alt="({{ uv.category|upper }})"
+                             title="{{ uv.category|upper }}" />
+                        {{ uv.code }} - {{ uv.name }}
+                    </a>
+                </li>
+            {% else %}
+                <li>{{ 'uvs.main.search.noResult'|trans }}</li>
+            {% endfor %}
+        </ul>
 
-		<div class="clear"></div>
+        <div class="clear"></div>
 
-		<hr />
+        <hr />
 
-		<div class="navigation">
-			{{ knp_pagination_render(pagination) }}
-		</div>
-	</div>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
 {% endblock %}

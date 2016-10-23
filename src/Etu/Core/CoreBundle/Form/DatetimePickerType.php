@@ -7,23 +7,23 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class DatetimePickerType extends AbstractType
 {
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
-	{
-		$resolver->setDefaults(array(
-			'date_widget' => 'single_text',
-			'date_format' => 'dd/MM/yyyy',
-			'time_widget' => 'single_text',
-			'attr' => array('class' => 'datetime-picker')
-		));
-	}
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'date_widget' => 'single_text',
+            'date_format' => 'dd/MM/yyyy',
+            'time_widget' => 'single_text',
+            'attr' => array('class' => 'datetime-picker'),
+        ));
+    }
 
-	public function getParent()
-	{
-		return 'datetime';
-	}
+    public function getParent()
+    {
+        return 'datetime';
+    }
 
-	public function getName()
-	{
-		return 'datetime_picker';
-	}
+    public function getName()
+    {
+        return 'datetime_picker';
+    }
 }

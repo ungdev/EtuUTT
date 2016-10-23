@@ -3,16 +3,16 @@
 {% block title %}{{ 'cumul.main.index.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('src/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block javascripts %}
     <script type="text/javascript">var logins = {{ logins|raw }}, root = '{{ path('cumul_index') }}';</script>
-	<script type="text/javascript" src="{{ asset('src/js/bundles/cumul.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('src/js/bundles/cumul.js') }}"></script>
 {% endblock %}
 
 {% block content %}
-	<div class="padding20-all">
+    <div class="padding20-all">
         <div class="visible-phone">
             <p class="alert">
                 {{ 'cumul.main.index.warning_phones'|trans }}
@@ -343,5 +343,5 @@
                 {% endfor %}
             </div>
         </div>
-	</div>
+    </div>
 {% endblock %}

@@ -39,7 +39,7 @@ class PublicUserController extends ApiController
         $user = $em->getRepository('EtuUserBundle:User')->find($this->getAccessToken()->getUser());
 
         return $this->format([
-            'data' => $this->get('etu.api.user.transformer')->transform($user)
+            'data' => $this->get('etu.api.user.transformer')->transform($user),
         ]);
     }
 }

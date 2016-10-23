@@ -36,6 +36,6 @@ class CreateClientCommand extends ContainerAwareCommand
         $em->persist($client);
         $em->flush();
 
-        $output->writeln('<fg=green>Client ' . $client->getClientId() . ' created with secret ' . $client->getClientSecret() . '</fg=green>');
+        $output->writeln('<fg=green>Client '.$client->getClientId().' created with secret '.$client->getClientSecret().'</fg=green>');
     }
 }

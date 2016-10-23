@@ -5,90 +5,90 @@
 {% block meta_desc %}{{ 'user.auth.connectExternal.meta'|trans }}{% endblock %}
 
 {% block page %}
-	<section class="page">
-		<div class="container page-container">
+    <section class="page">
+        <div class="container page-container">
 
-			<h2 class="page-title source-sans-pro">
-				<img src="{{ asset('src/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+            <h2 class="page-title source-sans-pro">
+                <img src="{{ asset('src/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 
-				{{ block('title') }}
-			</h2>
+                {{ block('title') }}
+            </h2>
 
-			{% if message %}
-				<div class="page-alert-mobile alert alert-{{ message.type }}">
-					{{ message.message|trans }}
-				</div>
-			{% endif %}
+            {% if message %}
+                <div class="page-alert-mobile alert alert-{{ message.type }}">
+                    {{ message.message|trans }}
+                </div>
+            {% endif %}
 
-			<div class="content content-connect">
-				<ul class="nav nav-tabs page-tabs">
-					<li>
-						<a href="{{ path('user_connect') }}">
-							<i class="icon-chevron-left"></i>
-							{{ 'user.auth.connectExternal.change'|trans }}
-						</a>
-					</li>
-				</ul>
+            <div class="content content-connect">
+                <ul class="nav nav-tabs page-tabs">
+                    <li>
+                        <a href="{{ path('user_connect') }}">
+                            <i class="icon-chevron-left"></i>
+                            {{ 'user.auth.connectExternal.change'|trans }}
+                        </a>
+                    </li>
+                </ul>
 
-				<div class="padding20-all">
-					<p>
-						{{ 'user.auth.connectExternal.desc'|trans }}
-						<br />
-						<br />
-					</p>
-					<div class="row-fluid">
-						<div class="span2"></div>
-						<div class="span4">
-							<form method="post" class="form-horizontal">
-								<div class="control-group">
-									<label class="control-label">
-										<label for="username">{{ 'user.auth.connectExternal.identifier'|trans }}</label>
-									</label>
-									<div class="controls">
-										<input type="text" id="username" name="_username" value="{{ last_username }}" required/>
-									</div>
-								</div>
-								<div class="control-group">
-									<label class="control-label">
-										<label for="password">{{ 'user.auth.connectExternal.password'|trans }}</label>
-									</label>
-									<div class="controls">
-										<input type="password" id="password" name="_password" required/>
-									</div>
-								</div>
-								<div class="control-group">
-									<div class="controls">
-										<button type="submit" class="btn">
-											{{ 'user.auth.connectExternal.submit'|trans }}
-										</button>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
+                <div class="padding20-all">
+                    <p>
+                        {{ 'user.auth.connectExternal.desc'|trans }}
+                        <br />
+                        <br />
+                    </p>
+                    <div class="row-fluid">
+                        <div class="span2"></div>
+                        <div class="span4">
+                            <form method="post" class="form-horizontal">
+                                <div class="control-group">
+                                    <label class="control-label">
+                                        <label for="username">{{ 'user.auth.connectExternal.identifier'|trans }}</label>
+                                    </label>
+                                    <div class="controls">
+                                        <input type="text" id="username" name="_username" value="{{ last_username }}" required/>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">
+                                        <label for="password">{{ 'user.auth.connectExternal.password'|trans }}</label>
+                                    </label>
+                                    <div class="controls">
+                                        <input type="password" id="password" name="_password" required/>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <button type="submit" class="btn">
+                                            {{ 'user.auth.connectExternal.submit'|trans }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-		</div>
-	</section>
+        </div>
+    </section>
 
-	<footer class="container footer-bottom">
-		<p>
-			<a href="#" class="footer-link change-locale">
-				{{ 'base.footer.change_locale'|trans }}
-			</a>
-			<a href="" id="next-change-locale-link" class="footer-link">
-				{{ 'base.footer.legalities'|trans }}
-			</a>
-			<a href="" class="footer-link">
-				{{ 'base.footer.help_us'|trans }}
-			</a>
-			<a href="" class="footer-link">
-				{{ 'base.footer.developers'|trans }}
-			</a>
-			<span class="pull-right">
-				{{ 'base.footer.1col_text'|trans|raw }}
-			</span>
-		</p>
-	</footer>
+    <footer class="container footer-bottom">
+        <p>
+            <a href="#" class="footer-link change-locale">
+                {{ 'base.footer.change_locale'|trans }}
+            </a>
+            <a href="" id="next-change-locale-link" class="footer-link">
+                {{ 'base.footer.legalities'|trans }}
+            </a>
+            <a href="" class="footer-link">
+                {{ 'base.footer.help_us'|trans }}
+            </a>
+            <a href="" class="footer-link">
+                {{ 'base.footer.developers'|trans }}
+            </a>
+            <span class="pull-right">
+                {{ 'base.footer.1col_text'|trans|raw }}
+            </span>
+        </p>
+    </footer>
 {% endblock %}

@@ -16,8 +16,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class PublicUsersListController extends ApiController
 {
     /**
-     *
-     *
      * @ApiDoc(
      *   section = "User - Public data",
      *   description = "List of the users (scope: public)",
@@ -79,8 +77,8 @@ class PublicUsersListController extends ApiController
                 'previous' => $previous,
                 'next' => $next,
             ],
-            'embed' => $embedBag->getMap([ 'badges' ]),
-            'data' => $this->get('etu.api.user.transformer')->transform($pagination->getItems(), $embedBag)
+            'embed' => $embedBag->getMap(['badges']),
+            'data' => $this->get('etu.api.user.transformer')->transform($pagination->getItems(), $embedBag),
         ]);
     }
 
@@ -99,8 +97,8 @@ class PublicUsersListController extends ApiController
     public function viewAction(User $user)
     {
         return $this->format([
-            'embed' => [ 'badges' => true ],
-            'data' => $this->get('etu.api.user.transformer')->transform($user, new EmbedBag([ 'badges' ]))
+            'embed' => ['badges' => true],
+            'data' => $this->get('etu.api.user.transformer')->transform($user, new EmbedBag(['badges'])),
         ]);
     }
 
@@ -125,7 +123,7 @@ class PublicUsersListController extends ApiController
         }
 
         return $this->format([
-            'data' => $this->get('etu.api.badge.transformer')->transform($badges)
+            'data' => $this->get('etu.api.badge.transformer')->transform($badges),
         ]);
     }
 

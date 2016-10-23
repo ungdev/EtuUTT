@@ -6,7 +6,7 @@ use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Notification\Helper\HelperInterface;
 
 /**
- * Notification for an edited covoit
+ * Notification for an edited covoit.
  */
 class EditedHelper implements HelperInterface
 {
@@ -33,12 +33,13 @@ class EditedHelper implements HelperInterface
 
     /**
      * @param Notification $notification
+     *
      * @return string
      */
     public function render(Notification $notification)
     {
         return $this->twig->render('EtuModuleCovoitBundle:Notification:edited.html.twig', array(
-            'notif' => $notification
+            'notif' => $notification,
         ));
     }
 }

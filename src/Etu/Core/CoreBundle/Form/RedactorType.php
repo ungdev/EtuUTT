@@ -7,20 +7,20 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class RedactorType extends AbstractType
 {
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
-	{
-		$resolver->setDefaults(array(
-			'attr' => array('class' => 'redactor')
-		));
-	}
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'attr' => array('class' => 'redactor'),
+        ));
+    }
 
-	public function getParent()
-	{
-		return 'textarea';
-	}
+    public function getParent()
+    {
+        return 'textarea';
+    }
 
-	public function getName()
-	{
-		return 'redactor';
-	}
+    public function getName()
+    {
+        return 'redactor';
+    }
 }
