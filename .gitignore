@@ -1,8 +1,6 @@
 # EtuUTT #
 ##########
 
-/app/config/parameters.yml
-/app/config/version.yml
 /app/config/modules.yml
 /app/check.php
 /src/Etu/Module/UVBundle/Resources/objects/current-guide.pdf
@@ -11,11 +9,8 @@
 /src/Etu/Module/LoggerBundle/Resources/objects/errors
 /src/Etu/Module/ArgentiqueBundle/Resources/photos/*
 
-/var
-
 /web/vendor/
 /web/min/
-/web/bundles/
 /web/uploads/
 /web/argentique/cache/
 /web/config.php
@@ -29,6 +24,24 @@
 
 # Used to store schedules
 /src/Etu/Core/UserBundle/Resources/temp
+
+# Symfony #
+###########
+/app/config/parameters.yml
+/build/
+/var/*
+!/var/cache
+/var/cache/*
+!var/cache/.gitkeep
+!/var/logs
+/var/logs/*
+!var/logs/.gitkeep
+!/var/sessions
+/var/sessions/*
+!var/sessions/.gitkeep
+!var/SymfonyRequirements.php
+/vendor/
+/web/bundles/
 
 # IDE #
 #######
@@ -62,6 +75,7 @@
 
 *.log
 *.sqlite
+*.sql
 
 # OS generated files #
 ######################
