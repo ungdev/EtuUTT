@@ -23,9 +23,4 @@ class MessageType extends AbstractType
             ]
         );
     }
-
-    public function getName()
-    {
-        return 'etu_module_forumbundle_messagetype';
-    }
 }

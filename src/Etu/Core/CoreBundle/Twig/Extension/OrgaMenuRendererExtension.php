@@ -49,12 +49,4 @@ class OrgaMenuRendererExtension extends \Twig_Extension
     {
         return $this->renderer->render($this->builder);
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'etu.orga_menu';
-    }
 }

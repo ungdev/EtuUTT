@@ -18,9 +18,4 @@ class RedactorLimitedType extends AbstractType
     {
         return 'textarea';
     }
-
-    public function getName()
-    {
-        return 'redactor_limited';
-    }
 }

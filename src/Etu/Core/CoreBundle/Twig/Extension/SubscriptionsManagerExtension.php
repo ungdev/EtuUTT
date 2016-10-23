@@ -33,14 +33,6 @@ class SubscriptionsManagerExtension extends \Twig_Extension
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'subscriptions_manager';
-    }
-
-    /**
      * @return array
      */
     public function getFunctions()

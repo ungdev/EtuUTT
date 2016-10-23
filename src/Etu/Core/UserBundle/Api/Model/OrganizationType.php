@@ -24,12 +24,4 @@ class OrganizationType extends AbstractType
             ->add('website', TextType::class)
         ;
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'etu_api_model_organization';
-    }
 }

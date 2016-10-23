@@ -53,12 +53,4 @@ class UrlBuilderExtension extends \Twig_Extension
     {
         return $this->builder->getWebPath().'/argentique/directory/'.$path;
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'etu.argentique';
-    }
 }

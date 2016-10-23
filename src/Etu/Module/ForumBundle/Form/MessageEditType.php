@@ -24,9 +24,4 @@ class MessageEditType extends AbstractType
             )
         );
     }
-
-    public function getName()
-    {
-        return 'etu_module_forumbundle_messageedittype';
-    }
 }

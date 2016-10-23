@@ -36,9 +36,4 @@ class ThreadType extends AbstractType
             ]
         );
     }
-
-    public function getName()
-    {
-        return 'etu_module_forumbundle_threadtype';
-    }
 }

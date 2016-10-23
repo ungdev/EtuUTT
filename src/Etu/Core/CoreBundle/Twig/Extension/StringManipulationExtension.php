@@ -10,14 +10,6 @@ namespace Etu\Core\CoreBundle\Twig\Extension;
 class StringManipulationExtension extends \Twig_Extension
 {
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'string_maniplation';
-    }
-
-    /**
      * @return array
      */
     public function getFilters()

@@ -60,12 +60,4 @@ class SidebarRendererExtension extends \Twig_Extension
     {
         return $this->renderer->renderMobile($this->builder);
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'etu.sidebar';
-    }
 }

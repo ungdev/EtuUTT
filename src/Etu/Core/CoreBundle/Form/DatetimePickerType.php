@@ -21,9 +21,4 @@ class DatetimePickerType extends AbstractType
     {
         return 'datetime';
     }
-
-    public function getName()
-    {
-        return 'datetime_picker';
-    }
 }

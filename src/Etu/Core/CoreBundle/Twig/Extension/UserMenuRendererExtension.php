@@ -49,12 +49,4 @@ class UserMenuRendererExtension extends \Twig_Extension
     {
         return $this->renderer->render($this->builder);
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'etu.user_menu';
-    }
 }

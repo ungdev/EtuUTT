@@ -20,9 +20,4 @@ class UserAutocompleteType extends AbstractType
     {
         return 'text';
     }
-
-    public function getName()
-    {
-        return 'user';
-    }
 }

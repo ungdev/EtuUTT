@@ -20,9 +20,4 @@ class BirthdayPickerType extends AbstractType
     {
         return 'date';
     }
-
-    public function getName()
-    {
-        return 'birthday_picker';
-    }
 }

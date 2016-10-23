@@ -44,12 +44,4 @@ class ClientType extends AbstractType
             ]
         );
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'etu_api_client';
-    }
 }

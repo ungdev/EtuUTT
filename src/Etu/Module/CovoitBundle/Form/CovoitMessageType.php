@@ -31,12 +31,4 @@ class CovoitMessageType extends AbstractType
             ]
         );
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'etu_module_covoitbundle_covoitmessage';
-    }
 }

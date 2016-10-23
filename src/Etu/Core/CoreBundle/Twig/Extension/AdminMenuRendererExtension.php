@@ -49,12 +49,4 @@ class AdminMenuRendererExtension extends \Twig_Extension
     {
         return $this->renderer->render($this->builder);
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'etu.admin_menu';
-    }
 }

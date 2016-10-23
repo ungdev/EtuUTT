@@ -47,12 +47,4 @@ class SearchType extends AbstractType
             ->add('olds', CheckboxType::class, ['label' => 'covoit.search.olds', 'required' => false])
         ;
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'etu_module_covoitbundle_search';
-    }
 }

@@ -43,12 +43,4 @@ class PrivacyExtension extends \Twig_Extension
     {
         return User::PRIVACY_PUBLIC == $privacy;
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'etu.user_privacy';
-    }
 }

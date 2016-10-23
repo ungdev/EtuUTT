@@ -24,9 +24,4 @@ class ThreadTypeNoSticky extends AbstractType
             ]
         );
     }
-
-    public function getName()
-    {
-        return 'etu_module_forumbundle_threadtypenosticky';
-    }
 }

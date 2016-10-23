@@ -131,12 +131,4 @@ class PermissionsExtension extends \Twig_Extension
 
         return $checker->canDelete($category);
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'etu.forum_permissions';
-    }
 }

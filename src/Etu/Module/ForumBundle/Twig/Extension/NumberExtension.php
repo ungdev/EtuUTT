@@ -15,9 +15,4 @@ class NumberExtension extends \Twig_Extension
     {
         return ceil($number);
     }
-
-    public function getName()
-    {
-        return 'etu.forum_number';
-    }
 }

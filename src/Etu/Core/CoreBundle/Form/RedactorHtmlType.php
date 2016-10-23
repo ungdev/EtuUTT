@@ -18,9 +18,4 @@ class RedactorHtmlType extends AbstractType
     {
         return 'textarea';
     }
-
-    public function getName()
-    {
-        return 'redactor_html';
-    }
 }

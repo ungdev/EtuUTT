@@ -26,14 +26,6 @@ class NotificationHelperExtension extends \Twig_Extension
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'notifs_helper';
-    }
-
-    /**
      * @return array
      */
     public function getFunctions()
