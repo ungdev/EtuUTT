@@ -1,33 +1,26 @@
 # EtuUTT #
 ##########
 
-/app/config/modules.yml
-/app/check.php
 /src/Etu/Module/UVBundle/Resources/objects/current-guide.pdf
 /src/Etu/Module/UVBundle/Resources/objects/current-guide.xml
 /src/Etu/Module/UVBundle/Resources/objects/registry.json
 /src/Etu/Module/LoggerBundle/Resources/objects/errors
 /src/Etu/Module/ArgentiqueBundle/Resources/photos/*
-
-/web/vendor/
-/web/min/
 /web/uploads/
 /web/argentique/cache/
-/web/config.php
-
-/vendor/
-/bin/
-/composer.phar
-*.php~
-
 /tmp
 
 # Used to store schedules
 /src/Etu/Core/UserBundle/Resources/temp
 
+# Composer #
+############
+/composer.phar
+
 # Symfony #
 ###########
 /app/config/parameters.yml
+/app/config/modules.yml
 /build/
 /var/*
 !/var/cache
@@ -41,7 +34,11 @@
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
 /vendor/
+/web/vendor/
+/web/min/
 /web/bundles/
+/web/config.php
+*.php~
 
 # IDE #
 #######
