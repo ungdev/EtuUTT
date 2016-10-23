@@ -1,10 +1,10 @@
 <?php
 
-namespace Etu\Module\CovoitBundle\Tests\Controller;
+namespace Test\Etu\Module\CovoitBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class PrivateControllerTest extends WebTestCase
+class PublicControllerTest extends WebTestCase
 {
     public function testRestrictionAssign()
     {

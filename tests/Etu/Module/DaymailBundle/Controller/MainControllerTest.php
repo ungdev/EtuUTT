@@ -1,6 +1,6 @@
 <?php
 
-namespace Etu\Module\DaymailBundle\Test\Controller;
+namespace Test\Etu\Module\DaymailBundle\Test\Controller;
 
 use Etu\Core\CoreBundle\Framework\Tests\EtuWebTestCase;
 

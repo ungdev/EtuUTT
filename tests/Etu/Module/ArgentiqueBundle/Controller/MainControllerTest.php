@@ -1,6 +1,6 @@
 <?php
 
-namespace Etu\Module\ArgentiqueBundle\Test\Controller;
+namespace Test\Etu\Module\ArgentiqueBundle\Test\Controller;
 
 use Etu\Core\CoreBundle\Framework\Tests\EtuWebTestCase;
 
