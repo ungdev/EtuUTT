@@ -3,11 +3,11 @@
 namespace Etu\Core\CoreBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RedactorLimitedType extends AbstractType
 {
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'attr' => array('class' => 'redactor-limited'),
