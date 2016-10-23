@@ -5,8 +5,9 @@ php:
 - 7.0
 
 env:
-    - SYMFONY_ENV=test
-    - SYMFONY_DEBUG=1
+    global:
+        - SYMFONY_ENV=test
+        - SYMFONY_DEBUG=1
 
 matrix:
     fast_finish: true
@@ -38,4 +39,3 @@ notifications:
             - https://etu.utt.fr/deploy
         on_failure: never
         on_start: never
-        on_pull_requests: false
