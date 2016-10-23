@@ -75,6 +75,7 @@
     "minimum-stability": "stable",
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
+        "symfony/phpunit-bridge": "^3.0",
         "elao/web-profiler-extra-bundle": "^2.3"
     },
     "scripts": {

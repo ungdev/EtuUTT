@@ -73,7 +73,7 @@ user:
             branche: Branche
             explainations: Use the above form to search
             no_results: No results
-            count: %count% results|%count% results
+            count: "%count% results|%count% results"
         userReadOnly:
             confirm_set: The user now has access to read only.
             confirm_unset: The user now has complete access.
@@ -104,7 +104,7 @@ user:
             orga_exists_ldap: This association exist but must be authorized to log in by the UNG
         connectExternal:
             title: Log in as a guest
-            desc: Use the login and the password given to you by the UNG to log in :
+            desc: "Use the login and the password given to you by the UNG to log in :"
             identifier: Login
             password: Password
             submit: Log in
@@ -164,7 +164,7 @@ user:
             phoneNumber: Phone number
             address: address
             birthday: Date of birth
-            age: %age% years old
+            age: "%age% years old"
             trombi: Group photo
             apps: Applications you allowed to access your informations
             surname: Nickname
