@@ -6,12 +6,41 @@
 /src/Etu/Module/UVBundle/Resources/objects/registry.json
 /src/Etu/Module/LoggerBundle/Resources/objects/errors
 /src/Etu/Module/ArgentiqueBundle/Resources/photos/*
-/web/uploads/
 /web/argentique/cache/
 /tmp
 
 # Used to store schedules
 /src/Etu/Core/UserBundle/Resources/temp
+
+# Upload directory
+!/web/uploads/apps
+/web/uploads/apps/*
+!/web/uploads/apps/.gitkeep
+!/web/uploads/apps/default.png
+
+!/web/uploads/events
+/web/uploads/events/*
+!/web/uploads/events/.gitkeep
+
+!/web/uploads/logos
+/web/uploads/logos/*
+!/web/uploads/logos/.gitkeep
+!/web/uploads/logos/default-logo.png
+
+!/web/uploads/photos
+/web/uploads/photos/*
+!/web/uploads/photos/.gitkeep
+!/web/uploads/photos/default-avatar.png
+
+!/web/uploads/users_files
+/web/uploads/users_files/*
+!/web/uploads/users_files/.gitkeep
+
+!/web/uploads/uvs
+/web/uploads/uvs/*
+!/web/uploads/uvs/.gitkeep
+
+
 
 # Composer #
 ############
