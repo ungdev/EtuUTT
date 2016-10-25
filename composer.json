@@ -18,6 +18,10 @@
     },
     "require": {
         "php": ">=5.5.9",
+        "ext-mbstring": "*",
+        "ext-curl": "*",
+        "ext-xml": "*",
+        "ext-mysql": "*",
         "symfony/symfony": "3.1.*",
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^1.6",
@@ -104,9 +108,19 @@
         "symfony-tests-dir": "tests",
         "symfony-assets-install": "relative",
         "incenteev-parameters": [
-        	{
-            	"file": "app/config/parameters.yml"
-       		},
+            {
+                 "file": "app/config/parameters.yml",
+                "env-map": {
+                    "database_driver": "ETUUTT_DATABASE_DRIVER",
+                    "database_host": "ETUUTT_DATABASE_HOST",
+                    "database_port": "ETUUTT_DATABASE_PORT",
+                    "database_name": "ETUUTT_DATABASE_NAME",
+                    "database_user": "ETUUTT_DATABASE_USER",
+                    "database_password": "ETUUTT_DATABASE_PASSWORD",
+                    "domain": "ETUUTT_DOMAIN",
+                    "version_id": "ETUUTT_VERSION_ID"
+                }
+            },
             {
                 "file": "app/config/modules.yml",
                 "parameter-key": "modules"
