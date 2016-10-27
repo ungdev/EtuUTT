@@ -31,7 +31,7 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
         $admin->setMail('admin@utt.fr');
         $admin->storeRole('ROLE_SUPERADMIN');
         $admin->setIsStudent(true);
-        $admin->setPassword('OwsJMxEhQi83BQ=='); // 'admin' with the default secret key
+        $admin->setPassword('$2a$12$2DKCL27MlY0KvDnI.Fofme7wRQU6AuU2kEvcemM2PbqNu.ixNY4JK'); // = 'admin'
         $admin->setAvatar('admin.png');
         $admin->setBirthday(new \DateTime());
         $admin->setLastVisitHome(new \DateTime());
@@ -42,7 +42,7 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
         $user->setFullName('User USER');
         $user->setLogin('user');
         $user->setIsStudent(true);
-        $user->setPassword('Ox8JJBEpQjQ='); // 'user' with the default secret key
+        $user->setPassword('$2a$12$NRBE4VdkpnngzVFZ.BA3uOTvLM/tlY54XteSi6/GK0ymEgHR2Euli'); // = 'user'
         $user->setMail('user@utt.fr');
         $user->setAvatar('user.png');
         $user->setBirthday(new \DateTime());
