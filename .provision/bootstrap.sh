@@ -59,6 +59,10 @@ composer global require "fxp/composer-asset-plugin:~1.2"
 cd /vagrant
 composer install
 
+# Manually copy vendor directory because some packages ignore autoload file
+cp -R /srv/composer-vendor /var/www/EtuUTT/vendor
+chown -R $USER /var/www/EtuUTT/vendor
+
 # Save db schema and fixtures
 php bin/console doctrine:schema:update --force
 php bin/console doctrine:fixtures:load -n
