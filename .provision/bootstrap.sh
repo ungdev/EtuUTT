@@ -13,7 +13,17 @@ export ETUUTT_DATABASE_PASSWORD=$MYSQL_PASS
 export ETUUTT_DATABASE_USER=$MYSQL_USER
 export ETUUTT_DATABASE_NAME=$MYSQL_DATABASE
 
+# Move composer vendor directory to speed up symfony
+sudo mkdir -p /srv/composer-vendor/
+sudo chown $USER /srv/composer-vendor/
+sudo chmod u+rw /srv/composer-vendor/
+export COMPOSER_VENDOR_DIR=/srv/composer-vendor/
+echo "export COMPOSER_VENDOR_DIR=/srv/composer-vendor/" >> /home/ubuntu/.bashrc
+sudo echo "export COMPOSER_VENDOR_DIR=/srv/composer-vendor/" >> /root/.bashrc
+sudo ln -s /srv/composer-vendor/ /vagrant/vendor
+
 # Nginx
+sudo apt-get update
 sudo apt-get -y install nginx
 sudo systemctl enable nginx
 sudo rm /etc/nginx/sites-enabled/* /etc/nginx/sites-available/*

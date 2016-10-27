@@ -130,12 +130,20 @@ class AppKernel extends EtuKernel
 
     public function getCacheDir()
     {
-        return dirname(__DIR__).'/var/cache/'.$this->getEnvironment();
+        if (!empty($this->getEnvParameters()['kernel.cache_dir'])) {
+            return $this->getEnvParameters()['kernel.cache_dir'].'/'.$this->environment;
+        } else {
+            return dirname(__DIR__).'/var/cache/'.$this->getEnvironment();
+        }
     }
 
     public function getLogDir()
     {
-        return dirname(__DIR__).'/var/logs';
+        if (!empty($this->getEnvParameters()['kernel.logs_dir'])) {
+            return $this->getEnvParameters()['kernel.logs_dir'];
+        } else {
+            return dirname(__DIR__).'/var/logs';
+        }
     }
 
     public function registerContainerConfiguration(LoaderInterface $loader)
