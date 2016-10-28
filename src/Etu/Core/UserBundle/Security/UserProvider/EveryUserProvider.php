@@ -4,8 +4,10 @@ namespace Etu\Core\UserBundle\Security\UserProvider;
 
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Etu\Core\UserBundle\Ldap\Model\User;
-use Etu\Core\UserBundle\Ldap\Model\Organization;
+use Etu\Core\UserBundle\Ldap\Model\User as ldapUser;
+use Etu\Core\UserBundle\Ldap\Model\Organization as LdapOrganization;
+use Etu\Core\UserBundle\Entity\User as UserEntity;
+use Etu\Core\UserBundle\Entity\Organization as OrganizationEntity;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Etu\Core\UserBundle\Ldap\LdapManager;
 use Etu\Core\UserBundle\Sync\Iterator\Element\ElementToImport;
@@ -60,12 +62,12 @@ class EveryUserProvider implements UserProviderInterface
             }
 
             // We caught a user that is not in the database : we import it !
-            if ($ldapUser instanceof User) {
+            if ($ldapUser instanceof ldapUser) {
                 $import = new ElementToImport($this->doctrine, $ldapUser);
                 $user = $import->import(true);
             }
             // We caught an organization not in database, we ask them to call and administrator
-            elseif ($ldapUser instanceof Organization) {
+            elseif ($ldapUser instanceof LdapOrganization) {
                 throw new OrganizationNotAuthorizedException(sprintf('Organization "%s" is not authorized.', $username));
             }
         }
@@ -83,7 +85,7 @@ class EveryUserProvider implements UserProviderInterface
      */
     public function refreshUser(UserInterface $user)
     {
-        if (!($user instanceof User) && !($user instanceof Organization)) {
+        if (!($user instanceof UserEntity) && !($user instanceof OrganizationEntity)) {
             throw new UnsupportedUserException();
         }
 
