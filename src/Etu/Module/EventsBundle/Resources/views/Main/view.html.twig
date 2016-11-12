@@ -5,7 +5,7 @@
 {% block meta_desc %}{{ event.title }}, le {{ event.begin|date('d/m/Y à H:i') }}, {{ event.location }}{% endblock %}
 
 {% block titleIcon %}
-    <img src="{{ asset('src/img/titles/events.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/events.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block sidebar %}
@@ -103,7 +103,7 @@
         <div class="pull-right">
             <div class="btn-group">
                 <a class="btn dropdown-toggle" id="subscriber_button" data-event-id="{{ event.id }}" data-toggle="dropdown" href="#">
-                    <img src="{{ asset('src/img/loader.gif') }}" id="subscriber_loader" style="display: none;" />
+                    <img src="{{ asset('assets/img/loader.gif') }}" id="subscriber_loader" style="display: none;" />
 
                     <span id="subscriber_current">
                         {% if userAnswer %}

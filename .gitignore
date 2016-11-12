@@ -66,8 +66,8 @@
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
 /vendor
-/web/vendor/
-/web/min/
+/web/assets/vendor/
+/web/assets/min/
 /web/bundles/
 *.php~
 

@@ -88,7 +88,7 @@ class MainController extends Controller
             }
         }
 
-        $image = $imagine->open($web_root.'/src/img/dirmask.png');
+        $image = $imagine->open($web_root.'/assets/img/dirmask.png');
 
         if ($photo) {
             $photo = $imagine->open($photo)->thumbnail(new Box(300, 200), ImageInterface::THUMBNAIL_OUTBOUND);

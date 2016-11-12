@@ -6,7 +6,7 @@
 
             <h2 class="page-title source-sans-pro">
                 {% block titleIcon %}
-                    <img src="{{ asset('src/img/titles/flux.png') }}" alt="{{ 'base.page_icon.alt'|trans }}" title="{{ 'base.page_icon.alt'|trans }}" class="page-title-icon" />
+                    <img src="{{ asset('assets/img/titles/flux.png') }}" alt="{{ 'base.page_icon.alt'|trans }}" title="{{ 'base.page_icon.alt'|trans }}" class="page-title-icon" />
                 {% endblock %}
 
                 {{ block('title') }}
@@ -16,19 +16,19 @@
               <ul class="list-vertical list-vertical-linked overlay-menu">
                 <li class="first">
                   <a href="{{ path('change_locale', {'lang': 'fr'}) }}">
-                    <img src="{{ asset('src/img/lang/fr.png') }}"/>
+                    <img src="{{ asset('assets/img/lang/fr.png') }}"/>
                     Français
                   </a>
                 </li>
                 <li>
                   <a href="{{ path('change_locale', {'lang': 'en'}) }}">
-                    <img src="{{ asset('src/img/lang/en.png') }}"/>
+                    <img src="{{ asset('assets/img/lang/en.png') }}"/>
                     English
                   </a>
                 </li>
                 <li>
                   <a href="{{ path('change_locale', {'lang': 'de'}) }}">
-                    <img src="{{ asset('src/img/lang/de.png') }}"/>
+                    <img src="{{ asset('assets/img/lang/de.png') }}"/>
                     Deutsh
                   </a>
                 </li>

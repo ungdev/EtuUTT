@@ -26,30 +26,30 @@
         <link rel="icon" type="image/png" href="{{ asset('favicon-96x96.png') }}" sizes="96x96">
 
         {% stylesheets
-            'vendor/jquery-ui/themes/smoothness/jquery-ui.min.css'
-            'vendor/bootstrap/docs/assets/css/bootstrap.css'
-            'vendor/bootstrap/docs/assets/css/bootstrap-responsive.css'
-            'vendor/font-awesome/css/font-awesome.min.css'
-            'vendor/tipsy/src/stylesheets/tipsy.css'
-            'vendor/facebox/src/facebox.css'
-            'vendor/swipebox/src/css/swipebox.min.css'
-            'vendor/jquery-impromptu/dist/jquery-impromptu.min.css'
-            'vendor/highlightjs/styles/solarized-dark.css'
-            'vendor/videojs/dist/video-js.css'
-            'src/css/sceditor.less'
-            'src/css/boot.less'
-			'src/css/developpers.less'
+            'assets/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css'
+            'assets/vendor/bootstrap/docs/assets/css/bootstrap.css'
+            'assets/vendor/bootstrap/docs/assets/css/bootstrap-responsive.css'
+            'assets/vendor/font-awesome/css/font-awesome.min.css'
+            'assets/vendor/tipsy/src/stylesheets/tipsy.css'
+            'assets/vendor/facebox/src/facebox.css'
+            'assets/vendor/swipebox/src/css/swipebox.min.css'
+            'assets/vendor/jquery-impromptu/dist/jquery-impromptu.min.css'
+            'assets/vendor/highlightjs/styles/solarized-dark.css'
+            'assets/vendor/videojs/dist/video-js.css'
+            'assets/scss/sceditor.scss'
+            'assets/scss/boot.scss'
+			'assets/scss/developpers.scss'
 
-            filter='cssrewrite,?minifier_css'
-            output='min/etuutt.css'
+            filter='scssphp'
+            output='assets/min/etuutt.css'
         %}
-            <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+            <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
 
         {% if not app.request.cookies.has('disable_responsive') %}
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-            {% stylesheets 'src/css/responsive.less' filter='cssrewrite' output='min/responsive.css' %}
+            {% stylesheets 'assets/scss/responsive.scss' filter='scssphp' output='assets/min/responsive.css' %}
                 <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
             {% endstylesheets %}
         {% endif %}
@@ -63,7 +63,7 @@
 	<body class="bg-soft-grey no-mathjax">
         <div id="loader" class="overlay">
             <div class="loader">
-                <img src="{{ asset('src/img/loader-big.gif') }}" />
+                <img src="{{ asset('assets/img/loader-big.gif') }}" />
             </div>
         </div>
 
@@ -71,30 +71,30 @@
 
 	    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 	    {% javascripts
-	        'vendor/jquery/jquery.min.js'
-	        'vendor/jquery-ui/ui/minified/jquery-ui.custom.min.js'
-	        'vendor/bootstrap/docs/assets/js/bootstrap.min.js'
-	        'vendor/facebox/src/facebox.js'
-	        'vendor/sceditor-bower/src/jquery.sceditor.js'
-	        'vendor/sceditor-bower/src/plugins/bbcode.js'
-	        'vendor/sceditor-bower/languages/fr.js'
-	        'vendor/tipsy/src/javascripts/jquery.tipsy.js'
-	        'vendor/jquery-ui-touch-punch-improved/jquery.ui.touch-punch-improved.js'
-	        'vendor/jquery-cycle2/build/jquery.cycle2.min.js'
-	        'vendor/jquery-cycle2/build/plugin/jquery.cycle2.center.min.js'
-	        'vendor/moment/min/moment.min.js'
-	        'vendor/moment/locale/fr.js'
-	        'vendor/highlightjs/highlight.pack.min.js'
-	        'vendor/videojs/dist/video.js'
+	        'assets/vendor/jquery/jquery.min.js'
+	        'assets/vendor/jquery-ui/ui/minified/jquery-ui.custom.min.js'
+	        'assets/vendor/bootstrap/docs/assets/js/bootstrap.min.js'
+	        'assets/vendor/facebox/src/facebox.js'
+	        'assets/vendor/sceditor-bower/src/jquery.sceditor.js'
+	        'assets/vendor/sceditor-bower/src/plugins/bbcode.js'
+	        'assets/vendor/sceditor-bower/languages/fr.js'
+	        'assets/vendor/tipsy/src/javascripts/jquery.tipsy.js'
+	        'assets/vendor/jquery-ui-touch-punch-improved/jquery.ui.touch-punch-improved.js'
+	        'assets/vendor/jquery-cycle2/build/jquery.cycle2.min.js'
+	        'assets/vendor/jquery-cycle2/build/plugin/jquery.cycle2.center.min.js'
+	        'assets/vendor/moment/min/moment.min.js'
+	        'assets/vendor/moment/locale/fr.js'
+	        'assets/vendor/highlightjs/highlight.pack.min.js'
+	        'assets/vendor/videojs/dist/video.js'
 	        'bundles/fosjsrouting/js/router.js'
-	        'src/js/routes.js'
-	        'src/js/common.js'
-	        'src/js/bbcode.js'
+	        'assets/js/routes.js'
+	        'assets/js/common.js'
+	        'assets/js/bbcode.js'
 
-	        filter='?minifier_js'
-	        output='min/etuutt.js'
+	        filter='?jsqueeze'
+	        output='assets/min/etuutt.js'
 	    %}
-	        <script type="text/javascript" src="{{ asset_url }}"></script>
+            <script src="{{ asset_url }}"></script>
 	    {% endjavascripts %}
 
 

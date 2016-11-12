@@ -118,7 +118,7 @@
 }
 
 .fc-toolbar h2 {
-    .source-sans-pro();
+    @extend .source-sans-pro;
 }
 
 .fc-month-list {

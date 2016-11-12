@@ -3,7 +3,7 @@
 {% block title %}{{ 'uvs.main.sendReview.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-    <img src="{{ asset('src/img/titles/uvs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/uvs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block sidebar %}
@@ -15,7 +15,7 @@
     <div class="padding20-all">
         {% include 'EtuModuleUVBundle:Main:chooser.html.twig' %}
 
-        <img src="{{ asset('src/img/uvs/'~uv.category~'.png') }}"
+        <img src="{{ asset('assets/img/uvs/'~uv.category~'.png') }}"
              class="uv-view-category"
              alt="{{ ('uvs.categories.'~uv.category)|trans }}"
              title="{{ ('uvs.categories.'~uv.category)|trans }}" />

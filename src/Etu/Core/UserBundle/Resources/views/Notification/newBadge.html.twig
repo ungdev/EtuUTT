@@ -1,7 +1,7 @@
 
 <a class="notif{% if notif.isSuper %} super-notif{% elseif notif.isNew(app.user.lastVisitHome) %} notif-new{% endif %}"
    href="{{ path('user_profile') }}">
-    <img src="{{ asset('src/img/icons-big/bug.png') }}" />
+    <img src="{{ asset('assets/img/icons-big/bug.png') }}" />
 
     <h4 class="notif-title">
         {{ 'user.notifs.newBadge'|trans({

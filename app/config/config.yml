@@ -83,10 +83,9 @@ assetic:
     use_controller: false
     bundles: [ ]
     filters:
-        cssrewrite: ~
-        lessphp:
-            file: "%kernel.root_dir%/../vendor/oyejorge/less.php/lessc.inc.php"
-            apply_to: "\\.less$"
+        scssphp:
+            formatter: 'Leafo\ScssPhp\Formatter\Compressed'
+        jsqueeze: ~
 
 
 # Minifier Assetic filters names
@@ -138,7 +137,7 @@ fm_bbcode:
         templates:
             - path: "@EtuCoreBundle/Resources/views/bbcodeTemplates"
     emoticon:
-        path: /src/img/emoticons/
+        path: /assets/img/emoticons/
     filter_sets:
         default_filter:
             locale: "%locale%"

@@ -6,7 +6,7 @@
     {% if user.login == 'richardb' %}
     <style>
         .bg-soft-grey {
-            background: url('/src/img/back_etuutt.jpg') #950014 !important;
+            background: url('/assets/img/back_etuutt.jpg') #950014 !important;
         }
         .page-container, .footer {
             background: none !important;
@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block titleIcon %}
-    <img src="{{ asset('src/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
@@ -348,7 +348,7 @@
             <ul class="badges-list badges-list-big">
             {% for badge in user.lastBadges %}
                 <li>
-                    <img src="{{ asset('src/img/badges/'~badge.picture~'.png') }}" class="tip"
+                    <img src="{{ asset('assets/img/badges/'~badge.picture~'.png') }}" class="tip"
                          title="<strong style='font-size: 13px;'>{{ badge.name }}</strong><br />{{ badge.description }}" />
                 </li>
             {% endfor %}

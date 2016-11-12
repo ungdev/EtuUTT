@@ -3,7 +3,7 @@
 {% block title %}{{ membership.organization.name }}{% endblock %}
 
 {% block titleIcon %}
-    <img src="{{ asset('src/img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block stylesheets %}
@@ -17,7 +17,7 @@
             var url = '{{ path('memberships_orga_daymail_preview', {'login': orga.login, 'day': currentDay|date('d-m-Y')}) }}';
 
             $.facebox(
-                '<p style="text-align:center;"><br /><img src="{{ asset('src/img/loader-big.gif') }}" /><br /><br /></p>'
+                '<p style="text-align:center;"><br /><img src="{{ asset('assets/img/loader-big.gif') }}" /><br /><br /></p>'
             );
 
             $.get(url, function(data) {

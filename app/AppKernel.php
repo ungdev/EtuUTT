@@ -32,7 +32,6 @@ class AppKernel extends EtuKernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             // Assets management
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
-        //    new Minifier\MinifierBundle(),
             // Libraies
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
