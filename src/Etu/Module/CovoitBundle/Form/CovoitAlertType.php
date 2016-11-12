@@ -19,7 +19,7 @@ class CovoitAlertType extends AbstractType
     {
         $builder
             ->add('startDate', DatePickerType::class, ['label' => 'covoit.alerts.label.startDate', 'required' => false])
-            ->add('endDate', DatePickerType::class, ['label' => 'covoit.alerts.label.endDate', 'required' => false])
+            ->add('endDate', DatePickerType::class, ['label' => 'covoit.alerts.label.endDate', 'required' => false, 'attr' => ['help' => 'covoit.alerts.create.precise_date']])
             ->add('priceMax', null, ['label' => 'covoit.alerts.label.priceMax', 'required' => false])
             ->add(
                 'startCity',

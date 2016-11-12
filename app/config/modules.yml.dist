@@ -10,4 +10,5 @@ modules:
   - Etu\Module\TrombiBundle\EtuModuleTrombiBundle
   - Etu\Module\TVBundle\EtuModuleTVBundle
   - Etu\Module\UVBundle\EtuModuleUVBundle
+  - Etu\Module\WikiBundle\EtuModuleWikiBundle
   - Etu\Module\UploadBundle\EtuModuleUploadBundle

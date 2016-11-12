@@ -41,7 +41,7 @@
             </li>
         {% endif %}
         {% if rights.canCreate(app.request.get('category')) %}
-            <li class="pull-right {% if not page.getSlug() %}active page-tabs-resolved-active{% endif %}"">
+            <li class="pull-right {% if not page.getSlug() %}active page-tabs-resolved-active{% endif %}">
                 <a href="{{ path('wiki_new', {'slug': app.request.get('slug'), 'category': app.request.get('category')})}}">
                     <i class="fa fa-plus" aria-hidden="true"></i>
                     {{ 'wiki.main.menu.new'|trans }}
@@ -53,10 +53,32 @@
         <div class="padding20-sides">
 
         {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <span class="pull-right">
-            {% include 'EtuModuleUploadBundle::upload_link.html.twig' %}
-        </span>
+            {% if form.preslug is defined %}
+                <div class="row-fluid">
+                    <div class="span6">
+                        {{ form_row(form.title) }}
+                    </div>
+                    <div class="span6">
+                        {{ form_row(form.preslug) }}
+                    </div>
+                </div>
+            {% else %}
+                {{ form_row(form.title) }}
+            {% endif %}
+            <span class="pull-right">
+                {% include 'EtuModuleUploadBundle::upload_link.html.twig' %}
+            </span>
+            {{ form_row(form.content) }}
+            <div class="row-fluid">
+                <div class="span6">
+                    {{ form_row(form.readRight) }}
+                </div>
+                {% if form.editRight is defined %}
+                    <div class="span6">
+                        {{ form_row(form.editRight) }}
+                    </div>
+                {% endif %}
+            </div>
         {{ form_end(form) }}
 
         </div>

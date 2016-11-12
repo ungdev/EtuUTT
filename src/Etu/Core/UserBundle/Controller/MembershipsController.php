@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -152,14 +153,16 @@ class MembershipsController extends Controller
 
         // Classic form
         $form = $this->createFormBuilder($orga)
-            ->add('contactMail', EmailType::class)
-            ->add('contactPhone', null, array('required' => false))
-            ->add('description', RedactorType::class, array('required' => false))
-            ->add('descriptionShort', TextareaType::class)
-            ->add('website', null, array('required' => false))
+            ->add('contactMail', EmailType::class, ['label' => 'user.orga.index.contactMail.label'])
+            ->add('contactPhone', null, array('required' => false, 'label' => 'user.orga.index.contactPhone.label'))
+            ->add('website', null, array('required' => false, 'label' => 'user.orga.index.website.label'))
+            ->add('descriptionShort', TextareaType::class, ['label' => 'user.orga.index.descriptionShort.label'])
+            ->add('description', RedactorType::class, array('required' => false, 'label' => 'user.orga.index.description.label'))
+            ->add('submit', SubmitType::class, ['label' => 'user.orga.index.submit'])
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($orga);
             $em->flush();
 
@@ -413,11 +416,13 @@ class MembershipsController extends Controller
         $notif->orga_name = $orga->getName();
 
         $form = $this->createFormBuilder($notif)
-            ->add('link', UrlType::class, array('required' => false))
-            ->add('content', TextareaType::class, array('required' => true, 'max_length' => 140))
+            ->add('link', UrlType::class, array('required' => false, 'label' => 'user.memberships.notification.link.label'))
+            ->add('content', TextareaType::class, array('required' => true, 'label' => 'user.memberships.notification.content.label', 'attr' => ['maxlength' => 140, 'help' => 'user.memberships.notification.content.desc']))
+            ->add('submit', SubmitType::class, ['label' => $this->get('translator')->trans('user.memberships.notification.submit', ['%orga%' => $membership->getOrganization()->getName()])])
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $notification = new Notification();
             $notification->setEntityType('orga')
                 ->setEntityId($orga->getId())

@@ -1,4 +1,6 @@
-{% extends '::developpers.html.twig' %}
+{% extends '::layout-developpers.html.twig' %}
+
+{% block title %}Développeurs{% endblock %}
 
 {% block content %}
     <div class="padding20-all">
@@ -58,17 +60,15 @@
 
                 <hr />
 
-                <form method="post" action="">
-                    {{ form_row(form.client_id) }}
-
-                    {{ form_rest(form) }}
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
 
                     <p>
                         <br />
                         <input type="submit" value="Supprimer cette application" class="btn btn-primary" id="form_submit" />
                         <a href="{{ path('devs_panel_manage_app', { 'clientId': client.clientId }) }}" class="btn btn-default">Annuler cette suppression</a>
                     </p>
-                </form>
+                    {{ form_end(form) }}
             </div>
         </div>
     </div>

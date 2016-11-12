@@ -48,8 +48,7 @@ class AppKernel extends EtuKernel
             // Generate routes from Javascript
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             // Calendar and events library
-        //    vendor/yohang/calendr/src/CalendR/Calendar.php
-            //Flnew FrequenceWeb\Bundle\CalendRBundle\FrequenceWebCalendRBundle(),
+            new FrequenceWeb\Bundle\CalendRBundle\FrequenceWebCalendRBundle(),
             // BBcode
             new FM\BbcodeBundle\FMBbcodeBundle(),
             // Internationalization

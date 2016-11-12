@@ -6,11 +6,14 @@ use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Entity\Subscription;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
+use Etu\Core\CoreBundle\Form\RedactorType;
 use Etu\Module\BugsBundle\Entity\Comment;
 use Etu\Module\BugsBundle\Entity\Issue;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -118,10 +121,12 @@ class BugsController extends Controller
         $comment->setUser($this->getUser());
 
         $form = $this->createFormBuilder($comment)
-            ->add('body')
+            ->add('body', RedactorType::class, ['label' => 'bugs.bugs.view.comment_body'])
+            ->add('submit', SubmitType::class, ['label' => 'bugs.bugs.view.comment_submit'])
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $this->isGranted('ROLE_BUGS_POST') && $form->submit($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($this->isGranted('ROLE_BUGS_POST') && $form->isSubmitted() && $form->isValid()) {
             $em->persist($comment);
             $em->flush();
 
@@ -153,16 +158,18 @@ class BugsController extends Controller
         }
 
         $updateForm = $this->createFormBuilder($bug)
+            ->setAction($this->generateUrl('bugs_admin_criticality', ['id' => $bug->getId(), 'slug' => StringManipulationExtension::slugify($bug->getTitle())]))
             ->add('criticality', ChoiceType::class, array(
                 'choices' => array(
-                    Issue::CRITICALITY_CRITICAL => 'bugs.criticality.60',
-                    Issue::CRITICALITY_SECURITY => 'bugs.criticality.50',
-                    Issue::CRITICALITY_MAJOR => 'bugs.criticality.40',
-                    Issue::CRITICALITY_MINOR => 'bugs.criticality.30',
-                    Issue::CRITICALITY_VISUAL => 'bugs.criticality.20',
-                    Issue::CRITICALITY_TYPO => 'bugs.criticality.10',
+                    'bugs.criticality.60' => Issue::CRITICALITY_SECURITY,
+                    'bugs.criticality.50' => Issue::CRITICALITY_CRITICAL,
+                    'bugs.criticality.40' => Issue::CRITICALITY_MAJOR,
+                    'bugs.criticality.30' => Issue::CRITICALITY_MINOR,
+                    'bugs.criticality.20' => Issue::CRITICALITY_VISUAL,
+                    'bugs.criticality.10' => Issue::CRITICALITY_TYPO,
                 ),
             ))
+            ->add('submit', SubmitType::class, ['label' => 'bugs.bugs.view.admin_edit'])
             ->getForm();
 
         return array(
@@ -185,20 +192,24 @@ class BugsController extends Controller
         $bug->setUser($this->getUser());
 
         $form = $this->createFormBuilder($bug)
-            ->add('title')
+            ->add('title', TextType::class, ['label' => 'bugs.bugs.create.name'])
             ->add('criticality', ChoiceType::class, array(
                 'choices' => array(
-                    Issue::CRITICALITY_SECURITY => 'bugs.criticality.60',
-                    Issue::CRITICALITY_CRITICAL => 'bugs.criticality.50',
-                    Issue::CRITICALITY_MAJOR => 'bugs.criticality.40',
-                    Issue::CRITICALITY_MINOR => 'bugs.criticality.30',
-                    Issue::CRITICALITY_VISUAL => 'bugs.criticality.20',
-                    Issue::CRITICALITY_TYPO => 'bugs.criticality.10',
-                ), ))
-            ->add('body')
+                    'bugs.criticality.60' => Issue::CRITICALITY_SECURITY,
+                    'bugs.criticality.50' => Issue::CRITICALITY_CRITICAL,
+                    'bugs.criticality.40' => Issue::CRITICALITY_MAJOR,
+                    'bugs.criticality.30' => Issue::CRITICALITY_MINOR,
+                    'bugs.criticality.20' => Issue::CRITICALITY_VISUAL,
+                    'bugs.criticality.10' => Issue::CRITICALITY_TYPO,
+                ),
+                'label' => 'bugs.bugs.create.criticality',
+            ))
+            ->add('body', RedactorType::class, ['label' => 'bugs.bugs.create.body'])
+            ->add('submit', SubmitType::class, ['label' => 'bugs.bugs.create.submit'])
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             /** @var $em EntityManager */
             $em = $this->getDoctrine()->getManager();
 
@@ -273,20 +284,24 @@ class BugsController extends Controller
         }
 
         $form = $this->createFormBuilder($bug)
-            ->add('title')
+            ->add('title', TextType::class, ['label' => 'bugs.bugs.edit.title'])
             ->add('criticality', ChoiceType::class, array(
                 'choices' => array(
-                    Issue::CRITICALITY_SECURITY => 'bugs.criticality.60',
-                    Issue::CRITICALITY_CRITICAL => 'bugs.criticality.50',
-                    Issue::CRITICALITY_MAJOR => 'bugs.criticality.40',
-                    Issue::CRITICALITY_MINOR => 'bugs.criticality.30',
-                    Issue::CRITICALITY_VISUAL => 'bugs.criticality.20',
-                    Issue::CRITICALITY_TYPO => 'bugs.criticality.10',
-                ), ))
-            ->add('body')
+                    'bugs.criticality.60' => Issue::CRITICALITY_SECURITY,
+                    'bugs.criticality.50' => Issue::CRITICALITY_CRITICAL,
+                    'bugs.criticality.40' => Issue::CRITICALITY_MAJOR,
+                    'bugs.criticality.30' => Issue::CRITICALITY_MINOR,
+                    'bugs.criticality.20' => Issue::CRITICALITY_VISUAL,
+                    'bugs.criticality.10' => Issue::CRITICALITY_TYPO,
+                ),
+                'label' => 'bugs.bugs.edit.criticality',
+            ))
+            ->add('body', RedactorType::class, ['label' => 'bugs.bugs.edit.body'])
+            ->add('submit', SubmitType::class, ['label' => 'bugs.bugs.edit.submit'])
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($bug);
@@ -359,10 +374,12 @@ class BugsController extends Controller
         }
 
         $form = $this->createFormBuilder($comment)
-            ->add('body')
+            ->add('body', RedactorType::class, ['label' => 'bugs.bugs.view.comment_body'])
+            ->add('submit', SubmitType::class, ['label' => 'bugs.bugs.edit.submit'])
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($comment);

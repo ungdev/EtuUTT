@@ -28,6 +28,7 @@ forum:
       unlock: Débloquer
       unlocked: "Le sujet a bien été débloqué"
       where: "Vers où déplacer le sujet ?"
+      submit: Modifier
     post:
       content: Message
       no: Non
@@ -35,6 +36,7 @@ forum:
       threadTitle: "Titre du sujet"
       title: "Création d'un sujet"
       yes: Oui
+      submit: Créer
     thread:
       answer: Répondre
       by: Par

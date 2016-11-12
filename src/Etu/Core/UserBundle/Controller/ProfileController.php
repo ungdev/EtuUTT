@@ -12,9 +12,11 @@ use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Model\BadgesManager;
 use Etu\Core\UserBundle\Model\CountriesManager;
 use Etu\Core\UserBundle\Schedule\Helper\ScheduleBuilder;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
@@ -118,46 +120,60 @@ class ProfileController extends Controller
 
         $privacyChoice = array(
             'choices' => array(
-                User::PRIVACY_PUBLIC => 'user.privacy.public',
-                User::PRIVACY_PRIVATE => 'user.privacy.private',
+                'user.privacy.public' => User::PRIVACY_PUBLIC,
+                'user.privacy.private' => User::PRIVACY_PRIVATE,
             ),
             'attr' => array(
                 'class' => 'profileEdit-privacy-select',
             ),
+            'placeholder' => false,
             'required' => false,
+            'label' => 'user.profile.profileEdit.privacy',
         );
 
         $form = $this->createFormBuilder($user)
-            ->add('phoneNumber', null, array('required' => false))
+            ->add('phoneNumber', null, array('required' => false, 'label' => 'user.profile.profileEdit.phoneNumber'))
             ->add('phoneNumberPrivacy', ChoiceType::class, $privacyChoice)
             ->add('sex', ChoiceType::class, array('choices' => array(
-                User::SEX_MALE => 'base.user.sex.male',
-                User::SEX_FEMALE => 'base.user.sex.female',
-            ), 'required' => false))
+                'base.user.sex.male' => User::SEX_MALE,
+                'base.user.sex.female' => User::SEX_FEMALE,
+            ), 'required' => false, 'label' => 'user.profile.profileEdit.sex'))
             ->add('sexPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('nationality', null, array('required' => false))
+            ->add('nationality', null, array('required' => false, 'label' => 'user.profile.profileEdit.nationality'))
             ->add('nationalityPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('address', null, array('required' => false))
+            ->add('address', null, array('required' => false, 'label' => 'user.profile.profileEdit.address'))
             ->add('addressPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('postalCode', null, array('required' => false))
+            ->add('postalCode', null, array('required' => false, 'label' => 'user.profile.profileEdit.postalCode'))
             ->add('postalCodePrivacy', ChoiceType::class, $privacyChoice)
-            ->add('city', null, array('required' => false))
+            ->add('city', null, array('required' => false, 'label' => 'user.profile.profileEdit.city'))
             ->add('cityPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('country', ChoiceType::class, array('choices' => CountriesManager::getCountriesList(), 'required' => false))
+            ->add('country', CountryType::class, array('choices' => CountriesManager::getCountriesList(), 'required' => false, 'label' => 'user.profile.profileEdit.country'))
             ->add('countryPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('birthday', BirthdayPickerType::class, array('required' => false))
+            ->add('birthday', BirthdayPickerType::class, array(
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'required' => false,
+                'label' => 'user.profile.profileEdit.birthday',
+            ))
             ->add('birthdayPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('birthdayDisplayOnlyAge', null, array('required' => false))
-            ->add('personnalMail', null, array('required' => false))
+            ->add('birthdayDisplayOnlyAge', null, array(
+                'required' => false,
+                'label' => 'user.profile.profileEdit.birthdayOnlyAge.label',
+                'attr' => [
+                    'help' => 'user.profile.profileEdit.birthdayOnlyAge.desc',
+                ], ))
+            ->add('personnalMail', EmailType::class, array('required' => false, 'label' => 'user.profile.profileEdit.personnalMail'))
             ->add('personnalMailPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('website', null, array('required' => false))
-            ->add('facebook', null, array('required' => false))
-            ->add('twitter', null, array('required' => false))
-            ->add('linkedin', null, array('required' => false))
-            ->add('viadeo', null, array('required' => false))
+            ->add('website', null, array('required' => false, 'label' => 'user.profile.profileEdit.website'))
+            ->add('facebook', null, array('required' => false, 'label' => 'user.profile.profileEdit.facebook'))
+            ->add('twitter', null, array('required' => false, 'label' => 'user.profile.profileEdit.twitter'))
+            ->add('linkedin', null, array('required' => false, 'label' => 'user.profile.profileEdit.linkedin'))
+            ->add('viadeo', null, array('required' => false, 'label' => 'user.profile.profileEdit.viadeo'))
+            ->add('submit', SubmitType::class, ['label' => 'user.profile.profileEdit.edit'])
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             if ($user->getProfileCompletion() == 100) {
@@ -179,7 +195,8 @@ class ProfileController extends Controller
         }
 
         // Avatar lightbox
-        $avatarForm = $this->createFormBuilder($user)
+        $avatarForm = $this->createFormBuilder($user, ['attr' => ['id' => 'avatar-upload-form']])
+            ->setAction($this->generateUrl('user_profile_avatar', ['login' => $user->getLogin()]))
             ->add('file', FileType::class)
             ->getForm();
 
@@ -201,10 +218,12 @@ class ProfileController extends Controller
         $user = $this->getUser();
 
         $form = $this->createFormBuilder($user)
-            ->add('file', FileType::class)
+            ->add('file', FileType::class, ['label' => 'user.profile.profileAvatar.file'])
+            ->add('submit', SubmitType::class, ['label' => 'user.profile.profileAvatar.edit'])
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $file = $user->upload();
@@ -212,22 +231,16 @@ class ProfileController extends Controller
             $em->persist($user);
             $em->flush();
 
-            return array(
-                'result' => 'success',
-                'data' => json_encode(array(
-                    'filename' => '/uploads/photos/'.$file,
-                )),
-            );
+            $this->get('session')->getFlashBag()->set('message', array(
+                'type' => 'success',
+                'message' => 'user.profile.profileAvatar.confirm',
+            ));
+
+            return $this->redirect($this->generateUrl('user_profile_edit'));
         }
 
-        /** @var $error FormError[] */
-        $error = $form->get('file')->getErrors();
-
         return array(
-            'result' => 'error',
-            'data' => json_encode(array(
-                'message' => (isset($error[0])) ? $error[0]->getMessage() : 'An error occured',
-            )),
+            'form' => $form->createView(),
         );
     }
 
@@ -243,12 +256,14 @@ class ProfileController extends Controller
         $user = $this->getUser();
 
         $form = $this->createFormBuilder($user)
-            ->add('surnom', null, array('required' => false))
-            ->add('jadis', null, array('required' => false, 'attr' => array('class' => 'trombi-textarea')))
-            ->add('passions', null, array('required' => false, 'attr' => array('class' => 'trombi-textarea')))
+            ->add('surnom', null, array('required' => false, 'label' => 'user.profile.trombiEdit.surname'))
+            ->add('jadis', null, array('required' => false, 'attr' => array('class' => 'trombi-textarea', 'label' => 'user.profile.trombiEdit.jadis')))
+            ->add('passions', null, array('required' => false, 'attr' => array('class' => 'trombi-textarea', 'label' => 'user.profile.trombiEdit.passions')))
+            ->add('submit', SubmitType::class, ['label' => 'user.profile.trombiEdit.edit'])
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             if ($user->getTrombiCompletion() == 100) {

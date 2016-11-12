@@ -6,26 +6,28 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ThreadType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class)
+            ->add('title', TextType::class, ['label' => 'forum.main.post.threadTitle'])
             ->add(
                 'weight',
-                'choice',
+                ChoiceType::class,
                 array(
-                    'choices' => array(100 => 'Non', 200 => 'Oui'),
+                    'choices' => array('Non' => 100, 'Oui' => 200),
                     'multiple' => false,
                     'expanded' => true,
                     'preferred_choices' => array(100),
-                    'empty_value' => false,
-                    'empty_data' => -1,
+                    'label' => 'forum.main.post.sticky',
                 )
             )
-            ->add('lastMessage', new MessageType());
+            ->add('lastMessage', MessageType::class)
+            ->add('submit', SubmitType::class, array('label' => 'forum.main.post.submit'));
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -97,36 +97,9 @@
                     {{ 'user.memberships.notification.desc'|trans }}
                 </p>
 
-                <form method="post" class="form-horizontal">
-                    {{ form_errors(form) }}
-
-                    <div class="control-group">
-                        <label class="control-label">{{ 'user.memberships.notification.link.label'|trans }}</label>
-                        <div class="controls">
-                            {{ form_widget(form.link) }}
-                        </div>
-                        <span class="help-block">{{ form_errors(form.link) }}</span>
-                    </div>
-
-                    <div class="control-group">
-                        <label class="control-label">{{ 'user.memberships.notification.content.label'|trans }}</label>
-                        <div class="controls">
-                            {{ form_widget(form.content) }}
-                            <span class="help-block">{{ 'user.memberships.notification.content.desc'|trans }}</span>
-                        </div>
-                        <span class="help-block">{{ form_errors(form.content) }}</span>
-                    </div>
-
-                    <div class="control-group">
-                        <div class="controls">
-                            {{ form_rest(form) }}
-
-                            <button type="submit" class="btn">
-                                {{ 'user.memberships.notification.submit'|trans({'%orga%': membership.organization.name}) }}
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
             </div>
         </div>
     </div>

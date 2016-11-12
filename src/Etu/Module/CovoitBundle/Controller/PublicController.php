@@ -10,6 +10,8 @@ use Etu\Module\CovoitBundle\Entity\CovoitMessage;
 
 // Import annotations
 use Etu\Module\CovoitBundle\Model\Search;
+use Etu\Module\CovoitBundle\Form\SearchType;
+use Etu\Module\CovoitBundle\Form\CovoitMessageType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,11 +48,11 @@ class PublicController extends Controller
         $search = new Search();
         $search->startCity = $em->getRepository('EtuCoreBundle:City')->find(749);
 
-        $searchForm = $this->createForm($this->get('etu.covoit.form.search'), $search);
+        $form = $this->createForm(SearchType::class, $search, ['action' => $this->generateUrl('covoiturage_search')]);
 
         return [
             'pagination' => $covoits,
-            'searchForm' => $searchForm->createView(),
+            'searchForm' => $form->createView(),
             'today' => new \DateTime(),
         ];
     }
@@ -69,10 +71,11 @@ class PublicController extends Controller
         $search = new Search();
         $search->startCity = $em->getRepository('EtuCoreBundle:City')->find(749);
 
-        $searchForm = $this->createForm($this->get('etu.covoit.form.search'), $search);
+        $form = $this->createForm(SearchType::class, $search);
         $pagination = false;
 
-        if ($searchForm->submit($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             // Search covoits
             $query = $this->get('etu.covoit.query_mapper.search')->map($em->createQueryBuilder(), $search)->getQuery();
 
@@ -81,7 +84,7 @@ class PublicController extends Controller
 
         return [
             'pagination' => $pagination,
-            'searchForm' => $searchForm->createView(),
+            'searchForm' => $form->createView(),
             'today' => new \DateTime(),
         ];
     }
@@ -124,9 +127,10 @@ class PublicController extends Controller
         $message->setAuthor($this->getUser());
         $message->setCovoit($covoit);
 
-        $messageForm = $this->createForm($this->get('etu.covoit.form.message'), $message);
+        $messageForm = $this->createForm(CovoitMessageType::class, $message);
 
-        if ($this->isGranted('ROLE_COVOIT_EDIT') && $request->getMethod() == 'POST' && $messageForm->submit($request)->isValid()) {
+        $messageForm->handleRequest($request);
+        if ($this->isGranted('ROLE_COVOIT_EDIT') && $messageForm->isSubmitted() && $messageForm->isValid()) {
             $em->persist($message);
             $em->flush();
 

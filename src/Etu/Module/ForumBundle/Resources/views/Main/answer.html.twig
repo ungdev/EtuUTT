@@ -34,5 +34,9 @@
     </ul>
 
     <div class="padding20-sides">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+                <input type="submit" value="{{ 'forum.main.thread.answer'|trans }}" class="btn" />
+            {{ form_end(form) }}
     </div>
 {% endblock %}

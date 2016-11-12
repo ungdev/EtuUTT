@@ -8,6 +8,8 @@ use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\CovoitBundle\Entity\Covoit;
 use Etu\Module\CovoitBundle\Entity\CovoitMessage;
 use Etu\Module\CovoitBundle\Entity\CovoitSubscription;
+use Etu\Module\CovoitBundle\Form\CovoitType;
+use Etu\Module\CovoitBundle\Form\CovoitMessageType;
 use Symfony\Component\HttpFoundation\Request;
 
 // Import annotations
@@ -72,9 +74,10 @@ class PrivateController extends Controller
             $proposal->setPhoneNumber($this->getUser()->getPhoneNumber());
         }
 
-        $form = $this->createForm($this->get('etu.covoit.form.proposal'), $proposal);
+        $form = $this->createForm(CovoitType::class, $proposal);
 
-        if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $proposal->setStartHour($proposal->getStartHour()->format('H:i'));
             $proposal->setEndHour($proposal->getEndHour()->format('H:i'));
 
@@ -138,9 +141,10 @@ class PrivateController extends Controller
         $covoit->setStartHour(\DateTime::createFromFormat('H:i', $covoit->getStartHour()));
         $covoit->setEndHour(\DateTime::createFromFormat('H:i', $covoit->getEndHour()));
 
-        $form = $this->createForm($this->get('etu.covoit.form.proposal'), $covoit);
+        $form = $this->createForm(CovoitType::class, $covoit);
 
-        if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $covoit->setStartHour($covoit->getStartHour()->format('H:i'));
             $covoit->setEndHour($covoit->getEndHour()->format('H:i'));
 
@@ -220,9 +224,10 @@ class PrivateController extends Controller
             throw new AccessDeniedHttpException();
         }
 
-        $form = $this->createForm($this->get('etu.covoit.form.message'), $message);
+        $form = $this->createForm(CovoitMessageType::class, $message);
 
-        if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             /** @var EntityManager $em */
             $em = $this->getDoctrine()->getManager();
 

@@ -11,6 +11,7 @@ use Etu\Module\UVBundle\Entity\Comment;
 use Etu\Module\UVBundle\Entity\Review;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Core\CoreBundle\Form\RedactorType;
@@ -60,10 +61,12 @@ class ViewController extends Controller
                 ->setUser($this->getUser());
 
             $commentForm = $this->createFormBuilder($comment)
-                ->add('body', RedactorType::class)
+                ->add('body', RedactorType::class, ['label' => 'uvs.main.view.body'])
+                ->add('submit', SubmitType::class, ['label' => 'uvs.main.view.submit'])
                 ->getForm();
 
-            if ($request->getMethod() == 'POST' && $commentForm->submit($request)->isValid()) {
+            $commentForm->handleRequest($request);
+            if ($commentForm->isSubmitted() && $commentForm->isValid()) {
                 $em->persist($comment);
                 $em->flush();
 
@@ -266,12 +269,14 @@ class ViewController extends Controller
             ->setSemester(User::currentSemester());
 
         $form = $this->createFormBuilder($review)
-            ->add('type', ChoiceType::class, array('choices' => Review::$types, 'required' => true))
-            ->add('semester', ChoiceType::class, array('choices' => Review::availableSemesters(), 'required' => true))
-            ->add('file', null, array('required' => true))
+            ->add('type', ChoiceType::class, array('choices' => array_flip(Review::$types), 'required' => true, 'label' => 'uvs.main.sendReview.type'))
+            ->add('semester', ChoiceType::class, array('choices' => array_flip(Review::availableSemesters()), 'required' => true, 'label' => 'uvs.main.sendReview.semester'))
+            ->add('file', null, array('required' => true, 'label' => 'uvs.main.sendReview.file'))
+            ->add('submit', SubmitType::class, array('label' => 'uvs.main.sendReview.submit'))
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $review->upload();
 
             $em->persist($review);

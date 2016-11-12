@@ -1,57 +1,114 @@
+.form-default {
 
-/* Form with two columns of inputs */
-.form-2col {
-    .form-2col-field {
-        display:inline-block;
-
-        padding:5px 0;
-        box-sizing: border-box;
-        border-radius: 4px;
-        min-width: 50%;
-        margin: 0 0 10px 0;
-        vertical-align: top;
-
-        input, select {
-            width: 98%;
-            box-sizing: border-box;
-            height:35px;
-            margin:0;
+    .form-field-width {
+        input, select, textarea {
+            width: 100%;
         }
-        input[type=checkbox] {
-            width:auto;
-            float:left;
-            margin: -5px 5px 0 0;
+    }
+
+    .form-field {
+        // display: block;
+        // padding:5px 0;
+        // box-sizing: border-box;
+        border-radius: 4px;
+        margin: 0 0 10px 0;
+
+
+        input, select, textarea {
+            box-sizing: border-box;
+            min-height: 35px;
+        }
+
+        .add-on {
+            box-sizing: border-box;
+            height: 35px;
+            width: 40px;
+            padding: 6px 8px;
+            vertical-align: middle;
         }
 
         label {
-            font-weight: bold;
+            // font-weight: bold;
         }
-
-        label:after {
-            color: #fff;
+        label.required:after {
+            color: #e32;
             font-size:1.6em;
             content: '*';
             display: inline;
         }
+
+        .field-checkbox {
+            label {
+                display: inline;
+                font-weight: normal;
+            }
+            input {
+                width: auto;
+                margin: 0 7px 0 0;
+                min-height: auto;
+            }
+            label.required:after {
+                content: '';
+            }
+        }
+
+        .field-date {
+            display: inline-block;
+            margin-right: 15px;
+        }
+        .field-date > select {
+            margin:0;
+            padding: 0;
+            width: auto;
+            margin-left: 2px;
+            margin-right: 2px;
+        }
+
+        .field-time {
+            display: inline-block;
+        }
+        .field-time > select {
+            padding: 0;
+            width: auto;
+            margin-left: 2px;
+            margin-right: 2px;
+        }
     }
-    .form-2col-button {
-        text-align:left;
+
+    div.form-button {
+        margin: 0 10px 20px 0;
+        display: inline-block;
     }
-    .form-2col-help {
+    .form-help {
         color: #777;
         font-size: 0.9em;
+        font-style: italic;
+        margin-top: 2px;
     }
-    .form-2col-error-list {
+
+    .form-error-list {
         color: #b94a48;
     }
-    .form-2col-error {
+    .form-error {
         background-color: #f2dede;
         border-color: #eed3d7;
+        padding: 8px 5px 5px 5px;
     }
-    .form-2col-required {
-        label:after {
-            color: #e32;
-        }
+}
+
+/* inline form theme */
+.form-theme-inline {
+    form {
+        margin-bottom: 5px;
+    }
+    .form-field {
+        display: inline-block;
+        margin: 0 5px 0 0;
+        vertical-align: top;
+    }
+    div.form-button {
+        margin-left: 3px;
+        margin: 2px 0 0 3px;
     }
 }
 
@@ -66,3 +123,23 @@
 .choice_level_7 { text-indent: 70px; }
 .choice_level_8 { text-indent: 80px; }
 .choice_level_9 { text-indent: 90px; }
+
+/* Privacy layout used in profile */
+.privacy-layout {
+    div {
+        display: inline-block;
+        width: 100%;
+    }
+    .field {
+        width: 69%;
+    }
+    .privacy {
+        width: 29%;
+        .form-field {
+            width: 100%;
+            label {
+                visibility: hidden;
+            }
+        }
+    }
+}

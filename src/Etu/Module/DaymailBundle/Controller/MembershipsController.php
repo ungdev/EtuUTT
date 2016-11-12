@@ -124,11 +124,12 @@ class MembershipsController extends Controller
         }
 
         $form = $this->createFormBuilder($daymailPart)
-            ->add('title', TextType::class, ['required' => true, 'attr' => ['maxlength' => 100]])
-            ->add('body', RedactorHtmlType::class, array('required' => true))
+            ->add('title', TextType::class, ['required' => true, 'label' => 'daymail.memberships.daymail.title.label', 'attr' => ['maxlength' => 100]])
+            ->add('body', RedactorHtmlType::class, array('required' => true, 'label' => 'daymail.memberships.daymail.body.label'))
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->submit($request)->isValid() && $canEdit) {
+        $form->handleRequest($request);
+        if ($canEdit && $form->isSubmitted() && $form->isValid()) {
             $daymailPart->setBody($this->get('etu_daymail.body_parser')->parse($daymailPart->getBody()));
 
             $em->persist($daymailPart);

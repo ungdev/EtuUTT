@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * @Route("/admin/bugs")
@@ -196,16 +197,17 @@ class BugsAdminController extends Controller
         }
 
         $criticalities = array(
-            Issue::CRITICALITY_SECURITY => 'bugs.criticality.60',
-            Issue::CRITICALITY_CRITICAL => 'bugs.criticality.50',
-            Issue::CRITICALITY_MAJOR => 'bugs.criticality.40',
-            Issue::CRITICALITY_MINOR => 'bugs.criticality.30',
-            Issue::CRITICALITY_VISUAL => 'bugs.criticality.20',
-            Issue::CRITICALITY_TYPO => 'bugs.criticality.10',
+            'bugs.criticality.60' => Issue::CRITICALITY_SECURITY,
+            'bugs.criticality.50' => Issue::CRITICALITY_CRITICAL,
+            'bugs.criticality.40' => Issue::CRITICALITY_MAJOR,
+            'bugs.criticality.30' => Issue::CRITICALITY_MINOR,
+            'bugs.criticality.20' => Issue::CRITICALITY_VISUAL,
+            'bugs.criticality.10' => Issue::CRITICALITY_TYPO,
         );
 
         $updateForm = $this->createFormBuilder($bug)
             ->add('criticality', ChoiceType::class, array('choices' => $criticalities))
+            ->add('submit', SubmitType::class)
             ->getForm();
 
         // Comment genration: before update
@@ -221,10 +223,11 @@ class BugsAdminController extends Controller
 
         $before = sprintf(
             '<span class="%s">%s</span>',
-            $label, $this->get('translator')->trans($criticalities[$bug->getCriticality()])
+            $label, $this->get('translator')->trans(array_flip($criticalities)[$bug->getCriticality()])
         );
 
-        if ($request->getMethod() == 'POST' && $updateForm->handleRequest($request)->isValid()) {
+        $updateForm->handleRequest($request);
+        if ($updateForm->isSubmitted() && $updateForm->isValid()) {
             $bug->setUpdatedAt(new \DateTime());
 
             $em->persist($bug);
@@ -242,7 +245,7 @@ class BugsAdminController extends Controller
 
             $after = sprintf(
                 '<span class="%s">%s</span>',
-                $label, $this->get('translator')->trans($criticalities[$bug->getCriticality()])
+                $label, $this->get('translator')->trans(array_flip($criticalities)[$bug->getCriticality()])
             );
 
             $comment = new Comment();

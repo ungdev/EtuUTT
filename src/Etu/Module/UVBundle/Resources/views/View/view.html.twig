@@ -33,8 +33,8 @@
 
     <h4>{{ uv.code }} - {{ uv.name }}</h4>
 
-    <div class="uv-view">
-        <div class="uv-view-infos">
+    <div class="uv-view row-fluid">
+        <div class="uv-view-infos span5">
             {% if uv.isOld %}
                 <div class="uv-view-infos-category">
                     {{ 'uvs.main.view.dontExists'|trans }}
@@ -102,7 +102,7 @@
             </div>
         </div>
 
-        <div class="uv-view-content">
+        <div class="uv-view-content span7">
             {% if uv.objectifs %}
                 <h4>{{ 'uvs.main.view.content'|trans }}</h4>
 
@@ -121,111 +121,94 @@
         </div>
     </div>
 
-    <div class="clear"></div>
-
     {% if is_granted('ROLE_UV_REVIEW') %}
     <hr />
+    <div class="row-fluid">
+        <div class="uv-view-reviews span5">
+            <h4>{{ 'uvs.main.view.reviews'|trans }} ({{ reviewsCount }})</h4>
 
-    <div class="uv-view-reviews">
-        <h4>{{ 'uvs.main.view.reviews'|trans }} ({{ reviewsCount }})</h4>
-
-        {% for semester, reviews in semesters %}
-            <div class="uv-view-reviews-semester">
-                <a href="" class="btn btn-link uv-view-reviews-semester-link">
-                    <b class="caret"></b> {{ semester }}
-                </a>
-                <small class="pull-right muted uv-view-reviews-count">
-                    {{ 'uvs.main.view.countReviews'|transchoice(reviews.count, {'%count%': reviews.count}) }}
-                </small>
-
-                {% if reviews.validated|count > 0 %}
-                <div class="uv-view-reviews-reviews-validated">
-                    <small class="muted">{{ 'uvs.main.view.approuved'|trans }}</small>
-                    {% for review in reviews.validated %}
-                        <a href="{{ asset('uploads/uvs/'~review.filename) }}">
-                            {{ ('uvs.reviews.'~review.type)|trans }}
-                            <span class="pull-right muted">{{ review.sender.fullName }}</span>
-                        </a>
-                    {% endfor %}
-                </div>
-                {% endif %}
-
-                {% if reviews.pending|count > 0 %}
-                <div class="uv-view-reviews-reviews-pending">
-                    <small class="muted">{{ 'uvs.main.view.pending'|trans }}</small>
-                    {% for review in reviews.pending %}
-                        <a href="{{ asset('uploads/uvs/'~review.filename) }}">
-                            {{ ('uvs.reviews.'~review.type)|trans }}
-                            <span class="pull-right muted">{{ review.sender.fullName }}</span>
-                        </a>
-                    {% endfor %}
-                </div>
-                {% endif %}
-            </div>
-        {% endfor %}
-
-        {% if is_granted('ROLE_UV_REVIEW_POST') %}
-        <p class="pull-right">
-            <a href="{{ path('uvs_view_send_review', {'slug': uv.slug, 'name': uv.name|slugify}) }}" class="btn">
-                <i class="icon-plus"></i> {{ 'uvs.main.view.sendReview'|trans }}
-            </a>
-        </p>
-        <p class="pull-right">
-            <small class="muted">{{ 'uvs.main.view.winBadges'|trans }}</small>
-        </p>
-        {% endif %}
-    </div>
-    <div class="uv-view-comments">
-        <h4>{{ 'uvs.main.view.comments'|trans }} ({{ pagination.totalItemCount }})</h4>
-
-        {% for comment in pagination %}
-            <div class="uv-view-comment">
-                <a href="{{ path('user_view', {'login': comment.user.login}) }}">
-                    <img src="{{ asset('uploads/photos/'~comment.user.avatar) }}" class="uv-view-comment-avatar" />
-                </a>
-                <div class="uv-view-comment-author">
-                    <a href="{{ path('user_view', {'login': comment.user.login}) }}">
-                        {{ comment.user.fullName }}
+            {% for semester, reviews in semesters %}
+                <div class="uv-view-reviews-semester">
+                    <a href="" class="btn btn-link uv-view-reviews-semester-link">
+                        <b class="caret"></b> {{ semester }}
                     </a>
-                </div>
-                <div class="uv-view-comment-date">
-                    {{ comment.createdAt|date('d/m/Y H:i') }}
-                </div>
-                <div class="uv-view-comment-content">
-                    {{ comment.body|bbcode_filter('default_filter') }}
-                </div>
-            </div>
-        {% else %}
-            <p>{{ 'uvs.main.view.noComment'|trans }}</p>
-        {% endfor %}
+                    <small class="pull-right muted uv-view-reviews-count">
+                        {{ 'uvs.main.view.countReviews'|transchoice(reviews.count, {'%count%': reviews.count}) }}
+                    </small>
 
-        <div class="navigation">
-            {{ knp_pagination_render(pagination) }}
+                    {% if reviews.validated|count > 0 %}
+                    <div class="uv-view-reviews-reviews-validated">
+                        <small class="muted">{{ 'uvs.main.view.approuved'|trans }}</small>
+                        {% for review in reviews.validated %}
+                            <a href="{{ asset('uploads/uvs/'~review.filename) }}">
+                                {{ ('uvs.reviews.'~review.type)|trans }}
+                                <span class="pull-right muted">{{ review.sender.fullName }}</span>
+                            </a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    {% if reviews.pending|count > 0 %}
+                    <div class="uv-view-reviews-reviews-pending">
+                        <small class="muted">{{ 'uvs.main.view.pending'|trans }}</small>
+                        {% for review in reviews.pending %}
+                            <a href="{{ asset('uploads/uvs/'~review.filename) }}">
+                                {{ ('uvs.reviews.'~review.type)|trans }}
+                                <span class="pull-right muted">{{ review.sender.fullName }}</span>
+                            </a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            {% if is_granted('ROLE_UV_REVIEW_POST') %}
+            <p class="pull-right">
+                <a href="{{ path('uvs_view_send_review', {'slug': uv.slug, 'name': uv.name|slugify}) }}" class="btn">
+                    <i class="icon-plus"></i> {{ 'uvs.main.view.sendReview'|trans }}
+                </a>
+            </p>
+            <p class="pull-right">
+                <small class="muted">{{ 'uvs.main.view.winBadges'|trans }}</small>
+            </p>
+            {% endif %}
         </div>
+        <div class="uv-view-comments span7">
+            <h4>{{ 'uvs.main.view.comments'|trans }} ({{ pagination.totalItemCount }})</h4>
 
-        <hr />
-
-        {% if is_granted('ROLE_UV_REVIEW_POST') %}
-        <form method="post">
-            {{ form_errors(commentForm) }}
-
-            <div class="control-group">
-                <label class="control-label">{{ 'uvs.main.view.body'|trans }}</label>
-                <div class="controls">{{ form_widget(commentForm.body) }}</div>
-                <span class="help-block">{{ form_errors(commentForm.body) }}</span>
-            </div>
-
-            <div class="control-group">
-                <div class="controls">
-                    {{ form_rest(commentForm) }}
-
-                    <button type="submit" class="btn">
-                        {{ 'uvs.main.view.submit'|trans }}
-                    </button>
+            {% for comment in pagination %}
+                <div class="uv-view-comment">
+                    <a href="{{ path('user_view', {'login': comment.user.login}) }}">
+                        <img src="{{ asset('uploads/photos/'~comment.user.avatar) }}" class="uv-view-comment-avatar" />
+                    </a>
+                    <div class="uv-view-comment-author">
+                        <a href="{{ path('user_view', {'login': comment.user.login}) }}">
+                            {{ comment.user.fullName }}
+                        </a>
+                    </div>
+                    <div class="uv-view-comment-date">
+                        {{ comment.createdAt|date('d/m/Y H:i') }}
+                    </div>
+                    <div class="uv-view-comment-content">
+                        {{ comment.body|bbcode_filter('default_filter') }}
+                    </div>
                 </div>
+            {% else %}
+                <p>{{ 'uvs.main.view.noComment'|trans }}</p>
+            {% endfor %}
+
+            <div class="navigation">
+                {{ knp_pagination_render(pagination) }}
             </div>
-        </form>
-        {% endif %}
+
+            <hr />
+
+            {% if is_granted('ROLE_UV_REVIEW_POST') %}
+                {{ form_start(commentForm) }}
+                    {{ form_widget(commentForm) }}
+                {{ form_end(commentForm) }}
+            {% endif %}
+        </div>
     </div>
     {% endif %}
 </div>

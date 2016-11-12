@@ -70,6 +70,3 @@ services:
         arguments: [ "@doctrine.orm.entity_manager" ]
         tags:
             - { name: form.type, alias: scopes }
-
-    etu.api.form.client:
-        class: Etu\Core\ApiBundle\Form\ClientType

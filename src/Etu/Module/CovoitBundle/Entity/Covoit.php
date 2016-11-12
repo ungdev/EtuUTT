@@ -16,8 +16,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @ORM\Table(name="etu_covoits")
  * @ORM\Entity
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
- *
- * @Assert\Callback(methods={"isBlaBlaCarUrlValid"})
  */
 class Covoit
 {
@@ -231,6 +229,7 @@ class Covoit
 
     /**
      * @param ExecutionContextInterface $context
+     * @Assert\Callback
      */
     public function isBlaBlaCarUrlValid(ExecutionContextInterface $context)
     {

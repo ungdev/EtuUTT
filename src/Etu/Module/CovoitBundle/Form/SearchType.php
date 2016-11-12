@@ -3,11 +3,11 @@
 namespace Etu\Module\CovoitBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\DBAL\Types\IntegerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Etu\Core\CoreBundle\Form\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -21,6 +21,7 @@ class SearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->setMethod('get')
             ->add('startCity', EntityType::class, [
                 'label' => 'covoit.search.start_city',
                 'required' => false,

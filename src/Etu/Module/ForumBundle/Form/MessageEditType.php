@@ -12,8 +12,8 @@ class MessageEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('content', RedactorType::class)
-            ->add('thread', new ThreadEditType());
+            ->add('content', RedactorType::class, ['label' => 'forum.main.post.content'])
+            ->add('thread', ThreadEditType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

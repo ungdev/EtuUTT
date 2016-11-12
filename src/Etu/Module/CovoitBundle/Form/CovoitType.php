@@ -22,7 +22,7 @@ class CovoitType extends AbstractType
     {
         $builder
             ->add('phoneNumber', null, ['label' => 'covoit.proposal.phone.label'])
-            ->add('notes', RedactorLimitedType::class, ['label' => 'covoit.proposal.notes.label'])
+            ->add('notes', RedactorLimitedType::class, ['required' => false, 'label' => 'covoit.proposal.notes.label'])
             ->add('capacity', null, ['label' => 'covoit.proposal.capacity.label'])
             ->add('date', DatePickerType::class, ['label' => 'covoit.proposal.date.label'])
             ->add('price', null, ['label' => 'covoit.proposal.price.label'])

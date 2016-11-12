@@ -14,7 +14,7 @@
     {% include 'EtuModuleCovoitBundle::menu.html.twig' with {'active': 'none'} %}
 
     <div class="padding20-sides">
-        <form method="post">
+        {{ form_start(form) }}
             <a href="{{ path('covoiturage_my_alerts_delete', {'id': alert.id}) }}" class="btn btn-danger pull-right">
                 {{ 'covoit.alerts.edit.delete'|trans }}
             </a>
@@ -29,32 +29,34 @@
                 </em>
             </p>
 
+
             <div class="row-fluid">
                 <div class="span6">
                     {{ form_row(form.startCity) }}
-                    {{ form_row(form.endCity) }}
-                    {{ form_row(form.priceMax) }}
                 </div>
                 <div class="span6">
-                    <p>
-                        <em class="muted"><small>{{ 'covoit.alerts.create.precise_date'|trans }}</small></em>
-                    </p>
-
+                    {{ form_row(form.endCity) }}
+                </div>
+            </div>
+            <hr/>
+            <div class="row-fluid">
+                <div class="span6">
                     {{ form_row(form.startDate) }}
+                </div>
+                <div class="span6">
                     {{ form_row(form.endDate) }}
                 </div>
             </div>
-
-            {{ form_rest(form) }}
-
-            <hr />
-
+            <hr/>
+            {{ form_row(form.priceMax) }}
+            <hr/>
             <p class="align-center">
                 <input type="submit" class="btn btn-primary" value="{{ 'covoit.alerts.edit.submit'|trans }}" />
                 <a href="{{ path('covoiturage_my_alerts') }}" class="btn btn-default">
                     {{ 'covoit.alerts.edit.cancel'|trans }}
                 </a>
             </p>
-        </form>
+
+        {{ form_end(form) }}
     </div>
 {% endblock %}

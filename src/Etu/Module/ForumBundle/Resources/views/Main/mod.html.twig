@@ -1,4 +1,4 @@
-{% extends '::page-1col.html.twig' %}
+{% extends '::page-2cols.html.twig' %}
 
 {% block title %}{{ 'forum.main.mod.title'|trans }}{% endblock %}
 
@@ -32,27 +32,12 @@
             {{ 'forum.main.mod.unlocked'|trans }}<br />
             <a href="{{ path('forum_thread', {'id': thread.getId(), 'slug': thread.getSlug()}) }}">{{ 'forum.main.mod.back'|trans }}</a>
         {% elseif action == 'move' %}
-            <form action="{{ path('forum_mod', {'action': 'move', 'threadId': thread.id, 'slug': thread.slug}) }}" method="post" {{ form_enctype(form) }}>
-                <fieldset class="forum-post">
-                    {{ form_errors(form) }}
-                    <div class="forum-post-left">
-                        <div class="forum-post-title">
-                            {{ form_label(form.category, 'forum.main.mod.where'|trans) }}
-                        </div>
-
-                    </div>
-                    <div class="forum-post-right">
-                        <div class="forum-post-title">
-                            {{ form_errors(form.category) }}
-                            {{ form_widget(form.category) }}
-                        </div>
-                        {{ form_rest(form) }}
-                        <input type="submit" class="btn btn-primary" />
-                        <a href="{{ path('forum_thread', {'id': thread.id, 'slug': thread.slug}) }}"
-                           class="btn">Annuler</a>
-                    </div>
-                </fieldset>
-            </form>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+                <input type="submit" class="btn btn-primary" />
+                <a href="{{ path('forum_thread', {'id': thread.id, 'slug': thread.slug}) }}"
+                   class="btn">Annuler</a>
+            {{ form_end(form) }}
         {% endif %}
     </div>
 {% endblock %}

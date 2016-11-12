@@ -29,13 +29,10 @@
 
 {% block body %}
     <div class="upload-form">
-        <form class="form-inline" method="post" action="" {{ form_enctype(form) }}>
-            <label for="image">{{ 'upload.main.index.send'|trans }}</label><br />
-            {{ form_widget(form.file) }}
-
-            {{ form_rest(form) }}
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
             <button type="submit" class="btn">{{ 'upload.main.index.send_submit'|trans }}</button>
-        </form>
+        {{ form_end(form) }}
     </div>
 
     <hr />

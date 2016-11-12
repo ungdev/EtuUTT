@@ -18,8 +18,7 @@ use Etu\Module\ForumBundle\Form\MessageEditType;
 use Etu\Module\ForumBundle\Form\MessageType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Etu\Module\ForumBundle\Model\PermissionsChecker;
-
-// Import annotations
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -214,7 +213,7 @@ class MainController extends Controller
         }
 
         $message = new Message();
-        $form = $this->createForm(new MessageType(), $message);
+        $form = $this->createForm(MessageType::class, $message, ['action' => $this->generateUrl('forum_answer', ['id' => $id, 'slug' => $slug])]);
 
         return array(
             'category' => $category,
@@ -230,7 +229,7 @@ class MainController extends Controller
      * @Route("/forum/post/{id}-{slug}", name="forum_post")
      * @Template()
      */
-    public function postAction($id, $slug)
+    public function postAction($id, $slug, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_FORUM_POST');
 
@@ -256,54 +255,49 @@ class MainController extends Controller
 
         $thread = new Thread();
         if ($checker->canSticky($category) || $this->isGranted('ROLE_FORUM_ADMIN')) {
-            $form = $this->createForm(new ThreadType(), $thread);
+            $form = $this->createForm(ThreadType::class, $thread);
         } else {
-            $form = $this->createForm(new ThreadTypeNoSticky(), $thread);
+            $form = $this->createForm(ThreadTypeNoSticky::class, $thread);
         }
 
-        $request = $this->get('request');
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                if ($thread->getWeight() != 100 && !$checker->canSticky($category) && !$this->isGranted('ROLE_FORUM_ADMIN')) {
-                    $thread->setWeight(100);
-                }
-                $thread->setAuthor($this->getUser())
-                    ->setCategory($category)
-                    ->setCountMessages(1)
-                    ->setSlug(StringManipulationExtension::slugify($thread->getTitle()));
-                $message = $thread->getLastMessage();
-                $message->setAuthor($this->getUser())
-                    ->setCategory($category)
-                    ->setThread($thread)
-                    ->setState(100)
-                    ->setCreatedAt($thread->getCreatedAt());
-                $thread->setLastMessage($message);
-                foreach ($parents as $parent) {
-                    $parent->setLastMessage($message)
-                        ->setCountMessages($parent->getCountMessages() + 1)
-                        ->setCountThreads($parent->getCountThreads() + 1);
-                    $em->persist($parent);
-                }
-
-                $em->persist($thread);
-
-                $cviews = $em->getRepository('EtuModuleForumBundle:CategoryView')
-                    ->findByCategory($category);
-                foreach ($cviews as $cview) {
-                    $em->remove($cview);
-                }
-
-                $em->flush();
-
-                $this->giveBadges();
-
-                $this->getSubscriptionsManager()->subscribe($this->getUser(), 'message', $thread->getId());
-
-                return $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug())));
-            } else {
-                return array('errors' => $form->getErrors(), 'category' => $category, 'parents' => $parents, 'form' => $form->createView());
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($thread->getWeight() != 100 && !$checker->canSticky($category) && !$this->isGranted('ROLE_FORUM_ADMIN')) {
+                $thread->setWeight(100);
             }
+            $thread->setAuthor($this->getUser())
+                ->setCategory($category)
+                ->setCountMessages(1)
+                ->setSlug(StringManipulationExtension::slugify($thread->getTitle()));
+            $message = $thread->getLastMessage();
+            $message->setAuthor($this->getUser())
+                ->setCategory($category)
+                ->setThread($thread)
+                ->setState(100)
+                ->setCreatedAt($thread->getCreatedAt());
+            $thread->setLastMessage($message);
+            foreach ($parents as $parent) {
+                $parent->setLastMessage($message)
+                    ->setCountMessages($parent->getCountMessages() + 1)
+                    ->setCountThreads($parent->getCountThreads() + 1);
+                $em->persist($parent);
+            }
+
+            $em->persist($thread);
+
+            $cviews = $em->getRepository('EtuModuleForumBundle:CategoryView')
+                ->findByCategory($category);
+            foreach ($cviews as $cview) {
+                $em->remove($cview);
+            }
+
+            $em->flush();
+
+            $this->giveBadges();
+
+            $this->getSubscriptionsManager()->subscribe($this->getUser(), 'message', $thread->getId());
+
+            return $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug())));
         }
 
         return array('category' => $category, 'parents' => $parents, 'form' => $form->createView());
@@ -313,7 +307,7 @@ class MainController extends Controller
      * @Route("/forum/answer/{id}-{slug}", name="forum_answer")
      * @Template()
      */
-    public function answerAction($id, $slug)
+    public function answerAction($id, $slug, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_FORUM_POST');
 
@@ -347,58 +341,53 @@ class MainController extends Controller
             ->getResult();
 
         $message = new Message();
-        $form = $this->createForm(new MessageType(), $message);
+        $form = $this->createForm(MessageType::class, $message);
 
-        $request = $this->get('request');
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $message->setAuthor($this->getUser())
-                    ->setCategory($category)
-                    ->setThread($thread)
-                    ->setState(100);
-                $thread->setCountMessages($thread->getCountMessages() + 1)
-                    ->setLastMessage($message);
-                foreach ($parents as $parent) {
-                    $parent->setLastMessage($message)
-                        ->setCountMessages($parent->getCountMessages() + 1);
-                    $em->persist($parent);
-                }
-                $em->persist($thread);
-
-                $views = $em->getRepository('EtuModuleForumBundle:View')
-                    ->findByThread($thread);
-                foreach ($views as $view) {
-                    $em->remove($view);
-                }
-                $cviews = $em->getRepository('EtuModuleForumBundle:CategoryView')
-                    ->findByCategory($category);
-                foreach ($cviews as $cview) {
-                    $em->remove($cview);
-                }
-                $em->flush();
-
-                $this->giveBadges();
-
-                $page = ceil($thread->getCountMessages() / 10);
-
-                $notif = new Notification();
-                $notif
-                    ->setModule('forum')
-                    ->setHelper('thread_answered')
-                    ->setAuthorId($this->getUser()->getId())
-                    ->setEntityType('message')
-                    ->setEntityId($thread->getId())
-                    ->addEntity($message);
-
-                $this->getNotificationsSender()->send($notif);
-
-                $this->getSubscriptionsManager()->subscribe($this->getUser(), 'message', $thread->getId());
-
-                return $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug(), 'page' => $page)).'#'.$message->getId());
-            } else {
-                return array('errors' => $form->getErrors(), 'thread' => $thread, 'parents' => $parents, 'form' => $form->createView());
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $message->setAuthor($this->getUser())
+                ->setCategory($category)
+                ->setThread($thread)
+                ->setState(100);
+            $thread->setCountMessages($thread->getCountMessages() + 1)
+                ->setLastMessage($message);
+            foreach ($parents as $parent) {
+                $parent->setLastMessage($message)
+                    ->setCountMessages($parent->getCountMessages() + 1);
+                $em->persist($parent);
             }
+            $em->persist($thread);
+
+            $views = $em->getRepository('EtuModuleForumBundle:View')
+                ->findByThread($thread);
+            foreach ($views as $view) {
+                $em->remove($view);
+            }
+            $cviews = $em->getRepository('EtuModuleForumBundle:CategoryView')
+                ->findByCategory($category);
+            foreach ($cviews as $cview) {
+                $em->remove($cview);
+            }
+            $em->flush();
+
+            $this->giveBadges();
+
+            $page = ceil($thread->getCountMessages() / 10);
+
+            $notif = new Notification();
+            $notif
+                ->setModule('forum')
+                ->setHelper('thread_answered')
+                ->setAuthorId($this->getUser()->getId())
+                ->setEntityType('message')
+                ->setEntityId($thread->getId())
+                ->addEntity($message);
+
+            $this->getNotificationsSender()->send($notif);
+
+            $this->getSubscriptionsManager()->subscribe($this->getUser(), 'message', $thread->getId());
+
+            return $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug(), 'page' => $page)).'#'.$message->getId());
         }
 
         return array('thread' => $thread, 'parents' => $parents, 'form' => $form->createView());
@@ -408,7 +397,7 @@ class MainController extends Controller
      * @Route("/forum/edit/{threadId}-{slug}/{messageId}", name="forum_edit")
      * @Template()
      */
-    public function editAction($messageId)
+    public function editAction($messageId, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_FORUM_POST');
 
@@ -443,36 +432,31 @@ class MainController extends Controller
             ->getResult();
 
         if ($message->getCreatedAt() == $thread->getCreatedAt()) {
-            $form = $this->createForm(new MessageEditType(), $message);
+            $form = $this->createForm(MessageEditType::class, $message,  ['action' => $this->generateUrl('forum_edit', ['messageId' => $message->getId(), 'threadId' => $thread->getId(), 'slug' => $thread->getSlug()])]);
             $typeForm = 'thread';
         } else {
-            $form = $this->createForm(new MessageType(), $message);
+            $form = $this->createForm(MessageType::class, $message,  ['action' => $this->generateUrl('forum_edit', ['messageId' => $message->getId(), 'threadId' => $thread->getId(), 'slug' => $thread->getSlug()])]);
             $typeForm = 'message';
         }
 
-        $request = $this->get('request');
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $em->persist($message);
-                $em->flush();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($message);
+            $em->flush();
 
-                $nbMessages = $em->createQueryBuilder()
-                    ->select('count(m.id)')
-                    ->from('EtuModuleForumBundle:Message', 'm')
-                    ->where('m.thread = :thread')
-                    ->andWhere('m.id <= :mid')
-                    ->setParameter('thread', $thread->getId())
-                    ->setParameter('mid', $message->getId())
-                    ->getQuery()
-                    ->getSingleScalarResult();
+            $nbMessages = $em->createQueryBuilder()
+                ->select('count(m.id)')
+                ->from('EtuModuleForumBundle:Message', 'm')
+                ->where('m.thread = :thread')
+                ->andWhere('m.id <= :mid')
+                ->setParameter('thread', $thread->getId())
+                ->setParameter('mid', $message->getId())
+                ->getQuery()
+                ->getSingleScalarResult();
 
-                $page = ceil($nbMessages / 10);
+            $page = ceil($nbMessages / 10);
 
-                return $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug(), 'page' => $page)).'#'.$message->getId());
-            } else {
-                return array('errors' => $form->getErrors(), 'messageContent' => $message, 'thread' => $thread, 'parents' => $parents, 'form' => $form->createView(), 'category' => $category, 'typeForm' => $typeForm);
-            }
+            return $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug(), 'page' => $page)).'#'.$message->getId());
         }
 
         return array('messageContent' => $message, 'thread' => $thread, 'parents' => $parents, 'form' => $form->createView(), 'category' => $category, 'typeForm' => $typeForm);
@@ -482,7 +466,7 @@ class MainController extends Controller
      * @Route("/forum/mod/{action}/{threadId}-{slug}/{messageId}", defaults={"messageId" = null}, requirements={"messageId" = "\d+"}, name="forum_mod")
      * @Template()
      */
-    public function modAction($action, $threadId, $messageId = null)
+    public function modAction($action, $threadId, $messageId, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_FORUM_POST');
 
@@ -511,7 +495,7 @@ class MainController extends Controller
             ->getQuery()
             ->getResult();
 
-        $return = array();
+        $return = array('thread' => $thread, 'parents' => $parents, 'action' => $action);
 
         switch ($action) {
             case 'remove':
@@ -668,67 +652,64 @@ class MainController extends Controller
                     )
                     ->getForm();
 
-                $request = $this->get('request');
-                if ($request->getMethod() == 'POST') {
-                    $form->handleRequest($request);
-                    if ($form->isValid()) {
-                        $category->setCountThreads($category->getCountThreads() - 1)
-                            ->setCountMessages($category->getCountMessages() - $thread->getCountMessages());
+                $return['form'] = $form->createView();
 
-                        $newCat = $thread->getCategory();
-                        $newCat->setCountThreads($newCat->getCountThreads() + 1)
-                            ->setCountMessages($newCat->getCountMessages() + $thread->getCountMessages());
+                $form->handleRequest($request);
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $category->setCountThreads($category->getCountThreads() - 1)
+                        ->setCountMessages($category->getCountMessages() - $thread->getCountMessages());
 
-                        $thread->setCategory($newCat);
+                    $newCat = $thread->getCategory();
+                    $newCat->setCountThreads($newCat->getCountThreads() + 1)
+                        ->setCountMessages($newCat->getCountMessages() + $thread->getCountMessages());
 
-                        $modMessages = $em->createQueryBuilder()->update('EtuModuleForumBundle:Message', 'm')
-                            ->set('m.category', ':newCat')
-                            ->setParameter('newCat', $newCat)
-                            ->where('m.thread = :thread')
-                            ->setParameter('thread', $thread)
-                            ->getQuery()
-                            ->execute();
-                        $em->persist($thread);
+                    $thread->setCategory($newCat);
 
-                        $getLastMessage = $em->createQueryBuilder()
-                            ->select('m')
-                            ->from('EtuModuleForumBundle:Message', 'm')
-                            ->where('m.category = :category')
-                            ->setParameter('category', $category)
-                            ->orderBy('m.createdAt', 'DESC')
-                            ->setMaxResults(1)
-                            ->getQuery();
+                    $modMessages = $em->createQueryBuilder()->update('EtuModuleForumBundle:Message', 'm')
+                        ->set('m.category', ':newCat')
+                        ->setParameter('newCat', $newCat)
+                        ->where('m.thread = :thread')
+                        ->setParameter('thread', $thread)
+                        ->getQuery()
+                        ->execute();
+                    $em->persist($thread);
 
-                        try {
-                            $getLastMessage = $getLastMessage->getSingleResult();
-                            $category->setLastMessage($getLastMessage);
-                        } catch (\Doctrine\Orm\NoResultException $e) {
-                            $category->setLastMessage(null);
-                        }
-                        $em->persist($category);
+                    $getLastMessage = $em->createQueryBuilder()
+                        ->select('m')
+                        ->from('EtuModuleForumBundle:Message', 'm')
+                        ->where('m.category = :category')
+                        ->setParameter('category', $category)
+                        ->orderBy('m.createdAt', 'DESC')
+                        ->setMaxResults(1)
+                        ->getQuery();
 
-                        $getLastMessage = $em->createQueryBuilder()
-                            ->select('m')
-                            ->from('EtuModuleForumBundle:Message', 'm')
-                            ->where('m.category = :category')
-                            ->setParameter('category', $newCat)
-                            ->orderBy('m.createdAt', 'DESC')
-                            ->setMaxResults(1)
-                            ->getQuery();
-
-                        try {
-                            $getLastMessage = $getLastMessage->getSingleResult();
-                            $newCat->setLastMessage($getLastMessage);
-                        } catch (\Doctrine\Orm\NoResultException $e) {
-                            $newCat->setLastMessage(null);
-                        }
-                        $em->persist($newCat);
-
-                        $em->flush();
-                        $return = $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug())));
+                    try {
+                        $getLastMessage = $getLastMessage->getSingleResult();
+                        $category->setLastMessage($getLastMessage);
+                    } catch (\Doctrine\Orm\NoResultException $e) {
+                        $category->setLastMessage(null);
                     }
-                } else {
-                    $return = array('parents' => $parents, 'action' => 'move', 'thread' => $thread, 'form' => $form->createView());
+                    $em->persist($category);
+
+                    $getLastMessage = $em->createQueryBuilder()
+                        ->select('m')
+                        ->from('EtuModuleForumBundle:Message', 'm')
+                        ->where('m.category = :category')
+                        ->setParameter('category', $newCat)
+                        ->orderBy('m.createdAt', 'DESC')
+                        ->setMaxResults(1)
+                        ->getQuery();
+
+                    try {
+                        $getLastMessage = $getLastMessage->getSingleResult();
+                        $newCat->setLastMessage($getLastMessage);
+                    } catch (\Doctrine\Orm\NoResultException $e) {
+                        $newCat->setLastMessage(null);
+                    }
+                    $em->persist($newCat);
+
+                    $em->flush();
+                    $return = $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug())));
                 }
         }
 

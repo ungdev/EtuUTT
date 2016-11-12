@@ -180,7 +180,8 @@ class SecurityController extends ApiController
             ->add('cancel', SubmitType::class, ['label' => 'Non, annuler', 'attr' => ['class' => 'btn btn-default', 'value' => '0']])
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $formData = $request->request->get('form');
 
             if (isset($formData['accept'])) {

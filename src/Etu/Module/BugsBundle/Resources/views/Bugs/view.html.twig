@@ -97,11 +97,11 @@
                     <div class="span5">
                         <h5>{{ 'bugs.bugs.view.admin_edit_criticality'|trans }}</h5>
 
-                        <form method="post" action="{{ path('bugs_admin_criticality', {'id': bug.id, 'slug': bug.title|slugify}) }}" class="form-inline">
-                            {{ form_widget(updateForm.criticality) }}
-                            {{ form_rest(updateForm) }}
-                            <button type="submit" class="btn">{{ 'bugs.bugs.view.admin_edit'|trans }}</button>
-                        </form>
+
+                        {% form_theme updateForm 'form/theme-inline.html.twig' %}
+                        {{ form_start(updateForm) }}
+                        {{ form_widget(updateForm) }}
+                        {{ form_end(updateForm) }}
                     </div>
 
                     <div class="span2">
@@ -230,21 +230,9 @@
 
         {% if is_granted('ROLE_BUGS_POST') %}
             <div class="bugs-view-comment">
-                <h4>{{ 'bugs.bugs.view.comment_title'|trans }}</h4>
-
-                <form method="post">
-                    <div class="control-group">
-                        <div class="hidden">{{ form_label(form.body, 'bugs.bugs.view.comment_body'|trans) }}</div>
-                        <div>{{ form_widget(form.body, {'attr': {'class': 'bugs-view-comment-textarea redactor'}}) }}</div>
-                        <p class="text-error">
-                            {{ form_errors(form.body) }}
-                        </p>
-                    </div>
-                    <div class="control-group">
-                        {{ form_rest(form) }}
-                        <input type="submit" class="btn pull-right" value="{{ 'bugs.bugs.view.comment_submit'|trans }}" />
-                    </div>
-                </form>
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
             </div>
         {% endif %}
     </div>

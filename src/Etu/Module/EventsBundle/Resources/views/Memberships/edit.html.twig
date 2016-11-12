@@ -106,145 +106,66 @@
 
                 <hr />
 
-                <form method="post" action="" {{ form_enctype(form) }}>
-                    {{ form_errors(form) }}
 
-                    <div class="control-group">
-                        <label class="control-label">
-                            <strong>{{ 'events.memberships.edit.title'|trans }}</strong>
-                        </label>
-                        <div class="controls">
-                            {{ form_widget(form.title, {'attr': {'class': 'span8'}}) }}
-                        </div>
-                        <span class="help-block">{{ form_errors(form.title) }}</span>
+                {{ form_start(form) }}
+                {{ form_row(form.title) }}
+
+                <hr/>
+
+                <div class="row-fluid">
+                    <div class="span6">
+                        {{ form_row(form.begin) }}
                     </div>
-
-                    <hr />
-
-                    <div class="row-fluid">
-                        <div class="span6">
-                            <div class="control-group">
-                                <label class="control-label">
-                                    <strong>{{ 'events.memberships.edit.begin'|trans }}</strong>
-                                </label>
-                                <div class="controls">
-                                    {{ form_widget(form.begin) }}
-                                </div>
-                                <span class="help-block">{{ form_errors(form.begin) }}</span>
-                            </div>
-                        </div>
-                        <div class="span6">
-                            <div class="control-group">
-                                <label class="control-label">
-                                    <strong>{{ 'events.memberships.edit.end'|trans }}</strong>
-                                </label>
-                                <div class="controls">
-                                    {{ form_widget(form.end) }}
-                                </div>
-                                <span class="help-block">{{ form_errors(form.end) }}</span>
-                            </div>
-                        </div>
+                    <div class="span6">
+                        {{ form_row(form.end) }}
                     </div>
+                </div>
 
-                    <hr />
-                    <div class="row-fluid">
-                        <div class="span5">
-                            <div class="control-group">
-                                <label class="control-label">
-                                    <strong>{{ 'events.memberships.create.privacy.label'|trans }}</strong>
-                                </label>
-                                <div class="controls">
-                                    {{ form_widget(form.privacy) }}
-                                </div>
-                                <span class="help-block">{{ form_errors(form.privacy) }}</span>
-                            </div>
-                        </div>
-                        <div class="span7">
-                            <br />
-                            <small class="muted">
-                                <em>
-                                    {{ 'events.memberships.create.privacy.explain.1'|trans }}<br />
-                                    {{ 'events.memberships.create.privacy.explain.2'|trans }}
-                                </em>
-                            </small>
-                        </div>
+                <hr />
+
+                <div class="row-fluid">
+                    <div class="span5">
+                        {{ form_row(form.privacy) }}
                     </div>
-
-                    <hr />
-
-                    <div class="row-fluid">
-                        <div class="span6">
-                            <div class="control-group">
-                                <label class="control-label">
-                                    <strong>{{ 'events.memberships.edit.category'|trans }}</strong>
-                                </label>
-                                <div class="controls">
-                                    {{ form_widget(form.category) }}
-                                </div>
-                                <span class="help-block">{{ form_errors(form.category) }}</span>
-                            </div>
-                        </div>
-                        <div class="span6">
-                            <div class="control-group">
-                                <label class="control-label">
-                                    <strong>{{ 'events.memberships.create.image.label'|trans }}</strong>
-                                </label>
-                                <div class="controls">
-                                    {{ form_widget(form.file) }}
-                                </div>
-                                <small class="muted">
-                                    <em>
-                                        {{ 'events.memberships.create.image.explain'|trans }}
-                                    </em>
-                                </small>
-                                <span class="help-block">{{ form_errors(form.file) }}</span>
-                            </div>
-                        </div>
+                    <div class="span7">
+                        <br />
+                        <small class="muted">
+                            <em>
+                                {{ 'events.memberships.create.privacy.explain.1'|trans }}<br />
+                                {{ 'events.memberships.create.privacy.explain.2'|trans }}
+                            </em>
+                        </small>
                     </div>
+                </div>
 
-                    <hr />
+                <hr />
 
-                    <div class="control-group">
-                        <label class="control-label">
-                            <strong>{{ 'events.memberships.edit.location'|trans }}</strong>
-                        </label>
-                        <div class="controls">
-                            {{ form_widget(form.location) }}
-                        </div>
-                        <span class="help-block">{{ form_errors(form.location) }}</span>
+                <div class="row-fluid">
+                    <div class="span6">
+                        {{ form_row(form.category) }}
                     </div>
-
-                    <div class="control-group">
-                        <label class="control-label">
-                            <strong>{{ 'events.memberships.edit.description'|trans }}</strong>
-                            <span class="pull-right">
-                                {% include 'EtuModuleUploadBundle::upload_link.html.twig' %}
-                            </span>
-                        </label>
-                        <div class="controls">
-                            {{ form_widget(form.description) }}
-                        </div>
-                        <span class="help-block">{{ form_errors(form.description) }}</span>
+                    <div class="span6">
+                        {{ form_row(form.file) }}
                     </div>
+                </div>
 
-                    <hr />
+                <hr />
 
-                    <div class="control-group">
-                        <div class="controls">
-                            {{ form_rest(form) }}
+                {{ form_row(form.location) }}
 
-                            <button type="submit" class="btn btn-primary">
-                                {{ 'events.memberships.edit.submit'|trans }}
-                            </button>
+                {{ form_row(form.description) }}
+                <span class="pull-right">
+                    {% include 'EtuModuleUploadBundle::upload_link.html.twig' %}
+                </span>
 
-                            <a href="{{ path('memberships_orga_events_delete', {
-                                'login': orga.login, 'id': event.id, 'slug': event.title|slugify
-                            }) }}" class="btn">
-                                {{ 'events.memberships.edit.delete'|trans }}
-                            </a>
-                        </div>
-                    </div>
-                </form>
+                {{ form_row(form.submit) }}
+                <a href="{{ path('memberships_orga_events_delete', {
+                        'login': orga.login, 'id': event.id, 'slug': event.title|slugify
+                        }) }}" class="btn btn-danger">
+                    {{ 'events.memberships.edit.delete'|trans }}
+                </a>
+                {{ form_end(form) }}
+
             </div>
         </div>
     </div>

@@ -11,71 +11,6 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script type="text/javascript" src="{{ asset('redactor/redactor/redactor.min.js') }}"></script>
-
-    <script type="text/javascript">
-        // HTML redactor
-        $('.redactor-html').redactor({
-            fixed: true,
-            lang: 'fr',
-            buttons: [
-                'bold', 'italic', 'deleted', 'underline', 'fontcolor', '|',
-                'alignleft', 'aligncenter', 'alignright', '|',
-                'unorderedlist', '|', 'image', 'link'
-            ]
-        });
-
-        var updateImgSizeAttr = function(){
-            $('.redactor_redactor-html').find('img').each(function() {
-
-                if($(this).width() >= 25 && $(this).height() >= 25)
-                {
-                    // Remove max-width to authorize resize
-                    if($(this).css('max-width')) {
-                        $(this).width($(this).css('max-width'));
-                    }
-                    $(this).css('max-width', 'none');
-
-                    // Force to keep ratio
-                    if(!$(this).data('ratio')) {
-                        $(this).data('ratio', $(this).width() / $(this).height());
-
-                        // Center image when inserted
-                        $(this).css('display', 'block');
-                        $(this).css('margin-left', 'auto');
-                        $(this).css('margin-right', 'auto');
-                    }
-                    else {
-                        $(this).height($(this).width() / $(this).data('ratio'));
-                    }
-
-                    // Limit image size
-                    if($(this).width() > 600) {
-                        $(this).height(600 / $(this).data('ratio'));
-                        $(this).width(600);
-                    }
-                    if($(this).height() > 500) {
-                        $(this).height(500);
-                        $(this).width(500 * $(this).data('ratio'));
-                    }
-                }
-
-                // Set width and height for php parsing
-                $(this).attr('data-width', $(this).width());
-                $(this).attr('data-height', $(this).height());
-
-            });
-
-            imgTimeout = setTimeout(updateImgSizeAttr, 250);
-            return true;
-        };
-        // ugly without an event, but there is no *html change event* compatible everywhere
-        var imgTimeout = setTimeout(updateImgSizeAttr, 250);
-
-        $('#daymailform').submit(updateImgSizeAttr);
-
-    </script>
-
     {% if wantPreview %}
     <script type="text/javascript">
         $(function() {
@@ -180,8 +115,7 @@
                     </div>
                 </div>
 
-                <form id="daymailform" method="post" action="">
-                    {{ form_errors(form) }}
+                {{ form_start(form) }}
 
                     <div class="control-group">
                         <label class="control-label">{{ 'daymail.memberships.daymail.date.label'|trans }}</label>
@@ -227,26 +161,12 @@
                     </div>
 
                     {% if canEdit %}
-                    <div class="control-group">
-                        <label class="control-label">{{ 'daymail.memberships.daymail.title.label'|trans }}</label>
-                        <div class="controls">
-                            {{ form_widget(form.title, {'attr': {'class': 'span8'}}) }}
-                        </div>
-                        <span class="help-block">{{ form_errors(form.title) }}</span>
-                    </div>
+                    {{ form_row(form.title) }}
 
-                    <div class="control-group">
-                        <label class="control-label">
-                            {{ 'daymail.memberships.daymail.body.label'|trans }}
-                            <span class="pull-right">
-                                {% include 'EtuModuleUploadBundle::upload_link.html.twig' %}
-                            </span>
-                        </label>
-                        <div class="controls">
-                            {{ form_widget(form.body) }}
-                        </div>
-                        <span class="help-block">{{ form_errors(form.body) }}</span>
-                    </div>
+                    <span class="pull-right">
+                        {% include 'EtuModuleUploadBundle::upload_link.html.twig' %}
+                    </span>
+                    {{ form_row(form.body) }}
 
                     <div class="control-group">
                         <div class="controls">
@@ -277,7 +197,7 @@
 
                         {{ daymail.body|raw }}
                     {% endif %}
-                </form>
+                {{ form_end(form) }}
             </div>
         </div>
     </div>

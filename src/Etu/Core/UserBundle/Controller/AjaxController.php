@@ -20,7 +20,7 @@ class AjaxController extends ApiController
         if (!$this->isGranted('ROLE_CORE_PROFIL')) {
             return $this->format([
                     'error' => 'Your must be connected and not be banned to access this page',
-                ], 403);
+                ], 403, null, $request);
         }
 
         $term = $request->query->get('term');
@@ -28,7 +28,7 @@ class AjaxController extends ApiController
         if (mb_strlen($term) < 3) {
             return $this->format([
                     'error' => 'Term provided is too short',
-                ], 400);
+                ], 400, null, $request);
         }
 
         /** @var EntityManager $em */
@@ -57,7 +57,7 @@ class AjaxController extends ApiController
 
         return $this->format([
             'users' => $this->get('etu.api.user.transformer')->transform($users),
-        ]);
+        ], 200, null, $request);
     }
 
     /**
@@ -68,7 +68,7 @@ class AjaxController extends ApiController
         if (!$this->isGranted('ROLE_CORE_PROFIL')) {
             return $this->format([
                     'error' => 'Your must be connected to access this page',
-                ], 403);
+                ], 403, null, $request);
         }
 
         $term = $request->query->get('term');
@@ -76,7 +76,7 @@ class AjaxController extends ApiController
         if (mb_strlen($term) < 1) {
             return $this->format([
                     'error' => 'Term provided is too short',
-                ], 400);
+                ], 400, null, $request);
         }
 
         /** @var EntityManager $em */
@@ -105,7 +105,7 @@ class AjaxController extends ApiController
 
         return $this->format([
             'orgas' => $this->get('etu.api.orga.transformer')->transform($orgas),
-        ]);
+        ], 200, null, $request);
     }
 
     /**
@@ -145,19 +145,19 @@ class AjaxController extends ApiController
             if (!$membership) {
                 return $this->format([
                         'error' => 'Membership not found',
-                    ], 403);
+                    ], 403, null, $request);
             }
 
             if (!$membership->hasPermission('edit_desc')) {
                 return $this->format([
                         'error' => 'Membership does not have required access',
-                    ], 403);
+                    ], 403, null, $request);
             }
         } else {
             if ($login != $this->getUser()->getLogin()) {
                 return $this->format([
                         'error' => 'You can not edit the description of this organization',
-                    ], 403);
+                    ], 403, null, $request);
             }
         }
 
@@ -167,7 +167,7 @@ class AjaxController extends ApiController
         if (!$orga) {
             return $this->format([
                     'error' => 'Orga not found',
-                ], 404);
+                ], 404, null, $request);
         }
 
         $orga->setContactPhone(null);
@@ -175,7 +175,7 @@ class AjaxController extends ApiController
         $em->persist($orga);
         $em->flush();
 
-        return $this->format(['phone' => null]);
+        return $this->format(['phone' => null], 200, null, $request);
     }
 
     /**
@@ -215,19 +215,19 @@ class AjaxController extends ApiController
             if (!$membership) {
                 return $this->format([
                         'error' => 'Membership not found',
-                    ], 403);
+                    ], 403, null, $request);
             }
 
             if (!$membership->hasPermission('edit_desc')) {
                 return $this->format([
                         'error' => 'Membership does not have required access',
-                    ], 403);
+                    ], 403, null, $request);
             }
         } else {
             if ($login != $this->getUser()->getLogin()) {
                 return $this->format([
                         'error' => 'You can not edit the description of this organization',
-                    ], 403);
+                    ], 403, null, $request);
             }
         }
 
@@ -237,7 +237,7 @@ class AjaxController extends ApiController
         if (!$orga) {
             return $this->format([
                     'error' => 'Orga not found',
-                ], 404);
+                ], 404, null, $request);
         }
 
         $orga->setWebsite(null);
@@ -245,6 +245,6 @@ class AjaxController extends ApiController
         $em->persist($orga);
         $em->flush();
 
-        return $this->format(['website' => null]);
+        return $this->format(['website' => null], 200, null, $request);
     }
 }

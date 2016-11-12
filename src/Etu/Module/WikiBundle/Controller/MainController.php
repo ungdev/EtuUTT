@@ -8,6 +8,7 @@ use Etu\Core\CoreBundle\Form\RedactorType;
 use Etu\Module\WikiBundle\Entity\WikiPage;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -83,7 +84,7 @@ class MainController extends Controller
 
         // Create form
         $form = $this->createFormBuilder($page)
-            ->add('title', null, array('required' => true, 'label' => 'wiki.main.edit.title'));
+            ->add('title', TextType::class, ['required' => true, 'label' => 'wiki.main.edit.title']);
 
         // Create pre-slug selection
         if ($new) {
@@ -133,7 +134,7 @@ class MainController extends Controller
         $organization_id = ($rights->getOrganization($category)) ? $rights->getOrganization($category)->getId() : null;
         foreach (WikiPage::RIGHT as $right) {
             if ($rights->has($right, $organization_id)) {
-                $choices[$right] = 'wiki.main.right.'.$right;
+                $choices['wiki.main.right.'.$right] = $right;
             }
         }
         $form = $form->add('readRight', ChoiceType::class, array('choices' => $choices, 'required' => true, 'label' => 'wiki.main.edit.readRight'));
@@ -147,7 +148,8 @@ class MainController extends Controller
             ->getForm();
 
         // Submit form
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             // Force insert
             $page->setId(null);
 

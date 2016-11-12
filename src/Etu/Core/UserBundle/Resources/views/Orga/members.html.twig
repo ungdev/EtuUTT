@@ -9,8 +9,11 @@
 {% block content %}
     <div class="trombi-search-box">
         <div class="form-inline add-member-form">
-            <form method="post" action="{{ path('orga_admin_members') }}">
-                {{ form_widget(form.user, {'attr': { 'placeholder': 'user.orga.members.add_member_user'|trans } } ) }}
+
+            {% form_theme form 'form/theme-inline.html.twig' %}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+                {# form_widget(form.user, {'attr': { 'placeholder': ''|trans } } ) }}
                 {{ form_widget(form.role, {'attr': { 'class': 'span2' } } ) }}
                 {{ form_rest(form) }}
                 <button type="submit" class="btn">
@@ -23,8 +26,8 @@
                 </p>
                 <p>
                     <span class="help-block">{{ form_errors(form.role) }}</span>
-                </p>
-            </form>
+                </p> #}
+            {{ form_end(form) }}
         </div>
     </div>
 

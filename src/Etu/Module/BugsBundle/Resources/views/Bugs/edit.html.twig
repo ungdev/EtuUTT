@@ -25,35 +25,14 @@
     </ul>
 
     <div class="padding20-sides">
-        <form method="post" action="" class="form-horizontal">
-            <div class="control-group">
-                <label class="control-label">{{ form_label(form.title, 'bugs.bugs.edit.title'|trans) }}</label>
-                <div class="controls">
-                    {{ form_widget(form.title) }}
-                    <span class="help-block">{{ form_errors(form.title) }}</span>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label">{{ form_label(form.criticality, 'bugs.bugs.edit.criticality'|trans) }}</label>
-                <div class="controls">
-                    {{ form_widget(form.criticality) }}
-                    <span class="help-block">{{ form_errors(form.criticality) }}</span>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label">{{ form_label(form.body, 'bugs.bugs.edit.body'|trans) }}</label>
-                <div class="controls">
-                    {{ form_widget(form.body, {'attr': {'class': 'bugs-view-comment-textarea redactor'}}) }}
-                    <span class="help-block">{{ form_errors(form.body) }}</span>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="controls">
-                    {{ form_rest(form) }}
-
-                    <button type="submit" class="btn">{{ 'bugs.bugs.edit.submit'|trans }}</button>
-                </div>
-            </div>
-        </form>
+        {{ form_start(form) }}
+        {{ form_row(form.title)}}
+        {{ form_row(form.criticality)}}
+        {{ form_row(form.body)}}
+        <div class="pull-right">
+            {% include 'EtuModuleUploadBundle::upload_link.html.twig' %}
+        </div>
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
     </div>
 {% endblock %}

@@ -165,24 +165,10 @@
         {% if (forum_can_answer(app.user, category) or is_granted('ROLE_FORUM_ADMIN')) and cantAnswer == false %}
             <hr />
 
-            <form action="{{ path('forum_answer', {'id': thread.id, 'slug': thread.slug}) }}" method="post" {{ form_enctype(form) }}>
-                <fieldset class="forum-post">
-                    {{ form_errors(form) }}
-                    <div class="control-group">
-                        <div class="control-label">
-                            {{ form_label(form.content, 'forum.main.post.content'|trans) }}
-                        </div>
-                        <div>
-                            {{ form_widget(form.content) }}
-                            {{ form_errors(form.content) }}
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        {{ form_rest(form) }}
-                        <input type="submit" value="{{ 'forum.main.thread.answer'|trans }}" class="btn" />
-                    </div>
-                </fieldset>
-            </form>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+                <input type="submit" value="{{ 'forum.main.thread.answer'|trans }}" class="btn" />
+            {{ form_end(form) }}
         {% endif %}
     </div>
 {% endblock %}

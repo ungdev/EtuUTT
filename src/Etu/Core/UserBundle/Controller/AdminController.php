@@ -5,14 +5,18 @@ namespace Etu\Core\UserBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
+use Etu\Core\CoreBundle\Form\BirthdayPickerType;
 use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Entity\Session;
 use Etu\Core\UserBundle\Model\BadgesManager;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -36,16 +40,18 @@ class AdminController extends Controller
 
         $form = $this->createFormBuilder($user)
             ->setMethod('get')
-            ->add('fullName', null, array('required' => false))
-            ->add('studentId', null, array('required' => false))
-            ->add('phoneNumber', null, array('required' => false))
-            ->add('uvs', null, array('required' => false))
-            ->add('filiere', ChoiceType::class, array('choices' => User::$branches, 'required' => false))
-            ->add('niveau', ChoiceType::class, array('choices' => User::$levels, 'required' => false))
-            ->add('personnalMail', null, array('required' => false))
+            ->add('fullName', null, array('required' => false, 'label' => 'user.admin.userIndex.name'))
+            ->add('studentId', null, array('required' => false, 'label' => 'user.admin.userIndex.studentId'))
+            ->add('phoneNumber', null, array('required' => false, 'label' => 'user.admin.userIndex.phone'))
+            ->add('uvs', null, array('required' => false, 'label' => 'user.admin.userIndex.uv'))
+            ->add('filiere', ChoiceType::class, array('choices' => User::$branches, 'required' => false, 'label' => 'user.admin.userIndex.name'))
+            ->add('niveau', ChoiceType::class, array('choices' => User::$levels, 'required' => false, 'label' => 'user.admin.userIndex.name'))
+            ->add('personnalMail', null, array('required' => false, 'label' => 'user.admin.userIndex.personnalMail'))
+            ->add('submit', SubmitType::class, ['label' => 'user.admin.userIndex.search'])
             ->getForm();
 
-        if ($request->query->has('form') && $form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $search = true;
 
             /** @var $em EntityManager */
@@ -153,44 +159,54 @@ class AdminController extends Controller
             'attr' => array(
                 'class' => 'profileEdit-privacy-select',
             ),
+            'placeholder' => false,
             'required' => false,
+            'label' => 'user.profile.profileEdit.privacy',
         );
 
         $form = $this->createFormBuilder($user)
-            ->add('phoneNumber', null, array('required' => false))
+            ->add('phoneNumber', null, array('required' => false, 'label' => 'user.profile.profileEdit.phoneNumber'))
             ->add('phoneNumberPrivacy', ChoiceType::class, $privacyChoice)
             ->add('sex', ChoiceType::class, array('choices' => array(
                 'base.user.sex.male' => User::SEX_MALE,
                 'base.user.sex.female' => User::SEX_FEMALE,
-            ), 'required' => false))
+            ), 'required' => false, 'label' => 'user.profile.profileEdit.sex'))
             ->add('sexPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('nationality', null, array('required' => false))
+            ->add('nationality', null, array('required' => false, 'label' => 'user.profile.profileEdit.nationality'))
             ->add('nationalityPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('address', null, array('required' => false))
+            ->add('address', null, array('required' => false, 'label' => 'user.profile.profileEdit.address'))
             ->add('addressPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('postalCode', null, array('required' => false))
+            ->add('postalCode', null, array('required' => false, 'label' => 'user.profile.profileEdit.postalCode'))
             ->add('postalCodePrivacy', ChoiceType::class, $privacyChoice)
-            ->add('city', null, array('required' => false))
+            ->add('city', null, array('required' => false, 'label' => 'user.profile.profileEdit.city'))
             ->add('cityPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('country', null, array('required' => false))
+            ->add('country', null, array('required' => false, 'label' => 'user.profile.profileEdit.country'))
             ->add('countryPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('birthday', BirthdayType::class, array(
+            ->add('birthday', BirthdayPickerType::class, array(
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
                 'required' => false,
+                'label' => 'user.profile.profileEdit.birthday',
             ))
             ->add('birthdayPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('birthdayDisplayOnlyAge', null, array('required' => false))
-            ->add('personnalMail', null, array('required' => false))
+            ->add('birthdayDisplayOnlyAge', null, array(
+                'required' => false,
+                'label' => 'user.profile.profileEdit.birthdayOnlyAge.label',
+                'attr' => [
+                    'help' => 'user.profile.profileEdit.birthdayOnlyAge.desc',
+                ], ))
+            ->add('personnalMail', EmailType::class, array('required' => false, 'label' => 'user.profile.profileEdit.personnalMail'))
             ->add('personnalMailPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('website', null, array('required' => false))
-            ->add('facebook', null, array('required' => false))
-            ->add('twitter', null, array('required' => false))
-            ->add('linkedin', null, array('required' => false))
-            ->add('viadeo', null, array('required' => false))
+            ->add('website', null, array('required' => false, 'label' => 'user.profile.profileEdit.website'))
+            ->add('facebook', null, array('required' => false, 'label' => 'user.profile.profileEdit.facebook'))
+            ->add('twitter', null, array('required' => false, 'label' => 'user.profile.profileEdit.twitter'))
+            ->add('linkedin', null, array('required' => false, 'label' => 'user.profile.profileEdit.linkedin'))
+            ->add('viadeo', null, array('required' => false, 'label' => 'user.profile.profileEdit.viadeo'))
+            ->add('submit', SubmitType::class, ['label' => 'user.profile.profileEdit.edit'])
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             if ($user->getProfileCompletion() == 100) {
@@ -221,7 +237,8 @@ class AdminController extends Controller
         }
 
         // Avatar lightbox
-        $avatarForm = $this->createFormBuilder($user)
+        $avatarForm = $this->createFormBuilder($user, ['attr' => ['id' => 'avatar-upload-form']])
+            ->setAction($this->generateUrl('admin_user_edit_avatar', ['login' => $user->getLogin()]))
             ->add('file', FileType::class)
             ->getForm();
 
@@ -353,10 +370,12 @@ class AdminController extends Controller
         }
 
         $form = $this->createFormBuilder($user)
-            ->add('file', FileType::class)
+            ->add('file', FileType::class, ['label' => 'user.admin.userAvatar.file'])
+            ->add('submit', SubmitType::class, ['label' => 'user.admin.userAvatar.submit'])
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $user->upload();
@@ -444,57 +463,74 @@ class AdminController extends Controller
 
         $privacyChoice = array(
             'choices' => array(
-                User::PRIVACY_PUBLIC => 'user.privacy.public',
-                User::PRIVACY_PRIVATE => 'user.privacy.private',
+                'user.privacy.public' => User::PRIVACY_PUBLIC,
+                'user.privacy.private' => User::PRIVACY_PRIVATE,
             ),
+            'placeholder' => false,
             'attr' => array(
                 'class' => 'profileEdit-privacy-select',
             ),
             'required' => false,
+            'label' => 'user.admin.userCreate.privacy',
         );
-
         $form = $this->createFormBuilder($user)
-            ->add('login', null, array('required' => true))
-            ->add('fullName', null, array('required' => true))
-            ->add('mail', null, array('required' => true))
-            ->add('password', null, array('required' => true))
-            ->add('studentId', null, array('required' => false))
-            ->add('phoneNumber', null, array('required' => false))
+            ->add('fullName', null, array('required' => true, 'label' => 'user.admin.userCreate.name'))
+            ->add('mail', EmailType::class, array('required' => true, 'label' => 'user.admin.userCreate.mail', 'attr' => ['help' => 'user.admin.userCreate.mail_desc']))
+            ->add('password', PasswordType::class, array('required' => true, 'label' => 'user.admin.userCreate.password'))
+            ->add('phoneNumber', null, array('required' => false, 'label' => 'user.admin.userCreate.phoneNumber'))
             ->add('phoneNumberPrivacy', ChoiceType::class, $privacyChoice)
             ->add('sex', ChoiceType::class, array('choices' => array(
                 User::SEX_MALE => 'base.user.sex.male',
                 User::SEX_FEMALE => 'base.user.sex.female',
-            ), 'required' => false))
+            ), 'required' => false, 'label' => 'user.admin.userCreate.sex'))
             ->add('sexPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('nationality', null, array('required' => false))
+            ->add('nationality', null, array('required' => false, 'label' => 'user.admin.userCreate.nationality'))
             ->add('nationalityPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('address', null, array('required' => false))
+            ->add('address', null, array('required' => false, 'label' => 'user.admin.userCreate.address'))
             ->add('addressPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('postalCode', null, array('required' => false))
+            ->add('postalCode', null, array('required' => false, 'label' => 'user.admin.userCreate.postalCode'))
             ->add('postalCodePrivacy', ChoiceType::class, $privacyChoice)
-            ->add('city', null, array('required' => false))
+            ->add('city', null, array('required' => false, 'label' => 'user.admin.userCreate.city'))
             ->add('cityPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('country', null, array('required' => false))
+            ->add('country', null, array('required' => false, 'label' => 'user.admin.userCreate.country'))
             ->add('countryPrivacy', ChoiceType::class, $privacyChoice)
             ->add('birthday', BirthdayType::class, array(
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
                 'required' => false,
+                'label' => 'user.admin.userCreate.birthday',
+                'attr' => [
+                    'placeholder' => 'jj/mm/aaaa',
+                ],
             ))
             ->add('birthdayPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('birthdayDisplayOnlyAge', null, array('required' => false))
-            ->add('personnalMail', null, array('required' => false))
+            ->add('birthdayDisplayOnlyAge', null, array(
+                'required' => false,
+                'label' => 'user.admin.userCreate.birthday_only_age_label',
+                'attr' => ['help' => 'user.admin.userCreate.birthday_only_age_desc'],
+            ))
+            ->add('personnalMail', EmailType::class, array('required' => false, 'label' => 'user.admin.userCreate.personnalMail'))
             ->add('personnalMailPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('website', null, array('required' => false))
-            ->add('facebook', null, array('required' => false))
-            ->add('twitter', null, array('required' => false))
-            ->add('linkedin', null, array('required' => false))
-            ->add('viadeo', null, array('required' => false))
-            ->add('isStudent', null, array('required' => false))
-            ->add('isStaffUTT', null, array('required' => false))
+            ->add('website', null, array('required' => false, 'label' => 'user.admin.userCreate.website'))
+            ->add('facebook', null, array('required' => false, 'label' => 'user.admin.userCreate.facebook'))
+            ->add('twitter', null, array('required' => false, 'label' => 'user.admin.userCreate.twitter'))
+            ->add('linkedin', null, array('required' => false, 'label' => 'user.admin.userCreate.linkedin'))
+            ->add('viadeo', null, array('required' => false, 'label' => 'user.admin.userCreate.viadeo'))
+            ->add('isStudent', null, array(
+                'required' => false,
+                'label' => 'user.admin.userCreate.is_student_label',
+                'attr' => ['help' => 'user.admin.userCreate.is_student_desc'],
+            ))
+            ->add('isStaffUTT', null, array(
+                'required' => false,
+                'label' => 'user.admin.userCreate.is_staffutt_label',
+                'attr' => ['help' => 'user.admin.userCreate.is_staffutt_desc'],
+            ))
+            ->add('submit', SubmitType::class, ['label' => 'user.admin.userCreate.submit'])
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             if ($user->getProfileCompletion() == 100) {
@@ -512,6 +548,15 @@ class AdminController extends Controller
             BadgesManager::userPersistBadges($user);
             $user->setPassword($this->get('security.password_encoder')->encodePassword($user, $user->getPassword()));
             $user->setIsInLDAP(false);
+
+            // Set external user login and studentId
+            $user->setLogin($user->getMail());
+            $lowestId = $em->createQueryBuilder()
+                ->select('MIN(u.studentId)')
+                ->from('EtuUserBundle:User', 'u')
+                ->getQuery()
+                ->getSingleScalarResult();
+            $user->setStudentId($lowestId - 1);
 
             $em->persist($user);
             $em->flush();
@@ -610,12 +655,14 @@ class AdminController extends Controller
         $orga = new Organization();
 
         $form = $this->createFormBuilder($orga)
-            ->add('login', null, array('required' => true))
-            ->add('name', null, array('required' => true))
-            ->add('descriptionShort', TextareaType::class, array('required' => true))
+            ->add('login', null, array('required' => true, 'label' => 'user.admin.orgasCreate.login'))
+            ->add('name', null, array('required' => true, 'label' => 'user.admin.orgasCreate.name'))
+            ->add('descriptionShort', TextareaType::class, array('required' => true, 'label' => 'user.admin.orgasCreate.descriptionShort'))
+            ->add('submit', SubmitType::class, ['label' => 'user.admin.orgasCreate.submit'])
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($orga);

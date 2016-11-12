@@ -1,6 +1,7 @@
 
 var sceditor = $('.redactor'),
-sceditorLimited = $('.redactor-limited');
+sceditorLimited = $('.redactor-limited'),
+sceditorHTML = $('.redactor-html');
 
 // Load code colorization
 hljs.initHighlightingOnLoad();
@@ -668,6 +669,65 @@ sceditorLimited.sceditor({
     emoticonsRoot: '/',
     toolbar:
         "source|bold,italic,underline,strike|left,center,right,justify|link,unlink|maximize",
+    emoticons: {
+        dropdown: {
+            ">:(": "src/img/emoticons/angry.png",
+            ":aw:": "src/img/emoticons/aw.png",
+            "8)": "src/img/emoticons/cool.png",
+            ":D": "src/img/emoticons/ecstatic.png",
+            ">:D": "src/img/emoticons/furious.png",
+            ":O": "src/img/emoticons/gah.png",
+            ":)": "src/img/emoticons/happy.png",
+            "<3": "src/img/emoticons/heart.png",
+            ":/": "src/img/emoticons/hm.png",
+            ":3": "src/img/emoticons/kiss.png",
+            ":|": "src/img/emoticons/meh.png",
+            ":x": "src/img/emoticons/mmf.png",
+            ":(": "src/img/emoticons/sad.png",
+            ":P": "src/img/emoticons/tongue.png",
+            ":o": "src/img/emoticons/what.png",
+            ";)": "src/img/emoticons/wink.png"
+        },
+        hidden: {
+            ">:[": "src/img/emoticons/angry.png",
+            "8]": "src/img/emoticons/cool.png",
+            "D:": "src/img/emoticons/gah.png",
+            ":]": "src/img/emoticons/happy.png",
+            ":\\": "src/img/emoticons/hm.png",
+            "-.-": "src/img/emoticons/meh.png",
+            "-_-": "src/img/emoticons/meh.png",
+            ":X": "src/img/emoticons/mmf.png",
+            ":[": "src/img/emoticons/sad.png",
+            ":\'(": "src/img/emoticons/sad.png",
+            ":\'[": "src/img/emoticons/sad.png",
+            ":p": "src/img/emoticons/tongue.png",
+            ":?": "src/img/emoticons/what.png",
+            ";]": "src/img/emoticons/wink.png",
+            ";D": "src/img/emoticons/wink.png"
+        }
+    }
+});
+
+// Load SCeditor html
+sceditorHTML.sceditor({
+
+    height: defaultSceditorHeight,
+    resizeWidth: false,
+
+    enablePasteFiltering: true,
+    parserOptions: {
+        breakBeforeBlock: false,
+        breakAfterBlock: false,
+        breakStartBlock: false,
+        breakEndBlock: false,
+    },
+    style: '/min/etuutt.css',
+    emoticonsRoot: '/',
+    locale: 'fr',
+    toolbar:
+        "bold,italic,strike,removeformat|left,center,right,justify" +
+            "|bulletlist,orderedlist|link,unlink|emoticon,image,video" +
+            "|headers,horizontalrule,abbreviation,float,alert,note,table,quote|code,var|latex|source,maximize",
     emoticons: {
         dropdown: {
             ">:(": "src/img/emoticons/angry.png",

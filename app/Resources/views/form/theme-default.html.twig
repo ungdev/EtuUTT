@@ -43,8 +43,10 @@
 {%- block choice_widget_expanded -%}
     <div {{ block('widget_container_attributes') }}>
     {%- for child in form %}
-        {{- form_widget(child) -}}
-        {{- form_label(child, null, {translation_domain: choice_translation_domain}) -}}
+        <div class="field-checkbox">
+            {{- form_widget(child) -}}
+            {{- form_label(child, null, {translation_domain: choice_translation_domain, option_label: true}) -}}
+        </div>
     {% endfor -%}
     </div>
 {%- endblock choice_widget_expanded -%}
@@ -108,6 +110,7 @@
     {%- if widget == 'single_text' -%}
         {{ block('form_widget_simple') }}
     {%- else -%}
+        {% set attr = attr|merge({'class': (label_attr.class|default('') ~ ' field-date')|trim}) %}
         <div {{ block('widget_container_attributes') }}>
             {{- date_pattern|replace({
                 '{{ year }}':  form_widget(form.year),
@@ -123,6 +126,7 @@
         {{ block('form_widget_simple') }}
     {%- else -%}
         {%- set vars = widget == 'text' ? { 'attr': { 'size': 1 }} : {} -%}
+        {% set attr = attr|merge({'class': (label_attr.class|default('') ~ ' field-time')|trim}) %}
         <div {{ block('widget_container_attributes') }}>
             {{ form_widget(form.hour, vars) }}{% if with_minutes %}:{{ form_widget(form.minute, vars) }}{% endif %}{% if with_seconds %}:{{ form_widget(form.second, vars) }}{% endif %}
         </div>
@@ -156,7 +160,10 @@
 
 {%- block percent_widget -%}
     {%- set type = type|default('text') -%}
-    {{ block('form_widget_simple') }} %
+    <div class="input-append">
+        {{ block('form_widget_simple') }} %
+        <span class="add-on">%</span>
+    </div>
 {%- endblock percent_widget -%}
 
 {%- block password_widget -%}
@@ -190,7 +197,7 @@
             {% set label = name|humanize %}
         {%- endif -%}
     {%- endif -%}
-    <button type="{{ type|default('button') }}" class="btn{%if type=="submit" %} btn-primary{% endif %}" {{ block('button_attributes') }}>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}</button>
+    <button type="{{ type|default('button') }}" class="btn{%if type is defined and type=="submit" %} btn-primary{% endif %}{%if type is defined and type=="reset" %} btn-danger{% endif %}" {{ block('button_attributes') }}>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}</button>
 {%- endblock button_widget -%}
 
 {%- block submit_widget -%}
@@ -210,7 +217,7 @@
         {% if not compound -%}
             {% set label_attr = label_attr|merge({'for': id}) %}
         {%- endif -%}
-        {% if required -%}
+        {% if required and not (option_label|default(false))-%}
             {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
         {%- endif -%}
         {% if label is empty -%}
@@ -240,18 +247,26 @@
 {%- endblock repeated_row -%}
 
 {%- block form_row -%}
-    <div class="form-2col-field{% if errors|length > 0 %} form-2col-error{% endif %}{% if required %} form-2col-required{% endif %}">
+    {# Remove custom attr we dont want as attributes #}
+    {% if attr.help is defined %}
+        {% set help = attr.help %}
+        {% set attr = attr|merge({'help': null}) %}
+    {% endif %}
+
+    <div class="form-field form-field-width {% if errors|length > 0 %} form-error{% endif %}{% if required %} form-required{% endif %}">
         {%- if form.vars.block_prefixes.1 is defined and form.vars.block_prefixes.1 == 'checkbox' -%}
-            {{- form_widget(form) -}}
-            {{- form_label(form) -}}
+            <div class="field-checkbox">
+                {{- form_widget(form) -}}
+                {{- form_label(form) -}}
+            </div>
         {%- else -%}
             {{- form_label(form) -}}
             {{- form_widget(form) -}}
         {%- endif -%}
 
-        {%- if attr.help is defined and attr.help is not empty -%}
-            <div class="form-2col-help">
-                {{ attr.help }}
+        {%- if help is defined and help is not empty -%}
+            <div class="form-help">
+                {{ translation_domain is same as(false) ? help : help|trans({}, translation_domain) }}
             </div>
         {%- endif -%}
         {{- form_errors(form) -}}
@@ -259,7 +274,7 @@
 {%- endblock form_row -%}
 
 {%- block button_row -%}
-    <div class="form-2col-button">
+    <div class="form-button">
         {{- form_widget(form) -}}
     </div>
 {%- endblock button_row -%}
@@ -283,7 +298,7 @@
     {%- else -%}
         {% set form_method = "POST" %}
     {%- endif -%}
-    <div class="form-2col">
+    <div class="form-default">
     <form name="{{ name }}" method="{{ form_method|lower }}"{% if action != '' %} action="{{ action }}"{% endif %}{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
     {%- if form_method != method -%}
         <input type="hidden" name="_method" value="{{ method }}" />
@@ -300,7 +315,7 @@
 
 {%- block form_errors -%}
     {%- if errors|length > 0 -%}
-    <ul class="form-2col-error-list">
+    <ul class="form-error-list">
         {%- for error in errors -%}
             <li>{{ error.message }}</li>
         {%- endfor -%}

@@ -5,7 +5,9 @@ namespace Etu\Module\EventsBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use CalendR\Calendar;
 use CalendR\Period\Range;
@@ -79,12 +81,6 @@ class MembershipsController extends Controller
             $categories[$category] = 'events.categories.'.$category;
         }
 
-        $form = $this->createFormBuilder($event)
-            ->add('title')
-            ->add('category', ChoiceType::class, array('choices' => $categories))
-            ->add('location', TextareaType::class)
-            ->getForm();
-
         $day = ($day == 'current') ? (int) date('d') : (int) $day;
         $month = ($month == 'current') ? (int) date('m') : (int) $month;
         $year = ($year == 'current') ? (int) date('Y') : (int) $year;
@@ -96,7 +92,6 @@ class MembershipsController extends Controller
             'day' => $day,
             'month' => $month - 1,
             'year' => $year,
-            'form' => $form->createView(),
         );
     }
 
@@ -270,29 +265,32 @@ class MembershipsController extends Controller
         $categories = array();
 
         foreach (Event::$categories as $category) {
-            $categories[$category] = 'events.categories.'.$category;
+            $categories['events.categories.'.$category] = $category;
         }
 
         $form = $this->createFormBuilder($event)
-            ->add('title')
-            ->add('begin', DatetimePickerType::class)
-            ->add('end', DatetimePickerType::class)
-            ->add('category', ChoiceType::class, array('choices' => $categories))
-            ->add('file', FileType::class, array('required' => false))
-            ->add('location', TextareaType::class)
+            ->add('title', TextType::class, ['label' => 'events.memberships.edit.title'])
+            ->add('begin', DatetimePickerType::class, ['label' => 'events.memberships.edit.begin'])
+            ->add('end', DatetimePickerType::class, ['label' => 'events.memberships.edit.end'])
+            ->add('category', ChoiceType::class, array('choices' => $categories, 'label' => 'events.memberships.edit.category'))
+            ->add('file', FileType::class, array('required' => false, 'label' => 'events.memberships.create.image.label', 'attr' => ['help' => 'events.memberships.create.image.explain']))
+            ->add('location', TextareaType::class, ['label' => 'events.memberships.edit.location'])
             ->add('privacy', ChoiceType::class, array(
                 'choices' => array(
-                    Event::PRIVACY_PUBLIC => 'events.memberships.create.privacy.public',
-                    Event::PRIVACY_PRIVATE => 'events.memberships.create.privacy.private',
-                    Event::PRIVACY_ORGAS => 'events.memberships.create.privacy.orgas',
-                    Event::PRIVACY_MEMBERS => 'events.memberships.create.privacy.members',
+                    'events.memberships.create.privacy.public' => Event::PRIVACY_PUBLIC,
+                    'events.memberships.create.privacy.private' => Event::PRIVACY_PRIVATE,
+                    'events.memberships.create.privacy.orgas' => Event::PRIVACY_ORGAS,
+                    'events.memberships.create.privacy.members' => Event::PRIVACY_MEMBERS,
                 ),
                 'required' => true,
+                'label' => 'events.memberships.create.privacy.label',
             ))
-            ->add('description', RedactorType::class)
+            ->add('description', RedactorType::class, ['label' => 'events.memberships.edit.description'])
+            ->add('submit', SubmitType::class, ['label' => 'events.memberships.create.submit'])
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($event);
             $em->flush();
 
@@ -302,7 +300,7 @@ class MembershipsController extends Controller
                 $entity = array( // @TODO WTF? Y U AN ARRAY?
                     'id' => $event->getId(),
                     'title' => $event->getTitle(),
-                    'category' => $categories[$event->getCategory()],
+                    'category' => array_flip($categories)[$event->getCategory()],
                     'orga' => array(
                         'id' => $event->getOrga()->getId(),
                         'name' => $event->getOrga()->getName(),
@@ -436,29 +434,32 @@ class MembershipsController extends Controller
         $categories = array();
 
         foreach (Event::$categories as $category) {
-            $categories[$category] = 'events.categories.'.$category;
+            $categories['events.categories.'.$category] = $category;
         }
 
         $form = $this->createFormBuilder($event)
-            ->add('title')
-            ->add('begin', DatetimePickerType::class)
-            ->add('end', DatetimePickerType::class)
-            ->add('category', ChoiceType::class, array('choices' => $categories))
-            ->add('file', FileType::class, array('required' => false))
+            ->add('title', TextType::class, ['label' => 'events.memberships.edit.title'])
+            ->add('begin', DatetimePickerType::class, ['label' => 'events.memberships.edit.begin'])
+            ->add('end', DatetimePickerType::class, ['label' => 'events.memberships.edit.end'])
+            ->add('category', ChoiceType::class, array('choices' => $categories, 'label' => 'events.memberships.edit.category'))
+            ->add('file', FileType::class, array('required' => false, 'label' => 'events.memberships.create.image.label', 'attr' => ['help' => 'events.memberships.create.image.explain']))
+            ->add('location', TextareaType::class, ['label' => 'events.memberships.edit.location'])
             ->add('privacy', ChoiceType::class, array(
                 'choices' => array(
-                    Event::PRIVACY_PUBLIC => 'events.memberships.create.privacy.public',
-                    Event::PRIVACY_PRIVATE => 'events.memberships.create.privacy.private',
-                    Event::PRIVACY_ORGAS => 'events.memberships.create.privacy.orgas',
-                    Event::PRIVACY_MEMBERS => 'events.memberships.create.privacy.members',
+                    'events.memberships.create.privacy.public' => Event::PRIVACY_PUBLIC,
+                    'events.memberships.create.privacy.private' => Event::PRIVACY_PRIVATE,
+                    'events.memberships.create.privacy.orgas' => Event::PRIVACY_ORGAS,
+                    'events.memberships.create.privacy.members' => Event::PRIVACY_MEMBERS,
                 ),
                 'required' => true,
+                'label' => 'events.memberships.create.privacy.label',
             ))
-            ->add('location', TextareaType::class)
-            ->add('description', RedactorType::class)
+            ->add('description', RedactorType::class, ['label' => 'events.memberships.edit.description'])
+            ->add('submit', SubmitType::class, ['label' => 'events.memberships.edit.submit'])
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($event);
             $em->flush();
 

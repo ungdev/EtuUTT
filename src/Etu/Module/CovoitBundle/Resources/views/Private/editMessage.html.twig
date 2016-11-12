@@ -10,13 +10,9 @@
     {% include 'EtuModuleCovoitBundle::menu.html.twig' with {'active': 'none'} %}
 
     <div class="padding20-sides covoit-edit-message">
-        <form method="post" action="">
-            {{ form_widget(form.text) }}
-            {{ form_errors(form.text) }}
-
+        {{ form_start(form) }}
+            {{ form_row(form.text) }}
             {{ form_rest(form) }}
-
-            <br />
 
             <p>
                 <input type="submit" class="btn btn-primary" value="{{ 'covoit.private_edit_message.submit'|trans }}" />
@@ -25,6 +21,6 @@
                     {{ 'covoit.private_edit_message.cancel'|trans }}
                 </a>
             </p>
-        </form>
+        {{ form_end(form) }}
     </div>
 {% endblock %}

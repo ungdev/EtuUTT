@@ -34,6 +34,7 @@ user:
             name: Nom
             studentId: Numéro étudiant
             mail: E-mail
+            mail_desc: Cet email sera utilisé en tant qu'identifiant de connexion.
             personnalMail: E-mail perso.
             formation: Formation
             phoneNumber: Numéro de tél.
@@ -52,6 +53,7 @@ user:
             is_student_desc: Donne les droits d'un étudiant classique
             is_staffutt_label: Personnel de l'UTT
             is_staffutt_desc: Donne les droits d'un compte associé à un membre du personnel de l'UTT
+            privacy: Confidentialité
         userDelete:
             title: Supprimer un utilisateur
             question: Voulez-vous vraiment supprimer l'utilisateur %username% ?
@@ -314,6 +316,7 @@ user:
             back: Retour sur mon compte
             edit: Modifier
         profileEdit:
+            privacy: Confidentialité
             title: Modifier mes informations
             confirm: Vous avez bien modifié vos informations
             back: Retour sur mon compte

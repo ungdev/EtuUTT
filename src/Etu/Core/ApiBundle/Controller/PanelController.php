@@ -4,6 +4,7 @@ namespace Etu\Core\ApiBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Etu\Core\ApiBundle\Entity\OauthClient;
+use Etu\Core\ApiBundle\Form\ClientType;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -56,9 +57,10 @@ class PanelController extends Controller
             $client->addScope($defaultScope);
         }
 
-        $form = $this->createForm($this->get('etu.api.form.client'), $client);
+        $form = $this->createForm(ClientType::class, $client);
 
-        if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $client->generateClientId();
             $client->generateClientSecret();
 
@@ -119,9 +121,10 @@ class PanelController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $form = $this->createForm($this->get('etu.api.form.client'), $client);
+        $form = $this->createForm(ClientType::class, $client);
 
-        if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($client);
             $em->flush();
 
@@ -168,7 +171,8 @@ class PanelController extends Controller
             ])
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->remove($client);
             $em->flush();
 

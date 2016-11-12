@@ -35,36 +35,18 @@
             <div class="row-fluid">
                 <div class="span4">
                     <div class="form-vertical">
-                        <div class="control-group">
-                            {{ form_label(form.fullName, 'user.admin.userIndex.name'|trans) }}
-                            <div class="controls">
-                                {{ form_widget(form.fullName) }}
-                            </div>
-                            <span class="help-block">{{ form_errors(form.fullName) }}</span>
-                        </div>
-                        <div class="control-group">
-                            {{ form_label(form.uvs, 'user.admin.userIndex.uv'|trans) }}
-                            <div class="controls">
-                                {{ form_widget(form.uvs) }}
-                            </div>
-                            <span class="help-block">{{ form_errors(form.uvs) }}</span>
-                        </div>
+                        {{ form_row(form.fullName) }}
+                        {{ form_row(form.uvs) }}
                     </div>
                 </div>
                 <div class="span4 hidden-phone">
                     <div class="form-vertical">
-                        <div class="control-group">
-                            {{ form_label(form.studentId, 'user.admin.userIndex.studentId'|trans) }}
-                            <div class="controls">
-                                {{ form_widget(form.studentId) }}
-                            </div>
-                            <span class="help-block">{{ form_errors(form.studentId) }}</span>
-                        </div>
-                        <div class="control-group">
+                        {{ form_row(form.studentId) }}
+                        <div class="control-group form-field">
                             {{ form_label(form.filiere, 'user.admin.userIndex.branche'|trans) }}
                             <div class="controls">
-                                {{ form_widget(form.filiere, {'attr': {'class': 'span4'} }) }}
-                                {{ form_widget(form.niveau, {'attr': {'class': 'span4'} }) }}
+                                {{ form_widget(form.filiere, {'attr': {'class': 'span6'} }) }}
+                                {{ form_widget(form.niveau, {'attr': {'class': 'span6'} }) }}
                             </div>
                             <span class="help-block">
                                 {{ form_errors(form.filiere) }}
@@ -75,27 +57,14 @@
                 </div>
                 <div class="span4 hidden-phone">
                     <div class="form-vertical">
-                        <div class="control-group">
-                            {{ form_label(form.phoneNumber, 'user.admin.userIndex.phone'|trans) }}
-                            <div class="controls">
-                                {{ form_widget(form.phoneNumber) }}
-                            </div>
-                            <span class="help-block">{{ form_errors(form.phoneNumber) }}</span>
-                        </div>
-                        <div class="control-group">
-                            {{ form_label(form.personnalMail, 'user.admin.userIndex.personnalMail'|trans) }}
-                            <div class="controls">
-                                {{ form_widget(form.personnalMail) }}
-                            </div>
-                            <span class="help-block">{{ form_errors(form.personnalMail) }}</span>
-                        </div>
+                        {{ form_row(form.phoneNumber) }}
+                        {{ form_row(form.personnalMail) }}
                     </div>
                 </div>
             </div>
 
             <div class="trombi-search-submit">
-                {{ form_rest(form) }}
-                <button type="submit" class="btn">{{ 'user.admin.userIndex.search'|trans }}</button>
+                {{ form_row(form.submit) }}
             </div>
         {{ form_end(form) }}
     </div>

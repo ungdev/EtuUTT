@@ -3,7 +3,6 @@ var upload = {
     form: {
         form: $('#avatar-upload-form'),
         input: $('#form_file'),
-        submit: $('#avatar-upload-submit')
     },
     frame: $('#avatar-upload-frame'),
     link: $('#avatar-upload-link')

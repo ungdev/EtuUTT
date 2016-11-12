@@ -1,0 +1,60 @@
+
+{%- block form_row -%}
+    {# Remove custom attr we dont want as attributes #}
+    {% if attr.help is defined %}
+        {% set help = attr.help %}
+        {% set attr = attr|merge({'help': null}) %}
+    {% endif %}
+
+    <div class="form-field {% if errors|length > 0 %} form-error{% endif %}{% if required %} form-required{% endif %}">
+        {%- if form.vars.block_prefixes.1 is defined and form.vars.block_prefixes.1 == 'checkbox' -%}
+            <div class="field-checkbox">
+                {{- form_widget(form) -}}
+                {{- form_label(form) -}}
+            </div>
+        {%- else -%}
+            {{- form_widget(form) -}}
+        {%- endif -%}
+
+        {%- if help is defined and help is not empty -%}
+            <div class="form-help">
+                {{ translation_domain is same as(false) ? help : help|trans({}, translation_domain) }}
+            </div>
+        {%- endif -%}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock form_row -%}
+
+{%- block form_start -%}
+    {% set method = method|upper %}
+    {%- if method in ["GET", "POST"] -%}
+        {% set form_method = method %}
+    {%- else -%}
+        {% set form_method = "POST" %}
+    {%- endif -%}
+    <div class="form-default form-theme-inline">
+    <form name="{{ name }}" method="{{ form_method|lower }}"{% if action != '' %} action="{{ action }}"{% endif %}{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
+    {%- if form_method != method -%}
+        <input type="hidden" name="_method" value="{{ method }}" />
+    {%- endif -%}
+{%- endblock form_start -%}
+
+{%- block widget_attributes -%}
+    {% if attr.placeholder is not defined and label is defined%}
+        {% set attr = attr|merge({'placeholder': label}) %}
+    {% endif %}
+
+    id="{{ id }}" name="{{ full_name }}"
+    {%- if disabled %} disabled="disabled"{% endif -%}
+    {%- if required %} required="required"{% endif -%}
+    {%- for attrname, attrvalue in attr -%}
+        {{- " " -}}
+        {%- if attrname in ['placeholder', 'title'] -%}
+            {{- attrname }}="{{ translation_domain is same as(false) ? attrvalue : attrvalue|trans({}, translation_domain) }}"
+        {%- elseif attrvalue is same as(true) -%}
+            {{- attrname }}="{{ attrname }}"
+        {%- elseif attrvalue is not same as(false) -%}
+            {{- attrname }}="{{ attrvalue }}"
+        {%- endif -%}
+    {%- endfor -%}
+{%- endblock widget_attributes -%}

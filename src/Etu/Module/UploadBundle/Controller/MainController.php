@@ -39,10 +39,11 @@ class MainController extends Controller
         }
 
         $form = $this->createFormBuilder()
-            ->add('file', FileType, array('required' => true))
+            ->add('file', FileType::class, array('required' => true, 'label' => 'upload.main.index.send'))
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
 
             /** @var $file \Symfony\Component\HttpFoundation\File\UploadedFile */
             $file = $form->getData()['file'];

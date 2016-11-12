@@ -12,7 +12,7 @@ class MessageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('content', RedactorType::class);
+            ->add('content', RedactorType::class, ['label' => 'forum.main.post.content']);
     }
 
     public function configureOptions(OptionsResolver $resolver)

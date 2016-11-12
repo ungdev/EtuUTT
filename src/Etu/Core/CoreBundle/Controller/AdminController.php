@@ -12,6 +12,9 @@ use Etu\Core\CoreBundle\Util\Server;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 /**
  * @Route("/admin")
@@ -191,11 +194,13 @@ class AdminController extends Controller
 
         $page->setContent("<p>\n\tHello paragraph !\n</p>");
         $form = $this->createFormBuilder($page)
-            ->add('title')
-            ->add('content')
+            ->add('title', TextType::class, ['label' => 'core.admin.pageCreate.name'])
+            ->add('content', TextareaType::class, ['label' => 'core.admin.pageCreate.content'])
+            ->add('submit', SubmitType::class, ['label' => 'core.admin.pageCreate.submit'])
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $page->setSlug(StringManipulationExtension::slugify($page->getTitle()));
 
             $em->persist($page);
@@ -228,11 +233,13 @@ class AdminController extends Controller
         $page = $em->getRepository('EtuCoreBundle:Page')->find($id);
 
         $form = $this->createFormBuilder($page)
-            ->add('title')
-            ->add('content')
+            ->add('title', TextType::class, ['label' => 'core.admin.pageEdit.name'])
+            ->add('content', TextareaType::class, ['label' => 'core.admin.pageEdit.content'])
+            ->add('submit', SubmitType::class, ['label' => 'core.admin.pageEdit.submit'])
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
 
             // $cacheDriver = $em->getConfiguration()->getResultCacheImpl();
             // $cacheDriver->delete('EtuCoreBundle/page:'.$page->getSlug());

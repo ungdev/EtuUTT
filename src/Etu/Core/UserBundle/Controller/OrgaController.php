@@ -11,8 +11,10 @@ use Etu\Core\CoreBundle\Form\RedactorType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -56,15 +58,17 @@ class OrgaController extends Controller
 
         // Classic form
         $form = $this->createFormBuilder($orga)
-            ->add('name')
-            ->add('contactMail', EmailType::class)
-            ->add('contactPhone', null, array('required' => false))
-            ->add('description', RedactorType::class, array('required' => false))
-            ->add('descriptionShort', TextareaType::class)
-            ->add('website', null, array('required' => false))
+            ->add('name', TextType::class, ['label' => 'user.orga.index.name.label'])
+            ->add('contactMail', EmailType::class, ['label' => 'user.orga.index.contactMail.label'])
+            ->add('contactPhone', null, array('required' => false, 'label' => 'user.orga.index.contactPhone.label'))
+            ->add('website', null, array('required' => false, 'label' => 'user.orga.index.website.label'))
+            ->add('descriptionShort', TextareaType::class, ['label' => 'user.orga.index.descriptionShort.label'])
+            ->add('description', RedactorType::class, array('required' => false, 'label' => 'user.orga.index.description.label'))
+            ->add('submit', SubmitType::class, ['label' => 'user.orga.index.submit'])
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($orga);
             $em->flush();
 
@@ -77,7 +81,8 @@ class OrgaController extends Controller
         }
 
         // Avatar lightbox
-        $avatarForm = $this->createFormBuilder($orga)
+        $avatarForm = $this->createFormBuilder($orga, ['attr' => ['id' => 'avatar-upload-form']])
+            ->setAction($this->generateUrl('orga_admin_avatar', ['login' => $orga->getLogin()]))
             ->add('file', FileType::class)
             ->getForm();
 
@@ -100,10 +105,12 @@ class OrgaController extends Controller
 
         // Avatar lightbox
         $form = $this->createFormBuilder($orga)
-            ->add('file', FileType::class)
+            ->add('file', FileType::class, ['label' => 'user.orga.avatar.file'])
+            ->add('submit', SubmitType::class, ['label' => 'user.orga.avatar.submit'])
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             /** @var $em EntityManager */
             $em = $this->getDoctrine()->getManager();
 
@@ -151,18 +158,21 @@ class OrgaController extends Controller
         $member = new Member();
         $member->setOrganization($this->getUser());
 
-        $roles = Member::getAvailableRoles();
+        $rolesAvailables = Member::getAvailableRoles();
+        $roles = [];
 
-        foreach ($roles as $key => $role) {
-            $roles[$key] = 'user.orga.role.'.$role;
+        foreach ($rolesAvailables as $key => $role) {
+            $roles['user.orga.role.'.$role] = $key;
         }
 
         $form = $this->createFormBuilder($member)
-            ->add('user', UserAutocompleteType::class)
+            ->add('user', UserAutocompleteType::class, ['label' => 'user.orga.members.add_member_user'])
             ->add('role', ChoiceType::class, array('choices' => $roles))
+            ->add('submit', SubmitType::class, ['label' => 'user.orga.members.add_member_btn'])
             ->getForm();
 
-        if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             /** @var $user User */
             $user = $em->createQueryBuilder()
                 ->select('u')

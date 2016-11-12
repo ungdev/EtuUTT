@@ -5,6 +5,7 @@ namespace Etu\Module\CovoitBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\CovoitBundle\Entity\CovoitAlert;
+use Etu\Module\CovoitBundle\Form\CovoitAlertType;
 use Symfony\Component\HttpFoundation\Request;
 
 // Import annotations
@@ -60,9 +61,10 @@ class AlertsController extends Controller
         $alert = new CovoitAlert();
         $alert->setUser($this->getUser());
 
-        $form = $this->createForm($this->get('etu.covoit.form.alert'), $alert);
+        $form = $this->createForm(CovoitAlertType::class, $alert);
 
-        if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($alert);
             $em->flush();
 
@@ -94,9 +96,10 @@ class AlertsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $alert = $em->getRepository('EtuModuleCovoitBundle:CovoitAlert')->find($id);
 
-        $form = $this->createForm($this->get('etu.covoit.form.alert'), $alert);
+        $form = $this->createForm(CovoitAlertType::class, $alert);
 
-        if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($alert);
             $em->flush();
 
