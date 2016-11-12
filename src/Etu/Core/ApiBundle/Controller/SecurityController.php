@@ -109,7 +109,7 @@ class SecurityController extends ApiController
         }
 
         // Not logged in
-        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY') && !$this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'error',
                 'message' => $this->get('translator')->trans('user.api_login.login', ['%name%' => $client->getName()]),

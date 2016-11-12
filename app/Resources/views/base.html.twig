@@ -109,7 +109,7 @@
 	            _paq.push(["setCustomVariable", 1, "type", "staffutt", "visit"]);
 	        {% elseif is_granted('ROLE_ORGA') %}
 	            _paq.push(["setCustomVariable", 1, "type", "orga", "visit"]);
-	        {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
+	        {% elseif is_granted('IS_AUTHENTICATED_FULLY') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 	            _paq.push(["setCustomVariable", 1, "type", "other", "visit"]);
 	        {% else %}
 	            _paq.push(["setCustomVariable", 1, "type", "visitor", "visit"]);

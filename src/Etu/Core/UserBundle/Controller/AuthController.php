@@ -24,7 +24,7 @@ class AuthController extends Controller
     public function connectAction()
     {
         // Redirect to home if user is already authenticated
-        if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY') || $this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('homepage'));
         }
 
@@ -62,7 +62,7 @@ class AuthController extends Controller
     public function connectCasAction()
     {
         // Redirect to home if user is already authenticated
-        if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY') || $this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('homepage'));
         }
 
@@ -116,7 +116,7 @@ class AuthController extends Controller
     public function connectExternalAction()
     {
         // Redirect to home if user is already authenticated
-        if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY') || $this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('homepage'));
         }
 
@@ -153,7 +153,7 @@ class AuthController extends Controller
         }
 
         // Logout from EtuUTT
-        if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY') || $this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('user_logout_external'));
         }
 

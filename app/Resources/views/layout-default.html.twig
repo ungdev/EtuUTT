@@ -60,7 +60,7 @@
                             <div class="clear"></div>
                         </a>
                     </li>
-                    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                    {% if not is_granted('IS_AUTHENTICATED_FULLY') and not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                         <li class="last connect_link">
                             <a href="{{ path('user_connect') }}">
                                 <i class="icon icon-head icon-head-connexion"></i>
@@ -73,7 +73,7 @@
             </nav>
 
             <div class="pull-right userbox">
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 <a href="#" class="userbox-avatar-link">
                     {% if is_granted('ROLE_ORGA') %}
                         <img src="{{ asset('uploads/logos/' ~ app.user.logo) }}" id="top-bar-avatar" alt="{{ app.user.fullName }}"
