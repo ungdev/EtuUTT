@@ -69,10 +69,10 @@ class PanelController extends Controller
 
             $client->upload();
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'Votre application a bien été crée',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('devs_panel_index'));
         }
@@ -130,10 +130,10 @@ class PanelController extends Controller
 
             $client->upload();
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'Votre application a bien été modifiée',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('devs_panel_manage_app', ['clientId' => $client->getClientId()]));
         }
@@ -176,10 +176,10 @@ class PanelController extends Controller
             $em->remove($client);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'L\' application '.$client->getName().' a bien été supprimée',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('devs_panel_index'));
         }

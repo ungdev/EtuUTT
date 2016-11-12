@@ -30,7 +30,7 @@ class ProgressBar
     /**
      * Options, like the precision used to display the numbers.
      */
-    protected $_options = array();
+    protected $_options = [];
     /**
      * Length to erase.
      */
@@ -39,7 +39,7 @@ class ProgressBar
      * When the progress started.
      */
     protected $_start_time = null;
-    protected $_rate_datapoints = array();
+    protected $_rate_datapoints = [];
     /**
      * Time when the bar was last drawn.
      */
@@ -58,7 +58,7 @@ class ProgressBar
      *
      * @see reset
      */
-    public function __construct($formatstring, $bar, $prefill, $width, $target_num, $options = array())
+    public function __construct($formatstring, $bar, $prefill, $width, $target_num, $options = [])
     {
         $this->reset($formatstring, $bar, $prefill, $width, $target_num, $options);
     }
@@ -143,7 +143,7 @@ class ProgressBar
      *
      * @return bool
      */
-    public function reset($formatstring, $bar, $prefill, $width, $target_num, $options = array())
+    public function reset($formatstring, $bar, $prefill, $width, $target_num, $options = [])
     {
         if ($target_num == 0) {
             throw new \ErrorException(
@@ -154,7 +154,7 @@ class ProgressBar
             $this->_target_num = $target_num;
         }
 
-        $default_options = array(
+        $default_options = [
             'percent_precision' => 2,
             'fraction_precision' => 0,
             'percent_pad' => ' ',
@@ -164,9 +164,9 @@ class ProgressBar
             'ansi_clear' => false,
             'num_datapoints' => 5,
             'min_draw_interval' => 0.0,
-        );
+        ];
 
-        $intopts = array();
+        $intopts = [];
 
         foreach ($default_options as $key => $value) {
             if (!isset($options[$key])) {
@@ -197,7 +197,7 @@ class ProgressBar
         $perc = '%4$\''.$options['percent_pad']{0}
         .$padding.'.'.$options['percent_precision'].'f';
 
-        $transitions = array(
+        $transitions = [
             '%%' => '%%',
             '%fraction%' => $cur.'/'.$max,
             '%current%' => $cur,
@@ -206,7 +206,7 @@ class ProgressBar
             '%bar%' => '%1$s',
             '%elapsed%' => '%5$s',
             '%estimate%' => '%6$s',
-        );
+        ];
 
         $this->_skeleton = strtr($formatstring, $transitions);
 
@@ -283,7 +283,7 @@ class ProgressBar
             array_shift($this->_rate_datapoints);
         }
 
-        $this->_rate_datapoints[] = array('time' => $time, 'value' => $val);
+        $this->_rate_datapoints[] = ['time' => $time, 'value' => $val];
     }
 
     /**

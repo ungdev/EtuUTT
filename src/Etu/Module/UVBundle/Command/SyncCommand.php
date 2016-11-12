@@ -77,7 +77,7 @@ databsse, it will only update them.
             );
         }
 
-        $regitryCodes = array();
+        $regitryCodes = [];
 
         foreach ($registry as $key => $registryUV) {
             unset($registry[$key]);
@@ -92,9 +92,9 @@ databsse, it will only update them.
         $output->writeln('Loading database ...');
 
         /** @var UV[] $database */
-        $database = $em->getRepository('EtuModuleUVBundle:UV')->findBy(array('isOld' => false));
+        $database = $em->getRepository('EtuModuleUVBundle:UV')->findBy(['isOld' => false]);
 
-        $databaseCodes = array();
+        $databaseCodes = [];
 
         foreach ($database as $key => $databaseUV) {
             unset($database[$key]);
@@ -111,7 +111,7 @@ databsse, it will only update them.
 
         $toAdd = array_diff($regitryCodes, $databaseCodes);
         $toRemove = array_diff($databaseCodes, $regitryCodes);
-        $toUpdate = array();
+        $toUpdate = [];
 
         $codes = array_intersect($databaseCodes, $regitryCodes);
 
@@ -249,7 +249,7 @@ databsse, it will only update them.
      */
     protected function areEquals(UV $registryUV, UV $databaseUV)
     {
-        $values = array(
+        $values = [
             'Category',
             'Name',
             'Cm',
@@ -261,7 +261,7 @@ databsse, it will only update them.
             'Credits',
             'Objectifs',
             'Programme',
-        );
+        ];
 
         foreach ($values as $value) {
             $value = 'get'.$value;

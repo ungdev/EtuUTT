@@ -15,9 +15,9 @@ class ModulesCollection extends ArrayCollection
      *
      * @param Module[] $modules
      */
-    public function __construct(array $modules = array())
+    public function __construct(array $modules = [])
     {
-        $constructed = array();
+        $constructed = [];
 
         foreach ($modules as $module) {
             $constructed[$module->getIdentifier()] = $module;

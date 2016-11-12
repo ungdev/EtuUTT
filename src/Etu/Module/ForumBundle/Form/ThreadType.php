@@ -18,16 +18,16 @@ class ThreadType extends AbstractType
             ->add(
                 'weight',
                 ChoiceType::class,
-                array(
-                    'choices' => array('Non' => 100, 'Oui' => 200),
+                [
+                    'choices' => ['Non' => 100, 'Oui' => 200],
                     'multiple' => false,
                     'expanded' => true,
-                    'preferred_choices' => array(100),
+                    'preferred_choices' => [100],
                     'label' => 'forum.main.post.sticky',
-                )
+                ]
             )
             ->add('lastMessage', MessageType::class)
-            ->add('submit', SubmitType::class, array('label' => 'forum.main.post.submit'));
+            ->add('submit', SubmitType::class, ['label' => 'forum.main.post.submit']);
     }
 
     public function configureOptions(OptionsResolver $resolver)

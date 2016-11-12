@@ -38,8 +38,8 @@ class NewCommentHelper implements HelperInterface
      */
     public function render(Notification $notification)
     {
-        return $this->twig->render('EtuModuleBugsBundle:Notification:newComment.html.twig', array(
+        return $this->twig->render('EtuModuleBugsBundle:Notification:newComment.html.twig', [
             'notif' => $notification,
-        ));
+        ]);
     }
 }

@@ -48,10 +48,10 @@ class AdminController extends Controller
             ->getQuery()
             ->getResult();
 
-        return array(
+        return [
             'comments' => $comments,
             'reviews' => $reviews,
-        );
+        ];
     }
 
     /**
@@ -75,9 +75,9 @@ class AdminController extends Controller
 
         $pagination = $this->get('knp_paginator')->paginate($query, $page, 40);
 
-        return array(
+        return [
             'pagination' => $pagination,
-        );
+        ];
     }
 
     /**
@@ -96,10 +96,10 @@ class AdminController extends Controller
         $em->persist($review);
         $em->flush();
 
-        $this->get('session')->getFlashBag()->set('message', array(
+        $this->get('session')->getFlashBag()->set('message', [
             'type' => 'success',
             'message' => 'uvs.admin.validateReview.confirm',
-        ));
+        ]);
 
         return $this->redirect($this->generateUrl('admin_uvs_reviews'));
     }
@@ -120,10 +120,10 @@ class AdminController extends Controller
         $em->persist($review);
         $em->flush();
 
-        $this->get('session')->getFlashBag()->set('message', array(
+        $this->get('session')->getFlashBag()->set('message', [
             'type' => 'success',
             'message' => 'uvs.admin.unvalidateReview.confirm',
-        ));
+        ]);
 
         return $this->redirect($this->generateUrl('admin_uvs_reviews'));
     }
@@ -144,10 +144,10 @@ class AdminController extends Controller
         $em->persist($review);
         $em->flush();
 
-        $this->get('session')->getFlashBag()->set('message', array(
+        $this->get('session')->getFlashBag()->set('message', [
             'type' => 'success',
             'message' => 'uvs.admin.deleteReview.confirm',
-        ));
+        ]);
 
         return $this->redirect($this->generateUrl('admin_uvs_reviews'));
     }
@@ -173,9 +173,9 @@ class AdminController extends Controller
 
         $pagination = $this->get('knp_paginator')->paginate($query, $page, 20);
 
-        return array(
+        return [
             'pagination' => $pagination,
-        );
+        ];
     }
 
     /**
@@ -194,10 +194,10 @@ class AdminController extends Controller
         $em->persist($comment);
         $em->flush();
 
-        $this->get('session')->getFlashBag()->set('message', array(
+        $this->get('session')->getFlashBag()->set('message', [
             'type' => 'success',
             'message' => 'uvs.admin.deleteComment.confirm',
-        ));
+        ]);
 
         return $this->redirect($this->generateUrl('admin_uvs_comments'));
     }

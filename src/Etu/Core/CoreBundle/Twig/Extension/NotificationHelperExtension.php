@@ -30,11 +30,11 @@ class NotificationHelperExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('render_notif', array($this, 'render'), array('is_safe' => array('html'))),
-            new \Twig_SimpleFunction('highlight_notif_data', array($this, 'highlight'), array('is_safe' => array('html'))),
-            new \Twig_SimpleFunction('duck_catched', array($this, 'duck_catched')),
-        );
+        return [
+            new \Twig_SimpleFunction('render_notif', [$this, 'render'], ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction('highlight_notif_data', [$this, 'highlight'], ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction('duck_catched', [$this, 'duck_catched']),
+        ];
     }
 
     /**

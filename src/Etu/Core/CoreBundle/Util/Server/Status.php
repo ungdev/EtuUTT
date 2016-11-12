@@ -9,13 +9,13 @@ class Status
 {
     protected $name;
     protected $load;
-    protected $memory = array();
-    protected $swap = array();
-    protected $processor = array();
-    protected $processes = array();
-    protected $versions = array();
+    protected $memory = [];
+    protected $swap = [];
+    protected $processor = [];
+    protected $processes = [];
+    protected $versions = [];
     protected $upTime;
-    protected $mountPoints = array();
+    protected $mountPoints = [];
 
     public function __construct()
     {
@@ -109,31 +109,31 @@ class Status
 
         $memoryUsage = preg_split('/\s+/', $output[1]);
 
-        $this->memory = array(
+        $this->memory = [
             'total' => $memoryUsage[1],
             'used' => $memoryUsage[2],
             'free' => $memoryUsage[3],
             'shared' => $memoryUsage[4],
             'buffers' => $memoryUsage[5],
             'cached' => $memoryUsage[6],
-        );
+        ];
 
         $swapUsage = preg_split('/\s+/', $output[3]);
 
-        $this->swap = array(
+        $this->swap = [
             'total' => $swapUsage[1],
             'used' => $swapUsage[2],
             'free' => $swapUsage[3],
-        );
+        ];
     }
 
     protected function initVersions()
     {
-        $this->versions = array(
+        $this->versions = [
             'php' => phpversion(),
             'mysql' => mysqli_get_client_info(),
             'zend' => zend_version(),
-        );
+        ];
     }
 
     protected function initUpTime()
@@ -144,12 +144,12 @@ class Status
         $min = sprintf('%2d', ($ut % (3600 * 24) % 3600) / 60);
         $sec = sprintf('%2d', ($ut % (3600 * 24) % 3600) % 60);
 
-        $this->upTime = array(
+        $this->upTime = [
             'days' => trim($days),
             'hours' => trim($hours),
             'min' => trim($min),
             'sec' => trim($sec),
-        );
+        ];
     }
 
     protected function initMountPoints()
@@ -161,14 +161,14 @@ class Status
         foreach ($output as $line) {
             $parts = preg_split('/\s+/', $line);
 
-            $this->mountPoints[] = array(
+            $this->mountPoints[] = [
                 'name' => $parts[0],
                 'size' => $parts[1],
                 'used' => $parts[2],
                 'available' => $parts[3],
                 'usedPercentage' => $parts[4],
                 'mountPoint' => $parts[5],
-            );
+            ];
         }
     }
 
@@ -197,7 +197,7 @@ class Status
 
             $parts = preg_split('/\s+/', $line);
 
-            $this->processes[] = array(
+            $this->processes[] = [
                 'id' => $parts[1],
                 'user' => $parts[2],
                 'priority' => $parts[3],
@@ -205,7 +205,7 @@ class Status
                 'memory' => $parts[10],
                 'time' => $parts[11],
                 'command' => (isset($parts[12])) ? $parts[12] : 'none',
-            );
+            ];
         }
     }
 }

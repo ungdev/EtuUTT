@@ -14,18 +14,18 @@ class StringManipulationExtension extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
+        return [
             new \Twig_SimpleFilter('count', 'count'),
             new \Twig_SimpleFilter('ucfirst', 'ucfirst'),
             new \Twig_SimpleFilter('urlencode', 'urlencode'),
-            new \Twig_SimpleFilter('limit', array($this, 'limit')),
-            new \Twig_SimpleFilter('camelize', array($this, 'camelize')),
-            new \Twig_SimpleFilter('uncamelize', array($this, 'uncamelize')),
-            new \Twig_SimpleFilter('seems_utf8', array($this, 'seemsUtf8')),
-            new \Twig_SimpleFilter('unaccent', array($this, 'unaccent')),
-            new \Twig_SimpleFilter('slugify', array($this, 'slugify')),
+            new \Twig_SimpleFilter('limit', [$this, 'limit']),
+            new \Twig_SimpleFilter('camelize', [$this, 'camelize']),
+            new \Twig_SimpleFilter('uncamelize', [$this, 'uncamelize']),
+            new \Twig_SimpleFilter('seems_utf8', [$this, 'seemsUtf8']),
+            new \Twig_SimpleFilter('unaccent', [$this, 'unaccent']),
+            new \Twig_SimpleFilter('slugify', [$this, 'slugify']),
             new \Twig_SimpleFilter('chunk', 'array_chunk'),
-        );
+        ];
     }
 
     /**
@@ -62,11 +62,11 @@ class StringManipulationExtension extends \Twig_Extension
      */
     public static function camelize($word)
     {
-        static $cache = array();
+        static $cache = [];
 
         if (!isset($cache[$word])) {
             $word = preg_replace('/[$]/', '', $word);
-            $classify = preg_replace_callback('~(_?)([-_])([\w])~', array(self, 'camelizeCallback'), ucfirst(strtolower($word)));
+            $classify = preg_replace_callback('~(_?)([-_])([\w])~', [self, 'camelizeCallback'], ucfirst(strtolower($word)));
             $cache[$word] = $classify;
         }
 
@@ -144,7 +144,7 @@ class StringManipulationExtension extends \Twig_Extension
         }
 
         if (self::seemsUtf8($string)) {
-            $chars = array(
+            $chars = [
                     // Decompositions for Latin-1 Supplement
                     chr(195).chr(128) => 'A', chr(195).chr(129) => 'A',
                     chr(195).chr(130) => 'A', chr(195).chr(131) => 'A',
@@ -247,7 +247,7 @@ class StringManipulationExtension extends \Twig_Extension
                     'Ö' => 'Oe', 'ö' => 'oe', 'ß' => 'ss',
                     // Norwegian characters
                     'Å' => 'Aa', 'Æ' => 'Ae', 'Ø' => 'O', 'æ' => 'a', 'ø' => 'o', 'å' => 'aa',
-            );
+            ];
 
             $string = strtr($string, $chars);
         } else {
@@ -266,8 +266,8 @@ class StringManipulationExtension extends \Twig_Extension
             $chars['out'] = 'EfSZszYcYuAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy';
 
             $string = strtr($string, $chars['in'], $chars['out']);
-            $doubleChars['in'] = array(chr(140), chr(156), chr(198), chr(208), chr(222), chr(223), chr(230), chr(240), chr(254));
-            $doubleChars['out'] = array('OE', 'oe', 'AE', 'DH', 'TH', 'ss', 'ae', 'dh', 'th');
+            $doubleChars['in'] = [chr(140), chr(156), chr(198), chr(208), chr(222), chr(223), chr(230), chr(240), chr(254)];
+            $doubleChars['out'] = ['OE', 'oe', 'AE', 'DH', 'TH', 'ss', 'ae', 'dh', 'th'];
             $string = str_replace($doubleChars['in'], $doubleChars['out'], $string);
         }
 

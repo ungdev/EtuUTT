@@ -21,30 +21,30 @@ class VideojsFilter extends AbstractFilter
      *
      * @var array
      */
-    protected $_tags = array(
-        'videojs' => array(
+    protected $_tags = [
+        'videojs' => [
             'template' => 'videojs',
             'displayType' => Decoda::TYPE_BLOCK,
             'allowedTypes' => Decoda::TYPE_NONE,
             'contentPattern' => self::VIDEO_PATTERN,
-            'attributes' => array(
+            'attributes' => [
                 'size' => self::SIZE_PATTERN,
-            ),
-        ),
-    );
+            ],
+        ],
+    ];
 
     /**
      * Video formats.
      *
      * @var array
      */
-    protected $_formats = array(
-        'videojs' => array(
-            'small' => array(400, 225),
-            'medium' => array(520, 292),
-            'large' => array(725, 405),
-        ),
-    );
+    protected $_formats = [
+        'videojs' => [
+            'small' => [400, 225],
+            'medium' => [520, 292],
+            'large' => [725, 405],
+        ],
+    ];
 
     /**
      * Custom build the HTML for videos.

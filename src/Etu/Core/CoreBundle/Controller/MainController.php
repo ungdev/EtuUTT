@@ -59,8 +59,8 @@ class MainController extends Controller
          */
         /** @var $subscriptions Subscription[] */
         $subscriptions = $this->get('etu.twig.global_accessor')->get('notifs')->get('subscriptions');
-        $subscriptionsWhere = array();
-        $notifications = array();
+        $subscriptionsWhere = [];
+        $notifications = [];
 
         if (!empty($subscriptions)) {
             foreach ($subscriptions as $key => $subscription) {
@@ -77,7 +77,7 @@ class MainController extends Controller
             /*
              * Modules
              */
-            $modulesWhere = array('n.module = \'core\'', 'n.module = \'user\'');
+            $modulesWhere = ['n.module = \'core\'', 'n.module = \'user\''];
 
             foreach ($this->getKernel()->getModulesDefinitions() as $module) {
                 $identifier = $module->getIdentifier();
@@ -108,9 +108,9 @@ class MainController extends Controller
             return new Response('no_more');
         }
 
-        return $this->render('EtuCoreBundle:Main:more.html.twig', array(
+        return $this->render('EtuCoreBundle:Main:more.html.twig', [
             'notifs' => $notifications,
-        ));
+        ]);
     }
 
     /**
@@ -140,10 +140,10 @@ class MainController extends Controller
 
         $url = $request->server->get('HTTP_REFERER');
 
-        $this->get('session')->getFlashBag()->set('message', array(
+        $this->get('session')->getFlashBag()->set('message', [
             'type' => 'success',
             'message' => 'core.main.changeLocale.confirm',
-        ));
+        ]);
 
         // Redirect wisely
         if ($this->container->getParameter('etu.domain') == parse_url($url, PHP_URL_HOST)) {
@@ -225,7 +225,7 @@ class MainController extends Controller
             throw $this->createNotFoundException('Invalid slug');
         }
 
-        return array('page' => $page);
+        return ['page' => $page];
     }
 
     /**
@@ -238,7 +238,7 @@ class MainController extends Controller
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $events = array();
+        $events = [];
 
         if ($modulesManager->getModuleByIdentifier('events')->isEnabled()) {
             $query = $em->createQueryBuilder()
@@ -259,9 +259,9 @@ class MainController extends Controller
             $events = $query->getResult();
         }
 
-        return $this->render('EtuCoreBundle:Main:indexAnonymous.html.twig', array(
+        return $this->render('EtuCoreBundle:Main:indexAnonymous.html.twig', [
             'events' => $events,
-        ));
+        ]);
     }
 
     /**

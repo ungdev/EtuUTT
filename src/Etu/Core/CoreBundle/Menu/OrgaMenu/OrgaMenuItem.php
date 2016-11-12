@@ -62,8 +62,8 @@ class OrgaMenuItem
         $this->icon = false;
         $this->alertsCount = 0;
         $this->position = 0;
-        $this->linkAttributes = array();
-        $this->itemAttributes = array();
+        $this->linkAttributes = [];
+        $this->itemAttributes = [];
 
         $this->setTranslation($translation);
     }

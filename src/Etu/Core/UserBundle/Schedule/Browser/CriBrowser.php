@@ -9,7 +9,7 @@ class CriBrowser
 {
     const ROOT_URL = 'http://edt.utt.fr/ung/site-etu-api/app.php';
 
-    public function request(array $parameters = array())
+    public function request(array $parameters = [])
     {
         $get = '';
 

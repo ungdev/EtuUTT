@@ -26,20 +26,20 @@ class MainController extends Controller
         }
 
         $iterator = new \DirectoryIterator($directory);
-        $images = array();
+        $images = [];
 
         /** @var $file \SplFileInfo */
         foreach ($iterator as $file) {
-            if ($file->isFile() && in_array(strtolower($file->getExtension()), array('png', 'jpg', 'jpeg', 'gif', 'bmp'))) {
-                $images[] = array(
+            if ($file->isFile() && in_array(strtolower($file->getExtension()), ['png', 'jpg', 'jpeg', 'gif', 'bmp'])) {
+                $images[] = [
                     'id' => substr(md5($file->getBasename()), 0, 10),
                     'name' => $file->getBasename(),
-                );
+                ];
             }
         }
 
         $form = $this->createFormBuilder()
-            ->add('file', FileType::class, array('required' => true, 'label' => 'upload.main.index.send'))
+            ->add('file', FileType::class, ['required' => true, 'label' => 'upload.main.index.send'])
             ->getForm();
 
         $form->handleRequest($request);
@@ -50,20 +50,20 @@ class MainController extends Controller
 
             if (!in_array(
                 strtolower(pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION)),
-                array('png', 'jpg', 'jpeg', 'gif', 'bmp'))) {
-                $this->get('session')->getFlashBag()->set('message', array(
+                ['png', 'jpg', 'jpeg', 'gif', 'bmp'])) {
+                $this->get('session')->getFlashBag()->set('message', [
                     'type' => 'error',
                     'message' => 'upload.main.index.error_type',
-                ));
+                ]);
 
                 return $this->redirect($this->generateUrl('upload_index'));
             }
 
             if ($file->getSize() > 2000000) {
-                $this->get('session')->getFlashBag()->set('message', array(
+                $this->get('session')->getFlashBag()->set('message', [
                     'type' => 'error',
                     'message' => 'upload.main.index.error_size',
-                ));
+                ]);
 
                 return $this->redirect($this->generateUrl('upload_index'));
             }
@@ -79,18 +79,18 @@ class MainController extends Controller
 
             $file->move($directory, $name);
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'upload.main.index.confirm',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('upload_index'));
         }
 
-        return array(
+        return [
             'images' => $images,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -112,13 +112,13 @@ class MainController extends Controller
 
         /** @var $file \SplFileInfo */
         foreach ($iterator as $file) {
-            if ($file->isFile() && in_array(strtolower($file->getExtension()), array('png', 'jpg', 'jpeg', 'gif', 'bmp'))) {
+            if ($file->isFile() && in_array(strtolower($file->getExtension()), ['png', 'jpg', 'jpeg', 'gif', 'bmp'])) {
                 if (substr(md5($file->getBasename()), 0, 10) == $id) {
-                    $image = array(
+                    $image = [
                         'id' => substr(md5($file->getBasename()), 0, 10),
                         'name' => $file->getBasename(),
                         'absolute' => $file->getPathname(),
-                    );
+                    ];
                 }
             }
         }
@@ -130,16 +130,16 @@ class MainController extends Controller
         if ($confirm) {
             unlink($image['absolute']);
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'upload.main.remove.confirm',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('upload_index'));
         }
 
-        return array(
+        return [
             'image' => $image,
-        );
+        ];
     }
 }

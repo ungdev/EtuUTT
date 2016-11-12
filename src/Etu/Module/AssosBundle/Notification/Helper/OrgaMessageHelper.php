@@ -38,8 +38,8 @@ class OrgaMessageHelper implements HelperInterface
      */
     public function render(Notification $notification)
     {
-        return $this->twig->render('EtuModuleAssosBundle:Notification:orgaMessage.html.twig', array(
+        return $this->twig->render('EtuModuleAssosBundle:Notification:orgaMessage.html.twig', [
             'notif' => $notification,
-        ));
+        ]);
     }
 }

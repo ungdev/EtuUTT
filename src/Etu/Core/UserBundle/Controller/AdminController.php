@@ -36,17 +36,17 @@ class AdminController extends Controller
 
         $user = new User();
         $search = false;
-        $users = array();
+        $users = [];
 
         $form = $this->createFormBuilder($user)
             ->setMethod('get')
-            ->add('fullName', null, array('required' => false, 'label' => 'user.admin.userIndex.name'))
-            ->add('studentId', null, array('required' => false, 'label' => 'user.admin.userIndex.studentId'))
-            ->add('phoneNumber', null, array('required' => false, 'label' => 'user.admin.userIndex.phone'))
-            ->add('uvs', null, array('required' => false, 'label' => 'user.admin.userIndex.uv'))
-            ->add('filiere', ChoiceType::class, array('choices' => User::$branches, 'required' => false, 'label' => 'user.admin.userIndex.name'))
-            ->add('niveau', ChoiceType::class, array('choices' => User::$levels, 'required' => false, 'label' => 'user.admin.userIndex.name'))
-            ->add('personnalMail', null, array('required' => false, 'label' => 'user.admin.userIndex.personnalMail'))
+            ->add('fullName', null, ['required' => false, 'label' => 'user.admin.userIndex.name'])
+            ->add('studentId', null, ['required' => false, 'label' => 'user.admin.userIndex.studentId'])
+            ->add('phoneNumber', null, ['required' => false, 'label' => 'user.admin.userIndex.phone'])
+            ->add('uvs', null, ['required' => false, 'label' => 'user.admin.userIndex.uv'])
+            ->add('filiere', ChoiceType::class, ['choices' => User::$branches, 'required' => false, 'label' => 'user.admin.userIndex.name'])
+            ->add('niveau', ChoiceType::class, ['choices' => User::$levels, 'required' => false, 'label' => 'user.admin.userIndex.name'])
+            ->add('personnalMail', null, ['required' => false, 'label' => 'user.admin.userIndex.personnalMail'])
             ->add('submit', SubmitType::class, ['label' => 'user.admin.userIndex.search'])
             ->getForm();
 
@@ -126,11 +126,11 @@ class AdminController extends Controller
             $users = $this->get('knp_paginator')->paginate($users->getQuery(), $page, 20);
         }
 
-        return array(
+        return [
             'form' => $form->createView(),
             'search' => $search,
             'pagination' => $users,
-        );
+        ];
     }
 
     /**
@@ -145,63 +145,63 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /** @var $user User */
-        $user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
+        $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $login]);
 
         if (!$user) {
             throw $this->createNotFoundException('Login "'.$login.'" not found');
         }
 
-        $privacyChoice = array(
-            'choices' => array(
+        $privacyChoice = [
+            'choices' => [
                 'user.privacy.public' => User::PRIVACY_PUBLIC,
                 'user.privacy.private' => User::PRIVACY_PRIVATE,
-            ),
-            'attr' => array(
+            ],
+            'attr' => [
                 'class' => 'profileEdit-privacy-select',
-            ),
+            ],
             'placeholder' => false,
             'required' => false,
             'label' => 'user.profile.profileEdit.privacy',
-        );
+        ];
 
         $form = $this->createFormBuilder($user)
-            ->add('phoneNumber', null, array('required' => false, 'label' => 'user.profile.profileEdit.phoneNumber'))
+            ->add('phoneNumber', null, ['required' => false, 'label' => 'user.profile.profileEdit.phoneNumber'])
             ->add('phoneNumberPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('sex', ChoiceType::class, array('choices' => array(
+            ->add('sex', ChoiceType::class, ['choices' => [
                 'base.user.sex.male' => User::SEX_MALE,
                 'base.user.sex.female' => User::SEX_FEMALE,
-            ), 'required' => false, 'label' => 'user.profile.profileEdit.sex'))
+            ], 'required' => false, 'label' => 'user.profile.profileEdit.sex'])
             ->add('sexPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('nationality', null, array('required' => false, 'label' => 'user.profile.profileEdit.nationality'))
+            ->add('nationality', null, ['required' => false, 'label' => 'user.profile.profileEdit.nationality'])
             ->add('nationalityPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('address', null, array('required' => false, 'label' => 'user.profile.profileEdit.address'))
+            ->add('address', null, ['required' => false, 'label' => 'user.profile.profileEdit.address'])
             ->add('addressPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('postalCode', null, array('required' => false, 'label' => 'user.profile.profileEdit.postalCode'))
+            ->add('postalCode', null, ['required' => false, 'label' => 'user.profile.profileEdit.postalCode'])
             ->add('postalCodePrivacy', ChoiceType::class, $privacyChoice)
-            ->add('city', null, array('required' => false, 'label' => 'user.profile.profileEdit.city'))
+            ->add('city', null, ['required' => false, 'label' => 'user.profile.profileEdit.city'])
             ->add('cityPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('country', null, array('required' => false, 'label' => 'user.profile.profileEdit.country'))
+            ->add('country', null, ['required' => false, 'label' => 'user.profile.profileEdit.country'])
             ->add('countryPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('birthday', BirthdayPickerType::class, array(
+            ->add('birthday', BirthdayPickerType::class, [
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
                 'required' => false,
                 'label' => 'user.profile.profileEdit.birthday',
-            ))
+            ])
             ->add('birthdayPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('birthdayDisplayOnlyAge', null, array(
+            ->add('birthdayDisplayOnlyAge', null, [
                 'required' => false,
                 'label' => 'user.profile.profileEdit.birthdayOnlyAge.label',
                 'attr' => [
                     'help' => 'user.profile.profileEdit.birthdayOnlyAge.desc',
-                ], ))
-            ->add('personnalMail', EmailType::class, array('required' => false, 'label' => 'user.profile.profileEdit.personnalMail'))
+                ], ])
+            ->add('personnalMail', EmailType::class, ['required' => false, 'label' => 'user.profile.profileEdit.personnalMail'])
             ->add('personnalMailPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('website', null, array('required' => false, 'label' => 'user.profile.profileEdit.website'))
-            ->add('facebook', null, array('required' => false, 'label' => 'user.profile.profileEdit.facebook'))
-            ->add('twitter', null, array('required' => false, 'label' => 'user.profile.profileEdit.twitter'))
-            ->add('linkedin', null, array('required' => false, 'label' => 'user.profile.profileEdit.linkedin'))
-            ->add('viadeo', null, array('required' => false, 'label' => 'user.profile.profileEdit.viadeo'))
+            ->add('website', null, ['required' => false, 'label' => 'user.profile.profileEdit.website'])
+            ->add('facebook', null, ['required' => false, 'label' => 'user.profile.profileEdit.facebook'])
+            ->add('twitter', null, ['required' => false, 'label' => 'user.profile.profileEdit.twitter'])
+            ->add('linkedin', null, ['required' => false, 'label' => 'user.profile.profileEdit.linkedin'])
+            ->add('viadeo', null, ['required' => false, 'label' => 'user.profile.profileEdit.viadeo'])
             ->add('submit', SubmitType::class, ['label' => 'user.profile.profileEdit.edit'])
             ->getForm();
 
@@ -228,12 +228,12 @@ class AdminController extends Controller
             $logger = $this->get('monolog.logger.admin');
             $logger->info('`'.$this->getUser()->getLogin().'` update profil of `'.$user->getLogin().'`');
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'user.admin.userEdit.confirm',
-            ));
+            ]);
 
-            return $this->redirect($this->generateUrl('user_view', array('login' => $user->getLogin())));
+            return $this->redirect($this->generateUrl('user_view', ['login' => $user->getLogin()]));
         }
 
         // Avatar lightbox
@@ -242,11 +242,11 @@ class AdminController extends Controller
             ->add('file', FileType::class)
             ->getForm();
 
-        return array(
+        return [
             'user' => $user,
             'form' => $form->createView(),
             'avatarForm' => $avatarForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -270,10 +270,10 @@ class AdminController extends Controller
         $roles = array_keys($hierarchy);
         $roles = array_diff($roles, $predefinedRoles);
 
-        return array(
+        return [
             'users' => $users,
             'hierarchy' => $hierarchy,
-        );
+        ];
     }
 
     /**
@@ -288,7 +288,7 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /** @var $user User */
-        $user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
+        $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $login]);
 
         if (!$user) {
             throw $this->createNotFoundException('Login "'.$login.'" not found');
@@ -296,7 +296,7 @@ class AdminController extends Controller
 
         // Get 'from' to choose the right back button
         $from = null;
-        if (in_array($request->get('from'), array('profile', 'admin', 'organizations', 'badges', 'schedule'))) {
+        if (in_array($request->get('from'), ['profile', 'admin', 'organizations', 'badges', 'schedule'])) {
             $from = $request->get('from');
         }
 
@@ -336,19 +336,19 @@ class AdminController extends Controller
             $logger = $this->get('monolog.logger.admin');
             $logger->warn('`'.$this->getUser()->getLogin().'` update roles of `'.$user->getLogin().'`');
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'user.admin.userRoles.confirm',
-            ));
+            ]);
 
-            return $this->redirect($this->generateUrl('admin_user_roles', array('login' => $user->getLogin(), 'from' => $from)));
+            return $this->redirect($this->generateUrl('admin_user_roles', ['login' => $user->getLogin(), 'from' => $from]));
         }
 
-        return array(
+        return [
             'user' => $user,
             'roles' => $roleArray,
             'fromVar' => $from,
-        );
+        ];
     }
 
     /**
@@ -363,7 +363,7 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /** @var $user User */
-        $user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
+        $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $login]);
 
         if (!$user) {
             throw $this->createNotFoundException('Login "'.$login.'" not found');
@@ -386,18 +386,18 @@ class AdminController extends Controller
             $logger = $this->get('monolog.logger.admin');
             $logger->info('`'.$this->getUser()->getLogin().'` update avatar of `'.$user->getLogin().'`');
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'user.admin.userEdit.confirm',
-            ));
+            ]);
 
-            return $this->redirect($this->generateUrl('user_view', array('login' => $user->getLogin())));
+            return $this->redirect($this->generateUrl('user_view', ['login' => $user->getLogin()]));
         }
 
-        return array(
+        return [
             'user' => $user,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -412,7 +412,7 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /** @var $user User */
-        $user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
+        $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $login]);
 
         if (!$user) {
             throw $this->createNotFoundException('Login "'.$login.'" not found');
@@ -426,26 +426,26 @@ class AdminController extends Controller
             $logger = $this->get('monolog.logger.admin');
             $logger->warn('`'.$this->getUser()->getLogin().'` put `'.$user->getLogin().'` on read only ');
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'user.admin.userReadOnly.confirm_set',
-            ));
+            ]);
         } else {
             $user->setReadOnlyExpirationDate(null);
 
             $logger = $this->get('monolog.logger.admin');
             $logger->warn('`'.$this->getUser()->getLogin().'` remove `'.$user->getLogin().'` from read only');
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'user.admin.userReadOnly.confirm_unset',
-            ));
+            ]);
         }
 
         $em->persist($user);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('user_view', array('login' => $user->getLogin())).'?from=admin');
+        return $this->redirect($this->generateUrl('user_view', ['login' => $user->getLogin()]).'?from=admin');
     }
 
     /**
@@ -461,40 +461,40 @@ class AdminController extends Controller
         $user->setIsStudent(true);
         $user->setIsInLDAP(false);
 
-        $privacyChoice = array(
-            'choices' => array(
+        $privacyChoice = [
+            'choices' => [
                 'user.privacy.public' => User::PRIVACY_PUBLIC,
                 'user.privacy.private' => User::PRIVACY_PRIVATE,
-            ),
+            ],
             'placeholder' => false,
-            'attr' => array(
+            'attr' => [
                 'class' => 'profileEdit-privacy-select',
-            ),
+            ],
             'required' => false,
             'label' => 'user.admin.userCreate.privacy',
-        );
+        ];
         $form = $this->createFormBuilder($user)
-            ->add('fullName', null, array('required' => true, 'label' => 'user.admin.userCreate.name'))
-            ->add('mail', EmailType::class, array('required' => true, 'label' => 'user.admin.userCreate.mail', 'attr' => ['help' => 'user.admin.userCreate.mail_desc']))
-            ->add('password', PasswordType::class, array('required' => true, 'label' => 'user.admin.userCreate.password'))
-            ->add('phoneNumber', null, array('required' => false, 'label' => 'user.admin.userCreate.phoneNumber'))
+            ->add('fullName', null, ['required' => true, 'label' => 'user.admin.userCreate.name'])
+            ->add('mail', EmailType::class, ['required' => true, 'label' => 'user.admin.userCreate.mail', 'attr' => ['help' => 'user.admin.userCreate.mail_desc']])
+            ->add('password', PasswordType::class, ['required' => true, 'label' => 'user.admin.userCreate.password'])
+            ->add('phoneNumber', null, ['required' => false, 'label' => 'user.admin.userCreate.phoneNumber'])
             ->add('phoneNumberPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('sex', ChoiceType::class, array('choices' => array(
+            ->add('sex', ChoiceType::class, ['choices' => [
                 User::SEX_MALE => 'base.user.sex.male',
                 User::SEX_FEMALE => 'base.user.sex.female',
-            ), 'required' => false, 'label' => 'user.admin.userCreate.sex'))
+            ], 'required' => false, 'label' => 'user.admin.userCreate.sex'])
             ->add('sexPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('nationality', null, array('required' => false, 'label' => 'user.admin.userCreate.nationality'))
+            ->add('nationality', null, ['required' => false, 'label' => 'user.admin.userCreate.nationality'])
             ->add('nationalityPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('address', null, array('required' => false, 'label' => 'user.admin.userCreate.address'))
+            ->add('address', null, ['required' => false, 'label' => 'user.admin.userCreate.address'])
             ->add('addressPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('postalCode', null, array('required' => false, 'label' => 'user.admin.userCreate.postalCode'))
+            ->add('postalCode', null, ['required' => false, 'label' => 'user.admin.userCreate.postalCode'])
             ->add('postalCodePrivacy', ChoiceType::class, $privacyChoice)
-            ->add('city', null, array('required' => false, 'label' => 'user.admin.userCreate.city'))
+            ->add('city', null, ['required' => false, 'label' => 'user.admin.userCreate.city'])
             ->add('cityPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('country', null, array('required' => false, 'label' => 'user.admin.userCreate.country'))
+            ->add('country', null, ['required' => false, 'label' => 'user.admin.userCreate.country'])
             ->add('countryPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('birthday', BirthdayType::class, array(
+            ->add('birthday', BirthdayType::class, [
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
                 'required' => false,
@@ -502,30 +502,30 @@ class AdminController extends Controller
                 'attr' => [
                     'placeholder' => 'jj/mm/aaaa',
                 ],
-            ))
+            ])
             ->add('birthdayPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('birthdayDisplayOnlyAge', null, array(
+            ->add('birthdayDisplayOnlyAge', null, [
                 'required' => false,
                 'label' => 'user.admin.userCreate.birthday_only_age_label',
                 'attr' => ['help' => 'user.admin.userCreate.birthday_only_age_desc'],
-            ))
-            ->add('personnalMail', EmailType::class, array('required' => false, 'label' => 'user.admin.userCreate.personnalMail'))
+            ])
+            ->add('personnalMail', EmailType::class, ['required' => false, 'label' => 'user.admin.userCreate.personnalMail'])
             ->add('personnalMailPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('website', null, array('required' => false, 'label' => 'user.admin.userCreate.website'))
-            ->add('facebook', null, array('required' => false, 'label' => 'user.admin.userCreate.facebook'))
-            ->add('twitter', null, array('required' => false, 'label' => 'user.admin.userCreate.twitter'))
-            ->add('linkedin', null, array('required' => false, 'label' => 'user.admin.userCreate.linkedin'))
-            ->add('viadeo', null, array('required' => false, 'label' => 'user.admin.userCreate.viadeo'))
-            ->add('isStudent', null, array(
+            ->add('website', null, ['required' => false, 'label' => 'user.admin.userCreate.website'])
+            ->add('facebook', null, ['required' => false, 'label' => 'user.admin.userCreate.facebook'])
+            ->add('twitter', null, ['required' => false, 'label' => 'user.admin.userCreate.twitter'])
+            ->add('linkedin', null, ['required' => false, 'label' => 'user.admin.userCreate.linkedin'])
+            ->add('viadeo', null, ['required' => false, 'label' => 'user.admin.userCreate.viadeo'])
+            ->add('isStudent', null, [
                 'required' => false,
                 'label' => 'user.admin.userCreate.is_student_label',
                 'attr' => ['help' => 'user.admin.userCreate.is_student_desc'],
-            ))
-            ->add('isStaffUTT', null, array(
+            ])
+            ->add('isStaffUTT', null, [
                 'required' => false,
                 'label' => 'user.admin.userCreate.is_staffutt_label',
                 'attr' => ['help' => 'user.admin.userCreate.is_staffutt_desc'],
-            ))
+            ])
             ->add('submit', SubmitType::class, ['label' => 'user.admin.userCreate.submit'])
             ->getForm();
 
@@ -564,18 +564,18 @@ class AdminController extends Controller
             $logger = $this->get('monolog.logger.admin');
             $logger->info('`'.$this->getUser()->getLogin().'` create an user `'.$user->getLogin().'`');
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'user.admin.userCreate.confirm',
-            ));
+            ]);
 
-            return $this->redirect($this->generateUrl('user_view', array('login' => $user->getLogin())));
+            return $this->redirect($this->generateUrl('user_view', ['login' => $user->getLogin()]));
         }
 
-        return array(
+        return [
             'user' => $user,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -590,7 +590,7 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /** @var $user User */
-        $user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
+        $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $login]);
 
         if (!$user) {
             throw $this->createNotFoundException('Login "'.$login.'" not found');
@@ -605,17 +605,17 @@ class AdminController extends Controller
             $logger = $this->get('monolog.logger.admin');
             $logger->warn('`'.$this->getUser()->getLogin().'` delete an user `'.$user->getLogin().'`');
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'user.admin.userDelete.confirm',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('admin_users_index'));
         }
 
-        return array(
+        return [
             'user' => $user,
-        );
+        ];
     }
 
     /**
@@ -638,9 +638,9 @@ class AdminController extends Controller
 
         $orgas = $this->get('knp_paginator')->paginate($orgas, $page, 20);
 
-        return array(
+        return [
             'pagination' => $orgas,
-        );
+        ];
     }
 
     /**
@@ -655,9 +655,9 @@ class AdminController extends Controller
         $orga = new Organization();
 
         $form = $this->createFormBuilder($orga)
-            ->add('login', null, array('required' => true, 'label' => 'user.admin.orgasCreate.login'))
-            ->add('name', null, array('required' => true, 'label' => 'user.admin.orgasCreate.name'))
-            ->add('descriptionShort', TextareaType::class, array('required' => true, 'label' => 'user.admin.orgasCreate.descriptionShort'))
+            ->add('login', null, ['required' => true, 'label' => 'user.admin.orgasCreate.login'])
+            ->add('name', null, ['required' => true, 'label' => 'user.admin.orgasCreate.name'])
+            ->add('descriptionShort', TextareaType::class, ['required' => true, 'label' => 'user.admin.orgasCreate.descriptionShort'])
             ->add('submit', SubmitType::class, ['label' => 'user.admin.orgasCreate.submit'])
             ->getForm();
 
@@ -671,18 +671,18 @@ class AdminController extends Controller
             $logger = $this->get('monolog.logger.admin');
             $logger->info('`'.$this->getUser()->getLogin().'` create organization `'.$orga->getLogin().'`');
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'user.admin.orgasCreate.confirm',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('admin_orgas_index'));
         }
 
-        return array(
+        return [
             'orga' => $orga,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -697,7 +697,7 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /** @var $orga Organization */
-        $orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(array('login' => $login));
+        $orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(['login' => $login]);
 
         if (!$orga) {
             throw $this->createNotFoundException(sprintf('Login %s not found', $login));
@@ -705,7 +705,7 @@ class AdminController extends Controller
 
         /** @var $members Members of the organisation to be removed */
         $members = $em->getRepository('EtuUserBundle:Member')
-                ->findBy(array('organization' => $orga));
+                ->findBy(['organization' => $orga]);
 
         foreach ($members as $member) {
             $member->setDeletedAt(new \DateTime());
@@ -720,10 +720,10 @@ class AdminController extends Controller
         $logger = $this->get('monolog.logger.admin');
         $logger->warn('`'.$this->getUser()->getLogin().'` delete organization `'.$orga->getLogin().'`');
 
-        $this->get('session')->getFlashBag()->set('message', array(
+        $this->get('session')->getFlashBag()->set('message', [
             'type' => 'success',
             'message' => 'user.admin.orgasDelete.confirm',
-        ));
+        ]);
 
         return $this->redirect($this->generateUrl('admin_orgas_index'));
     }
@@ -751,18 +751,18 @@ class AdminController extends Controller
                     ->getOneOrNullResult();
 
                 if (!$orga) {
-                    $this->get('session')->getFlashBag()->set('message', array(
+                    $this->get('session')->getFlashBag()->set('message', [
                         'type' => 'error',
                         'message' => 'user.admin.logAs.orga_not_found',
-                    ));
+                    ]);
                 } else {
                     $logger = $this->get('monolog.logger.admin');
                     $logger->warn('`'.$this->getUser()->getLogin().'` login as organization `'.$orga->getLogin().'`');
 
-                    $this->get('session')->getFlashBag()->set('message', array(
+                    $this->get('session')->getFlashBag()->set('message', [
                         'type' => 'success',
                         'message' => 'user.auth.connect.confirm',
-                    ));
+                    ]);
 
                     return $this->redirect($this->generateUrl('homepage', ['_switch_user' => $orga->getLogin()]));
                 }
@@ -778,18 +778,18 @@ class AdminController extends Controller
                     ->getOneOrNullResult();
 
                 if (!$user) {
-                    $this->get('session')->getFlashBag()->set('message', array(
+                    $this->get('session')->getFlashBag()->set('message', [
                         'type' => 'error',
                         'message' => 'user.admin.logAs.user_not_found',
-                    ));
+                    ]);
                 } else {
                     $logger = $this->get('monolog.logger.admin');
                     $logger->warn('`'.$this->getUser()->getLogin().'` login as an user `'.$user->getLogin().'`');
 
-                    $this->get('session')->getFlashBag()->set('message', array(
+                    $this->get('session')->getFlashBag()->set('message', [
                         'type' => 'success',
                         'message' => 'user.auth.connect.confirm',
-                    ));
+                    ]);
 
                     return $this->redirect($this->generateUrl('homepage', ['_switch_user' => $user->getLogin()]));
                 }
@@ -805,10 +805,10 @@ class AdminController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_PREVIOUS_ADMIN');
 
-        $this->get('session')->getFlashBag()->set('message', array(
+        $this->get('session')->getFlashBag()->set('message', [
             'type' => 'success',
             'message' => 'user.admin.logAs.welcomeBack',
-        ));
+        ]);
 
         return $this->redirect($this->generateUrl('homepage', ['_switch_user' => '_exit']));
     }

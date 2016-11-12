@@ -29,7 +29,7 @@ class AdminController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_HOME');
 
-        return array();
+        return [];
     }
     /**
      * @Route("/server", name="admin_server")
@@ -39,9 +39,9 @@ class AdminController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_CORE_ADMIN_SERVER');
 
-        return array(
+        return [
             'status' => new Server\Status(),
-        );
+        ];
     }
 
     /**
@@ -60,9 +60,9 @@ class AdminController extends Controller
         /** @var $module Module */
         foreach ($modules as $module) {
             $modules->get($module->getIdentifier())->needed = false;
-            $modules->get($module->getIdentifier())->neededBy = array();
+            $modules->get($module->getIdentifier())->neededBy = [];
             $modules->get($module->getIdentifier())->canBeEnabled = true;
-            $modules->get($module->getIdentifier())->need = array();
+            $modules->get($module->getIdentifier())->need = [];
         }
 
         /** @var $module Module */
@@ -86,7 +86,7 @@ class AdminController extends Controller
             if ($request->get('modules')) {
                 $enabledModules = array_keys((array) $request->get('modules'));
             } else {
-                $enabledModules = array();
+                $enabledModules = [];
             }
 
             foreach ($enabledModules as $key => $module) {
@@ -103,7 +103,7 @@ class AdminController extends Controller
                 }
             }
 
-            $yaml = \Symfony\Component\Yaml\Yaml::dump(array('modules' => $enabledModules));
+            $yaml = \Symfony\Component\Yaml\Yaml::dump(['modules' => $enabledModules]);
             $configFile = $this->getKernel()->getRootDir().'/config/modules.yml';
 
             file_put_contents($configFile, $yaml);
@@ -139,10 +139,10 @@ class AdminController extends Controller
             $logger = $this->get('monolog.logger.admin');
             $logger->warn('`'.$this->getUser()->getLogin().'` edit enabled modules');
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'core.admin.modules.confirm',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('admin_modules'));
         }
@@ -156,9 +156,9 @@ class AdminController extends Controller
                 implode(', ', $modules->get($module->getIdentifier())->need);
         }
 
-        return array(
+        return [
             'modules' => $modules,
-        );
+        ];
     }
 
     /**
@@ -172,11 +172,11 @@ class AdminController extends Controller
         /** @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
 
-        $pages = $em->getRepository('EtuCoreBundle:Page')->findBy(array(), array('title' => 'ASC'));
+        $pages = $em->getRepository('EtuCoreBundle:Page')->findBy([], ['title' => 'ASC']);
 
-        return array(
+        return [
             'pages' => $pages,
-        );
+        ];
     }
 
     /**
@@ -206,17 +206,17 @@ class AdminController extends Controller
             $em->persist($page);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'core.admin.pageCreate.confirm',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('admin_pages'));
         }
 
-        return array(
+        return [
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -247,18 +247,18 @@ class AdminController extends Controller
             $em->persist($page);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'core.admin.pageEdit.confirm',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('admin_pages'));
         }
 
-        return array(
+        return [
             'page' => $page,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -274,9 +274,9 @@ class AdminController extends Controller
 
         $page = $em->getRepository('EtuCoreBundle:Page')->find($id);
 
-        return array(
+        return [
             'page' => $page,
-        );
+        ];
     }
 
     /**
@@ -295,10 +295,10 @@ class AdminController extends Controller
         $em->remove($page);
         $em->flush();
 
-        $this->get('session')->getFlashBag()->set('message', array(
+        $this->get('session')->getFlashBag()->set('message', [
             'type' => 'success',
             'message' => 'core.admin.pageDelete.confirm',
-        ));
+        ]);
 
         return $this->redirect($this->generateUrl('admin_pages'));
     }

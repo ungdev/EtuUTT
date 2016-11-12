@@ -38,8 +38,8 @@ class NewBadgeHelper implements HelperInterface
      */
     public function render(Notification $notification)
     {
-        return $this->twig->render('EtuUserBundle:Notification:newBadge.html.twig', array(
+        return $this->twig->render('EtuUserBundle:Notification:newBadge.html.twig', [
             'notif' => $notification,
-        ));
+        ]);
     }
 }

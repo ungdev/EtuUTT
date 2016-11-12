@@ -43,9 +43,9 @@ class Process
      */
     public function __construct(Registry $doctrine, array $toAddInDb, array $toRemoveFromDb, array $toUpdate)
     {
-        $this->toAdd = array();
-        $this->toRemove = array();
-        $this->toUpdate = array();
+        $this->toAdd = [];
+        $this->toRemove = [];
+        $this->toUpdate = [];
         $this->doctrine = $doctrine;
 
         foreach ($toAddInDb as $login => $object) {

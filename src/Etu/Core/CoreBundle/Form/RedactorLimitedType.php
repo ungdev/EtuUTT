@@ -10,9 +10,9 @@ class RedactorLimitedType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'attr' => array('class' => 'redactor-limited'),
-        ));
+        $resolver->setDefaults([
+            'attr' => ['class' => 'redactor-limited'],
+        ]);
     }
 
     public function getParent()

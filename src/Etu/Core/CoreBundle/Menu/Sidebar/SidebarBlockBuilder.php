@@ -38,7 +38,7 @@ class SidebarBlockBuilder
      */
     public function __construct(SidebarBuilder $builder, $title)
     {
-        $this->items = array();
+        $this->items = [];
         $this->lastPosition = 0;
         $this->separatorCount = 0;
         $this->position = 0;

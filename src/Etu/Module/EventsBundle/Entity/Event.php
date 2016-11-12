@@ -32,10 +32,10 @@ class Event extends AbstractEvent
     const PRIVACY_ORGAS = 300;
     const PRIVACY_MEMBERS = 400;
 
-    public static $categories = array(
+    public static $categories = [
         self::CATEGORY_CULTURE, self::CATEGORY_SPORT, self::CATEGORY_FORMATION,
         self::CATEGORY_NIGHT, self::CATEGORY_OTHER,
-    );
+    ];
 
     /**
      * @var int

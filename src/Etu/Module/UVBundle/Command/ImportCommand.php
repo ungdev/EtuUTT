@@ -249,7 +249,7 @@ for another version, you will have to update this parser.');
         $bar->update(0);
         $i = 1;
 
-        $entities = array();
+        $entities = [];
 
         foreach ($uv as $code => $uv) {
             $entity = new UV();
@@ -286,21 +286,21 @@ for another version, you will have to update this parser.');
         $currentList = null;
         $tops = [];
 
-        $uv = array(
+        $uv = [
             'automne' => false,
             'printemps' => false,
             'cadre' => '',
             'programme' => '',
             'comment' => '',
             'credits' => 0,
-            'hours' => array(
+            'hours' => [
                 'cm' => 0,
                 'td' => 0,
                 'tp' => 0,
                 'the' => 0,
                 'prj' => 0,
-            ),
-        );
+            ],
+        ];
 
         $lines = explode('</text>', $raw);
 

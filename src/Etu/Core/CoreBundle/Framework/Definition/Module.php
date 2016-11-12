@@ -83,7 +83,7 @@ abstract class Module extends Bundle
      */
     public function getAvailablePermissions()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -93,10 +93,10 @@ abstract class Module extends Bundle
      */
     public function getRouting()
     {
-        return array(
+        return [
             'type' => 'annotation',
             'resource' => '@'.$this->getName().'/Controller/',
-        );
+        ];
     }
 
     /**
@@ -106,10 +106,10 @@ abstract class Module extends Bundle
      */
     public function getApiRouting()
     {
-        return array(
+        return [
             'type' => 'annotation',
             'resource' => '@'.$this->getName().'/Api/Resource/',
-        );
+        ];
     }
 
     /**

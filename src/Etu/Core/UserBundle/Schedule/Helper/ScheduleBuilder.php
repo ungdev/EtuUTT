@@ -12,7 +12,7 @@ class ScheduleBuilder
 {
     const DO_NOT_USE_HALF = false;
 
-    public static $colors = array();
+    public static $colors = [];
 
     /**
      * @var Course[]
@@ -33,19 +33,19 @@ class ScheduleBuilder
     {
         $this->useHalf = (bool) $useHalf;
 
-        $days = array(
+        $days = [
             Course::DAY_MONDAY, Course::DAY_TUESDAY, Course::DAY_WENESDAY,
             Course::DAY_THURSDAY, Course::DAY_FRIDAY, Course::DAY_SATHURDAY,
-        );
+        ];
 
-        $hours = array('08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19');
+        $hours = ['08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19'];
 
         foreach ($days as $day) {
-            $this->courses[$day] = array();
+            $this->courses[$day] = [];
 
             foreach ($hours as $hour) {
-                $this->courses[$day][$hour.':00'] = array('type' => 'void', 'size' => 1);
-                $this->courses[$day][$hour.':30'] = array('type' => 'void', 'size' => 1);
+                $this->courses[$day][$hour.':00'] = ['type' => 'void', 'size' => 1];
+                $this->courses[$day][$hour.':30'] = ['type' => 'void', 'size' => 1];
             }
         }
     }
@@ -59,28 +59,28 @@ class ScheduleBuilder
     {
         if ($this->useHalf) {
             if ($course->getWeek() == 'T') {
-                $this->courses[$course->getDay()][$course->getStart()] = array(
+                $this->courses[$course->getDay()][$course->getStart()] = [
                     'type' => 'course',
                     'size' => self::getBlockSize($course),
                     'course' => $course,
-                );
+                ];
             } else {
                 if (!isset($this->courses[$course->getDay()][$course->getStart()]['courses'])) {
-                    $this->courses[$course->getDay()][$course->getStart()] = array(
+                    $this->courses[$course->getDay()][$course->getStart()] = [
                         'type' => 'course_half',
                         'size' => self::getBlockSize($course),
                         'courses' => new CourseHalf(),
-                    );
+                    ];
                 }
 
                 $this->courses[$course->getDay()][$course->getStart()]['courses']->addCourse($course);
             }
         } else {
-            $this->courses[$course->getDay()][$course->getStart()] = array(
+            $this->courses[$course->getDay()][$course->getStart()] = [
                 'type' => 'course',
                 'size' => self::getBlockSize($course),
                 'course' => $course,
-            );
+            ];
         }
 
         return $this;
@@ -104,7 +104,7 @@ class ScheduleBuilder
             }
         }
 
-        $courses = array();
+        $courses = [];
 
         foreach ($this->courses as $day => $dayCourses) {
             foreach ($dayCourses as $key => $course) {

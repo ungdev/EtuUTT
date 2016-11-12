@@ -35,8 +35,8 @@ class EventDeletedHelper implements HelperInterface
      */
     public function render(Notification $notification)
     {
-        return $this->twig->render('EtuModuleEventsBundle:Notification:eventDeleted.html.twig', array(
+        return $this->twig->render('EtuModuleEventsBundle:Notification:eventDeleted.html.twig', [
             'notif' => $notification,
-        ));
+        ]);
     }
 }

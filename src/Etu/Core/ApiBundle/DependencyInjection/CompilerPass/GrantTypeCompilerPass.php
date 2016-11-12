@@ -21,7 +21,7 @@ class GrantTypeCompilerPass implements CompilerPassInterface
         $grantTypes = $container->findTaggedServiceIds('etu.oauth.grant_type');
 
         foreach ($grantTypes as $id => $attributes) {
-            $server->addMethodCall('addGrantType', array(new Reference($id)));
+            $server->addMethodCall('addGrantType', [new Reference($id)]);
         }
     }
 }

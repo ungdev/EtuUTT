@@ -43,7 +43,7 @@ class MainController extends Controller
             ->getQuery()
             ->getResult();
 
-        return array('categories' => $categories);
+        return ['categories' => $categories];
     }
 
     /**
@@ -140,7 +140,7 @@ class MainController extends Controller
             $em->flush();
         }
 
-        return array('category' => $category, 'subCategories' => $subCategories, 'parents' => $parents, 'threads' => $threads, 'noThreads' => $noThreads, 'isSubCategories' => $isSubCategories);
+        return ['category' => $category, 'subCategories' => $subCategories, 'parents' => $parents, 'threads' => $threads, 'noThreads' => $noThreads, 'isSubCategories' => $isSubCategories];
     }
 
     /**
@@ -215,14 +215,14 @@ class MainController extends Controller
         $message = new Message();
         $form = $this->createForm(MessageType::class, $message, ['action' => $this->generateUrl('forum_answer', ['id' => $id, 'slug' => $slug])]);
 
-        return array(
+        return [
             'category' => $category,
             'thread' => $thread,
             'parents' => $parents,
             'messages' => $messages,
             'cantAnswer' => $cantAnswer,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -297,10 +297,10 @@ class MainController extends Controller
 
             $this->getSubscriptionsManager()->subscribe($this->getUser(), 'message', $thread->getId());
 
-            return $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug())));
+            return $this->redirect($this->generateUrl('forum_thread', ['id' => $thread->getId(), 'slug' => $thread->getSlug()]));
         }
 
-        return array('category' => $category, 'parents' => $parents, 'form' => $form->createView());
+        return ['category' => $category, 'parents' => $parents, 'form' => $form->createView()];
     }
 
     /**
@@ -387,10 +387,10 @@ class MainController extends Controller
 
             $this->getSubscriptionsManager()->subscribe($this->getUser(), 'message', $thread->getId());
 
-            return $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug(), 'page' => $page)).'#'.$message->getId());
+            return $this->redirect($this->generateUrl('forum_thread', ['id' => $thread->getId(), 'slug' => $thread->getSlug(), 'page' => $page]).'#'.$message->getId());
         }
 
-        return array('thread' => $thread, 'parents' => $parents, 'form' => $form->createView());
+        return ['thread' => $thread, 'parents' => $parents, 'form' => $form->createView()];
     }
 
     /**
@@ -456,10 +456,10 @@ class MainController extends Controller
 
             $page = ceil($nbMessages / 10);
 
-            return $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug(), 'page' => $page)).'#'.$message->getId());
+            return $this->redirect($this->generateUrl('forum_thread', ['id' => $thread->getId(), 'slug' => $thread->getSlug(), 'page' => $page]).'#'.$message->getId());
         }
 
-        return array('messageContent' => $message, 'thread' => $thread, 'parents' => $parents, 'form' => $form->createView(), 'category' => $category, 'typeForm' => $typeForm);
+        return ['messageContent' => $message, 'thread' => $thread, 'parents' => $parents, 'form' => $form->createView(), 'category' => $category, 'typeForm' => $typeForm];
     }
 
     /**
@@ -495,7 +495,7 @@ class MainController extends Controller
             ->getQuery()
             ->getResult();
 
-        $return = array('thread' => $thread, 'parents' => $parents, 'action' => $action);
+        $return = ['thread' => $thread, 'parents' => $parents, 'action' => $action];
 
         switch ($action) {
             case 'remove':
@@ -579,9 +579,9 @@ class MainController extends Controller
                     $getLastMessage = $getLastMessage->getSingleResult();
                     $thread->setLastMessage($getLastMessage);
                     $em->persist($thread);
-                    $return = $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug())));
+                    $return = $this->redirect($this->generateUrl('forum_thread', ['id' => $thread->getId(), 'slug' => $thread->getSlug()]));
                 } catch (\Doctrine\Orm\NoResultException $e) {
-                    $return = $this->redirect($this->generateUrl('forum_category', array('id' => $category->getId(), 'slug' => $category->getSlug())));
+                    $return = $this->redirect($this->generateUrl('forum_category', ['id' => $category->getId(), 'slug' => $category->getSlug()]));
                 }
 
                 $em->persist($category);
@@ -603,10 +603,10 @@ class MainController extends Controller
                     $thread->setState(200);
                 }
 
-                $return = $this->redirect($this->generateUrl('forum_thread', array(
+                $return = $this->redirect($this->generateUrl('forum_thread', [
                     'id' => $thread->getId(),
                     'slug' => $thread->getSlug(),
-                )));
+                ]));
                 break;
             case 'move':
                 $thread = $em->getRepository('EtuModuleForumBundle:Thread')
@@ -621,10 +621,10 @@ class MainController extends Controller
                 $c = $em->getRepository('EtuModuleForumBundle:Category');
 
                 $form = $this->createFormBuilder($thread)
-                    ->add('category', EntityType::class, array(
+                    ->add('category', EntityType::class, [
                         'class' => 'EtuModuleForumBundle:Category',
                         'query_builder' => function (EntityRepository $er) {
-                            $categoriesList = array();
+                            $categoriesList = [];
                             $categories = $er->createQueryBuilder('c')
                             ->orderBy('c.left')
                             ->getQuery()
@@ -648,7 +648,7 @@ class MainController extends Controller
                             $categories->orderBy('c.left');
 
                             return $categories;
-                        }, )
+                        }, ]
                     )
                     ->getForm();
 
@@ -709,7 +709,7 @@ class MainController extends Controller
                     $em->persist($newCat);
 
                     $em->flush();
-                    $return = $this->redirect($this->generateUrl('forum_thread', array('id' => $thread->getId(), 'slug' => $thread->getSlug())));
+                    $return = $this->redirect($this->generateUrl('forum_thread', ['id' => $thread->getId(), 'slug' => $thread->getSlug()]));
                 }
         }
 

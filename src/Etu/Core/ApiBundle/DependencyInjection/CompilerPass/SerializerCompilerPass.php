@@ -22,11 +22,11 @@ class SerializerCompilerPass implements CompilerPassInterface
         $normalizers = $container->findTaggedServiceIds('etu.serializer_normalizer');
 
         foreach ($encoders as $id => $attributes) {
-            $collection->addMethodCall('addEncoder', array(new Reference($id)));
+            $collection->addMethodCall('addEncoder', [new Reference($id)]);
         }
 
         foreach ($normalizers as $id => $attributes) {
-            $collection->addMethodCall('addNormalizer', array(new Reference($id)));
+            $collection->addMethodCall('addNormalizer', [new Reference($id)]);
         }
     }
 }

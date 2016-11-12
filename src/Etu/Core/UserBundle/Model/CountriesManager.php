@@ -5,7 +5,7 @@ namespace Etu\Core\UserBundle\Model;
 class CountriesManager
 {
     protected static $initialized = false;
-    protected static $countries = array();
+    protected static $countries = [];
 
     public static function getCountriesList()
     {

@@ -32,7 +32,7 @@ class OrgaMenuRenderer
     public function render(OrgaMenuBuilder $builder)
     {
         $items = $builder->getItems();
-        $positions = array();
+        $positions = [];
 
         foreach ($items as $key => $item) {
             $positions[$key] = $item->getPosition();
@@ -40,12 +40,12 @@ class OrgaMenuRenderer
 
         asort($positions);
 
-        $sortedItems = array();
+        $sortedItems = [];
 
         foreach ($positions as $key => $position) {
             $sortedItems[] = $items[$key];
         }
 
-        return $this->twig->render('EtuCoreBundle:Menu:user_menu.html.twig', array('items' => $sortedItems));
+        return $this->twig->render('EtuCoreBundle:Menu:user_menu.html.twig', ['items' => $sortedItems]);
     }
 }

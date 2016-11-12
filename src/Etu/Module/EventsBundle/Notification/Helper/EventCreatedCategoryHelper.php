@@ -35,8 +35,8 @@ class EventCreatedCategoryHelper implements HelperInterface
      */
     public function render(Notification $notification)
     {
-        return $this->twig->render('EtuModuleEventsBundle:Notification:eventCreatedCategory.html.twig', array(
+        return $this->twig->render('EtuModuleEventsBundle:Notification:eventCreatedCategory.html.twig', [
             'notif' => $notification,
-        ));
+        ]);
     }
 }

@@ -41,7 +41,7 @@ class ViewController extends Controller
 
         /** @var UV $uv */
         $uv = $em->getRepository('EtuModuleUVBundle:UV')
-            ->findOneBy(array('slug' => $slug));
+            ->findOneBy(['slug' => $slug]);
         $rtn['uv'] = $uv;
 
         if (!$uv) {
@@ -49,9 +49,9 @@ class ViewController extends Controller
         }
 
         if (StringManipulationExtension::slugify($uv->getName()) != $name) {
-            return $this->redirect($this->generateUrl('uvs_view', array(
+            return $this->redirect($this->generateUrl('uvs_view', [
                 'slug' => $uv->getSlug(), 'name' => StringManipulationExtension::slugify($uv->getName()),
-            )), 301);
+            ]), 301);
         }
 
         // UV review post submit
@@ -83,15 +83,15 @@ class ViewController extends Controller
 
                 $this->getNotificationsSender()->send($notif);
 
-                $this->get('session')->getFlashBag()->set('message', array(
+                $this->get('session')->getFlashBag()->set('message', [
                     'type' => 'success',
                     'message' => 'uvs.main.comment.confirm',
-                ));
+                ]);
 
-                return $this->redirect($this->generateUrl('uvs_view', array(
+                return $this->redirect($this->generateUrl('uvs_view', [
                     'slug' => $slug,
                     'name' => $name,
-                )));
+                ]));
             }
             $rtn['commentForm'] = $commentForm->createView();
         }
@@ -110,7 +110,7 @@ class ViewController extends Controller
                 ->getQuery()
                 ->getResult();
 
-            $order = array();
+            $order = [];
 
             // Order by semester: A13, P12, A12, P11, ...
             foreach ($results as $review) {
@@ -124,7 +124,7 @@ class ViewController extends Controller
                 $results
             );
 
-            $reviews = array();
+            $reviews = [];
             $reviewsCount = 0;
 
             foreach ($results as $result) {
@@ -133,11 +133,11 @@ class ViewController extends Controller
                 }
 
                 if (!isset($reviews[$result->getSemester()]['validated'])) {
-                    $reviews[$result->getSemester()]['validated'] = array();
+                    $reviews[$result->getSemester()]['validated'] = [];
                 }
 
                 if (!isset($reviews[$result->getSemester()]['pending'])) {
-                    $reviews[$result->getSemester()]['pending'] = array();
+                    $reviews[$result->getSemester()]['pending'] = [];
                 }
 
                 $key = ($result->getValidated()) ? 'validated' : 'pending';
@@ -179,16 +179,16 @@ class ViewController extends Controller
 
         /** @var UV $uv */
         $uv = $em->getRepository('EtuModuleUVBundle:UV')
-            ->findOneBy(array('slug' => $slug));
+            ->findOneBy(['slug' => $slug]);
 
         if (!$uv) {
             throw $this->createNotFoundException(sprintf('UV for slug %s not found', $slug));
         }
 
         if (StringManipulationExtension::slugify($uv->getName()) != $name) {
-            return $this->redirect($this->generateUrl('uvs_view', array(
+            return $this->redirect($this->generateUrl('uvs_view', [
                 'slug' => $uv->getSlug(), 'name' => StringManipulationExtension::slugify($uv->getName()),
-            )), 301);
+            ]), 301);
         }
 
         /** @var $results Course[] */
@@ -203,15 +203,15 @@ class ViewController extends Controller
             ->getResult();
 
         /** @var $courses Course[] */
-        $courses = array();
+        $courses = [];
 
-        $days = array(
+        $days = [
             Course::DAY_MONDAY => 1, Course::DAY_TUESDAY => 2, Course::DAY_WENESDAY => 3,
             Course::DAY_THURSDAY => 4, Course::DAY_FRIDAY => 5, Course::DAY_SATHURDAY => 6,
-        );
+        ];
 
-        $orderDay = array();
-        $orderHour = array();
+        $orderDay = [];
+        $orderHour = [];
 
         foreach ($results as $course) {
             $courses[] = $course;
@@ -226,16 +226,16 @@ class ViewController extends Controller
         );
 
         /** @var $results Course[] */
-        $results = array();
+        $results = [];
 
         foreach ($courses as $course) {
             $results[$course->getDay()][] = $course;
         }
 
-        return array(
+        return [
             'uv' => $uv,
             'courses' => $results,
-        );
+        ];
     }
 
     /**
@@ -251,16 +251,16 @@ class ViewController extends Controller
 
         /** @var UV $uv */
         $uv = $em->getRepository('EtuModuleUVBundle:UV')
-            ->findOneBy(array('slug' => $slug));
+            ->findOneBy(['slug' => $slug]);
 
         if (!$uv) {
             throw $this->createNotFoundException(sprintf('UV for slug %s not found', $slug));
         }
 
         if (StringManipulationExtension::slugify($uv->getName()) != $name) {
-            return $this->redirect($this->generateUrl('uvs_view_send_review', array(
+            return $this->redirect($this->generateUrl('uvs_view_send_review', [
                 'slug' => $uv->getSlug(), 'name' => StringManipulationExtension::slugify($uv->getName()),
-            )), 301);
+            ]), 301);
         }
 
         $review = new Review();
@@ -269,10 +269,10 @@ class ViewController extends Controller
             ->setSemester(User::currentSemester());
 
         $form = $this->createFormBuilder($review)
-            ->add('type', ChoiceType::class, array('choices' => array_flip(Review::$types), 'required' => true, 'label' => 'uvs.main.sendReview.type'))
-            ->add('semester', ChoiceType::class, array('choices' => array_flip(Review::availableSemesters()), 'required' => true, 'label' => 'uvs.main.sendReview.semester'))
-            ->add('file', null, array('required' => true, 'label' => 'uvs.main.sendReview.file'))
-            ->add('submit', SubmitType::class, array('label' => 'uvs.main.sendReview.submit'))
+            ->add('type', ChoiceType::class, ['choices' => array_flip(Review::$types), 'required' => true, 'label' => 'uvs.main.sendReview.type'])
+            ->add('semester', ChoiceType::class, ['choices' => array_flip(Review::availableSemesters()), 'required' => true, 'label' => 'uvs.main.sendReview.semester'])
+            ->add('file', null, ['required' => true, 'label' => 'uvs.main.sendReview.file'])
+            ->add('submit', SubmitType::class, ['label' => 'uvs.main.sendReview.submit'])
             ->getForm();
 
         $form->handleRequest($request);
@@ -336,20 +336,20 @@ class ViewController extends Controller
             $em->persist($user);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'uvs.main.sendReview.confirm',
-            ));
+            ]);
 
-            return $this->redirect($this->generateUrl('uvs_view', array(
+            return $this->redirect($this->generateUrl('uvs_view', [
                 'slug' => $slug,
                 'name' => $name,
-            )));
+            ]));
         }
 
-        return array(
+        return [
             'uv' => $uv,
             'form' => $form->createView(),
-        );
+        ];
     }
 }

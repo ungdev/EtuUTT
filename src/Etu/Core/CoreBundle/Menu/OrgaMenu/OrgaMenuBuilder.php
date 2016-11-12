@@ -32,7 +32,7 @@ class OrgaMenuBuilder
      */
     public function __construct(Router $router)
     {
-        $this->items = array();
+        $this->items = [];
         $this->lastPosition = 0;
         $this->separatorCount = 0;
 

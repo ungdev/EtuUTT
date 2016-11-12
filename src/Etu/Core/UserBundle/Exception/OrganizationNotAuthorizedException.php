@@ -42,10 +42,10 @@ class OrganizationNotAuthorizedException extends AuthenticationException
      */
     public function serialize()
     {
-        return serialize(array(
+        return serialize([
             $this->login,
             parent::serialize(),
-        ));
+        ]);
     }
     /**
      * {@inheritdoc}
@@ -60,6 +60,6 @@ class OrganizationNotAuthorizedException extends AuthenticationException
      */
     public function getMessageData()
     {
-        return array('{{ login }}' => $this->login);
+        return ['{{ login }}' => $this->login];
     }
 }

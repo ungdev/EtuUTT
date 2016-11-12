@@ -66,6 +66,6 @@ class EtuUserBundle extends Module
      */
     public function getRequirements()
     {
-        return array();
+        return [];
     }
 }

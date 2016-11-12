@@ -39,9 +39,9 @@ class MainController extends Controller
         /** @var UV[] $my */
         $my = $query->getResult();
 
-        return array(
+        return [
             'my' => $my,
-        );
+        ];
     }
 
     /**
@@ -71,10 +71,10 @@ class MainController extends Controller
 
         $pagination = $this->get('knp_paginator')->paginate($query, $page, 20);
 
-        return array(
+        return [
             'pagination' => $pagination,
             'category' => $category,
-        );
+        ];
     }
 
     /**
@@ -108,10 +108,10 @@ class MainController extends Controller
 
         $pagination = $this->get('knp_paginator')->paginate($query, $page, 20);
 
-        return array(
+        return [
             'pagination' => $pagination,
             'term' => $term,
-        );
+        ];
     }
 
     /**
@@ -127,18 +127,18 @@ class MainController extends Controller
 
         /** @var UV $uv */
         $uv = $em->getRepository('EtuModuleUVBundle:UV')
-            ->findOneBy(array('code' => $code));
+            ->findOneBy(['code' => $code]);
 
         if (!$uv) {
-            return $this->redirect($this->generateUrl('uvs_search', array(
+            return $this->redirect($this->generateUrl('uvs_search', [
                 'q' => $code,
-            )), 301);
+            ]), 301);
         }
 
-        return $this->redirect($this->generateUrl('uvs_view', array(
+        return $this->redirect($this->generateUrl('uvs_view', [
             'slug' => $uv->getSlug(),
             'name' => StringManipulationExtension::slugify($uv->getName()),
-        )), 301);
+        ]), 301);
     }
 
     /**
@@ -154,17 +154,17 @@ class MainController extends Controller
 
         /** @var UV $uv */
         $uv = $em->getRepository('EtuModuleUVBundle:UV')
-            ->findOneBy(array('code' => $code));
+            ->findOneBy(['code' => $code]);
 
         if (!$uv) {
-            return $this->redirect($this->generateUrl('uvs_search', array(
+            return $this->redirect($this->generateUrl('uvs_search', [
                 'q' => $code,
-            )), 301);
+            ]), 301);
         }
 
-        return $this->redirect($this->generateUrl('uvs_view_courses', array(
+        return $this->redirect($this->generateUrl('uvs_view_courses', [
             'slug' => $uv->getSlug(),
             'name' => StringManipulationExtension::slugify($uv->getName()),
-        )), 301);
+        ]), 301);
     }
 }

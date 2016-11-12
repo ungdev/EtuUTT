@@ -38,8 +38,8 @@ class EditedHelper implements HelperInterface
      */
     public function render(Notification $notification)
     {
-        return $this->twig->render('EtuModuleCovoitBundle:Notification:edited.html.twig', array(
+        return $this->twig->render('EtuModuleCovoitBundle:Notification:edited.html.twig', [
             'notif' => $notification,
-        ));
+        ]);
     }
 }

@@ -60,10 +60,10 @@ class OrgaController extends Controller
         $form = $this->createFormBuilder($orga)
             ->add('name', TextType::class, ['label' => 'user.orga.index.name.label'])
             ->add('contactMail', EmailType::class, ['label' => 'user.orga.index.contactMail.label'])
-            ->add('contactPhone', null, array('required' => false, 'label' => 'user.orga.index.contactPhone.label'))
-            ->add('website', null, array('required' => false, 'label' => 'user.orga.index.website.label'))
+            ->add('contactPhone', null, ['required' => false, 'label' => 'user.orga.index.contactPhone.label'])
+            ->add('website', null, ['required' => false, 'label' => 'user.orga.index.website.label'])
             ->add('descriptionShort', TextareaType::class, ['label' => 'user.orga.index.descriptionShort.label'])
-            ->add('description', RedactorType::class, array('required' => false, 'label' => 'user.orga.index.description.label'))
+            ->add('description', RedactorType::class, ['required' => false, 'label' => 'user.orga.index.description.label'])
             ->add('submit', SubmitType::class, ['label' => 'user.orga.index.submit'])
             ->getForm();
 
@@ -72,10 +72,10 @@ class OrgaController extends Controller
             $em->persist($orga);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'user.orga.index.confirm',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('orga_admin'));
         }
@@ -86,11 +86,11 @@ class OrgaController extends Controller
             ->add('file', FileType::class)
             ->getForm();
 
-        return array(
+        return [
             'form' => $form->createView(),
             'avatarForm' => $avatarForm->createView(),
             'rand' => substr(md5(uniqid(true)), 0, 5),
-        );
+        ];
     }
 
     /**
@@ -119,17 +119,17 @@ class OrgaController extends Controller
             $em->persist($orga);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'user.orga.avatar.confirm',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('orga_admin'));
         }
 
-        return array(
+        return [
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -167,7 +167,7 @@ class OrgaController extends Controller
 
         $form = $this->createFormBuilder($member)
             ->add('user', UserAutocompleteType::class, ['label' => 'user.orga.members.add_member_user'])
-            ->add('role', ChoiceType::class, array('choices' => $roles))
+            ->add('role', ChoiceType::class, ['choices' => $roles])
             ->add('submit', SubmitType::class, ['label' => 'user.orga.members.add_member_btn'])
             ->getForm();
 
@@ -186,18 +186,18 @@ class OrgaController extends Controller
                 ->getOneOrNullResult();
 
             if (!$user) {
-                $this->get('session')->getFlashBag()->set('message', array(
+                $this->get('session')->getFlashBag()->set('message', [
                     'type' => 'error',
                     'message' => 'user.orga.members.error_user_not_fount',
-                ));
+                ]);
             } else {
                 $member->setUser($user);
 
                 // Keep the membership as unique
-                $membership = $em->getRepository('EtuUserBundle:Member')->findOneBy(array(
+                $membership = $em->getRepository('EtuUserBundle:Member')->findOneBy([
                     'user' => $member->getUser(),
                     'organization' => $member->getOrganization(),
-                ));
+                ]);
 
                 if (!$membership) {
                     if ($member->getRole() == Member::ROLE_PRESIDENT) {
@@ -212,27 +212,27 @@ class OrgaController extends Controller
                     $em->persist($member);
                     $em->flush();
 
-                    $this->get('session')->getFlashBag()->set('message', array(
+                    $this->get('session')->getFlashBag()->set('message', [
                         'type' => 'success',
                         'message' => 'user.orga.members.confirm_add',
-                    ));
+                    ]);
                 } else {
-                    $this->get('session')->getFlashBag()->set('message', array(
+                    $this->get('session')->getFlashBag()->set('message', [
                         'type' => 'error',
                         'message' => 'user.orga.members.error_exists',
-                    ));
+                    ]);
                 }
             }
 
             return $this->redirect($this->generateUrl(
-                'orga_admin_members', array('page' => $page)
+                'orga_admin_members', ['page' => $page]
             ));
         }
 
-        return array(
+        return [
             'pagination' => $members,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -266,25 +266,25 @@ class OrgaController extends Controller
         $availableRoles = Member::getAvailableRoles();
 
         foreach ($availableRoles as $key => $role) {
-            $availableRoles[$key] = array(
+            $availableRoles[$key] = [
                 'identifier' => $role,
                 'name' => 'user.orga.role.'.$role,
                 'selected' => $role == $member->getRole(),
-            );
+            ];
         }
 
         $availablePermissions = $this->getKernel()->getAvailableOrganizationsPermissions()->toArray();
 
-        $permissions1 = array();
-        $permissions2 = array();
+        $permissions1 = [];
+        $permissions2 = [];
 
         $i = floor(count($availablePermissions) / 2);
 
         foreach ($availablePermissions as $permission) {
             if ($member->hasPermission($permission->getName())) {
-                $permission = array('definition' => $permission, 'checked' => true);
+                $permission = ['definition' => $permission, 'checked' => true];
             } else {
-                $permission = array('definition' => $permission, 'checked' => false);
+                $permission = ['definition' => $permission, 'checked' => false];
             }
 
             if ($i == 0) {
@@ -307,7 +307,7 @@ class OrgaController extends Controller
             }
 
             if (is_array($request->get('permissions'))) {
-                $userPermissions = array();
+                $userPermissions = [];
 
                 foreach ($request->get('permissions') as $permission => $value) {
                     $userPermissions[] = $permission;
@@ -315,29 +315,29 @@ class OrgaController extends Controller
 
                 $member->setPermissions($userPermissions);
             } else {
-                $member->setPermissions(array());
+                $member->setPermissions([]);
             }
 
             $em->persist($member);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'user.orga.memberEdit.confirm',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl(
-                'orga_admin_members_edit', array('login' => $member->getUser()->getLogin())
+                'orga_admin_members_edit', ['login' => $member->getUser()->getLogin()]
             ));
         }
 
-        return array(
+        return [
             'member' => $member,
             'user' => $member->getUser(),
             'roles' => $availableRoles,
             'permissions1' => $permissions1,
             'permissions2' => $permissions2,
-        );
+        ];
     }
 
     /**
@@ -375,17 +375,17 @@ class OrgaController extends Controller
             $em->remove($member);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'user.orga.memberDelete.confirm',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('orga_admin_members'));
         }
 
-        return array(
+        return [
             'member' => $member,
             'user' => $member->getUser(),
-        );
+        ];
     }
 }

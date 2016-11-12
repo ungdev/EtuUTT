@@ -90,10 +90,10 @@ class PrivateController extends Controller
             // Dispatch the covoit for alerts
             $this->get('etu.covoit.notifs_dispatcher')->dispatch($proposal);
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'covoit.messages.created',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('covoiturage_view', [
                 'id' => $proposal->getId(),
@@ -195,10 +195,10 @@ class PrivateController extends Controller
             }
 
             // Flash message
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'covoit.messages.edited',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('covoiturage_view', [
                 'id' => $covoit->getId(),
@@ -234,10 +234,10 @@ class PrivateController extends Controller
             $em->persist($message);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'covoit.messages.message_edited',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('covoiturage_view', [
                 'id' => $message->getCovoit()->getId(),
@@ -302,10 +302,10 @@ class PrivateController extends Controller
             $this->getNotificationsSender()->send($notif);
 
             // Flash message
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'covoit.messages.canceled',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('covoiturage_my_index'));
         }
@@ -343,15 +343,15 @@ class PrivateController extends Controller
         }
 
         if (!$this->getUser()->getPhoneNumber()) {
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                     'type' => 'error',
                     'message' => 'covoit.messages.required_phone',
-                ));
+                ]);
         } elseif ($covoit->hasUser($this->getUser())) {
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                     'type' => 'error',
                     'message' => 'covoit.messages.already_subscribed',
-                ));
+                ]);
         } else {
             $subscription = new CovoitSubscription();
             $subscription->setCovoit($covoit);
@@ -380,10 +380,10 @@ class PrivateController extends Controller
             // Add current user as subscriber
             $this->getSubscriptionsManager()->subscribe($this->getUser(), 'covoit', $covoit->getId());
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                     'type' => 'success',
                     'message' => 'covoit.messages.subscribed',
-                ));
+                ]);
         }
 
         return $this->redirect($this->generateUrl('covoiturage_view', [
@@ -405,10 +405,10 @@ class PrivateController extends Controller
         $em->remove($subscription);
         $em->flush();
 
-        $this->get('session')->getFlashBag()->set('message', array(
+        $this->get('session')->getFlashBag()->set('message', [
             'type' => 'success',
             'message' => 'covoit.messages.unsubscribed',
-        ));
+        ]);
 
         return $this->redirect($this->generateUrl('covoiturage_view', [
             'id' => $subscription->getCovoit()->getId(),

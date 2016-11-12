@@ -44,11 +44,11 @@ class EveryUserProvider implements UserProviderInterface
         $em = $this->doctrine->getManager();
 
         // Try to load user from database
-        $user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $username));
+        $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $username]);
 
         // If user can't be loaded from database, we try for an organization
         if (!$user) {
-            $user = $em->getRepository('EtuUserBundle:Organization')->findOneBy(array('login' => $username));
+            $user = $em->getRepository('EtuUserBundle:Organization')->findOneBy(['login' => $username]);
         }
 
         // If user can't be loaded even as organization, we try using LDAP

@@ -42,7 +42,7 @@ class Synchronizer
     {
         // LDAP
         $ldapUsers = $this->ldap->getUsers();
-        $ldapLogins = array();
+        $ldapLogins = [];
 
         foreach ($ldapUsers as $key => $ldapUser) {
             $ldapLogins[] = $ldapUser->getLogin();
@@ -57,7 +57,7 @@ class Synchronizer
 
         /** @var User[] $dbUsers */
         $dbUsers = $em->getRepository('EtuUserBundle:User')->findAll();
-        $dbLogins = array();
+        $dbLogins = [];
 
         foreach ($dbUsers as $key => $dbUser) {
             $dbLogins[] = $dbUser->getLogin();
@@ -86,10 +86,10 @@ class Synchronizer
 
         foreach ($toUpdate as $login => $dbUser) {
             if (isset($ldapUsers[$login]) && isset($dbUsers[$login])) {
-                $toUpdate[$login] = array(
+                $toUpdate[$login] = [
                     'database' => $dbUsers[$login],
                     'ldap' => $ldapUsers[$login],
-                );
+                ];
             } else {
                 unset($toUpdate[$login]);
             }

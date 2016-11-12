@@ -14,9 +14,9 @@ class ArrayManipulationExtension extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
+        return [
             'shuffle' => new \Twig_SimpleFilter('shuffle', [$this, 'shuffle']),
-        );
+        ];
     }
 
     /**

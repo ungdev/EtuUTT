@@ -52,14 +52,14 @@ class MainController extends Controller
                 $found[] = $user->getLogin();
             }
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'error',
                 'message' => $this->get('translator')->transChoice(
                         'cumul.main.errors.invalid_logins',
                         count(array_diff($logins, $found)),
                         ['%items%' => implode('", "', array_diff($logins, $found))]
                     ),
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('cumul_index').'?q='.implode(':', $found));
         }
@@ -156,10 +156,10 @@ class MainController extends Controller
          * Compare schedules
          */
         /** @var $builders ScheduleBuilder[] */
-        $builders = array();
+        $builders = [];
 
         /** @var $users User[] */
-        $users = array();
+        $users = [];
 
         foreach ($courses as $course) {
             if (!isset($builders[$course->getUser()->getLogin()])) {
@@ -287,14 +287,14 @@ class MainController extends Controller
                 $errorType = 'cumul.main.errors.invalid_ids';
             }
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'error',
                 'message' => $this->get('translator')->transChoice(
                         $errorType,
                         count(array_diff($dataItems, $dbItems)),
                         ['%items%' => implode('", "', array_diff($dataItems, $dbItems))]
                     ),
-            ));
+            ]);
         }
 
         foreach ($users as $user) {

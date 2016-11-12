@@ -24,7 +24,7 @@ class SidebarBuilder
      */
     public function __construct(Router $router)
     {
-        $this->blocks = array();
+        $this->blocks = [];
         $this->lastPosition = 0;
 
         $this

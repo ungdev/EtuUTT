@@ -68,6 +68,6 @@ class EtuCoreBundle extends Module
      */
     public function getRequirements()
     {
-        return array();
+        return [];
     }
 }

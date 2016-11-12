@@ -76,15 +76,15 @@ class SendCommand extends ContainerAwareCommand
             $subject .= date('d').' ';
             $subject .= $translator->trans('daymail.memberships.daymail.months.'.strtolower(date('M'))).' ';
 
-            $content = $twig->render('EtuModuleDaymailBundle:Mail:daymail.html.twig', array(
+            $content = $twig->render('EtuModuleDaymailBundle:Mail:daymail.html.twig', [
                 'daymail' => $daymailParts[0],
                 'parts' => $daymailParts,
-            ));
+            ]);
 
             $to = 'daymail@utt.fr';
 
             $message = \Swift_Message::newInstance($subject)
-                ->setFrom(array('bde@utt.fr' => 'BDE UTT'))
+                ->setFrom(['bde@utt.fr' => 'BDE UTT'])
                 ->setTo($to)
                 ->setBody($content, 'text/html');
 
@@ -97,8 +97,8 @@ class SendCommand extends ContainerAwareCommand
                 $output->writeln("An error occured.\n");
 
                 $alert = \Swift_Message::newInstance('Erreur lors de l\'envoi du '.$subject)
-                    ->setFrom(array('bde@utt.fr' => 'BDE UTT'))
-                    ->setTo(array('ung@utt.fr'))
+                    ->setFrom(['bde@utt.fr' => 'BDE UTT'])
+                    ->setTo(['ung@utt.fr'])
                     ->setBody('Le '.$subject.' n\'a pas pu être envoyé, une erreur a interrompu son envoi.');
 
                 $alertResult = $mailer->send($alert);

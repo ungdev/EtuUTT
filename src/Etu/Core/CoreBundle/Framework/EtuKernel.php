@@ -17,7 +17,7 @@ abstract class EtuKernel extends Kernel
     /**
      * @var \Etu\Core\CoreBundle\Framework\Definition\Module[]
      */
-    protected $modules = array();
+    protected $modules = [];
 
     /**
      * @var PermissionsCollection
@@ -29,7 +29,7 @@ abstract class EtuKernel extends Kernel
      */
     public function checkModulesIntegrity()
     {
-        $idenfitiers = array();
+        $idenfitiers = [];
 
         foreach ($this->getModulesDefinitions() as $module) {
             $idenfitiers[] = $module->getIdentifier();
@@ -69,11 +69,11 @@ abstract class EtuKernel extends Kernel
      */
     public function getAvailableOrganizationsPermissions()
     {
-        $permissions = array(
+        $permissions = [
             new OrgaPermission('edit_desc', 'Peut modifier la description de l\'association'),
             new OrgaPermission('notify', 'Peut envoyer des notifications au nom de l\'association'),
             new OrgaPermission('deleguate', 'Peut distribuer les droits qu\'il possède aux membres de l\'association'),
-        );
+        ];
 
         /** @var Module $module */
         foreach ($this->getModulesDefinitions() as $module) {

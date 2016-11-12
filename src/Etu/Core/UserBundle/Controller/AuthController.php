@@ -49,7 +49,7 @@ class AuthController extends Controller
         }
 
         // If we can't auto-connect, we ask for the method
-        return array();
+        return [];
     }
 
     /**
@@ -79,18 +79,18 @@ class AuthController extends Controller
             }
         } catch (OrganizationNotAuthorizedException $e) {
             // Organization found on the LDAP, but not authorized by an admin
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'error',
                 'message' => 'user.auth.connect.orga_exists_ldap',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('homepage'));
         } catch (AuthenticationException $e) {
             // If user is authorized by cas, we shouldn't have an exception
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'error',
                 'message' => 'user.auth.connect.unknownError',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('homepage'));
         }
@@ -125,18 +125,18 @@ class AuthController extends Controller
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         if ($error) {
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'error',
                 'message' => 'user.auth.connect.error',
-            ));
+            ]);
         }
 
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return array(
+        return [
             'last_username' => $lastUsername,
-        );
+        ];
     }
 
     /**
@@ -149,7 +149,7 @@ class AuthController extends Controller
         // Logout from CAS
         $this->initializeCAS();
         if (\phpCAS::isAuthenticated()) {
-            \phpCAS::logoutWithRedirectService($this->generateUrl('user_logout', array(), UrlGeneratorInterface::ABSOLUTE_URL));
+            \phpCAS::logoutWithRedirectService($this->generateUrl('user_logout', [], UrlGeneratorInterface::ABSOLUTE_URL));
         }
 
         // Logout from EtuUTT
@@ -158,10 +158,10 @@ class AuthController extends Controller
         }
 
         // Yeah ! We are logged out !
-        $this->get('session')->getFlashBag()->set('message', array(
+        $this->get('session')->getFlashBag()->set('message', [
             'type' => 'success',
             'message' => 'user.auth.connect.loggedOut',
-        ));
+        ]);
 
         return $this->redirect($this->generateUrl('homepage'));
     }
@@ -187,10 +187,10 @@ class AuthController extends Controller
      */
     public function forbidden()
     {
-        $this->get('session')->getFlashBag()->set('message', array(
+        $this->get('session')->getFlashBag()->set('message', [
             'type' => 'error',
             'message' => 'user.denied',
-        ));
+        ]);
 
         return $this->redirect($this->generateUrl('homepage'));
     }

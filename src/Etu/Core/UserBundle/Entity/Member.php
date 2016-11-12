@@ -98,7 +98,7 @@ class Member
     public function __construct()
     {
         $this->role = self::ROLE_MEMBER;
-        $this->permissions = array();
+        $this->permissions = [];
     }
 
     /**
@@ -106,10 +106,10 @@ class Member
      */
     public function isFromBureau()
     {
-        return in_array($this->role, array(
+        return in_array($this->role, [
             self::ROLE_PRESIDENT, self::ROLE_SECRETARY, self::ROLE_TREASURER,
             self::ROLE_V_PRESIDENT, self::ROLE_V_SECRETARY, self::ROLE_V_TREASURER,
-        ));
+        ]);
     }
 
     /**
@@ -117,7 +117,7 @@ class Member
      */
     public static function getAvailableRoles()
     {
-        return array(
+        return [
             self::ROLE_MEMBER => self::ROLE_MEMBER,
             self::ROLE_PRESIDENT => self::ROLE_PRESIDENT,
             self::ROLE_SECRETARY => self::ROLE_SECRETARY,
@@ -125,7 +125,7 @@ class Member
             self::ROLE_V_PRESIDENT => self::ROLE_V_PRESIDENT,
             self::ROLE_V_SECRETARY => self::ROLE_V_SECRETARY,
             self::ROLE_V_TREASURER => self::ROLE_V_TREASURER,
-        );
+        ];
     }
 
     /**

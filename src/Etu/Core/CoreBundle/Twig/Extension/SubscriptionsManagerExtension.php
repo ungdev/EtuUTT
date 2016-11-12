@@ -37,12 +37,12 @@ class SubscriptionsManagerExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             // new \Twig_SimpleFunction('notifs_subscribe', array($this, 'subscribe')),
             // new \Twig_SimpleFunction('notifs_unsubscribe', array($this, 'unsubscribe')),
-            new \Twig_SimpleFunction('is_subscriber', array($this, 'isSubscriber')),
-            new \Twig_SimpleFunction('render_subscribe_button', array($this, 'renderButton'), array('is_safe' => array('html'))),
-        );
+            new \Twig_SimpleFunction('is_subscriber', [$this, 'isSubscriber']),
+            new \Twig_SimpleFunction('render_subscribe_button', [$this, 'renderButton'], ['is_safe' => ['html']]),
+        ];
     }
 
     /**
@@ -90,9 +90,9 @@ class SubscriptionsManagerExtension extends \Twig_Extension
      */
     public function renderButton($entityType, $entityId)
     {
-        return $this->twig->render('EtuCoreBundle:Subscriptions:button.html.twig', array(
+        return $this->twig->render('EtuCoreBundle:Subscriptions:button.html.twig', [
             'entityType' => $entityType,
             'entityId' => $entityId,
-        ));
+        ]);
     }
 }

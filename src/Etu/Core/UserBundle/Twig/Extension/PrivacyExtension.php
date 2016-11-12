@@ -14,10 +14,10 @@ class PrivacyExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('is_private', array($this, 'isPrivate')),
-            new \Twig_SimpleFunction('is_public', array($this, 'isPublic')),
-        );
+        return [
+            new \Twig_SimpleFunction('is_private', [$this, 'isPrivate']),
+            new \Twig_SimpleFunction('is_public', [$this, 'isPublic']),
+        ];
     }
 
     /**

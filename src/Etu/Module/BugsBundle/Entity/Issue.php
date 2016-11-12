@@ -352,14 +352,14 @@ class Issue
      */
     public function setCriticality($criticality)
     {
-        if (in_array($criticality, array(
+        if (in_array($criticality, [
             self::CRITICALITY_CRITICAL,
             self::CRITICALITY_MAJOR,
             self::CRITICALITY_MINOR,
             self::CRITICALITY_SECURITY,
             self::CRITICALITY_VISUAL,
             self::CRITICALITY_TYPO,
-        ))) {
+        ])) {
             $this->criticality = $criticality;
         }
 

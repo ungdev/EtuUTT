@@ -29,10 +29,10 @@ class AjaxController extends Controller
     public function subscribeAction($entityType, $entityId)
     {
         if (!$this->isGranted('ROLE_CORE_SUBSCRIBE')) {
-            return new Response(json_encode(array(
+            return new Response(json_encode([
                 'status' => 403,
                 'message' => 'You are not allowed to access this URL as anonymous or organization.',
-            )), 403);
+            ]), 403);
         }
 
         $user = $this->getUser();
@@ -76,10 +76,10 @@ class AjaxController extends Controller
         $em->persist($user);
         $em->flush();
 
-        return new Response(json_encode(array(
+        return new Response(json_encode([
             'status' => 200,
             'message' => $this->get('translator')->trans('core.subscriptions.api.confirm_follow'),
-        )));
+        ]));
     }
 
     /**
@@ -94,10 +94,10 @@ class AjaxController extends Controller
     public function unsubscribeAction($entityType, $entityId)
     {
         if (!$this->isGranted('ROLE_CORE_SUBSCRIBE')) {
-            return new Response(json_encode(array(
+            return new Response(json_encode([
                 'status' => 403,
                 'message' => 'You are not allowed to access this URL as anonymous or organization.',
-            )), 403);
+            ]), 403);
         }
 
         $user = $this->getUser();
@@ -141,10 +141,10 @@ class AjaxController extends Controller
         $em->persist($user);
         $em->flush();
 
-        return new Response(json_encode(array(
+        return new Response(json_encode([
             'status' => 200,
             'message' => $this->get('translator')->trans('core.subscriptions.api.confirm_unfollow'),
-        )));
+        ]));
     }
 
     /**
@@ -157,18 +157,18 @@ class AjaxController extends Controller
     public function newAction()
     {
         if (!$this->isGranted('ROLE_CORE_SUBSCRIBE')) {
-            return new Response(json_encode(array(
+            return new Response(json_encode([
                 'status' => 403,
                 'message' => 'You are not allowed to access this URL as anonymous or organization.',
-            )), 403);
+            ]), 403);
         }
 
-        return new Response(json_encode(array(
+        return new Response(json_encode([
             'status' => 200,
-            'result' => array(
+            'result' => [
                 'count' => $this->get('etu.twig.global_accessor')->get('notifs')->get('new_count'),
                 'notifs' => $this->get('etu.twig.global_accessor')->get('notifs')->get('new'),
-            ),
-        )));
+            ],
+        ]));
     }
 }

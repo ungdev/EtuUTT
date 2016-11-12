@@ -35,8 +35,8 @@ class ThreadCreatedHelper implements HelperInterface
      */
     public function render(Notification $notification)
     {
-        return $this->twig->render('EtuModuleForumBundle:Notification:threadCreated.html.twig', array(
+        return $this->twig->render('EtuModuleForumBundle:Notification:threadCreated.html.twig', [
             'notif' => $notification,
-        ));
+        ]);
     }
 }

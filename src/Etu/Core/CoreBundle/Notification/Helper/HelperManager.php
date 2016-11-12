@@ -10,7 +10,7 @@ class HelperManager
     /**
      * @var array
      */
-    protected $helpers = array();
+    protected $helpers = [];
 
     /**
      * @param array $helpers

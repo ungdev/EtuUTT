@@ -61,10 +61,10 @@ class Controller extends BaseController
      */
     public function createAccessDeniedResponse()
     {
-        $this->get('session')->getFlashBag()->set('message', array(
+        $this->get('session')->getFlashBag()->set('message', [
             'type' => 'error',
             'message' => 'user.denied',
-        ));
+        ]);
 
         return $this->redirect($this->generateUrl('user_connect'));
     }

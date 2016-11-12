@@ -35,8 +35,8 @@ class EventEditedHelper implements HelperInterface
      */
     public function render(Notification $notification)
     {
-        return $this->twig->render('EtuModuleEventsBundle:Notification:eventEdited.html.twig', array(
+        return $this->twig->render('EtuModuleEventsBundle:Notification:eventEdited.html.twig', [
             'notif' => $notification,
-        ));
+        ]);
     }
 }

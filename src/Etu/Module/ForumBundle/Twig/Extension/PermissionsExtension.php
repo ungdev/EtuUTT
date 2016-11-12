@@ -16,16 +16,16 @@ class PermissionsExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('forum_can_read', array($this, 'canRead')),
-            new \Twig_SimpleFunction('forum_can_post', array($this, 'canPost')),
-            new \Twig_SimpleFunction('forum_can_answer', array($this, 'canAnswer')),
-            new \Twig_SimpleFunction('forum_can_edit', array($this, 'canEdit')),
-            new \Twig_SimpleFunction('forum_can_sticky', array($this, 'canSticky')),
-            new \Twig_SimpleFunction('forum_can_lock', array($this, 'canLock')),
-            new \Twig_SimpleFunction('forum_can_move', array($this, 'canMove')),
-            new \Twig_SimpleFunction('forum_can_delete', array($this, 'canDelete')),
-        );
+        return [
+            new \Twig_SimpleFunction('forum_can_read', [$this, 'canRead']),
+            new \Twig_SimpleFunction('forum_can_post', [$this, 'canPost']),
+            new \Twig_SimpleFunction('forum_can_answer', [$this, 'canAnswer']),
+            new \Twig_SimpleFunction('forum_can_edit', [$this, 'canEdit']),
+            new \Twig_SimpleFunction('forum_can_sticky', [$this, 'canSticky']),
+            new \Twig_SimpleFunction('forum_can_lock', [$this, 'canLock']),
+            new \Twig_SimpleFunction('forum_can_move', [$this, 'canMove']),
+            new \Twig_SimpleFunction('forum_can_delete', [$this, 'canDelete']),
+        ];
     }
 
     /**

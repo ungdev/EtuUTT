@@ -17,15 +17,15 @@ class ThreadEditType extends AbstractType
             ->add(
                 'weight',
                 ChoiceType::class,
-                array(
+                [
                     'choices' => ['Non' => 100, 'Oui' => 200],
                     'multiple' => false,
                     'expanded' => true,
-                    'preferred_choices' => array(100),
+                    'preferred_choices' => [100],
                     'placeholder' => null,
                     'empty_data' => -1,
                     'label' => 'forum.main.post.sticky',
-                )
+                ]
             );
     }
 

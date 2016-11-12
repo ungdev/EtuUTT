@@ -210,7 +210,7 @@ class Message
      */
     public function setState($state)
     {
-        if (!in_array($state, array(self::STATE_HIDDEN, self::STATE_VISIBLE))) {
+        if (!in_array($state, [self::STATE_HIDDEN, self::STATE_VISIBLE])) {
             throw new \InvalidArgumentException(
                 sprintf('Invalid thread state (%s given, Message constante expected).', $state)
             );

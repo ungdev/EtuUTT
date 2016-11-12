@@ -27,10 +27,10 @@ class UrlBuilderExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('argentique_photo', array($this, 'generatePhotoUrl')),
-            new \Twig_SimpleFunction('argentique_collection', array($this, 'generateCollectionUrl')),
-        );
+        return [
+            new \Twig_SimpleFunction('argentique_photo', [$this, 'generatePhotoUrl']),
+            new \Twig_SimpleFunction('argentique_collection', [$this, 'generateCollectionUrl']),
+        ];
     }
 
     /**

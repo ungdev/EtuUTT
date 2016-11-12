@@ -76,9 +76,9 @@ class EtuModuleWikiBundle extends Module
      */
     public function getAvailablePermissions()
     {
-        return array(
+        return [
             new OrgaPermission('wiki', 'Peut gérer le wiki de l\'association'),
-        );
+        ];
     }
     /**
      * Define the modules requirements (the other required modules) using their identifiers.
@@ -87,8 +87,8 @@ class EtuModuleWikiBundle extends Module
      */
     public function getRequirements()
     {
-        return array(
+        return [
             // Insert your requirements here
-        );
+        ];
     }
 }

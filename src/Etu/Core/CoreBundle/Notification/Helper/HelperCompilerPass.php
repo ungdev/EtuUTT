@@ -19,7 +19,7 @@ class HelperCompilerPass implements CompilerPassInterface
         $taggedServices = $container->findTaggedServiceIds('etu.notifs_helper');
 
         foreach ($taggedServices as $id => $attributes) {
-            $definition->addMethodCall('addHelper', array(new Reference($id)));
+            $definition->addMethodCall('addHelper', [new Reference($id)]);
         }
     }
 }

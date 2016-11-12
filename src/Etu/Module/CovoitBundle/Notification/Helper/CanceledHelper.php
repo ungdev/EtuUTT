@@ -38,8 +38,8 @@ class CanceledHelper implements HelperInterface
      */
     public function render(Notification $notification)
     {
-        return $this->twig->render('EtuModuleCovoitBundle:Notification:canceled.html.twig', array(
+        return $this->twig->render('EtuModuleCovoitBundle:Notification:canceled.html.twig', [
             'notif' => $notification,
-        ));
+        ]);
     }
 }

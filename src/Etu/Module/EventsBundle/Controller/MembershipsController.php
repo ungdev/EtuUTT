@@ -75,7 +75,7 @@ class MembershipsController extends Controller
         $event = new Event(null, new \DateTime(), new \DateTime());
         $event->setOrga($orga);
 
-        $categories = array();
+        $categories = [];
 
         foreach (Event::$categories as $category) {
             $categories[$category] = 'events.categories.'.$category;
@@ -85,14 +85,14 @@ class MembershipsController extends Controller
         $month = ($month == 'current') ? (int) date('m') : (int) $month;
         $year = ($year == 'current') ? (int) date('Y') : (int) $year;
 
-        return array(
+        return [
             'memberships' => $memberships,
             'membership' => $membership,
             'orga' => $orga,
             'day' => $day,
             'month' => $month - 1,
             'year' => $year,
-        );
+        ];
     }
 
     /**
@@ -145,17 +145,17 @@ class MembershipsController extends Controller
         $end = $request->query->get('end');
 
         if (!$start) {
-            return new Response(json_encode(array(
+            return new Response(json_encode([
                 'status' => 'error',
                 'message' => '"start" parameter is required',
-            )));
+            ]));
         }
 
         if (!$end) {
-            return new Response(json_encode(array(
+            return new Response(json_encode([
                 'status' => 'error',
                 'message' => '"end" parameter is required',
-            )));
+            ]));
         }
         $start = \DateTime::createFromFormat('Y-m-d', $start);
         $end = \DateTime::createFromFormat('Y-m-d', $end);
@@ -164,10 +164,10 @@ class MembershipsController extends Controller
         $calendr = $this->get('calendr');
 
         /** @var \CalendR\Event\Collection\Basic $events */
-        $events = $calendr->getEvents(new Range($start, $end), array('connected' => true));
+        $events = $calendr->getEvents(new Range($start, $end), ['connected' => true]);
 
         /** @var array $json */
-        $json = array();
+        $json = [];
 
         /** @var Event $event */
         foreach ($events->all() as $event) {
@@ -175,18 +175,18 @@ class MembershipsController extends Controller
                 continue;
             }
 
-            $json[] = array(
+            $json[] = [
                 'id' => $event->getId(),
                 'title' => $event->getTitle(),
                 'start' => $event->getBegin()->format('Y-m-d H:i:00'),
                 'end' => $event->getEnd()->format('Y-m-d H:i:00'),
                 'allDay' => $event->getIsAllDay(),
-                'url' => $this->generateUrl('memberships_orga_events_edit', array(
+                'url' => $this->generateUrl('memberships_orga_events_edit', [
                     'login' => $orga->getLogin(),
                     'id' => $event->getId(),
                     'slug' => StringManipulationExtension::slugify($event->getTitle()),
-                )),
-            );
+                ]),
+            ];
         }
 
         return new Response(json_encode($json));
@@ -262,7 +262,7 @@ class MembershipsController extends Controller
         $event->setOrga($orga)
             ->setIsAllDay($allDay);
 
-        $categories = array();
+        $categories = [];
 
         foreach (Event::$categories as $category) {
             $categories['events.categories.'.$category] = $category;
@@ -272,19 +272,19 @@ class MembershipsController extends Controller
             ->add('title', TextType::class, ['label' => 'events.memberships.edit.title'])
             ->add('begin', DatetimePickerType::class, ['label' => 'events.memberships.edit.begin'])
             ->add('end', DatetimePickerType::class, ['label' => 'events.memberships.edit.end'])
-            ->add('category', ChoiceType::class, array('choices' => $categories, 'label' => 'events.memberships.edit.category'))
-            ->add('file', FileType::class, array('required' => false, 'label' => 'events.memberships.create.image.label', 'attr' => ['help' => 'events.memberships.create.image.explain']))
+            ->add('category', ChoiceType::class, ['choices' => $categories, 'label' => 'events.memberships.edit.category'])
+            ->add('file', FileType::class, ['required' => false, 'label' => 'events.memberships.create.image.label', 'attr' => ['help' => 'events.memberships.create.image.explain']])
             ->add('location', TextareaType::class, ['label' => 'events.memberships.edit.location'])
-            ->add('privacy', ChoiceType::class, array(
-                'choices' => array(
+            ->add('privacy', ChoiceType::class, [
+                'choices' => [
                     'events.memberships.create.privacy.public' => Event::PRIVACY_PUBLIC,
                     'events.memberships.create.privacy.private' => Event::PRIVACY_PRIVATE,
                     'events.memberships.create.privacy.orgas' => Event::PRIVACY_ORGAS,
                     'events.memberships.create.privacy.members' => Event::PRIVACY_MEMBERS,
-                ),
+                ],
                 'required' => true,
                 'label' => 'events.memberships.create.privacy.label',
-            ))
+            ])
             ->add('description', RedactorType::class, ['label' => 'events.memberships.edit.description'])
             ->add('submit', SubmitType::class, ['label' => 'events.memberships.create.submit'])
             ->getForm();
@@ -297,15 +297,15 @@ class MembershipsController extends Controller
             $event->upload();
 
             if (!in_array($event->getPrivacy(), [Event::PRIVACY_ORGAS, Event::PRIVACY_MEMBERS])) {
-                $entity = array( // @TODO WTF? Y U AN ARRAY?
+                $entity = [ // @TODO WTF? Y U AN ARRAY?
                     'id' => $event->getId(),
                     'title' => $event->getTitle(),
                     'category' => array_flip($categories)[$event->getCategory()],
-                    'orga' => array(
+                    'orga' => [
                         'id' => $event->getOrga()->getId(),
                         'name' => $event->getOrga()->getName(),
-                    ),
-                );
+                    ],
+                ];
 
                 // Send notifications to subscribers of all eventts
                 $notif = new Notification();
@@ -339,26 +339,26 @@ class MembershipsController extends Controller
             }
 
             // Confirmation
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'events.memberships.create.confirm',
-            ));
+            ]);
 
-            return $this->redirect($this->generateUrl('memberships_orga_events', array(
+            return $this->redirect($this->generateUrl('memberships_orga_events', [
                 'login' => $login,
                 'day' => $event->getBegin()->format('d'),
                 'month' => $event->getBegin()->format('m'),
                 'year' => $event->getBegin()->format('Y'),
-            )));
+            ]));
         }
 
-        return array(
+        return [
             'memberships' => $memberships,
             'membership' => $membership,
             'orga' => $orga,
             'form' => $form->createView(),
             'event' => $event,
-        );
+        ];
     }
 
     /**
@@ -422,16 +422,16 @@ class MembershipsController extends Controller
         }
 
         if (StringManipulationExtension::slugify($event->getTitle()) != $slug) {
-            return $this->redirect($this->generateUrl('events_view', array(
+            return $this->redirect($this->generateUrl('events_view', [
                 'id' => $id, 'slug' => StringManipulationExtension::slugify($event->getTitle()),
-            )), 301);
+            ]), 301);
         }
 
         if ($event->getOrga()->getId() != $orga->getId()) {
             return $this->createAccessDeniedResponse();
         }
 
-        $categories = array();
+        $categories = [];
 
         foreach (Event::$categories as $category) {
             $categories['events.categories.'.$category] = $category;
@@ -441,19 +441,19 @@ class MembershipsController extends Controller
             ->add('title', TextType::class, ['label' => 'events.memberships.edit.title'])
             ->add('begin', DatetimePickerType::class, ['label' => 'events.memberships.edit.begin'])
             ->add('end', DatetimePickerType::class, ['label' => 'events.memberships.edit.end'])
-            ->add('category', ChoiceType::class, array('choices' => $categories, 'label' => 'events.memberships.edit.category'))
-            ->add('file', FileType::class, array('required' => false, 'label' => 'events.memberships.create.image.label', 'attr' => ['help' => 'events.memberships.create.image.explain']))
+            ->add('category', ChoiceType::class, ['choices' => $categories, 'label' => 'events.memberships.edit.category'])
+            ->add('file', FileType::class, ['required' => false, 'label' => 'events.memberships.create.image.label', 'attr' => ['help' => 'events.memberships.create.image.explain']])
             ->add('location', TextareaType::class, ['label' => 'events.memberships.edit.location'])
-            ->add('privacy', ChoiceType::class, array(
-                'choices' => array(
+            ->add('privacy', ChoiceType::class, [
+                'choices' => [
                     'events.memberships.create.privacy.public' => Event::PRIVACY_PUBLIC,
                     'events.memberships.create.privacy.private' => Event::PRIVACY_PRIVATE,
                     'events.memberships.create.privacy.orgas' => Event::PRIVACY_ORGAS,
                     'events.memberships.create.privacy.members' => Event::PRIVACY_MEMBERS,
-                ),
+                ],
                 'required' => true,
                 'label' => 'events.memberships.create.privacy.label',
-            ))
+            ])
             ->add('description', RedactorType::class, ['label' => 'events.memberships.edit.description'])
             ->add('submit', SubmitType::class, ['label' => 'events.memberships.edit.submit'])
             ->getForm();
@@ -466,26 +466,26 @@ class MembershipsController extends Controller
             $event->upload();
 
             // Confirmation
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'events.memberships.edit.confirm',
-            ));
+            ]);
 
-            return $this->redirect($this->generateUrl('memberships_orga_events_edit', array(
+            return $this->redirect($this->generateUrl('memberships_orga_events_edit', [
                 'login' => $login,
                 'id' => $id,
                 'slug' => $slug,
-            )));
+            ]));
         }
 
-        return array(
+        return [
             'memberships' => $memberships,
             'membership' => $membership,
             'orga' => $orga,
             'event' => $event,
             'form' => $form->createView(),
             'rand' => substr(md5(uniqid(true)), 0, 5),
-        );
+        ];
     }
 
     /**
@@ -568,9 +568,9 @@ class MembershipsController extends Controller
         $em->persist($event);
         $em->flush();
 
-        return new Response(json_encode(array(
+        return new Response(json_encode([
             'status' => 'success',
-        )));
+        ]));
     }
 
     /**
@@ -635,9 +635,9 @@ class MembershipsController extends Controller
         }
 
         if (StringManipulationExtension::slugify($event->getTitle()) != $slug) {
-            return $this->redirect($this->generateUrl('events_view', array(
+            return $this->redirect($this->generateUrl('events_view', [
                 'id' => $id, 'slug' => StringManipulationExtension::slugify($event->getTitle()),
-            )), 301);
+            ]), 301);
         }
 
         if ($event->getOrga()->getId() != $orga->getId()) {
@@ -645,17 +645,17 @@ class MembershipsController extends Controller
         }
 
         if ($confirm) {
-            $entity = array(
+            $entity = [
                 'id' => $event->getId(),
                 'title' => $event->getTitle(),
                 'location' => $event->getLocation(),
                 'begin' => $event->getBegin(),
                 'end' => $event->getEnd(),
-                'orga' => array(
+                'orga' => [
                     'id' => $event->getOrga()->getId(),
                     'name' => $event->getOrga()->getName(),
-                ),
-            );
+                ],
+            ];
 
             // Send notifications to subscribers
             $notif = new Notification();
@@ -682,21 +682,21 @@ class MembershipsController extends Controller
             $em->flush();
 
             // Confirmation
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'events.memberships.delete.confirm',
-            ));
+            ]);
 
-            return $this->redirect($this->generateUrl('memberships_orga_events', array(
+            return $this->redirect($this->generateUrl('memberships_orga_events', [
                 'login' => $login,
-            )));
+            ]));
         }
 
-        return array(
+        return [
             'memberships' => $memberships,
             'membership' => $membership,
             'orga' => $orga,
             'event' => $event,
-        );
+        ];
     }
 }

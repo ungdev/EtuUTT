@@ -38,8 +38,8 @@ class BugClosedHelper implements HelperInterface
      */
     public function render(Notification $notification)
     {
-        return $this->twig->render('EtuModuleBugsBundle:Notification:closed.html.twig', array(
+        return $this->twig->render('EtuModuleBugsBundle:Notification:closed.html.twig', [
             'notif' => $notification,
-        ));
+        ]);
     }
 }

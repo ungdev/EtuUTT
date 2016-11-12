@@ -5,7 +5,6 @@ namespace Etu\Module\ForumBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Etu\Core\UserBundle\Entity\User;
-use Etu\Module\ForumBundle\Entity\Message;
 
 /**
  * @ORM\Table(name="etu_forum_threads")
@@ -275,7 +274,7 @@ class Thread
      */
     public function setState($state)
     {
-        if (!in_array($state, array(self::STATE_HIDDEN, self::STATE_CLOSED, self::STATE_OPEN))) {
+        if (!in_array($state, [self::STATE_HIDDEN, self::STATE_CLOSED, self::STATE_OPEN])) {
             throw new \InvalidArgumentException(
                 sprintf('Invalid thread state (%s given, Thread constante expected).', $state)
             );
@@ -306,7 +305,7 @@ class Thread
         if ($weight == null) {
             $weight = self::WEIGHT_BASIC;
         }
-        if (!in_array($weight, array(self::WEIGHT_BASIC, self::WEIGHT_STICKY))) {
+        if (!in_array($weight, [self::WEIGHT_BASIC, self::WEIGHT_STICKY])) {
             throw new \InvalidArgumentException(
                 sprintf('Invalid thread weight (%s given, Thread constante expected).', $weight)
             );

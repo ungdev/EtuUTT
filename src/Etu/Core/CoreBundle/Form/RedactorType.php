@@ -10,9 +10,9 @@ class RedactorType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'attr' => array('class' => 'redactor'),
-        ));
+        $resolver->setDefaults([
+            'attr' => ['class' => 'redactor'],
+        ]);
     }
 
     public function getParent()

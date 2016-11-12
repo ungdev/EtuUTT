@@ -10,11 +10,11 @@ class BirthdayPickerType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'widget' => 'single_text',
             'format' => 'dd/MM/yyyy',
-            'attr' => array('class' => 'birthday-picker'),
-        ));
+            'attr' => ['class' => 'birthday-picker'],
+        ]);
     }
 
     public function getParent()

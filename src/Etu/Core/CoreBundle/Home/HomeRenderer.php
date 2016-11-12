@@ -60,13 +60,13 @@ class HomeRenderer
     public function createTrombiBlock()
     {
         $trombiFrom = $this->formFactory->createBuilder()
-            ->add('fullName', TextType::class, array('required' => false))
-            ->add('studentId', HiddenType::class, array('required' => false))
-            ->add('phoneNumber', HiddenType::class, array('required' => false))
-            ->add('uvs', HiddenType::class, array('required' => false))
-            ->add('branch', HiddenType::class, array('required' => false))
-            ->add('niveau', HiddenType::class, array('required' => false))
-            ->add('personnalMail', HiddenType::class, array('required' => false))
+            ->add('fullName', TextType::class, ['required' => false])
+            ->add('studentId', HiddenType::class, ['required' => false])
+            ->add('phoneNumber', HiddenType::class, ['required' => false])
+            ->add('uvs', HiddenType::class, ['required' => false])
+            ->add('branch', HiddenType::class, ['required' => false])
+            ->add('niveau', HiddenType::class, ['required' => false])
+            ->add('personnalMail', HiddenType::class, ['required' => false])
             ->getForm();
 
         $block = [

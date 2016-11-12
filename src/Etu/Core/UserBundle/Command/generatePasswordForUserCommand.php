@@ -51,7 +51,7 @@ This command will help you to set generate a random password for an user to let 
         while (!$user instanceof User) {
             $login = $dialog->ask($output, 'User login: ');
 
-            $user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
+            $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $login]);
 
             if (!$user) {
                 $output->writeln("The given login can not be found. Please retry.\n");
@@ -84,15 +84,15 @@ This command will help you to set generate a random password for an user to let 
 
         // Send email with password
         $subject = 'Identifiants de connexion à EtuUTT';
-        $content = $twig->render('EtuUserBundle:Mail:password.html.twig', array(
+        $content = $twig->render('EtuUserBundle:Mail:password.html.twig', [
            'fullName' => $user->getFirstName().' '.$user->getLastName(),
            'login' => $user->getLogin(),
            'password' => $result,
-        ));
+        ]);
 
         $message = \Swift_Message::newInstance($subject)
-           ->setFrom(array('bde@utt.fr' => 'BDE UTT'))
-           ->setTo(array($email))
+           ->setFrom(['bde@utt.fr' => 'BDE UTT'])
+           ->setTo([$email])
            ->setBody($content, 'text/html');
         $result = $mailer->send($message);
 

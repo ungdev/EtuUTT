@@ -44,10 +44,10 @@ class ProfileController extends Controller
             ->getQuery()
             ->getResult();
 
-        return array(
+        return [
             'hasApps' => !empty($apps),
             'apps' => $apps,
-        );
+        ];
     }
 
     /**
@@ -118,57 +118,57 @@ class ProfileController extends Controller
         /** @var $user User */
         $user = $this->getUser();
 
-        $privacyChoice = array(
-            'choices' => array(
+        $privacyChoice = [
+            'choices' => [
                 'user.privacy.public' => User::PRIVACY_PUBLIC,
                 'user.privacy.private' => User::PRIVACY_PRIVATE,
-            ),
-            'attr' => array(
+            ],
+            'attr' => [
                 'class' => 'profileEdit-privacy-select',
-            ),
+            ],
             'placeholder' => false,
             'required' => false,
             'label' => 'user.profile.profileEdit.privacy',
-        );
+        ];
 
         $form = $this->createFormBuilder($user)
-            ->add('phoneNumber', null, array('required' => false, 'label' => 'user.profile.profileEdit.phoneNumber'))
+            ->add('phoneNumber', null, ['required' => false, 'label' => 'user.profile.profileEdit.phoneNumber'])
             ->add('phoneNumberPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('sex', ChoiceType::class, array('choices' => array(
+            ->add('sex', ChoiceType::class, ['choices' => [
                 'base.user.sex.male' => User::SEX_MALE,
                 'base.user.sex.female' => User::SEX_FEMALE,
-            ), 'required' => false, 'label' => 'user.profile.profileEdit.sex'))
+            ], 'required' => false, 'label' => 'user.profile.profileEdit.sex'])
             ->add('sexPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('nationality', null, array('required' => false, 'label' => 'user.profile.profileEdit.nationality'))
+            ->add('nationality', null, ['required' => false, 'label' => 'user.profile.profileEdit.nationality'])
             ->add('nationalityPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('address', null, array('required' => false, 'label' => 'user.profile.profileEdit.address'))
+            ->add('address', null, ['required' => false, 'label' => 'user.profile.profileEdit.address'])
             ->add('addressPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('postalCode', null, array('required' => false, 'label' => 'user.profile.profileEdit.postalCode'))
+            ->add('postalCode', null, ['required' => false, 'label' => 'user.profile.profileEdit.postalCode'])
             ->add('postalCodePrivacy', ChoiceType::class, $privacyChoice)
-            ->add('city', null, array('required' => false, 'label' => 'user.profile.profileEdit.city'))
+            ->add('city', null, ['required' => false, 'label' => 'user.profile.profileEdit.city'])
             ->add('cityPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('country', CountryType::class, array('choices' => CountriesManager::getCountriesList(), 'required' => false, 'label' => 'user.profile.profileEdit.country'))
+            ->add('country', CountryType::class, ['choices' => CountriesManager::getCountriesList(), 'required' => false, 'label' => 'user.profile.profileEdit.country'])
             ->add('countryPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('birthday', BirthdayPickerType::class, array(
+            ->add('birthday', BirthdayPickerType::class, [
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
                 'required' => false,
                 'label' => 'user.profile.profileEdit.birthday',
-            ))
+            ])
             ->add('birthdayPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('birthdayDisplayOnlyAge', null, array(
+            ->add('birthdayDisplayOnlyAge', null, [
                 'required' => false,
                 'label' => 'user.profile.profileEdit.birthdayOnlyAge.label',
                 'attr' => [
                     'help' => 'user.profile.profileEdit.birthdayOnlyAge.desc',
-                ], ))
-            ->add('personnalMail', EmailType::class, array('required' => false, 'label' => 'user.profile.profileEdit.personnalMail'))
+                ], ])
+            ->add('personnalMail', EmailType::class, ['required' => false, 'label' => 'user.profile.profileEdit.personnalMail'])
             ->add('personnalMailPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('website', null, array('required' => false, 'label' => 'user.profile.profileEdit.website'))
-            ->add('facebook', null, array('required' => false, 'label' => 'user.profile.profileEdit.facebook'))
-            ->add('twitter', null, array('required' => false, 'label' => 'user.profile.profileEdit.twitter'))
-            ->add('linkedin', null, array('required' => false, 'label' => 'user.profile.profileEdit.linkedin'))
-            ->add('viadeo', null, array('required' => false, 'label' => 'user.profile.profileEdit.viadeo'))
+            ->add('website', null, ['required' => false, 'label' => 'user.profile.profileEdit.website'])
+            ->add('facebook', null, ['required' => false, 'label' => 'user.profile.profileEdit.facebook'])
+            ->add('twitter', null, ['required' => false, 'label' => 'user.profile.profileEdit.twitter'])
+            ->add('linkedin', null, ['required' => false, 'label' => 'user.profile.profileEdit.linkedin'])
+            ->add('viadeo', null, ['required' => false, 'label' => 'user.profile.profileEdit.viadeo'])
             ->add('submit', SubmitType::class, ['label' => 'user.profile.profileEdit.edit'])
             ->getForm();
 
@@ -186,10 +186,10 @@ class ProfileController extends Controller
             $em->persist($user);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'user.profile.profileEdit.confirm',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('user_profile_edit'));
         }
@@ -200,10 +200,10 @@ class ProfileController extends Controller
             ->add('file', FileType::class)
             ->getForm();
 
-        return array(
+        return [
             'form' => $form->createView(),
             'avatarForm' => $avatarForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -231,17 +231,17 @@ class ProfileController extends Controller
             $em->persist($user);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'user.profile.profileAvatar.confirm',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('user_profile_edit'));
         }
 
-        return array(
+        return [
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -256,9 +256,9 @@ class ProfileController extends Controller
         $user = $this->getUser();
 
         $form = $this->createFormBuilder($user)
-            ->add('surnom', null, array('required' => false, 'label' => 'user.profile.trombiEdit.surname'))
-            ->add('jadis', null, array('required' => false, 'attr' => array('class' => 'trombi-textarea', 'label' => 'user.profile.trombiEdit.jadis')))
-            ->add('passions', null, array('required' => false, 'attr' => array('class' => 'trombi-textarea', 'label' => 'user.profile.trombiEdit.passions')))
+            ->add('surnom', null, ['required' => false, 'label' => 'user.profile.trombiEdit.surname'])
+            ->add('jadis', null, ['required' => false, 'attr' => ['class' => 'trombi-textarea', 'label' => 'user.profile.trombiEdit.jadis']])
+            ->add('passions', null, ['required' => false, 'attr' => ['class' => 'trombi-textarea', 'label' => 'user.profile.trombiEdit.passions']])
             ->add('submit', SubmitType::class, ['label' => 'user.profile.trombiEdit.edit'])
             ->getForm();
 
@@ -276,17 +276,17 @@ class ProfileController extends Controller
             $em->persist($user);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'user.profile.trombiEdit.confirm',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('user_profile'));
         }
 
-        return array(
+        return [
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -302,7 +302,7 @@ class ProfileController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             /** @var $user User */
-            $user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
+            $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $login]);
 
             if (!$user) {
                 throw $this->createNotFoundException('Login "'.$login.'" not found');
@@ -313,14 +313,14 @@ class ProfileController extends Controller
 
         $from = null;
 
-        if (in_array($request->get('from'), array('search', 'profile', 'trombi', 'admin'))) {
+        if (in_array($request->get('from'), ['search', 'profile', 'trombi', 'admin'])) {
             $from = $request->get('from');
         }
 
-        return array(
+        return [
             'user' => $user,
             'from' => $from,
-        );
+        ];
     }
 
     /**
@@ -335,7 +335,7 @@ class ProfileController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /** @var $user User */
-        $user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
+        $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $login]);
 
         if (!$user) {
             throw $this->createNotFoundException('Login "'.$login.'" not found');
@@ -354,15 +354,15 @@ class ProfileController extends Controller
 
         $from = null;
 
-        if (in_array($request->get('from'), array('search', 'profile', 'trombi', 'admin'))) {
+        if (in_array($request->get('from'), ['search', 'profile', 'trombi', 'admin'])) {
             $from = $request->get('from');
         }
 
-        return array(
+        return [
             'user' => $user,
             'memberships' => $memberships,
             'from' => $from,
-        );
+        ];
     }
 
     /**
@@ -379,7 +379,7 @@ class ProfileController extends Controller
         if ($login != $this->getUser()->getLogin()) {
 
             /** @var $user User */
-            $user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
+            $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $login]);
 
             if (!$user) {
                 throw $this->createNotFoundException('Login "'.$login.'" not found');
@@ -390,7 +390,7 @@ class ProfileController extends Controller
 
         $from = null;
 
-        if (in_array($request->get('from'), array('search', 'profile', 'trombi', 'admin'))) {
+        if (in_array($request->get('from'), ['search', 'profile', 'trombi', 'admin'])) {
             $from = $request->get('from');
         }
 
@@ -404,10 +404,10 @@ class ProfileController extends Controller
             $builder->addCourse($course);
         }
 
-        $days = array(
+        $days = [
             Course::DAY_MONDAY, Course::DAY_TUESDAY, Course::DAY_WENESDAY,
             Course::DAY_THURSDAY, Course::DAY_FRIDAY, Course::DAY_SATHURDAY,
-        );
+        ];
 
         if (!in_array($day, $days)) {
             if (date('w') == 0) { // Sunday
@@ -417,12 +417,12 @@ class ProfileController extends Controller
             }
         }
 
-        return array(
+        return [
             'courses' => $builder->build(),
             'currentDay' => $day,
             'user' => $user,
             'from' => $from,
-        );
+        ];
     }
 
     /**
@@ -438,7 +438,7 @@ class ProfileController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             /** @var $user User */
-            $user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
+            $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $login]);
 
             if (!$user) {
                 throw $this->createNotFoundException('Login "'.$login.'" not found');
@@ -449,13 +449,13 @@ class ProfileController extends Controller
 
         $from = null;
 
-        if (in_array($request->get('from'), array('search', 'profile', 'trombi', 'admin'))) {
+        if (in_array($request->get('from'), ['search', 'profile', 'trombi', 'admin'])) {
             $from = $request->get('from');
         }
 
-        return array(
+        return [
             'user' => $user,
             'from' => $from,
-        );
+        ];
     }
 }

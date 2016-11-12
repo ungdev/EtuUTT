@@ -15,9 +15,9 @@ class PermissionsCollection extends ArrayCollection
      *
      * @throws \RuntimeException
      */
-    public function __construct(array $permissions = array())
+    public function __construct(array $permissions = [])
     {
-        $constructed = array();
+        $constructed = [];
 
         foreach ($permissions as $permission) {
             if (!$permission instanceof Permission) {

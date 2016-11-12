@@ -20,7 +20,7 @@ class CasFactory implements SecurityFactoryInterface
         $listenerId = 'security.authentication.listener.cas.'.$id;
         $container->setDefinition($listenerId, new DefinitionDecorator('etu.user.cas.authentication.listener'));
 
-        return array($providerId, $listenerId, $defaultEntryPoint);
+        return [$providerId, $listenerId, $defaultEntryPoint];
     }
 
     public function getPosition()

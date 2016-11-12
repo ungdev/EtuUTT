@@ -32,7 +32,7 @@ class PermissionsChecker
             $user = new User();
         }
         $this->user = $user;
-        $this->memberships = ($this->user instanceof User) ? $this->user->getMemberships() : array();
+        $this->memberships = ($this->user instanceof User) ? $this->user->getMemberships() : [];
     }
 
     /**

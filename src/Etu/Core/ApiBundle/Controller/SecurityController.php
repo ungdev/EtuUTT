@@ -85,10 +85,10 @@ class SecurityController extends ApiController
         $em = $this->getDoctrine()->getManager();
 
         if (!$request->query->has('client_id')) {
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'error',
                 'message' => 'L\'application externe n\'a pas été trouvée. Vous avez été redirigé vers EtuUTT.',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('homepage'));
         }
@@ -100,25 +100,25 @@ class SecurityController extends ApiController
         ]);
 
         if (!$client) {
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'error',
                 'message' => 'L\'application externe n\'a pas été trouvée. Vous avez été redirigé vers EtuUTT.',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('homepage'));
         }
 
         // Not logged in
         if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'error',
                 'message' => $this->get('translator')->trans('user.api_login.login', ['%name%' => $client->getName()]),
-            ));
+            ]);
         } elseif (!$this->isGranted('ROLE_API_USE')) {
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'error',
                 'message' => $this->get('translator')->trans('user.api_login.orga'),
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('homepage'));
         }

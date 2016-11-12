@@ -30,17 +30,17 @@ class ScheduleApi
      */
     public function findPage($page)
     {
-        $result = json_decode($this->browser->request(array('all' => '1', 'page' => $page)));
+        $result = json_decode($this->browser->request(['all' => '1', 'page' => $page]));
 
-        $courses = array();
+        $courses = [];
 
         foreach ($result->body->courses as $values) {
             $courses[] = new Course($values);
         }
 
-        return array(
+        return [
             'paging' => $result->body->paging,
             'courses' => $courses,
-        );
+        ];
     }
 }

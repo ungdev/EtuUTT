@@ -38,15 +38,15 @@ class AssetsCompileCommand extends ContainerAwareCommand
             $directory.'../app'
         ));
 
-        $css = array(
+        $css = [
             'bootstrap/css/bootstrap.min.css',
             'bootstrap/css/bootstrap-responsive.min.css',
             'tipsy/src/tipsy.css',
             'facebox/src/facebox.css',
             'css/boot.css',
-        );
+        ];
 
-        $js = array(
+        $js = [
             'bootstrap/js/bootstrap.min.js',
             'bundles/fosjsrouting/js/router.js',
             'js/fos_js_routes.js',
@@ -54,7 +54,7 @@ class AssetsCompileCommand extends ContainerAwareCommand
             'facebox/src/facebox.js',
             'tipsy/src/jquery.tipsy.js',
             'js/common.js',
-        );
+        ];
 
         /*
          * CSS
@@ -91,15 +91,15 @@ class AssetsCompileCommand extends ContainerAwareCommand
      */
     protected function minifyCss($input)
     {
-        return file_get_contents('http://cssminifier.com/raw', false, stream_context_create(array(
-            'http' => array(
+        return file_get_contents('http://cssminifier.com/raw', false, stream_context_create([
+            'http' => [
                 'method' => 'POST',
                 'header' => 'Content-type: application/x-www-form-urlencoded',
-                'content' => http_build_query(array(
+                'content' => http_build_query([
                     'input' => $input,
-                )),
-            ),
-        )));
+                ]),
+            ],
+        ]));
     }
 
     /**
@@ -109,6 +109,6 @@ class AssetsCompileCommand extends ContainerAwareCommand
      */
     protected function minifyJs($input)
     {
-        return \JShrink\Minifier::minify($input, array('flaggedComments' => false));
+        return \JShrink\Minifier::minify($input, ['flaggedComments' => false]);
     }
 }

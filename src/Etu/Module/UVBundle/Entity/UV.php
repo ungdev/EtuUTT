@@ -21,7 +21,7 @@ class UV
     const CATEGORY_ST = 'st';
     const CATEGORY_OTHER = 'other';
 
-    public static $categories = array(
+    public static $categories = [
         self::CATEGORY_CS,
         self::CATEGORY_TM,
         self::CATEGORY_CT,
@@ -29,7 +29,7 @@ class UV
         self::CATEGORY_EC,
         self::CATEGORY_ST,
         self::CATEGORY_OTHER,
-    );
+    ];
 
     /**
      * @var int

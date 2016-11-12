@@ -56,8 +56,8 @@ class SidebarItem
         $this->builder = $builder;
         $this->icon = false;
         $this->position = 0;
-        $this->linkAttributes = array();
-        $this->itemAttributes = array();
+        $this->linkAttributes = [];
+        $this->itemAttributes = [];
 
         $this->setTranslation($translation);
     }

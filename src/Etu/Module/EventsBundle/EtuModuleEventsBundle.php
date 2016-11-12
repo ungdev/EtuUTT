@@ -60,9 +60,9 @@ class EtuModuleEventsBundle extends Module
      */
     public function getAvailablePermissions()
     {
-        return array(
+        return [
             new OrgaPermission('events', 'Peut gérer les évènements de l\'association'),
-        );
+        ];
     }
 
     /**
@@ -72,8 +72,8 @@ class EtuModuleEventsBundle extends Module
      */
     public function getRequirements()
     {
-        return array(
+        return [
             // Insert your requirements here
-        );
+        ];
     }
 }

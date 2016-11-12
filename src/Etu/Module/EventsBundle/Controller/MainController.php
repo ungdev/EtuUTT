@@ -34,11 +34,11 @@ class MainController extends Controller
 
         $keys = array_flip($availableCategories);
 
-        return array(
+        return [
             'availableCategories' => $availableCategories,
             'currentCategory' => $category,
             'currentCategoryId' => $keys[$category],
-        );
+        ];
     }
 
     /**
@@ -55,17 +55,17 @@ class MainController extends Controller
         $end = $request->query->get('end');
 
         if (!$start) {
-            return new Response(json_encode(array(
+            return new Response(json_encode([
                 'status' => 'error',
                 'message' => '"start" parameter is required',
-            )));
+            ]));
         }
 
         if (!$end) {
-            return new Response(json_encode(array(
+            return new Response(json_encode([
                 'status' => 'error',
                 'message' => '"end" parameter is required',
-            )));
+            ]));
         }
 
         $start = \DateTime::createFromFormat('Y-m-d', $start);
@@ -75,12 +75,12 @@ class MainController extends Controller
         $calendr = $this->get('calendr');
 
         /** @var \CalendR\Event\Collection\Basic $events */
-        $events = $calendr->getEvents(new Range($start, $end), array(
+        $events = $calendr->getEvents(new Range($start, $end), [
             'connected' => $this->isGranted('ROLE_EVENTS_INTERNAL'),
-        ));
+        ]);
 
         /** @var array $json */
-        $json = array();
+        $json = [];
 
         /** @var Event $event */
         foreach ($events->all() as $event) {
@@ -103,17 +103,17 @@ class MainController extends Controller
                 }
             }
 
-            $json[] = array(
+            $json[] = [
                 'id' => $event->getId(),
                 'title' => $event->getTitle(),
                 'start' => $event->getBegin()->format('Y-m-d H:i:00'),
                 'end' => $event->getEnd()->format('Y-m-d H:i:00'),
                 'allDay' => $event->getIsAllDay(),
-                'url' => $this->generateUrl('events_view', array(
+                'url' => $this->generateUrl('events_view', [
                     'id' => $event->getId(),
                     'slug' => StringManipulationExtension::slugify($event->getTitle()),
-                )),
-            );
+                ]),
+            ];
         }
 
         return new Response(json_encode($json));
@@ -164,9 +164,9 @@ class MainController extends Controller
         }
 
         if (StringManipulationExtension::slugify($event->getTitle()) != $slug) {
-            return $this->redirect($this->generateUrl('events_view', array(
+            return $this->redirect($this->generateUrl('events_view', [
                 'id' => $id, 'slug' => StringManipulationExtension::slugify($event->getTitle()),
-            )), 301);
+            ]), 301);
         }
 
         /** @var $answers Answer[] */
@@ -179,8 +179,8 @@ class MainController extends Controller
             ->getQuery()
             ->getResult();
 
-        $answersYes = array();
-        $answersProbably = array();
+        $answersYes = [];
+        $answersProbably = [];
         $userAnswer = false;
 
         foreach ($answers as $answer) {
@@ -201,13 +201,13 @@ class MainController extends Controller
             $useOn = false;
         }
 
-        return array(
+        return [
             'event' => $event,
             'useOn' => $useOn,
             'userAnswer' => $userAnswer,
             'answersYesCount' => count($answersYes),
             'answersProbablyCount' => count($answersProbably),
-        );
+        ];
     }
 
     /**
@@ -237,9 +237,9 @@ class MainController extends Controller
         }
 
         if (StringManipulationExtension::slugify($event->getTitle()) != $slug) {
-            return $this->redirect($this->generateUrl('events_view', array(
+            return $this->redirect($this->generateUrl('events_view', [
                 'id' => $id, 'slug' => StringManipulationExtension::slugify($event->getTitle()),
-            )), 301);
+            ]), 301);
         }
 
         /** @var $answers Answer[] */
@@ -252,9 +252,9 @@ class MainController extends Controller
             ->getQuery()
             ->getResult();
 
-        $answersYes = array();
-        $answersProbably = array();
-        $answersNo = array();
+        $answersYes = [];
+        $answersProbably = [];
+        $answersNo = [];
 
         foreach ($answers as $answer) {
             if ($answer->getAnswer() == Answer::ANSWER_YES) {
@@ -266,7 +266,7 @@ class MainController extends Controller
             }
         }
 
-        return array(
+        return [
             'event' => $event,
             'answersYesCount' => count($answersYes),
             'answersProbablyCount' => count($answersProbably),
@@ -274,7 +274,7 @@ class MainController extends Controller
             'answersYes' => $answersYes,
             'answersProbably' => $answersProbably,
             'answersNo' => $answersNo,
-        );
+        ];
     }
 
     /**
@@ -285,11 +285,11 @@ class MainController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_EVENTS_ANSWER_POST');
 
-        if (!in_array($answer, array(Answer::ANSWER_YES, Answer::ANSWER_NO, Answer::ANSWER_PROBABLY))) {
-            return new Response(json_encode(array(
+        if (!in_array($answer, [Answer::ANSWER_YES, Answer::ANSWER_NO, Answer::ANSWER_PROBABLY])) {
+            return new Response(json_encode([
                 'status' => 'error',
                 'message' => 'Invalid answer',
-            )), 500);
+            ]), 500);
         }
 
         /** @var $em EntityManager */
@@ -307,10 +307,10 @@ class MainController extends Controller
             ->getOneOrNullResult();
 
         if (!$event) {
-            return new Response(json_encode(array(
+            return new Response(json_encode([
                 'status' => 'error',
                 'message' => 'Event #'.$id.' not found',
-            )), 404);
+            ]), 404);
         }
 
         /** @var $userAnswer Answer */
@@ -340,10 +340,10 @@ class MainController extends Controller
             $this->getSubscriptionsManager()->unsubscribe($this->getUser(), 'event', $event->getId());
         }
 
-        return new Response(json_encode(array(
+        return new Response(json_encode([
             'status' => 'success',
             'message' => 'Ok',
-        )), 200);
+        ]), 200);
     }
 
     /**
@@ -362,9 +362,9 @@ class MainController extends Controller
         $end->add(new \DateInterval('P1M'));
 
         /** @var \CalendR\Event\Collection\Basic $events */
-        $events = $calendr->getEvents(new Range($start, $end), array(
+        $events = $calendr->getEvents(new Range($start, $end), [
             'connected' => true, // TODO add better security with private events
-        ));
+        ]);
 
         $array = [];
         foreach ($events->all() as $event) {
@@ -394,8 +394,8 @@ class MainController extends Controller
             }
         }
 
-        return array(
+        return [
             'events' => $array,
-        );
+        ];
     }
 }

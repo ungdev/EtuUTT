@@ -105,7 +105,7 @@ class DaymailPart
      */
     public static function createFutureAvailableDays()
     {
-        $available = array();
+        $available = [];
 
         for ($i = 1; $i <= 7; ++$i) {
             $day = new \DateTime();

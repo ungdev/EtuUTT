@@ -38,8 +38,8 @@ class NewOpenedHelper implements HelperInterface
      */
     public function render(Notification $notification)
     {
-        return $this->twig->render('EtuModuleBugsBundle:Notification:newOpened.html.twig', array(
+        return $this->twig->render('EtuModuleBugsBundle:Notification:newOpened.html.twig', [
             'notif' => $notification,
-        ));
+        ]);
     }
 }

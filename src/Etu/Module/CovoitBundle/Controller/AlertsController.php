@@ -71,10 +71,10 @@ class AlertsController extends Controller
             // Add current user as subscriber of the specific alert
             $this->getSubscriptionsManager()->subscribe($this->getUser(), 'covoit-alert', $alert->getId());
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'covoit.messages.alert_created',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('covoiturage_my_alerts'));
         }
@@ -103,10 +103,10 @@ class AlertsController extends Controller
             $em->persist($alert);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                     'type' => 'success',
                     'message' => 'covoit.messages.alert_edited',
-                ));
+                ]);
 
             return $this->redirect($this->generateUrl('covoiturage_my_alerts'));
         }
@@ -134,10 +134,10 @@ class AlertsController extends Controller
         $em->remove($alert);
         $em->flush();
 
-        $this->get('session')->getFlashBag()->set('message', array(
+        $this->get('session')->getFlashBag()->set('message', [
             'type' => 'success',
             'message' => 'covoit.messages.alert_deleted',
-        ));
+        ]);
 
         return $this->redirect($this->generateUrl('covoiturage_my_alerts'));
     }

@@ -35,8 +35,8 @@ class EventCreatedAllHelper implements HelperInterface
      */
     public function render(Notification $notification)
     {
-        return $this->twig->render('EtuModuleEventsBundle:Notification:eventCreatedAll.html.twig', array(
+        return $this->twig->render('EtuModuleEventsBundle:Notification:eventCreatedAll.html.twig', [
             'notif' => $notification,
-        ));
+        ]);
     }
 }

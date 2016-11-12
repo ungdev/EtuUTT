@@ -29,12 +29,12 @@ class LoadPagesData extends AbstractFixture implements OrderedFixtureInterface
 
         $manager->persist($pageToDelete);
 
-        $datas = array(
+        $datas = [
             'developpeurs' => 'Développeurs',
             'nous-aider' => 'Nous aider',
             'mentions-legales' => 'Mentions légales',
             'l-equipe' => 'L\'équipe',
-        );
+        ];
 
         foreach ($datas as $slug => $title) {
             $page = new Page();

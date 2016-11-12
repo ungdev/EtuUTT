@@ -45,9 +45,9 @@ class MembershipsController extends Controller
         /** @var $memberships Member[] */
         $memberships = $query->getResult();
 
-        return array(
+        return [
             'memberships' => $memberships,
-        );
+        ];
     }
 
     /**
@@ -91,7 +91,7 @@ class MembershipsController extends Controller
 
         /** @var $availablePermissions OrgaPermission[] */
         $availablePermissions = $this->getKernel()->getAvailableOrganizationsPermissions()->toArray();
-        $membershipPermissions = array();
+        $membershipPermissions = [];
 
         foreach ($availablePermissions as $availablePermission) {
             if (in_array($availablePermission->getName(), $membership->getPermissions())) {
@@ -99,11 +99,11 @@ class MembershipsController extends Controller
             }
         }
 
-        return array(
+        return [
             'memberships' => $memberships,
             'membership' => $membership,
             'permissions' => $membershipPermissions,
-        );
+        ];
     }
 
     /**
@@ -154,10 +154,10 @@ class MembershipsController extends Controller
         // Classic form
         $form = $this->createFormBuilder($orga)
             ->add('contactMail', EmailType::class, ['label' => 'user.orga.index.contactMail.label'])
-            ->add('contactPhone', null, array('required' => false, 'label' => 'user.orga.index.contactPhone.label'))
-            ->add('website', null, array('required' => false, 'label' => 'user.orga.index.website.label'))
+            ->add('contactPhone', null, ['required' => false, 'label' => 'user.orga.index.contactPhone.label'])
+            ->add('website', null, ['required' => false, 'label' => 'user.orga.index.website.label'])
             ->add('descriptionShort', TextareaType::class, ['label' => 'user.orga.index.descriptionShort.label'])
-            ->add('description', RedactorType::class, array('required' => false, 'label' => 'user.orga.index.description.label'))
+            ->add('description', RedactorType::class, ['required' => false, 'label' => 'user.orga.index.description.label'])
             ->add('submit', SubmitType::class, ['label' => 'user.orga.index.submit'])
             ->getForm();
 
@@ -166,20 +166,20 @@ class MembershipsController extends Controller
             $em->persist($orga);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'user.memberships.desc.confirm',
-            ));
+            ]);
 
-            return $this->redirect($this->generateUrl('memberships_orga_desc', array('login' => $login)));
+            return $this->redirect($this->generateUrl('memberships_orga_desc', ['login' => $login]));
         }
 
-        return array(
+        return [
             'memberships' => $memberships,
             'membership' => $membership,
             'form' => $form->createView(),
             'orga' => $orga,
-        );
+        ];
     }
 
     /**
@@ -240,12 +240,12 @@ class MembershipsController extends Controller
 
         $members = $this->get('knp_paginator')->paginate($members, $page, 20);
 
-        return array(
+        return [
             'memberships' => $memberships,
             'membership' => $membership,
             'pagination' => $members,
             'orga' => $orga,
-        );
+        ];
     }
 
     /**
@@ -320,19 +320,19 @@ class MembershipsController extends Controller
             }
         }
 
-        $permissions = array();
+        $permissions = [];
 
         foreach ($availablePermissions as $permission) {
             if ($member->hasPermission($permission->getName())) {
-                $permissions[] = array('definition' => $permission, 'checked' => true);
+                $permissions[] = ['definition' => $permission, 'checked' => true];
             } else {
-                $permissions[] = array('definition' => $permission, 'checked' => false);
+                $permissions[] = ['definition' => $permission, 'checked' => false];
             }
         }
 
         if ($request->getMethod() == 'POST') {
             if (is_array($request->get('permissions'))) {
-                $userPermissions = array();
+                $userPermissions = [];
 
                 foreach ($request->get('permissions') as $permission => $value) {
                     $userPermissions[] = $permission;
@@ -340,29 +340,29 @@ class MembershipsController extends Controller
 
                 $member->setPermissions($userPermissions);
             } else {
-                $member->setPermissions(array());
+                $member->setPermissions([]);
             }
 
             $em->persist($member);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'user.memberships.permissionsEdit.confirm',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl(
-                'memberships_orga_permissions_edit', array('login' => $login, 'user' => $user)
+                'memberships_orga_permissions_edit', ['login' => $login, 'user' => $user]
             ));
         }
 
-        return array(
+        return [
             'memberships' => $memberships,
             'membership' => $membership,
             'member' => $member,
             'permissions' => $permissions,
             'orga' => $orga,
-        );
+        ];
     }
 
     /**
@@ -416,8 +416,8 @@ class MembershipsController extends Controller
         $notif->orga_name = $orga->getName();
 
         $form = $this->createFormBuilder($notif)
-            ->add('link', UrlType::class, array('required' => false, 'label' => 'user.memberships.notification.link.label'))
-            ->add('content', TextareaType::class, array('required' => true, 'label' => 'user.memberships.notification.content.label', 'attr' => ['maxlength' => 140, 'help' => 'user.memberships.notification.content.desc']))
+            ->add('link', UrlType::class, ['required' => false, 'label' => 'user.memberships.notification.link.label'])
+            ->add('content', TextareaType::class, ['required' => true, 'label' => 'user.memberships.notification.content.label', 'attr' => ['maxlength' => 140, 'help' => 'user.memberships.notification.content.desc']])
             ->add('submit', SubmitType::class, ['label' => $this->get('translator')->trans('user.memberships.notification.submit', ['%orga%' => $membership->getOrganization()->getName()])])
             ->getForm();
 
@@ -433,18 +433,18 @@ class MembershipsController extends Controller
 
             $this->getNotificationsSender()->send($notification, false);
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'user.memberships.notification.confirm',
-            ));
+            ]);
 
-            return $this->redirect($this->generateUrl('memberships_orga_notifications', array('login' => $login)));
+            return $this->redirect($this->generateUrl('memberships_orga_notifications', ['login' => $login]));
         }
 
-        return array(
+        return [
             'memberships' => $memberships,
             'membership' => $membership,
             'form' => $form->createView(),
-        );
+        ];
     }
 }

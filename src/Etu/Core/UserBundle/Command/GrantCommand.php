@@ -51,7 +51,7 @@ This command will help you to grant a role for a given user.
         while (!$user instanceof User) {
             $login = $dialog->ask($output, 'User login: ');
 
-            $user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
+            $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $login]);
 
             if (!$user) {
                 $output->writeln("The given login can not be found. Please retry.\n");

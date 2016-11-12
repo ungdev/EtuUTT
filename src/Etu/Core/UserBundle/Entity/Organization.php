@@ -284,7 +284,7 @@ class Organization implements UserInterface, \Serializable
      */
     public function getRoles()
     {
-        return array('ROLE_ORGA');
+        return ['ROLE_ORGA'];
     }
 
     /**
@@ -299,11 +299,11 @@ class Organization implements UserInterface, \Serializable
      */
     public function serialize()
     {
-        return serialize(array(
+        return serialize([
             $this->id, $this->login, $this->president, $this->name, $this->contactMail,
             $this->contactPhone, $this->description, $this->descriptionShort, $this->website,
             $this->logo, $this->countMembers, $this->createdAt, $this->updatedAt, $this->deletedAt,
-        ));
+        ]);
     }
 
     /**

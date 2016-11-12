@@ -35,10 +35,10 @@ class SidebarRendererExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('render_sidebar', array($this, 'render'), array('is_safe' => array('html'))),
-            new \Twig_SimpleFunction('render_sidebar_mobile', array($this, 'renderMobile'), array('is_safe' => array('html'))),
-        );
+        return [
+            new \Twig_SimpleFunction('render_sidebar', [$this, 'render'], ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction('render_sidebar_mobile', [$this, 'renderMobile'], ['is_safe' => ['html']]),
+        ];
     }
 
     /**

@@ -87,7 +87,7 @@ class MembershipsController extends Controller
             ->setMaxResults(10)
             ->getResult();
 
-        $available = array();
+        $available = [];
         $available['divider'] = 'divider';
         $future = DaymailPart::createFutureAvailableDays();
 
@@ -110,7 +110,7 @@ class MembershipsController extends Controller
         }
 
         if (count($available) == 1) {
-            $available = array();
+            $available = [];
         }
 
         $available = array_merge(array_reverse($available), $future);
@@ -125,7 +125,7 @@ class MembershipsController extends Controller
 
         $form = $this->createFormBuilder($daymailPart)
             ->add('title', TextType::class, ['required' => true, 'label' => 'daymail.memberships.daymail.title.label', 'attr' => ['maxlength' => 100]])
-            ->add('body', RedactorHtmlType::class, array('required' => true, 'label' => 'daymail.memberships.daymail.body.label'))
+            ->add('body', RedactorHtmlType::class, ['required' => true, 'label' => 'daymail.memberships.daymail.body.label'])
             ->getForm();
 
         $form->handleRequest($request);
@@ -135,25 +135,25 @@ class MembershipsController extends Controller
             $em->persist($daymailPart);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'daymail.memberships.daymail.confirm',
-            ));
+            ]);
 
             if ($request->request->has('_preview')) {
-                return $this->redirect($this->generateUrl('memberships_orga_daymail', array(
+                return $this->redirect($this->generateUrl('memberships_orga_daymail', [
                     'login' => $login,
                     'day' => $day->format('d-m-Y'),
-                )).'?preview');
+                ]).'?preview');
             } else {
-                return $this->redirect($this->generateUrl('memberships_orga_daymail', array(
+                return $this->redirect($this->generateUrl('memberships_orga_daymail', [
                     'login' => $login,
                     'day' => $day->format('d-m-Y'),
-                )));
+                ]));
             }
         }
 
-        return array(
+        return [
             'memberships' => $memberships,
             'membership' => $membership,
             'orga' => $orga,
@@ -165,7 +165,7 @@ class MembershipsController extends Controller
             'wantPreview' => $request->query->has('preview'),
             'login' => $login,
             'day' => $day->format('d-m-Y'),
-        );
+        ];
     }
 
     /**
@@ -245,9 +245,9 @@ class MembershipsController extends Controller
             throw $this->createNotFoundException('Daymail not found for this day');
         }
 
-        return array(
+        return [
             'daymail' => $daymailPart,
-        );
+        ];
     }
 
     /**
@@ -330,9 +330,9 @@ class MembershipsController extends Controller
         $em->remove($daymailPart);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('memberships_orga_daymail', array(
+        return $this->redirect($this->generateUrl('memberships_orga_daymail', [
             'login' => $login,
             'day' => $day->format('d-m-Y'),
-        )));
+        ]));
     }
 }

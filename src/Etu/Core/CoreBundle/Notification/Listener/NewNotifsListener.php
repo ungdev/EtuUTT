@@ -67,12 +67,12 @@ class NewNotifsListener
         }
 
         $user = $this->tokenStorage->getToken()->getUser();
-        $subscriptions = array();
+        $subscriptions = [];
 
         if ($this->authorizationChecker->isGranted('ROLE_CORE_SUBSCRIBE')) {
             /** @var $em EntityManager */
             $em = $this->doctrine->getManager();
-            $subscriptions = $em->getRepository('EtuCoreBundle:Subscription')->findBy(array('user' => $user));
+            $subscriptions = $em->getRepository('EtuCoreBundle:Subscription')->findBy(['user' => $user]);
         }
 
         $this->globalAccessor->set('notifs', new ArrayCollection());

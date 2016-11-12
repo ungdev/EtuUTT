@@ -76,8 +76,8 @@ class EtuModuleCumulBundle extends Module
      */
     public function getRequirements()
     {
-        return array(
+        return [
             // Insert your requirements here
-        );
+        ];
     }
 }

@@ -14,12 +14,12 @@ class ModulesManager
     /**
      * @var \Etu\Core\CoreBundle\Framework\Definition\Module[]
      */
-    protected $modules = array();
+    protected $modules = [];
 
     /**
      * @var string[]
      */
-    protected $modulesList = array();
+    protected $modulesList = [];
 
     /**
      * @var string
@@ -53,7 +53,7 @@ class ModulesManager
      */
     public function getEnabledModules()
     {
-        $modules = array();
+        $modules = [];
 
         foreach ($this->modules as $module) {
             if ($module->isEnabled()) {

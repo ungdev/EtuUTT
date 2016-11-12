@@ -45,7 +45,7 @@ This command will help you to promote given user as global admin.
         while (!$user instanceof User) {
             $login = $dialog->ask($output, 'User login: ');
 
-            $user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
+            $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $login]);
 
             if (!$user) {
                 $output->writeln("The given login can not be found. Please retry.\n");

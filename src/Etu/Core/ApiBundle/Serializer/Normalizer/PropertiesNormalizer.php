@@ -11,7 +11,7 @@ class PropertiesNormalizer extends SerializerAwareNormalizer implements Normaliz
     /**
      * {@inheritdoc}
      */
-    public function normalize($object, $format = null, array $context = array())
+    public function normalize($object, $format = null, array $context = [])
     {
         return get_object_vars($object);
     }
@@ -19,7 +19,7 @@ class PropertiesNormalizer extends SerializerAwareNormalizer implements Normaliz
     /**
      * {@inheritdoc}
      */
-    public function denormalize($data, $class, $format = null, array $context = array())
+    public function denormalize($data, $class, $format = null, array $context = [])
     {
         $object = new $class();
 

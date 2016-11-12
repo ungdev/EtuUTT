@@ -35,8 +35,8 @@ class ThreadAnsweredHelper implements HelperInterface
      */
     public function render(Notification $notification)
     {
-        return $this->twig->render('EtuModuleForumBundle:Notification:threadAnswered.html.twig', array(
+        return $this->twig->render('EtuModuleForumBundle:Notification:threadAnswered.html.twig', [
             'notif' => $notification,
-        ));
+        ]);
     }
 }

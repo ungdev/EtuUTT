@@ -35,9 +35,9 @@ class ScheduleController extends Controller
             $builder->addCourse($course);
         }
 
-        return array(
+        return [
             'courses' => $builder->build(),
-        );
+        ];
     }
 
     /**
@@ -69,10 +69,10 @@ class ScheduleController extends Controller
             ->getQuery()
             ->getResult();
 
-        return array(
+        return [
             'course' => $course,
             'students' => $students,
-        );
+        ];
     }
 
     /**
@@ -155,10 +155,10 @@ class ScheduleController extends Controller
             $builder->addCourse($course);
         }
 
-        $days = array(
+        $days = [
             Course::DAY_MONDAY, Course::DAY_TUESDAY, Course::DAY_WENESDAY,
             Course::DAY_THURSDAY, Course::DAY_FRIDAY, Course::DAY_SATHURDAY,
-        );
+        ];
 
         if (!in_array($day, $days)) {
             if (date('w') == 0) { // Sunday
@@ -168,9 +168,9 @@ class ScheduleController extends Controller
             }
         }
 
-        return array(
+        return [
             'courses' => $builder->build(),
             'currentDay' => $day,
-        );
+        ];
     }
 }

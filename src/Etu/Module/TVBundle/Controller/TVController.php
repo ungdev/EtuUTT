@@ -18,10 +18,10 @@ class TVController extends Controller
      */
     public function viewAction()
     {
-        return array(
+        return [
             // 'images' => $images,
             // 'form' => $form->createView()
-        );
+        ];
     }
 
     /**
@@ -43,13 +43,13 @@ class TVController extends Controller
 
         /** @var $file \SplFileInfo */
         foreach ($iterator as $file) {
-            if ($file->isFile() && in_array(strtolower($file->getExtension()), array('png', 'jpg', 'jpeg', 'gif', 'bmp'))) {
+            if ($file->isFile() && in_array(strtolower($file->getExtension()), ['png', 'jpg', 'jpeg', 'gif', 'bmp'])) {
                 if (substr(md5($file->getBasename()), 0, 10) == $id) {
-                    $image = array(
+                    $image = [
                         'id' => substr(md5($file->getBasename()), 0, 10),
                         'name' => $file->getBasename(),
                         'absolute' => $file->getPathname(),
-                    );
+                    ];
                 }
             }
         }
@@ -61,16 +61,16 @@ class TVController extends Controller
         if ($confirm) {
             unlink($image['absolute']);
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'upload.main.remove.confirm',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('upload_index'));
         }
 
-        return array(
+        return [
             'image' => $image,
-        );
+        ];
     }
 }

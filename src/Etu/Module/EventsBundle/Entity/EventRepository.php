@@ -14,7 +14,7 @@ class EventRepository extends EntityRepository implements ProviderInterface
      *
      * @return array
      */
-    public function getEvents(\DateTime $begin, \DateTime $end, array $options = array())
+    public function getEvents(\DateTime $begin, \DateTime $end, array $options = [])
     {
         $query = $this->createQueryBuilder('e')
             ->select('e, o')

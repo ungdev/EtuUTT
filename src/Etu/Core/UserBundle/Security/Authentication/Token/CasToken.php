@@ -18,7 +18,7 @@ class CasToken extends AbstractToken
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct($user, array $roles = array())
+    public function __construct($user, array $roles = [])
     {
         parent::__construct($roles);
 

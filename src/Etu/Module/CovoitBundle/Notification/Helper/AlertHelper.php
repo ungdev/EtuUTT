@@ -38,8 +38,8 @@ class AlertHelper implements HelperInterface
      */
     public function render(Notification $notification)
     {
-        return $this->twig->render('EtuModuleCovoitBundle:Notification:alert.html.twig', array(
+        return $this->twig->render('EtuModuleCovoitBundle:Notification:alert.html.twig', [
             'notif' => $notification,
-        ));
+        ]);
     }
 }

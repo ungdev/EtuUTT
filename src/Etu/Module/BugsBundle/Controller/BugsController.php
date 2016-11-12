@@ -45,7 +45,7 @@ class BugsController extends Controller
 
         $pagination = $this->get('knp_paginator')->paginate($query, $page, 20);
 
-        return array('pagination' => $pagination);
+        return ['pagination' => $pagination];
     }
 
     /**
@@ -70,7 +70,7 @@ class BugsController extends Controller
 
         $pagination = $this->get('knp_paginator')->paginate($query, $page, 20);
 
-        return array('pagination' => $pagination);
+        return ['pagination' => $pagination];
     }
 
     /**
@@ -101,9 +101,9 @@ class BugsController extends Controller
         }
 
         if (StringManipulationExtension::slugify($bug->getTitle()) != $slug) {
-            return $this->redirect($this->generateUrl('bugs_view', array(
+            return $this->redirect($this->generateUrl('bugs_view', [
                 'id' => $id, 'slug' => StringManipulationExtension::slugify($bug->getTitle()),
-            )), 301);
+            ]), 301);
         }
 
         /** @var $bug Issue */
@@ -146,38 +146,38 @@ class BugsController extends Controller
             // Subscribe automatically the user
             $this->getSubscriptionsManager()->subscribe($this->getUser(), 'issue', $bug->getId());
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'bugs.bugs.view.comment_confirm',
-            ));
+            ]);
 
-            return $this->redirect($this->generateUrl('bugs_view', array(
+            return $this->redirect($this->generateUrl('bugs_view', [
                 'id' => $bug->getId(),
                 'slug' => StringManipulationExtension::slugify($bug->getTitle()),
-            )));
+            ]));
         }
 
         $updateForm = $this->createFormBuilder($bug)
             ->setAction($this->generateUrl('bugs_admin_criticality', ['id' => $bug->getId(), 'slug' => StringManipulationExtension::slugify($bug->getTitle())]))
-            ->add('criticality', ChoiceType::class, array(
-                'choices' => array(
+            ->add('criticality', ChoiceType::class, [
+                'choices' => [
                     'bugs.criticality.60' => Issue::CRITICALITY_SECURITY,
                     'bugs.criticality.50' => Issue::CRITICALITY_CRITICAL,
                     'bugs.criticality.40' => Issue::CRITICALITY_MAJOR,
                     'bugs.criticality.30' => Issue::CRITICALITY_MINOR,
                     'bugs.criticality.20' => Issue::CRITICALITY_VISUAL,
                     'bugs.criticality.10' => Issue::CRITICALITY_TYPO,
-                ),
-            ))
+                ],
+            ])
             ->add('submit', SubmitType::class, ['label' => 'bugs.bugs.view.admin_edit'])
             ->getForm();
 
-        return array(
+        return [
             'bug' => $bug,
             'comments' => $comments,
             'form' => $form->createView(),
             'updateForm' => $updateForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -193,17 +193,17 @@ class BugsController extends Controller
 
         $form = $this->createFormBuilder($bug)
             ->add('title', TextType::class, ['label' => 'bugs.bugs.create.name'])
-            ->add('criticality', ChoiceType::class, array(
-                'choices' => array(
+            ->add('criticality', ChoiceType::class, [
+                'choices' => [
                     'bugs.criticality.60' => Issue::CRITICALITY_SECURITY,
                     'bugs.criticality.50' => Issue::CRITICALITY_CRITICAL,
                     'bugs.criticality.40' => Issue::CRITICALITY_MAJOR,
                     'bugs.criticality.30' => Issue::CRITICALITY_MINOR,
                     'bugs.criticality.20' => Issue::CRITICALITY_VISUAL,
                     'bugs.criticality.10' => Issue::CRITICALITY_TYPO,
-                ),
+                ],
                 'label' => 'bugs.bugs.create.criticality',
-            ))
+            ])
             ->add('body', RedactorType::class, ['label' => 'bugs.bugs.create.body'])
             ->add('submit', SubmitType::class, ['label' => 'bugs.bugs.create.submit'])
             ->getForm();
@@ -232,20 +232,20 @@ class BugsController extends Controller
             // Subscribe automatically the user at the issue
             $this->getSubscriptionsManager()->subscribe($this->getUser(), 'issue', $bug->getId());
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'bugs.bugs.create.confirm',
-            ));
+            ]);
 
-            return $this->redirect($this->generateUrl('bugs_view', array(
+            return $this->redirect($this->generateUrl('bugs_view', [
                 'id' => $bug->getId(),
                 'slug' => StringManipulationExtension::slugify($bug->getTitle()),
-            )));
+            ]));
         }
 
-        return array(
+        return [
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -285,17 +285,17 @@ class BugsController extends Controller
 
         $form = $this->createFormBuilder($bug)
             ->add('title', TextType::class, ['label' => 'bugs.bugs.edit.title'])
-            ->add('criticality', ChoiceType::class, array(
-                'choices' => array(
+            ->add('criticality', ChoiceType::class, [
+                'choices' => [
                     'bugs.criticality.60' => Issue::CRITICALITY_SECURITY,
                     'bugs.criticality.50' => Issue::CRITICALITY_CRITICAL,
                     'bugs.criticality.40' => Issue::CRITICALITY_MAJOR,
                     'bugs.criticality.30' => Issue::CRITICALITY_MINOR,
                     'bugs.criticality.20' => Issue::CRITICALITY_VISUAL,
                     'bugs.criticality.10' => Issue::CRITICALITY_TYPO,
-                ),
+                ],
                 'label' => 'bugs.bugs.edit.criticality',
-            ))
+            ])
             ->add('body', RedactorType::class, ['label' => 'bugs.bugs.edit.body'])
             ->add('submit', SubmitType::class, ['label' => 'bugs.bugs.edit.submit'])
             ->getForm();
@@ -316,20 +316,20 @@ class BugsController extends Controller
             $em->persist($subscription);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'bugs.bugs.edit.confirm',
-            ));
+            ]);
 
-            return $this->redirect($this->generateUrl('bugs_view', array(
+            return $this->redirect($this->generateUrl('bugs_view', [
                 'id' => $bug->getId(),
                 'slug' => StringManipulationExtension::slugify($bug->getTitle()),
-            )));
+            ]));
         }
 
-        return array(
+        return [
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -364,9 +364,9 @@ class BugsController extends Controller
         }
 
         if (StringManipulationExtension::slugify($comment->getIssue()->getTitle()) != $slug) {
-            return $this->redirect($this->generateUrl('bugs_edit_comment', array(
+            return $this->redirect($this->generateUrl('bugs_edit_comment', [
                 'id' => $id, 'slug' => StringManipulationExtension::slugify($comment->getIssue()->getTitle()),
-            )), 301);
+            ]), 301);
         }
 
         if ($comment->getUser()->getId() != $this->getUser()->getId() && !$this->isGranted('ROLE_BUGS_ADMIN')) {
@@ -388,14 +388,14 @@ class BugsController extends Controller
             $em->persist($comment);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('bugs_view', array(
+            return $this->redirect($this->generateUrl('bugs_view', [
                 'id' => $comment->getIssue()->getId(),
                 'slug' => StringManipulationExtension::slugify($comment->getIssue()->getTitle()),
-            )));
+            ]));
         }
 
-        return array(
+        return [
             'form' => $form->createView(),
-        );
+        ];
     }
 }

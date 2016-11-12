@@ -24,7 +24,7 @@ class LdapManager
         $this->connection = null;
         $this->host = $host;
         $this->port = $port;
-        $this->logs = array();
+        $this->logs = [];
     }
 
     /**
@@ -40,7 +40,7 @@ class LdapManager
             )
         );
 
-        $users = array();
+        $users = [];
 
         foreach ($infos as $values) {
             if (!is_numeric($values)) {
@@ -61,7 +61,7 @@ class LdapManager
     public function getStudents()
     {
         $this->connect();
-        $result = array();
+        $result = [];
         $users = $this->getAll();
 
         foreach ($users as $user) {
@@ -79,7 +79,7 @@ class LdapManager
     public function getUsers()
     {
         $this->connect();
-        $result = array();
+        $result = [];
         $users = $this->getAll();
 
         foreach ($users as $user) {
@@ -97,7 +97,7 @@ class LdapManager
     public function getOrgas()
     {
         $this->connect();
-        $result = array();
+        $result = [];
         $users = $this->getAll();
 
         foreach ($users as $user) {
@@ -187,7 +187,7 @@ class LdapManager
         }
 
         if (!isset($values['uv'])) {
-            $values['uv'] = array();
+            $values['uv'] = [];
         }
 
         $user = new Model\User();
@@ -210,7 +210,7 @@ class LdapManager
                 || in_array('student', $values['employeetype'])
         );
 
-        $uvs = array();
+        $uvs = [];
 
         foreach ((array) $values['uv'] as $key => $uv) {
             if (is_numeric($key)) {

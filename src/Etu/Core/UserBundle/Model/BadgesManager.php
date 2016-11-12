@@ -67,7 +67,7 @@ class BadgesManager
             self::initialize();
         }
 
-        $list = array();
+        $list = [];
 
         foreach (self::$badges as $badge) {
             $list[$badge->getSerie()][$badge->getLevel()] = $badge;
@@ -204,10 +204,10 @@ class BadgesManager
     protected static function initialize()
     {
         /** @var Badge[] $badges */
-        $badges = self::$doctrine->getRepository('EtuUserBundle:Badge')->findBy(array(), array(
+        $badges = self::$doctrine->getRepository('EtuUserBundle:Badge')->findBy([], [
             'countLevels' => 'ASC',
             'serie' => 'ASC',
-        ));
+        ]);
 
         foreach ($badges as $badge) {
             self::$badges[$badge->getSerie().$badge->getLevel()] = $badge;

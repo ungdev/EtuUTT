@@ -38,8 +38,8 @@ class NewReviewHelper implements HelperInterface
      */
     public function render(Notification $notification)
     {
-        return $this->twig->render('EtuModuleUVBundle:Notification:newReview.html.twig', array(
+        return $this->twig->render('EtuModuleUVBundle:Notification:newReview.html.twig', [
             'notif' => $notification,
-        ));
+        ]);
     }
 }

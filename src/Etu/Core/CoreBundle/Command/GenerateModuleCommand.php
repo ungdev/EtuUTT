@@ -167,8 +167,8 @@ For instance, the UVBundle module name is "UV".
     private function replaceVariables($name, $identifier, $string)
     {
         return str_replace(
-            array('%name%', '%identifier%'),
-            array($name, $identifier),
+            ['%name%', '%identifier%'],
+            [$name, $identifier],
             $string
         );
     }

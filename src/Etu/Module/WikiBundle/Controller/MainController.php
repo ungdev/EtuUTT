@@ -39,11 +39,11 @@ class MainController extends Controller
             return $this->createAccessDeniedResponse();
         }
 
-        return array(
+        return [
             'page' => $page,
             'rights' => $this->get('etu.wiki.permissions_checker'),
             'parentSlug' => substr($slug, 0, strrpos($slug, '/')),
-        );
+        ];
     }
 
     /**
@@ -111,7 +111,7 @@ class MainController extends Controller
             }
 
             // Add "none" item
-            $form = $form->add('preslug', ChoiceType::class, array(
+            $form = $form->add('preslug', ChoiceType::class, [
                 'choices' => $pagelist,
                 'choice_attr' => function ($val) {
                     $level = substr_count($val, '/');
@@ -123,11 +123,11 @@ class MainController extends Controller
                 'required' => false,
                 'label' => 'wiki.main.edit.parentPage',
                 'mapped' => false,
-            ));
+            ]);
         }
 
         // Create editor field
-        $form = $form->add('content', RedactorType::class, array('required' => true, 'label' => 'wiki.main.edit.content'));
+        $form = $form->add('content', RedactorType::class, ['required' => true, 'label' => 'wiki.main.edit.content']);
 
         // Create rights fields
         $choices = [];
@@ -137,14 +137,14 @@ class MainController extends Controller
                 $choices['wiki.main.right.'.$right] = $right;
             }
         }
-        $form = $form->add('readRight', ChoiceType::class, array('choices' => $choices, 'required' => true, 'label' => 'wiki.main.edit.readRight'));
+        $form = $form->add('readRight', ChoiceType::class, ['choices' => $choices, 'required' => true, 'label' => 'wiki.main.edit.readRight']);
         unset($choices[WikiPage::RIGHT['ALL']]);
         if (count($choices) > 1) {
-            $form = $form->add('editRight', ChoiceType::class, array('choices' => $choices, 'required' => true, 'label' => 'wiki.main.edit.editRight'));
+            $form = $form->add('editRight', ChoiceType::class, ['choices' => $choices, 'required' => true, 'label' => 'wiki.main.edit.editRight']);
         }
 
         // Create submit
-        $form = $form->add('submit', SubmitType::class, array('label' => 'wiki.main.edit.submit'))
+        $form = $form->add('submit', SubmitType::class, ['label' => 'wiki.main.edit.submit'])
             ->getForm();
 
         // Submit form
@@ -195,24 +195,24 @@ class MainController extends Controller
             $em->flush();
 
             // Emit flash message
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'wiki.main.edit.success',
-            ));
+            ]);
 
             // Redirect
-            return $this->redirect($this->generateUrl('wiki_view', array(
+            return $this->redirect($this->generateUrl('wiki_view', [
                 'category' => $page->getCategory(),
                 'slug' => $page->getSlug(),
-                )
+                ]
             ), 301);
         }
 
-        return array(
+        return [
             'page' => $page,
             'form' => $form->createView(),
             'rights' => $this->get('etu.wiki.permissions_checker'),
-        );
+        ];
     }
 
     /**
@@ -245,10 +245,10 @@ class MainController extends Controller
             }
         }
 
-        return array(
+        return [
             'pagelist' => $pagelist,
             'category' => $category,
             'rights' => $this->get('etu.wiki.permissions_checker'),
-        );
+        ];
     }
 }

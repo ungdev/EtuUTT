@@ -75,9 +75,9 @@ class EtuModuleDaymailBundle extends Module
      */
     public function getAvailablePermissions()
     {
-        return array(
+        return [
             new OrgaPermission('daymail', 'Peut modifier le daymail de l\'association'),
-        );
+        ];
     }
 
     /**
@@ -87,8 +87,8 @@ class EtuModuleDaymailBundle extends Module
      */
     public function getRequirements()
     {
-        return array(
+        return [
             'upload',
-        );
+        ];
     }
 }

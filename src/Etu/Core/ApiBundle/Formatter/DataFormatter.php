@@ -28,7 +28,7 @@ class DataFormatter
      *
      * @return Response
      */
-    public function format($request, $data = array(), $status = 200, $message = null)
+    public function format($request, $data = [], $status = 200, $message = null)
     {
         $data = array_merge($data, [
             'http' => [ // @TODO: remove this when everything is OAuth2 compatible

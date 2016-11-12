@@ -148,7 +148,7 @@ class HomeBuilder
             /*
              * Modules
              */
-            $modulesWhere = array('n.module = \'core\'', 'n.module = \'user\'');
+            $modulesWhere = ['n.module = \'core\'', 'n.module = \'user\''];
 
             foreach ($enabledModules as $module) {
                 $identifier = $module->getIdentifier();

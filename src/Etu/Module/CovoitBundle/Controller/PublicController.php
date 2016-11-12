@@ -150,10 +150,10 @@ class PublicController extends Controller
             // Add current user as subscriber
             $this->getSubscriptionsManager()->subscribe($this->getUser(), 'covoit', $covoit->getId());
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'covoit.messages.message_sent',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('covoiturage_view', [
                 'id' => $covoit->getId(),

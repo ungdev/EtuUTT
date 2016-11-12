@@ -23,17 +23,17 @@ class MainController extends Controller
 
         $user = new User();
         $search = false;
-        $users = array();
+        $users = [];
 
         $form = $this->createFormBuilder($user)
             ->setMethod('get')
-            ->add('fullName', null, array('required' => false))
-            ->add('studentId', null, array('required' => false))
-            ->add('phoneNumber', null, array('required' => false))
-            ->add('uvs', null, array('required' => false))
-            ->add('branch', ChoiceType::class, array('choices' => User::$branches, 'required' => false))
-            ->add('niveau', ChoiceType::class, array('choices' => User::$levels, 'required' => false))
-            ->add('personnalMail', null, array('required' => false))
+            ->add('fullName', null, ['required' => false])
+            ->add('studentId', null, ['required' => false])
+            ->add('phoneNumber', null, ['required' => false])
+            ->add('uvs', null, ['required' => false])
+            ->add('branch', ChoiceType::class, ['choices' => User::$branches, 'required' => false])
+            ->add('niveau', ChoiceType::class, ['choices' => User::$levels, 'required' => false])
+            ->add('personnalMail', null, ['required' => false])
             ->getForm();
 
         $form->handleRequest($request);
@@ -81,7 +81,7 @@ class MainController extends Controller
 
             if ($user->getPhoneNumber()) {
                 $phone = $user->getPhoneNumber();
-                $parts = array();
+                $parts = [];
 
                 if (strpos($phone, '.') !== false) {
                     $parts = explode('.', $phone);
@@ -127,10 +127,10 @@ class MainController extends Controller
             $users = $this->get('knp_paginator')->paginate($query, $page, 10);
         }
 
-        return array(
+        return [
             'form' => $form->createView(),
             'search' => $search,
             'pagination' => $users,
-        );
+        ];
     }
 }

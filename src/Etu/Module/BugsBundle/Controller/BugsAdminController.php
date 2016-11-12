@@ -62,10 +62,10 @@ class BugsAdminController extends Controller
             ->getOneOrNullResult();
 
         if (!$assignee) {
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'error',
                 'message' => 'bugs.bugs_admin.assign.assignee_not_found',
-            ));
+            ]);
         } else {
             $bug->setAssignee($assignee);
             $bug->setUpdatedAt(new \DateTime());
@@ -77,10 +77,10 @@ class BugsAdminController extends Controller
             $comment->setIssue($bug);
             $comment->setUser($this->getUser());
             $comment->setBody(
-                $this->get('translator')->trans('bugs.bugs_admin.assign.message', array(
+                $this->get('translator')->trans('bugs.bugs_admin.assign.message', [
                     '%adminName%' => $this->getUser()->getFullName(),
                     '%userName%' => $assignee->getFullName(),
-                ))
+                ])
             );
 
             $em->persist($comment);
@@ -89,16 +89,16 @@ class BugsAdminController extends Controller
             // Subscribe automatically the user at the issue
             $this->getSubscriptionsManager()->subscribe($assignee, 'issue', $bug->getId());
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'bugs.bugs_admin.assign.success',
-            ));
+            ]);
         }
 
-        return $this->redirect($this->generateUrl('bugs_view', array(
+        return $this->redirect($this->generateUrl('bugs_view', [
             'id' => $bug->getId(),
             'slug' => StringManipulationExtension::slugify($bug->getTitle()),
-        )));
+        ]));
     }
 
     /**
@@ -144,25 +144,25 @@ class BugsAdminController extends Controller
         $comment->setIssue($bug);
         $comment->setUser($this->getUser());
         $comment->setBody(
-            $this->get('translator')->trans('bugs.bugs_admin.unassign.message', array(
+            $this->get('translator')->trans('bugs.bugs_admin.unassign.message', [
                 '%adminName%' => $this->getUser()->getFullName(),
                 '%userName%' => $assignee->getFullName(),
-            ))
+            ])
         );
 
         $em->persist($comment);
 
         $em->flush();
 
-        $this->get('session')->getFlashBag()->set('message', array(
+        $this->get('session')->getFlashBag()->set('message', [
             'type' => 'success',
             'message' => 'bugs.bugs_admin.unassign.success',
-        ));
+        ]);
 
-        return $this->redirect($this->generateUrl('bugs_view', array(
+        return $this->redirect($this->generateUrl('bugs_view', [
             'id' => $bug->getId(),
             'slug' => StringManipulationExtension::slugify($bug->getTitle()),
-        )));
+        ]));
     }
 
     /**
@@ -196,17 +196,17 @@ class BugsAdminController extends Controller
             throw $this->createNotFoundException('Invalid slug');
         }
 
-        $criticalities = array(
+        $criticalities = [
             'bugs.criticality.60' => Issue::CRITICALITY_SECURITY,
             'bugs.criticality.50' => Issue::CRITICALITY_CRITICAL,
             'bugs.criticality.40' => Issue::CRITICALITY_MAJOR,
             'bugs.criticality.30' => Issue::CRITICALITY_MINOR,
             'bugs.criticality.20' => Issue::CRITICALITY_VISUAL,
             'bugs.criticality.10' => Issue::CRITICALITY_TYPO,
-        );
+        ];
 
         $updateForm = $this->createFormBuilder($bug)
-            ->add('criticality', ChoiceType::class, array('choices' => $criticalities))
+            ->add('criticality', ChoiceType::class, ['choices' => $criticalities])
             ->add('submit', SubmitType::class)
             ->getForm();
 
@@ -253,27 +253,27 @@ class BugsAdminController extends Controller
             $comment->setIssue($bug);
             $comment->setUser($this->getUser());
             $comment->setBody(
-                $this->get('translator')->trans('bugs.bugs_admin.criticality.message', array(
+                $this->get('translator')->trans('bugs.bugs_admin.criticality.message', [
                     '%adminName%' => $this->getUser()->getFullName(),
                     '%before%' => $before,
                     '%after%' => $after,
-                ))
+                ])
             );
 
             $em->persist($comment);
 
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'bugs.bugs_admin.criticality.success',
-            ));
+            ]);
         }
 
-        return $this->redirect($this->generateUrl('bugs_view', array(
+        return $this->redirect($this->generateUrl('bugs_view', [
             'id' => $bug->getId(),
             'slug' => StringManipulationExtension::slugify($bug->getTitle()),
-        )));
+        ]));
     }
 
     /**
@@ -315,9 +315,9 @@ class BugsAdminController extends Controller
         $comment->setIssue($bug);
         $comment->setUser($this->getUser());
         $comment->setBody(
-            $this->get('translator')->trans('bugs.bugs_admin.close.message', array(
+            $this->get('translator')->trans('bugs.bugs_admin.close.message', [
                 '%adminName%' => $this->getUser()->getFullName(),
-            ))
+            ])
         );
 
         $em->persist($comment);
@@ -336,15 +336,15 @@ class BugsAdminController extends Controller
 
         $this->getNotificationsSender()->send($notif);
 
-        $this->get('session')->getFlashBag()->set('message', array(
+        $this->get('session')->getFlashBag()->set('message', [
             'type' => 'success',
             'message' => 'bugs.bugs_admin.close.success',
-        ));
+        ]);
 
-        return $this->redirect($this->generateUrl('bugs_view', array(
+        return $this->redirect($this->generateUrl('bugs_view', [
             'id' => $bug->getId(),
             'slug' => StringManipulationExtension::slugify($bug->getTitle()),
-        )));
+        ]));
     }
 
     /**
@@ -386,24 +386,24 @@ class BugsAdminController extends Controller
         $comment->setIssue($bug);
         $comment->setUser($this->getUser());
         $comment->setBody(
-            $this->get('translator')->trans('bugs.bugs_admin.open.message', array(
+            $this->get('translator')->trans('bugs.bugs_admin.open.message', [
                 '%adminName%' => $this->getUser()->getFullName(),
-            ))
+            ])
         );
 
         $em->persist($comment);
 
         $em->flush();
 
-        $this->get('session')->getFlashBag()->set('message', array(
+        $this->get('session')->getFlashBag()->set('message', [
             'type' => 'success',
             'message' => 'bugs.bugs_admin.open.success',
-        ));
+        ]);
 
-        return $this->redirect($this->generateUrl('bugs_view', array(
+        return $this->redirect($this->generateUrl('bugs_view', [
             'id' => $bug->getId(),
             'slug' => StringManipulationExtension::slugify($bug->getTitle()),
-        )));
+        ]));
     }
 
     /**
@@ -437,9 +437,9 @@ class BugsAdminController extends Controller
             throw $this->createNotFoundException('Invalid slug');
         }
 
-        return array(
+        return [
             'bug' => $bug,
-        );
+        ];
     }
 
     /**
@@ -491,10 +491,10 @@ class BugsAdminController extends Controller
 
         $em->flush();
 
-        $this->get('session')->getFlashBag()->set('message', array(
+        $this->get('session')->getFlashBag()->set('message', [
             'type' => 'success',
             'message' => 'bugs.bugs_admin.delete.success',
-        ));
+        ]);
 
         return $this->redirect($this->generateUrl('bugs_index'));
     }

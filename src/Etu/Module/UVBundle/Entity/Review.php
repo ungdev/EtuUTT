@@ -22,14 +22,14 @@ class Review
     const TYPE_MIDTERM = 'midterm';
     const TYPE_FINAL = 'final';
 
-    public static $types = array(
+    public static $types = [
         self::TYPE_PARTIEL => 'uvs.reviews.partiel',
         self::TYPE_PARTIEL_1 => 'uvs.reviews.partiel_1',
         self::TYPE_PARTIEL_2 => 'uvs.reviews.partiel_2',
         self::TYPE_DM => 'uvs.reviews.dm',
         self::TYPE_MIDTERM => 'uvs.reviews.midterm',
         self::TYPE_FINAL => 'uvs.reviews.final',
-    );
+    ];
 
     /**
      * @var int
@@ -129,7 +129,7 @@ class Review
      */
     public static function availableSemesters()
     {
-        $semesters = array();
+        $semesters = [];
 
         for ($i = date('Y'); $i >= date('Y') - 15; --$i) {
             $semesters['P'.$i] = 'P'.$i;

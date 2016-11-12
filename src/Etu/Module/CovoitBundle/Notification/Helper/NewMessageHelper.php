@@ -38,8 +38,8 @@ class NewMessageHelper implements HelperInterface
      */
     public function render(Notification $notification)
     {
-        return $this->twig->render('EtuModuleCovoitBundle:Notification:newMessage.html.twig', array(
+        return $this->twig->render('EtuModuleCovoitBundle:Notification:newMessage.html.twig', [
             'notif' => $notification,
-        ));
+        ]);
     }
 }

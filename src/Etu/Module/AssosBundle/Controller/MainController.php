@@ -32,9 +32,9 @@ class MainController extends Controller
 
         $orgas = $this->get('knp_paginator')->paginate($query, $page, 10);
 
-        return array(
+        return [
             'pagination' => $orgas,
-        );
+        ];
     }
 
     /**
@@ -56,9 +56,9 @@ class MainController extends Controller
 
         $orgas = $this->get('knp_paginator')->paginate($query, $page, 10);
 
-        return array(
+        return [
             'pagination' => $orgas,
-        );
+        ];
     }
 
     /**
@@ -71,7 +71,7 @@ class MainController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /** @var $orga Organization */
-        $orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(array('login' => $login));
+        $orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(['login' => $login]);
 
         if (!$orga) {
             throw $this->createNotFoundException('Orga not found');
@@ -83,10 +83,10 @@ class MainController extends Controller
             $isElus = true;
         }
 
-        return array(
+        return [
             'orga' => $orga,
             'isElus' => $isElus,
-        );
+        ];
     }
 
     /**
@@ -101,7 +101,7 @@ class MainController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /** @var $orga Organization */
-        $orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(array('login' => $login));
+        $orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(['login' => $login]);
 
         if (!$orga) {
             throw $this->createNotFoundException('Orga not found');
@@ -120,8 +120,8 @@ class MainController extends Controller
             ->getQuery()
             ->getResult();
 
-        $office = array();
-        $members = array();
+        $office = [];
+        $members = [];
 
         foreach ($memberships as $membership) {
             if ($membership->isFromBureau()) {
@@ -131,10 +131,10 @@ class MainController extends Controller
             }
         }
 
-        return array(
+        return [
             'orga' => $orga,
             'office' => $office,
             'members' => $members,
-        );
+        ];
     }
 }

@@ -33,8 +33,8 @@ class SidebarRenderer
     {
         $blocks = $builder->getBlocks();
 
-        $positions = array();
-        $renderedBlocks = array();
+        $positions = [];
+        $renderedBlocks = [];
 
         foreach ($blocks as $key => $block) {
             $positions[$key] = $block->getPosition();
@@ -49,7 +49,7 @@ class SidebarRenderer
             $renderedBlocks[] = $block;
         }
 
-        return $this->twig->render('EtuCoreBundle:Menu:sidebar.html.twig', array('blocks' => $renderedBlocks));
+        return $this->twig->render('EtuCoreBundle:Menu:sidebar.html.twig', ['blocks' => $renderedBlocks]);
     }
 
     /**
@@ -63,8 +63,8 @@ class SidebarRenderer
     {
         $blocks = $builder->getBlocks();
 
-        $positions = array();
-        $renderedBlocks = array();
+        $positions = [];
+        $renderedBlocks = [];
 
         foreach ($blocks as $key => $block) {
             $positions[$key] = $block->getPosition();
@@ -79,7 +79,7 @@ class SidebarRenderer
             $renderedBlocks[] = $block;
         }
 
-        return $this->twig->render('EtuCoreBundle:Menu:sidebar_mobile.html.twig', array('blocks' => $renderedBlocks));
+        return $this->twig->render('EtuCoreBundle:Menu:sidebar_mobile.html.twig', ['blocks' => $renderedBlocks]);
     }
 
     /**
@@ -92,7 +92,7 @@ class SidebarRenderer
     public function renderBlock(SidebarBlockBuilder $builder)
     {
         $items = $builder->getItems();
-        $positions = array();
+        $positions = [];
 
         foreach ($items as $key => $item) {
             $positions[$key] = $item->getPosition();
@@ -100,13 +100,13 @@ class SidebarRenderer
 
         asort($positions);
 
-        $sortedItems = array();
+        $sortedItems = [];
 
         foreach ($positions as $key => $position) {
             $sortedItems[] = $items[$key];
         }
 
-        return $this->twig->render('EtuCoreBundle:Menu:sidebar_block.html.twig', array('items' => $sortedItems));
+        return $this->twig->render('EtuCoreBundle:Menu:sidebar_block.html.twig', ['items' => $sortedItems]);
     }
 
     /**
@@ -119,7 +119,7 @@ class SidebarRenderer
     public function renderMobileBlock(SidebarBlockBuilder $builder)
     {
         $items = $builder->getItems();
-        $positions = array();
+        $positions = [];
 
         foreach ($items as $key => $item) {
             $positions[$key] = $item->getPosition();
@@ -127,12 +127,12 @@ class SidebarRenderer
 
         asort($positions);
 
-        $sortedItems = array();
+        $sortedItems = [];
 
         foreach ($positions as $key => $position) {
             $sortedItems[] = $items[$key];
         }
 
-        return $this->twig->render('EtuCoreBundle:Menu:sidebar_mobile_block.html.twig', array('items' => $sortedItems));
+        return $this->twig->render('EtuCoreBundle:Menu:sidebar_mobile_block.html.twig', ['items' => $sortedItems]);
     }
 }

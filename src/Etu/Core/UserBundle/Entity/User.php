@@ -38,16 +38,16 @@ class User implements UserInterface, EquatableInterface, \Serializable
     const PRIVACY_PUBLIC = 100;
     const PRIVACY_PRIVATE = 200;
 
-    public static $branches = array(
+    public static $branches = [
         'ISI' => 'ISI', 'MTE' => 'MTE', 'SI' => 'SI',
         'SIT' => 'SIT', 'SM' => 'SM', 'SRT' => 'SRT',
         'TC' => 'TC', 'PMOM' => 'PMOM',
-    );
+    ];
 
-    public static $levels = array(
+    public static $levels = [
         '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5',
         '6' => '6', '7' => '7', '8' => '8', '9' => '9', '10' => '10',
-    );
+    ];
 
     /**
      * @var int
@@ -496,7 +496,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      *
      * @ORM\Column(type="array")
      */
-    protected $semestersHistory = array();
+    protected $semestersHistory = [];
 
     /**
      * Last visit date.
@@ -581,7 +581,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
         $this->isInLDAP = false;
         $this->readOnlyExpirationDate = null;
         $this->bannedExpirationDate = null;
-        $this->storedRoles = array();
+        $this->storedRoles = [];
         $this->avatar = 'default-avatar.png';
         $this->phoneNumberPrivacy = self::PRIVACY_PUBLIC;
         $this->sexPrivacy = self::PRIVACY_PUBLIC;
@@ -595,7 +595,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
         $this->personnalMailPrivacy = self::PRIVACY_PUBLIC;
         $this->options = new UserOptionsCollection();
         $this->badges = new ArrayCollection();
-        $this->permissions = array();
+        $this->permissions = [];
         $this->ldapInformations = new LdapUser();
         $this->uvs = '';
         $this->lastVisitHome = new \DateTime();
@@ -615,7 +615,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public static function availableBranches()
     {
-        $result = array();
+        $result = [];
 
         foreach (self::$branches as $branch) {
             foreach (self::$levels as $level) {
@@ -679,10 +679,10 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function getProfileCompletion()
     {
-        $infos = array(
+        $infos = [
             $this->phoneNumber, $this->sex, $this->nationality, $this->address, $this->postalCode, $this->city,
             $this->country, $this->birthday, $this->personnalMail,
-        );
+        ];
 
         $completion = 0;
         $count = 0;
@@ -703,7 +703,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function getTrombiCompletion()
     {
-        $infos = array($this->surnom, $this->jadis, $this->passions);
+        $infos = [$this->surnom, $this->jadis, $this->passions];
 
         $completion = 0;
         $count = 0;
@@ -2144,12 +2144,12 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function addCureentSemesterToHistory()
     {
-        $history = array(
+        $history = [
             'formation' => $this->formation,
             'niveau' => $this->niveau,
             'filiere' => $this->filiere,
             'uvs' => $this->getUvsList(),
-        );
+        ];
 
         $this->semestersHistory[SemesterManager::current()->getCode()] = $history;
 
@@ -2303,20 +2303,20 @@ class User implements UserInterface, EquatableInterface, \Serializable
         /*
          * Create a usable list
          */
-        $list = array();
+        $list = [];
 
         foreach ((array) BadgesManager::findBadgesList() as $serie => $badges) {
             foreach ((array) $badges as $level => $badge) {
                 if ($badge->getCountLevels() > 1) {
-                    $list[$serie][$level] = array(
+                    $list[$serie][$level] = [
                         'owned' => false,
                         'badge' => $badge,
-                    );
+                    ];
                 } else {
-                    $list['singles'][$serie] = array(
+                    $list['singles'][$serie] = [
                         'owned' => false,
                         'badge' => $badge,
-                    );
+                    ];
                 }
             }
         }
@@ -2346,7 +2346,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function getBadges2d()
     {
-        $badges = array();
+        $badges = [];
 
         foreach ($this->getBadgesList() as $serie) {
             foreach ($serie as $badge) {
@@ -2364,8 +2364,8 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function getLastBadges($count = 6)
     {
-        $badges = array();
-        $dates = array();
+        $badges = [];
+        $dates = [];
         $i = 0;
 
         /** @var $userBadge UserBadge */
@@ -2567,7 +2567,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public function serialize()
     {
         //Serialize only attributs used in equals method
-        return serialize(array(
+        return serialize([
             $this->id,
             $this->login,
             $this->password,
@@ -2577,7 +2577,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
             $this->readOnlyExpirationDate,
             $this->bannedExpirationDate,
             $this->storedRoles,
-        ));
+        ]);
     }
 
     /**

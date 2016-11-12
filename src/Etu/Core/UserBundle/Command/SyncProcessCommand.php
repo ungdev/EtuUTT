@@ -157,7 +157,7 @@ but if they want to connect, you will have to set a password for them.
                 $item->remove();
                 $output->writeln("\n1 flagged as not in LDAP anymore");
             } else {
-                $logins = array();
+                $logins = [];
 
                 /** @var $item ElementToRemove */
                 foreach ($usersRemoveIterator as $item) {
