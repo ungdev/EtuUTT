@@ -29,7 +29,6 @@
             'assets/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css'
             'assets/vendor/bootstrap/docs/assets/css/bootstrap.css'
             'assets/vendor/bootstrap/docs/assets/css/bootstrap-responsive.css'
-            'assets/vendor/font-awesome/css/font-awesome.min.css'
             'assets/vendor/tipsy/src/stylesheets/tipsy.css'
             'assets/vendor/facebox/src/facebox.css'
             'assets/vendor/swipebox/src/css/swipebox.min.css'
@@ -53,6 +52,9 @@
                 <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
             {% endstylesheets %}
         {% endif %}
+
+        {# CSS CDN #}
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
         {% block stylesheets %}{% endblock %}
 
