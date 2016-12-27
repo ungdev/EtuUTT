@@ -60,6 +60,16 @@ class OauthClient
     private $name;
 
     /**
+     * A trusted app don't needs user authencation and autorisation
+     * to access user data.
+     *
+     * @var bool
+     *
+     * @ORM\Column(type="string", length=80)
+     */
+    private $trusted = false;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string", length=2000, nullable=false)
@@ -237,6 +247,30 @@ class OauthClient
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set if trusted.
+     *
+     * @param bool $trusted
+     *
+     * @return OauthClient
+     */
+    public function setTrusted($trusted)
+    {
+        $this->trusted = $trusted;
+
+        return $this;
+    }
+
+    /**
+     * Is trusted.
+     *
+     * @return bool
+     */
+    public function getTrusted()
+    {
+        return $this->trusted;
     }
 
     /**
