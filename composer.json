@@ -81,7 +81,8 @@
         "bower-asset/codemirror": "5.14.*",
         "bower-asset/font-awesome": "4.6.0",
         "bower-asset/highlightjs": "9.7.0",
-        "bower-asset/videojs": "5.11.7"
+        "bower-asset/videojs": "5.11.7",
+        "nelmio/cors-bundle": "^1.4"
     },
     "minimum-stability": "stable",
     "require-dev": {

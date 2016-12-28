@@ -19,7 +19,7 @@ class AppKernel extends EtuKernel
      */
     public function registerBundles()
     {
-        $bundles = [
+        $bundles = array(
             // Symfony
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             // Security management (authorization and authentication)
@@ -54,14 +54,16 @@ class AppKernel extends EtuKernel
             new Sonata\IntlBundle\SonataIntlBundle(),
             // Api documentation
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
+            // Api Cross-origin configuration
+            new Nelmio\CorsBundle\NelmioCorsBundle(),
 
             // EtuUTT
             new Etu\Core\CoreBundle\EtuCoreBundle(),
             new Etu\Core\UserBundle\EtuUserBundle(),
             new Etu\Core\ApiBundle\EtuCoreApiBundle(),
-        ];
+        );
 
-        if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
+        if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
