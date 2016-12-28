@@ -164,22 +164,17 @@ class SecurityController extends ApiController
             'user' => $user,
         ));
 
-        if ($client->getTrusted()) {
-            $authorizationCode = new OauthAuthorizationCode();
-            $authorizationCode->setUser($user);
-            $authorizationCode->setClient($client);
-            $authorizationCode->generateCode();
-
-            return $this->redirect($client->getRedirectUri().'?authorization_code='.$authorizationCode->getCode().'&code='.$authorizationCode->getCode());
-        } elseif ($authorization) {
+        if ($authorization || $client->getTrusted()) {
             $authorizationScopes = array();
 
-            foreach ($authorization->getScopes() as $scope) {
-                $authorizationScopes[] = $scope->getName();
-            }
+            if ($authorization) {
+                foreach ($authorization->getScopes() as $scope) {
+                    $authorizationScopes[] = $scope->getName();
+                }
 
-            // Compare scopes : if more requested, reask authorization, otherwise redirect
-            $newScopes = array_diff($requestedScopes, $authorizationScopes);
+                // Compare scopes : if more requested, reask authorization, otherwise redirect
+                $newScopes = array_diff($requestedScopes, $authorizationScopes);
+            }
 
             if (empty($newScopes)) {
                 $authorizationCode = new OauthAuthorizationCode();
@@ -187,8 +182,10 @@ class SecurityController extends ApiController
                 $authorizationCode->setClient($client);
                 $authorizationCode->generateCode();
 
-                foreach ($authorization->getScopes() as $scope) {
-                    $authorizationCode->addScope($scope);
+                if ($authorization) {
+                    foreach ($authorization->getScopes() as $scope) {
+                        $authorizationCode->addScope($scope);
+                    }
                 }
 
                 $em->persist($authorizationCode);
@@ -346,7 +343,7 @@ class SecurityController extends ApiController
             return $this->format(array(
                 'error' => 'invalid_client',
                 'error_message' => 'Client credentials are invalid',
-            ), 401);
+            ), 401, [], $request);
         }
 
         /** @var OauthServer $server */
@@ -363,9 +360,9 @@ class SecurityController extends ApiController
                 'error' => 'grant_type_error',
                 'error_message' => $exception->getMessage(),
                 'received_request' => $request->request->all(),
-            ), 400);
+            ), 400, [], $request);
         }
 
-        return $this->format($server->formatToken($grantType, $token));
+        return $this->format($server->formatToken($grantType, $token), 200, [], $request);
     }
 }
