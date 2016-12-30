@@ -40,16 +40,16 @@ class PrivateUserController extends ApiController
      * @Method("GET")
      * @Scope("private_user_account")
      */
-    public function accountAction()
+    public function accountAction(Request $request)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $user = $em->getRepository('EtuUserBundle:User')->find($this->getAccessToken()->getUser());
+        $user = $em->getRepository('EtuUserBundle:User')->find($this->getAccessToken($request)->getUser());
 
         return $this->format([
             'data' => $this->get('etu.api.user.private_transformer')->transform($user),
-        ]);
+        ], 200, [], $request);
     }
 
     /**
@@ -64,12 +64,12 @@ class PrivateUserController extends ApiController
      * @Method("GET")
      * @Scope("private_user_schedule")
      */
-    public function scheduleAction()
+    public function scheduleAction(Request $request)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $courses = $em->getRepository('EtuUserBundle:Course')->findBy(['user' => $this->getAccessToken()->getUser()]);
+        $courses = $em->getRepository('EtuUserBundle:Course')->findBy(['user' => $this->getAccessToken($request)->getUser()]);
 
         // Order results
         $days = [];
@@ -103,7 +103,7 @@ class PrivateUserController extends ApiController
 
         return $this->format([
             'data' => $this->get('etu.api.course.transformer')->transform($courses),
-        ]);
+        ], 200, [], $request);
     }
 
     /**
@@ -126,10 +126,10 @@ class PrivateUserController extends ApiController
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $user = $em->getRepository('EtuUserBundle:User')->find($this->getAccessToken()->getUser());
+        $user = $em->getRepository('EtuUserBundle:User')->find($this->getAccessToken($request)->getUser());
 
         return $this->format([
             'data' => $this->get('etu.api.user_orgas_private.transformer')->transform($user->getMemberships()->toArray(), EmbedBag::createFromRequest($request)),
-        ]);
+        ], 200, [], $request);
     }
 }

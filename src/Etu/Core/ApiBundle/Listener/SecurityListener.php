@@ -46,8 +46,6 @@ class SecurityListener
     public function onKernelRequest(GetResponseEvent $event)
     {
         if (strpos($event->getRequest()->attributes->get('_controller'), 'Api\\Resource') !== false) {
-            header('Access-Control-Allow-Origin: *');
-
             $controller = explode('::', $event->getRequest()->attributes->get('_controller'));
             $reflection = new \ReflectionMethod($controller[0], $controller[1]);
 

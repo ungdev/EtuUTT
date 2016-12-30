@@ -79,7 +79,7 @@ class PublicUsersListController extends ApiController
             ],
             'embed' => $embedBag->getMap(['badges']),
             'data' => $this->get('etu.api.user.transformer')->transform($pagination->getItems(), $embedBag),
-        ]);
+        ], 200, [], $request);
     }
 
     /**
@@ -94,12 +94,12 @@ class PublicUsersListController extends ApiController
      * @Route("/public/users/{login}", name="api_public_users_view")
      * @Method("GET")
      */
-    public function viewAction(User $user)
+    public function viewAction(User $user, Request $request)
     {
         return $this->format([
             'embed' => ['badges' => true],
             'data' => $this->get('etu.api.user.transformer')->transform($user, new EmbedBag(['badges'])),
-        ]);
+        ], 200, [], $request);
     }
 
     /**
@@ -114,7 +114,7 @@ class PublicUsersListController extends ApiController
      * @Route("/public/users/{login}/badges", name="api_public_users_badges")
      * @Method("GET")
      */
-    public function badgesAction(User $user)
+    public function badgesAction(User $user, Request $request)
     {
         $badges = [];
 
@@ -124,7 +124,7 @@ class PublicUsersListController extends ApiController
 
         return $this->format([
             'data' => $this->get('etu.api.badge.transformer')->transform($badges),
-        ]);
+        ], 200, [], $request);
     }
 
     /**

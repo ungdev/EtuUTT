@@ -72,7 +72,7 @@ class PublicOrgasListController extends ApiController
             ],
             'embed' => $embedBag->getMap(['members']),
             'data' => $this->get('etu.api.orga.transformer')->transform($pagination->getItems(), $embedBag),
-        ]);
+        ], 200, [], $request);
     }
 
     /**
@@ -89,12 +89,12 @@ class PublicOrgasListController extends ApiController
      * @Route("/public/orgas/{login}", name="api_public_orgas_view")
      * @Method("GET")
      */
-    public function viewAction(Organization $orga)
+    public function viewAction(Organization $orga, Request $request)
     {
         return $this->format([
             'embed' => ['members' => true],
             'data' => $this->get('etu.api.orga.transformer')->transform($orga, new EmbedBag(['members'])),
-        ]);
+        ], 200, [], $request);
     }
 
     /**

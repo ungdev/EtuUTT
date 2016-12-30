@@ -164,17 +164,30 @@ class SecurityController extends ApiController
             'user' => $user,
         ));
 
-        if ($authorization || $client->getTrusted()) {
+        if ($client->getTrusted()) {
+            $authorizationCode = new OauthAuthorizationCode();
+            $authorizationCode->setUser($user);
+            $authorizationCode->setClient($client);
+            $authorizationCode->generateCode();
+
+            // We take all scope decler
+            foreach ($authorization->getScopes() as $scope) {
+                $authorizationCode->addScope($scope);
+            }
+
+            $em->persist($authorizationCode);
+            $em->flush();
+
+            return $this->redirect($client->getRedirectUri().'?authorization_code='.$authorizationCode->getCode().'&code='.$authorizationCode->getCode());
+        } elseif ($authorization) {
             $authorizationScopes = array();
 
-            if ($authorization) {
-                foreach ($authorization->getScopes() as $scope) {
-                    $authorizationScopes[] = $scope->getName();
-                }
-
-                // Compare scopes : if more requested, reask authorization, otherwise redirect
-                $newScopes = array_diff($requestedScopes, $authorizationScopes);
+            foreach ($authorization->getScopes() as $scope) {
+                $authorizationScopes[] = $scope->getName();
             }
+
+            // Compare scopes : if more requested, reask authorization, otherwise redirect
+            $newScopes = array_diff($requestedScopes, $authorizationScopes);
 
             if (empty($newScopes)) {
                 $authorizationCode = new OauthAuthorizationCode();
@@ -182,10 +195,8 @@ class SecurityController extends ApiController
                 $authorizationCode->setClient($client);
                 $authorizationCode->generateCode();
 
-                if ($authorization) {
-                    foreach ($authorization->getScopes() as $scope) {
-                        $authorizationCode->addScope($scope);
-                    }
+                foreach ($authorization->getScopes() as $scope) {
+                    $authorizationCode->addScope($scope);
                 }
 
                 $em->persist($authorizationCode);
