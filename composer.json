@@ -16,14 +16,12 @@
             "Tests\\": "tests/"
         }
     },
-
     "repositories": [
         {
             "type": "vcs",
             "url": "https://github.com/garak/FrequenceWebCalendRBundle"
         }
     ],
-
     "require": {
         "php": ">=5.5.9",
         "ext-mbstring": "*",
@@ -60,6 +58,7 @@
         "symfony/assetic-bundle": "^2.3",
         "leafo/scssphp": "^0.6.6",
         "patchwork/jsqueeze": "^2.0",
+        "nelmio/cors-bundle": "^1.4",
 
 	"bower-asset/bootstrap": "2.3.*",
         "bower-asset/facebox": "*",
@@ -81,8 +80,7 @@
         "bower-asset/codemirror": "5.14.*",
         "bower-asset/font-awesome": "4.6.0",
         "bower-asset/highlightjs": "9.7.0",
-        "bower-asset/videojs": "5.11.7",
-        "nelmio/cors-bundle": "^1.4"
+        "bower-asset/videojs": "5.11.7"
     },
     "minimum-stability": "stable",
     "require-dev": {
