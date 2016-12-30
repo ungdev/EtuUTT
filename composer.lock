@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a2bc304f14186ca646e4eb157f77b369",
+    "content-hash": "dc73eb4607fb85238451b147077458e6",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -135,38 +135,19 @@
         },
         {
             "name": "bower-asset/codemirror",
-            "version": "5.14.2",
+            "version": "5.21.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/codemirror/bower.git",
-                "reference": "c50b08ba4411a68dce8050f3d283fb9cc2b5f8cf"
+                "url": "https://github.com/components/codemirror.git",
+                "reference": "e2f8466a372b7295432c92a11316768fdf9c4d40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codemirror/bower/zipball/c50b08ba4411a68dce8050f3d283fb9cc2b5f8cf",
-                "reference": "c50b08ba4411a68dce8050f3d283fb9cc2b5f8cf",
+                "url": "https://api.github.com/repos/components/codemirror/zipball/e2f8466a372b7295432c92a11316768fdf9c4d40",
+                "reference": "e2f8466a372b7295432c92a11316768fdf9c4d40",
                 "shasum": ""
             },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": [
-                    "lib/codemirror.js",
-                    "lib/codemirror.css"
-                ],
-                "bower-asset-ignore": [
-                    "**/.*",
-                    "node_modules",
-                    "components",
-                    "bin",
-                    "demo",
-                    "doc",
-                    "test",
-                    "index.html",
-                    "package.json",
-                    "mode/*/*test.js",
-                    "mode/*/*.html"
-                ]
-            }
+            "type": "bower-asset-library"
         },
         {
             "name": "bower-asset/facebox",
