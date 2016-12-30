@@ -30,7 +30,7 @@ class MainController extends Controller
 
         /** @var string $root */
         $root = EtuModuleArgentiqueBundle::getPhotosRoot();
-        $cache_root = $this->get('kernel')->getRootDir().'/cache/';
+        $cache_root = $this->container->getParameter('kernel.cache_dir').'/';
 
         if (!file_exists($root.'/'.$file)) {
             throw $this->createNotFoundException('Picture not found');
@@ -56,7 +56,7 @@ class MainController extends Controller
 
         /** @var string $root */
         $root = EtuModuleArgentiqueBundle::getPhotosRoot();
-        $cache_root = $this->get('kernel')->getRootDir().'/cache/';
+        $cache_root = $this->container->getParameter('kernel.cache_dir').'/';
         $web_root = $this->get('kernel')->getRootDir().'/../web/';
 
         $imagine = new Imagine();
