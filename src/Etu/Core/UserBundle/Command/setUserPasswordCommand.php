@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Console\Question\Question;
 
 class setUserPasswordCommand extends ContainerAwareCommand
 {
@@ -29,7 +30,7 @@ class setUserPasswordCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getHelperSet()->get('dialog');
+        $helper = $this->getHelper('question');
 
         $output->writeln('
 	Welcome to the EtuUTT users manager
@@ -43,7 +44,7 @@ This command will help you to set the password of an user to let him connect as 
         $em = $this->getContainer()->get('doctrine')->getManager();
 
         while (!$user instanceof User) {
-            $login = $dialog->ask($output, 'User login: ');
+            $login = $helper->ask($input, $output, new Question('User login: '));
 
             $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $login]);
 
@@ -55,8 +56,9 @@ This command will help you to set the password of an user to let him connect as 
         $confirm = null;
 
         while (!$password || $confirm != $password) {
-            $password = $dialog->askHiddenResponse($output, 'Password: ', false);
-            $confirm = $dialog->askHiddenResponse($output, 'Confirm password: ', false);
+            $question = new Question('What is the database password?');
+            $password = $helper->ask($input, $output, (new Question('Password: '))->setHidden(true), false);
+            $confirm = $helper->ask($input, $output, (new Question('Confirm password: '))->setHidden(true), false);
 
             if ($confirm != $password) {
                 $output->writeln("Password and its confirmation are different. Please retry.\n");

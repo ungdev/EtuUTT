@@ -15,6 +15,7 @@ use Etu\Core\UserBundle\Sync\Synchronizer;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 
 class SyncProcessCommand extends ContainerAwareCommand
 {
@@ -37,7 +38,7 @@ class SyncProcessCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getHelperSet()->get('dialog');
+        $helper = $this->getHelper('question');
 
         $output->writeln('
 	Welcome to the EtuUTT users manager
@@ -73,7 +74,7 @@ but if they want to connect, you will have to set a password for them.
 
         $output->write("\n");
 
-        $startNow = $dialog->ask($output, 'Start the synchronization now (y/n) [y]? ', 'y') == 'y';
+        $startNow = $helper->ask($input, $output, new Question('Start the synchronization now (y/n) [y]? ', 'y')) == 'y';
 
         if (!$startNow) {
             $output->writeln("Aborted.\n");

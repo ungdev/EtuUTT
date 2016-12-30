@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Console\Question\Question;
 
 class generatePasswordForUserCommand extends ContainerAwareCommand
 {
@@ -29,7 +30,7 @@ class generatePasswordForUserCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getHelperSet()->get('dialog');
+        $helper = $this->getHelper('question');
 
         $output->writeln('
 	Welcome to the EtuUTT users manager
@@ -49,7 +50,7 @@ This command will help you to set generate a random password for an user to let 
         $em = $this->getContainer()->get('doctrine')->getManager();
 
         while (!$user instanceof User) {
-            $login = $dialog->ask($output, 'User login: ');
+            $login = $helper->ask($input, $output, new Question('User login: '));
 
             $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $login]);
 
@@ -60,7 +61,7 @@ This command will help you to set generate a random password for an user to let 
 
         $output->writeln('User found: '.$user->getFirstName().' '.$user->getLastName());
 
-        $email = $dialog->ask($output, 'External email ['.$user->getPersonnalMail().']: ', $user->getPersonnalMail());
+        $email = $helper->ask($input, $output, new Question('External email ['.$user->getPersonnalMail().']: ', $user->getPersonnalMail()));
         $user->setPersonnalMail($email);
 
         // Generate password

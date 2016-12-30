@@ -5,6 +5,7 @@ namespace Etu\Core\CoreBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 
 class GenerateModuleCommand extends ContainerAwareCommand
 {
@@ -34,7 +35,7 @@ class GenerateModuleCommand extends ContainerAwareCommand
     {
         $this->modulesDirectory = __DIR__.'/../../../Module/';
 
-        $dialog = $this->getHelperSet()->get('dialog');
+        $helper = $this->getHelper('question');
 
         $output->writeln('
 
@@ -49,9 +50,9 @@ Its name is the bundle name without the "Bundle" prefix.
 For instance, the UVBundle module name is "UV".
 ');
 
-        $name = $dialog->ask(
-            $output,
-            'Module name: '
+        $name = $helper->ask(
+            $input, $output,
+            new Question('Module name: ')
         );
 
         if (file_exists($this->modulesDirectory.'/'.$name.'Bundle')) {
@@ -68,9 +69,9 @@ For instance, the UVBundle module name is "UV".
                 'For instance, the UVBundle module identifier is "uv".'."\n"
         );
 
-        $identifier = $dialog->ask(
-            $output,
-            'Module identifier: '
+        $identifier = $helper->ask(
+            $input, $output,
+            new Question('Module identifier: ')
         );
 
         $this->createTree($name);

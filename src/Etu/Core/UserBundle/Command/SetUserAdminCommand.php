@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Console\Question\Question;
 
 class SetUserAdminCommand extends ContainerAwareCommand
 {
@@ -29,7 +30,7 @@ class SetUserAdminCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getHelperSet()->get('dialog');
+        $helper = $this->getHelper('question');
 
         $output->writeln('
 	Welcome to the EtuUTT users grant tool
@@ -43,7 +44,7 @@ This command will help you to promote given user as global admin.
         $em = $this->getContainer()->get('doctrine')->getManager();
 
         while (!$user instanceof User) {
-            $login = $dialog->ask($output, 'User login: ');
+            $login = $helper->ask($input, $output, new Question('User login: '));
 
             $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $login]);
 

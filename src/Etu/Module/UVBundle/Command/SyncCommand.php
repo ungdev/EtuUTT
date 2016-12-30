@@ -4,12 +4,12 @@ namespace Etu\Module\UVBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Etu\Core\UserBundle\Command\Util\ProgressBar;
-use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Etu\Module\UVBundle\Entity\UV;
+use Symfony\Component\Console\Question\Question;
 
 class SyncCommand extends ContainerAwareCommand
 {
@@ -54,8 +54,7 @@ databsse, it will only update them.
         /** @var EntityManager $em */
         $em = $container->get('doctrine')->getManager();
 
-        /** @var DialogHelper $dialog */
-        $dialog = $this->getHelperSet()->get('dialog');
+        $helper = $this->getHelper('question');
 
         /*
          * Loading registry
@@ -137,7 +136,7 @@ databsse, it will only update them.
             return;
         }
 
-        $startNow = $dialog->ask($output, 'Start the synchronization now (y/n) [y]? ', 'y') == 'y';
+        $startNow = $helper->ask($input, $output, new Question('Start the synchronization now (y/n) [y]? ', 'y')) == 'y';
 
         if (!$startNow) {
             $output->writeln("Aborted.\n");

@@ -4,16 +4,18 @@ namespace Etu\Core\ApiBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Etu\Core\ApiBundle\Entity\OauthClient;
+use Etu\Core\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 
 class CreateClientCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
         $this
-            ->setName('oauth:create-client')
+            ->setName('etu:oauth:create-client')
             ->setDescription('Create a OAuth2 client')
         ;
     }
@@ -23,12 +25,22 @@ class CreateClientCommand extends ContainerAwareCommand
         /** @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine')->getManager();
 
-        $dialog = $this->getHelperSet()->get('dialog');
+        $helper = $this->getHelper('question');
 
         $client = new OauthClient();
-        $client->setName($dialog->ask($output, 'Name: '));
-        $client->setUserId($dialog->ask($output, 'Owner ID: '));
-        $client->setRedirectUri($dialog->ask($output, 'Redirect URL: '));
+        $client->setName($helper->ask($input, $output, new Question('Name: ')));
+        $user = null;
+        while (!$user instanceof User) {
+            $login = $helper->ask($input, $output, new Question('Owner login: '));
+
+            $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $login]);
+
+            if (!$user) {
+                $output->writeln("The given login can not be found. Please retry.\n");
+            }
+        }
+        $client->setUser($user);
+        $client->setRedirectUri($helper->ask($input, $output, new Question('Redirect URL: ')));
 
         $client->generateClientId();
         $client->generateClientSecret();
