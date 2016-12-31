@@ -6,7 +6,7 @@
 
 {% block javascripts %}
     {% if not app.user.getFirstLogin() %}
-        <script type="text/javascript" src="{{ asset('vendor/jquery-impromptu/dist/jquery-impromptu.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/vendor/jquery-impromptu/dist/jquery-impromptu.min.js') }}"></script>
         <script type="text/javascript">
         var tourSubmitFunc = function(e,v,m,f){
                     if(v === -1){
