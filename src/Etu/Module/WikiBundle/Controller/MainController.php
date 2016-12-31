@@ -47,7 +47,7 @@ class MainController extends Controller
     }
 
     /**
-     * @Route("/wiki/edit/{category}/{slug}", requirements={"category" = "[a-z0-9-]+", "slug" = "[a-z0-9-/]+"}, name="wiki_edit")
+     * @Route("/wiki/edit/{category}/{slug}", defaults={"new"=false}, requirements={"category" = "[a-z0-9-]+", "slug" = "[a-z0-9-/]+"}, name="wiki_edit")
      * @Route("/wiki/new/{category}/{slug}", defaults={"new"=true}, requirements={"category" = "[a-z0-9-]+", "slug" = "[a-z0-9-/]*"}, name="wiki_new")
      * @Template()
      */
@@ -92,7 +92,7 @@ class MainController extends Controller
             $result = $em->createQueryBuilder()
                 ->select('p.title, p.slug, p.readRight, IDENTITY(p.organization) as organization_id')
                 ->from('EtuModuleWikiBundle:WikiPage', 'p', 'p.slug')
-                ->leftJoin('EtuModuleWikiBundle:WikiPage', 'p2', 'WITH',  'p.slug = p2.slug AND p.createdAt < p2.createdAt')
+                ->leftJoin('EtuModuleWikiBundle:WikiPage', 'p2', 'WITH', 'p.slug = p2.slug AND p.createdAt < p2.createdAt')
                 ->where('p2.slug IS NULL')
                 ->where('p.category = :category')->setParameter(':category', $category)
                 ->orderBy('p.slug', 'ASC')
@@ -225,7 +225,7 @@ class MainController extends Controller
         $result = $em->createQueryBuilder()
             ->select('p')
             ->from('EtuModuleWikiBundle:WikiPage', 'p')
-            ->leftJoin('EtuModuleWikiBundle:WikiPage', 'p2', 'WITH',  'p.slug = p2.slug AND p.createdAt < p2.createdAt')
+            ->leftJoin('EtuModuleWikiBundle:WikiPage', 'p2', 'WITH', 'p.slug = p2.slug AND p.createdAt < p2.createdAt')
             ->where('p2.slug IS NULL')
             ->where('p.category = :category')->setParameter(':category', $category)
             ->orderBy('p.slug', 'ASC')
