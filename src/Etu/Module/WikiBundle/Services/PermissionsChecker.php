@@ -142,7 +142,7 @@ class PermissionsChecker
         if ($organization) {
             // Check if user is in organization
             $membership = $this->memberships[$organization->getId()] ?? null;
-            if ($membership) {
+            if ($membership || $this->authorizationChecker->isGranted('ROLE_WIKI_ADMIN')) {
                 return true;
             }
         }
@@ -179,7 +179,8 @@ class PermissionsChecker
      */
     public function has($right, $organization_id = null)
     {
-        if ($this->authorizationChecker->isGranted('ROLE_WIKI_ADMIN')) {
+        if ($this->authorizationChecker->isGranted('ROLE_WIKI_ADMIN')
+            && ($organization_id != null || !in_array($right, [WikiPage::RIGHT['ORGA_ADMIN'], WikiPage::RIGHT['ORGA_MEMBER']]))) {
             return true;
         }
 
@@ -187,13 +188,13 @@ class PermissionsChecker
             case WikiPage::RIGHT['ADMIN']:
                 return false;
             case WikiPage::RIGHT['ORGA_ADMIN']:
-                $membership = $this->membership[$organization_id] ?? null;
+                $membership = $this->memberships[$organization_id] ?? null;
                 if (count($membership) && $membership->hasPermission('wiki')) {
                     return true;
                 }
                 break;
             case WikiPage::RIGHT['ORGA_MEMBER']:
-                $membership = $this->membership[$organization_id] ?? null;
+                $membership = $this->memberships[$organization_id] ?? null;
                 if (count($membership)) {
                     return true;
                 }

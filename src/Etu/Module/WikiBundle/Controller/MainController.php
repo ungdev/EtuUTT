@@ -138,7 +138,7 @@ class MainController extends Controller
             }
         }
         $form = $form->add('readRight', ChoiceType::class, ['choices' => $choices, 'required' => true, 'label' => 'wiki.main.edit.readRight']);
-        unset($choices[WikiPage::RIGHT['ALL']]);
+        unset($choices['wiki.main.right.'.WikiPage::RIGHT['ALL']]);
         if (count($choices) > 1) {
             $form = $form->add('editRight', ChoiceType::class, ['choices' => $choices, 'required' => true, 'label' => 'wiki.main.edit.editRight']);
         }
