@@ -615,7 +615,7 @@ sceditor.sceditor({
         breakStartBlock: false,
         breakEndBlock: false,
     },
-    style: '/min/etuutt.css',
+    style: '/assets/min/etuutt.css',
     emoticonsRoot: '/',
     locale: 'fr',
     toolbar:
