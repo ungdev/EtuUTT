@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -144,7 +145,7 @@ class MainController extends Controller
 
         // "Print" content
         $response = new BinaryFileResponse($this->getKernel()->getRootDir().'/../web/uploads/users_files/'.$file->getId());
-        if ($download == 'download') {
+        if ($download == 'download' || $file->getExtension() == 'html') {
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $file->getName().'.'.$file->getExtension());
         }
 
