@@ -245,6 +245,7 @@ tinymce.init({
     table_default_styles: {
         width: 'auto'
     },
+    language_url: '/assets/js/TinyMCE/lang/fr_FR.js',
 });
 
 
@@ -308,5 +309,6 @@ tinymce.init({
         var orga = $('#'+editor.id).data('organization');
         editor.settings.images_upload_url = Routing.generate('upload_editor', {'organization': orga});
     },
+    language_url: '/assets/js/TinyMCE/lang/fr_FR.js',
 });
 
