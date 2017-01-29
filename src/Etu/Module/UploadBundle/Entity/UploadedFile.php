@@ -99,8 +99,7 @@ class UploadedFile
      * @var string
      *
      * @ORM\Column(type="text")
-     * @Assert\NotBlank()
-     * @Assert\Length(min = "5")
+     * @Assert\Length(min = "3")
      */
     protected $description;
 
@@ -119,6 +118,7 @@ class UploadedFile
     {
         $this->createdAt = new \DateTime();
         $this->readRight = self::RIGHT['ALL'];
+        $this->description = '';
     }
 
     /**
@@ -308,7 +308,7 @@ class UploadedFile
      */
     public function setDescription($description)
     {
-        $this->description = $description;
+        $this->description = $description ?? '';
 
         return $this;
     }

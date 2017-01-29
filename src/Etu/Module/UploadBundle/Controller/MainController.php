@@ -43,7 +43,7 @@ class MainController extends Controller
 
         $form = $this->createFormBuilder($file)
             ->add('name', TextType::class, ['label' => 'upload.main.index.name'])
-            ->add('description', TextareaType::class, ['label' => 'upload.main.index.description']);
+            ->add('description', TextareaType::class, ['label' => 'upload.main.index.description', 'required' => false]);
 
         $organization_id = ($organization) ? $organization->getId() : null;
         $organization_name = ($organization) ? $organization->getName() : null;
@@ -247,7 +247,7 @@ class MainController extends Controller
 
         $form = $this->createFormBuilder($file)
             ->add('name', TextType::class, ['label' => 'upload.main.index.name'])
-            ->add('description', TextareaType::class, ['label' => 'upload.main.index.description']);
+            ->add('description', TextareaType::class, ['label' => 'upload.main.index.description', 'required' => false]);
 
         $organization_id = ($file->getOrganization()) ? $file->getOrganization()->getId() : null;
         $organization_name = ($file->getOrganization()) ? $file->getOrganization()->getName() : null;
