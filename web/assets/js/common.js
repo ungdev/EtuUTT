@@ -385,6 +385,7 @@ $(document).ready(function() {
         hljs.highlightBlock(block);
     });
 });
+$('.language-auto').addClass('language-').removeClass('language-auto');
 
 // Upload popup link
 $('.upload-popup').click(function() {

@@ -86,6 +86,7 @@ tinymce.init({
         editor.settings.link_list = Routing.generate('wiki_linklist', {'organization': orga});
     },
     codesample_languages: [
+        {text: 'Auto', value: 'auto'},
         {text: 'Plain text', value: 'nohighlight'},
         {text: '1C', value: '1c'},
         {text: 'ABNF', value: 'abnf'},
