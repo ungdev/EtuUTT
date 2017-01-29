@@ -94,11 +94,6 @@ services:
         tags:
             - { name: twig.extension }
 
-    etu.decoda.filter.videojs:
-        class: Etu\Core\CoreBundle\Framework\Twig\VideojsFilter
-        tags:
-            - { name: fm_bbcode.decoda.filter, id: videojs }
-
     # Global accessor
     etu.twig.global_accessor:
         class: Etu\Core\CoreBundle\Framework\Twig\GlobalAccessorObject

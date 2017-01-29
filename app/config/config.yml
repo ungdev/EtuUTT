@@ -131,22 +131,6 @@ stof_doctrine_extensions:
             softdeleteable: true
             uploadable:     false
 
-## FMBbcode
-fm_bbcode:
-    config:
-        templates:
-            - path: "@EtuCoreBundle/Resources/views/bbcodeTemplates"
-    emoticon:
-        path: /assets/img/emoticons/
-    filter_sets:
-        default_filter:
-            locale: "%locale%"
-            strict: false
-            xhtml: true
-            filters: [ default, block, text, code, image, list, table, quote, video, url, videojs, email ]
-            whitelist: [ 'b', 'i', 's', 'hr', 'abbr', 'float', 'alert', 'note', 'left', 'center', 'right', 'justify', 'code', 'source', 'email', 'img', 'ul', 'ol', 'li', 'quote', 'h2', 'h3', 'h4', 'h5', 'h6', 'url', 'youtube', 'videojs', 'table', 'tr', 'td']
-            hooks: [ clickable, emoticon ]
-
 # API Doc
 nelmio_api_doc:
     name: EtuUTT API endpoints reference

@@ -48,8 +48,6 @@ class AppKernel extends EtuKernel
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             // Calendar and events library
             new FrequenceWeb\Bundle\CalendRBundle\FrequenceWebCalendRBundle(),
-            // Rich text editor
-            new FM\BbcodeBundle\FMBbcodeBundle(), // TODO REMOVE
             // Internationalization
             new Sonata\IntlBundle\SonataIntlBundle(),
             // Api documentation

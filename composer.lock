@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "afa5d33c6360be17709a1e187919dd92",
+    "content-hash": "e8a59b55e1da18f991edea3631068f69",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -1905,68 +1905,6 @@
             "time": "2016-06-24T23:00:38+00:00"
         },
         {
-            "name": "helios-ag/fm-bbcode-bundle",
-            "version": "7.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/helios-ag/FMBbCodeBundle.git",
-                "reference": "d88ff5ca6c0ab71ec094d5a7d56b0bc8bc100363"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/helios-ag/FMBbCodeBundle/zipball/d88ff5ca6c0ab71ec094d5a7d56b0bc8bc100363",
-                "reference": "d88ff5ca6c0ab71ec094d5a7d56b0bc8bc100363",
-                "shasum": ""
-            },
-            "require": {
-                "mjohnson/decoda": "6.*",
-                "php": ">=5.5",
-                "sensio/distribution-bundle": "~5.0",
-                "symfony/assetic-bundle": "~2.4",
-                "symfony/config": "~3.0",
-                "symfony/console": "~3.0",
-                "symfony/dependency-injection": "~3.0",
-                "symfony/framework-bundle": "~3.0",
-                "symfony/http-foundation": "~3.0",
-                "symfony/http-kernel": "~3.0",
-                "symfony/process": "~3.0",
-                "symfony/templating": "~3.0",
-                "symfony/twig-bundle": "~3.0",
-                "symfony/yaml": "~3.0"
-            },
-            "require-dev": {
-                "satooshi/php-coveralls": "dev-master",
-                "symfony/symfony": "~3.0"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "6.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "FM\\BbcodeBundle\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Albert Ganiev",
-                    "email": "helios.ag@gmail.com"
-                }
-            ],
-            "description": "Symfony FMBbCodeBundle",
-            "homepage": "https://github.com/helios-ag/FMBbCodeBundle",
-            "keywords": [
-                "bbcode"
-            ],
-            "time": "2016-03-13T08:36:18+00:00"
-        },
-        {
             "name": "imagine/imagine",
             "version": "v0.5.0",
             "source": {
@@ -2873,56 +2811,6 @@
                 "markdown"
             ],
             "time": "2016-10-29T18:58:20+00:00"
-        },
-        {
-            "name": "mjohnson/decoda",
-            "version": "6.7.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/milesj/decoda.git",
-                "reference": "b692742f980e1c25bc953e4ea2008ab581e2a60c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/milesj/decoda/zipball/b692742f980e1c25bc953e4ea2008ab581e2a60c",
-                "reference": "b692742f980e1c25bc953e4ea2008ab581e2a60c",
-                "shasum": ""
-            },
-            "require": {
-                "ext-mbstring": "*",
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.8"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Decoda": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Miles Johnson",
-                    "homepage": "http://milesj.me"
-                }
-            ],
-            "description": "A lightweight lexical string parser for BBCode styled markup.",
-            "homepage": "http://milesj.me/code/php/decoda",
-            "keywords": [
-                "HOOK",
-                "bbcode",
-                "decoda",
-                "filter",
-                "lexer",
-                "markup",
-                "parser"
-            ],
-            "time": "2016-05-15T06:38:28+00:00"
         },
         {
             "name": "monolog/monolog",
