@@ -1,0 +1,15 @@
+{% extends '::page-popup.html.twig' %}
+
+{% block title %}{{ 'upload.main.edit.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'upload.main.edit.title'|trans }}</h1>
+    <div class="upload-form">
+        {{ form_start(form) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.readRight) }}
+            {{ form_row(form.description) }}
+            {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

@@ -1,8 +1,8 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block title %}{{ page.title ?? 'Nouvelle page du wiki' }}{% endblock %}
+{% block title %}{{ page.title ?? 'wiki.main.edit.new-title'|trans }}{% endblock %}
 
-{% block meta_desc %}{{ page.title ?? 'Nouvelle page du wiki' }}{% endblock %}
+{% block meta_desc %}{{ page.title ?? 'wiki.main.edit.new-title'|trans }}{% endblock %}
 
 {% block titleIcon %}
     <img src="{{ asset('assets/img/titles/page.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -65,9 +65,6 @@
             {% else %}
                 {{ form_row(form.title) }}
             {% endif %}
-            <span class="pull-right">
-                {% include 'EtuModuleUploadBundle::upload_link.html.twig' %}
-            </span>
             {{ form_row(form.content) }}
             <div class="row-fluid">
                 <div class="span6">

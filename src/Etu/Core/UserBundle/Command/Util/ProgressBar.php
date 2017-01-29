@@ -180,11 +180,11 @@ class ProgressBar
         $this->_options = $options = $intopts;
 
         // placeholder
-        $cur = '%2$\''.$options['fraction_pad']{0}
+        $cur = '%2$\''.$options['fraction_pad'][0]
         .strlen((int) $target_num).'.'.$options['fraction_precision'].'f';
 
         $max = $cur;
-        $max{1} = 3;
+        $max[1] = 3;
 
         // pre php-4.3.7 %3.2f meant 3 characters before . and two after
         // php-4.3.7 and later it means 3 characters for the whole number
@@ -194,7 +194,7 @@ class ProgressBar
             $padding = 3;
         }
 
-        $perc = '%4$\''.$options['percent_pad']{0}
+        $perc = '%4$\''.$options['percent_pad'][0]
         .$padding.'.'.$options['percent_precision'].'f';
 
         $transitions = [
@@ -220,7 +220,7 @@ class ProgressBar
             $blen = $width;
         }
 
-        $lbar = str_pad($bar, $blen, $bar{0}, STR_PAD_LEFT);
+        $lbar = str_pad($bar, $blen, $bar[0], STR_PAD_LEFT);
         $rbar = str_pad($prefill, $blen, substr($prefill, -1, 1));
 
         $this->_bar = substr($lbar, -$blen).substr($rbar, 0, $blen);

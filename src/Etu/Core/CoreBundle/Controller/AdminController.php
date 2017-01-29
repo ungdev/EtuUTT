@@ -31,6 +31,7 @@ class AdminController extends Controller
 
         return [];
     }
+
     /**
      * @Route("/server", name="admin_server")
      * @Template()
@@ -240,7 +241,6 @@ class AdminController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
             // $cacheDriver = $em->getConfiguration()->getResultCacheImpl();
             // $cacheDriver->delete('EtuCoreBundle/page:'.$page->getSlug());
 

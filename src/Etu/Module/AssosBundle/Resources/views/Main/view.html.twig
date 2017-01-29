@@ -93,7 +93,7 @@
             </div>
             <div class="span9">
                 {% if orga.description %}
-                    {{ orga.description|bbcode_filter('default_filter') }}
+                    {{ orga.description|purify }}
                 {% else %}
                     {{ orga.descriptionShort }}
                 {% endif %}

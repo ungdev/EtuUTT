@@ -432,10 +432,10 @@ class MainController extends Controller
             ->getResult();
 
         if ($message->getCreatedAt() == $thread->getCreatedAt()) {
-            $form = $this->createForm(MessageEditType::class, $message,  ['action' => $this->generateUrl('forum_edit', ['messageId' => $message->getId(), 'threadId' => $thread->getId(), 'slug' => $thread->getSlug()])]);
+            $form = $this->createForm(MessageEditType::class, $message, ['action' => $this->generateUrl('forum_edit', ['messageId' => $message->getId(), 'threadId' => $thread->getId(), 'slug' => $thread->getSlug()])]);
             $typeForm = 'thread';
         } else {
-            $form = $this->createForm(MessageType::class, $message,  ['action' => $this->generateUrl('forum_edit', ['messageId' => $message->getId(), 'threadId' => $thread->getId(), 'slug' => $thread->getSlug()])]);
+            $form = $this->createForm(MessageType::class, $message, ['action' => $this->generateUrl('forum_edit', ['messageId' => $message->getId(), 'threadId' => $thread->getId(), 'slug' => $thread->getSlug()])]);
             $typeForm = 'message';
         }
 

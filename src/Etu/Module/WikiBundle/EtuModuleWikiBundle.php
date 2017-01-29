@@ -80,6 +80,7 @@ class EtuModuleWikiBundle extends Module
             new OrgaPermission('wiki', 'Peut gérer le wiki de l\'association'),
         ];
     }
+
     /**
      * Define the modules requirements (the other required modules) using their identifiers.
      *

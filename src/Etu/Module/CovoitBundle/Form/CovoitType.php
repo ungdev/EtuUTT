@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Etu\Core\CoreBundle\Form\DatePickerType;
-use Etu\Core\CoreBundle\Form\RedactorLimitedType;
+use Etu\Core\CoreBundle\Form\EditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class CovoitType extends AbstractType
@@ -22,7 +22,7 @@ class CovoitType extends AbstractType
     {
         $builder
             ->add('phoneNumber', null, ['label' => 'covoit.proposal.phone.label'])
-            ->add('notes', RedactorLimitedType::class, ['required' => false, 'label' => 'covoit.proposal.notes.label'])
+            ->add('notes', EditorType::class, ['required' => false, 'label' => 'covoit.proposal.notes.label'])
             ->add('capacity', null, ['label' => 'covoit.proposal.capacity.label'])
             ->add('date', DatePickerType::class, ['label' => 'covoit.proposal.date.label'])
             ->add('price', null, ['label' => 'covoit.proposal.price.label'])

@@ -197,7 +197,7 @@
         <hr />
 
         <div class="description">
-            {{ event.description|bbcode_filter('default_filter') }}
+            {{ event.description|purify }}
         </div>
     </div>
 {% endblock %}

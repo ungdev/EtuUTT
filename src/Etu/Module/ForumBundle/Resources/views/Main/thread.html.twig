@@ -126,7 +126,7 @@
                         </small>
                     </div>
                     <div class="etu-comment-body">
-                        {{ message.content|bbcode_filter('default_filter') }}
+                        {{ message.content|purify }}
                     </div>
                 </div>
 

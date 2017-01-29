@@ -15,7 +15,7 @@ use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
-use Etu\Core\CoreBundle\Form\RedactorType;
+use Etu\Core\CoreBundle\Form\EditorType;
 use Etu\Core\CoreBundle\Form\DatetimePickerType;
 use Etu\Core\UserBundle\Entity\Member;
 use Etu\Module\EventsBundle\Entity\Event;
@@ -285,7 +285,7 @@ class MembershipsController extends Controller
                 'required' => true,
                 'label' => 'events.memberships.create.privacy.label',
             ])
-            ->add('description', RedactorType::class, ['label' => 'events.memberships.edit.description'])
+            ->add('description', EditorType::class, ['label' => 'events.memberships.edit.description', 'organization' => $orga->getLogin()])
             ->add('submit', SubmitType::class, ['label' => 'events.memberships.create.submit'])
             ->getForm();
 
@@ -454,7 +454,7 @@ class MembershipsController extends Controller
                 'required' => true,
                 'label' => 'events.memberships.create.privacy.label',
             ])
-            ->add('description', RedactorType::class, ['label' => 'events.memberships.edit.description'])
+            ->add('description', EditorType::class, ['label' => 'events.memberships.edit.description', 'organization' => $orga->getLogin()])
             ->add('submit', SubmitType::class, ['label' => 'events.memberships.edit.submit'])
             ->getForm();
 

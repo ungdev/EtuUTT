@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Etu\Core\CoreBundle\Form\RedactorLimitedType;
+use Etu\Core\CoreBundle\Form\EditorType;
 
 class CovoitMessageType extends AbstractType
 {
@@ -17,7 +17,7 @@ class CovoitMessageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('text', RedactorLimitedType::class);
+            ->add('text', EditorType::class);
     }
 
     /**

@@ -24,6 +24,7 @@ wiki:
       can-read: "Page visible par"
       can-edit: "Page modifiable par"
     edit:
+        new-title: Nouvelle page
         title: Titre
         parentPage: Page parent
         content: Contenu de la page
@@ -31,3 +32,5 @@ wiki:
         editRight: Qui peut modifier la page ?
         submit: Sauvegarder les modifications
         success: Votre modification a été enregistré
+    list:
+        title: Index du wiki

@@ -4,7 +4,7 @@ namespace Etu\Module\DaymailBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
-use Etu\Core\CoreBundle\Form\RedactorHtmlType;
+use Etu\Core\CoreBundle\Form\EditorEmailType;
 use Etu\Core\UserBundle\Entity\Member;
 use Etu\Module\DaymailBundle\Entity\DaymailPart;
 use Symfony\Component\HttpFoundation\Request;
@@ -125,7 +125,7 @@ class MembershipsController extends Controller
 
         $form = $this->createFormBuilder($daymailPart)
             ->add('title', TextType::class, ['required' => true, 'label' => 'daymail.memberships.daymail.title.label', 'attr' => ['maxlength' => 100]])
-            ->add('body', RedactorHtmlType::class, ['required' => true, 'label' => 'daymail.memberships.daymail.body.label'])
+            ->add('body', EditorEmailType::class, ['required' => true, 'label' => 'daymail.memberships.daymail.body.label', 'organization' => $orga])
             ->getForm();
 
         $form->handleRequest($request);

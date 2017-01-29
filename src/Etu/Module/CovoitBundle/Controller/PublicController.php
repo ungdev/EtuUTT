@@ -7,7 +7,6 @@ use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\CovoitBundle\Entity\Covoit;
 use Etu\Module\CovoitBundle\Entity\CovoitMessage;
-
 // Import annotations
 use Etu\Module\CovoitBundle\Model\Search;
 use Etu\Module\CovoitBundle\Form\SearchType;

@@ -7,7 +7,6 @@ use Etu\Module\UVBundle\Entity\Comment;
 use Etu\Module\UVBundle\Entity\Review;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\UVBundle\Entity\UV;
-
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

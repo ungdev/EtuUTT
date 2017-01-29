@@ -142,7 +142,7 @@
                     </small>
                 </div>
                 <div class="etu-comment-body">
-                    {{ bug.body|bbcode_filter('default_filter') }}
+                    {{ bug.body|purify }}
 
                     <br /><br />
 
@@ -204,7 +204,7 @@
                             </small>
                         </div>
                         <div class="etu-comment-body">
-                            {{ comment.body|bbcode_filter('default_filter') }}
+                            {{ comment.body|purify }}
 
                             <br /><br />
 

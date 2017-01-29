@@ -377,7 +377,6 @@ class ProfileController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         if ($login != $this->getUser()->getLogin()) {
-
             /** @var $user User */
             $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $login]);
 

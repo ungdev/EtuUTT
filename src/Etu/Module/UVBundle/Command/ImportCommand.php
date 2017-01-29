@@ -161,7 +161,6 @@ for another version, you will have to update this parser.');
 
             $descBegin = -1;
             for ($i = 0; $i < count($match[1]); ++$i) {
-
                 // Create raw description of the precedent UV
                 if ($descBegin > 0) {
                     $uv[$this->sanitizer($match[1][$i - 1][0])] =

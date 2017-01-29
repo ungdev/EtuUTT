@@ -4,11 +4,12 @@ namespace Etu\Module\WikiBundle\Controller;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
-use Etu\Core\CoreBundle\Form\RedactorType;
+use Etu\Core\CoreBundle\Form\EditorType;
 use Etu\Module\WikiBundle\Entity\WikiPage;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -127,7 +128,7 @@ class MainController extends Controller
         }
 
         // Create editor field
-        $form = $form->add('content', RedactorType::class, ['required' => true, 'label' => 'wiki.main.edit.content']);
+        $form = $form->add('content', EditorType::class, ['required' => true, 'label' => 'wiki.main.edit.content', 'organization' => ($rights->getOrganization($category) ? $rights->getOrganization($category)->getLogin() : null)]);
 
         // Create rights fields
         $choices = [];
@@ -250,5 +251,55 @@ class MainController extends Controller
             'category' => $category,
             'rights' => $this->get('etu.wiki.permissions_checker'),
         ];
+    }
+
+    /**
+     * Give wiki link list for editor.
+     *
+     * @Route("/wiki/linklist/{organization}", name="wiki_linklist", options={"expose"=true})
+     * @Template()
+     */
+    public function editorAction(Request $request, $organization = null)
+    {
+        // Find organization
+        $em = $this->getDoctrine()->getManager();
+        if ($organization) {
+            $organization = $em->getRepository('EtuUserBundle:Organization')
+                ->findOneBy(['login' => $request->get('organization')]);
+            if (!$organization) {
+                return $this->createNotFoundException('Organization not found');
+            }
+        }
+
+        $category = 'general';
+        if ($organization) {
+            $category = 'orga-'.$organization->getLogin();
+        }
+
+        // Find list
+        $result = $em->createQueryBuilder()
+            ->select('p')
+            ->from('EtuModuleWikiBundle:WikiPage', 'p')
+            ->leftJoin('EtuModuleWikiBundle:WikiPage', 'p2', 'WITH', 'p.slug = p2.slug AND p.createdAt < p2.createdAt')
+            ->where('p2.slug IS NULL')
+            ->where('p.category = :category')->setParameter(':category', $category)
+            ->orderBy('p.slug', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        // Formate array, check rights and add ↳ at the beggining of the title if necessary
+        $rights = $this->get('etu.wiki.permissions_checker');
+        $pagelist = [];
+        foreach ($result as $value) {
+            $association_id = ($value->getOrganization()) ? $value->getOrganization()->getId() : null;
+            if ($rights->has($value->getReadRight(), $association_id)) {
+                $pagelist[$value->getSlug()] = [
+                    'title' => (substr_count($value->getSlug(), '/') ? str_repeat(' ', substr_count($value->getSlug(), '/')).'↳' : '').$value->getTitle(),
+                    'value' => $this->generateUrl('wiki_view', ['category' => $value->getCategory(), 'slug' => $value->getSlug()], true),
+                ];
+            }
+        }
+
+        return new JsonResponse($pagelist);
     }
 }

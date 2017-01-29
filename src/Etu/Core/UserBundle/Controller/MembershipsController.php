@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Framework\Definition\OrgaPermission;
-use Etu\Core\CoreBundle\Form\RedactorType;
+use Etu\Core\CoreBundle\Form\EditorType;
 use Etu\Core\UserBundle\Entity\Member;
 use Etu\Core\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -157,7 +157,7 @@ class MembershipsController extends Controller
             ->add('contactPhone', null, ['required' => false, 'label' => 'user.orga.index.contactPhone.label'])
             ->add('website', null, ['required' => false, 'label' => 'user.orga.index.website.label'])
             ->add('descriptionShort', TextareaType::class, ['label' => 'user.orga.index.descriptionShort.label'])
-            ->add('description', RedactorType::class, ['required' => false, 'label' => 'user.orga.index.description.label'])
+            ->add('description', EditorType::class, ['required' => false, 'label' => 'user.orga.index.description.label', 'organization' => $orga->getLogin()])
             ->add('submit', SubmitType::class, ['label' => 'user.orga.index.submit'])
             ->getForm();
 

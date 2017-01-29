@@ -154,10 +154,6 @@
                 {{ form_row(form.location) }}
 
                 {{ form_row(form.description) }}
-                <span class="pull-right">
-                    {% include 'EtuModuleUploadBundle::upload_link.html.twig' %}
-                </span>
-
                 {{ form_row(form.submit) }}
                 <a href="{{ path('memberships_orga_events_delete', {
                         'login': orga.login, 'id': event.id, 'slug': event.title|slugify

@@ -378,3 +378,20 @@ $(function() {
         }
     }
 });
+
+// Syntax highlighting
+$(document).ready(function() {
+    $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+    });
+});
+
+// Upload popup link
+$('.upload-popup').click(function() {
+    if($(this).data('organization')) {
+        window.open(Routing.generate('upload_index', {'organization': $(this).data('organization')}), '', 'width=1000, height=700, top='+((screen.height/2)-(700/2))+', left='+((screen.width/2)-(1000/2))+', toolbar=no, location=yes, directories=no, status=no, menubar=yes, scrollbars=yes, copyhistory=no, resizable=yes');
+    }
+    else {
+        window.open(Routing.generate('upload_index', {'organization': null}), '', 'width=1000, height=700, top='+((screen.height/2)-(700/2))+', left='+((screen.width/2)-(1000/2))+', toolbar=no, location=yes, directories=no, status=no, menubar=yes, scrollbars=yes, copyhistory=no, resizable=yes');
+    }
+})

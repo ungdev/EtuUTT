@@ -6,7 +6,7 @@ use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Entity\Subscription;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
-use Etu\Core\CoreBundle\Form\RedactorType;
+use Etu\Core\CoreBundle\Form\EditorType;
 use Etu\Module\BugsBundle\Entity\Comment;
 use Etu\Module\BugsBundle\Entity\Issue;
 use Doctrine\ORM\EntityManager;
@@ -121,7 +121,7 @@ class BugsController extends Controller
         $comment->setUser($this->getUser());
 
         $form = $this->createFormBuilder($comment)
-            ->add('body', RedactorType::class, ['label' => 'bugs.bugs.view.comment_body'])
+            ->add('body', EditorType::class, ['label' => 'bugs.bugs.view.comment_body'])
             ->add('submit', SubmitType::class, ['label' => 'bugs.bugs.view.comment_submit'])
             ->getForm();
 
@@ -204,7 +204,7 @@ class BugsController extends Controller
                 ],
                 'label' => 'bugs.bugs.create.criticality',
             ])
-            ->add('body', RedactorType::class, ['label' => 'bugs.bugs.create.body'])
+            ->add('body', EditorType::class, ['label' => 'bugs.bugs.create.body'])
             ->add('submit', SubmitType::class, ['label' => 'bugs.bugs.create.submit'])
             ->getForm();
 
@@ -296,7 +296,7 @@ class BugsController extends Controller
                 ],
                 'label' => 'bugs.bugs.edit.criticality',
             ])
-            ->add('body', RedactorType::class, ['label' => 'bugs.bugs.edit.body'])
+            ->add('body', EditorType::class, ['label' => 'bugs.bugs.edit.body'])
             ->add('submit', SubmitType::class, ['label' => 'bugs.bugs.edit.submit'])
             ->getForm();
 
@@ -374,7 +374,7 @@ class BugsController extends Controller
         }
 
         $form = $this->createFormBuilder($comment)
-            ->add('body', RedactorType::class, ['label' => 'bugs.bugs.view.comment_body'])
+            ->add('body', EditorType::class, ['label' => 'bugs.bugs.view.comment_body'])
             ->add('submit', SubmitType::class, ['label' => 'bugs.bugs.edit.submit'])
             ->getForm();
 

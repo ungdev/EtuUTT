@@ -309,6 +309,9 @@ user:
             apps_explain: Les applications suivantes ont accès à vos données :
             revoke_app: Révoquer l'accès
             revoke_cancel: Annuler
+            uploads: Gestionnaire de fichiers envoyés
+            uploads_explain: Le gestionnaire de fichier permet d'envoyer, de modifier ou de supprimer les fichiers que vous avez envoyé à partir de l'éditeur de message.
+            uploads_action: Accéder au gestionnaire de fichier
         profileAvatar:
             title: Ma photo
             file: Image

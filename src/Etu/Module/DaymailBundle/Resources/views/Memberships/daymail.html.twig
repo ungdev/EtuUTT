@@ -6,10 +6,6 @@
     <img src="{{ asset('assets/img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('redactor/redactor/redactor.css') }}" type="text/css" />
-{% endblock %}
-
 {% block javascripts %}
     {% if wantPreview %}
     <script type="text/javascript">
@@ -162,10 +158,6 @@
 
                     {% if canEdit %}
                     {{ form_row(form.title) }}
-
-                    <span class="pull-right">
-                        {% include 'EtuModuleUploadBundle::upload_link.html.twig' %}
-                    </span>
                     {{ form_row(form.body) }}
 
                     <div class="control-group">

@@ -140,7 +140,7 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelRequest }
 
-    # Redactor
+    # Editor
     etu.redactor_type:
         class: Etu\Core\CoreBundle\Form\RedactorType
         tags:
@@ -179,3 +179,9 @@ services:
     etu.core.home_renderer:
         class: Etu\Core\CoreBundle\Home\HomeRenderer
         arguments: [ "@etu.core.home_builder", "@etu.core.modules_manager", "@form.factory" ]
+    # HTML purifier
+    etu.menu.html_purifier:
+        class: Etu\Core\CoreBundle\Twig\Extension\HTMLPurifierExtension
+        arguments: ["@service_container"]
+        tags:
+            - { name: twig.extension }

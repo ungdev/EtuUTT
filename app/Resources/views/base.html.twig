@@ -7,7 +7,7 @@
     <head>
         <meta charset="utf-8" />
 
-        <title>{% block title %}{{ 'home.index.page.title'|trans }}{% endblock %} - {{ 'base.title'|trans }}</title>
+        <title>{% block title %}{% endblock %} - {{ 'base.title'|trans }}</title>
 
         <meta name="description" content="{% block meta_desc %}{{ 'base.meta'|trans }}{% endblock %}" />
         <meta name="apple-mobile-web-app-title" content="EtuUTT">
@@ -35,7 +35,6 @@
             'assets/vendor/jquery-impromptu/dist/jquery-impromptu.min.css'
             'assets/vendor/highlightjs/styles/solarized-dark.css'
             'assets/vendor/videojs/dist/video-js.css'
-            'assets/scss/sceditor.scss'
             'assets/scss/boot.scss'
 			'assets/scss/developpers.scss'
 
@@ -71,15 +70,15 @@
 
 		{% block layout %}{% endblock %}
 
+        {# JS CDN #}
 	    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+        <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+
 	    {% javascripts
 	        'assets/vendor/jquery/jquery.min.js'
 	        'assets/vendor/jquery-ui/ui/minified/jquery-ui.custom.min.js'
 	        'assets/vendor/bootstrap/docs/assets/js/bootstrap.min.js'
 	        'assets/vendor/facebox/src/facebox.js'
-	        'assets/vendor/sceditor-bower/src/jquery.sceditor.js'
-	        'assets/vendor/sceditor-bower/src/plugins/bbcode.js'
-	        'assets/vendor/sceditor-bower/languages/fr.js'
 	        'assets/vendor/tipsy/src/javascripts/jquery.tipsy.js'
 	        'assets/vendor/jquery-ui-touch-punch-improved/jquery.ui.touch-punch-improved.js'
 	        'assets/vendor/jquery-cycle2/build/jquery.cycle2.min.js'
@@ -91,7 +90,7 @@
 	        'bundles/fosjsrouting/js/router.js'
 	        'assets/js/routes.js'
 	        'assets/js/common.js'
-	        'assets/js/bbcode.js'
+	        'assets/js/editor.js'
 
 	        filter=''
 	        output='assets/min/etuutt.js'

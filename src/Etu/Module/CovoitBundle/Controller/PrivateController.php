@@ -11,7 +11,6 @@ use Etu\Module\CovoitBundle\Entity\CovoitSubscription;
 use Etu\Module\CovoitBundle\Form\CovoitType;
 use Etu\Module\CovoitBundle\Form\CovoitMessageType;
 use Symfony\Component\HttpFoundation\Request;
-
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

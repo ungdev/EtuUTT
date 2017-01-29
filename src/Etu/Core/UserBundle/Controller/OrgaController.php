@@ -7,7 +7,7 @@ use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\Member;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Form\UserAutocompleteType;
-use Etu\Core\CoreBundle\Form\RedactorType;
+use Etu\Core\CoreBundle\Form\EditorType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -63,7 +63,7 @@ class OrgaController extends Controller
             ->add('contactPhone', null, ['required' => false, 'label' => 'user.orga.index.contactPhone.label'])
             ->add('website', null, ['required' => false, 'label' => 'user.orga.index.website.label'])
             ->add('descriptionShort', TextareaType::class, ['label' => 'user.orga.index.descriptionShort.label'])
-            ->add('description', RedactorType::class, ['required' => false, 'label' => 'user.orga.index.description.label'])
+            ->add('description', EditorType::class, ['required' => false, 'label' => 'user.orga.index.description.label', 'organization' => $orga->getLogin()])
             ->add('submit', SubmitType::class, ['label' => 'user.orga.index.submit'])
             ->getForm();
 

@@ -9,7 +9,6 @@ use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Entity\Course;
 use Etu\Core\UserBundle\Schedule\Helper\ScheduleBuilder;
 use Etu\Module\CumulBundle\Schedule\ScheduleComparator;
-
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

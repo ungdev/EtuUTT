@@ -2,18 +2,37 @@
 upload:
   main:
     index:
-      address: "Récupérer l'adresse"
-      confirm: "Vous avez bien envoyé une image"
-      error_size: "Le fichier que vous avez fourni semble être trop volumineux (maximum 2MB)"
-      error_type: "Le fichier que vous avez fourni ne semble pas être une image (jpg, png, gif, bmp)"
-      no_image_yet: "Vous n'avez pas encore envoyé d'image"
-      remove: "Supprimer l'image"
-      send: "Envoyer une image (jpg, png, gif, bmp, 2 MB maximum) :"
-      send_submit: Envoyer
-      title: "Envoi d'images"
-    remove:
-      confirm: "Vous avez bien supprimé cette image"
-      no: "Non, annuler"
-      question: "Voulez-vous vraiment supprimer <strong>%name%</strong> du serveur ?"
-      yes: "Oui, supprimer"
-  upload_link: "Envoyer une image"
+      name: "Nom du fichier"
+      description: "Description"
+      title: "Envoyez un fichier"
+      file: "Fichier"
+      submit: "Envoyer"
+      not_in_organization: "Vous ne pouvez pas envoyer de fichier car vous ne faites pas partie de l'association."
+      confirm: "Votre fichier a été envoyé"
+      yourfiles: "Ou séléctionnez un fichier déjà envoyé"
+      fileof: "Ou sélectionnez un fichier déjà envoyé pour "
+    right:
+      0: "Administrateur du wiki"
+      100: "Administrateur du wiki de %orga%"
+      200: "Membre de %orga%"
+      300: "Etudiant"
+      400: "Etudiant et Exterieur"
+    edit:
+      readRight: "Qui peut voir le fichier ?"
+      confirm: "Le fichier a été modifié."
+      title: "Modification d'un fichier"
+    delete:
+      confirm: "Vous avez bien supprimé ce fichier image"
+    description:
+      yourfiles: "Vos fichiers"
+      fileof: "Fichiers de "
+      edit: "Modifier"
+      delete: "Supprimer"
+      view: "Voir"
+      download: "Télécharger"
+      new: "Envoyer un fichier"
+      title: "Description d'un fichier"
+      created: "Création : "
+      updated: "Modification : "
+      creator: "Créateur : "
+      organization: "Association : "

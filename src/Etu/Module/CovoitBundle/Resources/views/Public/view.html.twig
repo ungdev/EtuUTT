@@ -158,7 +158,7 @@
             </h5>
 
             <div class="covoit-notes">
-                {{ covoit.notes|bbcode_filter('default_filter') }}
+                {{ covoit.notes|purify }}
             </div>
         {% endif %}
 
@@ -228,7 +228,7 @@
                             </small>
                         </div>
                         <div class="etu-comment-body">
-                            {{ message.text|bbcode_filter('default_filter') }}
+                            {{ message.text|purify }}
                         </div>
                     </div>
 

@@ -58,7 +58,7 @@
                     <table style="max-width: 600px; width:100%; margin: 0 auto; border-collapse: collapse;">
                         <tr>
                             <td>
-                                {{ part.body|raw }}
+                                {{ part.body|purify('email') }}
                             </td>
                         </tr>
                     </table>

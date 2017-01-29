@@ -114,7 +114,6 @@ class ModulesManager
 
         foreach ($iterator as $dir) {
             if (!$dir->isDot() && $dir->isDir()) {
-
                 // Check validity
                 if (substr($dir->getBasename(), -6) == 'Bundle') {
                     $module = 'Etu\\Module\\'.$dir->getBasename().'\\EtuModule'.$dir->getBasename();

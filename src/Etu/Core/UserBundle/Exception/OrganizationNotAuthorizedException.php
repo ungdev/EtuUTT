@@ -19,6 +19,7 @@ class OrganizationNotAuthorizedException extends AuthenticationException
     {
         return 'Organization exist but is not authorized to log in.';
     }
+
     /**
      * Get the organization login.
      *
@@ -28,6 +29,7 @@ class OrganizationNotAuthorizedException extends AuthenticationException
     {
         return $this->login;
     }
+
     /**
      * Set the organization login.
      *
@@ -37,6 +39,7 @@ class OrganizationNotAuthorizedException extends AuthenticationException
     {
         $this->login = $login;
     }
+
     /**
      * {@inheritdoc}
      */
@@ -47,6 +50,7 @@ class OrganizationNotAuthorizedException extends AuthenticationException
             parent::serialize(),
         ]);
     }
+
     /**
      * {@inheritdoc}
      */
@@ -55,6 +59,7 @@ class OrganizationNotAuthorizedException extends AuthenticationException
         list($this->login, $parentData) = unserialize($str);
         parent::unserialize($parentData);
     }
+
     /**
      * {@inheritdoc}
      */

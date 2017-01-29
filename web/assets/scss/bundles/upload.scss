@@ -1,54 +1,41 @@
-
-.upload-page {
-    background: #f5f5f5;
-    padding: 10px;
+.content-full {
+    box-sizing: border-box;
 }
 
 .upload-form {
-    text-align: center;
+    text-align: left;
 }
 
+.media-border {
+    border: solid #d8d8d8 1px;
+    border-radius: 3px;
+    padding: 3px;
+    height: 200px;
+    width: 200px;
+    line-height: 200px;
+    text-align: center;
+
+    display: flex;
+
+    img, div {
+        margin: auto;
+        max-width: 100%;
+        max-height: 100%;
+        font-size: 100px;
+        color: #333;
+    }
+}
 .upload-image-container {
     display: inline-block;
     vertical-align: top;
     width: 215px;
+    margin-bottom: 15px;
     text-align: center;
+    overflow:hidden;
 
-    .upload-image {
-        display: inline-block;
-        width: 150px;
-        height: 150px;
-        background-size: cover;
-        background-position: center;
 
-        a {
-            display: block;
-            float: right;
-            padding: 5px 7px;
-            background: rgba(255, 255, 255, 0.2);
-
-            &:hover {
-                text-decoration: none;
-                background: rgba(255, 255, 255, 0.5);
-            }
-        }
-    }
-
-    .upload-label input {
-        background: transparent;
-        border: 0;
-        box-shadow: none;
-        -webkit-box-shadow: none;
-        -moz-box-shadow: none;
-        font-size: 11px;
+    .upload-label {
         width: 200px;
+        overflow: hidden;
     }
-}
-
-.upload-remove {
-    text-align: center;
-}
-.upload-remove-image {
-    max-height: 300px;
-    max-width: 600px;
 }

@@ -5,14 +5,14 @@ namespace Etu\Module\ForumBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Etu\Core\CoreBundle\Form\RedactorType;
+use Etu\Core\CoreBundle\Form\EditorType;
 
 class MessageType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('content', RedactorType::class, ['label' => 'forum.main.post.content']);
+            ->add('content', EditorType::class, ['label' => 'forum.main.post.content']);
     }
 
     public function configureOptions(OptionsResolver $resolver)

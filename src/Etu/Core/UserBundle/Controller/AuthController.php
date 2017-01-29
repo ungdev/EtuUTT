@@ -7,7 +7,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Etu\Core\UserBundle\Security\Authentication\Token\CasToken;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Etu\Core\UserBundle\Exception\OrganizationNotAuthorizedException;
-
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

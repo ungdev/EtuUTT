@@ -60,7 +60,7 @@ class ImportIterator implements \Iterator
     /**
      * Return the current element.
      *
-     * @link http://php.net/manual/en/iterator.current.php
+     * @see http://php.net/manual/en/iterator.current.php
      *
      * @return mixed Can return any type
      */
@@ -72,7 +72,7 @@ class ImportIterator implements \Iterator
     /**
      * Move forward to next element.
      *
-     * @link http://php.net/manual/en/iterator.next.php
+     * @see http://php.net/manual/en/iterator.next.php
      */
     public function next()
     {
@@ -82,7 +82,7 @@ class ImportIterator implements \Iterator
     /**
      * Return the key of the current element.
      *
-     * @link http://php.net/manual/en/iterator.key.php
+     * @see http://php.net/manual/en/iterator.key.php
      *
      * @return mixed scalar on success, or null on failure
      */
@@ -94,7 +94,7 @@ class ImportIterator implements \Iterator
     /**
      * Checks if current position is valid.
      *
-     * @link http://php.net/manual/en/iterator.valid.php
+     * @see http://php.net/manual/en/iterator.valid.php
      *
      * @return bool The return value will be casted to boolean and then evaluated.
      *              Returns true on success or false on failure
@@ -107,7 +107,7 @@ class ImportIterator implements \Iterator
     /**
      * Rewind the Iterator to the first element.
      *
-     * @link http://php.net/manual/en/iterator.rewind.php
+     * @see http://php.net/manual/en/iterator.rewind.php
      */
     public function rewind()
     {

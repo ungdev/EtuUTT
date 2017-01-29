@@ -203,6 +203,7 @@ class User
     {
         return $this->fullName;
     }
+
     /**
      * @param bool $isStudent
      *

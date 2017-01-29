@@ -59,8 +59,9 @@
         "leafo/scssphp": "^0.6.6",
         "patchwork/jsqueeze": "^2.0",
         "nelmio/cors-bundle": "^1.4",
+	"ezyang/htmlpurifier": "^4.8",
 
-	"bower-asset/bootstrap": "2.3.*",
+        "bower-asset/bootstrap": "2.3.*",
         "bower-asset/facebox": "*",
         "bower-asset/fullcalendar": "2.*",
         "bower-asset/gmaps": "0.4.*",
@@ -71,7 +72,6 @@
         "bower-asset/jquery-ui-touch-punch-improved": "*",
         "bower-asset/jquery-impromptu": "5.2.*",
         "bower-asset/moment": "2.9.*",
-        "bower-asset/SCEditor-bower": "v1.4.4",
         "bower-asset/swipebox": "1.2.*",
         "bower-asset/tipsy": "0.1.*",
         "bower-asset/jquery-cycle2": "*",
@@ -87,7 +87,7 @@
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0",
         "elao/web-profiler-extra-bundle": "^2.3",
-	"fxp/composer-asset-plugin": "~1.2"
+        "fxp/composer-asset-plugin": "~1.2"
     },
     "scripts": {
         "symfony-scripts": [
@@ -116,7 +116,7 @@
         "symfony-assets-install": "relative",
         "incenteev-parameters": [
             {
-                 "file": "app/config/parameters.yml",
+                "file": "app/config/parameters.yml",
                 "env-map": {
                     "database_driver": "ETUUTT_DATABASE_DRIVER",
                     "database_host": "ETUUTT_DATABASE_HOST",
@@ -132,9 +132,10 @@
                 "file": "app/config/modules.yml",
                 "parameter-key": "modules"
             }
-    	],
+        ],
         "asset-installer-paths": {
-            "bower-asset-library": "web/assets/vendor"
+            "bower-asset-library": "web/assets/vendor",
+            "npm-asset-library": "web/assets/npm-vendor"
         }
     }
 }

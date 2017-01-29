@@ -33,7 +33,7 @@ class EtuModuleUploadBundle extends Module
      */
     public function getAuthor()
     {
-        return 'Titouan Galopin';
+        return 'Aurélien Labate';
     }
 
     /**
@@ -43,7 +43,7 @@ class EtuModuleUploadBundle extends Module
      */
     public function getDescription()
     {
-        return 'Module permettant aux utilisateurs l\'upload d\'images';
+        return 'Module permettant aux utilisateurs l\'upload de fichiers';
     }
 
     /**

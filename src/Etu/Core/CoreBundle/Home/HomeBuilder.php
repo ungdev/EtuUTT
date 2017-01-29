@@ -131,7 +131,7 @@ class HomeBuilder
             } else {
                 foreach ($subscriptions as $key => $subscription) {
                     $subscriptionsWhere[] = '(n.entityType = \''.$subscription->getEntityType().'\'
-                                                AND n.entityId = ' .intval($subscription->getEntityId()).')';
+                                                AND n.entityId = '.intval($subscription->getEntityId()).')';
                 }
 
                 $subscriptionsWhere = implode(' OR ', $subscriptionsWhere);

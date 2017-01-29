@@ -352,7 +352,6 @@ class MainController extends Controller
      */
     public function tvAction()
     {
-
         /** @var Calendar $calendr */
         $calendr = $this->get('calendr');
 

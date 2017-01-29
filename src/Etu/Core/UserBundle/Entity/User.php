@@ -2464,6 +2464,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
             && $this->getReadOnlyExpirationDate() instanceof \DateTime
             && $this->getReadOnlyExpirationDate() > new \DateTime();
     }
+
     /**
      * Tell if user is currently banned.
      *

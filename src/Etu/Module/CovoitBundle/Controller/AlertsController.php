@@ -7,7 +7,6 @@ use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\CovoitBundle\Entity\CovoitAlert;
 use Etu\Module\CovoitBundle\Form\CovoitAlertType;
 use Symfony\Component\HttpFoundation\Request;
-
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

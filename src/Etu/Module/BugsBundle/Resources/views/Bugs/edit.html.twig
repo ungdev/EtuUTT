@@ -29,9 +29,6 @@
         {{ form_row(form.title)}}
         {{ form_row(form.criticality)}}
         {{ form_row(form.body)}}
-        <div class="pull-right">
-            {% include 'EtuModuleUploadBundle::upload_link.html.twig' %}
-        </div>
         {{ form_widget(form) }}
         {{ form_end(form) }}
     </div>

@@ -14,9 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
-use Etu\Core\CoreBundle\Form\RedactorType;
+use Etu\Core\CoreBundle\Form\EditorType;
 use Etu\Module\UVBundle\Entity\UV;
-
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -61,7 +60,7 @@ class ViewController extends Controller
                 ->setUser($this->getUser());
 
             $commentForm = $this->createFormBuilder($comment)
-                ->add('body', RedactorType::class, ['label' => 'uvs.main.view.body'])
+                ->add('body', EditorType::class, ['label' => 'uvs.main.view.body'])
                 ->add('submit', SubmitType::class, ['label' => 'uvs.main.view.submit'])
                 ->getForm();
 
@@ -97,7 +96,6 @@ class ViewController extends Controller
         }
 
         if ($this->isGranted('ROLE_UV_REVIEW')) {
-
             // Get UV annals
 
             /** @var Review[] $results */
