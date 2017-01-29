@@ -35,6 +35,9 @@
                 <li>{{ 'upload.main.description.creator'|trans }}{{ file.author.fullName }}</li>
                 {% if file.organization %}
                     <li>{{ 'upload.main.description.organization'|trans }}{{ file.organization.fullName }}</li>
+                    <li>{{ 'upload.main.description.readright'|trans }}{{ ('upload.main.right.'~file.readRight)|trans({ 'organization': file.organization.fullName}) }}</li>
+                {% else %}
+                    <li>{{ 'upload.main.description.readright'|trans }}{{ ('upload.main.right.'~file.readRight)|trans }}</li>
                 {% endif %}
             </ul>
             <a class="btn btn-success" href="{{ path('upload_download', { 'download': 'view', 'id': file.id, 'fullname': file.name~'.'~file.extension }) }}">{{ 'upload.main.description.view'|trans }}</a>
