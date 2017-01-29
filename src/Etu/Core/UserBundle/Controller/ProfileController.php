@@ -428,7 +428,7 @@ class ProfileController extends Controller
      * @Route("/user/{login}/badges", name="user_view_badges")
      * @Template()
      */
-    public function badgesAction($login)
+    public function badgesAction($login, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_CORE_PROFIL');
 
