@@ -45,7 +45,7 @@
 
     <hr />
     {% if file.organization %}
-        <a class="btn btn-primary pull-right" href="{{ path('upload_index', { 'organization': file.organization }) }}">{{ 'upload.main.description.new'|trans }}</a>
+        <a class="btn btn-primary pull-right" href="{{ path('upload_index', { 'organization': file.organization.login }) }}">{{ 'upload.main.description.new'|trans }}</a>
         <h2>{{ 'upload.main.description.fileof'|trans }} {{ file.organization.fullName }}</h2>
     {% else %}
         <a class="btn btn-primary pull-right" href="{{ path('upload_index') }}">{{ 'upload.main.description.new'|trans }}</a>

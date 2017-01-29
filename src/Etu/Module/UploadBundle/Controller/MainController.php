@@ -221,8 +221,7 @@ class MainController extends Controller
         ]);
 
         return $this->redirect($this->generateUrl('upload_index', [
-            'organization' => $organization,
-            'rights' => $rights,
+            'organization' => $organization->getLogin(),
         ]));
     }
 
