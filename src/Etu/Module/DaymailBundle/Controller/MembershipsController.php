@@ -125,7 +125,7 @@ class MembershipsController extends Controller
 
         $form = $this->createFormBuilder($daymailPart)
             ->add('title', TextType::class, ['required' => true, 'label' => 'daymail.memberships.daymail.title.label', 'attr' => ['maxlength' => 100]])
-            ->add('body', EditorEmailType::class, ['required' => true, 'label' => 'daymail.memberships.daymail.body.label', 'organization' => $orga])
+            ->add('body', EditorEmailType::class, ['required' => true, 'label' => 'daymail.memberships.daymail.body.label', 'organization' => $orga->getLogin()])
             ->getForm();
 
         $form->handleRequest($request);
