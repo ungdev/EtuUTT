@@ -12,23 +12,14 @@ class EtuModuleWikiBundle extends Module
      */
     public function onModuleBoot()
     {
-        //        $this->getSidebarBuilder()
-//            ->getBlock('base.sidebar.services.title')
-//            ->add('base.sidebar.services.items.uvs')
-//            ->setIcon('briefcase.png')
-//            ->setUrl($this->getRouter()->generate('uvs_index'))
-//            ->setPosition(0)
-//            ->setRole('ROLE_UV')
-//            ->end();
-
-//        $this->getAdminMenuBuilder()
-//            ->getBlock('base.admin_menu.title')
-//            ->add('uvs.admin.menu_item')
-//            ->setIcon('briefcase.png')
-//            ->setUrl($this->getRouter()->generate('admin_uvs_index'))
-//            ->setPosition(5)
-//            ->setRole('ROLE_UV_REVIEW_ADMIN')
-//            ->end();
+        $this->getSidebarBuilder()
+            ->getBlock('base.sidebar.services.title')
+            ->add('base.user.menu.wiki')
+                ->setIcon('wiki.png')
+                ->setUrl($this->getRouter()->generate('wiki_view', ['slug' => 'home', 'organization' => 'general']))
+                ->setPosition(2)
+            ->end()
+        ->end();
     }
 
     /**
@@ -89,7 +80,7 @@ class EtuModuleWikiBundle extends Module
     public function getRequirements()
     {
         return [
-            // Insert your requirements here
+            'upload',
         ];
     }
 }

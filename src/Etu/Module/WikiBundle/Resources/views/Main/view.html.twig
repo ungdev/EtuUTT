@@ -9,70 +9,23 @@
 {% endblock %}
 
 {% block content %}
-    <ul class="nav nav-tabs page-tabs">
-        {% if parentSlug %}
-            <li>
-                <a href="{{ path('wiki_view', {'slug': parentSlug, 'category': page.getCategory()})}}">
-                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
-                    {{ 'wiki.main.menu.back'|trans }}
-                </a>
-            </li>
-        {%endif%}
-        {% if rights.canGoHome(page.getCategory()) and page.getSlug() != 'home'%}
-            <li>
-                <a href="{{ path('wiki_view', {'slug': 'home', 'category': page.getCategory()})}}">
-                    <i class="fa fa-home" aria-hidden="true"></i>
-                    {{ 'wiki.main.menu.home'|trans }}
-                </a>
-            </li>
-        {%endif%}
-        <li>
-            <a href="{{ path('wiki_list', {'category': page.getCategory()})}}">
-                <i class="fa fa-list" aria-hidden="true"></i>
-                {{ 'wiki.main.menu.list'|trans }}
-            </a>
-        </li>
-        {% if rights.canRead(page) %}
-            <li class="pull-right active page-tabs-resolved-active">
-                <a href="{{ path('wiki_view', {'slug': page.getSlug(), 'category': page.getCategory()})}}">
-                    <i class="fa fa-file-text" aria-hidden="true"></i>
-                    {{ 'wiki.main.menu.view'|trans }}
-                </a>
-            </li>
-        {% endif %}
-        {% if rights.canEdit(page) %}
-            <li class="pull-right">
-                <a href="{{ path('wiki_edit', {'slug': page.getSlug(), 'category': page.getCategory()})}}">
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                    {{ 'wiki.main.menu.edit'|trans }}
-                </a>
-            </li>
-        {% endif %}
-        {% if rights.canCreate(page.getCategory()) %}
-            <li class="pull-right">
-                <a href="{{ path('wiki_new', {'slug': parentSlug, 'category': page.getCategory()})}}">
-                    <i class="fa fa-plus" aria-hidden="true"></i>
-                    {{ 'wiki.main.menu.new'|trans }}
-                </a>
-            </li>
-        {% endif %}
-    </ul>
-    <div class="padding20-all mathjax">
+    {% include "@EtuModuleWiki/Main/part_headbar.html.twig" with {'action': 'read'}  %}
+    <div class="padding20-sides mathjax">
         {{ (page.content??'')|purify }}
     </div>
     <div class="muted align-right padding20-all">
         <small>
-            {{ 'wiki.main.view.last-edit'|trans }} <a href="{{ path('user_view', { 'login' : page.getAuthor().getLogin() }) }}">{{ page.getAuthor().getFullName() }}</a> : {{ page.getCreatedAt()|localizeddate('short','short') }}<br/>
-            {% if page.getOrganization() %}
-                {{ 'wiki.main.view.can-edit'|trans }} <em>{{ ('wiki.main.right-orga.'~page.getEditRight())|trans({'%orga%': page.getOrganization()}) }}</em><br/>
+            {{ 'wiki.main.view.last-edit'|trans }} <a href="{{ path('user_view', { 'login' : page.author.login }) }}">{{ page.author.fullName }}</a> : {{ page.createdAt|localizeddate('short','short') }}<br/>
+            {% if page.organization %}
+                {{ 'wiki.main.view.can-edit'|trans }} <em>{{ ('wiki.main.right-orga.'~page.editRight)|trans({'%orga%': page.organization}) }}</em><br/>
             {% else %}
-                {{ 'wiki.main.view.can-edit'|trans }} <em>{{ ('wiki.main.right.'~page.getEditRight())|trans }}</em><br/>
+                {{ 'wiki.main.view.can-edit'|trans }} <em>{{ ('wiki.main.right.'~page.editRight)|trans }}</em><br/>
             {% endif %}
 
-            {% if page.getOrganization() %}
-                {{ 'wiki.main.view.can-read' |trans }} <em>{{ ('wiki.main.right-orga.'~page.getReadRight())|trans({'%orga%': page.getOrganization()}) }}</em>
+            {% if page.organization %}
+                {{ 'wiki.main.view.can-read' |trans }} <em>{{ ('wiki.main.right-orga.'~page.editRight)|trans({'%orga%': page.organization}) }}</em>
             {% else %}
-                {{ 'wiki.main.view.can-read' |trans }} <em>{{ ('wiki.main.right.'~page.getReadRight())|trans }}</em>
+                {{ 'wiki.main.view.can-read' |trans }} <em>{{ ('wiki.main.right.'~page.editRight)|trans }}</em>
             {% endif %}
 
         </small>

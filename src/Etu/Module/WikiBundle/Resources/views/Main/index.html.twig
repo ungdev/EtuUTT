@@ -1,0 +1,53 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'wiki.main.index.title'|trans }}{% endblock %}
+
+{% block meta_desc %}{{ 'wiki.main.index.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+    <img src="{{ asset('assets/img/titles/page.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+    {% include "@EtuModuleWiki/Main/part_headbar.html.twig" with {'action': 'index'}  %}
+
+
+        <div class="padding20-sides">
+            {% if organization %}
+                <h3>{{ 'wiki.main.index.subtitle_orga'|trans({ '%orga%': organization.fullName}) }}</h3>
+            {% else %}
+                <h3>{{ 'wiki.main.index.subtitle'|trans }}</h3>
+            {% endif %}
+
+            {% if pagelist|count %}
+                <ul>
+                    {% set lvl = 0 %}
+                    {% set li = 0 %}
+                    {% for slug, array in pagelist %}
+                        {% if lvl == array.level %}
+                            {% if li %} </li> {% endif %}
+                            <li><a href="{{ path('wiki_view', {'slug': slug, 'organization': array.organization.login ?? 'general' })}}">{{array.title}}</a>
+                            {% set li = 1 %}
+                        {% elseif lvl > array.level %}
+                            {% for i in (array.level+1)..lvl %}
+                                {% if li %} </li> {% set li = 0 %}{% endif %}
+                                </ul>
+                            {% endfor %}
+                            {% set lvl = array.level %}
+                            <li><a href="{{ path('wiki_view', {'slug': slug, 'organization': array.organization.login ?? 'general' })}}">{{array.title}}</a>
+                        {% elseif lvl < array.level %}
+                            {% for i in (lvl+1)..array.level %}
+                                <ul>
+                            {% endfor %}
+                            {% set lvl = array.level %}
+                            <li><a href="{{ path('wiki_view', {'slug': slug, 'organization': array.organization.login ?? 'general' })}}">{{array.title}}</a>
+                            {% set li = 1 %}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <em>Il n'y a aucune page dans ce wiki !</em>
+            {% endif %}
+
+        </div>
+{% endblock %}

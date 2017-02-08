@@ -170,6 +170,7 @@ user:
             notifications: Notifications
             event: Evènements
             daymail: Daymail
+            wiki: Wiki
             public: Page publique
         index:
             title: Associatif

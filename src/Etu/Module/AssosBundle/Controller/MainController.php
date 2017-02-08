@@ -82,9 +82,17 @@ class MainController extends Controller
             $isElus = true;
         }
 
+        // Get wiki rights
+        $rights = null;
+        $modulesManager = $this->get('etu.core.modules_manager');
+        if ($modulesManager->getModuleByIdentifier('events')->isEnabled()) {
+            $rights = $this->get('etu.wiki.permissions_checker');
+        }
+
         return [
             'orga' => $orga,
             'isElus' => $isElus,
+            'wikirights' => $rights,
         ];
     }
 
@@ -130,10 +138,18 @@ class MainController extends Controller
             }
         }
 
+        // Get wiki rights
+        $rights = null;
+        $modulesManager = $this->get('etu.core.modules_manager');
+        if ($modulesManager->getModuleByIdentifier('events')->isEnabled()) {
+            $rights = $this->get('etu.wiki.permissions_checker');
+        }
+
         return [
             'orga' => $orga,
             'office' => $office,
             'members' => $members,
+            'wikirights' => $rights,
         ];
     }
 }

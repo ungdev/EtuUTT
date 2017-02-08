@@ -1,11 +1,4 @@
-{% extends '@EtuUser/Memberships/layout.html.twig' %}
-{% set tab = 'memberships_orga_events' %}
-
-{% block title %}{{ membership.organization.name }}{% endblock %}
-
-{% block titleIcon %}
-    <img src="{{ asset('assets/img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
-{% endblock %}
+{% extends '::page-2cols.html.twig' %}
 
 {% block content %}
     <div class="padding20-all">
@@ -37,13 +30,13 @@
                         </button>
                         <div class="nav-collapse collapse" style="height: 0;">
                             <ul class="nav">
-                                <li>
+                                <li {% if tab == 'memberships_orga' %}class="active"{% endif %}>
                                     <a href="{{ path('memberships_orga', {'login': membership.organization.login}) }}">
                                         {{ 'user.memberships.menu.position'|trans }}
                                     </a>
                                 </li>
                                 {% if membership.hasPermission('edit_desc') %}
-                                    <li>
+                                    <li {% if tab == 'memberships_orga_desc' %}class="active"{% endif %}>
                                         <a href="{{ path('memberships_orga_desc', {'login': membership.organization.login}) }}">
                                             {{ 'user.memberships.menu.orga'|trans }}
                                         </a>
@@ -51,7 +44,7 @@
                                 {% endif %}
 
                                 {% if membership.hasPermission('deleguate') %}
-                                    <li>
+                                    <li {% if tab == 'memberships_orga_permissions' %}class="active"{% endif %}>
                                         <a href="{{ path('memberships_orga_permissions', {'login': membership.organization.login}) }}">
                                             {{ 'user.memberships.menu.permissions'|trans }}
                                         </a>
@@ -59,7 +52,7 @@
                                 {% endif %}
 
                                 {% if membership.hasPermission('notify') %}
-                                    <li>
+                                    <li  {% if tab == 'memberships_orga_notifications' %}class="active"{% endif %}>
                                         <a href="{{ path('memberships_orga_notifications', {'login': membership.organization.login}) }}">
                                             {{ 'user.memberships.menu.notifications'|trans }}
                                         </a>
@@ -67,7 +60,7 @@
                                 {% endif %}
 
                                 {% if membership.hasPermission('events') %}
-                                    <li class="active">
+                                    <li  {% if tab == 'memberships_orga_events' %}class="active"{% endif %}>
                                         <a href="{{ path('memberships_orga_events', {'login': membership.organization.login}) }}">
                                             {{ 'user.memberships.menu.event'|trans }}
                                         </a>
@@ -75,9 +68,17 @@
                                 {% endif %}
 
                                 {% if membership.hasPermission('daymail') and etu.modules.isEnabled('daymail') %}
-                                    <li>
+                                    <li  {% if tab == 'memberships_orga_daymail' %}class="active"{% endif %}>
                                         <a href="{{ path('memberships_orga_daymail', {'login': membership.organization.login}) }}">
                                             {{ 'user.memberships.menu.daymail'|trans }}
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+                                {% if etu.modules.isEnabled('wiki') %}
+                                    <li  {% if tab == 'memberships_orga_wiki' %}class="active"{% endif %}>
+                                        <a href="{{ path('memberships_orga_wiki', {'login': membership.organization.login}) }}">
+                                            {{ 'user.memberships.menu.wiki'|trans }}
                                         </a>
                                     </li>
                                 {% endif %}
@@ -93,33 +94,7 @@
                         </div>
                     </div>
                 </div>
-
-                <p>
-                    <a href="{{ path('memberships_orga_events', {'login': orga.login}) }}">
-                        <i class="icon-chevron-left"></i>
-                        {{ 'events.memberships.edit.back'|trans }}
-                    </a>
-
-                    <a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}" class="pull-right">
-                        {{ 'events.memberships.edit.publicView'|trans }}
-                    </a>
-                </p>
-
-                <p>
-                    {{ 'events.memberships.delete.question'|trans({'%title%': event.title}) }}
-                </p>
-                <p>
-                    <a href="{{ path('memberships_orga_events_delete', {
-                        'login': orga.login, 'id': event.id, 'slug': event.title|slugify, 'confirm': 'confirm'
-                    }) }}" class="btn btn-primary">
-                        {{ 'events.memberships.delete.yes'|trans }}
-                    </a>
-                    <a href="{{ path('memberships_orga_events_edit', {
-                        'login': orga.login, 'id': event.id, 'slug': event.title|slugify
-                    }) }}" class="btn">
-                        {{ 'events.memberships.delete.no'|trans }}
-                    </a>
-                </p>
+                {% block membership_content %}{% endblock %}
             </div>
         </div>
     </div>

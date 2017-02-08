@@ -1,4 +1,6 @@
-{% extends '::page-2cols.html.twig' %}
+{% extends '@EtuUser/Memberships/layout.html.twig' %}
+{% set tab = 'memberships_orga_daymail' %}
+
 
 {% block title %}{{ membership.organization.name }}{% endblock %}
 
@@ -24,173 +26,84 @@
     {% endif %}
 {% endblock %}
 
-{% block content %}
-    <div class="padding20-all">
-        <div class="row-fluid">
-            <div class="span3 memberships">
-                <ul class="nav nav-list">
-                    {% for m in memberships %}
-                        <li{% if membership.id == m.id %} class="active"{% endif %}>
-                            <a href="{{ path('memberships_orga', {'login': m.organization.login}) }}">
-                                {{ m.organization.name }}<br />
-                                {% if membership.id == m.id %}
-                                    {{ ('user.orga.role.'~m.role)|trans }}
-                                {% else %}
-                                    <span class="muted">{{ ('user.orga.role.'~m.role)|trans }}</span>
-                                {% endif %}
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
+{% block membership_content %}
+    {{ form_start(form) }}
 
-            <div class="span9">
-                <div class="navbar navbar-etu-membership">
-                    <div class="navbar-inner">
-                        <button type="button" class="btn btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <div class="nav-collapse collapse" style="height: 0;">
-                            <ul class="nav">
-                                <li>
-                                    <a href="{{ path('memberships_orga', {'login': membership.organization.login}) }}">
-                                        {{ 'user.memberships.menu.position'|trans }}
-                                    </a>
-                                </li>
-                                {% if membership.hasPermission('edit_desc') %}
-                                    <li>
-                                        <a href="{{ path('memberships_orga_desc', {'login': membership.organization.login}) }}">
-                                            {{ 'user.memberships.menu.orga'|trans }}
-                                        </a>
-                                    </li>
-                                {% endif %}
-
-                                {% if membership.hasPermission('deleguate') %}
-                                    <li>
-                                        <a href="{{ path('memberships_orga_permissions', {'login': membership.organization.login}) }}">
-                                            {{ 'user.memberships.menu.permissions'|trans }}
-                                        </a>
-                                    </li>
-                                {% endif %}
-
-                                {% if membership.hasPermission('notify') %}
-                                    <li>
-                                        <a href="{{ path('memberships_orga_notifications', {'login': membership.organization.login}) }}">
-                                            {{ 'user.memberships.menu.notifications'|trans }}
-                                        </a>
-                                    </li>
-                                {% endif %}
-
-                                {% if membership.hasPermission('events') %}
-                                    <li>
-                                        <a href="{{ path('memberships_orga_events', {'login': membership.organization.login}) }}">
-                                            {{ 'user.memberships.menu.event'|trans }}
-                                        </a>
-                                    </li>
-                                {% endif %}
-
-                                {% if membership.hasPermission('daymail') and etu.modules.isEnabled('daymail') %}
-                                    <li class="active">
-                                        <a href="{{ path('memberships_orga_daymail', {'login': membership.organization.login}) }}">
-                                            {{ 'user.memberships.menu.daymail'|trans }}
-                                        </a>
-                                    </li>
-                                {% endif %}
-
-                                {% if etu.modules.isEnabled('assos') %}
-                                    <li>
-                                        <a href="{{ path('orgas_view', {'login': membership.organization.login}) }}">
-                                            {{ 'user.memberships.menu.public'|trans }}
-                                        </a>
-                                    </li>
-                                {% endif %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                {{ form_start(form) }}
-
-                    <div class="control-group">
-                        <label class="control-label">{{ 'daymail.memberships.daymail.date.label'|trans }}</label>
-                        <div class="controls">
-                            <div class="btn-group">
-                                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                                    {{ ('daymail.memberships.daymail.days.'~currentDay|date('D')|lower)|trans }}
-                                    {{ currentDay|date('d') }}
-                                    {{ ('daymail.memberships.daymail.months.'~currentDay|date('M')|lower)|trans }}
-                                    {{ currentDay|date('Y') }}
-                                    <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    {% for code, day in available %}
-                                        {% if code == 'divider' %}
-                                            <li class="divider"></li>
-                                        {% else %}
-                                        <li>
-                                            <a href="{{ path('memberships_orga_daymail', {'login': orga.login, 'day': code}) }}">
-                                                {% if day.old %}
-                                                    <em>
-                                                {% endif %}
-
-                                                {{ ('daymail.memberships.daymail.days.'~day|date('D')|lower)|trans }}
-                                                {{ day|date('d') }}
-                                                {{ ('daymail.memberships.daymail.months.'~day|date('M')|lower)|trans }}
-                                                {{ day|date('Y') }}
-
-                                                {% if day.name is defined %}
-                                                    <span class="muted">- {{ day.name }}</span>
-                                                {% endif %}
-
-                                                {% if day.old %}
-                                                    </em>
-                                                {% endif %}
-                                            </a>
-                                        </li>
-                                        {% endif %}
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    {% if canEdit %}
-                    {{ form_row(form.title) }}
-                    {{ form_row(form.body) }}
-
-                    <div class="control-group">
-                        <div class="controls">
-                            {{ form_rest(form) }}
-
-                            {% if daymail.id > 0 %}
-                                <button type="submit" class="btn">
-                                    {{ 'daymail.memberships.daymail.edit'|trans({'%day%': currentDay|date('d/m/Y')}) }}
-                                </button>
-                                <button type="submit" class="btn" name="_preview">
-                                    {{ 'daymail.memberships.daymail.preview'|trans({'%day%': currentDay|date('d/m/Y')}) }}
-                                </button>
-                                <a href="{{ path('memberships_orga_daymail_remove', {'login': login, 'day': day}) }}"
-                                   class="btn btn-link pull-right">
-                                    {{ 'daymail.memberships.daymail.remove'|trans({'%day%': currentDay|date('d/m/Y')}) }}
-                                </a>
+        <div class="control-group">
+            <label class="control-label">{{ 'daymail.memberships.daymail.date.label'|trans }}</label>
+            <div class="controls">
+                <div class="btn-group">
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                        {{ ('daymail.memberships.daymail.days.'~currentDay|date('D')|lower)|trans }}
+                        {{ currentDay|date('d') }}
+                        {{ ('daymail.memberships.daymail.months.'~currentDay|date('M')|lower)|trans }}
+                        {{ currentDay|date('Y') }}
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for code, day in available %}
+                            {% if code == 'divider' %}
+                                <li class="divider"></li>
                             {% else %}
-                                <button type="submit" class="btn">
-                                    {{ 'daymail.memberships.daymail.create'|trans({'%day%': currentDay|date('d/m/Y')}) }}
-                                </button>
+                            <li>
+                                <a href="{{ path('memberships_orga_daymail', {'login': orga.login, 'day': code}) }}">
+                                    {% if day.old %}
+                                        <em>
+                                    {% endif %}
+
+                                    {{ ('daymail.memberships.daymail.days.'~day|date('D')|lower)|trans }}
+                                    {{ day|date('d') }}
+                                    {{ ('daymail.memberships.daymail.months.'~day|date('M')|lower)|trans }}
+                                    {{ day|date('Y') }}
+
+                                    {% if day.name is defined %}
+                                        <span class="muted">- {{ day.name }}</span>
+                                    {% endif %}
+
+                                    {% if day.old %}
+                                        </em>
+                                    {% endif %}
+                                </a>
+                            </li>
                             {% endif %}
-                        </div>
-                    </div>
-                    {% else %}
-                        <hr />
-
-                        <h4>{{ daymail.title }}</h4>
-
-                        {{ daymail.body|raw }}
-                    {% endif %}
-                {{ form_end(form) }}
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
+
+        {% if canEdit %}
+        {{ form_row(form.title) }}
+        {{ form_row(form.body) }}
+
+        <div class="control-group">
+            <div class="controls">
+                {{ form_rest(form) }}
+
+                {% if daymail.id > 0 %}
+                    <button type="submit" class="btn">
+                        {{ 'daymail.memberships.daymail.edit'|trans({'%day%': currentDay|date('d/m/Y')}) }}
+                    </button>
+                    <button type="submit" class="btn" name="_preview">
+                        {{ 'daymail.memberships.daymail.preview'|trans({'%day%': currentDay|date('d/m/Y')}) }}
+                    </button>
+                    <a href="{{ path('memberships_orga_daymail_remove', {'login': login, 'day': day}) }}"
+                       class="btn btn-link pull-right">
+                        {{ 'daymail.memberships.daymail.remove'|trans({'%day%': currentDay|date('d/m/Y')}) }}
+                    </a>
+                {% else %}
+                    <button type="submit" class="btn">
+                        {{ 'daymail.memberships.daymail.create'|trans({'%day%': currentDay|date('d/m/Y')}) }}
+                    </button>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+            <hr />
+
+            <h4>{{ daymail.title }}</h4>
+
+            {{ daymail.body|raw }}
+        {% endif %}
+    {{ form_end(form) }}
 {% endblock %}

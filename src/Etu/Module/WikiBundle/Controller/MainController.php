@@ -17,16 +17,29 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class MainController extends Controller
 {
     /**
-     * @Route("/wiki/view/{category}/{slug}", requirements={"category" = "[a-z0-9-]+", "slug" = "[a-z0-9-/]+"}, name="wiki_view")
+     * @Route("/wiki/view/{organization}/{slug}", requirements={"slug" = "[a-z0-9-/]+"}, name="wiki_view")
      * @Template()
      */
-    public function viewAction($slug, $category)
+    public function viewAction($slug, $organization, Request $request)
     {
+        // Find organization
+        $em = $this->getDoctrine()->getManager();
+        if ($organization && $organization != 'general') {
+            $organization = $em->getRepository('EtuUserBundle:Organization')
+                ->findOneBy(['login' => $request->get('organization')]);
+            if (!$organization) {
+                throw $this->createNotFoundException('Organization not found');
+            }
+        }
+        else {
+            $organization = null;
+        }
+
         // Find last version of a page
         $repo = $this->getDoctrine()->getRepository('EtuModuleWikiBundle:WikiPage');
         $page = $repo->findOneBy([
             'slug' => $slug,
-            'category' => $category,
+            'organization' => $organization,
         ], ['createdAt' => 'DESC']);
 
         // If not found
@@ -44,28 +57,42 @@ class MainController extends Controller
             'page' => $page,
             'rights' => $this->get('etu.wiki.permissions_checker'),
             'parentSlug' => substr($slug, 0, strrpos($slug, '/')),
+            'organization' => $organization,
         ];
     }
 
     /**
-     * @Route("/wiki/edit/{category}/{slug}", defaults={"new"=false}, requirements={"category" = "[a-z0-9-]+", "slug" = "[a-z0-9-/]+"}, name="wiki_edit")
-     * @Route("/wiki/new/{category}/{slug}", defaults={"new"=true}, requirements={"category" = "[a-z0-9-]+", "slug" = "[a-z0-9-/]*"}, name="wiki_new")
+     * @Route("/wiki/edit/{organization}/{slug}", defaults={"new"=false}, requirements={"slug" = "[a-z0-9-/]+"}, name="wiki_edit")
+     * @Route("/wiki/new/{organization}/{slug}", defaults={"new"=true}, requirements={"slug" = "[a-z0-9-/]*"}, name="wiki_new")
      * @Template()
      */
-    public function editAction($category, $slug, $new, Request $request)
+    public function editAction($organization, $slug, $new, Request $request)
     {
+        // Find organization
+        $em = $this->getDoctrine()->getManager();
+        if ($organization && $organization != 'general') {
+            $organization = $em->getRepository('EtuUserBundle:Organization')
+                ->findOneBy(['login' => $request->get('organization')]);
+            if (!$organization) {
+                throw $this->createNotFoundException('Organization not found');
+            }
+        }
+        else {
+            $organization = null;
+        }
+
         // Find last version of a page
         $repo = $this->getDoctrine()->getRepository('EtuModuleWikiBundle:WikiPage');
         $page = $repo->findOneBy([
             'slug' => $slug,
-            'category' => $category,
+            'organization' => $organization,
         ], ['createdAt' => 'DESC']);
 
         // If not found
         $rights = $this->get('etu.wiki.permissions_checker');
         if ($new) {
             // Check create
-            if (!$rights->canCreate($category)) {
+            if (!$rights->canCreate($organization)) {
                 return $this->createAccessDeniedResponse();
             }
             // Check if subslug exist
@@ -94,16 +121,21 @@ class MainController extends Controller
                 ->select('p.title, p.slug, p.readRight, IDENTITY(p.organization) as organization_id')
                 ->from('EtuModuleWikiBundle:WikiPage', 'p', 'p.slug')
                 ->leftJoin('EtuModuleWikiBundle:WikiPage', 'p2', 'WITH', 'p.slug = p2.slug AND p.createdAt < p2.createdAt')
-                ->where('p2.slug IS NULL')
-                ->where('p.category = :category')->setParameter(':category', $category)
-                ->orderBy('p.slug', 'ASC')
+                ->where('p2.slug IS NULL');
+                if($organization) {
+                    $result = $result->where('p.organization = :organization')->setParameter(':organization', $organization);
+                }
+                else {
+                    $result = $result->where('p.organization is NULL');
+                }
+                $result = $result->orderBy('p.slug', 'ASC')
                 ->getQuery()
                 ->getResult();
             // Formate array, check rights and add ↳ at the beggining of the title if necessary
             $rights = $this->get('etu.wiki.permissions_checker');
             $pagelist = [];
             foreach ($result as $key => $value) {
-                if ($rights->has($value['readRight'], $value['organization_id'])) {
+                if ($rights->has($value['readRight'], $organization)) {
                     $pagelist[$key] = $value['title'];
                     if (strpos($key, '/') !== false) {
                         $pagelist[$key] = '↳'.$pagelist[$key];
@@ -113,7 +145,7 @@ class MainController extends Controller
 
             // Add "none" item
             $form = $form->add('preslug', ChoiceType::class, [
-                'choices' => $pagelist,
+                'choices' => array_flip($pagelist),
                 'choice_attr' => function ($val) {
                     $level = substr_count($val, '/');
 
@@ -128,13 +160,12 @@ class MainController extends Controller
         }
 
         // Create editor field
-        $form = $form->add('content', EditorType::class, ['required' => true, 'label' => 'wiki.main.edit.content', 'organization' => ($rights->getOrganization($category) ? $rights->getOrganization($category)->getLogin() : null)]);
+        $form = $form->add('content', EditorType::class, ['required' => true, 'label' => 'wiki.main.edit.content', 'organization' => ($organization ? $organization->getLogin() : null)]);
 
         // Create rights fields
         $choices = [];
-        $organization_id = ($rights->getOrganization($category)) ? $rights->getOrganization($category)->getId() : null;
         foreach (WikiPage::RIGHT as $right) {
-            if ($rights->has($right, $organization_id)) {
+            if ($rights->has($right, $organization)) {
                 $choices['wiki.main.right.'.$right] = $right;
             }
         }
@@ -156,7 +187,6 @@ class MainController extends Controller
 
             // Create slug if its a new page
             if ($new) {
-                $page->setCategory($category);
                 if (empty($form->get('preslug')->getData())) {
                     $page->setSlug(StringManipulationExtension::slugify($page->getTitle()));
                 } else {
@@ -166,7 +196,7 @@ class MainController extends Controller
                 // Check if slug is not already used
                 $pageTest = $repo->findOneBy([
                     'slug' => $page->getSlug(),
-                    'category' => $page->getCategory(),
+                    'organization' => $organization,
                 ]);
 
                 $try = 1;
@@ -177,18 +207,16 @@ class MainController extends Controller
                     // Check if slug is not already used
                     $pageTest = $repo->findOneBy([
                         'slug' => $page->getSlug(),
-                        'category' => $page->getCategory(),
+                        'organization' => $organization,
                     ]);
                 }
             }
 
             // Set modification author and date
             $page->setAuthor($this->getUser());
+            $page->setOrganization($organization);
             $page->setCreatedAt(new \DateTime());
             $page->setValidated(false);
-
-            // Update organization according to category
-            $page->setOrganization($rights->getOrganization($category));
 
             // Save to db
             $em = $this->getDoctrine()->getManager();
@@ -203,7 +231,7 @@ class MainController extends Controller
 
             // Redirect
             return $this->redirect($this->generateUrl('wiki_view', [
-                'category' => $page->getCategory(),
+                'organization' => $organization->getLogin(),
                 'slug' => $page->getSlug(),
                 ]
             ), 301);
@@ -213,34 +241,54 @@ class MainController extends Controller
             'page' => $page,
             'form' => $form->createView(),
             'rights' => $this->get('etu.wiki.permissions_checker'),
+            'organization' => $organization,
         ];
     }
 
     /**
-     * @Route("/wiki/list/{category}", requirements={"category" = "[a-z0-9-]+"}, name="wiki_list")
+     * @Route("/wiki/index/{organization}", name="wiki_index")
      * @Template()
      */
-    public function listAction($category)
+    public function indexAction($organization = null, Request $request)
     {
+        // Find organization
+        $em = $this->getDoctrine()->getManager();
+        if ($organization && $organization != 'general') {
+            $organization = $em->getRepository('EtuUserBundle:Organization')
+                ->findOneBy(['login' => $request->get('organization')]);
+            if (!$organization) {
+                throw $this->createNotFoundException('Organization not found');
+            }
+        }
+        else {
+            $organization = null;
+        }
+
+        // Find page tree
         $em = $this->getDoctrine()->getManager();
         $result = $em->createQueryBuilder()
             ->select('p')
             ->from('EtuModuleWikiBundle:WikiPage', 'p')
             ->leftJoin('EtuModuleWikiBundle:WikiPage', 'p2', 'WITH', 'p.slug = p2.slug AND p.createdAt < p2.createdAt')
-            ->where('p2.slug IS NULL')
-            ->where('p.category = :category')->setParameter(':category', $category)
-            ->orderBy('p.slug', 'ASC')
+            ->where('p2.slug IS NULL');
+            if($organization) {
+                $result = $result->where('p.organization = :organization')->setParameter(':organization', $organization);
+            }
+            else {
+                $result = $result->where('p.organization is NULL');
+            }
+            $result = $result->orderBy('p.slug', 'ASC')
             ->getQuery()
             ->getResult();
+
         // Formate array, check rights and add ↳ at the beggining of the title if necessary
         $rights = $this->get('etu.wiki.permissions_checker');
         $pagelist = [];
         foreach ($result as $value) {
-            $association_id = ($value->getOrganization()) ? $value->getOrganization()->getId() : null;
-            if ($rights->has($value->getReadRight(), $association_id)) {
+            if ($rights->has($value->getReadRight(), $value->getOrganization())) {
                 $pagelist[$value->getSlug()] = [
                     'title' => $value->getTitle(),
-                    'category' => $value->getCategory(),
+                    'organization' => $value->getOrganization(),
                     'level' => substr_count($value->getSlug(), '/'),
                 ];
             }
@@ -248,7 +296,7 @@ class MainController extends Controller
 
         return [
             'pagelist' => $pagelist,
-            'category' => $category,
+            'organization' => $organization,
             'rights' => $this->get('etu.wiki.permissions_checker'),
         ];
     }
@@ -267,13 +315,8 @@ class MainController extends Controller
             $organization = $em->getRepository('EtuUserBundle:Organization')
                 ->findOneBy(['login' => $request->get('organization')]);
             if (!$organization) {
-                return $this->createNotFoundException('Organization not found');
+                throw $this->createNotFoundException('Organization not found');
             }
-        }
-
-        $category = 'general';
-        if ($organization) {
-            $category = 'orga-'.$organization->getLogin();
         }
 
         // Find list
@@ -282,7 +325,7 @@ class MainController extends Controller
             ->from('EtuModuleWikiBundle:WikiPage', 'p')
             ->leftJoin('EtuModuleWikiBundle:WikiPage', 'p2', 'WITH', 'p.slug = p2.slug AND p.createdAt < p2.createdAt')
             ->where('p2.slug IS NULL')
-            ->where('p.category = :category')->setParameter(':category', $category)
+            ->where('p.organization = :organization')->setParameter(':organization', $organization)
             ->orderBy('p.slug', 'ASC')
             ->getQuery()
             ->getResult();
@@ -291,11 +334,10 @@ class MainController extends Controller
         $rights = $this->get('etu.wiki.permissions_checker');
         $pagelist = [];
         foreach ($result as $value) {
-            $association_id = ($value->getOrganization()) ? $value->getOrganization()->getId() : null;
-            if ($rights->has($value->getReadRight(), $association_id)) {
+            if ($rights->has($value->getReadRight(), $value->getOrganization())) {
                 $pagelist[$value->getSlug()] = [
                     'title' => (substr_count($value->getSlug(), '/') ? str_repeat(' ', substr_count($value->getSlug(), '/')).'↳' : '').$value->getTitle(),
-                    'value' => $this->generateUrl('wiki_view', ['category' => $value->getCategory(), 'slug' => $value->getSlug()], true),
+                    'value' => $this->generateUrl('wiki_view', ['organization' => $organization, 'slug' => $value->getSlug()], true),
                 ];
             }
         }

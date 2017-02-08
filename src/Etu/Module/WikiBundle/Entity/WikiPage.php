@@ -47,13 +47,6 @@ class WikiPage
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
-     */
-    protected $category;
-
-    /**
-     * @var string
-     *
      * @Assert\NotBlank()
      * @ORM\Column(type="text", nullable = true)
      */
@@ -176,30 +169,6 @@ class WikiPage
     public function getSlug()
     {
         return $this->slug;
-    }
-
-    /**
-     * Set category.
-     *
-     * @param string $category
-     *
-     * @return WikiPage
-     */
-    public function setCategory($category)
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Get category.
-     *
-     * @return string
-     */
-    public function getCategory()
-    {
-        return $this->category;
     }
 
     /**
@@ -368,5 +337,27 @@ class WikiPage
     public function isValidated()
     {
         return $this->validated;
+    }
+
+
+    /**
+     * Remove title and content to delete the page
+     *
+     * @return string
+     */
+    public function delete()
+    {
+        $this->content = '';
+        $this->title = '';
+    }
+
+    /**
+     * Check if this page is deleted
+     *
+     * @return string
+     */
+    public function isDeleted()
+    {
+        return ($this->content == '' && $this->title = '');
     }
 }

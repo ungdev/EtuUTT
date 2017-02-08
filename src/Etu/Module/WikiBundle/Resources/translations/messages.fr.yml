@@ -1,11 +1,20 @@
 wiki:
+  membership:
+    wiki:
+      intro: "Le wiki permet la création et la modification collaboratives de pages par et pour les membres de votre organisation. Vous pouvez donc vous servir de cet outil comme support permettant de transmettre vos connaissances et experiences aux membres reprenant votre projet."
+      file: "Gestionnaire de fichier de %orga%"
+      home: "Page d'accueil du wiki"
+      index: "Index du wiki"
+      placeholder: "Index des pages"
+      homepage: "Page d'accueil du wiki"
+      submit: "Valider"
   main:
     menu:
       view: "Lire"
       new: "Nouvelle page"
       edit: "Modifier"
       back: "Retour"
-      list: "Index"
+      index: "Index"
       home: "Accueil"
     right-orga:
       0: "Administrateur du wiki"
@@ -32,5 +41,8 @@ wiki:
         editRight: Qui peut modifier la page ?
         submit: Sauvegarder les modifications
         success: Votre modification a été enregistré
-    list:
+    index:
         title: Index du wiki
+        subtitle: Liste des pages du wiki
+        subtitle_orga: Liste des pages du wiki de %orga%
+        nopage: Il n'y a aucune page dans ce wiki

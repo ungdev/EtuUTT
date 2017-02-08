@@ -24,6 +24,7 @@ assos:
       elus: "Elus étudiants"
       members: Membres
       orgas: "Associations et clubs"
+      wiki: "Wiki"
     view:
       back: "Retour à la liste"
       contactMail: "E-mail de contact"

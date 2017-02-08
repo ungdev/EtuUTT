@@ -45,6 +45,7 @@ base:
             pages: Pages statiques
             orgas: Mes associations
             nutt: Le NUTT
+            wiki: Wiki
 
         # Sex
         sex:

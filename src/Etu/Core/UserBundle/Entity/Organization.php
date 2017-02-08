@@ -142,6 +142,14 @@ class Organization implements UserInterface, \Serializable
      */
     protected $memberships;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected $wikiHomepage;
+
     /**
      * Temporary variable to store uploaded file during photo update.
      *
@@ -605,5 +613,53 @@ class Organization implements UserInterface, \Serializable
     public function getDeletedAt()
     {
         return $this->deletedAt;
+    }
+
+    /**
+     * Set wikiHomepage
+     *
+     * @param string $wikiHomepage
+     *
+     * @return Organization
+     */
+    public function setWikiHomepage($wikiHomepage)
+    {
+        $this->wikiHomepage = $wikiHomepage;
+
+        return $this;
+    }
+
+    /**
+     * Get wikiHomepage
+     *
+     * @return string
+     */
+    public function getWikiHomepage()
+    {
+        return $this->wikiHomepage;
+    }
+
+    /**
+     * Add membership
+     *
+     * @param \Etu\Core\UserBundle\Entity\Member $membership
+     *
+     * @return Organization
+     */
+    public function addMembership(\Etu\Core\UserBundle\Entity\Member $membership)
+    {
+        $this->memberships[] = $membership;
+
+        return $this;
+    }
+
+    /**
+     * Remove membership
+     *
+     * @param \Etu\Core\UserBundle\Entity\Member $membership
+     */
+    public function removeMembership(\Etu\Core\UserBundle\Entity\Member $membership)
+    {
+        $this->memberships->removeElement($membership);
     }
 }

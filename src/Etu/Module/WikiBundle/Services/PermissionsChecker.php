@@ -57,25 +57,40 @@ class PermissionsChecker
     }
 
     /**
-     * Check if there is a home page in the category and if user can read it.
+     * Give the home page slug for the given organization (or general wiki if null) if configured
+     * If not configured or cannot be read by user, it returns null.
      *
-     * @param string $category
+     * @param Organization $organization
      *
-     * @return bool
+     * @return string slug or nul
      */
-    public function canGoHome($category)
+    public function getHomeSlug(Organization $organization = null)
     {
+        // Find homepage name
+        $homepageSlug = $organization->getWikiHomepage();
+
+        // Check if page exist
         $repo = $this->em->getRepository('EtuModuleWikiBundle:WikiPage');
         $page = $repo->findOneBy([
-            'slug' => 'home',
-            'category' => $category,
+            'slug' => $homepageSlug,
+            'organization' => $organization,
         ], ['createdAt' => 'DESC']);
 
-        if (!$page) {
+        if (!$page || $page->isDeleted() || !$this->canRead($page)) {
             return false;
         }
 
-        return $this->canRead($page);
+        return $homepageSlug;
+    }
+
+    /**
+     * @param Page $page
+     *
+     * @return bool
+     */
+    public function canSetHome(Organization $organization = null)
+    {
+        return $this->has(WikiPage::RIGHT['ORGA_ADMIN'], $organization);
     }
 
     /**
@@ -85,9 +100,7 @@ class PermissionsChecker
      */
     public function canRead(WikiPage $page)
     {
-        $organization_id = ($page->getOrganization()) ? $page->getOrganization()->getId() : null;
-
-        return $this->has($page->getReadRight(), $organization_id);
+        return $this->has($page->getReadRight(), $page->getOrganization());
     }
 
     /**
@@ -101,44 +114,21 @@ class PermissionsChecker
             return false;
         }
 
-        $organization_id = ($page->getOrganization()) ? $page->getOrganization()->getId() : null;
-
-        return $this->has($page->getEditRight(), $organization_id);
+        return $this->has($page->getEditRight(), $page->getOrganization());
     }
 
     /**
-     * @param string $category
-     *
-     * @return Organization associated to a category
-     */
-    public function getOrganization($category)
-    {
-        if (preg_match('/^orga-([a-z-]+)$/', $category, $matches)) {
-            // Find organization
-            $repo = $this->em->getRepository('EtuUserBundle:Organization');
-            $orga = $repo->findOneBy([
-                'login' => $matches[1],
-            ]);
-
-            return $orga;
-        }
-
-        return;
-    }
-
-    /**
-     * @param string $category
+     * @param Organization $organization
      *
      * @return bool return true if user can crate a page in the category
      */
-    public function canCreate($category)
+    public function canCreate(Organization $organization = null)
     {
         if (!$this->authorizationChecker->isGranted('ROLE_WIKI_EDIT')) {
             return false;
         }
 
-        // Try to match organization wiki
-        $organization = $this->getOrganization($category);
+        // For organization wiki
         if ($organization) {
             // Check if user is in organization
             $membership = $this->memberships[$organization->getId()] ?? null;
@@ -147,40 +137,22 @@ class PermissionsChecker
             }
         }
 
-        // Try to match UE wiki
-        if (preg_match('/^ue-([a-z0-9]+)$/', $category, $matches)) {
-            // Find UE
-            $repo = $this->em->getRepository('EtuModuleUVBundle:UV');
-            $ue = $repo->findOneBy([
-                'code' => $matches[1],
-            ]);
-
-            //Check if UE exist
-            if ($ue) {
-                return true;
-            }
-        }
-
-        // Try to match general category
-        if ($category == 'general') {
-            return true;
-        }
-
-        return false;
+        // For general wiki
+        return true;
     }
 
     /**
      * Check if user has the given right.
      *
      * @param int $right           WikiPage::RIGHT['*']
-     * @param int $organization_id
+      * @param Organization $organization
      *
      * @return bool
      */
-    public function has($right, $organization_id = null)
+    public function has($right, Organization $organization = null)
     {
         if ($this->authorizationChecker->isGranted('ROLE_WIKI_ADMIN')
-            && ($organization_id != null || !in_array($right, [WikiPage::RIGHT['ORGA_ADMIN'], WikiPage::RIGHT['ORGA_MEMBER']]))) {
+            && ($organization != null || !in_array($right, [WikiPage::RIGHT['ORGA_ADMIN'], WikiPage::RIGHT['ORGA_MEMBER']]))) {
             return true;
         }
 
@@ -188,15 +160,19 @@ class PermissionsChecker
             case WikiPage::RIGHT['ADMIN']:
                 return false;
             case WikiPage::RIGHT['ORGA_ADMIN']:
-                $membership = $this->memberships[$organization_id] ?? null;
-                if (count($membership) && $membership->hasPermission('wiki')) {
-                    return true;
+                if($organization) {
+                    $membership = $this->memberships[$organization->getId()] ?? null;
+                    if ($organization && count($membership) && $membership->hasPermission('wiki')) {
+                        return true;
+                    }
                 }
                 break;
             case WikiPage::RIGHT['ORGA_MEMBER']:
-                $membership = $this->memberships[$organization_id] ?? null;
-                if (count($membership)) {
-                    return true;
+                if($organization) {
+                    $membership = $this->memberships[$organization->getId()] ?? null;
+                    if (count($membership)) {
+                        return true;
+                    }
                 }
                 break;
             case WikiPage::RIGHT['STUDENT']:

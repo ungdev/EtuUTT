@@ -40,6 +40,23 @@
                 {{ 'assos.main.menu.description'|trans }}
             </a>
         </li>
+
+        {% if etu.modules.isEnabled('wiki') %}
+            {% if wikirights.getHomeSlug(orga) %}
+                <li class="pull-right">
+                    <a href="{{ path('wiki_view', {'slug': wikirights.getHomeSlug(orga), 'organization': orga.login}) }}">
+                        {{ 'assos.main.menu.wiki'|trans }}
+                    </a>
+                </li>
+            {% else %}
+                <li class="pull-right">
+                    <a href="{{ path('wiki_index', {'organization': orga.login}) }}">
+                        {{ 'assos.main.menu.wiki'|trans }}
+                    </a>
+                </li>
+            {% endif %}
+        {% endif %}
+
     </ul>
 
     <div class="padding20-all">

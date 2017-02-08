@@ -9,46 +9,11 @@
 {% endblock %}
 
 {% block content %}
-    <ul class="nav nav-tabs page-tabs">
-        {% if rights.canGoHome(app.request.get('category')) and page.getSlug() != 'home'%}
-            <li>
-                <a href="{{ path('wiki_view', {'slug': 'home', 'category': app.request.get('category')})}}">
-                    <i class="fa fa-home" aria-hidden="true"></i>
-                    {{ 'wiki.main.menu.home'|trans }}
-                </a>
-            </li>
-        {%endif%}
-        <li>
-            <a href="{{ path('wiki_list', {'category': app.request.get('category')})}}">
-                <i class="fa fa-list" aria-hidden="true"></i>
-                {{ 'wiki.main.menu.list'|trans }}
-            </a>
-        </li>
-        {% if rights.canRead(page) and page.getSlug() %}
-            <li class="pull-right">
-                <a href="{{ path('wiki_view', {'slug': page.getSlug(), 'category': app.request.get('category')})}}">
-                    <i class="fa fa-file-text" aria-hidden="true"></i>
-                    {{ 'wiki.main.menu.view'|trans }}
-                </a>
-            </li>
-        {% endif %}
-        {% if rights.canEdit(page) and page.getSlug() %}
-            <li class="pull-right active page-tabs-resolved-active">
-                <a href="{{ path('wiki_edit', {'slug': page.getSlug(), 'category': app.request.get('category')})}}">
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                    {{ 'wiki.main.menu.edit'|trans }}
-                </a>
-            </li>
-        {% endif %}
-        {% if rights.canCreate(app.request.get('category')) %}
-            <li class="pull-right {% if not page.getSlug() %}active page-tabs-resolved-active{% endif %}">
-                <a href="{{ path('wiki_new', {'slug': app.request.get('slug'), 'category': app.request.get('category')})}}">
-                    <i class="fa fa-plus" aria-hidden="true"></i>
-                    {{ 'wiki.main.menu.new'|trans }}
-                </a>
-            </li>
-        {% endif %}
-    </ul>
+    {% if page.slug %}
+        {% include "@EtuModuleWiki/Main/part_headbar.html.twig" with {'action': 'edit'}  %}
+    {% else %}
+        {% include "@EtuModuleWiki/Main/part_headbar.html.twig" with {'action': 'new'}  %}
+    {% endif %}
 
         <div class="padding20-sides">
 
