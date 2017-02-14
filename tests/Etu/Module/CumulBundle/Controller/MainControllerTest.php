@@ -11,7 +11,7 @@ class MainControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/cumul?q=user');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionIndexOrga()
@@ -19,6 +19,6 @@ class MainControllerTest extends EtuWebTestCase
         $client = $this->createOrgaClient();
 
         $client->request('GET', '/cumul?q=user');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 }

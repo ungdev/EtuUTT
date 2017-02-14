@@ -3,12 +3,12 @@
 namespace Etu\Module\DaymailBundle\Command;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\ORM\EntityManager;
 use Etu\Module\DaymailBundle\Entity\DaymailPart;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\Container;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\Translation\Translator;
 
 class SendCommand extends ContainerAwareCommand
@@ -20,8 +20,7 @@ class SendCommand extends ContainerAwareCommand
     {
         $this
             ->setName('etu:daymail:send')
-            ->setDescription('Send the daymail to all the users using daymail@utt.fr')
-        ;
+            ->setDescription('Send the daymail to all the users using daymail@utt.fr');
     }
 
     /**
@@ -72,9 +71,9 @@ class SendCommand extends ContainerAwareCommand
              * Create the message
              */
             $subject = 'Daymail du ';
-            $subject .= $translator->trans('daymail.memberships.daymail.days.'.strtolower(date('D'))).' ';
+            $subject .= $translator->trans('daymail.memberships.daymail.days.'.mb_strtolower(date('D'))).' ';
             $subject .= date('d').' ';
-            $subject .= $translator->trans('daymail.memberships.daymail.months.'.strtolower(date('M'))).' ';
+            $subject .= $translator->trans('daymail.memberships.daymail.months.'.mb_strtolower(date('M'))).' ';
 
             $content = $twig->render('EtuModuleDaymailBundle:Mail:daymail.html.twig', [
                 'daymail' => $daymailParts[0],

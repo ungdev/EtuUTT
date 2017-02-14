@@ -2,18 +2,18 @@
 
 namespace Etu\Core\UserBundle\Security\UserProvider;
 
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Etu\Core\UserBundle\Ldap\Model\User as ldapUser;
-use Etu\Core\UserBundle\Ldap\Model\Organization as LdapOrganization;
-use Etu\Core\UserBundle\Entity\User as UserEntity;
-use Etu\Core\UserBundle\Entity\Organization as OrganizationEntity;
 use Doctrine\Bundle\DoctrineBundle\Registry;
-use Etu\Core\UserBundle\Ldap\LdapManager;
-use Etu\Core\UserBundle\Sync\Iterator\Element\ElementToImport;
+use Etu\Core\UserBundle\Entity\Organization as OrganizationEntity;
+use Etu\Core\UserBundle\Entity\User as UserEntity;
 use Etu\Core\UserBundle\Exception\OrganizationNotAuthorizedException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Etu\Core\UserBundle\Ldap\LdapManager;
+use Etu\Core\UserBundle\Ldap\Model\Organization as LdapOrganization;
+use Etu\Core\UserBundle\Ldap\Model\User as ldapUser;
+use Etu\Core\UserBundle\Sync\Iterator\Element\ElementToImport;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class EveryUserProvider implements UserProviderInterface
 {
@@ -33,11 +33,11 @@ class EveryUserProvider implements UserProviderInterface
      *
      * @param string $username The login (CAS or external)
      *
-     * @return UserInterface
-     *
      * @throws UsernameNotFoundException          if the user is not found
      * @throws OrganizationNotAuthorizedException if the organisation is
      *                                            found only on LDAP
+     *
+     * @return UserInterface
      */
     public function loadUserByUsername($username)
     {

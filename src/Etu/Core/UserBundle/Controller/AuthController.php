@@ -3,13 +3,13 @@
 namespace Etu\Core\UserBundle\Controller;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Etu\Core\UserBundle\Security\Authentication\Token\CasToken;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Etu\Core\UserBundle\Exception\OrganizationNotAuthorizedException;
-// Import annotations
+use Etu\Core\UserBundle\Security\Authentication\Token\CasToken;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+// Import annotations
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class AuthController extends Controller
 {

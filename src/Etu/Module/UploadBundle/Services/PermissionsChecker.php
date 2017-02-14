@@ -3,9 +3,9 @@
 namespace Etu\Module\UploadBundle\Services;
 
 use Doctrine\ORM\EntityManager;
+use Etu\Core\UserBundle\Entity\Member;
 use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Core\UserBundle\Entity\User;
-use Etu\Core\UserBundle\Entity\Member;
 use Etu\Module\UploadBundle\Entity\UploadedFile;
 use Etu\Module\WikiBundle\Entity\WikiPage;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;

@@ -4,22 +4,22 @@ namespace Etu\Core\UserBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
-use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Form\BirthdayPickerType;
+use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\Organization;
-use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Entity\Session;
+use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Model\BadgesManager;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/admin")
@@ -29,6 +29,8 @@ class AdminController extends Controller
     /**
      * @Route("/users/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="admin_users_index")
      * @Template()
+     *
+     * @param mixed $page
      */
     public function usersIndexAction($page, Request $request)
     {
@@ -83,7 +85,7 @@ class AdminController extends Controller
                     $users->setParameter('name_'.$key, '%'.$term.'%');
                 }
 
-                $where = substr($where, 0, -5).')';
+                $where = mb_substr($where, 0, -5).')';
 
                 $users->andWhere($where);
             }
@@ -136,6 +138,8 @@ class AdminController extends Controller
     /**
      * @Route("/user/{login}/edit", name="admin_user_edit")
      * @Template()
+     *
+     * @param mixed $login
      */
     public function userEditAction($login, Request $request)
     {
@@ -279,6 +283,8 @@ class AdminController extends Controller
     /**
      * @Route("/user/{login}/permissions", name="admin_user_roles")
      * @Template()
+     *
+     * @param mixed $login
      */
     public function userRolesAction($login, Request $request)
     {
@@ -354,6 +360,8 @@ class AdminController extends Controller
     /**
      * @Route("/user/{login}/avatar", name="admin_user_edit_avatar", options={"expose"=true})
      * @Template()
+     *
+     * @param mixed $login
      */
     public function userAvatarAction($login, Request $request)
     {
@@ -403,6 +411,8 @@ class AdminController extends Controller
     /**
      * @Route("/user/{login}/toggle-readonly", name="admin_user_toggle_readonly")
      * @Template()
+     *
+     * @param mixed $login
      */
     public function userReadOnlyAction($login)
     {
@@ -581,6 +591,9 @@ class AdminController extends Controller
     /**
      * @Route("/user/{login}/delete/{confirm}", defaults={"confirm" = ""}, name="admin_user_delete")
      * @Template()
+     *
+     * @param mixed $login
+     * @param mixed $confirm
      */
     public function userDeleteAction($login, $confirm = '')
     {
@@ -621,6 +634,8 @@ class AdminController extends Controller
     /**
      * @Route("/orgas/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="admin_orgas_index")
      * @Template()
+     *
+     * @param mixed $page
      */
     public function orgasIndexAction($page = 1)
     {
@@ -688,6 +703,8 @@ class AdminController extends Controller
     /**
      * @Route("/orgas/{login}/delete", name="admin_orgas_delete")
      * @Template()
+     *
+     * @param mixed $login
      */
     public function orgasDeleteAction($login)
     {

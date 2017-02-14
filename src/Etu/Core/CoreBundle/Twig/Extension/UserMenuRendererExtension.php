@@ -2,8 +2,8 @@
 
 namespace Etu\Core\CoreBundle\Twig\Extension;
 
-use Etu\Core\CoreBundle\Menu\UserMenu\UserMenuRenderer;
 use Etu\Core\CoreBundle\Menu\UserMenu\UserMenuBuilder;
+use Etu\Core\CoreBundle\Menu\UserMenu\UserMenuRenderer;
 
 /**
  * Twig extension to call user menu renderer.

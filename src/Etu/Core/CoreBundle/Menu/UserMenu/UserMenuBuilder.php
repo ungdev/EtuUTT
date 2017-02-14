@@ -64,8 +64,7 @@ class UserMenuBuilder
                 ->setIcon('gear.png')
                 ->setUrl($router->generate('admin_index'))
                 ->setRole('ROLE_CORE_ADMIN_HOME')
-            ->end()
-        ;
+            ->end();
     }
 
     /**
@@ -84,6 +83,8 @@ class UserMenuBuilder
     }
 
     /**
+     * @param mixed $role
+     *
      * @return \Etu\Core\CoreBundle\Menu\UserMenu\UserMenuBuilder
      */
     public function addSeparator($role = '')

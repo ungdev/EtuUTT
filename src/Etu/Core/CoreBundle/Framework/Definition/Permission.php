@@ -7,8 +7,8 @@ namespace Etu\Core\CoreBundle\Framework\Definition;
  */
 class Permission
 {
-    const DEFAULT_ENABLED = true;
-    const DEFAULT_DISABLED = false;
+    public const DEFAULT_ENABLED = true;
+    public const DEFAULT_DISABLED = false;
 
     /**
      * @var string

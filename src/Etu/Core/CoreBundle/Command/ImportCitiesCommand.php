@@ -21,8 +21,7 @@ class ImportCitiesCommand extends ContainerAwareCommand
     {
         $this
             ->setName('etu:cities:import')
-            ->setDescription('Import cities')
-        ;
+            ->setDescription('Import cities');
     }
 
     /**

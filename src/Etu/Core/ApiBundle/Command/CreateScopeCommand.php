@@ -15,8 +15,7 @@ class CreateScopeCommand extends ContainerAwareCommand
     {
         $this
             ->setName('etu:oauth:create-scope')
-            ->setDescription('Create a OAuth2 scope')
-        ;
+            ->setDescription('Create a OAuth2 scope');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

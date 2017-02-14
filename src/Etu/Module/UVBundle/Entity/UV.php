@@ -3,8 +3,8 @@
 namespace Etu\Module\UVBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
@@ -13,13 +13,13 @@ use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
  */
 class UV
 {
-    const CATEGORY_CS = 'cs';
-    const CATEGORY_TM = 'tm';
-    const CATEGORY_CT = 'ct';
-    const CATEGORY_ME = 'me';
-    const CATEGORY_EC = 'ec';
-    const CATEGORY_ST = 'st';
-    const CATEGORY_OTHER = 'other';
+    public const CATEGORY_CS = 'cs';
+    public const CATEGORY_TM = 'tm';
+    public const CATEGORY_CT = 'ct';
+    public const CATEGORY_ME = 'me';
+    public const CATEGORY_EC = 'ec';
+    public const CATEGORY_ST = 'st';
+    public const CATEGORY_OTHER = 'other';
 
     public static $categories = [
         self::CATEGORY_CS,

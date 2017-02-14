@@ -8,10 +8,10 @@ use Etu\Core\ApiBundle\Form\ClientType;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Validator\Constraints\EqualTo;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * @Route("/panel")

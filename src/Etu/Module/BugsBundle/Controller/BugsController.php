@@ -2,21 +2,21 @@
 
 namespace Etu\Module\BugsBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Entity\Subscription;
+use Etu\Core\CoreBundle\Form\EditorType;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
-use Etu\Core\CoreBundle\Form\EditorType;
 use Etu\Module\BugsBundle\Entity\Comment;
 use Etu\Module\BugsBundle\Entity\Issue;
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * @Route("/bugs")
@@ -26,6 +26,8 @@ class BugsController extends Controller
     /**
      * @Route("/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="bugs_index")
      * @Template()
+     *
+     * @param mixed $page
      */
     public function indexAction($page = 1)
     {
@@ -51,6 +53,8 @@ class BugsController extends Controller
     /**
      * @Route("/closed/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="bugs_closed")
      * @Template()
+     *
+     * @param mixed $page
      */
     public function closedAction($page = 1)
     {
@@ -76,6 +80,9 @@ class BugsController extends Controller
     /**
      * @Route("/{id}-{slug}", requirements = {"id" = "\d+"}, name="bugs_view")
      * @Template()
+     *
+     * @param mixed $id
+     * @param mixed $slug
      */
     public function viewAction($id, $slug, Request $request)
     {
@@ -251,6 +258,9 @@ class BugsController extends Controller
     /**
      * @Route("/{id}-{slug}/edit", requirements = {"id" = "\d+"}, name="bugs_edit")
      * @Template()
+     *
+     * @param mixed $id
+     * @param mixed $slug
      */
     public function editAction($id, $slug, Request $request)
     {
@@ -339,6 +349,9 @@ class BugsController extends Controller
      *      name="bugs_edit_comment"
      * )
      * @Template()
+     *
+     * @param mixed $slug
+     * @param mixed $id
      */
     public function editCommentAction($slug, $id, Request $request)
     {

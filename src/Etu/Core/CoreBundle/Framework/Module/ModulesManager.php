@@ -2,8 +2,8 @@
 
 namespace Etu\Core\CoreBundle\Framework\Module;
 
-use Etu\Core\CoreBundle\Framework\EtuKernel;
 use Etu\Core\CoreBundle\Framework\Definition\Module;
+use Etu\Core\CoreBundle\Framework\EtuKernel;
 
 /**
  * EtuUTT modules manager. Find all the modules (enabled and disabled), dump the enabled modules list
@@ -115,7 +115,7 @@ class ModulesManager
         foreach ($iterator as $dir) {
             if (!$dir->isDot() && $dir->isDir()) {
                 // Check validity
-                if (substr($dir->getBasename(), -6) == 'Bundle') {
+                if (mb_substr($dir->getBasename(), -6) == 'Bundle') {
                     $module = 'Etu\\Module\\'.$dir->getBasename().'\\EtuModule'.$dir->getBasename();
 
                     if (in_array($module, $this->modulesList)) {

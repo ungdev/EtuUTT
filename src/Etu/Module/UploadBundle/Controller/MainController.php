@@ -4,7 +4,10 @@ namespace Etu\Module\UploadBundle\Controller;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\UploadBundle\Entity\UploadedFile;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -12,9 +15,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -24,6 +24,8 @@ class MainController extends Controller
     /**
      * @Route("/upload/index/{organization}", name="upload_index", options={"expose"=true})
      * @Template()
+     *
+     * @param null|mixed $organization
      */
     public function indexAction(Request $request, $organization = null)
     {
@@ -70,9 +72,9 @@ class MainController extends Controller
 
                 if ($request->headers->get('referer')) {
                     return $this->redirect($request->headers->get('referer'));
-                } else {
-                    return $this->redirect($this->generateUrl('homepage'));
                 }
+
+                return $this->redirect($this->generateUrl('homepage'));
             }
 
             $name = preg_replace('/[\/\:\*\?"\|\\\\]/', '-', $file->getName());
@@ -118,6 +120,10 @@ class MainController extends Controller
     /**
      * @Route("/upload/{download}/{id}/{fullname}", requirements={"download" = "download|view"}, name="upload_download")
      * @Template()
+     *
+     * @param mixed $id
+     * @param mixed $download
+     * @param mixed $fullname
      */
     public function downloadAction(Request $request, $id, $download, $fullname)
     {
@@ -155,6 +161,8 @@ class MainController extends Controller
     /**
      * @Route("/upload/description/{id}", name="upload_description")
      * @Template()
+     *
+     * @param mixed $id
      */
     public function descriptionAction(Request $request, $id)
     {
@@ -191,6 +199,8 @@ class MainController extends Controller
     /**
      * @Route("/upload/delete/{id}", name="upload_delete")
      * @Template()
+     *
+     * @param mixed $id
      */
     public function deleteAction(Request $request, $id)
     {
@@ -229,6 +239,8 @@ class MainController extends Controller
     /**
      * @Route("/upload/edit/{id}", name="upload_edit")
      * @Template()
+     *
+     * @param mixed $id
      */
     public function editAction(Request $request, $id)
     {
@@ -291,6 +303,8 @@ class MainController extends Controller
      *
      * @Route("/upload/editor/{organization}", name="upload_editor", options={"expose"=true})
      * @Template()
+     *
+     * @param null|mixed $organization
      */
     public function editorAction(Request $request, $organization = null)
     {
@@ -378,6 +392,8 @@ class MainController extends Controller
      *
      * @Route("/upload/imageproxy", name="upload_imageproxy", options={"expose"=true})
      * @Template()
+     *
+     * @param mixed $url
      */
     public function proxyAction(Request $request, $url = '')
     {

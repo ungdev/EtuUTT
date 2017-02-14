@@ -56,8 +56,7 @@ class SidebarBuilder
                     ->setPosition(10)
                     ->setLinkAttribute('target', '_blank')
                 ->end()
-            ->end()
-        ;
+            ->end();
     }
 
     /**

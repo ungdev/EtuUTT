@@ -2,26 +2,26 @@
 
 namespace Etu\Module\EventsBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use CalendR\Calendar;
 use CalendR\Period\Range;
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Entity\Notification;
+use Etu\Core\CoreBundle\Form\DatetimePickerType;
+use Etu\Core\CoreBundle\Form\EditorType;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
-use Etu\Core\CoreBundle\Form\EditorType;
-use Etu\Core\CoreBundle\Form\DatetimePickerType;
 use Etu\Core\UserBundle\Entity\Member;
 use Etu\Module\EventsBundle\Entity\Event;
-// Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+// Import annotations
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class MembershipsController extends Controller
 {
@@ -33,6 +33,11 @@ class MembershipsController extends Controller
      *      name="memberships_orga_events"
      * )
      * @Template()
+     *
+     * @param mixed $login
+     * @param mixed $day
+     * @param mixed $month
+     * @param mixed $year
      */
     public function eventsAction($login, $day = 'current', $month = 'current', $year = 'current')
     {
@@ -102,6 +107,8 @@ class MembershipsController extends Controller
      *      name="memberships_orga_events_find",
      *      options={"expose"=true}
      * )
+     *
+     * @param mixed $login
      */
     public function ajaxEventsAction(Request $request, $login)
     {
@@ -199,6 +206,8 @@ class MembershipsController extends Controller
      *      options={"expose"=true}
      * )
      * @Template()
+     *
+     * @param mixed $login
      */
     public function createAction(Request $request, $login)
     {
@@ -246,11 +255,11 @@ class MembershipsController extends Controller
 
         $orga = $membership->getOrganization();
 
-        if (substr($start, 12) == '00-00' && substr($end, 12) == '00-00') {
-            $start = substr($start, 0, 12).'12-00';
+        if (mb_substr($start, 12) == '00-00' && mb_substr($end, 12) == '00-00') {
+            $start = mb_substr($start, 0, 12).'12-00';
 
-            $jour2 = str_pad((substr($end, 0, 2) - 1), 2, '0', STR_PAD_LEFT);
-            $end = $jour2.substr($end, 2, 10).'13-00';
+            $jour2 = str_pad((mb_substr($end, 0, 2) - 1), 2, '0', STR_PAD_LEFT);
+            $end = $jour2.mb_substr($end, 2, 10).'13-00';
         }
 
         $event = new Event(
@@ -367,6 +376,10 @@ class MembershipsController extends Controller
      *      name="memberships_orga_events_edit"
      * )
      * @Template()
+     *
+     * @param mixed $login
+     * @param mixed $id
+     * @param mixed $slug
      */
     public function editAction(Request $request, $login, $id, $slug)
     {
@@ -484,7 +497,7 @@ class MembershipsController extends Controller
             'orga' => $orga,
             'event' => $event,
             'form' => $form->createView(),
-            'rand' => substr(md5(uniqid(true)), 0, 5),
+            'rand' => mb_substr(md5(uniqid(true)), 0, 5),
         ];
     }
 
@@ -496,6 +509,8 @@ class MembershipsController extends Controller
      *      options={"expose"=true}
      * )
      * @Template()
+     *
+     * @param mixed $login
      */
     public function ajaxEditAction(Request $request, $login, Event $event)
     {
@@ -580,6 +595,11 @@ class MembershipsController extends Controller
      *      name="memberships_orga_events_delete"
      * )
      * @Template()
+     *
+     * @param mixed $login
+     * @param mixed $id
+     * @param mixed $slug
+     * @param mixed $confirm
      */
     public function deleteAction(Request $request, $login, $id, $slug, $confirm = false)
     {

@@ -11,10 +11,10 @@ use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Core\CoreBundle\Util\Server;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/admin")
@@ -115,8 +115,8 @@ class AdminController extends Controller
 
                 foreach ($iterator as $file) {
                     if ($file->isFile() &&
-                        (strpos($file->getBasename(), 'UrlGenerator') !== false)
-                        || (strpos($file->getBasename(), 'UrlMatcher') !== false)
+                        (mb_strpos($file->getBasename(), 'UrlGenerator') !== false)
+                        || (mb_strpos($file->getBasename(), 'UrlMatcher') !== false)
                     ) {
                         unlink($file->getPathname());
                     }
@@ -129,8 +129,8 @@ class AdminController extends Controller
 
                 foreach ($iterator as $file) {
                     if ($file->isFile() &&
-                        (strpos($file->getBasename(), 'UrlGenerator') !== false)
-                        || (strpos($file->getBasename(), 'UrlMatcher') !== false)
+                        (mb_strpos($file->getBasename(), 'UrlGenerator') !== false)
+                        || (mb_strpos($file->getBasename(), 'UrlMatcher') !== false)
                     ) {
                         unlink($file->getPathname());
                     }
@@ -223,6 +223,8 @@ class AdminController extends Controller
     /**
      * @Route("/page/edit/{id}", name="admin_page_edit")
      * @Template()
+     *
+     * @param mixed $id
      */
     public function pageEditAction($id, Request $request)
     {
@@ -264,6 +266,8 @@ class AdminController extends Controller
     /**
      * @Route("/page/delete/{id}", name="admin_page_delete")
      * @Template()
+     *
+     * @param mixed $id
      */
     public function pageDeleteAction($id)
     {
@@ -282,6 +286,8 @@ class AdminController extends Controller
     /**
      * @Route("/page/delete/{id}/confirm", name="admin_page_delete_confirm")
      * @Template()
+     *
+     * @param mixed $id
      */
     public function pageDeleteConfirmAction($id)
     {

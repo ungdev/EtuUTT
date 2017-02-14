@@ -2,12 +2,12 @@
 
 namespace Etu\Core\UserBundle\Security\Authentication\Provider;
 
+use Etu\Core\UserBundle\Entity\User;
+use Etu\Core\UserBundle\Security\Authentication\Token\CasToken;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Etu\Core\UserBundle\Security\Authentication\Token\CasToken;
-use Etu\Core\UserBundle\Entity\User;
 
 class CasProvider implements AuthenticationProviderInterface
 {

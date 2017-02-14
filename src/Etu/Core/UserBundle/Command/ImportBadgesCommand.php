@@ -16,8 +16,7 @@ class ImportBadgesCommand extends ContainerAwareCommand
     {
         $this
             ->setName('etu:badges:import')
-            ->setDescription('Import badges')
-        ;
+            ->setDescription('Import badges');
     }
 
     /**

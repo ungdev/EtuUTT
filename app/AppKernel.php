@@ -1,8 +1,8 @@
 <?php
 
-use Symfony\Component\Config\Loader\LoaderInterface;
-use Etu\Core\CoreBundle\Framework\EtuKernel;
 use Etu\Core\CoreBundle\Framework\Definition\Module;
+use Etu\Core\CoreBundle\Framework\EtuKernel;
+use Symfony\Component\Config\Loader\LoaderInterface;
 
 /**
  * EtuUTT AppKernel. Redefine the way to load bundles for the modules system.
@@ -12,14 +12,14 @@ class AppKernel extends EtuKernel
     /**
      * Register the bundles (and by the way the modules).
      *
-     * @return array|\Symfony\Component\HttpKernel\Bundle\BundleInterface[]
-     *
      * @throws RuntimeException
      * @throws \ErrorException
+     *
+     * @return array|\Symfony\Component\HttpKernel\Bundle\BundleInterface[]
      */
     public function registerBundles()
     {
-        $bundles = array(
+        $bundles = [
             // Symfony
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             // Security management (authorization and authentication)
@@ -59,9 +59,9 @@ class AppKernel extends EtuKernel
             new Etu\Core\CoreBundle\EtuCoreBundle(),
             new Etu\Core\UserBundle\EtuUserBundle(),
             new Etu\Core\ApiBundle\EtuCoreApiBundle(),
-        );
+        ];
 
-        if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
+        if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
@@ -130,18 +130,18 @@ class AppKernel extends EtuKernel
     {
         if (!empty($this->getEnvParameters()['kernel.cache_dir'])) {
             return $this->getEnvParameters()['kernel.cache_dir'].'/'.$this->environment;
-        } else {
-            return dirname(__DIR__).'/var/cache/'.$this->getEnvironment();
         }
+
+        return dirname(__DIR__).'/var/cache/'.$this->getEnvironment();
     }
 
     public function getLogDir()
     {
         if (!empty($this->getEnvParameters()['kernel.logs_dir'])) {
             return $this->getEnvParameters()['kernel.logs_dir'];
-        } else {
-            return dirname(__DIR__).'/var/logs';
         }
+
+        return dirname(__DIR__).'/var/logs';
     }
 
     public function registerContainerConfiguration(LoaderInterface $loader)

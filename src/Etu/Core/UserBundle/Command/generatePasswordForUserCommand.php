@@ -2,11 +2,11 @@
 
 namespace Etu\Core\UserBundle\Command;
 
+use Doctrine\ORM\EntityManager;
 use Etu\Core\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\Console\Question\Question;
 
 class generatePasswordForUserCommand extends ContainerAwareCommand
@@ -18,8 +18,7 @@ class generatePasswordForUserCommand extends ContainerAwareCommand
     {
         $this
             ->setName('etu:users:generate-password')
-            ->setDescription('Set user password to let him connect as an external account')
-        ;
+            ->setDescription('Set user password to let him connect as an external account');
     }
 
     /**
@@ -72,10 +71,10 @@ This command will help you to set generate a random password for an user to let 
         $result = '';
 
         for ($i = 0; $i < 5; ++$i) {
-            $index = mt_rand(0, $countC - 1);
+            $index = random_int(0, $countC - 1);
             $result .= mb_substr($consonant, $index, 1);
 
-            $index = mt_rand(0, $countV - 1);
+            $index = random_int(0, $countV - 1);
             $result .= mb_substr($vowel, $index, 1);
         }
         $password = $this->getContainer()->get('security.password_encoder')->encodePassword($user, $result);

@@ -27,7 +27,7 @@ class MainControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/orgas/orga/members');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testMembers()

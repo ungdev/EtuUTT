@@ -3,9 +3,9 @@
 namespace Etu\Core\CoreBundle\Home;
 
 use Etu\Core\CoreBundle\Framework\Module\ModulesManager;
-use Symfony\Component\Form\FormFactory;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormFactory;
 
 class HomeRenderer
 {

@@ -10,7 +10,7 @@ use Etu\Core\UserBundle\Schedule\Model\CourseHalf;
  */
 class ScheduleBuilder
 {
-    const DO_NOT_USE_HALF = false;
+    public const DO_NOT_USE_HALF = false;
 
     public static $colors = [];
 
@@ -28,6 +28,8 @@ class ScheduleBuilder
 
     /**
      * Constructor.
+     *
+     * @param mixed $useHalf
      */
     public function __construct($useHalf = true)
     {

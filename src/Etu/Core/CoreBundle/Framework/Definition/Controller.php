@@ -72,9 +72,9 @@ class Controller extends BaseController
     /**
      * Get a user from the Security Context.
      *
-     * @return User|Organization
-     *
      * @throws \LogicException If SecurityBundle is not available
+     *
+     * @return User|Organization
      *
      * @see Symfony\Component\Security\Core\Authentication\Token\TokenInterface::getUser()
      */

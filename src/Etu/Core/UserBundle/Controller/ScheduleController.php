@@ -137,6 +137,8 @@ class ScheduleController extends Controller
     /**
      * @Route("/schedule/{day}", defaults={"day" = "current"}, name="user_schedule")
      * @Template()
+     *
+     * @param mixed $day
      */
     public function scheduleAction($day = 'current')
     {

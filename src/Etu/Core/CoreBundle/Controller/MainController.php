@@ -10,10 +10,10 @@ use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Home\HomeRenderer;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Module\EventsBundle\Entity\Event;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class MainController extends Controller
 {
@@ -33,6 +33,8 @@ class MainController extends Controller
     /**
      * @Route("/more/{page}", name="flux_more", options={"expose"=true})
      * @Template()
+     *
+     * @param mixed $page
      */
     public function moreAction($page)
     {
@@ -116,6 +118,8 @@ class MainController extends Controller
     /**
      * @Route("/change-locale/{lang}", name="change_locale")
      * @Template()
+     *
+     * @param mixed $lang
      */
     public function changeLocaleAction($lang, Request $request)
     {
@@ -201,6 +205,8 @@ class MainController extends Controller
     /**
      * @Route("/page/{slug}", name="page_view")
      * @Template()
+     *
+     * @param mixed $slug
      */
     public function pageAction($slug)
     {

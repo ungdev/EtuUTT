@@ -3,8 +3,8 @@
 namespace Etu\Module\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Etu\Core\UserBundle\Entity\User;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Table(name="etu_forum_threads")
@@ -13,12 +13,12 @@ use Etu\Core\UserBundle\Entity\User;
  */
 class Thread
 {
-    const STATE_OPEN = 100;
-    const STATE_CLOSED = 200;
-    const STATE_HIDDEN = 300;
+    public const STATE_OPEN = 100;
+    public const STATE_CLOSED = 200;
+    public const STATE_HIDDEN = 300;
 
-    const WEIGHT_BASIC = 100;
-    const WEIGHT_STICKY = 200;
+    public const WEIGHT_BASIC = 100;
+    public const WEIGHT_STICKY = 200;
 
     /**
      * @ORM\Id
@@ -135,6 +135,7 @@ class Thread
 
     /**
      * @param \DateTime $createdAt
+     * @param mixed     $deletedAt
      *
      * @return $this
      */
@@ -268,9 +269,9 @@ class Thread
     /**
      * @param int $state
      *
-     * @return $this
-     *
      * @throws \InvalidArgumentException
+     *
+     * @return $this
      */
     public function setState($state)
     {
@@ -296,9 +297,9 @@ class Thread
     /**
      * @param int $weight
      *
-     * @return $this
-     *
      * @throws \InvalidArgumentException
+     *
+     * @return $this
      */
     public function setWeight($weight)
     {

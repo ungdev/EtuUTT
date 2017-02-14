@@ -4,12 +4,12 @@ namespace Etu\Module\UVBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Etu\Core\UserBundle\Command\Util\ProgressBar;
+use Etu\Module\UVBundle\Entity\UV;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\Container;
-use Etu\Module\UVBundle\Entity\UV;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\DependencyInjection\Container;
 
 class SyncCommand extends ContainerAwareCommand
 {
@@ -20,8 +20,7 @@ class SyncCommand extends ContainerAwareCommand
     {
         $this
             ->setName('etu:uv:sync')
-            ->setDescription('Synchronize imported information with the database')
-        ;
+            ->setDescription('Synchronize imported information with the database');
     }
 
     /**

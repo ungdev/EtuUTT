@@ -21,8 +21,7 @@ class SyncScheduleCommand extends ContainerAwareCommand
     {
         $this
             ->setName('etu:users:sync-schedule')
-            ->setDescription('Synchronize officials schedules with database schedules.')
-        ;
+            ->setDescription('Synchronize officials schedules with database schedules.');
     }
 
     /**

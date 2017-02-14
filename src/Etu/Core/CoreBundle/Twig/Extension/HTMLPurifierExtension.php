@@ -8,7 +8,7 @@ class HTMLPurifierExtension extends \Twig_Extension
 {
     private $container;
 
-    private $purifiers = array();
+    private $purifiers = [];
 
     /**
      * Constructor.
@@ -25,9 +25,9 @@ class HTMLPurifierExtension extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
+        return [
             new \Twig_SimpleFilter('purify', [$this, 'purify'], ['is_safe' => ['html']]),
-        );
+        ];
     }
 
     /**
@@ -58,7 +58,7 @@ class HTMLPurifierExtension extends \Twig_Extension
                 'Attr.AllowedClasses' => 'alert,alert-error,alert-warning,alert-info,alert-success,pull-left,pull-right,mce-toc,table,table-bordered,'
                     .'language-auto,language-nohighlight,language-1c,language-abnf,language-accesslog,language-ada,language-armasm,language-avrasm,language-actionscript,language-apache,language-applescript,language-asciidoc,language-aspectj,language-autohotkey,language-autoit,language-awk,language-axapta,language-bash,language-basic,language-bnf,language-brainfuck,language-cs,language-cpp,language-cal,language-cos,language-cmake,language-coq,language-csp,language-css,language-capnproto,language-clojure,language-coffeescript,language-crmsh,language-crystal,language-d,language-dns,language-dos,language-dart,language-delphi,language-lazarus,language-diff,language-django,language-dockerfile,language-dsconfig,language-dts,language-dust,language-ebnf,language-elixir,language-elm,language-erlang,language-excel,language-fsharp,language-fix,language-fortran,language-gcode,language-gams,language-gauss,language-gherkin,language-go,language-golo,language-gradle,language-groovy,language-xml,language-http,language-haml,language-handlebars,language-haskell,language-haxe,language-ini,language-inform7,language-irpf90,language-json,language-java,language-javascript,language-lasso,language-less,language-ldif,language-lisp,language-livecodeserver,language-livescript,language-lua,language-makefile,language-markdown,language-mathematica,language-matlab,language-maxima,language-mel,language-mercury,language-mizar,language-mojolicious,language-monkey,language-moonscript,language-nsis,language-nginx,language-nimrod,language-nix,language-ocaml,language-objectivec,language-glsl,language-openscad,language-ruleslanguage,language-oxygene,language-pf,language-php,language-parser3,language-perl,language-pony,language-powershell,language-processing,language-prolog,language-protobuf,language-puppet,language-python,language-profile,language-k,language-qml,language-r,language-rib,language-rsl,language-graph,language-ruby,language-rust,language-scss,language-sql,language-p21,language-scala,language-scheme,language-scilab,language-smali,language-smalltalk,language-stan,language-stata,language-stylus,language-subunit,language-swift,language-tap,language-tcl,language-tex,language-thrift,language-tp,language-twig,language-typescript,language-vbnet,language-vbscript,language-vhdl,language-vala,language-verilog,language-vim,language-x86asm,language-xl,language-xpath,language-zephir',
                 'Attr.EnableID' => true,
-                'Attr.IDBlacklistRegexp' => '/^(?!mcetoc_)/'
+                'Attr.IDBlacklistRegexp' => '/^(?!mcetoc_)/',
             ]);
         }
 
@@ -99,6 +99,8 @@ class HTMLPurifierExtension extends \Twig_Extension
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * @param mixed $setArray
  */
 function load_htmlpurifier($setArray)
 {
@@ -132,7 +134,7 @@ function load_htmlpurifier($setArray)
         $def->addElement('figure', 'Block', 'Optional: (figcaption, Flow) | (Flow, figcaption) | Flow', 'Common');
         $def->addElement('figcaption', 'Inline', 'Flow', 'Common');
         // http://developers.whatwg.org/the-video-element.html#the-video-element
-        $def->addElement('video', 'Block', 'Optional: (source, Flow) | (Flow, source) | Flow', 'Common', array(
+        $def->addElement('video', 'Block', 'Optional: (source, Flow) | (Flow, source) | Flow', 'Common', [
             'src' => 'URI',
             'type' => 'Text',
             'width' => 'Length',
@@ -140,11 +142,11 @@ function load_htmlpurifier($setArray)
             'poster' => 'URI',
             'preload' => 'Enum#auto,metadata,none',
             'controls' => 'Bool',
-        ));
-        $def->addElement('source', 'Block', 'Flow', 'Common', array(
+        ]);
+        $def->addElement('source', 'Block', 'Flow', 'Common', [
             'src' => 'URI',
             'type' => 'Text',
-        ));
+        ]);
         // http://developers.whatwg.org/text-level-semantics.html
         $def->addElement('s', 'Inline', 'Inline', 'Common');
         $def->addElement('var', 'Inline', 'Inline', 'Common');
@@ -153,8 +155,8 @@ function load_htmlpurifier($setArray)
         $def->addElement('mark', 'Inline', 'Inline', 'Common');
         $def->addElement('wbr', 'Inline', 'Empty', 'Core');
         // http://developers.whatwg.org/edits.html
-        $def->addElement('ins', 'Block', 'Flow', 'Common', array('cite' => 'URI', 'datetime' => 'CDATA'));
-        $def->addElement('del', 'Block', 'Flow', 'Common', array('cite' => 'URI', 'datetime' => 'CDATA'));
+        $def->addElement('ins', 'Block', 'Flow', 'Common', ['cite' => 'URI', 'datetime' => 'CDATA']);
+        $def->addElement('del', 'Block', 'Flow', 'Common', ['cite' => 'URI', 'datetime' => 'CDATA']);
         // TinyMCE
         $def->addAttribute('img', 'data-mce-src', 'Text');
         $def->addAttribute('img', 'data-mce-json', 'Text');

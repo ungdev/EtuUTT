@@ -38,7 +38,7 @@ class StringManipulationExtension extends \Twig_Extension
      */
     public static function limit($str, $length)
     {
-        return (strlen($str) > $length) ? substr($str, 0, $length).'...' : $str;
+        return (mb_strlen($str) > $length) ? mb_substr($str, 0, $length).'...' : $str;
     }
 
     /**
@@ -50,7 +50,7 @@ class StringManipulationExtension extends \Twig_Extension
      */
     public static function uncamelize($word)
     {
-        return strtolower(preg_replace('~(?<=\\w)([A-Z])~', '_$1', $word));
+        return mb_strtolower(preg_replace('~(?<=\\w)([A-Z])~', '_$1', $word));
     }
 
     /**
@@ -66,7 +66,7 @@ class StringManipulationExtension extends \Twig_Extension
 
         if (!isset($cache[$word])) {
             $word = preg_replace('/[$]/', '', $word);
-            $classify = preg_replace_callback('~(_?)([-_])([\w])~', [self, 'camelizeCallback'], ucfirst(strtolower($word)));
+            $classify = preg_replace_callback('~(_?)([-_])([\w])~', [self, 'camelizeCallback'], ucfirst(mb_strtolower($word)));
             $cache[$word] = $classify;
         }
 
@@ -82,7 +82,7 @@ class StringManipulationExtension extends \Twig_Extension
      */
     public static function camelizeCallback($matches)
     {
-        return $matches[1].strtoupper($matches[3]);
+        return $matches[1].mb_strtoupper($matches[3]);
     }
 
     /**
@@ -96,7 +96,7 @@ class StringManipulationExtension extends \Twig_Extension
      */
     public static function seemsUtf8($string)
     {
-        for ($i = 0; $i < strlen($string); ++$i) {
+        for ($i = 0; $i < mb_strlen($string); ++$i) {
             if (ord($string[$i]) < 0x80) {
                 continue;
             } // 0bbbbbbb
@@ -121,7 +121,7 @@ class StringManipulationExtension extends \Twig_Extension
 
             for ($j = 0; $j < $n; ++$j) {
                 // n bytes matching 10bbbbbb follow ?
-                if ((++$i == strlen($string)) || ((ord($string[$i]) & 0xC0) != 0x80)) {
+                if ((++$i == mb_strlen($string)) || ((ord($string[$i]) & 0xC0) != 0x80)) {
                     return false;
                 }
             }
@@ -289,14 +289,14 @@ class StringManipulationExtension extends \Twig_Extension
         if (function_exists('mb_strtolower')) {
             $text = mb_strtolower($text);
         } else {
-            $text = strtolower($text);
+            $text = mb_strtolower($text);
         }
 
         // Remove all none word characters
         $text = preg_replace('/\W/', ' ', $text);
 
         // More stripping. Replace spaces with dashes
-        $text = strtolower(preg_replace('/[^A-Z^a-z^0-9^\/]+/', '-',
+        $text = mb_strtolower(preg_replace('/[^A-Z^a-z^0-9^\/]+/', '-',
                 preg_replace('/([a-z\d])([A-Z])/', '\1_\2',
                         preg_replace('/([A-Z]+)([A-Z][a-z])/', '\1_\2',
                                 preg_replace('/::/', '/', $text)))));

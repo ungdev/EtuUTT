@@ -11,10 +11,10 @@ use Etu\Core\ApiBundle\Framework\Controller\ApiController;
 use Etu\Core\ApiBundle\Oauth\OauthServer;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/oauth")
@@ -91,25 +91,25 @@ class SecurityController extends ApiController
         $em = $this->getDoctrine()->getManager();
 
         if (!$request->query->has('client_id')) {
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'error',
                 'message' => 'L\'application externe n\'a pas été trouvée. Vous avez été redirigé vers EtuUTT.',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('homepage'));
         }
 
         // Find the client
         /** @var OauthClient $client */
-        $client = $em->getRepository('EtuCoreApiBundle:OauthClient')->findOneBy(array(
+        $client = $em->getRepository('EtuCoreApiBundle:OauthClient')->findOneBy([
             'clientId' => $request->query->get('client_id'),
-        ));
+        ]);
 
         if (!$client) {
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'error',
                 'message' => 'L\'application externe n\'a pas été trouvée. Vous avez été redirigé vers EtuUTT.',
-            ));
+            ]);
 
             return $this->redirect($this->generateUrl('homepage'));
         }
@@ -118,31 +118,31 @@ class SecurityController extends ApiController
         $user = null;
         if ($client->getTrusted()) {
             if ($request->query->get('login')) {
-                $user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $request->query->get('student_id')));
+                $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $request->query->get('student_id')]);
             } elseif ($request->query->get('student_id')) {
-                $user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('studentId' => $request->query->get('student_id')));
+                $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['studentId' => $request->query->get('student_id')]);
             }
 
             if (!$user) {
-                $this->get('session')->getFlashBag()->set('message', array(
+                $this->get('session')->getFlashBag()->set('message', [
                     'type' => 'error',
                     'message' => 'L\'utilisateur n\'a pas pus être identifié.',
-                ));
+                ]);
 
                 return $this->redirect($this->generateUrl('homepage'));
             }
         } else {
             // Check if user is logged in and can use external applications
             if (!$this->isGranted('IS_AUTHENTICATED_FULLY') && !$this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-                $this->get('session')->getFlashBag()->set('message', array(
+                $this->get('session')->getFlashBag()->set('message', [
                     'type' => 'error',
-                    'message' => $this->get('translator')->trans('user.api_login.login', array('%name%' => $client->getName())),
-                ));
+                    'message' => $this->get('translator')->trans('user.api_login.login', ['%name%' => $client->getName()]),
+                ]);
             } elseif (!$this->isGranted('ROLE_API_USE')) {
-                $this->get('session')->getFlashBag()->set('message', array(
+                $this->get('session')->getFlashBag()->set('message', [
                     'type' => 'error',
                     'message' => $this->get('translator')->trans('user.api_login.orga'),
-                ));
+                ]);
 
                 return $this->redirect($this->generateUrl('homepage'));
             }
@@ -152,17 +152,17 @@ class SecurityController extends ApiController
             $user = $this->getUser();
         }
 
-        $requestedScopes = array('public');
+        $requestedScopes = ['public'];
 
         if ($request->query->has('scopes')) {
             $requestedScopes = array_unique(array_merge($requestedScopes, explode(' ', $request->query->get('scopes'))));
         }
 
         // Search if user already approved the app
-        $authorization = $em->getRepository('EtuCoreApiBundle:OauthAuthorization')->findOneBy(array(
+        $authorization = $em->getRepository('EtuCoreApiBundle:OauthAuthorization')->findOneBy([
             'client' => $client,
             'user' => $user,
-        ));
+        ]);
 
         if ($client->getTrusted()) {
             $authorizationCode = new OauthAuthorizationCode();
@@ -180,7 +180,7 @@ class SecurityController extends ApiController
 
             return $this->redirect($client->getRedirectUri().'?authorization_code='.$authorizationCode->getCode().'&code='.$authorizationCode->getCode());
         } elseif ($authorization) {
-            $authorizationScopes = array();
+            $authorizationScopes = [];
 
             foreach ($authorization->getScopes() as $scope) {
                 $authorizationScopes[] = $scope->getName();
@@ -219,8 +219,8 @@ class SecurityController extends ApiController
 
         // If the use didn't already approve the app, ask him / her
         $form = $this->createFormBuilder()
-            ->add('accept', SubmitType::class, array('label' => 'Oui, accepter', 'attr' => array('class' => 'btn btn-primary', 'value' => '1')))
-            ->add('cancel', SubmitType::class, array('label' => 'Non, annuler', 'attr' => array('class' => 'btn btn-default', 'value' => '0')))
+            ->add('accept', SubmitType::class, ['label' => 'Oui, accepter', 'attr' => ['class' => 'btn btn-primary', 'value' => '1']])
+            ->add('cancel', SubmitType::class, ['label' => 'Non, annuler', 'attr' => ['class' => 'btn btn-default', 'value' => '0']])
             ->getForm();
 
         $form->handleRequest($request);
@@ -245,7 +245,7 @@ class SecurityController extends ApiController
                 $authorizationCode->generateCode();
 
                 /** @var OauthScope[] $defaultScopes */
-                $defaultScopes = $em->getRepository('EtuCoreApiBundle:OauthScope')->findBy(array('isDefault' => true));
+                $defaultScopes = $em->getRepository('EtuCoreApiBundle:OauthScope')->findBy(['isDefault' => true]);
 
                 foreach ($defaultScopes as $defaultScope) {
                     $authorizationCode->addScope($defaultScope);
@@ -265,17 +265,17 @@ class SecurityController extends ApiController
                 $em->flush();
 
                 return $this->redirect($client->getRedirectUri().'?authorization_code='.$authorizationCode->getCode().'&code='.$authorizationCode->getCode());
-            } else {
-                return $this->redirect($client->getRedirectUri().'?error=authentification_canceled&error_message=L\'utilisateur a annulé l\'authentification.');
             }
+
+            return $this->redirect($client->getRedirectUri().'?error=authentification_canceled&error_message=L\'utilisateur a annulé l\'authentification.');
         }
 
-        return array(
+        return [
             'client' => $client,
             'user' => $client->getUser(),
             'scopes' => $scopes,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -345,16 +345,16 @@ class SecurityController extends ApiController
         $clientSecret = $request->get('client_secret', $request->server->get('PHP_AUTH_PW'));
 
         /** @var OauthClient $client */
-        $client = $em->getRepository('EtuCoreApiBundle:OauthClient')->findOneBy(array(
+        $client = $em->getRepository('EtuCoreApiBundle:OauthClient')->findOneBy([
             'clientId' => $clientId,
             'clientSecret' => $clientSecret,
-        ));
+        ]);
 
         if (!$client) {
-            return $this->format(array(
+            return $this->format([
                 'error' => 'invalid_client',
                 'error_message' => 'Client credentials are invalid',
-            ), 401, [], $request);
+            ], 401, [], $request);
         }
 
         /** @var OauthServer $server */
@@ -367,11 +367,11 @@ class SecurityController extends ApiController
         try {
             $token = $server->createToken($grantType, $request);
         } catch (\RuntimeException $exception) {
-            return $this->format(array(
+            return $this->format([
                 'error' => 'grant_type_error',
                 'error_message' => $exception->getMessage(),
                 'received_request' => $request->request->all(),
-            ), 400, [], $request);
+            ], 400, [], $request);
         }
 
         return $this->format($server->formatToken($grantType, $token), 200, [], $request);

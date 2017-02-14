@@ -2,11 +2,11 @@
 
 namespace Etu\Core\UserBundle\Command;
 
+use Doctrine\ORM\EntityManager;
 use Etu\Core\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\Console\Question\Question;
 
 class setUserPasswordCommand extends ContainerAwareCommand
@@ -18,8 +18,7 @@ class setUserPasswordCommand extends ContainerAwareCommand
     {
         $this
             ->setName('etu:users:set-password')
-            ->setDescription('Set user password to let him connect as an external account')
-        ;
+            ->setDescription('Set user password to let him connect as an external account');
     }
 
     /**

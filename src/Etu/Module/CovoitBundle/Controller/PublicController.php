@@ -8,9 +8,9 @@ use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\CovoitBundle\Entity\Covoit;
 use Etu\Module\CovoitBundle\Entity\CovoitMessage;
 // Import annotations
-use Etu\Module\CovoitBundle\Model\Search;
-use Etu\Module\CovoitBundle\Form\SearchType;
 use Etu\Module\CovoitBundle\Form\CovoitMessageType;
+use Etu\Module\CovoitBundle\Form\SearchType;
+use Etu\Module\CovoitBundle\Model\Search;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +24,8 @@ class PublicController extends Controller
     /**
      * @Route("/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="covoiturage_index")
      * @Template()
+     *
+     * @param mixed $page
      */
     public function indexAction($page = 1)
     {
@@ -59,6 +61,8 @@ class PublicController extends Controller
     /**
      * @Route("/search/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="covoiturage_search")
      * @Template()
+     *
+     * @param mixed $page
      */
     public function searchAction(Request $request, $page = 1)
     {
@@ -91,6 +95,9 @@ class PublicController extends Controller
     /**
      * @Route("/{slug}-{id}", requirements={"slug"=".+"}, name="covoiturage_view")
      * @Template()
+     *
+     * @param mixed $id
+     * @param mixed $slug
      */
     public function viewAction(Request $request, $id, $slug)
     {

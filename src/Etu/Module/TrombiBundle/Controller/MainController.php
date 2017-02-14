@@ -6,16 +6,18 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\User;
-use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\HttpFoundation\Request;
 
 class MainController extends Controller
 {
     /**
      * @Route("/trombi/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="trombi_index")
      * @Template()
+     *
+     * @param mixed $page
      */
     public function indexAction($page, Request $request)
     {
@@ -69,7 +71,7 @@ class MainController extends Controller
                     $users->setParameter('name_'.$key, '%'.$term.'%');
                 }
 
-                $where = substr($where, 0, -5).')';
+                $where = mb_substr($where, 0, -5).')';
 
                 $users->andWhere($where);
             }
@@ -83,11 +85,11 @@ class MainController extends Controller
                 $phone = $user->getPhoneNumber();
                 $parts = [];
 
-                if (strpos($phone, '.') !== false) {
+                if (mb_strpos($phone, '.') !== false) {
                     $parts = explode('.', $phone);
-                } elseif (strpos($phone, '-') !== false) {
+                } elseif (mb_strpos($phone, '-') !== false) {
                     $parts = explode('-', $phone);
-                } elseif (strpos($phone, ' ') !== false) {
+                } elseif (mb_strpos($phone, ' ') !== false) {
                     $parts = explode(' ', $phone);
                 } else {
                     $parts = str_split($phone, 2);

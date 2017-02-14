@@ -11,9 +11,9 @@ class ReviewRepository extends EntityRepository
     /**
      * @param UV|UV[]|string[] $uv
      *
-     * @return QueryBuilder
-     *
      * @throws \InvalidArgumentException
+     *
+     * @return QueryBuilder
      */
     public function createQbReviewOf(array $uv)
     {

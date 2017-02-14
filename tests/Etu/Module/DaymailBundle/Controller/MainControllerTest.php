@@ -11,7 +11,7 @@ class MainControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/user/membership/orga/daymail');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
     }
 
     public function testRestrictionDaymailOrga()
@@ -19,7 +19,7 @@ class MainControllerTest extends EtuWebTestCase
         $client = $this->createOrgaClient();
 
         $client->request('GET', '/user/membership/orga/daymail');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
     }
 
     public function testRestrictionPreview()
@@ -27,7 +27,7 @@ class MainControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/user/membership/orga/daymail/current/preview');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
     }
 
     public function testRestrictionPreviewOrga()
@@ -35,7 +35,7 @@ class MainControllerTest extends EtuWebTestCase
         $client = $this->createOrgaClient();
 
         $client->request('GET', '/user/membership/orga/daymail/current/preview');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
     }
 
     public function testDaymail()
@@ -43,7 +43,7 @@ class MainControllerTest extends EtuWebTestCase
         $client = $this->createUserClient();
 
         $crawler = $client->request('GET', '/user/membership/orga/daymail');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
     }
 
     public function testPreview()
@@ -52,6 +52,6 @@ class MainControllerTest extends EtuWebTestCase
 
         $client->request('GET', '/user/membership/orga/daymail/current/preview');
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
     }
 }

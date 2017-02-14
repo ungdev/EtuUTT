@@ -11,7 +11,7 @@ class AdminControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/admin/users');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionUserCreate()
@@ -19,7 +19,7 @@ class AdminControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/admin/user/create');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionUserEdit()
@@ -27,7 +27,7 @@ class AdminControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/admin/user/galopint/edit');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionUserPermissions()
@@ -35,7 +35,7 @@ class AdminControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/admin/user/galopint/permissions');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionUserAvatar()
@@ -43,7 +43,7 @@ class AdminControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/admin/user/galopint/avatar');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionUserReadOnly()
@@ -51,7 +51,7 @@ class AdminControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/admin/user/galopint/toggle-readonly');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionUserDelete()
@@ -59,7 +59,7 @@ class AdminControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/admin/user/galopint/delete');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testUsers()

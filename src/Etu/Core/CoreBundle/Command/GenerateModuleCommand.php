@@ -21,8 +21,7 @@ class GenerateModuleCommand extends ContainerAwareCommand
     {
         $this
             ->setName('etu:generate:module')
-            ->setDescription('Generate an EtuUTT module.')
-        ;
+            ->setDescription('Generate an EtuUTT module.');
     }
 
     /**

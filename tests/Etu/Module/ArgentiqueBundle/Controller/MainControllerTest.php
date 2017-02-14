@@ -11,7 +11,7 @@ class MainControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/argentique');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testIndex()

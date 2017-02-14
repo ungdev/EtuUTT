@@ -51,6 +51,9 @@ class ElementToImport
 
     /**
      * Import the element in the database.
+     *
+     * @param mixed      $flush
+     * @param null|mixed $bdeOrga
      */
     public function import($flush = false, $bdeOrga = null)
     {
@@ -104,7 +107,7 @@ class ElementToImport
         $user->setFirstName($this->element->getFirstName());
         $user->setLastName($this->element->getLastName());
         $user->setFiliere($this->element->getFiliere());
-        $user->setFormation(ucfirst(strtolower($this->element->getFormation())));
+        $user->setFormation(ucfirst(mb_strtolower($this->element->getFormation())));
         $user->setNiveau($niveau);
         $user->setBranch($branch);
         $user->setMail($this->element->getMail());

@@ -3,8 +3,8 @@
 namespace Etu\Module\WikiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -14,7 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class WikiPage
 {
     /* List of rights sorted by most important to less */
-    const RIGHT = [
+    public const RIGHT = [
         'ADMIN' => 0,
         'ORGA_ADMIN' => 100,
         'ORGA_MEMBER' => 200,

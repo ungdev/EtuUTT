@@ -45,7 +45,6 @@ class AdminBuilder extends SidebarBuilder
                     ->setUrl($router->generate('admin_orgas_index'))
                     ->setRole('ROLE_CORE_ADMIN_PROFIL')
                 ->end()
-            ->end()
-        ;
+            ->end();
     }
 }

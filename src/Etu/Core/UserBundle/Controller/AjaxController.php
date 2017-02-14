@@ -110,6 +110,8 @@ class AjaxController extends ApiController
 
     /**
      * @Route("/orga/{login}/remove-phone", name="orga_remove_phone", options={ "expose" = true })
+     *
+     * @param mixed $login
      */
     public function orgaRemovePhoneAction($login)
     {
@@ -180,6 +182,8 @@ class AjaxController extends ApiController
 
     /**
      * @Route("/orga/{login}/remove-website", name="orga_remove_website", options={ "expose" = true })
+     *
+     * @param mixed $login
      */
     public function orgaRemoveWebsiteAction($login)
     {

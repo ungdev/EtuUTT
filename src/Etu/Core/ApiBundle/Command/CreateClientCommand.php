@@ -16,8 +16,7 @@ class CreateClientCommand extends ContainerAwareCommand
     {
         $this
             ->setName('etu:oauth:create-client')
-            ->setDescription('Create a OAuth2 client')
-        ;
+            ->setDescription('Create a OAuth2 client');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

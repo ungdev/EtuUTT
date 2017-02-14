@@ -8,10 +8,10 @@ use Etu\Core\ApiBundle\Framework\Controller\ApiController;
 use Etu\Core\ApiBundle\Framework\Embed\EmbedBag;
 use Etu\Core\UserBundle\Entity\User;
 use Knp\Component\Pager\Pagination\SlidingPagination;
-use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class PublicUsersListController extends ApiController
 {

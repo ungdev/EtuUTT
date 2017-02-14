@@ -3,14 +3,14 @@
 namespace Etu\Module\CovoitBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TimeType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Etu\Core\CoreBundle\Form\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class SearchType extends AbstractType
 {
@@ -45,7 +45,6 @@ class SearchType extends AbstractType
             ->add('hourMin', TimeType::class, ['label' => 'covoit.search.hour_min', 'minutes' => range(0, 55, 5), 'required' => false])
             ->add('hourMax', TimeType::class, ['label' => 'covoit.search.hour_max', 'minutes' => range(0, 55, 5), 'required' => false])
             ->add('keywords', TextType::class, ['label' => 'covoit.search.keywords', 'required' => false])
-            ->add('olds', CheckboxType::class, ['label' => 'covoit.search.olds', 'required' => false])
-        ;
+            ->add('olds', CheckboxType::class, ['label' => 'covoit.search.olds', 'required' => false]);
     }
 }

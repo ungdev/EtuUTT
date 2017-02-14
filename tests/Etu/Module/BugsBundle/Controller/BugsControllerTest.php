@@ -11,7 +11,7 @@ class BugsControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/bugs');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionClosed()
@@ -19,7 +19,7 @@ class BugsControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/bugs/closed');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionView()
@@ -27,7 +27,7 @@ class BugsControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/bugs/1-issue-title');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionCreate()
@@ -35,7 +35,7 @@ class BugsControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/bugs/create');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionEdit()
@@ -43,7 +43,7 @@ class BugsControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/bugs/1-issue-title/edit');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionEditComment()
@@ -51,7 +51,7 @@ class BugsControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/bugs/1-issue-title/edit/comment/1');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionEditCommentNotAuthor()
@@ -59,7 +59,7 @@ class BugsControllerTest extends EtuWebTestCase
         $client = $this->createUserClient();
 
         $client->request('GET', '/bugs/1-issue-title/edit/comment/1');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 403);
+        $this->assertSame($client->getResponse()->getStatusCode(), 403);
     }
 
     public function testIndex()

@@ -56,13 +56,13 @@ class ElementToRemove
         $user->setBranch(null);
         $user->setFiliere(null);
         $user->setUvs(null);
-        if (substr($user->getMail(), -7) == '@utt.fr' && !preg_match('/^\.[0-9]{4}$/', substr($user->getMail(), -12, 5))) {
+        if (mb_substr($user->getMail(), -7) == '@utt.fr' && !preg_match('/^\.[0-9]{4}$/', mb_substr($user->getMail(), -12, 5))) {
             $user->setMail(null);
         }
         $user->setRoom(null);
         $user->setTitle(null);
         $user->setIsInLDAP(false);
-        if (substr($user->getPhoneNumber(), 0, 5) === '03257') {
+        if (mb_substr($user->getPhoneNumber(), 0, 5) === '03257') {
             $user->setPhoneNumber(null);
         }
 

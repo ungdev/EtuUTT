@@ -57,9 +57,9 @@ class BadgesManager
     }
 
     /**
-     * @return Badge[][]
-     *
      * @throws \InvalidArgumentException
+     *
+     * @return Badge[][]
      */
     public static function findBadgesList()
     {
@@ -80,9 +80,9 @@ class BadgesManager
      * @param $serie
      * @param $level
      *
-     * @return Badge
-     *
      * @throws \InvalidArgumentException
+     *
+     * @return Badge
      */
     public static function findBySerie($serie, $level = 1)
     {

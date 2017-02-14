@@ -2,14 +2,14 @@
 
 namespace Etu\Core\UserBundle\Command;
 
+use Doctrine\ORM\EntityManager;
 use Etu\Core\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Console\Question\Question;
 
 class CreateUserCommand extends ContainerAwareCommand
 {
@@ -27,8 +27,7 @@ class CreateUserCommand extends ContainerAwareCommand
             ->addOption('branch', 'br', InputOption::VALUE_REQUIRED, 'Branch')
             ->addOption('isStudent', 'st', InputOption::VALUE_REQUIRED, 'Is it a student (y/n)')
             ->addOption('isStaffUTT', 'sf', InputOption::VALUE_REQUIRED, 'Is it a staff of UTT (y/n)')
-            ->setDescription('Create a user')
-        ;
+            ->setDescription('Create a user');
     }
 
     /**

@@ -3,19 +3,19 @@
 namespace Etu\Core\UserBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Etu\Core\CoreBundle\Form\EditorType;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\Member;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Form\UserAutocompleteType;
-use Etu\Core\CoreBundle\Form\EditorType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 
 class OrgaController extends Controller
@@ -89,7 +89,7 @@ class OrgaController extends Controller
         return [
             'form' => $form->createView(),
             'avatarForm' => $avatarForm->createView(),
-            'rand' => substr(md5(uniqid(true)), 0, 5),
+            'rand' => mb_substr(md5(uniqid(true)), 0, 5),
         ];
     }
 
@@ -135,6 +135,8 @@ class OrgaController extends Controller
     /**
      * @Route("/orga/members/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="orga_admin_members")
      * @Template()
+     *
+     * @param mixed $page
      */
     public function membersAction($page, Request $request)
     {
@@ -238,6 +240,8 @@ class OrgaController extends Controller
     /**
      * @Route("/orga/members/{login}", name="orga_admin_members_edit")
      * @Template()
+     *
+     * @param mixed $login
      */
     public function memberEditAction($login, Request $request)
     {
@@ -296,8 +300,8 @@ class OrgaController extends Controller
         }
 
         if ($request->getMethod() == 'POST') {
-            if ($request->get('role') != null && in_array(intval($request->get('role')), Member::getAvailableRoles())) {
-                $member->setRole(intval($request->get('role')));
+            if ($request->get('role') != null && in_array((int) ($request->get('role')), Member::getAvailableRoles())) {
+                $member->setRole((int) ($request->get('role')));
             }
 
             if ($member->getRole() == Member::ROLE_PRESIDENT) {
@@ -343,6 +347,9 @@ class OrgaController extends Controller
     /**
      * @Route("/orga/members/{login}/delete/{confirm}", defaults={"confirm" = ""}, name="orga_admin_members_delete")
      * @Template()
+     *
+     * @param mixed $login
+     * @param mixed $confirm
      */
     public function memberDeleteAction($login, $confirm = '')
     {

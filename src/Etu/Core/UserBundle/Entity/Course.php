@@ -15,17 +15,17 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Course
 {
-    const WEEK_ALL = 'T';
-    const WEEK_A = 'A';
-    const WEEK_B = 'B';
+    public const WEEK_ALL = 'T';
+    public const WEEK_A = 'A';
+    public const WEEK_B = 'B';
 
-    const DAY_MONDAY = 'monday';
-    const DAY_TUESDAY = 'tuesday';
-    const DAY_WENESDAY = 'wednesday';
-    const DAY_THURSDAY = 'thursday';
-    const DAY_FRIDAY = 'friday';
-    const DAY_SATHURDAY = 'sathurday';
-    const DAY_SUNDAY = 'sunday';
+    public const DAY_MONDAY = 'monday';
+    public const DAY_TUESDAY = 'tuesday';
+    public const DAY_WENESDAY = 'wednesday';
+    public const DAY_THURSDAY = 'thursday';
+    public const DAY_FRIDAY = 'friday';
+    public const DAY_SATHURDAY = 'sathurday';
+    public const DAY_SUNDAY = 'sunday';
 
     /**
      * @var int

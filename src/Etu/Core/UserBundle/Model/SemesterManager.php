@@ -11,11 +11,11 @@ namespace Etu\Core\UserBundle\Model;
  */
 class SemesterManager
 {
-    const SPRING = 'P';
-    const AUTUMN = 'A';
+    public const SPRING = 'P';
+    public const AUTUMN = 'A';
 
-    const FIRST_DAY_SPRING = 31;
-    const FIRST_DAY_AUTUMN = 212;
+    public const FIRST_DAY_SPRING = 31;
+    public const FIRST_DAY_AUTUMN = 212;
 
     /**
      * @param \DateTime $datetime
