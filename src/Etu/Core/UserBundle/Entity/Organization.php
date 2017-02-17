@@ -142,7 +142,6 @@ class Organization implements UserInterface, \Serializable
      */
     protected $memberships;
 
-
     /**
      * @var string
      *
@@ -618,7 +617,7 @@ class Organization implements UserInterface, \Serializable
     }
 
     /**
-     * Set wikiHomepage
+     * Set wikiHomepage.
      *
      * @param string $wikiHomepage
      *
@@ -632,7 +631,7 @@ class Organization implements UserInterface, \Serializable
     }
 
     /**
-     * Get wikiHomepage
+     * Get wikiHomepage.
      *
      * @return string
      */
@@ -642,7 +641,7 @@ class Organization implements UserInterface, \Serializable
     }
 
     /**
-     * Add membership
+     * Add membership.
      *
      * @param \Etu\Core\UserBundle\Entity\Member $membership
      *
@@ -656,7 +655,7 @@ class Organization implements UserInterface, \Serializable
     }
 
     /**
-     * Remove membership
+     * Remove membership.
      *
      * @param \Etu\Core\UserBundle\Entity\Member $membership
      */

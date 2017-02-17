@@ -4,15 +4,12 @@ namespace Etu\Module\WikiBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
-use Etu\Core\CoreBundle\Form\EditorEmailType;
 use Etu\Core\UserBundle\Entity\Member;
-use Etu\Module\DaymailBundle\Entity\DaymailPart;
-use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 
 class MembershipsController extends Controller
 {
@@ -22,6 +19,7 @@ class MembershipsController extends Controller
      *      name="memberships_orga_wiki"
      * )
      * @Template()
+     * @param mixed $login
      */
     public function wikiAction($login, Request $request)
     {
@@ -92,8 +90,7 @@ class MembershipsController extends Controller
         // Submit form
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
-            if(!$rights->canSetHome($organization)) {
+            if (!$rights->canSetHome($organization)) {
                 return $this->createAccessDeniedResponse();
             }
 

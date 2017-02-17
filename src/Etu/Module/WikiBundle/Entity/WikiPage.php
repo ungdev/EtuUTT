@@ -339,9 +339,8 @@ class WikiPage
         return $this->validated;
     }
 
-
     /**
-     * Remove title and content to delete the page
+     * Remove title and content to delete the page.
      *
      * @return string
      */
@@ -352,12 +351,12 @@ class WikiPage
     }
 
     /**
-     * Check if this page is deleted
+     * Check if this page is deleted.
      *
      * @return string
      */
     public function isDeleted()
     {
-        return ($this->content == '' && $this->title = '');
+        return $this->content == '' && $this->title = '';
     }
 }
