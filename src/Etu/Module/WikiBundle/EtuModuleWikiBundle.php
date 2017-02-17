@@ -12,14 +12,14 @@ class EtuModuleWikiBundle extends Module
      */
     public function onModuleBoot()
     {
-        $this->getSidebarBuilder()
-            ->getBlock('base.sidebar.services.title')
-            ->add('base.user.menu.wiki')
-                ->setIcon('wiki.png')
-                ->setUrl($this->getRouter()->generate('wiki_view', ['slug' => 'home', 'organization' => 'general']))
-                ->setPosition(2)
-            ->end()
-        ->end();
+        // $this->getSidebarBuilder()
+        //     ->getBlock('base.sidebar.services.title')
+        //     ->add('base.user.menu.wiki')
+        //         ->setIcon('wiki.png')
+        //         ->setUrl($this->getRouter()->generate('wiki_view', ['slug' => 'home', 'organization' => 'general']))
+        //         ->setPosition(2)
+        //     ->end()
+        // ->end();
     }
 
     /**
