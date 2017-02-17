@@ -155,6 +155,9 @@ class MainController extends Controller
             }
         }
 
+        // Force insertion
+        $page = clone $page;
+
         // Create form
         $form = $this->createFormBuilder($page)
             ->add('title', TextType::class, ['required' => true, 'label' => 'wiki.main.edit.title']);
@@ -226,9 +229,6 @@ class MainController extends Controller
         // Submit form
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            // Force insert
-            $page->setId(null);
-
             // Create slug if its a new page
             if ($new) {
                 if (empty($form->get('preslug')->getData())) {
