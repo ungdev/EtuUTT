@@ -50,7 +50,7 @@ tinymce.init({
     autoresize_max_height: 500,
     autoresize_bottom_margin: 20,
     autosave_retention: "120m",
-    mage_caption: true,
+    image_caption: true,
     link_assume_external_targets: false,
     link_title: false,
     spellchecker_language: 'fr_FR',
@@ -277,10 +277,12 @@ tinymce.init({
     autoresize_max_height: 500,
     autoresize_bottom_margin: 20,
     autosave_retention: "120m",
-    mage_caption: true,
+    image_caption: true,
     link_assume_external_targets: false,
     link_title: false,
     spellchecker_language: 'fr_FR',
+    content_style: 'img[align="center"],img[align="middle"] {display: block; margin-left: auto; margin-right: auto; }',
+
     textpattern_patterns: [
         {start: '*', end: '*', format: 'italic'},
         {start: '**', end: '**', format: 'bold'},
@@ -311,4 +313,3 @@ tinymce.init({
     },
     language_url: '/assets/js/TinyMCE/lang/fr_FR.js',
 });
-
