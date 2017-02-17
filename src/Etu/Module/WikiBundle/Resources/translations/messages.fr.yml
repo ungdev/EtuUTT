@@ -16,6 +16,7 @@ wiki:
       back: "Retour"
       index: "Index"
       home: "Accueil"
+      wikilist: Liste des Wiki
     right-orga:
       0: "Administrateur du wiki"
       100: "Administrateur du wiki de %orga%"
@@ -46,3 +47,7 @@ wiki:
         subtitle: Liste des pages du wiki
         subtitle_orga: Liste des pages du wiki de %orga%
         nopage: Il n'y a aucune page dans ce wiki
+    wikilist:
+        title: Listes des wiki
+        general_name: Wiki UTT
+        general_description: Wiki général d'EtuUTT permettant aux étudiants de l'UTT de partager leurs connaissances sur différents sujets.

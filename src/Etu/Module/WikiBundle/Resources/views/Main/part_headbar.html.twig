@@ -27,13 +27,23 @@ Variables:
     </li>
 
     {% if rights.getHomeSlug(organization) %}
-        <li class="{% if page.slug is defined and page.slug == 'home' %}active page-tabs-resolved-active{% endif %}">
+        <li class="{% if page.slug is defined and page.slug == rights.getHomeSlug(organization) %}active page-tabs-resolved-active{% endif %}">
             <a href="{{ path('wiki_view', {'slug': rights.getHomeSlug(organization), 'organization': organization.login ?? 'general'}) }}">
                 <i class="fa fa-home" aria-hidden="true"></i>
                 {{ 'wiki.main.menu.home'|trans }}
             </a>
         </li>
     {% endif %}
+
+    {# Wiki list #}
+    <li class="{% if action == 'wikilist' %}active page-tabs-resolved-active{% endif %}">
+        <a href="{{ path('wiki_list') }}">
+            <i class="fa fa-wikipedia-w" aria-hidden="true"></i>
+            {{ 'wiki.main.menu.wikilist'|trans }}
+        </a>
+    </li>
+
+
 
     {% if page.slug is defined and page.slug and rights.canRead(page) %}
         <li class="pull-right {% if action == 'read' %}active page-tabs-resolved-active{% endif %}">

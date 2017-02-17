@@ -30,8 +30,7 @@ class MainController extends Controller
             if (!$organization) {
                 throw $this->createNotFoundException('Organization not found');
             }
-        }
-        else {
+        } else {
             $organization = null;
         }
 
@@ -76,8 +75,7 @@ class MainController extends Controller
             if (!$organization) {
                 throw $this->createNotFoundException('Organization not found');
             }
-        }
-        else {
+        } else {
             $organization = null;
         }
 
@@ -122,13 +120,12 @@ class MainController extends Controller
                 ->from('EtuModuleWikiBundle:WikiPage', 'p', 'p.slug')
                 ->leftJoin('EtuModuleWikiBundle:WikiPage', 'p2', 'WITH', 'p.slug = p2.slug AND p.createdAt < p2.createdAt')
                 ->where('p2.slug IS NULL');
-                if($organization) {
-                    $result = $result->where('p.organization = :organization')->setParameter(':organization', $organization);
-                }
-                else {
-                    $result = $result->where('p.organization is NULL');
-                }
-                $result = $result->orderBy('p.slug', 'ASC')
+            if ($organization) {
+                $result = $result->where('p.organization = :organization')->setParameter(':organization', $organization);
+            } else {
+                $result = $result->where('p.organization is NULL');
+            }
+            $result = $result->orderBy('p.slug', 'ASC')
                 ->getQuery()
                 ->getResult();
             // Formate array, check rights and add ↳ at the beggining of the title if necessary
@@ -259,8 +256,7 @@ class MainController extends Controller
             if (!$organization) {
                 throw $this->createNotFoundException('Organization not found');
             }
-        }
-        else {
+        } else {
             $organization = null;
         }
 
@@ -271,13 +267,12 @@ class MainController extends Controller
             ->from('EtuModuleWikiBundle:WikiPage', 'p')
             ->leftJoin('EtuModuleWikiBundle:WikiPage', 'p2', 'WITH', 'p.slug = p2.slug AND p.createdAt < p2.createdAt')
             ->where('p2.slug IS NULL');
-            if($organization) {
-                $result = $result->where('p.organization = :organization')->setParameter(':organization', $organization);
-            }
-            else {
-                $result = $result->where('p.organization is NULL');
-            }
-            $result = $result->orderBy('p.slug', 'ASC')
+        if ($organization) {
+            $result = $result->where('p.organization = :organization')->setParameter(':organization', $organization);
+        } else {
+            $result = $result->where('p.organization is NULL');
+        }
+        $result = $result->orderBy('p.slug', 'ASC')
             ->getQuery()
             ->getResult();
 
@@ -343,5 +338,34 @@ class MainController extends Controller
         }
 
         return new JsonResponse($pagelist);
+    }
+
+
+
+    /**
+     * @Route("/wiki/list", name="wiki_list")
+     * @Template()
+     */
+    public function wikilistAction(Request $request)
+    {
+        $right = WikiPage::RIGHT['ALL'];
+        if ($this->isGranted('ROLE_STUDENT')) {
+            $right = WikiPage::RIGHT['STUDENT'];
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $organizations = $em->createQueryBuilder()
+                ->select('o')
+                ->from('EtuUserBundle:Organization', 'o')
+                ->innerJoin('EtuModuleWikiBundle:WikiPage', 'p', 'WITH', 'o = p.organization')
+                ->where('p.readRight >= :right')->setParameter(':right', $right)
+                ->orderBy('o.name')
+                ->getQuery()
+                ->getResult();
+
+        return [
+            'organizations' => $organizations,
+            'rights' => $this->get('etu.wiki.permissions_checker'),
+        ];
     }
 }

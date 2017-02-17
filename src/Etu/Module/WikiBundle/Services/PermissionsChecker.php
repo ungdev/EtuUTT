@@ -67,7 +67,7 @@ class PermissionsChecker
     public function getHomeSlug(Organization $organization = null)
     {
         // Find homepage name
-        $homepageSlug = $organization->getWikiHomepage();
+        $homepageSlug = $organization ? $organization->getWikiHomepage() : 'home';
 
         // Check if page exist
         $repo = $this->em->getRepository('EtuModuleWikiBundle:WikiPage');
@@ -160,7 +160,7 @@ class PermissionsChecker
             case WikiPage::RIGHT['ADMIN']:
                 return false;
             case WikiPage::RIGHT['ORGA_ADMIN']:
-                if($organization) {
+                if ($organization) {
                     $membership = $this->memberships[$organization->getId()] ?? null;
                     if ($organization && count($membership) && $membership->hasPermission('wiki')) {
                         return true;
@@ -168,7 +168,7 @@ class PermissionsChecker
                 }
                 break;
             case WikiPage::RIGHT['ORGA_MEMBER']:
-                if($organization) {
+                if ($organization) {
                     $membership = $this->memberships[$organization->getId()] ?? null;
                     if (count($membership)) {
                         return true;
