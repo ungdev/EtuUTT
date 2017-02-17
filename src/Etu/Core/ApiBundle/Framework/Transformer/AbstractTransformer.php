@@ -35,9 +35,9 @@ abstract class AbstractTransformer
      * @param object|array $input
      * @param EmbedBag     $includes
      *
-     * @return array
-     *
      * @throws \InvalidArgumentException
+     *
+     * @return array
      */
     public function transform($input, EmbedBag $includes = null)
     {

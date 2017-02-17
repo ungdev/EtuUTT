@@ -2,7 +2,7 @@ language: php
 sudo: false
 
 php:
-- 7.0
+- 7.1
 
 env:
     global:
@@ -20,6 +20,7 @@ cache:
         - $HOME/.composer/cache
 
 before_script:
+    - phpenv config-rm xdebug.ini
     - cp app/config/parameters.yml.dist app/config/parameters.yml
     - cp app/config/modules.yml.dist app/config/modules.yml
     - composer self-update
@@ -28,6 +29,7 @@ before_script:
 
 script:
     - phpunit
+    - vendor/bin/php-cs-fixer fix --config=.php_cs.dist -v --dry-run --using-cache=no
 
 notifications:
     email:

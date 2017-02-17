@@ -3,9 +3,9 @@
 namespace Etu\Module\DaymailBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Etu\Core\UserBundle\Entity\Organization;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
-use Etu\Core\UserBundle\Entity\Organization;
 
 /**
  * Daymail part.

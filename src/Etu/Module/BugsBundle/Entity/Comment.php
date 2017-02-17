@@ -3,9 +3,9 @@
 namespace Etu\Module\BugsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Etu\Core\UserBundle\Entity\User;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
-use Etu\Core\UserBundle\Entity\User;
 
 /**
  * Comment.

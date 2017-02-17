@@ -5,12 +5,12 @@ namespace Etu\Core\ApiBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Etu\Core\UserBundle\Entity\User;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * OauthClients.
@@ -146,7 +146,7 @@ class OauthClient
      */
     public function generateClientId()
     {
-        return $this->clientId = mt_rand(100000000, 2100000000) * 25;
+        return $this->clientId = random_int(100000000, 2100000000) * 25;
     }
 
     /**

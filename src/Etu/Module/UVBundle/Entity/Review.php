@@ -2,11 +2,11 @@
 
 namespace Etu\Module\UVBundle\Entity;
 
-use Etu\Core\UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use Etu\Core\UserBundle\Entity\User;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="Etu\Module\UVBundle\Entity\Repository\ReviewRepository")
@@ -15,12 +15,12 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class Review
 {
-    const TYPE_PARTIEL = 'partiel';
-    const TYPE_PARTIEL_1 = 'partiel_1';
-    const TYPE_PARTIEL_2 = 'partiel_2';
-    const TYPE_DM = 'dm';
-    const TYPE_MIDTERM = 'midterm';
-    const TYPE_FINAL = 'final';
+    public const TYPE_PARTIEL = 'partiel';
+    public const TYPE_PARTIEL_1 = 'partiel_1';
+    public const TYPE_PARTIEL_2 = 'partiel_2';
+    public const TYPE_DM = 'dm';
+    public const TYPE_MIDTERM = 'midterm';
+    public const TYPE_FINAL = 'final';
 
     public static $types = [
         self::TYPE_PARTIEL => 'uvs.reviews.partiel',
@@ -174,7 +174,7 @@ class Review
 
         $name .= '-'.$this->semester;
         $name .= '-'.$this->getUv()->getSlug();
-        $name .= '-'.substr(md5(uniqid(true)), 0, 3);
+        $name .= '-'.mb_substr(md5(uniqid(true)), 0, 3);
 
         $ext = $this->file->guessExtension();
 

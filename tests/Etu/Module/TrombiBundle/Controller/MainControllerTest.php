@@ -11,7 +11,7 @@ class MainControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/trombi');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
     }
 
     public function testIndex()
@@ -19,7 +19,7 @@ class MainControllerTest extends EtuWebTestCase
         $client = $this->createUserClient();
 
         $crawler = $client->request('GET', '/trombi');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
         $this->assertGreaterThan(0, $crawler->filter('h2:contains("Trombinoscope")')->count());
     }
 }

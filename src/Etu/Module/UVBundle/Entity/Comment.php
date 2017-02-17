@@ -2,8 +2,8 @@
 
 namespace Etu\Module\UVBundle\Entity;
 
-use Etu\Core\UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use Etu\Core\UserBundle\Entity\User;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 

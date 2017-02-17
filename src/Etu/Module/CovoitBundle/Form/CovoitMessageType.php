@@ -2,11 +2,11 @@
 
 namespace Etu\Module\CovoitBundle\Form;
 
+use Etu\Core\CoreBundle\Form\EditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Etu\Core\CoreBundle\Form\EditorType;
 
 class CovoitMessageType extends AbstractType
 {

@@ -3,9 +3,9 @@
 namespace Etu\Module\BugsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Etu\Core\UserBundle\Entity\User;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
-use Etu\Core\UserBundle\Entity\User;
 
 /**
  * Issue.
@@ -19,12 +19,12 @@ class Issue
     /**
      * Issues criticalities.
      */
-    const CRITICALITY_TYPO = 10;
-    const CRITICALITY_VISUAL = 20;
-    const CRITICALITY_MINOR = 30;
-    const CRITICALITY_MAJOR = 40;
-    const CRITICALITY_CRITICAL = 50;
-    const CRITICALITY_SECURITY = 60;
+    public const CRITICALITY_TYPO = 10;
+    public const CRITICALITY_VISUAL = 20;
+    public const CRITICALITY_MINOR = 30;
+    public const CRITICALITY_MAJOR = 40;
+    public const CRITICALITY_CRITICAL = 50;
+    public const CRITICALITY_SECURITY = 60;
 
     /**
      * @var int

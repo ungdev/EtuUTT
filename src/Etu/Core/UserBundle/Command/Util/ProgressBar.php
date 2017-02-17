@@ -55,6 +55,12 @@ class ProgressBar
      * @param int          The width of the display
      * @param float        The target number for the bar
      * @param array        Options for the progress bar
+     * @param mixed $formatstring
+     * @param mixed $bar
+     * @param mixed $prefill
+     * @param mixed $width
+     * @param mixed $target_num
+     * @param mixed $options
      *
      * @see reset
      */
@@ -140,6 +146,8 @@ class ProgressBar
      * @param int    $width          The width of the display
      * @param float  $target_num     The target number for the bar
      * @param array  $optionsOptions for the progress bar
+     * @param mixed  $formatstring
+     * @param mixed  $options
      *
      * @return bool
      */
@@ -181,7 +189,7 @@ class ProgressBar
 
         // placeholder
         $cur = '%2$\''.$options['fraction_pad'][0]
-        .strlen((int) $target_num).'.'.$options['fraction_precision'].'f';
+        .mb_strlen((int) $target_num).'.'.$options['fraction_precision'].'f';
 
         $max = $cur;
         $max[1] = 3;
@@ -210,7 +218,7 @@ class ProgressBar
 
         $this->_skeleton = strtr($formatstring, $transitions);
 
-        $slen = strlen(sprintf($this->_skeleton, '', 0, 0, 0, '00:00:00', '00:00:00'));
+        $slen = mb_strlen(sprintf($this->_skeleton, '', 0, 0, 0, '00:00:00', '00:00:00'));
 
         if ($options['width_absolute']) {
             $blen = $width - $slen;
@@ -221,9 +229,9 @@ class ProgressBar
         }
 
         $lbar = str_pad($bar, $blen, $bar[0], STR_PAD_LEFT);
-        $rbar = str_pad($prefill, $blen, substr($prefill, -1, 1));
+        $rbar = str_pad($prefill, $blen, mb_substr($prefill, -1, 1));
 
-        $this->_bar = substr($lbar, -$blen).substr($rbar, 0, $blen);
+        $this->_bar = mb_substr($lbar, -$blen).mb_substr($rbar, 0, $blen);
         $this->_blen = $blen;
         $this->_tlen = $tlen;
         $this->_first = true;
@@ -235,6 +243,7 @@ class ProgressBar
      * Updates the bar with new progress information.
      *
      * @param int current position of the progress counter
+     * @param mixed $current
      *
      * @return bool
      */
@@ -292,6 +301,7 @@ class ProgressBar
      * custom function (for whatever reason) to erase the bar, use this method.
      *
      * @param int current position of the progress counter
+     * @param mixed $current
      *
      * @return bool
      */
@@ -299,7 +309,7 @@ class ProgressBar
     {
         $percent = $current / $this->_target_num;
         $filled = round($percent * $this->_blen);
-        $visbar = substr($this->_bar, $this->_blen - $filled, $this->_blen);
+        $visbar = mb_substr($this->_bar, $this->_blen - $filled, $this->_blen);
 
         $elapsed = $this->_formatSeconds($this->_fetchTime() - $this->_start_time);
 
@@ -316,7 +326,7 @@ class ProgressBar
         );
 
         // fix for php-versions where printf doesn't return anything
-        if (is_null($this->_rlen)) {
+        if (null === $this->_rlen) {
             $this->_rlen = $this->_tlen;
             // fix for php versions between 4.3.7 and 5.x.y(?)
         } elseif ($this->_rlen < $this->_tlen) {
@@ -331,6 +341,7 @@ class ProgressBar
      * Returns a string containing the formatted number of seconds.
      *
      * @param float The number of seconds
+     * @param mixed $seconds
      *
      * @return string
      */
@@ -372,6 +383,7 @@ class ProgressBar
      *
      * @param bool if the bar should be cleared in addition to resetting the
      *             cursor position
+     * @param mixed $clear
      *
      * @return bool
      */

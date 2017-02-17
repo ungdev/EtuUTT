@@ -3,15 +3,15 @@
 namespace Etu\Module\CumulBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\HttpFoundation\Request;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
-use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Entity\Course;
+use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Schedule\Helper\ScheduleBuilder;
 use Etu\Module\CumulBundle\Schedule\ScheduleComparator;
-// Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+// Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 
 class MainController extends Controller
 {
@@ -195,6 +195,8 @@ class MainController extends Controller
     /**
      * @Route("/import/{type}", name="cumul_import")
      * @Template()
+     *
+     * @param mixed $type
      */
     public function importAction(Request $request, $type)
     {
@@ -226,7 +228,7 @@ class MainController extends Controller
             // Separator
             $separator = "\n";
 
-            if ($post->get('separator-textarea') != 'new-line' && strlen($post->get('separator-char')) >= 1) {
+            if ($post->get('separator-textarea') != 'new-line' && mb_strlen($post->get('separator-char')) >= 1) {
                 $separator = $post->get('separator-char');
             }
 
@@ -249,7 +251,7 @@ class MainController extends Controller
             // Separator
             $separator = "\n";
 
-            if ($post->get('separator-textarea') != 'new-line' && strlen($post->get('separator-char')) >= 1) {
+            if ($post->get('separator-textarea') != 'new-line' && mb_strlen($post->get('separator-char')) >= 1) {
                 $separator = $post->get('separator-char');
             }
 

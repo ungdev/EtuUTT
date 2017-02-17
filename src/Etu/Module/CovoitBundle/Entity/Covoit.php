@@ -234,7 +234,7 @@ class Covoit
     public function isBlaBlaCarUrlValid(ExecutionContextInterface $context)
     {
         if (!empty($this->blablacarUrl)) {
-            if (strpos($this->blablacarUrl, 'http') === false) {
+            if (mb_strpos($this->blablacarUrl, 'http') === false) {
                 $this->blablacarUrl = 'https://'.$this->blablacarUrl;
             }
 

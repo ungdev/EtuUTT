@@ -23,6 +23,8 @@ class MainController extends Controller
 {
     /**
      * @Route("/photo/{file}", requirements={"file"=".+"}, name="argentique_view")
+     *
+     * @param mixed $file
      */
     public function viewAction($file)
     {
@@ -49,6 +51,8 @@ class MainController extends Controller
 
     /**
      * @Route("/directory/{file}", requirements={"file"=".+"}, name="argentique_collectionImage")
+     *
+     * @param mixed $file
      */
     public function collectionImageAction(Request $request, $file)
     {
@@ -108,6 +112,8 @@ class MainController extends Controller
      * @Route("", name="argentique_index")
      * @Route("/collection/{directory}", requirements={"directory"=".+"}, name="argentique_directory")
      * @Template()
+     *
+     * @param null|mixed $directory
      */
     public function indexAction($directory = null)
     {
@@ -122,7 +128,7 @@ class MainController extends Controller
 
         $directory = rtrim($directory, '/');
 
-        if (strpos($directory, './') !== false) {
+        if (mb_strpos($directory, './') !== false) {
             return $this->redirect($this->generateUrl('argentique_index'));
         }
 
@@ -167,7 +173,7 @@ class MainController extends Controller
         $photos = [];
 
         foreach ($iterator as $file) {
-            if (substr($file->getBasename(), 0, 1) == '.') {
+            if (mb_substr($file->getBasename(), 0, 1) == '.') {
                 continue;
             }
 
@@ -177,9 +183,9 @@ class MainController extends Controller
                 $score = $basename;
 
                 if (!$directory) {
-                    $score = intval(substr($basename, 1)) * 2;
+                    $score = (int) (mb_substr($basename, 1)) * 2;
 
-                    if (substr($basename, 0, 1) == 'A') {
+                    if (mb_substr($basename, 0, 1) == 'A') {
                         $score += 1;
                     }
                 }

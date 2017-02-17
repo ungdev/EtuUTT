@@ -5,8 +5,8 @@ namespace Etu\Core\UserBundle\Api\Resource;
 use Doctrine\ORM\EntityManager;
 use Etu\Core\ApiBundle\Framework\Controller\ApiController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

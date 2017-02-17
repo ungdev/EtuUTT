@@ -4,21 +4,21 @@ namespace Etu\Core\UserBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Etu\Core\ApiBundle\Entity\OauthClient;
-use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Form\BirthdayPickerType;
+use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\Course;
 use Etu\Core\UserBundle\Entity\Member;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Model\BadgesManager;
 use Etu\Core\UserBundle\Model\CountriesManager;
 use Etu\Core\UserBundle\Schedule\Helper\ScheduleBuilder;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
 class ProfileController extends Controller
@@ -292,6 +292,8 @@ class ProfileController extends Controller
     /**
      * @Route("/user/{login}", name="user_view")
      * @Template()
+     *
+     * @param mixed $login
      */
     public function viewAction($login, Request $request)
     {
@@ -326,6 +328,8 @@ class ProfileController extends Controller
     /**
      * @Route("/user/{login}/organizations", name="user_organizations")
      * @Template()
+     *
+     * @param mixed $login
      */
     public function organizationsAction($login, Request $request)
     {
@@ -368,6 +372,9 @@ class ProfileController extends Controller
     /**
      * @Route("/user/{login}/schedule/{day}", defaults={"day" = "current"}, name="user_view_schedule")
      * @Template()
+     *
+     * @param mixed $login
+     * @param mixed $day
      */
     public function scheduleAction($login, $day, Request $request)
     {
@@ -427,6 +434,8 @@ class ProfileController extends Controller
     /**
      * @Route("/user/{login}/badges", name="user_view_badges")
      * @Template()
+     *
+     * @param mixed $login
      */
     public function badgesAction($login, Request $request)
     {

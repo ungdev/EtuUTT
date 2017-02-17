@@ -11,7 +11,7 @@ class AlertsControllerTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/covoiturage/private/alerts');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionCreate()
@@ -19,7 +19,7 @@ class AlertsControllerTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/covoiturage/private/alerts/create');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionEdit()
@@ -27,7 +27,7 @@ class AlertsControllerTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/covoiturage/private/1/edit');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     /*

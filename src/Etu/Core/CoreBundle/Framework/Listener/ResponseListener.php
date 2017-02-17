@@ -28,7 +28,7 @@ class ResponseListener
         $request = $event->getRequest();
         $response = $event->getResponse();
 
-        if (substr($request->get('_controller'), 0, 3) != 'Etu') {
+        if (mb_substr($request->get('_controller'), 0, 3) != 'Etu') {
             return;
         }
 

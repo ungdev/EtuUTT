@@ -14,16 +14,16 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Member
 {
-    const ROLE_PRESIDENT = 40;
-    const ROLE_V_PRESIDENT = 39;
+    public const ROLE_PRESIDENT = 40;
+    public const ROLE_V_PRESIDENT = 39;
 
-    const ROLE_TREASURER = 30;
-    const ROLE_V_TREASURER = 29;
+    public const ROLE_TREASURER = 30;
+    public const ROLE_V_TREASURER = 29;
 
-    const ROLE_SECRETARY = 20;
-    const ROLE_V_SECRETARY = 19;
+    public const ROLE_SECRETARY = 20;
+    public const ROLE_V_SECRETARY = 19;
 
-    const ROLE_MEMBER = 10;
+    public const ROLE_MEMBER = 10;
 
     public static $roles = [
         self::ROLE_PRESIDENT => 'president',

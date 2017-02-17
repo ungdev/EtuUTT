@@ -15,6 +15,8 @@ class MainController extends Controller
     /**
      * @Route("/orgas/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="orgas_index")
      * @Template()
+     *
+     * @param mixed $page
      */
     public function indexAction($page)
     {
@@ -39,6 +41,8 @@ class MainController extends Controller
     /**
      * @Route("/elus/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="elus_index")
      * @Template()
+     *
+     * @param mixed $page
      */
     public function elusAction($page)
     {
@@ -63,6 +67,8 @@ class MainController extends Controller
     /**
      * @Route("/orgas/{login}", name="orgas_view")
      * @Template()
+     *
+     * @param mixed $login
      */
     public function viewAction($login)
     {
@@ -78,7 +84,7 @@ class MainController extends Controller
 
         $isElus = false;
 
-        if (strpos($orga->getName(), 'Elus') !== false) {
+        if (mb_strpos($orga->getName(), 'Elus') !== false) {
             $isElus = true;
         }
 
@@ -99,6 +105,8 @@ class MainController extends Controller
     /**
      * @Route("/orgas/{login}/members", name="orgas_members")
      * @Template()
+     *
+     * @param mixed $login
      */
     public function membersAction($login)
     {

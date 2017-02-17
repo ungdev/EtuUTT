@@ -3,8 +3,8 @@
 namespace Etu\Module\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Etu\Core\UserBundle\Entity\User;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Table(name="etu_forum_messages")
@@ -13,8 +13,8 @@ use Etu\Core\UserBundle\Entity\User;
  */
 class Message
 {
-    const STATE_VISIBLE = 100;
-    const STATE_HIDDEN = 200;
+    public const STATE_VISIBLE = 100;
+    public const STATE_HIDDEN = 200;
 
     /**
      * @ORM\Id
@@ -111,6 +111,7 @@ class Message
 
     /**
      * @param \DateTime $createdAt
+     * @param mixed     $deletedAt
      *
      * @return $this
      */
@@ -204,9 +205,9 @@ class Message
     /**
      * @param int $state
      *
-     * @return $this
-     *
      * @throws \InvalidArgumentException
+     *
+     * @return $this
      */
     public function setState($state)
     {

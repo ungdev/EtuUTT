@@ -3,10 +3,10 @@
 namespace Etu\Module\UploadBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Validator\Constraints as Assert;
 use Etu\Core\UserBundle\Entity\Organization;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Imagine\Gd\Image;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -15,7 +15,7 @@ use Imagine\Gd\Image;
 class UploadedFile
 {
     /* List of rights sorted by most important to less */
-    const RIGHT = [
+    public const RIGHT = [
         'ADMIN' => 0,
         'ORGA_ADMIN' => 100,
         'ORGA_MEMBER' => 200,

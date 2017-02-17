@@ -2,10 +2,10 @@
 
 namespace Etu\Module\ForumBundle\Form;
 
+use Etu\Core\CoreBundle\Form\EditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Etu\Core\CoreBundle\Form\EditorType;
 
 class MessageEditType extends AbstractType
 {

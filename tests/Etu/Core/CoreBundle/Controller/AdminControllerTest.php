@@ -10,49 +10,49 @@ class AdminControllerTest extends EtuWebTestCase
     {
         $client = $this->createUserClient();
         $client->request('GET', '/admin');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionModules()
     {
         $client = $this->createUserClient();
         $client->request('GET', '/admin/modules');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionPages()
     {
         $client = $this->createUserClient();
         $client->request('GET', '/admin/pages');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionPageCreate()
     {
         $client = $this->createUserClient();
         $client->request('GET', '/admin/page/create');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionPageEdit()
     {
         $client = $this->createUserClient();
         $client->request('GET', '/admin/page/edit/0');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionPageDelete()
     {
         $client = $this->createUserClient();
         $client->request('GET', '/admin/page/delete/0');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionPageDeleteConfirm()
     {
         $client = $this->createUserClient();
         $client->request('GET', '/admin/page/delete/0/confirm');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testIndex()

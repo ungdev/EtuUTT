@@ -4,17 +4,17 @@ namespace Etu\Core\UserBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Entity\Notification;
+use Etu\Core\CoreBundle\Form\EditorType;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Framework\Definition\OrgaPermission;
-use Etu\Core\CoreBundle\Form\EditorType;
 use Etu\Core\UserBundle\Entity\Member;
 use Etu\Core\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\HttpFoundation\Request;
 
 class MembershipsController extends Controller
@@ -53,6 +53,8 @@ class MembershipsController extends Controller
     /**
      * @Route("/user/membership/{login}", name="memberships_orga")
      * @Template()
+     *
+     * @param mixed $login
      */
     public function orgaAction($login)
     {
@@ -109,6 +111,8 @@ class MembershipsController extends Controller
     /**
      * @Route("/user/membership/{login}/description", name="memberships_orga_desc")
      * @Template()
+     *
+     * @param mixed $login
      */
     public function descAction($login, Request $request)
     {
@@ -185,6 +189,9 @@ class MembershipsController extends Controller
     /**
      * @Route("/user/membership/{login}/permissions/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="memberships_orga_permissions")
      * @Template()
+     *
+     * @param mixed $login
+     * @param mixed $page
      */
     public function permissionsAction($login, $page = 1)
     {
@@ -251,6 +258,9 @@ class MembershipsController extends Controller
     /**
      * @Route("/user/membership/{login}/permissions/{user}/edit", name="memberships_orga_permissions_edit")
      * @Template()
+     *
+     * @param mixed $login
+     * @param mixed $user
      */
     public function permissionsEditAction($login, $user, Request $request)
     {
@@ -368,6 +378,8 @@ class MembershipsController extends Controller
     /**
      * @Route("/user/membership/{login}/notification", name="memberships_orga_notifications")
      * @Template()
+     *
+     * @param mixed $login
      */
     public function notificationAction($login, Request $request)
     {

@@ -6,10 +6,10 @@ use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\CovoitBundle\Entity\CovoitAlert;
 use Etu\Module\CovoitBundle\Form\CovoitAlertType;
-use Symfony\Component\HttpFoundation\Request;
-// Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+// Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/covoiturage/private/alerts")
@@ -20,6 +20,8 @@ class AlertsController extends Controller
     /**
      * @Route("/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="covoiturage_my_alerts")
      * @Template()
+     *
+     * @param mixed $page
      */
     public function indexAction($page = 1)
     {
@@ -86,6 +88,8 @@ class AlertsController extends Controller
     /**
      * @Route("/{id}/edit", name="covoiturage_my_alerts_edit")
      * @Template()
+     *
+     * @param mixed $id
      */
     public function editAction(Request $request, $id)
     {
@@ -118,6 +122,8 @@ class AlertsController extends Controller
 
     /**
      * @Route("/{id}/delete", name="covoiturage_my_alerts_delete")
+     *
+     * @param mixed $id
      */
     public function deleteAction($id)
     {

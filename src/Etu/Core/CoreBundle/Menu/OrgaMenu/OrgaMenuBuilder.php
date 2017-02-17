@@ -54,7 +54,7 @@ class OrgaMenuBuilder
             // 	->setIcon('question.png')
             // 	->setUrl('')
             // ->end()
-        ;
+;
     }
 
     /**

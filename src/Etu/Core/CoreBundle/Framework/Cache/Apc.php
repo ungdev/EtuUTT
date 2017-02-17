@@ -32,9 +32,9 @@ class Apc
     {
         if ($overwrite) {
             return apc_store($key, $data, $ttl);
-        } else {
-            return apc_add($key, $data, $ttl);
         }
+
+        return apc_add($key, $data, $ttl);
     }
 
     /**
@@ -48,9 +48,9 @@ class Apc
     {
         if (self::has($key)) {
             return apc_fetch($key);
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**

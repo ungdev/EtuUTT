@@ -26,6 +26,9 @@ class TVController extends Controller
     /**
      * @Route("/upload/remove/{id}/{confirm}", defaults={"confirm"=false}, name="upload_remove")
      * @Template()
+     *
+     * @param mixed $id
+     * @param mixed $confirm
      */
     public function removeAction($id, $confirm = false)
     {
@@ -42,10 +45,10 @@ class TVController extends Controller
 
         /** @var $file \SplFileInfo */
         foreach ($iterator as $file) {
-            if ($file->isFile() && in_array(strtolower($file->getExtension()), ['png', 'jpg', 'jpeg', 'gif', 'bmp'])) {
-                if (substr(md5($file->getBasename()), 0, 10) == $id) {
+            if ($file->isFile() && in_array(mb_strtolower($file->getExtension()), ['png', 'jpg', 'jpeg', 'gif', 'bmp'])) {
+                if (mb_substr(md5($file->getBasename()), 0, 10) == $id) {
                     $image = [
-                        'id' => substr(md5($file->getBasename()), 0, 10),
+                        'id' => mb_substr(md5($file->getBasename()), 0, 10),
                         'name' => $file->getBasename(),
                         'absolute' => $file->getPathname(),
                     ];

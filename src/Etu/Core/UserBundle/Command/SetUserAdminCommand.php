@@ -2,11 +2,11 @@
 
 namespace Etu\Core\UserBundle\Command;
 
+use Doctrine\ORM\EntityManager;
 use Etu\Core\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\Console\Question\Question;
 
 class SetUserAdminCommand extends ContainerAwareCommand
@@ -18,8 +18,7 @@ class SetUserAdminCommand extends ContainerAwareCommand
     {
         $this
             ->setName('etu:users:set-admin')
-            ->setDescription('Promote given user as global super admin')
-        ;
+            ->setDescription('Promote given user as global super admin');
     }
 
     /**

@@ -36,9 +36,9 @@ class ModulesRoutingLoader implements LoaderInterface
      * @param mixed $resource
      * @param null  $type
      *
-     * @return \Symfony\Component\Routing\RouteCollection
-     *
      * @throws \RuntimeException
+     *
+     * @return \Symfony\Component\Routing\RouteCollection
      */
     public function load($resource, $type = null)
     {

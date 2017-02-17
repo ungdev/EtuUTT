@@ -3,8 +3,8 @@
 namespace Etu\Core\UserBundle\Sync\Iterator\Element;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
-use Etu\Core\UserBundle\Ldap\Model\User as LdapUser;
 use Etu\Core\UserBundle\Entity\User as DbUser;
+use Etu\Core\UserBundle\Ldap\Model\User as LdapUser;
 use Etu\Core\UserBundle\Model\BadgesManager;
 use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
@@ -90,9 +90,9 @@ class ElementToUpdate
         }
 
         // Updates
-        if (ucfirst(strtolower($this->ldap->getFormation())) != $this->database->getFormation()) {
+        if (ucfirst(mb_strtolower($this->ldap->getFormation())) != $this->database->getFormation()) {
             $persist = true;
-            $user->setFormation(ucfirst(strtolower($this->ldap->getFormation())));
+            $user->setFormation(ucfirst(mb_strtolower($this->ldap->getFormation())));
         }
 
         if ($niveau != $this->database->getNiveau()) {
@@ -188,7 +188,7 @@ class ElementToUpdate
         /*
          * Add badges
          */
-        if (substr($history['niveau'], 0, 2) == 'TC' && substr($user->getNiveau(), 0, 2) != 'TC') {
+        if (mb_substr($history['niveau'], 0, 2) == 'TC' && mb_substr($user->getNiveau(), 0, 2) != 'TC') {
             BadgesManager::userAddBadge($user, 'tc_survivor');
             BadgesManager::userPersistBadges($user);
         }

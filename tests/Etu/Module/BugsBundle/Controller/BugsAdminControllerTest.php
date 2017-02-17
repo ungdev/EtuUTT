@@ -11,7 +11,7 @@ class BugsAdminControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/admin/bugs/1-issue-title/assign');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionUnassign()
@@ -19,7 +19,7 @@ class BugsAdminControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/admin/bugs/1-issue-title/unassign');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionCriticality()
@@ -27,7 +27,7 @@ class BugsAdminControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/admin/bugs/1-issue-title/criticality');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionClose()
@@ -35,7 +35,7 @@ class BugsAdminControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/admin/bugs/1-issue-title/close');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionOpen()
@@ -43,7 +43,7 @@ class BugsAdminControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/admin/bugs/1-issue-title/open');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionDelete()
@@ -51,7 +51,7 @@ class BugsAdminControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/admin/bugs/1-issue-title/delete');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionDeleteConfirm()
@@ -59,7 +59,7 @@ class BugsAdminControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/admin/bugs/1-issue-title/delete/confirm');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testDelete()

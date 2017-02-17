@@ -39,9 +39,9 @@ class HelperManager
     /**
      * @param string $helperName
      *
-     * @return HelperInterface
-     *
      * @throws \InvalidArgumentException
+     *
+     * @return HelperInterface
      */
     public function getHelper($helperName)
     {

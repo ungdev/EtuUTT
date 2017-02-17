@@ -5,14 +5,14 @@ namespace Etu\Core\UserBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Imagine\Image\Color;
 use Imagine\Image\Point;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Organization.
@@ -284,7 +284,7 @@ class Organization implements UserInterface, \Serializable
      */
     public function getPassword()
     {
-        return substr($this->getSalt(), 0, 8);
+        return mb_substr($this->getSalt(), 0, 8);
     }
 
     /**
@@ -316,6 +316,8 @@ class Organization implements UserInterface, \Serializable
 
     /**
      * @see \Serializable::unserialize()
+     *
+     * @param mixed $serialized
      */
     public function unserialize($serialized)
     {

@@ -4,20 +4,20 @@ namespace Etu\Core\UserBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Etu\Core\UserBundle\Collection\UserOptionsCollection;
+use Etu\Core\UserBundle\Ldap\Model\User as LdapUser;
 use Etu\Core\UserBundle\Model\BadgesManager;
 use Etu\Core\UserBundle\Model\SemesterManager;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\EquatableInterface;
-use Symfony\Component\Validator\Constraints as Assert;
-use Etu\Core\UserBundle\Collection\UserOptionsCollection;
-use Etu\Core\UserBundle\Ldap\Model\User as LdapUser;
 use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Imagine\Image\Color;
 use Imagine\Image\Point;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User.
@@ -32,11 +32,11 @@ use Imagine\Image\Point;
  */
 class User implements UserInterface, EquatableInterface, \Serializable
 {
-    const SEX_MALE = 'male';
-    const SEX_FEMALE = 'female';
+    public const SEX_MALE = 'male';
+    public const SEX_FEMALE = 'female';
 
-    const PRIVACY_PUBLIC = 100;
-    const PRIVACY_PRIVATE = 200;
+    public const PRIVACY_PUBLIC = 100;
+    public const PRIVACY_PRIVATE = 200;
 
     public static $branches = [
         'ISI' => 'ISI', 'MTE' => 'MTE', 'SI' => 'SI',
@@ -925,7 +925,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function setFormation($formation)
     {
-        if (strtolower($formation) == 'nc') {
+        if (mb_strtolower($formation) == 'nc') {
             $formation = null;
         }
 
@@ -2360,6 +2360,8 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * Get badges 2D (generate some of them on the fly).
      *
+     * @param mixed $count
+     *
      * @return array
      */
     public function getLastBadges($count = 6)
@@ -2583,6 +2585,8 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     /**
      * @see \Serializable::unserialize()
+     *
+     * @param mixed $serialized
      */
     public function unserialize($serialized)
     {
@@ -2617,7 +2621,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
             && $this->getIsInLDAP() === $user->getIsInLDAP()
             && $this->getReadOnlyExpirationDate() == $user->getReadOnlyExpirationDate()
             && $this->getBannedExpirationDate() == $user->getBannedExpirationDate()
-            && $this->getStoredRoles() == $user->getStoredRoles()
-        ;
+            && $this->getStoredRoles() == $user->getStoredRoles();
     }
 }

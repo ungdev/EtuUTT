@@ -8,12 +8,12 @@ use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\CovoitBundle\Entity\Covoit;
 use Etu\Module\CovoitBundle\Entity\CovoitMessage;
 use Etu\Module\CovoitBundle\Entity\CovoitSubscription;
-use Etu\Module\CovoitBundle\Form\CovoitType;
 use Etu\Module\CovoitBundle\Form\CovoitMessageType;
-use Symfony\Component\HttpFoundation\Request;
-// Import annotations
+use Etu\Module\CovoitBundle\Form\CovoitType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+// Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
@@ -25,6 +25,8 @@ class PrivateController extends Controller
     /**
      * @Route("/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="covoiturage_my_index")
      * @Template()
+     *
+     * @param mixed $page
      */
     public function indexAction($page = 1)
     {
@@ -108,6 +110,8 @@ class PrivateController extends Controller
     /**
      * @Route("/{id}/edit", name="covoiturage_my_edit")
      * @Template()
+     *
+     * @param mixed $id
      */
     public function editAction(Request $request, $id)
     {
@@ -253,6 +257,9 @@ class PrivateController extends Controller
     /**
      * @Route("/{id}/cancel/{confirm}", defaults={"confirm" = false}, name="covoiturage_my_cancel")
      * @Template()
+     *
+     * @param mixed $id
+     * @param mixed $confirm
      */
     public function cancelAction($id, $confirm)
     {
@@ -316,6 +323,8 @@ class PrivateController extends Controller
 
     /**
      * @Route("/{id}/subscribe", name="covoiturage_my_subscribe")
+     *
+     * @param mixed $id
      */
     public function subscribeAction($id)
     {

@@ -2,17 +2,17 @@
 
 namespace Etu\Module\EventsBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use CalendR\Event\AbstractEvent;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
 use Etu\Core\UserBundle\Entity\Organization;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Imagine\Image\Color;
 use Imagine\Image\Point;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="etu_events")
@@ -21,16 +21,16 @@ use Imagine\Image\Point;
  */
 class Event extends AbstractEvent
 {
-    const CATEGORY_CULTURE = 'culture';
-    const CATEGORY_SPORT = 'sport';
-    const CATEGORY_FORMATION = 'formation';
-    const CATEGORY_NIGHT = 'soiree';
-    const CATEGORY_OTHER = 'autre';
+    public const CATEGORY_CULTURE = 'culture';
+    public const CATEGORY_SPORT = 'sport';
+    public const CATEGORY_FORMATION = 'formation';
+    public const CATEGORY_NIGHT = 'soiree';
+    public const CATEGORY_OTHER = 'autre';
 
-    const PRIVACY_PUBLIC = 100;
-    const PRIVACY_PRIVATE = 200;
-    const PRIVACY_ORGAS = 300;
-    const PRIVACY_MEMBERS = 400;
+    public const PRIVACY_PUBLIC = 100;
+    public const PRIVACY_PRIVATE = 200;
+    public const PRIVACY_ORGAS = 300;
+    public const PRIVACY_MEMBERS = 400;
 
     public static $categories = [
         self::CATEGORY_CULTURE, self::CATEGORY_SPORT, self::CATEGORY_FORMATION,
@@ -178,11 +178,10 @@ class Event extends AbstractEvent
                 copy(__DIR__.'/../../../../../web/uploads/logos/'.$this->getOrga()->getLogin().'.png', __DIR__.'/../../../../../web/uploads/events/'.$this->getId().'.png');
 
                 return true;
-            } else {
-                copy(__DIR__.'/../../../../../web/uploads/logos/default-logo.png', __DIR__.'/../../../../../web/uploads/events/'.$this->getId().'.png');
-
-                return true;
             }
+            copy(__DIR__.'/../../../../../web/uploads/logos/default-logo.png', __DIR__.'/../../../../../web/uploads/events/'.$this->getId().'.png');
+
+            return true;
         }
 
         /*

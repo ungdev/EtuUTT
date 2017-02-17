@@ -11,7 +11,7 @@ class OrgaControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/orga');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionAvatar()
@@ -19,7 +19,7 @@ class OrgaControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/orga/avatar');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionMembers()
@@ -27,7 +27,7 @@ class OrgaControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/orga/members');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testIndex()

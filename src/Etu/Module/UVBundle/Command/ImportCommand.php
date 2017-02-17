@@ -2,13 +2,13 @@
 
 namespace Etu\Module\UVBundle\Command;
 
+use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
+use Etu\Core\UserBundle\Command\Util\ProgressBar;
+use Etu\Module\UVBundle\Entity\UV;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Etu\Core\UserBundle\Command\Util\ProgressBar;
-use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
-use Etu\Module\UVBundle\Entity\UV;
 
 class ImportCommand extends ContainerAwareCommand
 {
@@ -20,8 +20,7 @@ class ImportCommand extends ContainerAwareCommand
         $this
             ->setName('etu:uv:import')
             ->setDescription('Import UV informations from the PDF official guide. Script made for the 2015-2016 version of the guide')
-            ->addArgument('url', InputArgument::REQUIRED, 'The file URL to download')
-        ;
+            ->addArgument('url', InputArgument::REQUIRED, 'The file URL to download');
     }
 
     /**
@@ -166,7 +165,7 @@ for another version, you will have to update this parser.');
                     $uv[$this->sanitizer($match[1][$i - 1][0])] =
                         array_merge(
                         $uv[$this->sanitizer($match[1][$i - 1][0])],
-                        $this->parseDesc(substr($text, $descBegin, $match[0][$i][1] - $descBegin)));
+                        $this->parseDesc(mb_substr($text, $descBegin, $match[0][$i][1] - $descBegin)));
                 }
 
                 // Find index : UV Code
@@ -213,13 +212,13 @@ for another version, you will have to update this parser.');
                         $uv[$code]['category'] = $category;
                 }
 
-                $descBegin = $match[0][$i][1] + strlen($match[0][$i][0]);
+                $descBegin = $match[0][$i][1] + mb_strlen($match[0][$i][0]);
             }
             if ($descBegin > 0) {
                 $uv[$this->sanitizer($match[1][$i - 1][0])] =
                     array_merge(
                     $uv[$this->sanitizer($match[1][$i - 1][0])],
-                    $this->parseDesc(substr($text, $descBegin)));
+                    $this->parseDesc(mb_substr($text, $descBegin)));
             }
         }
 
@@ -308,22 +307,22 @@ for another version, you will have to update this parser.');
                 continue;
             }
 
-            if (strpos($line, 'Automne') !== false) {
+            if (mb_strpos($line, 'Automne') !== false) {
                 $uv['automne'] = true;
                 continue;
             }
 
-            if (strpos($line, 'Printemps') !== false) {
+            if (mb_strpos($line, 'Printemps') !== false) {
                 $uv['printemps'] = true;
                 continue;
             }
 
-            if (strpos($line, 'CADRE') !== false) {
+            if (mb_strpos($line, 'CADRE') !== false) {
                 $currentList = 'cadre';
                 continue;
             }
 
-            if (strpos($line, 'PROGRAMME') !== false) {
+            if (mb_strpos($line, 'PROGRAMME') !== false) {
                 $currentList = 'programme';
                 continue;
             }
@@ -362,7 +361,7 @@ for another version, you will have to update this parser.');
 
             // append to cadre and programme
             if (!empty($line) && !empty($currentList) && preg_match('/[a-z]/i', $this->sanitizer($line))) {
-                if (strpos(strip_tags($line), "\n  ") === 0) {
+                if (mb_strpos(strip_tags($line), "\n  ") === 0) {
                     $uv[$currentList] .= "\n• ".ucfirst($this->sanitizer($line));
                 } else {
                     $uv[$currentList] .= ' '.$this->sanitizer($line);
@@ -371,7 +370,7 @@ for another version, you will have to update this parser.');
 
             // append to comment
             if (preg_match('/top="[0-9]+" left="([0-9]+)" width="[0-9]+" height="[0-9]+" font="[0-9]+">(.*)$/', $line, $match) && $match[1] == 43) {
-                if (strpos($match[2], '  ') === 0) {
+                if (mb_strpos($match[2], '  ') === 0) {
                     $uv['comment'] .= ucfirst($this->sanitizer($line));
                 } else {
                     $uv['comment'] .= ' '.$this->sanitizer($line);
@@ -394,15 +393,15 @@ for another version, you will have to update this parser.');
      */
     protected function ucfirst($string)
     {
-        if (!preg_match('/^[a-z0-9]$/i', substr($string, 0, 1))) {
+        if (!preg_match('/^[a-z0-9]$/i', mb_substr($string, 0, 1))) {
             $i = 2;
         } else {
             $i = 1;
         }
 
-        $firstLetter = substr($string, 0, $i);
-        $wordRest = substr($string, $i);
-        $word = strtoupper(StringManipulationExtension::unaccent($firstLetter)).$wordRest;
+        $firstLetter = mb_substr($string, 0, $i);
+        $wordRest = mb_substr($string, $i);
+        $word = mb_strtoupper(StringManipulationExtension::unaccent($firstLetter)).$wordRest;
 
         return htmlspecialchars(trim(html_entity_decode($word)));
     }

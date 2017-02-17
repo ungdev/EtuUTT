@@ -10,21 +10,21 @@ class AuthControllerTest extends EtuWebTestCase
     {
         $client = $this->createUserClient();
         $client->request('GET', '/user');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302, $client->getResponse()->getContent());
+        $this->assertSame($client->getResponse()->getStatusCode(), 302, $client->getResponse()->getContent());
     }
 
     public function testRestrictionConnectCAS()
     {
         $client = $this->createUserClient();
         $client->request('GET', '/user/cas');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302, $client->getResponse()->getContent());
+        $this->assertSame($client->getResponse()->getStatusCode(), 302, $client->getResponse()->getContent());
     }
 
     public function testRestrictionConnectExternal()
     {
         $client = $this->createUserClient();
         $client->request('GET', '/user/external');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302, $client->getResponse()->getContent());
+        $this->assertSame($client->getResponse()->getStatusCode(), 302, $client->getResponse()->getContent());
     }
 
     public function testRestrictionDisconnect()
@@ -32,7 +32,7 @@ class AuthControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/user/disconnect');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302, $client->getResponse()->getContent());
+        $this->assertSame($client->getResponse()->getStatusCode(), 302, $client->getResponse()->getContent());
     }
 
     public function testConnect()

@@ -11,7 +11,7 @@ class ScheduleControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/schedule');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionEdit()
@@ -19,7 +19,7 @@ class ScheduleControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/schedule/edit');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionPrint()
@@ -27,7 +27,7 @@ class ScheduleControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/schedule/print');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testView()

@@ -11,9 +11,9 @@ use Etu\Core\UserBundle\Entity\User;
  */
 class Answer
 {
-    const ANSWER_YES = 'yes';
-    const ANSWER_PROBABLY = 'probably';
-    const ANSWER_NO = 'no';
+    public const ANSWER_YES = 'yes';
+    public const ANSWER_PROBABLY = 'probably';
+    public const ANSWER_NO = 'no';
 
     /**
      * @var int

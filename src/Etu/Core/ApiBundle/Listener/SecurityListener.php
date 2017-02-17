@@ -2,9 +2,9 @@
 
 namespace Etu\Core\ApiBundle\Listener;
 
+use Doctrine\Common\Annotations\Reader;
 use Etu\Core\ApiBundle\Formatter\DataFormatter;
 use Etu\Core\ApiBundle\Oauth\OauthServer;
-use Doctrine\Common\Annotations\Reader;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 class SecurityListener
@@ -45,7 +45,7 @@ class SecurityListener
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
-        if (strpos($event->getRequest()->attributes->get('_controller'), 'Api\\Resource') !== false) {
+        if (mb_strpos($event->getRequest()->attributes->get('_controller'), 'Api\\Resource') !== false) {
             $controller = explode('::', $event->getRequest()->attributes->get('_controller'));
             $reflection = new \ReflectionMethod($controller[0], $controller[1]);
 

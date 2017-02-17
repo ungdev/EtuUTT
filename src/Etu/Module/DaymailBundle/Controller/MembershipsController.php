@@ -3,14 +3,14 @@
 namespace Etu\Module\DaymailBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Form\EditorEmailType;
+use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\Member;
 use Etu\Module\DaymailBundle\Entity\DaymailPart;
-use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
 
 class MembershipsController extends Controller
 {
@@ -21,6 +21,9 @@ class MembershipsController extends Controller
      *      name="memberships_orga_daymail"
      * )
      * @Template()
+     *
+     * @param mixed $login
+     * @param mixed $day
      */
     public function daymailAction($login, $day, Request $request)
     {
@@ -145,12 +148,12 @@ class MembershipsController extends Controller
                     'login' => $login,
                     'day' => $day->format('d-m-Y'),
                 ]).'?preview');
-            } else {
-                return $this->redirect($this->generateUrl('memberships_orga_daymail', [
+            }
+
+            return $this->redirect($this->generateUrl('memberships_orga_daymail', [
                     'login' => $login,
                     'day' => $day->format('d-m-Y'),
                 ]));
-            }
         }
 
         return [
@@ -175,6 +178,9 @@ class MembershipsController extends Controller
      *      name="memberships_orga_daymail_preview"
      * )
      * @Template()
+     *
+     * @param mixed $login
+     * @param mixed $day
      */
     public function previewAction($login, $day)
     {
@@ -257,6 +263,9 @@ class MembershipsController extends Controller
      *      name="memberships_orga_daymail_remove"
      * )
      * @Template()
+     *
+     * @param mixed $login
+     * @param mixed $day
      */
     public function removeAction($login, $day)
     {

@@ -277,9 +277,9 @@ class OauthAccessToken
             }
 
             return false;
-        } else {
-            return in_array($scope, $this->scopes->toArray());
         }
+
+        return in_array($scope, $this->scopes->toArray());
     }
 
     /**

@@ -4,21 +4,21 @@ namespace Etu\Module\UVBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Entity\Notification;
+use Etu\Core\CoreBundle\Form\EditorType;
+use Etu\Core\CoreBundle\Framework\Definition\Controller;
+use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Core\UserBundle\Entity\Course;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Model\BadgesManager;
 use Etu\Module\UVBundle\Entity\Comment;
 use Etu\Module\UVBundle\Entity\Review;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Etu\Core\CoreBundle\Framework\Definition\Controller;
-use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
-use Etu\Core\CoreBundle\Form\EditorType;
 use Etu\Module\UVBundle\Entity\UV;
-// Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+// Import annotations
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/uvs")
@@ -28,6 +28,10 @@ class ViewController extends Controller
     /**
      * @Route("/{slug}-{name}/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="uvs_view")
      * @Template()
+     *
+     * @param mixed $slug
+     * @param mixed $name
+     * @param mixed $page
      */
     public function viewAction(Request $request, $slug, $name, $page = 1)
     {
@@ -112,8 +116,8 @@ class ViewController extends Controller
 
             // Order by semester: A13, P12, A12, P11, ...
             foreach ($results as $review) {
-                $semester = (int) substr($review->getSemester(), 1);
-                $season = (substr($review->getSemester(), 0, 1)) == 'A' ? 1 : 0;
+                $semester = (int) mb_substr($review->getSemester(), 1);
+                $season = (mb_substr($review->getSemester(), 0, 1)) == 'A' ? 1 : 0;
                 $order[] = $semester * 2 + $season;
             }
 
@@ -167,6 +171,9 @@ class ViewController extends Controller
     /**
      * @Route("/{slug}-{name}/courses", name="uvs_view_courses")
      * @Template()
+     *
+     * @param mixed $slug
+     * @param mixed $name
      */
     public function coursesAction($slug, $name)
     {
@@ -194,7 +201,7 @@ class ViewController extends Controller
             ->select('c')
             ->from('EtuUserBundle:Course', 'c')
             ->where('c.uv = :uv')
-            ->setParameter('uv', strtoupper($slug))
+            ->setParameter('uv', mb_strtoupper($slug))
             ->orderBy('c.start')
             ->groupBy('c.day, c.room')
             ->getQuery()
@@ -239,6 +246,9 @@ class ViewController extends Controller
     /**
      * @Route("/{slug}-{name}/send-review", name="uvs_view_send_review")
      * @Template()
+     *
+     * @param mixed $slug
+     * @param mixed $name
      */
     public function sendReviewAction(Request $request, $slug, $name)
     {

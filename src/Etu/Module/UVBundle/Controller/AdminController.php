@@ -3,9 +3,9 @@
 namespace Etu\Module\UVBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\UVBundle\Entity\Comment;
 use Etu\Module\UVBundle\Entity\Review;
-use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\UVBundle\Entity\UV;
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -56,6 +56,8 @@ class AdminController extends Controller
     /**
      * @Route("/reviews/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="admin_uvs_reviews")
      * @Template()
+     *
+     * @param mixed $page
      */
     public function reviewsAction($page = 1)
     {
@@ -154,6 +156,8 @@ class AdminController extends Controller
     /**
      * @Route("/comments/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="admin_uvs_comments")
      * @Template()
+     *
+     * @param mixed $page
      */
     public function commentsAction($page = 1)
     {

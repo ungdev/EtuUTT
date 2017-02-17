@@ -3,11 +3,11 @@
 namespace Etu\Module\CovoitBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
+use Etu\Core\CoreBundle\Form\DatePickerType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Etu\Core\CoreBundle\Form\DatePickerType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class CovoitAlertType extends AbstractType
 {

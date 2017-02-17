@@ -3,9 +3,9 @@
 namespace Etu\Module\WikiBundle\Services;
 
 use Doctrine\ORM\EntityManager;
+use Etu\Core\UserBundle\Entity\Member;
 use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Core\UserBundle\Entity\User;
-use Etu\Core\UserBundle\Entity\Member;
 use Etu\Module\WikiBundle\Entity\WikiPage;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -144,8 +144,8 @@ class PermissionsChecker
     /**
      * Check if user has the given right.
      *
-     * @param int $right           WikiPage::RIGHT['*']
-      * @param Organization $organization
+     * @param int          $right        WikiPage::RIGHT['*']
+     * @param Organization $organization
      *
      * @return bool
      */

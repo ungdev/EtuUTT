@@ -2,23 +2,27 @@
 
 namespace Etu\Module\WikiBundle\Controller;
 
+use Etu\Core\CoreBundle\Form\EditorType;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
-use Etu\Core\CoreBundle\Form\EditorType;
 use Etu\Module\WikiBundle\Entity\WikiPage;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class MainController extends Controller
 {
     /**
      * @Route("/wiki/view/{organization}/{slug}", requirements={"slug" = "[a-z0-9-/]+"}, name="wiki_view")
      * @Template()
+     *
+     * @param mixed $slug
+     * @param mixed $category
+     * @param mixed $organization
      */
     public function viewAction($slug, $organization, Request $request)
     {
@@ -55,7 +59,7 @@ class MainController extends Controller
         return [
             'page' => $page,
             'rights' => $this->get('etu.wiki.permissions_checker'),
-            'parentSlug' => substr($slug, 0, strrpos($slug, '/')),
+            'parentSlug' => mb_substr($slug, 0, mb_strrpos($slug, '/')),
             'organization' => $organization,
         ];
     }
@@ -64,6 +68,11 @@ class MainController extends Controller
      * @Route("/wiki/edit/{organization}/{slug}", defaults={"new"=false}, requirements={"slug" = "[a-z0-9-/]+"}, name="wiki_edit")
      * @Route("/wiki/new/{organization}/{slug}", defaults={"new"=true}, requirements={"slug" = "[a-z0-9-/]*"}, name="wiki_new")
      * @Template()
+     *
+     * @param mixed $category
+     * @param mixed $slug
+     * @param mixed $new
+     * @param mixed $organization
      */
     public function editAction($organization, $slug, $new, Request $request)
     {
@@ -134,7 +143,7 @@ class MainController extends Controller
             foreach ($result as $key => $value) {
                 if ($rights->has($value['readRight'], $organization)) {
                     $pagelist[$key] = $value['title'];
-                    if (strpos($key, '/') !== false) {
+                    if (mb_strpos($key, '/') !== false) {
                         $pagelist[$key] = '↳'.$pagelist[$key];
                     }
                 }
@@ -144,7 +153,7 @@ class MainController extends Controller
             $form = $form->add('preslug', ChoiceType::class, [
                 'choices' => array_flip($pagelist),
                 'choice_attr' => function ($val) {
-                    $level = substr_count($val, '/');
+                    $level = mb_substr_count($val, '/');
 
                     return ['class' => 'choice_level_'.$level];
                 },
@@ -245,8 +254,11 @@ class MainController extends Controller
     /**
      * @Route("/wiki/index/{organization}", name="wiki_index")
      * @Template()
+     *
+     * @param mixed $category
+     * @param mixed $organization
      */
-    public function indexAction($organization = null, Request $request)
+    public function indexAction($organization, Request $request)
     {
         // Find organization
         $em = $this->getDoctrine()->getManager();
@@ -284,7 +296,7 @@ class MainController extends Controller
                 $pagelist[$value->getSlug()] = [
                     'title' => $value->getTitle(),
                     'organization' => $value->getOrganization(),
-                    'level' => substr_count($value->getSlug(), '/'),
+                    'level' => mb_substr_count($value->getSlug(), '/'),
                 ];
             }
         }
@@ -301,6 +313,8 @@ class MainController extends Controller
      *
      * @Route("/wiki/linklist/{organization}", name="wiki_linklist", options={"expose"=true})
      * @Template()
+     *
+     * @param null|mixed $organization
      */
     public function editorAction(Request $request, $organization = null)
     {
@@ -331,7 +345,7 @@ class MainController extends Controller
         foreach ($result as $value) {
             if ($rights->has($value->getReadRight(), $value->getOrganization())) {
                 $pagelist[$value->getSlug()] = [
-                    'title' => (substr_count($value->getSlug(), '/') ? str_repeat(' ', substr_count($value->getSlug(), '/')).'↳' : '').$value->getTitle(),
+                    'title' => (mb_substr_count($value->getSlug(), '/') ? str_repeat(' ', mb_substr_count($value->getSlug(), '/')).'↳' : '').$value->getTitle(),
                     'value' => $this->generateUrl('wiki_view', ['organization' => $organization, 'slug' => $value->getSlug()], true),
                 ];
             }
@@ -339,8 +353,6 @@ class MainController extends Controller
 
         return new JsonResponse($pagelist);
     }
-
-
 
     /**
      * @Route("/wiki/list", name="wiki_list")

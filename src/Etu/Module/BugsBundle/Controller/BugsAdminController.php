@@ -2,18 +2,18 @@
 
 namespace Etu\Module\BugsBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Module\BugsBundle\Entity\Comment;
 use Etu\Module\BugsBundle\Entity\Issue;
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/admin/bugs")
@@ -23,6 +23,9 @@ class BugsAdminController extends Controller
     /**
      * @Route("/{id}-{slug}/assign", requirements = {"id" = "\d+"}, name="bugs_admin_assign")
      * @Template()
+     *
+     * @param mixed $id
+     * @param mixed $slug
      */
     public function assignAction($id, $slug, Request $request)
     {
@@ -104,6 +107,9 @@ class BugsAdminController extends Controller
     /**
      * @Route("/{id}-{slug}/unassign", requirements = {"id" = "\d+"}, name="bugs_admin_unassign")
      * @Template()
+     *
+     * @param mixed $id
+     * @param mixed $slug
      */
     public function unassignAction($id, $slug)
     {
@@ -168,6 +174,9 @@ class BugsAdminController extends Controller
     /**
      * @Route("/{id}-{slug}/criticality", requirements = {"id" = "\d+"}, name="bugs_admin_criticality")
      * @Template()
+     *
+     * @param mixed $id
+     * @param mixed $slug
      */
     public function criticalityAction($id, $slug, Request $request)
     {
@@ -279,6 +288,9 @@ class BugsAdminController extends Controller
     /**
      * @Route("/{id}-{slug}/close", requirements = {"id" = "\d+"}, name="bugs_admin_close")
      * @Template()
+     *
+     * @param mixed $id
+     * @param mixed $slug
      */
     public function closeAction($id, $slug)
     {
@@ -350,6 +362,9 @@ class BugsAdminController extends Controller
     /**
      * @Route("/{id}-{slug}/open", requirements = {"id" = "\d+"}, name="bugs_admin_open")
      * @Template()
+     *
+     * @param mixed $id
+     * @param mixed $slug
      */
     public function openAction($id, $slug)
     {
@@ -409,6 +424,9 @@ class BugsAdminController extends Controller
     /**
      * @Route("/{id}-{slug}/delete", requirements = {"id" = "\d+"}, name="bugs_admin_delete")
      * @Template()
+     *
+     * @param mixed $id
+     * @param mixed $slug
      */
     public function deleteAction($id, $slug)
     {
@@ -445,6 +463,9 @@ class BugsAdminController extends Controller
     /**
      * @Route("/{id}-{slug}/delete/confirm", requirements = {"id" = "\d+"}, name="bugs_admin_delete_confirm")
      * @Template()
+     *
+     * @param mixed $id
+     * @param mixed $slug
      */
     public function deleteConfirmAction($id, $slug)
     {

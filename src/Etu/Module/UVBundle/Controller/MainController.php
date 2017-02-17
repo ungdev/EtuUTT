@@ -3,13 +3,13 @@
 namespace Etu\Module\UVBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\HttpFoundation\Request;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Module\UVBundle\Entity\UV;
-// Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+// Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/uvs")
@@ -46,6 +46,9 @@ class MainController extends Controller
     /**
      * @Route("/category/{category}/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="uvs_category")
      * @Template()
+     *
+     * @param mixed $category
+     * @param mixed $page
      */
     public function categoryAction($category, $page = 1)
     {
@@ -79,6 +82,8 @@ class MainController extends Controller
     /**
      * @Route("/search/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="uvs_search")
      * @Template()
+     *
+     * @param mixed $page
      */
     public function searchAction(Request $request, $page = 1)
     {
@@ -116,6 +121,8 @@ class MainController extends Controller
     /**
      * @Route("/goto/{code}", name="uvs_goto")
      * @Template()
+     *
+     * @param mixed $code
      */
     public function goToAction($code)
     {
@@ -143,6 +150,8 @@ class MainController extends Controller
     /**
      * @Route("/goto/courses/{code}", name="uvs_goto_courses")
      * @Template()
+     *
+     * @param mixed $code
      */
     public function goToCoursesAction($code)
     {

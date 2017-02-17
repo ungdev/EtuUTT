@@ -43,12 +43,6 @@ class SidebarBuilder
                     ->setLinkAttribute('target', '_blank')
                 ->end()
             ->end()
-            ->addBlock('base.sidebar.etu.title')
-                ->add('base.sidebar.etu.items.team')
-                    ->setIcon('users.png')
-                    ->setUrl($router->generate('contributors'))
-                ->end()
-            ->end()
             // ->getBlock('base.sidebar.services.title')
             //     ->add('base.user.menu.nutt')
             //         ->setIcon('newspaper.png')
@@ -57,7 +51,12 @@ class SidebarBuilder
             //         ->setLinkAttribute('target', '_blank')
             //     ->end()
             // ->end()
-        ;
+            ->addBlock('base.sidebar.etu.title')
+                ->add('base.sidebar.etu.items.team')
+                    ->setIcon('users.png')
+                    ->setUrl($router->generate('contributors'))
+                ->end()
+            ->end();
     }
 
     /**

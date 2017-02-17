@@ -10,11 +10,11 @@ use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Module\EventsBundle\Entity\Answer;
 use Etu\Module\EventsBundle\Entity\Event;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-// Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+// Import annotations
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class MainController extends Controller
@@ -22,6 +22,8 @@ class MainController extends Controller
     /**
      * @Route("/events/{category}", defaults={"category" = "all"}, name="events_index")
      * @Template()
+     *
+     * @param mixed $category
      */
     public function indexAction($category = 'all')
     {
@@ -48,6 +50,8 @@ class MainController extends Controller
      *      name="events_find",
      *      options={"expose"=true}
      * )
+     *
+     * @param mixed $category
      */
     public function ajaxEventsAction(Request $request, $category = 'all')
     {
@@ -122,6 +126,9 @@ class MainController extends Controller
     /**
      * @Route("/event/{id}-{slug}", name="events_view")
      * @Template()
+     *
+     * @param mixed $id
+     * @param mixed $slug
      */
     public function viewAction($id, $slug)
     {
@@ -213,6 +220,9 @@ class MainController extends Controller
     /**
      * @Route("/event/{id}-{slug}/members", name="events_members")
      * @Template()
+     *
+     * @param mixed $id
+     * @param mixed $slug
      */
     public function membersAction($id, $slug)
     {
@@ -280,6 +290,9 @@ class MainController extends Controller
     /**
      * @Route("/event/{id}/answer/{answer}", name="events_answer", options={"expose" = true})
      * @Template()
+     *
+     * @param mixed $id
+     * @param mixed $answer
      */
     public function answerAction($id, $answer)
     {

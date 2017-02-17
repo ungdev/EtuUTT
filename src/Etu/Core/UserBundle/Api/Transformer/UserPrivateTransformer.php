@@ -140,8 +140,8 @@ class UserPrivateTransformer extends AbstractTransformer
     {
         if ($privacy == User::PRIVACY_PUBLIC) {
             return 'public';
-        } else {
-            return 'private';
         }
+
+        return 'private';
     }
 }

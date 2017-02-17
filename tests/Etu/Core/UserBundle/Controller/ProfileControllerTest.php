@@ -11,7 +11,7 @@ class ProfileControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/user/profile');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionProfileEdit()
@@ -19,7 +19,7 @@ class ProfileControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/user/profile/edit');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionProfileAvatar()
@@ -27,7 +27,7 @@ class ProfileControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/user/profile/avatar');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionTrombiEdit()
@@ -35,7 +35,7 @@ class ProfileControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/user/trombi/edit');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testRestrictionView()
@@ -43,7 +43,7 @@ class ProfileControllerTest extends EtuWebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/user/admin');
-        $this->assertEquals($client->getResponse()->getStatusCode(), 302);
+        $this->assertSame($client->getResponse()->getStatusCode(), 302);
     }
 
     public function testProfile()

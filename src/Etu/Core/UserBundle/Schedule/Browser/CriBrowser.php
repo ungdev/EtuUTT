@@ -7,7 +7,7 @@ namespace Etu\Core\UserBundle\Schedule\Browser;
  */
 class CriBrowser
 {
-    const ROOT_URL = 'http://edt.utt.fr/ung/site-etu-api/app.php';
+    public const ROOT_URL = 'http://edt.utt.fr/ung/site-etu-api/app.php';
 
     public function request(array $parameters = [])
     {
@@ -17,6 +17,6 @@ class CriBrowser
             $get .= $key.'='.$value.'&';
         }
 
-        return file_get_contents(self::ROOT_URL.'?'.substr($get, 0, -1));
+        return file_get_contents(self::ROOT_URL.'?'.mb_substr($get, 0, -1));
     }
 }

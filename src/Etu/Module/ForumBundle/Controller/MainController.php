@@ -3,24 +3,24 @@
 namespace Etu\Module\ForumBundle\Controller;
 
 use Doctrine\ORM\EntityRepository;
+use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
-use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\UserBundle\Model\BadgesManager;
 use Etu\Module\ForumBundle\Entity\Category;
-use Etu\Module\ForumBundle\Entity\Thread;
-use Etu\Module\ForumBundle\Entity\Message;
-use Etu\Module\ForumBundle\Entity\View;
 use Etu\Module\ForumBundle\Entity\CategoryView;
-use Etu\Module\ForumBundle\Form\ThreadType;
-use Etu\Module\ForumBundle\Form\ThreadTypeNoSticky;
+use Etu\Module\ForumBundle\Entity\Message;
+use Etu\Module\ForumBundle\Entity\Thread;
+use Etu\Module\ForumBundle\Entity\View;
 use Etu\Module\ForumBundle\Form\MessageEditType;
 use Etu\Module\ForumBundle\Form\MessageType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Etu\Module\ForumBundle\Form\ThreadType;
+use Etu\Module\ForumBundle\Form\ThreadTypeNoSticky;
 use Etu\Module\ForumBundle\Model\PermissionsChecker;
-use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\HttpFoundation\Request;
 
 class MainController extends Controller
 {
@@ -49,6 +49,10 @@ class MainController extends Controller
     /**
      * @Route("/forum/{id}-{slug}/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="forum_category")
      * @Template()
+     *
+     * @param mixed $id
+     * @param mixed $slug
+     * @param mixed $page
      */
     public function categoryAction($id, $slug, $page)
     {
@@ -146,6 +150,10 @@ class MainController extends Controller
     /**
      * @Route("/forum/thread/{id}-{slug}/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="forum_thread")
      * @Template()
+     *
+     * @param mixed $id
+     * @param mixed $slug
+     * @param mixed $page
      */
     public function threadAction($id, $slug, $page)
     {
@@ -228,6 +236,9 @@ class MainController extends Controller
     /**
      * @Route("/forum/post/{id}-{slug}", name="forum_post")
      * @Template()
+     *
+     * @param mixed $id
+     * @param mixed $slug
      */
     public function postAction($id, $slug, Request $request)
     {
@@ -306,6 +317,9 @@ class MainController extends Controller
     /**
      * @Route("/forum/answer/{id}-{slug}", name="forum_answer")
      * @Template()
+     *
+     * @param mixed $id
+     * @param mixed $slug
      */
     public function answerAction($id, $slug, Request $request)
     {
@@ -396,6 +410,8 @@ class MainController extends Controller
     /**
      * @Route("/forum/edit/{threadId}-{slug}/{messageId}", name="forum_edit")
      * @Template()
+     *
+     * @param mixed $messageId
      */
     public function editAction($messageId, Request $request)
     {
@@ -465,6 +481,10 @@ class MainController extends Controller
     /**
      * @Route("/forum/mod/{action}/{threadId}-{slug}/{messageId}", defaults={"messageId" = null}, requirements={"messageId" = "\d+"}, name="forum_mod")
      * @Template()
+     *
+     * @param mixed $action
+     * @param mixed $threadId
+     * @param mixed $messageId
      */
     public function modAction($action, $threadId, $messageId, Request $request)
     {

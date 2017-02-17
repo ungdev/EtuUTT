@@ -6,10 +6,10 @@ use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Model\BadgesManager;
-use Symfony\Component\HttpFoundation\Response;
-// Import @Route() and @Template() annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+// Import @Route() and @Template() annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/ajax")
@@ -24,6 +24,9 @@ class AjaxController extends Controller
      *      name="notifs_subscribe",
      *      options={"expose"=true}
      * )
+     *
+     * @param mixed $entityType
+     * @param mixed $entityId
      */
     public function subscribeAction($entityType, $entityId)
     {
@@ -89,6 +92,9 @@ class AjaxController extends Controller
      *      name="notifs_unsubscribe",
      *      options={"expose"=true}
      * )
+     *
+     * @param mixed $entityType
+     * @param mixed $entityId
      */
     public function unsubscribeAction($entityType, $entityId)
     {
