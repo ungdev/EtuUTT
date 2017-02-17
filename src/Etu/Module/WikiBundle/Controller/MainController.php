@@ -237,7 +237,7 @@ class MainController extends Controller
 
             // Redirect
             return $this->redirect($this->generateUrl('wiki_view', [
-                'organization' => $organization->getLogin(),
+                'organization' => ($organization ? $organization->getLogin() : 'general'),
                 'slug' => $page->getSlug(),
                 ]
             ), 301);
