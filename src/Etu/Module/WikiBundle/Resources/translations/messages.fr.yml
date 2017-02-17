@@ -13,7 +13,7 @@ wiki:
       view: "Lire"
       new: "Nouvelle page"
       edit: "Modifier"
-      back: "Retour"
+      back: "Parent"
       index: "Index"
       home: "Accueil"
       wikilist: Liste des Wiki

@@ -13,6 +13,38 @@
     <div class="padding20-sides mathjax">
         {{ (page.content??'')|purify }}
     </div>
+
+    {% if pagelist|count %}
+    <hr/>
+    <div class="padding20-sides">
+        <ul>
+            {% set lvl = 0 %}
+            {% set li = 0 %}
+            {% for slug, array in pagelist %}
+                {% if lvl == array.level %}
+                    {% if li %} </li> {% endif %}
+                    <li><a href="{{ path('wiki_view', {'slug': slug, 'organization': array.organization.login ?? 'general' })}}">{{array.title}}</a>
+                    {% set li = 1 %}
+                {% elseif lvl > array.level %}
+                    {% for i in (array.level+1)..lvl %}
+                        {% if li %} </li> {% set li = 0 %}{% endif %}
+                        </ul>
+                    {% endfor %}
+                    {% set lvl = array.level %}
+                    <li><a href="{{ path('wiki_view', {'slug': slug, 'organization': array.organization.login ?? 'general' })}}">{{array.title}}</a>
+                {% elseif lvl < array.level %}
+                    {% for i in (lvl+1)..array.level %}
+                        <ul>
+                    {% endfor %}
+                    {% set lvl = array.level %}
+                    <li><a href="{{ path('wiki_view', {'slug': slug, 'organization': array.organization.login ?? 'general' })}}">{{array.title}}</a>
+                    {% set li = 1 %}
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    <hr/>
     <div class="muted align-right padding20-all">
         <small>
             {{ 'wiki.main.view.last-edit'|trans }} <a href="{{ path('user_view', { 'login' : page.author.login }) }}">{{ page.author.fullName }}</a> : {{ page.createdAt|localizeddate('short','short') }}<br/>

@@ -56,8 +56,46 @@ class MainController extends Controller
             return $this->createAccessDeniedResponse();
         }
 
+        // Create page tree
+        $slug = $page->getSlug();
+        $originalLevel = mb_substr_count($page->getSlug(), '/');
+        if ($rights->getHomeSlug($organization) == $page->getSlug()) {
+            $slug = '';
+            $originalLevel = -1;
+        }
+        $result = $em->createQueryBuilder()
+            ->select('p')
+            ->from('EtuModuleWikiBundle:WikiPage', 'p')
+            ->leftJoin('EtuModuleWikiBundle:WikiPage', 'p2', 'WITH', 'p.slug = p2.slug AND p.createdAt < p2.createdAt')
+            ->where('p2.slug IS NULL');
+        if ($slug) {
+            $result = $result->andWhere('p.slug LIKE CONCAT(:slug, \'/%\')')->setParameter(':slug', $slug);
+        }
+        if ($organization) {
+            $result = $result->andWhere('p.organization = :organization')->setParameter(':organization', $organization);
+        } else {
+            $result = $result->andWhere('p.organization is NULL');
+        }
+        $result = $result->orderBy('p.slug', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        // Formate array, check rights and add ↳ at the beggining of the title if necessary
+        $rights = $this->get('etu.wiki.permissions_checker');
+        $pagelist = [];
+        foreach ($result as $value) {
+            if ($rights->has($value->getReadRight(), $value->getOrganization())) {
+                $pagelist[$value->getSlug()] = [
+                    'title' => $value->getTitle(),
+                    'organization' => $value->getOrganization(),
+                    'level' => mb_substr_count($value->getSlug(), '/') - $originalLevel - 1,
+                ];
+            }
+        }
+
         return [
             'page' => $page,
+            'pagelist' => $pagelist,
             'rights' => $this->get('etu.wiki.permissions_checker'),
             'parentSlug' => mb_substr($slug, 0, mb_strrpos($slug, '/')),
             'organization' => $organization,
