@@ -19,6 +19,7 @@ class MembershipsController extends Controller
      *      name="memberships_orga_wiki"
      * )
      * @Template()
+     *
      * @param mixed $login
      */
     public function wikiAction($login, Request $request)
