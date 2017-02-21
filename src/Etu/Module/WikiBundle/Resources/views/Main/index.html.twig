@@ -1,8 +1,8 @@
 {% extends '::page-2cols.html.twig' %}
 
-{% block title %}{{ 'wiki.main.index.title'|trans }}{% endblock %}
+{% block title %}{{ 'wiki.main.index.title'|trans({'%orga%': (organization ? organization.name : 'UTT')}) }}{% endblock %}
 
-{% block meta_desc %}{{ 'wiki.main.index.title'|trans }}{% endblock %}
+{% block meta_desc %}{{ 'wiki.main.index.title'|trans({'%orga%': (organization ? organization.name : 'UTT')}) }}{% endblock %}
 
 {% block titleIcon %}
     <img src="{{ asset('assets/img/titles/page.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -13,11 +13,7 @@
 
 
         <div class="padding20-sides">
-            {% if organization %}
-                <h3>{{ 'wiki.main.index.subtitle_orga'|trans({ '%orga%': organization.fullName}) }}</h3>
-            {% else %}
-                <h3>{{ 'wiki.main.index.subtitle'|trans }}</h3>
-            {% endif %}
+            <h3>{{ 'wiki.main.index.subtitle'|trans({'%orga%': (organization ? organization.name : 'UTT')}) }}</h3>
 
             {% if pagelist|count %}
                 <ul>

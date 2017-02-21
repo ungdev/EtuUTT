@@ -33,6 +33,7 @@ wiki:
       last-edit: "Dernière modification par"
       can-read: "Page visible par"
       can-edit: "Page modifiable par"
+      title: Wiki %orga%
     edit:
         new-title: Nouvelle page
         title: Titre
@@ -43,9 +44,8 @@ wiki:
         submit: Sauvegarder les modifications
         success: Votre modification a été enregistré
     index:
-        title: Index du wiki
-        subtitle: Liste des pages du wiki
-        subtitle_orga: Liste des pages du wiki de %orga%
+        title: Index du Wiki %orga%
+        subtitle: Liste des pages du Wiki %orga%
         nopage: Il n'y a aucune page dans ce wiki
     wikilist:
         title: Listes des wiki

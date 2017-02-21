@@ -1,6 +1,7 @@
 {% extends '::page-2cols.html.twig' %}
 
 {% block title %}{{ page.title }}{% endblock %}
+{% block icontitle %}{{ 'wiki.main.view.title'|trans({'%orga%': (page.organization ? page.organization.name : 'UTT')}) }}{% endblock %}
 
 {% block meta_desc %}{{ page.title }}{% endblock %}
 
@@ -11,6 +12,7 @@
 {% block content %}
     {% include "@EtuModuleWiki/Main/part_headbar.html.twig" with {'action': 'read'}  %}
     <div class="padding20-sides mathjax">
+        <h2>{{ page.title }}</h2>
         {{ (page.content??'')|purify }}
     </div>
 
