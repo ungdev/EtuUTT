@@ -59,10 +59,6 @@ class MainController extends Controller
         // Create page tree
         $slug = $page->getSlug();
         $originalLevel = mb_substr_count($page->getSlug(), '/');
-        if ($rights->getHomeSlug($organization) == $page->getSlug()) {
-            $slug = '';
-            $originalLevel = -1;
-        }
         $result = $em->createQueryBuilder()
             ->select('p')
             ->from('EtuModuleWikiBundle:WikiPage', 'p')
