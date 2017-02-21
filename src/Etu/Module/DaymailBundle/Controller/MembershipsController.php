@@ -133,8 +133,6 @@ class MembershipsController extends Controller
 
         $form->handleRequest($request);
         if ($canEdit && $form->isSubmitted() && $form->isValid()) {
-            $daymailPart->setBody($this->get('etu_daymail.body_parser')->parse($daymailPart->getBody()));
-
             $em->persist($daymailPart);
             $em->flush();
 
