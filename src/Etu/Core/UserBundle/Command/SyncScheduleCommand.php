@@ -105,7 +105,12 @@ This command helps you to synchronise database\'s with officials schedules.
             $course->setEnd($criCourse->getEnd());
             $course->setUv($criCourse->getUv());
             $course->setType($criCourse->getType());
-            $course->setWeek($criCourse->getWeek());
+
+            if($criCourse->getWeek()) {
+                $course->setWeek($criCourse->getWeek());
+            } else {
+                $course->setWeek('T');
+            }
 
             if ($criCourse->getRoom()) {
                 $course->setRoom($criCourse->getRoom());
@@ -119,7 +124,7 @@ This command helps you to synchronise database\'s with officials schedules.
 
         $bar->update(count($content));
 
-        $output->writeln('Deleteing old schedules ...');
+        $output->writeln('Deleting old schedules ...');
         $em->createQuery('DELETE FROM EtuUserBundle:Course')->execute();
 
         $output->writeln('Inserting new schedules ...');
