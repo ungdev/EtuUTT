@@ -106,7 +106,7 @@ This command helps you to synchronise database\'s with officials schedules.
             $course->setUv($criCourse->getUv());
             $course->setType($criCourse->getType());
 
-            if($criCourse->getWeek()) {
+            if($criCourse->getWeek() !== NULL) {
                 $course->setWeek($criCourse->getWeek());
             } else {
                 $course->setWeek('T');
