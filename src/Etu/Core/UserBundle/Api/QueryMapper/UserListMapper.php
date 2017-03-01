@@ -27,7 +27,7 @@ class UserListMapper implements QueryMapper
         }
 
         if ($request->has('student_id')) {
-            $query->andWhere('u.studentId = :studentId')
+            $query->andWhere('u.studentId = :student_id')
                 ->setParameter('student_id', $request->get('student_id'));
         }
 
