@@ -64,6 +64,29 @@ security:
             - ROLE_CORE_PROFIL # Can read public profiles except 'Nickname', 'hobbies' and 'Formerly'
             - ROLE_UPLOAD # Can upload image to post them
             - ROLE_UV # Read UV list and description but not reviews
+            - ROLE_API_CREATE # Can create external application
+            - ROLE_WIKI_EDIT # Can write on the wiki
+
+        ROLE_EXTERNAL:
+            - ROLE_CORE_MEMBERSHIPS # Can be in an association and edit the association if authorized
+            - ROLE_CORE_ORGAS # Can read organization list of an user
+            - ROLE_CORE_SUBSCRIBE # User can receive and use subscriptions
+            - ROLE_ASSOS_MEMBERS # Read assos member list
+            - ROLE_BUGS # read bugs list
+            - ROLE_BUGS_POST # Post on bugs list
+            - ROLE_COVOIT # Can read covoit bundle
+            - ROLE_COVOIT_EDIT # Can answer, post and set alerts on covoit bundle
+            - ROLE_DAYMAIL_EDIT # Can edit daymail of his organization if authorized
+            - ROLE_EVENTS_INTERNAL # can read Private/internal calendar and events
+            - ROLE_EVENTS_EDIT # Can edit event of his organization if authorized
+            - ROLE_TROMBI # Can search on trombi
+            - ROLE_CORE_PROFIL # Can read public profiles except 'Nickname', 'hobbies' and 'Formerly'
+            - ROLE_UPLOAD # Can upload image to post them
+            - ROLE_UV # Read UV list and description but not reviews
+            - ROLE_CORE_HOMEPAGE # Can see the private homepage
+            - ROLE_API_CREATE # Can create external application
+            - ROLE_WIKI_EDIT # Can write on the wiki
+
 
         ROLE_ADMIN:
             - ROLE_CORE_ADMIN_HOME # Can see admin homepage
