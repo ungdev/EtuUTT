@@ -2,12 +2,13 @@
 # This script should install a dev env inside an Ubuntu Vagrant VM
 
 # Configuration
-MYSQL_USER=etuutt
-MYSQL_PASS=etuutt
-MYSQL_DATABASE=etuutt
+export MYSQL_USER=etuutt
+export MYSQL_PASS=etuutt
+export MYSQL_DATABASE=etuutt
+export VUSER=ubuntu
 
 
-# Tell ubuntu we are a script
+# Tell ubuntu we are a script and set locals
 export DEBIAN_FRONTEND=noninteractive
 export ETUUTT_DATABASE_PASSWORD=$MYSQL_PASS
 export ETUUTT_DATABASE_USER=$MYSQL_USER
@@ -15,12 +16,11 @@ export ETUUTT_DATABASE_NAME=$MYSQL_DATABASE
 
 # Move composer vendor directory to speed up symfony
 sudo mkdir -p /srv/composer-vendor/
-sudo chown $USER /srv/composer-vendor/
+sudo chown $VUSER /srv/composer-vendor/
 sudo chmod u+rw /srv/composer-vendor/
 export COMPOSER_VENDOR_DIR=/srv/composer-vendor/
-echo "export COMPOSER_VENDOR_DIR=/srv/composer-vendor/" >> /home/ubuntu/.bashrc
+echo "export COMPOSER_VENDOR_DIR=/srv/composer-vendor/" >> /home/$VUSER/.bashrc
 sudo echo "export COMPOSER_VENDOR_DIR=/srv/composer-vendor/" >> /root/.bashrc
-sudo ln -s /srv/composer-vendor/ /vagrant/vendor
 
 # Nginx
 sudo apt-get update
@@ -34,7 +34,9 @@ sudo ln -s /etc/nginx/sites-available/*.conf /etc/nginx/sites-enabled/
 sudo systemctl restart nginx
 
 # Php 7
-sudo apt-get -y install php7.0 php7.0-fpm php7.0-mbstring php7.0-curl php7.0-mysql php7.0-xml php7.0-zip
+sudo add-apt-repository ppa:ondrej/php
+sudo apt-get update
+sudo apt-get -y install php7.1 php7.1-fpm php7.1-mbstring php7.1-curl php7.1-mysql php7.1-xml php7.1-zip
 
 # MariaDB (mysql)
 sudo apt-get -y install mariadb-server-10.0
@@ -61,8 +63,13 @@ composer install
 
 # Manually copy vendor directory because some packages ignore autoload file
 cp -R /srv/composer-vendor /var/www/EtuUTT/vendor
-chown -R $USER /var/www/EtuUTT/vendor
+chown -R $VUSER /var/www/EtuUTT/vendor
 
 # Save db schema and fixtures
 php bin/console doctrine:schema:update --force
 php bin/console doctrine:fixtures:load -n
+
+# Ensure rights
+chown -R $VUSER /vagrant
+chown -R $VUSER /srv/composer-vendor
+chown -R www-data:www-data /var/www
