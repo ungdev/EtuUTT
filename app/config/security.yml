@@ -66,6 +66,7 @@ security:
             - ROLE_UV # Read UV list and description but not reviews
             - ROLE_API_CREATE # Can create external application
             - ROLE_WIKI_EDIT # Can write on the wiki
+            - ROLE_API_USE # Can use api with external applications
 
         ROLE_EXTERNAL:
             - ROLE_CORE_MEMBERSHIPS # Can be in an association and edit the association if authorized
@@ -86,6 +87,7 @@ security:
             - ROLE_CORE_HOMEPAGE # Can see the private homepage
             - ROLE_API_CREATE # Can create external application
             - ROLE_WIKI_EDIT # Can write on the wiki
+            - ROLE_API_USE # Can use api with external applications
 
 
         ROLE_ADMIN:
