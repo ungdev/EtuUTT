@@ -122,8 +122,8 @@ role:
     ROLE_READONLY: Utilisateur ne pouvant plus écrire sur le site (sanction)
     ROLE_BANNED: Utilisateur ne pouvant plus lire le site (sanction)
 
-    ROLE_SUPERADMIN: Super-Administrateur globale du site
-    ROLE_ADMIN: Administrateur globale du site
+    ROLE_SUPERADMIN: Super-Administrateur global du site
+    ROLE_ADMIN: Administrateur global du site
     ROLE_MODERATOR: Modérateur du forum et des annales d'UVs
     ROLE_EDITOR: Rédacteur des pages statiques
     ROLE_DEVELOPER: Administrateur des signalement de bugs

@@ -26,7 +26,8 @@ class PublicUsersListController extends ApiController
      *      { "name"="level",           "dataType"="string"     },
      *      { "name"="speciality",      "dataType"="string"     },
      *      { "name"="is_student",      "dataType"="boolean"    },
-     *      { "name"="bde_member",      "dataType"="boolean"    }
+     *      { "name"="bde_member",      "dataType"="boolean"    },
+     *      { "name"="student_id",      "dataType"="integer"    }
      *   },
      *   parameters={
      *      { "name"="embed", "dataType"="string", "description"="Embed foreign entities in the users data (available: badges)" }

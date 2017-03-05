@@ -26,6 +26,11 @@ class UserListMapper implements QueryMapper
                 ->setParameter('login', $request->get('login'));
         }
 
+        if ($request->has('student_id')) {
+            $query->andWhere('u.studentId = :student_id')
+                ->setParameter('student_id', $request->get('student_id'));
+        }
+
         if ($request->has('lastname')) {
             $query->andWhere('u.lastName LIKE :lastname')
                 ->setParameter('lastname', '%'.$request->get('lastname').'%');
