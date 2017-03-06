@@ -95,8 +95,8 @@ base:
         mobile_version: Version mobile
 
         # Authors and version
-        text: "Réalisé par l’UNG<br />Propulsé par Symfony 2"
-        1col_text: "Réalisé par l’UNG - Propulsé par Symfony 2"
+        text: "Réalisé par l’UNG<br />Propulsé par Symfony 3"
+        1col_text: "Réalisé par l’UNG - Propulsé par Symfony 3"
         mobile_text: "Réalisé par l’UNG"
         version: Version
 
