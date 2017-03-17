@@ -1,17 +1,17 @@
 
 <a class="notif{% if notif.isNew(app.user.lastVisitHome) %} notif-new{% endif %}{% if not notif.firstEntity.link %} notif-not-link{% endif %}"
-	{% if notif.firstEntity.link %}
+    {% if notif.firstEntity.link %}
    href="{{ notif.firstEntity.link }}"
    {% endif %}>
-	<img src="{{ asset('src/img/icons-big/orga_message.png') }}" />
+    <img src="{{ asset('assets/img/icons-big/orga_message.png') }}" />
 
-	<h4 class="notif-title">
-		{{ highlight_notif_data(notif.firstEntity.orga_name) }} : {{ notif.firstEntity.content }}
-	</h4>
+    <h4 class="notif-title">
+        {{ highlight_notif_data(notif.firstEntity.orga_name) }} : {{ notif.firstEntity.content }}
+    </h4>
 
-	<div class="notif-date">
-		{{ time_diff(notif.date)|ucfirst }}
-	</div>
+    <div class="notif-date">
+        {{ time_diff(notif.date)|ucfirst }}
+    </div>
 
-	<div class="clear"></div>
+    <div class="clear"></div>
 </a>

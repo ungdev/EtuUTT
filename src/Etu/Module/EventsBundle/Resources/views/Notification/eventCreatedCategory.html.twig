@@ -1,24 +1,24 @@
 
 <a class="notif{% if notif.isSuper %} super-notif{% elseif notif.isNew(app.user.lastVisitHome) %} notif-new{% endif %}"
-	{% if notif.countEntities == 1 %}
-	href="{{ path('events_view', {'id': notif.firstEntity.id, 'slug': notif.firstEntity.title|slugify}) }}"
-	{% else %}
-	href="{{ path('events_index') }}"
-	{% endif %}>
-	<img src="{{ asset('src/img/icons-big/event.png') }}" />
+    {% if notif.countEntities == 1 %}
+    href="{{ path('events_view', {'id': notif.firstEntity.id, 'slug': notif.firstEntity.title|slugify}) }}"
+    {% else %}
+    href="{{ path('events_index') }}"
+    {% endif %}>
+    <img src="{{ asset('assets/img/icons-big/event.png') }}" />
 
-	<h4 class="notif-title">
-		{% if notif.countEntities == 1 %}
-			{{ 'events.notifs.eventCreated'|trans({
-				'%title%': highlight_notif_data(notif.firstEntity.title),
-				'%orga%': highlight_notif_data(notif.firstEntity.orga.name)
-			})|raw }}
-		{% endif %}
-	</h4>
+    <h4 class="notif-title">
+        {% if notif.countEntities == 1 %}
+            {{ 'events.notifs.eventCreated'|trans({
+                '%title%': highlight_notif_data(notif.firstEntity.title),
+                '%orga%': highlight_notif_data(notif.firstEntity.orga.name)
+            })|raw }}
+        {% endif %}
+    </h4>
 
-	<div class="notif-date">
-		{{ time_diff(notif.date)|ucfirst }}
-	</div>
+    <div class="notif-date">
+        {{ time_diff(notif.date)|ucfirst }}
+    </div>
 
-	<div class="clear"></div>
+    <div class="clear"></div>
 </a>

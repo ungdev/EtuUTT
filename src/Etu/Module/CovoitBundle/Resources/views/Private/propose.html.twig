@@ -3,28 +3,28 @@
 {% block title %}{{ 'covoit.proposal.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-    <img src="{{ asset('src/img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
     {% include 'EtuModuleCovoitBundle::menu.html.twig' with {'active': 'none'} %}
 
     <div class="padding20-sides covoit-propose">
-        <form method="post">
+        {{ form_start(form) }}
             <h4>{{ 'covoit.proposal.titles.details'|trans }}</h4>
 
             <div class="row-fluid">
-                <div class="span5">
+                <div class="span6">
                     {{ form_row(form.date) }}
-                    {{ form_row(form.phoneNumber) }}
                     {{ form_row(form.capacity) }}
-                    {{ form_row(form.price) }}
-                </div>
-                <div class="span7">
-                    {{ form_row(form.notes) }}
                     {{ form_row(form.blablacarUrl) }}
                 </div>
+                <div class="span6">
+                {{ form_row(form.phoneNumber) }}
+                    {{ form_row(form.price) }}
+                </div>
             </div>
+            {{ form_row(form.notes) }}
 
             <hr />
 
@@ -61,6 +61,6 @@
             <p class="align-center">
                 <input type="submit" class="btn" value="{{ 'covoit.proposal.submit'|trans }}" />
             </p>
-        </form>
+        {{ form_end(form) }}
     </div>
 {% endblock %}

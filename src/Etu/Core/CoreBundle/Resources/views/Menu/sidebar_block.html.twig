@@ -1,18 +1,20 @@
 
 {% if items|count > 0 %}
 <ul class="list-vertical list-vertical-linked sidebar-menu">
-	{% for item in items %}
-		<li {{ item.itemAttributesString|raw }}>
-			<a href="{{ item.url }}" {{ item.linkAttributesString|raw }}>
-				{% if item.hasIcon %}
-					<img src="{{ asset('src/img/icons/'~item.icon) }}" class="etu-img-icon" />
-				{% else %}
-					<i class="etu-no-icon"></i>
-				{% endif %}
+    {% for item in items %}
+        {% if item.role is empty or is_granted(item.role) %}
+        <li {{ item.itemAttributesString|raw }}>
+            <a href="{{ item.url }}" {{ item.linkAttributesString|raw }}>
+                {% if item.hasIcon %}
+                    <img src="{{ asset('assets/img/icons/'~item.icon) }}" class="etu-img-icon" />
+                {% else %}
+                    <i class="etu-no-icon"></i>
+                {% endif %}
 
-				{{ item.translation|trans }}
-			</a>
-		</li>
-	{% endfor %}
+                {{ item.translation|trans }}
+            </a>
+        </li>
+        {% endif %}
+    {% endfor %}
 </ul>
 {% endif %}

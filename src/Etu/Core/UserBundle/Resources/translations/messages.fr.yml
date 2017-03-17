@@ -12,7 +12,7 @@ user:
     denied: Vous n'avez pas le droit de voir cette page
 
     api_login:
-        login: Connectez-vous pour utilisez l'application %name%
+        login: Connectez-vous pour utiliser l'application %name%
         orga: Vous ne pouvez pas utiliser une application externe en tant qu'association
 
     admin:
@@ -34,12 +34,13 @@ user:
             name: Nom
             studentId: Numéro étudiant
             mail: E-mail
+            mail_desc: Cet email sera utilisé en tant qu'identifiant de connexion.
             personnalMail: E-mail perso.
             formation: Formation
             phoneNumber: Numéro de tél.
             sex: Sexe
             nationality: Nationalité
-            adress: Adresse
+            address: Adresse
             postalCode: Code postal
             city: Ville
             country: Pays
@@ -48,6 +49,11 @@ user:
             birthday_only_age_desc: Afficher seulement l'âge sur le profil (si la date de naissance est privée)
             back: Retour
             submit: Créer
+            is_student_label: Est étudiant
+            is_student_desc: Donne les droits d'un étudiant classique
+            is_staffutt_label: Personnel de l'UTT
+            is_staffutt_desc: Donne les droits d'un compte associé à un membre du personnel de l'UTT
+            privacy: Confidentialité
         userDelete:
             title: Supprimer un utilisateur
             question: Voulez-vous vraiment supprimer l'utilisateur %username% ?
@@ -63,11 +69,6 @@ user:
             birthday_only_age_desc: Afficher seulement l'âge sur le profil (si la date de naissance est privée)
             confirm: Vous avez bien modifié le profil de cet utilisateur
             back: Retour sur le profil
-        userPermissions:
-            title: Modifier les permissions
-            back: Retour sur le profil
-            confirm: Vous avez bien modifié les permissions de cet utilisateur
-            submit: Modifier
         userIndex:
             title: Utilisateurs
             search_title: Rechercher un étudiant
@@ -82,7 +83,8 @@ user:
             branche: Branche
             explainations: Effectuez votre recherche en utilisant le formulaire ci-dessus
             no_results: Aucun résultat
-            count: %count% résultat|%count% résultats
+            count: "%count% résultat|%count% résultats"
+            userRoles: Permissions assignées
         userReadOnly:
             confirm_set: L'utilisateur possède maintenant un accès en lecture seule.
             confirm_unset: L'utilisateur possède maintenant un accès complet.
@@ -90,7 +92,7 @@ user:
             title: Associations
             create: Créer un accès
             no_results: Aucune association n'a d'accès au site étudiant pour le moment
-            count: %count% résultat|%count% résultats
+            count: "%count% résultat|%count% résultats"
             question: Voulez-vous vraiment supprimer l'accès de l'association "%orga%" au site étudiant ?
             yes: Oui, supprimer
             no: Non, annuler
@@ -104,6 +106,35 @@ user:
             confirm: L'accès a bien été créé
         orgasDelete:
             confirm: L'accès a bien été supprimé
+        logAs:
+            title: Se connecter en tant que ...
+            back: Retour
+            logAsUser: Se connecter en tant qu'un utilisateur
+            logAsUser_placeholder: Utilisateur
+            logAsUser_submit: Se connecter
+            logAsOrga: Se connecter en tant qu'une association
+            logAsOrga_placeholder: Association
+            logAsOrga_submit: Se connecter
+            orga_not_found: Association non trouvée
+            user_not_found: Utilisateur non trouvé
+            button: Se connecter en tant que ...
+            badCookie: Reconnexion impossible. Veuillez vous reconnecter normalement.
+            welcomeBack: Vous êtes bien connecté sur votre vrai compte
+            loginBack: Retour à votre compte
+        userRolesList:
+            title: Gestion des permissions
+            back: Retour
+            edit: Modifier
+            assignedTitle: Permissions assignées
+            assignedDesc: Pour assigner des permissions à une nouvelle personne, rendez-vous sur son profile et cliquez sur 'Modifier ses permissions'.
+            hierarchyTitle: Groupes de permission
+            hierarchyDesc: Pour ajouter ou modifier les groupes de permissions définis, editez le fichier app/config/security.yml. Pour plus d'informations, reportez vous à la documentation sur Github.
+        userRoles:
+            title: Modifier les permissions
+            back: Retour
+            confirm: Vous avez bien modifié les permissions de cet utilisateur
+            submit: Modifier
+            introduction: Pour ajouter ou modifier les groupes de permissions prédéfinie, editez le fichier app/config/security.yml. Pour plus d'informations, reportez vous à la documentation sur Github.
 
     auth:
         connect:
@@ -114,6 +145,8 @@ user:
             external: En utilisant un compte exterieur
             confirm: Vous êtes bien connecté
             error: La connexion a échoué, vos identifiants semblent incorrects
+            unknownError: Une erreur sauvage est apparue, veuillez réessayer.
+            loggedOut: À bientôt !
             orga_exists_ldap: Cette association existe bien mais doit être autorisée à se connecter par l'UNG
             betaAssos: |
                 La connexion en tant qu'utilisateur est impossible pour le moment. Cette bêta est
@@ -121,7 +154,7 @@ user:
         connectExternal:
             title: Connexion d'un exterieur
             meta: Se connecter au site étudiant en tant qu'exterieur
-            desc: Connectez-vous en utilisant l'identifiant et le mot de passe qui vous ont été fournis par l'UNG :
+            desc: "Connectez-vous en utilisant l'identifiant et le mot de passe qui vous ont été fournis par l'UNG :"
             identifier: Identifiant
             password: Mot de passe
             submit: Connexion
@@ -137,6 +170,7 @@ user:
             notifications: Notifications
             event: Evènements
             daymail: Daymail
+            wiki: Wiki
             public: Page publique
         index:
             title: Associatif
@@ -155,7 +189,7 @@ user:
         orga:
             position: Au sein de %orga%, vous êtes
             since: Vous faites partie de cette association depuis le %date%.
-            permissions: Vous avez les droits suivants :
+            permissions: "Vous avez les droits suivants :"
             no_permission: Vous n'avez pas de permission quant à cette association
         desc:
             title: Association
@@ -222,7 +256,7 @@ user:
                 desc: Logo de l'association
         members:
             title: Membres
-            count: %count% membre dans l'association|%count% membres dans l'association
+            count: "%count% membre dans l'association|%count% membres dans l'association"
             add_member_btn: Ajouter un membre
             add_member_user: Utilisateur
             add_member_role: Rôle
@@ -263,19 +297,22 @@ user:
             sex: Sexe
             personnalMail: E-mail perso.
             phoneNumber: Numéro de tél.
-            adress: Adresse
+            address: Adresse
             birthday: Date de naissance
-            age: %age% ans
+            age: "%age% ans"
             trombi: Trombinoscope
             surname: Surnom
             jadis: Jadis
             passions: Passions
             badges: Badges
-            no_badge: %firstName% n'a aucun badge pour le moment
+            no_badge: "%firstName% n'a aucun badge pour le moment"
             apps: Applications externes
             apps_explain: Les applications suivantes ont accès à vos données :
             revoke_app: Révoquer l'accès
             revoke_cancel: Annuler
+            uploads: Gestionnaire de fichiers envoyés
+            uploads_explain: Le gestionnaire de fichier permet d'envoyer, de modifier ou de supprimer les fichiers que vous avez envoyé à partir de l'éditeur de message.
+            uploads_action: Accéder au gestionnaire de fichier
         profileAvatar:
             title: Ma photo
             file: Image
@@ -283,6 +320,7 @@ user:
             back: Retour sur mon compte
             edit: Modifier
         profileEdit:
+            privacy: Confidentialité
             title: Modifier mes informations
             confirm: Vous avez bien modifié vos informations
             back: Retour sur mon compte
@@ -301,7 +339,7 @@ user:
             phoneNumber: Numéro de tél.
             sex: Sexe
             nationality: Nationalité
-            adress: Adresse
+            address: Adresse
             postalCode: Code postal
             city: Ville
             country: Pays
@@ -344,17 +382,17 @@ user:
             formation: Formation
             sex: Sexe
             nationality: Nationalité
-            adress: Adresse
+            address: Adresse
             birthday: Date de naissance
             age: Age
-            age_display: %age% ans
+            age_display: "%age% ans"
             surname: Surnom
             jadis: Jadis
             passions: Passions
             last_badges: Derniers badges débloqués
         organizations:
             is_in: "%name% fait partie de %count% association(s) :"
-            not_asso: %name% ne fait partie d'aucune association
+            not_asso: "%name% ne fait partie d'aucune association"
         badges:
             by: "Badges obtenus par %name%"
 
@@ -385,7 +423,7 @@ user:
             title: Imprimer mon emploi du temps
         course:
             title: Créneau de cours
-            desc: Créneau de %uv%, le %day% à %start%
+            desc: Créneau de %type% de %uv%, le %day% à %start%
             uv: Voir la description de l'UV
-            students: %count% étudiant inscrit à ce créneau|%count% étudiants inscrits à ce créneau
-
+            other: Voir les autre créneaux
+            students: "%count% étudiant inscrit à ce créneau|%count% étudiants inscrits à ce créneau"

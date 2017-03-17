@@ -1,301 +1,138 @@
 {% set message = false %}
-
 {% if app.session.flashBag.has('message') %}
-	{% set message = app.session.flashBag.get('message') %}
+    {% set message = app.session.flashBag.get('message') %}
 {% endif %}
-
 <!DOCTYPE html>
 <html lang="fr" class="bg-soft-grey">
-	<head>
-		<meta charset="utf-8" />
+    <head>
+        <meta charset="utf-8" />
 
-		<title>{% block title %}{{ 'home.index.page.title'|trans }}{% endblock %} - {{ 'base.title'|trans }}</title>
+        <title>{% block title %}{% endblock %} - {{ 'base.title'|trans }}</title>
 
-		<meta name="description" content="{% block meta_desc %}{{ 'base.meta'|trans }}{% endblock %}" />
-		<meta name="apple-mobile-web-app-title" content="EtuUTT">
-		<meta name="msapplication-TileColor" content="#00aba9">
-		<meta name="application-name" content="EtuUTT">
+        <meta name="description" content="{% block meta_desc %}{{ 'base.meta'|trans }}{% endblock %}" />
+        <meta name="apple-mobile-web-app-title" content="EtuUTT">
+        <meta name="msapplication-TileColor" content="#00aba9">
+        <meta name="application-name" content="EtuUTT">
 
-		<link rel="apple-touch-icon" sizes="120x120" href="{{ asset('apple-touch-icon-120x120.png') }}">
-		<link rel="apple-touch-icon" sizes="114x114" href="{{ asset('apple-touch-icon-114x114.png') }}">
-		<link rel="apple-touch-icon" sizes="76x76" href="{{ asset('apple-touch-icon-76x76.png') }}">
-		<link rel="apple-touch-icon" sizes="72x72" href="{{ asset('apple-touch-icon-72x72.png') }}">
-		<link rel="apple-touch-icon" sizes="60x60" href="{{ asset('apple-touch-icon-60x60.png') }}">
-		<link rel="apple-touch-icon" sizes="57x57" href="{{ asset('apple-touch-icon-57x57.png') }}">
+        <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('apple-touch-icon-120x120.png') }}">
+        <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('apple-touch-icon-114x114.png') }}">
+        <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('apple-touch-icon-76x76.png') }}">
+        <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('apple-touch-icon-72x72.png') }}">
+        <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('apple-touch-icon-60x60.png') }}">
+        <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('apple-touch-icon-57x57.png') }}">
 
-		<link rel="icon" type="image/png" href="{{ asset('favicon-16x16.png') }}" sizes="16x16">
-		<link rel="icon" type="image/png" href="{{ asset('favicon-32x32.png') }}" sizes="32x32">
-		<link rel="icon" type="image/png" href="{{ asset('favicon-96x96.png') }}" sizes="96x96">
+        <link rel="icon" type="image/png" href="{{ asset('favicon-16x16.png') }}" sizes="16x16">
+        <link rel="icon" type="image/png" href="{{ asset('favicon-32x32.png') }}" sizes="32x32">
+        <link rel="icon" type="image/png" href="{{ asset('favicon-96x96.png') }}" sizes="96x96">
 
         {% stylesheets
-            'vendor/jquery-ui/themes/smoothness/jquery-ui.min.css'
-            'vendor/bootstrap/docs/assets/css/bootstrap.css'
-            'vendor/bootstrap/docs/assets/css/bootstrap-responsive.css'
-            'vendor/fontawesome/css/font-awesome.min.css'
-            'vendor/tipsy/src/stylesheets/tipsy.css'
-            'vendor/facebox/src/facebox.css'
-            'vendor/swipebox/src/css/swipebox.min.css'
-            'vendor/jquery-impromptu/dist/jquery-impromptu.min.css'
-            'src/css/sceditor.less'
-            'src/css/boot.less'
+            'assets/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css'
+            'assets/vendor/bootstrap/docs/assets/css/bootstrap.css'
+            'assets/vendor/bootstrap/docs/assets/css/bootstrap-responsive.css'
+            'assets/vendor/tipsy/src/stylesheets/tipsy.css'
+            'assets/vendor/facebox/src/facebox.css'
+            'assets/vendor/swipebox/src/css/swipebox.min.css'
+            'assets/vendor/jquery-impromptu/dist/jquery-impromptu.min.css'
+            'assets/vendor/highlightjs/styles/solarized-dark.css'
+            'assets/vendor/videojs/dist/video-js.css'
+            'assets/scss/boot.scss'
+			'assets/scss/developpers.scss'
 
-            filter='cssrewrite,?minifier_css'
-            output='min/etuutt.css'
+            filter='scssphp'
+            output='assets/min/etuutt.css'
         %}
-            <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+            <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
 
-		{% if not app.request.cookies.has('disable_responsive') %}
+        {% if not app.request.cookies.has('disable_responsive') %}
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-            {% stylesheets 'src/css/responsive.less' filter='cssrewrite' output='min/responsive.css' %}
+            {% stylesheets 'assets/scss/responsive.scss' filter='scssphp' output='assets/min/responsive.css' %}
                 <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
             {% endstylesheets %}
-		{% endif %}
-
-		{% block stylesheets %}{% endblock %}
-
-		<!--[if lt IE 9]>
-			<script type="text/javascript" src="{{ asset('vendor/html5shiv/dist/html5shiv.min.js') }}"></script>
-		<![endif]-->
-	</head>
-	<body class="bg-soft-grey">
-		<div id="loader" class="overlay">
-			<div class="loader">
-				<img src="{{ asset('src/img/loader-big.gif') }}" />
-			</div>
-		</div>
-
-		<header class="bg-dark-blue fixed head">
-			<div class="container" id="top">
-				<div class="pull-left title">
-					<h1 class="seo-title">{{ block('title') }} - {{ 'base.title'|trans }}</h1>
-
-					<a href="{{ path('homepage') }}">
-						<img src="{{ asset('src/img/logo.jpg') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="logo" />
-					</a>
-				</div>
-
-				<nav class="pull-left">
-					<ul class="list-horizontal list-horizontal-linked menu" id="head-menu-list">
-						<li class="first">
-							{% if etu.notifs.new_count == 0 %}
-							<span id="head-menu-home-pins" class="pins pins-alert pins-head pins-head-hidden">0</span>
-							{% else %}
-							<span id="head-menu-home-pins" class="pins pins-alert pins-head">{{ etu.notifs.new_count }}</span>
-							{% endif %}
-
-							<a href="{{ path('homepage') }}">
-								<i class="icon icon-head icon-head-home"></i>
-								<span class="menu-link-text" id="menu_home">{{ 'base.menu.home'|trans }}</span>
-								<div class="clear"></div>
-							</a>
-						</li>
-						{% if etu.modules.isEnabled('events') %}
-						<li>
-							<a href="{{ path('events_index') }}">
-								<i class="icon icon-head icon-head-events"></i>
-								<span class="menu-link-text" id="menu_events">{{ 'base.menu.events'|trans }}</span>
-								<div class="clear"></div>
-							</a>
-						</li>
-						{% endif %}
-						{% if etu.modules.isEnabled('forum') and app.user %}
-						<li>
-							<a href="{{ path('forum_index') }}">
-								<i class="icon icon-head icon-head-forums"></i>
-								<span class="menu-link-text" id="menu_forums">{{ 'base.menu.forums'|trans }}</span>
-								<div class="clear"></div>
-							</a>
-						</li>
-						{% endif %}
-						{% if etu.modules.isEnabled('assos') %}
-						<li class="last hidden-for-phones">
-							<a href="{{ path('orgas_index') }}">
-								<i class="icon icon-head icon-head-associations"></i>
-								<span class="menu-link-text" id="menu_assos">{{ 'base.menu.associations'|trans }}</span>
-								<div class="clear"></div>
-							</a>
-						</li>
-						{% endif %}
-						<li class="display-for-phones last" id="more">
-							<a href="#">
-								<i class="icon icon-head icon-head-plus"></i>
-								<span class="menu-link-text">{{ 'base.menu.more'|trans }}</span>
-								<div class="clear"></div>
-							</a>
-						</li>
-						{% if not app.user %}
-							<li class="last connect_link">
-								<a href="{{ path('user_connect') }}">
-									<i class="icon icon-head icon-head-connexion"></i>
-									<span class="menu-link-text">{{ 'base.menu.connexion'|trans }}</span>
-									<div class="clear"></div>
-								</a>
-							</li>
-						{% endif %}
-					</ul>
-				</nav>
-
-				<div class="pull-right userbox">
-                {% if app.user %}
-                    <a href="#" class="userbox-avatar-link">
-                        {% if app.user.isOrga %}
-                            <img src="{{ asset('uploads/logos/' ~ app.user.logo) }}" id="top-bar-avatar" alt="{{ app.user.fullName }}"
-                                 title="{{ app.user.fullName }}" class="pull-left avatar" />
-                        {% else %}
-                            <img src="{{ asset('uploads/photos/' ~ app.user.avatar) }}" id="top-bar-avatar" alt="{{ app.user.fullName }}"
-                                 title="{{ app.user.fullName }}" class="pull-left avatar" />
-                        {% endif %}
-                    </a>
-
-					<a href="#" class="userbox-link">
-						<i class="icon-chevron-down userbox-link-icon"></i>
-
-						<span class="hidden-for-1024">
-							{{ app.user.fullName|limit(21) }}<br />
-							<span class="color-soft">
-								{% if app.user.isStudent %}
-									{{ 'base.user.types.student'|trans }}
-								{% elseif app.user.isOrga %}
-									{{ 'base.user.types.orga'|trans }}
-								{% else %}
-									{{ 'base.user.types.external'|trans }}
-								{% endif %}
-							</span>
-						</span>
-					</a>
-
-					<div class="userbox-menu">
-						<div class="userbox-display-for-1024 display-for-1024">
-							{{ app.user.fullName }}<br />
-							<span class="color-soft">
-								{% if app.user.isOrga %}
-									{{ 'base.user.types.orga'|trans }}
-								{% elseif app.user.keepActive %}
-									{{ 'base.user.types.external'|trans }}
-								{% elseif app.user.isStudent %}
-									{{ 'base.user.types.student'|trans }}
-								{% else %}
-									{{ 'base.user.types.external'|trans }}
-								{% endif %}
-							</span>
-						</div>
-
-						{% if not app.user.isOrga %}
-							{{ render_user_menu() }}
-
-							{% if app.user.isAdmin %}
-								<hr class="separator" />
-
-								<ul class="list-vertical list-vertical-linked">
-									<li>
-										<a href="{{ path('admin_index') }}">
-											<img src="{{ asset('src/img/icons/gear.png') }}" class="etu-img-icon" />
-											{{ 'base.user.menu.admin'|trans }}
-										</a>
-									</li>
-								</ul>
-							{% elseif app.user.hasPermission('pages.admin') or app.user.hasPermission('argentique.admin') %}
-								<hr class="separator" />
-
-								<ul class="list-vertical list-vertical-linked">
-									{% if app.user.hasPermission('pages.admin') %}
-										<li>
-											<a href="{{ path('admin_pages') }}">
-												<img src="{{ asset('src/img/icons/book.png') }}" class="etu-img-icon" />
-												{{ 'base.user.menu.pages'|trans }}
-											</a>
-										</li>
-									{% endif %}
-
-									{% if app.user.hasPermission('argentique.admin') %}
-										<li>
-											<a href="{{ path('argentique_admin') }}">
-												<img src="{{ asset('src/img/icons/argentique.png') }}" class="etu-img-icon" />
-												{{ 'argentique.admin.menu'|trans }}
-											</a>
-										</li>
-									{% endif %}
-								</ul>
-							{% endif %}
-						{% else %}
-							{{ render_orga_menu() }}
-						{% endif %}
-					</div>
-					{% endif %}
-				</div>
-			</div>
-		</header>
-
-		{# Overlay #}
-		<div id="overlay"></div>
-
-		{# Mobile "Plus" menu #}
-		<div id="menu-mobile">
-			{% if etu.modules.isEnabled('assos') %}
-				<ul class="list-vertical list-vertical-linked overlay-menu">
-					<li class="first">
-						<a href="{{ path('orgas_index') }}">
-							<img src="{{ asset('src/img/icons/bank.png') }}" class="etu-img-icon">
-							{{ 'base.menu.associations'|trans }}
-						</a>
-					</li>
-				</ul>
-			{% endif %}
-
-			{% block mobile_menu %}
-				{{ render_sidebar_mobile() }}
-			{% endblock %}
-
-			<p class="clear footer-description footer-description-mobiles">
-				{{ 'base.footer.mobile_text'|trans|raw }}<br />
-				{% include '::version.html.twig' %}
-			</p>
-		</div>
-
-		{% block page %}{% endblock %}
-
-        {% javascripts
-            'vendor/jquery/jquery.min.js'
-            'vendor/jquery-ui/ui/minified/jquery-ui.custom.min.js'
-            'vendor/bootstrap/docs/assets/js/bootstrap.min.js'
-            'vendor/facebox/src/facebox.js'
-            'vendor/SCEditor/src/jquery.sceditor.js'
-            'vendor/SCEditor/src/plugins/bbcode.js'
-            'vendor/SCEditor/languages/fr.js'
-            'vendor/tipsy/src/javascripts/jquery.tipsy.js'
-            'vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js'
-            'vendor/jquery-cycle2/build/jquery.cycle2.min.js'
-            'vendor/jquery-cycle2/build/plugin/jquery.cycle2.center.min.js'
-            'vendor/moment/min/moment.min.js'
-            'vendor/moment/locale/fr.js'
-            'bundles/fosjsrouting/js/router.js'
-            'src/js/routes.js'
-            'src/js/common.js'
-
-            filter='?minifier_js'
-            output='min/etuutt.js'
-        %}
-            <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-
-		{% block js_libs %}{% endblock %}
-
-		{% block checkout_notifications %}{% endblock %}
-
-		{% block javascripts %}{% endblock %}
-
-		{% if app.environment == 'prod' %}
-            <script>
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-                ga('create', 'UA-43851564-1', 'utt.fr');
-                ga('send', 'pageview');
-            </script>
         {% endif %}
+
+        {# CSS CDN #}
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+        {% block stylesheets %}{% endblock %}
+
+        <!--[if lt IE 9]>
+            <script type="text/javascript" src="{{ asset('assets/vendor/html5shiv/dist/html5shiv.min.js') }}"></script>
+        <![endif]-->
+    </head>
+	<body class="bg-soft-grey no-mathjax">
+        <div id="loader" class="overlay">
+            <div class="loader">
+                <img src="{{ asset('assets/img/loader-big.gif') }}" />
+            </div>
+        </div>
+
+		{% block layout %}{% endblock %}
+
+        {# JS CDN #}
+	    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+        <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+
+	    {% javascripts
+	        'assets/vendor/jquery/jquery.min.js'
+	        'assets/vendor/jquery-ui/ui/minified/jquery-ui.custom.min.js'
+	        'assets/vendor/bootstrap/docs/assets/js/bootstrap.min.js'
+	        'assets/vendor/facebox/src/facebox.js'
+	        'assets/vendor/tipsy/src/javascripts/jquery.tipsy.js'
+	        'assets/vendor/jquery-ui-touch-punch-improved/jquery.ui.touch-punch-improved.js'
+	        'assets/vendor/jquery-cycle2/build/jquery.cycle2.min.js'
+	        'assets/vendor/jquery-cycle2/build/plugin/jquery.cycle2.center.min.js'
+	        'assets/vendor/moment/min/moment.min.js'
+	        'assets/vendor/moment/locale/fr.js'
+	        'assets/vendor/highlightjs/highlight.pack.min.js'
+	        'assets/vendor/videojs/dist/video.js'
+	        'bundles/fosjsrouting/js/router.js'
+	        'assets/js/routes.js'
+	        'assets/js/common.js'
+	        'assets/js/editor.js'
+
+	        filter=''
+	        output='assets/min/etuutt.js'
+	    %}
+            <script src="{{ asset_url }}"></script>
+	    {% endjavascripts %}
+
+
+	    <!-- Piwik -->
+	    <script type="text/javascript">
+	        var _paq = _paq || [];
+	        _paq.push(["setDomains", ["*.etu.utt.fr"]]);
+	        // you can set up to 5 custom variables for each visitor
+	        {% if is_granted('ROLE_STUDENT') %}
+	            _paq.push(["setCustomVariable", 1, "type", "student", "visit"]);
+	        {% elseif is_granted('ROLE_STAFFUTT') %}
+	            _paq.push(["setCustomVariable", 1, "type", "staffutt", "visit"]);
+	        {% elseif is_granted('ROLE_ORGA') %}
+	            _paq.push(["setCustomVariable", 1, "type", "orga", "visit"]);
+	        {% elseif is_granted('IS_AUTHENTICATED_FULLY') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+	            _paq.push(["setCustomVariable", 1, "type", "other", "visit"]);
+	        {% else %}
+	            _paq.push(["setCustomVariable", 1, "type", "visitor", "visit"]);
+	        {% endif %}
+	        _paq.push(['trackPageView']);
+	        _paq.push(['enableLinkTracking']);
+	        (function() {
+	            var u="//piwik.uttnetgroup.fr/";
+	            _paq.push(['setTrackerUrl', u+'piwik.php']);
+	            _paq.push(['setSiteId', 1]);
+	            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+	            g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+	        })();
+	    </script>
+	    <noscript><p><img src="//piwik.uttnetgroup.fr/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
+	    <!-- End Piwik Code -->
+
+	    {% block js_libs %}{% endblock %}
+
+	    {% block checkout_notifications %}{% endblock %}
+
+	    {% block javascripts %}{% endblock %}
+
 	</body>
 </html>

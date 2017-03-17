@@ -13,7 +13,7 @@ use Etu\Core\UserBundle\Entity\User;
 class OauthAccessToken
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -22,7 +22,7 @@ class OauthAccessToken
     private $id;
 
     /**
-     * @var OauthClient $client
+     * @var OauthClient
      *
      * @ORM\ManyToOne(targetEntity="OauthClient")
      * @ORM\JoinColumn()
@@ -30,7 +30,7 @@ class OauthAccessToken
     private $client;
 
     /**
-     * @var User $user
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
      * @ORM\JoinColumn()
@@ -38,7 +38,7 @@ class OauthAccessToken
     private $user;
 
     /**
-     * @var OauthRefreshToken $refreshToken
+     * @var OauthRefreshToken
      *
      * @ORM\ManyToOne(targetEntity="Etu\Core\ApiBundle\Entity\OauthRefreshToken")
      * @ORM\JoinColumn()
@@ -67,7 +67,7 @@ class OauthAccessToken
     private $expireAt;
 
     /**
-     * @var OauthScope[] $scopes
+     * @var OauthScope[]
      *
      * @ORM\ManyToMany(targetEntity="OauthScope")
      * @ORM\JoinTable(name="oauth_access_tokens_scopes")
@@ -75,7 +75,7 @@ class OauthAccessToken
     private $scopes;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -91,11 +91,11 @@ class OauthAccessToken
     {
         return $this->token = md5(uniqid(time(), true));
     }
-    
+
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -103,22 +103,23 @@ class OauthAccessToken
     }
 
     /**
-     * Set token
+     * Set token.
      *
      * @param string $token
+     *
      * @return OauthAccessToken
      */
     public function setToken($token)
     {
         $this->token = $token;
-    
+
         return $this;
     }
 
     /**
-     * Get token
+     * Get token.
      *
-     * @return string 
+     * @return string
      */
     public function getToken()
     {
@@ -126,22 +127,23 @@ class OauthAccessToken
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
+     *
      * @return OauthAccessToken
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -149,22 +151,23 @@ class OauthAccessToken
     }
 
     /**
-     * Set expireAt
+     * Set expireAt.
      *
      * @param \DateTime $expireAt
+     *
      * @return OauthAccessToken
      */
     public function setExpireAt($expireAt)
     {
         $this->expireAt = $expireAt;
-    
+
         return $this;
     }
 
     /**
-     * Get expireAt
+     * Get expireAt.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getExpireAt()
     {
@@ -172,20 +175,21 @@ class OauthAccessToken
     }
 
     /**
-     * Set client
+     * Set client.
      *
      * @param OauthClient $client
+     *
      * @return OauthAccessToken
      */
     public function setClient(OauthClient $client = null)
     {
         $this->client = $client;
-    
+
         return $this;
     }
 
     /**
-     * Get client
+     * Get client.
      *
      * @return OauthClient
      */
@@ -195,20 +199,21 @@ class OauthAccessToken
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param User $user
+     *
      * @return OauthAccessToken
      */
     public function setUser(User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return User
      */
@@ -234,20 +239,21 @@ class OauthAccessToken
     }
 
     /**
-     * Add scopes
+     * Add scopes.
      *
      * @param OauthScope $scopes
+     *
      * @return OauthAccessToken
      */
     public function addScope(OauthScope $scopes)
     {
         $this->scopes[] = $scopes;
-    
+
         return $this;
     }
 
     /**
-     * Remove scopes
+     * Remove scopes.
      *
      * @param OauthScope $scopes
      */
@@ -258,6 +264,7 @@ class OauthAccessToken
 
     /**
      * @param OauthScope|string $scope
+     *
      * @return bool
      */
     public function hasScope($scope)
@@ -270,13 +277,13 @@ class OauthAccessToken
             }
 
             return false;
-        } else {
-            return in_array($scope, $this->scopes->toArray());
         }
+
+        return in_array($scope, $this->scopes->toArray());
     }
 
     /**
-     * Get scopes
+     * Get scopes.
      *
      * @return \Doctrine\Common\Collections\Collection|OauthScope[]
      */

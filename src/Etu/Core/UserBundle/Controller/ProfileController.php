@@ -3,9 +3,8 @@
 namespace Etu\Core\UserBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-
 use Etu\Core\ApiBundle\Entity\OauthClient;
-use Etu\Core\ApiBundle\Entity\OauthScope;
+use Etu\Core\CoreBundle\Form\BirthdayPickerType;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\Course;
 use Etu\Core\UserBundle\Entity\Member;
@@ -13,11 +12,14 @@ use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Model\BadgesManager;
 use Etu\Core\UserBundle\Model\CountriesManager;
 use Etu\Core\UserBundle\Schedule\Helper\ScheduleBuilder;
-
-use Symfony\Component\Form\FormError;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 
 class ProfileController extends Controller
 {
@@ -27,9 +29,7 @@ class ProfileController extends Controller
      */
     public function profileAction()
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -44,10 +44,10 @@ class ProfileController extends Controller
             ->getQuery()
             ->getResult();
 
-        return array(
-            'hasApps' => ! empty($apps),
+        return [
+            'hasApps' => !empty($apps),
             'apps' => $apps,
-        );
+        ];
     }
 
     /**
@@ -55,15 +55,13 @@ class ProfileController extends Controller
      */
     public function appRevokeAction(OauthClient $client)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         // Remove authorization
-        $em ->createQueryBuilder()
+        $em->createQueryBuilder()
             ->delete()
             ->from('EtuCoreApiBundle:OauthAuthorization', 'a')
             ->where('a.client = :client')
@@ -74,7 +72,7 @@ class ProfileController extends Controller
             ->execute();
 
         // Remove access_tokens
-        $em ->createQueryBuilder()
+        $em->createQueryBuilder()
             ->delete()
             ->from('EtuCoreApiBundle:OauthAccessToken', 't')
             ->where('t.client = :client')
@@ -85,7 +83,7 @@ class ProfileController extends Controller
             ->execute();
 
         // Remove refresh_tokens
-        $em ->createQueryBuilder()
+        $em->createQueryBuilder()
             ->delete()
             ->from('EtuCoreApiBundle:OauthRefreshToken', 't')
             ->where('t.client = :client')
@@ -96,7 +94,7 @@ class ProfileController extends Controller
             ->execute();
 
         // Remove authrization_code
-        $em ->createQueryBuilder()
+        $em->createQueryBuilder()
             ->delete()
             ->from('EtuCoreApiBundle:OauthAuthorizationCode', 't')
             ->where('t.client = :client')
@@ -109,362 +107,363 @@ class ProfileController extends Controller
         return $this->redirect($this->generateUrl('user_profile'));
     }
 
-	/**
-	 * @Route("/user/profile/edit", name="user_profile_edit")
-	 * @Template()
-	 */
-	public function profileEditAction()
-	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
-
-		/** @var $user User */
-		$user = $this->getUser();
-
-		$privacyChoice = array(
-			'choices' => array(
-				User::PRIVACY_PUBLIC => 'user.privacy.public',
-				User::PRIVACY_PRIVATE => 'user.privacy.private',
-			),
-			'attr' => array(
-				'class' => 'profileEdit-privacy-select'
-			),
-			'required' => false
-		);
-
-		$form = $this->createFormBuilder($user)
-			->add('phoneNumber', null, array('required' => false))
-			->add('phoneNumberPrivacy', 'choice', $privacyChoice)
-			->add('sex', 'choice', array('choices' => array(
-				User::SEX_MALE => 'base.user.sex.male',
-				User::SEX_FEMALE => 'base.user.sex.female'
-			), 'required' => false))
-			->add('sexPrivacy', 'choice', $privacyChoice)
-			->add('nationality', null, array('required' => false))
-			->add('nationalityPrivacy', 'choice', $privacyChoice)
-			->add('adress', null, array('required' => false))
-			->add('adressPrivacy', 'choice', $privacyChoice)
-			->add('postalCode', null, array('required' => false))
-			->add('postalCodePrivacy', 'choice', $privacyChoice)
-			->add('city', null, array('required' => false))
-			->add('cityPrivacy', 'choice', $privacyChoice)
-			->add('country', 'choice', array('choices' => CountriesManager::getCountriesList(), 'required' => false))
-			->add('countryPrivacy', 'choice', $privacyChoice)
-			->add('birthday', 'birthday_picker', array('required' => false))
-			->add('birthdayPrivacy', 'choice', $privacyChoice)
-			->add('birthdayDisplayOnlyAge', null, array('required' => false))
-			->add('personnalMail', null, array('required' => false))
-			->add('personnalMailPrivacy', 'choice', $privacyChoice)
-			->add('website', null, array('required' => false))
-			->add('facebook', null, array('required' => false))
-			->add('twitter', null, array('required' => false))
-			->add('linkedin', null, array('required' => false))
-			->add('viadeo', null, array('required' => false))
-			->getForm();
-
-		$request = $this->getRequest();
-
-		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
-			$em = $this->getDoctrine()->getManager();
-
-			if ($user->getProfileCompletion() == 100) {
-				BadgesManager::userAddBadge($user, 'profile_completed');
-			} else {
-				BadgesManager::userRemoveBadge($user, 'profile_completed');
-			}
-
-			BadgesManager::userPersistBadges($user);
-			$em->persist($user);
-			$em->flush();
-
-			$this->get('session')->getFlashBag()->set('message', array(
-				'type' => 'success',
-				'message' => 'user.profile.profileEdit.confirm'
-			));
-
-			return $this->redirect($this->generateUrl('user_profile_edit'));
-		}
-
-		// Avatar lightbox
-		$avatarForm = $this->createFormBuilder($user)
-			->add('file', 'file')
-			->getForm();
-
-		return array(
-			'form' => $form->createView(),
-			'avatarForm' => $avatarForm->createView()
-		);
-	}
-
-	/**
-	 * @Route("/user/profile/avatar", name="user_profile_avatar")
-	 * @Template()
-	 */
-	public function profileAvatarAction()
-	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
-
-		/** @var $user User */
-		$user = $this->getUser();
-
-		$form = $this->createFormBuilder($user)
-			->add('file', 'file')
-			->getForm();
-
-		$request = $this->getRequest();
-
-		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
-			$em = $this->getDoctrine()->getManager();
-
-			$file = $user->upload();
-
-			$em->persist($user);
-			$em->flush();
-
-			return array(
-				'result' => 'success',
-				'data' => json_encode(array(
-					'filename' => '/uploads/photos/'.$file
-				))
-			);
-		}
-
-		/** @var $error FormError[] */
-		$error = $form->get('file')->getErrors();
-
-		return array(
-			'result' => 'error',
-			'data' => json_encode(array(
-				'message' => (isset($error[0])) ? $error[0]->getMessage() : 'An error occured'
-			))
-		);
-	}
-
-	/**
-	 * @Route("/user/trombi/edit", name="user_trombi_edit")
-	 * @Template()
-	 */
-	public function trombiEditAction()
-	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
-
-		/** @var $user User */
-		$user = $this->getUser();
-
-		$form = $this->createFormBuilder($user)
-			->add('surnom', null, array('required' => false))
-			->add('jadis', null, array('required' => false, 'attr' => array('class' => 'trombi-textarea')))
-			->add('passions', null, array('required' => false, 'attr' => array('class' => 'trombi-textarea')))
-			->getForm();
-
-		$request = $this->getRequest();
-
-		if ($request->getMethod() == 'POST' && $form->bind($request)->isValid()) {
-			$em = $this->getDoctrine()->getManager();
-
-			if ($user->getTrombiCompletion() == 100) {
-				BadgesManager::userAddBadge($user, 'trombi_completed');
-			} else {
-				BadgesManager::userRemoveBadge($user, 'trombi_completed');
-			}
-
-			BadgesManager::userPersistBadges($user);
-			$em->persist($user);
-			$em->flush();
-
-			$this->get('session')->getFlashBag()->set('message', array(
-				'type' => 'success',
-				'message' => 'user.profile.trombiEdit.confirm'
-			));
-
-			return $this->redirect($this->generateUrl('user_profile'));
-		}
-
-		return array(
-			'form' => $form->createView()
-		);
-	}
-
-	/**
-	 * @Route("/user/{login}", name="user_view")
-	 * @Template()
-	 */
-	public function viewAction($login)
-	{
-		if (! $this->getUserLayer()->isConnected()) {
-			return $this->createAccessDeniedResponse();
-		}
-
-		if ($login != $this->getUser()->getLogin()) {
-			/** @var $em EntityManager */
-			$em = $this->getDoctrine()->getManager();
-
-			/** @var $user User */
-			$user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
-
-			if (! $user) {
-				throw $this->createNotFoundException('Login "'.$login.'" not found');
-			}
-		} else {
-			$user = $this->getUser();
-		}
-
-		$from = null;
-
-		if (in_array($this->getRequest()->get('from'), array('search', 'profile', 'trombi', 'admin'))) {
-			$from = $this->getRequest()->get('from');
-		}
-
-		return array(
-			'user' => $user,
-			'from' => $from
-		);
-	}
-
-	/**
-	 * @Route("/user/{login}/organizations", name="user_organizations")
-	 * @Template()
-	 */
-	public function organizationsAction($login)
-	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
-
-		/** @var $em EntityManager */
-		$em = $this->getDoctrine()->getManager();
-
-		/** @var $user User */
-		$user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
-
-		if (! $user) {
-			throw $this->createNotFoundException('Login "'.$login.'" not found');
-		}
-
-		/** @var $memberships Member[] */
-		$memberships = $em->createQueryBuilder()
-			->select('m, u, o')
-			->from('EtuUserBundle:Member', 'm')
-			->leftJoin('m.user', 'u')
-			->leftJoin('m.organization', 'o')
-			->where('u.login = :login')
-			->setParameter('login', $user->getLogin())
-			->getQuery()
-			->getResult();
-
-		$from = null;
-
-		if (in_array($this->getRequest()->get('from'), array('search', 'profile', 'trombi', 'admin'))) {
-			$from = $this->getRequest()->get('from');
-		}
-
-		return array(
-			'user' => $user,
-			'memberships' => $memberships,
-			'from' => $from
-		);
-	}
-
-	/**
-	 * @Route("/user/{login}/schedule/{day}", defaults={"day" = "current"}, name="user_view_schedule")
-	 * @Template()
-	 */
-	public function scheduleAction($login, $day = 'current')
-	{
-		if (! $this->getUserLayer()->isConnected()) {
-			return $this->createAccessDeniedResponse();
-		}
-
-		/** @var $em EntityManager */
-		$em = $this->getDoctrine()->getManager();
-
-		if ($login != $this->getUser()->getLogin()) {
-
-			/** @var $user User */
-			$user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
-
-			if (! $user) {
-				throw $this->createNotFoundException('Login "'.$login.'" not found');
-			}
-		} else {
-			$user = $this->getUser();
-		}
-
-		$from = null;
-
-		if (in_array($this->getRequest()->get('from'), array('search', 'profile', 'trombi', 'admin'))) {
-			$from = $this->getRequest()->get('from');
-		}
-
-		/** @var $courses Course[] */
-		$courses = $em->getRepository('EtuUserBundle:Course')->findByUser($user);
-
-		// Builder to create the schedule
-		$builder = new ScheduleBuilder();
-
-		foreach ($courses as $course) {
-			$builder->addCourse($course);
-		}
-
-		$days = array(
-			Course::DAY_MONDAY, Course::DAY_TUESDAY, Course::DAY_WENESDAY,
-			Course::DAY_THURSDAY, Course::DAY_FRIDAY, Course::DAY_SATHURDAY
-		);
-
-		if (! in_array($day, $days)) {
-			if (date('w') == 0) { // Sunday
-				$day = Course::DAY_MONDAY;
-			} else {
-				$day = $days[date('w') - 1];
-			}
-		}
-
-		return array(
-			'courses' => $builder->build(),
-			'currentDay' => $day,
-			'user' => $user,
-			'from' => $from
-		);
-	}
-
-	/**
-	 * @Route("/user/{login}/badges", name="user_view_badges")
-	 * @Template()
-	 */
-	public function badgesAction($login)
-	{
-		if (! $this->getUserLayer()->isConnected()) {
-			return $this->createAccessDeniedResponse();
-		}
-
-		if ($login != $this->getUser()->getLogin()) {
-			/** @var $em EntityManager */
-			$em = $this->getDoctrine()->getManager();
-
-			/** @var $user User */
-			$user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
-
-			if (! $user) {
-				throw $this->createNotFoundException('Login "'.$login.'" not found');
-			}
-		} else {
-			$user = $this->getUser();
-		}
-
-		$from = null;
-
-		if (in_array($this->getRequest()->get('from'), array('search', 'profile', 'trombi', 'admin'))) {
-			$from = $this->getRequest()->get('from');
-		}
-
-		return array(
-			'user' => $user,
-			'from' => $from
-		);
-	}
+    /**
+     * @Route("/user/profile/edit", name="user_profile_edit")
+     * @Template()
+     */
+    public function profileEditAction(Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        /** @var $user User */
+        $user = $this->getUser();
+
+        $privacyChoice = [
+            'choices' => [
+                'user.privacy.public' => User::PRIVACY_PUBLIC,
+                'user.privacy.private' => User::PRIVACY_PRIVATE,
+            ],
+            'attr' => [
+                'class' => 'profileEdit-privacy-select',
+            ],
+            'placeholder' => false,
+            'required' => false,
+            'label' => 'user.profile.profileEdit.privacy',
+        ];
+
+        $form = $this->createFormBuilder($user)
+            ->add('phoneNumber', null, ['required' => false, 'label' => 'user.profile.profileEdit.phoneNumber'])
+            ->add('phoneNumberPrivacy', ChoiceType::class, $privacyChoice)
+            ->add('sex', ChoiceType::class, ['choices' => [
+                'base.user.sex.male' => User::SEX_MALE,
+                'base.user.sex.female' => User::SEX_FEMALE,
+            ], 'required' => false, 'label' => 'user.profile.profileEdit.sex'])
+            ->add('sexPrivacy', ChoiceType::class, $privacyChoice)
+            ->add('nationality', null, ['required' => false, 'label' => 'user.profile.profileEdit.nationality'])
+            ->add('nationalityPrivacy', ChoiceType::class, $privacyChoice)
+            ->add('address', null, ['required' => false, 'label' => 'user.profile.profileEdit.address'])
+            ->add('addressPrivacy', ChoiceType::class, $privacyChoice)
+            ->add('postalCode', null, ['required' => false, 'label' => 'user.profile.profileEdit.postalCode'])
+            ->add('postalCodePrivacy', ChoiceType::class, $privacyChoice)
+            ->add('city', null, ['required' => false, 'label' => 'user.profile.profileEdit.city'])
+            ->add('cityPrivacy', ChoiceType::class, $privacyChoice)
+            ->add('country', CountryType::class, ['choices' => CountriesManager::getCountriesList(), 'required' => false, 'label' => 'user.profile.profileEdit.country'])
+            ->add('countryPrivacy', ChoiceType::class, $privacyChoice)
+            ->add('birthday', BirthdayPickerType::class, [
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'required' => false,
+                'label' => 'user.profile.profileEdit.birthday',
+            ])
+            ->add('birthdayPrivacy', ChoiceType::class, $privacyChoice)
+            ->add('birthdayDisplayOnlyAge', null, [
+                'required' => false,
+                'label' => 'user.profile.profileEdit.birthdayOnlyAge.label',
+                'attr' => [
+                    'help' => 'user.profile.profileEdit.birthdayOnlyAge.desc',
+                ], ])
+            ->add('personnalMail', EmailType::class, ['required' => false, 'label' => 'user.profile.profileEdit.personnalMail'])
+            ->add('personnalMailPrivacy', ChoiceType::class, $privacyChoice)
+            ->add('website', null, ['required' => false, 'label' => 'user.profile.profileEdit.website'])
+            ->add('facebook', null, ['required' => false, 'label' => 'user.profile.profileEdit.facebook'])
+            ->add('twitter', null, ['required' => false, 'label' => 'user.profile.profileEdit.twitter'])
+            ->add('linkedin', null, ['required' => false, 'label' => 'user.profile.profileEdit.linkedin'])
+            ->add('viadeo', null, ['required' => false, 'label' => 'user.profile.profileEdit.viadeo'])
+            ->add('submit', SubmitType::class, ['label' => 'user.profile.profileEdit.edit'])
+            ->getForm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            if ($user->getProfileCompletion() == 100) {
+                BadgesManager::userAddBadge($user, 'profile_completed');
+            } else {
+                BadgesManager::userRemoveBadge($user, 'profile_completed');
+            }
+
+            BadgesManager::userPersistBadges($user);
+            $em->persist($user);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->set('message', [
+                'type' => 'success',
+                'message' => 'user.profile.profileEdit.confirm',
+            ]);
+
+            return $this->redirect($this->generateUrl('user_profile_edit'));
+        }
+
+        // Avatar lightbox
+        $avatarForm = $this->createFormBuilder($user, ['attr' => ['id' => 'avatar-upload-form']])
+            ->setAction($this->generateUrl('user_profile_avatar', ['login' => $user->getLogin()]))
+            ->add('file', FileType::class)
+            ->getForm();
+
+        return [
+            'form' => $form->createView(),
+            'avatarForm' => $avatarForm->createView(),
+        ];
+    }
+
+    /**
+     * @Route("/user/profile/avatar", name="user_profile_avatar")
+     * @Template()
+     */
+    public function profileAvatarAction(Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        /** @var $user User */
+        $user = $this->getUser();
+
+        $form = $this->createFormBuilder($user)
+            ->add('file', FileType::class, ['label' => 'user.profile.profileAvatar.file'])
+            ->add('submit', SubmitType::class, ['label' => 'user.profile.profileAvatar.edit'])
+            ->getForm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $file = $user->upload();
+
+            $em->persist($user);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->set('message', [
+                'type' => 'success',
+                'message' => 'user.profile.profileAvatar.confirm',
+            ]);
+
+            return $this->redirect($this->generateUrl('user_profile_edit'));
+        }
+
+        return [
+            'form' => $form->createView(),
+        ];
+    }
+
+    /**
+     * @Route("/user/trombi/edit", name="user_trombi_edit")
+     * @Template()
+     */
+    public function trombiEditAction(Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        /** @var $user User */
+        $user = $this->getUser();
+
+        $form = $this->createFormBuilder($user)
+            ->add('surnom', null, ['required' => false, 'label' => 'user.profile.trombiEdit.surname'])
+            ->add('jadis', null, ['required' => false, 'attr' => ['class' => 'trombi-textarea', 'label' => 'user.profile.trombiEdit.jadis']])
+            ->add('passions', null, ['required' => false, 'attr' => ['class' => 'trombi-textarea', 'label' => 'user.profile.trombiEdit.passions']])
+            ->add('submit', SubmitType::class, ['label' => 'user.profile.trombiEdit.edit'])
+            ->getForm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            if ($user->getTrombiCompletion() == 100) {
+                BadgesManager::userAddBadge($user, 'trombi_completed');
+            } else {
+                BadgesManager::userRemoveBadge($user, 'trombi_completed');
+            }
+
+            BadgesManager::userPersistBadges($user);
+            $em->persist($user);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->set('message', [
+                'type' => 'success',
+                'message' => 'user.profile.trombiEdit.confirm',
+            ]);
+
+            return $this->redirect($this->generateUrl('user_profile'));
+        }
+
+        return [
+            'form' => $form->createView(),
+        ];
+    }
+
+    /**
+     * @Route("/user/{login}", name="user_view")
+     * @Template()
+     *
+     * @param mixed $login
+     */
+    public function viewAction($login, Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_CORE_PROFIL');
+
+        if ($login != $this->getUser()->getLogin()) {
+            /** @var $em EntityManager */
+            $em = $this->getDoctrine()->getManager();
+
+            /** @var $user User */
+            $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $login]);
+
+            if (!$user) {
+                throw $this->createNotFoundException('Login "'.$login.'" not found');
+            }
+        } else {
+            $user = $this->getUser();
+        }
+
+        $from = null;
+
+        if (in_array($request->get('from'), ['search', 'profile', 'trombi', 'admin'])) {
+            $from = $request->get('from');
+        }
+
+        return [
+            'user' => $user,
+            'from' => $from,
+        ];
+    }
+
+    /**
+     * @Route("/user/{login}/organizations", name="user_organizations")
+     * @Template()
+     *
+     * @param mixed $login
+     */
+    public function organizationsAction($login, Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_CORE_ORGAS');
+
+        /** @var $em EntityManager */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var $user User */
+        $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $login]);
+
+        if (!$user) {
+            throw $this->createNotFoundException('Login "'.$login.'" not found');
+        }
+
+        /** @var $memberships Member[] */
+        $memberships = $em->createQueryBuilder()
+            ->select('m, u, o')
+            ->from('EtuUserBundle:Member', 'm')
+            ->leftJoin('m.user', 'u')
+            ->leftJoin('m.organization', 'o')
+            ->where('u.login = :login')
+            ->setParameter('login', $user->getLogin())
+            ->getQuery()
+            ->getResult();
+
+        $from = null;
+
+        if (in_array($request->get('from'), ['search', 'profile', 'trombi', 'admin'])) {
+            $from = $request->get('from');
+        }
+
+        return [
+            'user' => $user,
+            'memberships' => $memberships,
+            'from' => $from,
+        ];
+    }
+
+    /**
+     * @Route("/user/{login}/schedule/{day}", defaults={"day" = "current"}, name="user_view_schedule")
+     * @Template()
+     *
+     * @param mixed $login
+     * @param mixed $day
+     */
+    public function scheduleAction($login, $day, Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_CORE_SCHEDULE');
+
+        /** @var $em EntityManager */
+        $em = $this->getDoctrine()->getManager();
+
+        if ($login != $this->getUser()->getLogin()) {
+            /** @var $user User */
+            $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $login]);
+
+            if (!$user) {
+                throw $this->createNotFoundException('Login "'.$login.'" not found');
+            }
+        } else {
+            $user = $this->getUser();
+        }
+
+        $from = null;
+
+        if (in_array($request->get('from'), ['search', 'profile', 'trombi', 'admin'])) {
+            $from = $request->get('from');
+        }
+
+        /** @var $courses Course[] */
+        $courses = $em->getRepository('EtuUserBundle:Course')->findByUser($user);
+
+        // Builder to create the schedule
+        $builder = new ScheduleBuilder();
+
+        foreach ($courses as $course) {
+            $builder->addCourse($course);
+        }
+
+        $days = [
+            Course::DAY_MONDAY, Course::DAY_TUESDAY, Course::DAY_WENESDAY,
+            Course::DAY_THURSDAY, Course::DAY_FRIDAY, Course::DAY_SATHURDAY,
+        ];
+
+        if (!in_array($day, $days)) {
+            if (date('w') == 0) { // Sunday
+                $day = Course::DAY_MONDAY;
+            } else {
+                $day = $days[date('w') - 1];
+            }
+        }
+
+        return [
+            'courses' => $builder->build(),
+            'currentDay' => $day,
+            'user' => $user,
+            'from' => $from,
+        ];
+    }
+
+    /**
+     * @Route("/user/{login}/badges", name="user_view_badges")
+     * @Template()
+     *
+     * @param mixed $login
+     */
+    public function badgesAction($login, Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_CORE_PROFIL');
+
+        if ($login != $this->getUser()->getLogin()) {
+            /** @var $em EntityManager */
+            $em = $this->getDoctrine()->getManager();
+
+            /** @var $user User */
+            $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $login]);
+
+            if (!$user) {
+                throw $this->createNotFoundException('Login "'.$login.'" not found');
+            }
+        } else {
+            $user = $this->getUser();
+        }
+
+        $from = null;
+
+        if (in_array($request->get('from'), ['search', 'profile', 'trombi', 'admin'])) {
+            $from = $request->get('from');
+        }
+
+        return [
+            'user' => $user,
+            'from' => $from,
+        ];
+    }
 }

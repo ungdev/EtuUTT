@@ -1,12 +1,10 @@
 cumul:
-    main:
-        index:
-            title: Overlapping timetables
-            explainations: |
-                This page will allow you to easily compare student timetables
-                (up to 5).<br />To do so, add desired students on the left column.
-            placeholder: First Name Last Name
-            add: Add the student
-            week: Week
-            warning: You can only add up to 5 students at a time
-            warning_phones: Overlapping timetables cannot be used on small resolutions
+  main:
+    errors:
+      invalid_ids: "The student id \"%items%\" could not be found, it has been removed|The student ids \"%items%\" could not be found, they have been removed"
+      invalid_logins: "The id \"%items%\" could not be found, it has been removed|The ids \"%items%\" could not be found, they have been removed"
+      invalid_names: "The name \"%items%\" could not be found, it has been removed|The names \"%items%\" could not be found, they have been removed"
+    index:
+      other: Other
+      title: "Overlapping timetables"
+      warning_phones: "Overlapping timetables cannot be used on small resolutions"

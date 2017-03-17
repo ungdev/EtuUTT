@@ -1,58 +1,55 @@
 forum:
-    meta: Die Foren der UTT Studentenwebseite
-
-    main:
-        index:
-            meta: Die Foren der UTT Studentenwebseite : kommen Sie diskutieren !
-            noMessage: Keine Nachricht
-            forum: Forum
-            category: Kategorie
-            nbThreads: Thema
-            nbMessages: Nachricht
-            lastMessage: Letzte Nachricht
-            noMessage: Keine Nachricht in dieser Kategorie.
-        thread:
-            thread: Thema
-            in: In
-            by: Von
-            date: Datum
-            datePrefix: Am
-            dateHour: Um
-            dateFormat: d/m/Y
-            messages: Nachricht
-            lastMessage: Letzte Nachricht
-            post: Ein neues Thema herstellen
-            answer: Antworten
-            read: Lesen
-            sticky: Angepint
-            locked: Abgeblockt
-            edit: Editieren
-            new: Nicht gelesen
-        post:
-            title: Thema herstellen
-            threadTitle: Titel des Themas
-            content: Nachricht
-            sticky: Angepint ?
-            yes: Ja
-            no: Nein
-        answer:
-            title: Antworten
-        edit:
-            title: Nachricht editieren
-        mod:
-            title: Mdorierungsschild
-            lock: Abblocken
-            unlock: Klären
-            remove: Löschen
-            removeThreadWarning: Achtung, wenn Sie diese Nachricht löschen, wird das Thema auch gelöscht. Wollen Sie das wirklich ?
-            removeThread: Thema wirklich löschen ?
-            removeMessage: Nachricht wirklich löschen ?
-            back: Zurück
-            locked: Thema wurde blockiert
-            unlocked: Thema wurde geklärt
-            moderation: Moderieren
-            move: Bewegen
-            where: Wohin bewegen ?
-
-    notifs:
-            threadCreated: %author% hat in %title% geantwortet
+  main:
+    answer:
+      title: Antworten
+    edit:
+      title: "Nachricht editieren"
+    index:
+      category: Kategorie
+      forum: Forum
+      lastMessage: "Letzte Nachricht"
+      meta: "Die Foren der UTT Studentenwebseite : kommen Sie diskutieren !"
+      nbMessages: Nachricht
+      nbThreads: Thema
+      noMessage: "Keine Nachricht in dieser Kategorie."
+    mod:
+      back: Zurück
+      lock: Abblocken
+      locked: "Thema wurde blockiert"
+      moderation: Moderieren
+      move: Bewegen
+      remove: Löschen
+      removeMessage: "Nachricht wirklich löschen ?"
+      removeThread: "Thema wirklich löschen ?"
+      removeThreadWarning: "Achtung, wenn Sie diese Nachricht löschen, wird das Thema auch gelöscht. Wollen Sie das wirklich ?"
+      title: "Mdorierungsschild"
+      unlock: Klären
+      unlocked: "Thema wurde geklärt"
+      where: "Wohin bewegen ?"
+    post:
+      content: Nachricht
+      'no': Nein
+      sticky: "Angepint ?"
+      threadTitle: "Titel des Themas"
+      title: "Thema herstellen"
+      'yes': Ja
+    thread:
+      answer: Antworten
+      by: Von
+      date: Datum
+      dateFormat: d/m/Y
+      dateHour: Um
+      datePrefix: Am
+      edit: Editieren
+      in: In
+      lastMessage: "Letzte Nachricht"
+      locked: Abgeblockt
+      messages: Nachricht
+      new: "Nicht gelesen"
+      post: "Ein neues Thema herstellen"
+      read: Lesen
+      sticky: Angepint
+      thread: Thema
+  meta: "Die Foren der UTT Studentenwebseite"
+  notifs:
+    threadCreated: "%author% hat in %title% geantwortet"

@@ -1,0 +1,156 @@
+covoit:
+  alerts:
+    create:
+      explainations: "Leave a field blank to ignore it"
+      precise_date: "Fill \"Between...\" only for an exact date"
+      submit: Submit
+      subtitle: "Create an alert for carpools"
+      title: "Create an alert"
+    edit:
+      cancel: Cancel
+      delete: Delete
+      submit: Submit edits
+      subtitle: "Monitor carpools with alerts"
+      title: "Edit an alert"
+    index:
+      currently: "You are currently monitoring carpools..."
+      dateBoth: "Between %startDate% and %endDate%"
+      dateEnd: "before %date%"
+      datePrecise: "on %date%"
+      endCity: "to %endCity%"
+      priceMax: "with a maximum price of %price%€"
+      startCity: "from %startCity%"
+    label:
+      endCity: "to..."
+      endDate: "and..."
+      priceMax: "with a maximum price of..."
+      startCity: "from..."
+      startDate: "Between..."
+  index:
+    no_covoit:
+      link: "Offer a carpool!"
+      text: "No carpools for the moment !"
+    title: Carpool
+  menu:
+    alerts: "My alerts"
+    home: "Latest carpools"
+    my: "My carpools"
+  messages:
+    alert_created: "The alert has been created"
+    alert_deleted: "The alert has been deleted"
+    alert_edited: "The alert has been edited"
+    already_subscribed: "You already joined this carpool"
+    canceled: "Your carpool has been deleted"
+    created: "Your offer has been created"
+    edited: "Your carpool has been edited"
+    message_edited: "Your message has been edited"
+    message_sent: "Your message has been sent"
+    required_phone: "You need to add your phone number in the directory to join a carpool"
+    subscribed: "You have joined the carpool"
+    unsubscribed: "You have left the carpool"
+  notifs:
+    alert: "The carpool offer by %author% on %date% from %start% to %end% might interest you"
+    canceled: "The carpool offer by %author% on %date% from %start% to %end% was deleted"
+    edited: "The carpool offer by %author% on %date% from %start% to %end% was edited"
+    new_message: "%author% posted in his carpool offer on %date% from %start% to %end%"
+    subscription: "%name% has joined the carpool on %date% from %start% to %end%"
+  private_alerts:
+    create: "Create an alert"
+    no_alert:
+      text: "No alerts are set at the moment."
+    title: "My alerts"
+  private_delete:
+    'false': "Cancel"
+    question: "Carpool %start% <i class=\"fa fa-angle-right\"></i> %end% on %date% will be permanently deleted.<br />Do you confirm ?"
+    title: "Delete a carpool offer"
+    'true': "Yes, delete"
+  private_edit:
+    cancel: Cancel
+    delete: "Delete this carpool offer"
+    submit: Edit
+    title: "Edit a carpool offer"
+  private_edit_message:
+    cancel: Cancel
+    submit: "Edit message"
+    title: "Edit a message"
+  private_index:
+    by: "by %name%"
+    creator: Author
+    no_covoit:
+      link: "Offer one !"
+      text: "You haven't joined any carpool until now !"
+    per_place: "per seat"
+    subscribed: Joined
+    subscriptions_left: "none_or_one: seat<br />left|some: seats<br />left"
+    title: "My carpools"
+  proposal:
+    blablacarUrl:
+      label: "BlaBlaCar link (optional)"
+    capacity:
+      label: "Number of seats in your vehicle, excluding you"
+    date:
+      label: Date
+    end:
+      adress:
+        label: "Exact address of destination"
+      city:
+        label: "Closest town or city"
+      hour:
+        label: "Estimated time of arrival"
+    notes:
+      label: "Additional details (vehicle description, space available in the trunk...)"
+    phone:
+      label: "Phone number"
+    price:
+      label: "Price per seat"
+    start:
+      adress:
+        label: "Exact address of meeting point"
+      city:
+        label: "Closest town or city"
+      hour:
+        label: "Departure time"
+    submit: "Submit this carpool offer"
+    title: "Submit a carpool offer"
+    titles:
+      details: Details
+      end: Arrival
+      start: Departure
+  public_view:
+    blablacar: "See on BlaBlaCar"
+    cancel: "Cancel registration"
+    comment: "Submit comment"
+    comments: Comments
+    creator: Author
+    edit: Edit
+    endAdress: "Destination address"
+    from_to: "%name% offers a carpool from %startCity% to %endCity%"
+    no_comment: "No comments for the moment"
+    notes: "Notes from %name%"
+    places_left:
+      label: "Available seats"
+      value: "%placesLeft% / %capacity%"
+    price: "Price per seat"
+    startAdress: "Address of origin"
+    startHour:
+      label: "Departure time"
+      value:
+        end: "(ETA %endHour% at %endCity%)"
+        start: "On %date% at %startHour%"
+    subscribe: "Join"
+    subscriptions: "Registrations"
+    title: "Carpool details"
+  search:
+    date: Date
+    date_before_after: "Include eve and next day"
+    end_city: "Destination city"
+    hour_max: "Latest departure time"
+    hour_min: "Earliest departure time"
+    keywords: Keywords
+    no_covoit: "No carpool was found"
+    olds: "Include past carpools"
+    places_left: "Minimum number of available seats left"
+    price_max: "Maximum price"
+    start_city: "Origin city"
+    submit: Search
+    title: "Search for a carpool"

@@ -4,7 +4,6 @@ namespace Etu\Core\ApiBundle\Oauth\GrantType;
 
 use Doctrine\ORM\EntityManager;
 use Etu\Core\ApiBundle\Entity\OauthAccessToken;
-use Etu\Core\ApiBundle\Entity\OauthAuthorizationCode;
 use Etu\Core\ApiBundle\Entity\OauthClient;
 use Etu\Core\ApiBundle\Entity\OauthRefreshToken;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,6 +25,7 @@ class RefreshTokenGrantType implements GrantTypeInterface
 
     /**
      * @param Request $request
+     *
      * @return OauthAccessToken
      */
     public function createToken(Request $request)
@@ -33,15 +33,15 @@ class RefreshTokenGrantType implements GrantTypeInterface
         /** @var OauthClient $client */
         $client = $request->attributes->get('_oauth_client');
 
-        if (! $client) {
+        if (!$client) {
             throw new \RuntimeException('Client not found');
         }
 
         /** @var OauthRefreshToken $refreshToken */
         $refreshToken = $this->manager->getRepository('EtuCoreApiBundle:OauthRefreshToken')
-            ->findOneBy([ 'token' => $request->request->get('refresh_token') ]);
+            ->findOneBy(['token' => $request->request->get('refresh_token')]);
 
-        if (! $refreshToken) {
+        if (!$refreshToken) {
             throw new \RuntimeException('Refresh token code not found');
         }
 
@@ -68,6 +68,7 @@ class RefreshTokenGrantType implements GrantTypeInterface
 
     /**
      * @param OauthAccessToken $token
+     *
      * @return array
      */
     public function format(OauthAccessToken $token)
@@ -81,8 +82,10 @@ class RefreshTokenGrantType implements GrantTypeInterface
         return [
             'access_token' => $token->getToken(),
             'expires_at' => $token->getExpireAt()->format('U'),
+            'expires' => $token->getExpireAt()->format('U'),
             'scopes' => $scopes,
-            'refresh_token' => $token->getRefreshToken()->getToken()
+            'refresh_token' => $token->getRefreshToken()->getToken(),
+            'token_type' => 'Bearer',
         ];
     }
 

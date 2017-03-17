@@ -3,75 +3,37 @@
 {% block title %}{{ 'uvs.main.sendReview.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/uvs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/uvs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block sidebar %}
-	{{ render_subscribe_button('uv', uv.id) }}
-	{{ parent() }}
+    {{ render_subscribe_button('uv', uv.id) }}
+    {{ parent() }}
 {% endblock %}
 
 {% block content %}
-	<div class="padding20-all">
-		{% include 'EtuModuleUVBundle:Main:chooser.html.twig' %}
+    <div class="padding20-all">
+        {% include 'EtuModuleUVBundle:Main:chooser.html.twig' %}
 
-		<img src="{{ asset('src/img/uvs/'~uv.category~'.png') }}"
-			 class="uv-view-category"
-			 alt="{{ ('uvs.categories.'~uv.category)|trans }}"
-			 title="{{ ('uvs.categories.'~uv.category)|trans }}" />
+        <img src="{{ asset('assets/img/uvs/'~uv.category~'.png') }}"
+             class="uv-view-category"
+             alt="{{ ('uvs.categories.'~uv.category)|trans }}"
+             title="{{ ('uvs.categories.'~uv.category)|trans }}" />
 
-		<h4>{{ uv.code }} - {{ uv.name }}</h4>
+        <h4>{{ uv.code }} - {{ uv.name }}</h4>
 
-		<hr />
+        <hr />
 
-		<p>
-			<a href="{{ path('uvs_view', {'slug': uv.slug, 'name': uv.name|slugify}) }}">
-				<i class="icon-chevron-left"></i> {{ 'uvs.main.sendReview.back'|trans }}
-			</a>
-		</p>
+        <p>
+            <a href="{{ path('uvs_view', {'slug': uv.slug, 'name': uv.name|slugify}) }}">
+                <i class="icon-chevron-left"></i> {{ 'uvs.main.sendReview.back'|trans }}
+            </a>
+        </p>
 
-		<hr />
+        <hr />
 
-		<div class="row-fluid">
-			<div class="span4"></div>
-			<div class="span6">
-				<form method="post" {{ form_enctype(form) }}>
-					{{ form_errors(form) }}
-
-					<div class="control-group">
-						<label class="control-label">{{ 'uvs.main.sendReview.type'|trans }}</label>
-						<div class="controls">{{ form_widget(form.type) }}</div>
-						<span class="help-block">{{ form_errors(form.type) }}</span>
-					</div>
-
-					<div class="control-group">
-						<label class="control-label">{{ 'uvs.main.sendReview.semester'|trans }}</label>
-						<div class="controls">{{ form_widget(form.semester) }}</div>
-						<span class="help-block">{{ form_errors(form.semester) }}</span>
-					</div>
-
-					<div class="control-group">
-						<label class="control-label">{{ 'uvs.main.sendReview.file'|trans }}</label>
-						<div class="controls">{{ form_widget(form.file) }}</div>
-						<span class="help-block">{{ form_errors(form.file) }}</span>
-					</div>
-
-					<div class="control-group">
-						<div class="controls">
-							{{ form_rest(form) }}
-
-							<button type="submit" class="btn">
-								{{ 'uvs.main.sendReview.submit'|trans }}
-							</button>
-
-							<a href="{{ path('uvs_view', {'slug': uv.slug, 'name': uv.name|slugify}) }}" class="btn btn-link">
-								{{ 'uvs.main.sendReview.cancel'|trans }}
-							</a>
-						</div>
-					</div>
-				</form>
-			</div>
-			<div class="span2"></div>
-		</div>
-	</div>
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+    </div>
 {% endblock %}

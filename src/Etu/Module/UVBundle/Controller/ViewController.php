@@ -4,342 +4,360 @@ namespace Etu\Module\UVBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Entity\Notification;
+use Etu\Core\CoreBundle\Form\EditorType;
+use Etu\Core\CoreBundle\Framework\Definition\Controller;
+use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Core\UserBundle\Entity\Course;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Model\BadgesManager;
 use Etu\Module\UVBundle\Entity\Comment;
 use Etu\Module\UVBundle\Entity\Review;
-use Symfony\Component\HttpFoundation\Request;
-
-use Etu\Core\CoreBundle\Framework\Definition\Controller;
-use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Module\UVBundle\Entity\UV;
-
-// Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+// Import annotations
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/uvs")
  */
 class ViewController extends Controller
 {
-	/**
-	 * @Route("/{slug}-{name}/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="uvs_view")
-	 * @Template()
-	 */
-	public function viewAction(Request $request, $slug, $name, $page = 1)
-	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+    /**
+     * @Route("/{slug}-{name}/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="uvs_view")
+     * @Template()
+     *
+     * @param mixed $slug
+     * @param mixed $name
+     * @param mixed $page
+     */
+    public function viewAction(Request $request, $slug, $name, $page = 1)
+    {
+        $this->denyAccessUnlessGranted('ROLE_UV');
 
-		/** @var EntityManager $em */
-		$em = $this->getDoctrine()->getManager();
+        $rtn = [];
 
-		/** @var UV $uv */
-		$uv = $em->getRepository('EtuModuleUVBundle:UV')
-			->findOneBy(array('slug' => $slug));
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
 
-		if (! $uv) {
-			throw $this->createNotFoundException(sprintf('UV for slug %s not found', $slug));
-		}
+        /** @var UV $uv */
+        $uv = $em->getRepository('EtuModuleUVBundle:UV')
+            ->findOneBy(['slug' => $slug]);
+        $rtn['uv'] = $uv;
 
-		if (StringManipulationExtension::slugify($uv->getName()) != $name) {
-			return $this->redirect($this->generateUrl('uvs_view', array(
-				'slug' => $uv->getSlug(), 'name' => StringManipulationExtension::slugify($uv->getName())
-			)), 301);
-		}
+        if (!$uv) {
+            throw $this->createNotFoundException(sprintf('UV for slug %s not found', $slug));
+        }
 
-		$comment = new Comment();
-		$comment->setUv($uv)
-			->setUser($this->getUser());
+        if (StringManipulationExtension::slugify($uv->getName()) != $name) {
+            return $this->redirect($this->generateUrl('uvs_view', [
+                'slug' => $uv->getSlug(), 'name' => StringManipulationExtension::slugify($uv->getName()),
+            ]), 301);
+        }
 
-		$commentForm = $this->createFormBuilder($comment)
-			->add('body', 'redactor')
-			->getForm();
+        // UV review post submit
+        if ($this->isGranted('ROLE_UV_REVIEW_POST')) {
+            $comment = new Comment();
+            $comment->setUv($uv)
+                ->setUser($this->getUser());
 
-		if ($request->getMethod() == 'POST' && $commentForm->submit($request)->isValid()) {
-			$em->persist($comment);
-			$em->flush();
+            $commentForm = $this->createFormBuilder($comment)
+                ->add('body', EditorType::class, ['label' => 'uvs.main.view.body'])
+                ->add('submit', SubmitType::class, ['label' => 'uvs.main.view.submit'])
+                ->getForm();
 
-			// Notify subscribers
-			$notif = new Notification();
+            $commentForm->handleRequest($request);
+            if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+                $em->persist($comment);
+                $em->flush();
 
-			$notif
-				->setModule($this->getCurrentBundle()->getIdentifier())
-				->setHelper('uv_new_comment')
-				->setAuthorId($this->getUser()->getId())
-				->setEntityType('uv')
-				->setEntityId($uv->getId())
-				->addEntity($comment);
+                // Notify subscribers
+                $notif = new Notification();
 
-			$this->getNotificationsSender()->send($notif);
+                $notif
+                    ->setModule('uv')
+                    ->setHelper('uv_new_comment')
+                    ->setAuthorId($this->getUser()->getId())
+                    ->setEntityType('uv')
+                    ->setEntityId($uv->getId())
+                    ->addEntity($comment);
 
-			$this->get('session')->getFlashBag()->set('message', array(
-				'type' => 'success',
-				'message' => 'uvs.main.comment.confirm'
-			));
+                $this->getNotificationsSender()->send($notif);
 
-			return $this->redirect($this->generateUrl('uvs_view', array(
-				'slug' => $slug,
-				'name' => $name
-			)));
-		}
+                $this->get('session')->getFlashBag()->set('message', [
+                    'type' => 'success',
+                    'message' => 'uvs.main.comment.confirm',
+                ]);
 
-		/** @var Review[] $results */
-		$results = $em->createQueryBuilder()
-			->select('r, s')
-			->from('EtuModuleUVBundle:Review', 'r')
-			->leftJoin('r.sender', 's')
-			->where('r.uv = :uv')
-			->setParameter('uv', $uv->getId())
-			->getQuery()
-			->getResult();
+                return $this->redirect($this->generateUrl('uvs_view', [
+                    'slug' => $slug,
+                    'name' => $name,
+                ]));
+            }
+            $rtn['commentForm'] = $commentForm->createView();
+        }
 
-		$order = array();
+        if ($this->isGranted('ROLE_UV_REVIEW')) {
+            // Get UV annals
 
-		// Order by semester: A13, P12, A12, P11, ...
-		foreach ($results as $review) {
-			$semester = (int) substr($review->getSemester(), 1);
-			$season = (substr($review->getSemester(), 0, 1)) == 'A' ? 1 : 0;
-			$order[] = $semester * 2 + $season;
-		}
+            /** @var Review[] $results */
+            $results = $em->createQueryBuilder()
+                ->select('r, s')
+                ->from('EtuModuleUVBundle:Review', 'r')
+                ->leftJoin('r.sender', 's')
+                ->where('r.uv = :uv')
+                ->setParameter('uv', $uv->getId())
+                ->getQuery()
+                ->getResult();
 
-		array_multisort(
-			$order, SORT_DESC, SORT_NUMERIC,
-			$results
-		);
+            $order = [];
 
-		$reviews = array();
-		$reviewsCount = 0;
+            // Order by semester: A13, P12, A12, P11, ...
+            foreach ($results as $review) {
+                $semester = (int) mb_substr($review->getSemester(), 1);
+                $season = (mb_substr($review->getSemester(), 0, 1)) == 'A' ? 1 : 0;
+                $order[] = $semester * 2 + $season;
+            }
 
-		foreach ($results as $result) {
-			if (! isset($reviews[$result->getSemester()]['count'])) {
-				$reviews[$result->getSemester()]['count'] = 0;
-			}
+            array_multisort(
+                $order, SORT_DESC, SORT_NUMERIC,
+                $results
+            );
 
-			if (! isset($reviews[$result->getSemester()]['validated'])) {
-				$reviews[$result->getSemester()]['validated'] = array();
-			}
+            $reviews = [];
+            $reviewsCount = 0;
 
-			if (! isset($reviews[$result->getSemester()]['pending'])) {
-				$reviews[$result->getSemester()]['pending'] = array();
-			}
+            foreach ($results as $result) {
+                if (!isset($reviews[$result->getSemester()]['count'])) {
+                    $reviews[$result->getSemester()]['count'] = 0;
+                }
 
-			$key = ($result->getValidated()) ? 'validated' : 'pending';
-			$reviews[$result->getSemester()][$key][] = $result;
-			$reviews[$result->getSemester()]['count']++;
-			$reviewsCount++;
-		}
+                if (!isset($reviews[$result->getSemester()]['validated'])) {
+                    $reviews[$result->getSemester()]['validated'] = [];
+                }
 
-		$query = $em->createQueryBuilder()
-			->select('c, u')
-			->from('EtuModuleUVBundle:Comment', 'c')
-			->leftJoin('c.user', 'u')
-			->where('c.uv = :uv')
-			->setParameter('uv', $uv->getId())
-			->orderBy('c.createdAt', 'DESC')
-			->getQuery();
+                if (!isset($reviews[$result->getSemester()]['pending'])) {
+                    $reviews[$result->getSemester()]['pending'] = [];
+                }
 
-		$pagination = $this->get('knp_paginator')->paginate($query, $page, 10);
+                $key = ($result->getValidated()) ? 'validated' : 'pending';
+                $reviews[$result->getSemester()][$key][] = $result;
+                ++$reviews[$result->getSemester()]['count'];
+                ++$reviewsCount;
+            }
 
-		return array(
-			'uv' => $uv,
-			'semesters' => $reviews,
-			'reviewsCount' => $reviewsCount,
-			'pagination' => $pagination,
-			'commentForm' => $commentForm->createView(),
-		);
-	}
+            // Get UV comments
+            $query = $em->createQueryBuilder()
+                ->select('c, u')
+                ->from('EtuModuleUVBundle:Comment', 'c')
+                ->leftJoin('c.user', 'u')
+                ->where('c.uv = :uv')
+                ->setParameter('uv', $uv->getId())
+                ->orderBy('c.createdAt', 'DESC')
+                ->getQuery();
 
-	/**
-	 * @Route("/{slug}-{name}/courses", name="uvs_view_courses")
-	 * @Template()
-	 */
-	public function coursesAction($slug, $name)
-	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+            $pagination = $this->get('knp_paginator')->paginate($query, $page, 10);
 
-		/** @var EntityManager $em */
-		$em = $this->getDoctrine()->getManager();
+            $rtn['semesters'] = $reviews;
+            $rtn['reviewsCount'] = $reviewsCount;
+            $rtn['pagination'] = $pagination;
+        }
 
-		/** @var UV $uv */
-		$uv = $em->getRepository('EtuModuleUVBundle:UV')
-			->findOneBy(array('slug' => $slug));
+        return $rtn;
+    }
 
-		if (! $uv) {
-			throw $this->createNotFoundException(sprintf('UV for slug %s not found', $slug));
-		}
+    /**
+     * @Route("/{slug}-{name}/courses", name="uvs_view_courses")
+     * @Template()
+     *
+     * @param mixed $slug
+     * @param mixed $name
+     */
+    public function coursesAction($slug, $name)
+    {
+        $this->denyAccessUnlessGranted('ROLE_UV');
 
-		if (StringManipulationExtension::slugify($uv->getName()) != $name) {
-			return $this->redirect($this->generateUrl('uvs_view', array(
-				'slug' => $uv->getSlug(), 'name' => StringManipulationExtension::slugify($uv->getName())
-			)), 301);
-		}
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
 
-		/** @var $results Course[] */
-		$results = $em->createQueryBuilder()
-			->select('c')
-			->from('EtuUserBundle:Course', 'c')
-			->where('c.uv = :uv')
-			->setParameter('uv', strtoupper($slug))
-			->orderBy('c.start')
-			->groupBy('c.day, c.room')
-			->getQuery()
-			->getResult();
+        /** @var UV $uv */
+        $uv = $em->getRepository('EtuModuleUVBundle:UV')
+            ->findOneBy(['slug' => $slug]);
 
-		/** @var $courses Course[] */
-		$courses = array();
+        if (!$uv) {
+            throw $this->createNotFoundException(sprintf('UV for slug %s not found', $slug));
+        }
 
-		$days = array(
-			Course::DAY_MONDAY => 1, Course::DAY_TUESDAY => 2, Course::DAY_WENESDAY => 3,
-			Course::DAY_THURSDAY => 4, Course::DAY_FRIDAY => 5, Course::DAY_SATHURDAY => 6
-		);
+        if (StringManipulationExtension::slugify($uv->getName()) != $name) {
+            return $this->redirect($this->generateUrl('uvs_view', [
+                'slug' => $uv->getSlug(), 'name' => StringManipulationExtension::slugify($uv->getName()),
+            ]), 301);
+        }
 
-		$orderDay = array();
-		$orderHour = array();
+        /** @var $results Course[] */
+        $results = $em->createQueryBuilder()
+            ->select('c')
+            ->from('EtuUserBundle:Course', 'c')
+            ->where('c.uv = :uv')
+            ->setParameter('uv', mb_strtoupper($slug))
+            ->orderBy('c.start')
+            ->groupBy('c.day, c.room')
+            ->getQuery()
+            ->getResult();
 
-		foreach ($results as $course) {
-			$courses[] = $course;
-			$orderDay[] = $days[$course->getDay()];
-			$orderHour[] = $course->getStart();
-		}
+        /** @var $courses Course[] */
+        $courses = [];
 
-		array_multisort(
-			$orderDay, SORT_ASC, SORT_NUMERIC,
-			$orderHour, SORT_ASC, SORT_NUMERIC,
-			$courses
-		);
+        $days = [
+            Course::DAY_MONDAY => 1, Course::DAY_TUESDAY => 2, Course::DAY_WENESDAY => 3,
+            Course::DAY_THURSDAY => 4, Course::DAY_FRIDAY => 5, Course::DAY_SATHURDAY => 6,
+        ];
 
-		/** @var $results Course[] */
-		$results = array();
+        $orderDay = [];
+        $orderHour = [];
 
-		foreach ($courses as $course) {
-			$results[$course->getDay()][] = $course;
-		}
+        foreach ($results as $course) {
+            $courses[] = $course;
+            $orderDay[] = $days[$course->getDay()];
+            $orderHour[] = $course->getStart();
+        }
 
-		return array(
-			'uv' => $uv,
-			'courses' => $results,
-		);
-	}
+        array_multisort(
+            $orderDay, SORT_ASC, SORT_NUMERIC,
+            $orderHour, SORT_ASC, SORT_NUMERIC,
+            $courses
+        );
 
-	/**
-	 * @Route("/{slug}-{name}/send-review", name="uvs_view_send_review")
-	 * @Template()
-	 */
-	public function sendReviewAction(Request $request, $slug, $name)
-	{
-		if (! $this->getUserLayer()->isUser()) {
-			return $this->createAccessDeniedResponse();
-		}
+        /** @var $results Course[] */
+        $results = [];
 
-		/** @var EntityManager $em */
-		$em = $this->getDoctrine()->getManager();
+        foreach ($courses as $course) {
+            $results[$course->getDay()][] = $course;
+        }
 
-		/** @var UV $uv */
-		$uv = $em->getRepository('EtuModuleUVBundle:UV')
-			->findOneBy(array('slug' => $slug));
+        return [
+            'uv' => $uv,
+            'courses' => $results,
+        ];
+    }
 
-		if (! $uv) {
-			throw $this->createNotFoundException(sprintf('UV for slug %s not found', $slug));
-		}
+    /**
+     * @Route("/{slug}-{name}/send-review", name="uvs_view_send_review")
+     * @Template()
+     *
+     * @param mixed $slug
+     * @param mixed $name
+     */
+    public function sendReviewAction(Request $request, $slug, $name)
+    {
+        $this->denyAccessUnlessGranted('ROLE_UV_REVIEW_POST');
 
-		if (StringManipulationExtension::slugify($uv->getName()) != $name) {
-			return $this->redirect($this->generateUrl('uvs_view_send_review', array(
-				'slug' => $uv->getSlug(), 'name' => StringManipulationExtension::slugify($uv->getName())
-			)), 301);
-		}
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
 
-		$review = new Review();
-		$review->setUv($uv)
-			->setSender($this->getUser())
-			->setSemester(User::currentSemester());
+        /** @var UV $uv */
+        $uv = $em->getRepository('EtuModuleUVBundle:UV')
+            ->findOneBy(['slug' => $slug]);
 
-		$form = $this->createFormBuilder($review)
-			->add('type', 'choice', array('choices' => Review::$types, 'required' => true))
-			->add('semester', 'choice', array('choices' => Review::availableSemesters(), 'required' => true))
-			->add('file', null, array('required' => true))
-			->getForm();
+        if (!$uv) {
+            throw $this->createNotFoundException(sprintf('UV for slug %s not found', $slug));
+        }
 
-		if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
-			$review->upload();
+        if (StringManipulationExtension::slugify($uv->getName()) != $name) {
+            return $this->redirect($this->generateUrl('uvs_view_send_review', [
+                'slug' => $uv->getSlug(), 'name' => StringManipulationExtension::slugify($uv->getName()),
+            ]), 301);
+        }
 
-			$em->persist($review);
-			$em->flush();
+        $review = new Review();
+        $review->setUv($uv)
+            ->setSender($this->getUser())
+            ->setSemester(User::currentSemester());
 
-			// Notify subscribers
-			$notif = new Notification();
+        $form = $this->createFormBuilder($review)
+            ->add('type', ChoiceType::class, ['choices' => array_flip(Review::$types), 'required' => true, 'label' => 'uvs.main.sendReview.type'])
+            ->add('semester', ChoiceType::class, ['choices' => array_flip(Review::availableSemesters()), 'required' => true, 'label' => 'uvs.main.sendReview.semester'])
+            ->add('file', null, ['required' => true, 'label' => 'uvs.main.sendReview.file'])
+            ->add('submit', SubmitType::class, ['label' => 'uvs.main.sendReview.submit'])
+            ->getForm();
 
-			$review->file = null;
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $review->upload();
 
-			$notif
-				->setModule($this->getCurrentBundle()->getIdentifier())
-				->setHelper('uv_new_review')
-				->setAuthorId($this->getUser()->getId())
-				->setEntityType('uv')
-				->setEntityId($uv->getId())
-				->addEntity($review);
+            $em->persist($review);
+            $em->flush();
 
-			$this->getNotificationsSender()->send($notif);
+            // Notify subscribers
+            $notif = new Notification();
 
-			// Add badges
-			$count = $em->createQueryBuilder()
-				->select('COUNT(r) as nb')
-				->from('EtuModuleUVBundle:Review', 'r')
-				->where('r.sender = :user')
-				->setParameter('user', $this->getUser()->getId())
-				->getQuery()
-				->getSingleScalarResult();
+            $review->file = null;
 
-			$user = $this->getUser();
+            $notif
+                ->setModule('uv')
+                ->setHelper('uv_new_review')
+                ->setAuthorId($this->getUser()->getId())
+                ->setEntityType('uv')
+                ->setEntityId($uv->getId())
+                ->addEntity($review);
 
-			if ($count >= 1) {
-				BadgesManager::userAddBadge($user, 'uvs_reviews', 1);
-			} else {
-				BadgesManager::userRemoveBadge($user, 'uvs_reviews', 1);
-			}
+            $this->getNotificationsSender()->send($notif);
 
-			if ($count >= 2) {
-				BadgesManager::userAddBadge($user, 'uvs_reviews', 2);
-			} else {
-				BadgesManager::userRemoveBadge($user, 'uvs_reviews', 2);
-			}
+            // Add badges
+            $count = $em->createQueryBuilder()
+                ->select('COUNT(r) as nb')
+                ->from('EtuModuleUVBundle:Review', 'r')
+                ->where('r.sender = :user')
+                ->setParameter('user', $this->getUser()->getId())
+                ->getQuery()
+                ->getSingleScalarResult();
 
-			if ($count >= 4) {
-				BadgesManager::userAddBadge($user, 'uvs_reviews', 3);
-			} else {
-				BadgesManager::userRemoveBadge($user, 'uvs_reviews', 3);
-			}
+            $user = $this->getUser();
 
-			if ($count >= 10) {
-				BadgesManager::userAddBadge($user, 'uvs_reviews', 4);
-			} else {
-				BadgesManager::userRemoveBadge($user, 'uvs_reviews', 4);
-			}
+            if ($count >= 1) {
+                BadgesManager::userAddBadge($user, 'uvs_reviews', 1);
+            } else {
+                BadgesManager::userRemoveBadge($user, 'uvs_reviews', 1);
+            }
 
-			BadgesManager::userPersistBadges($user);
-			$em->persist($user);
-			$em->flush();
+            if ($count >= 2) {
+                BadgesManager::userAddBadge($user, 'uvs_reviews', 2);
+            } else {
+                BadgesManager::userRemoveBadge($user, 'uvs_reviews', 2);
+            }
 
-			$this->get('session')->getFlashBag()->set('message', array(
-				'type' => 'success',
-				'message' => 'uvs.main.sendReview.confirm'
-			));
+            if ($count >= 4) {
+                BadgesManager::userAddBadge($user, 'uvs_reviews', 3);
+            } else {
+                BadgesManager::userRemoveBadge($user, 'uvs_reviews', 3);
+            }
 
-			return $this->redirect($this->generateUrl('uvs_view', array(
-				'slug' => $slug,
-				'name' => $name
-			)));
-		}
+            if ($count >= 10) {
+                BadgesManager::userAddBadge($user, 'uvs_reviews', 4);
+            } else {
+                BadgesManager::userRemoveBadge($user, 'uvs_reviews', 4);
+            }
 
-		return array(
-			'uv' => $uv,
-			'form' => $form->createView(),
-		);
-	}
+            BadgesManager::userPersistBadges($user);
+            $em->persist($user);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->set('message', [
+                'type' => 'success',
+                'message' => 'uvs.main.sendReview.confirm',
+            ]);
+
+            return $this->redirect($this->generateUrl('uvs_view', [
+                'slug' => $slug,
+                'name' => $name,
+            ]));
+        }
+
+        return [
+            'uv' => $uv,
+            'form' => $form->createView(),
+        ];
+    }
 }
-

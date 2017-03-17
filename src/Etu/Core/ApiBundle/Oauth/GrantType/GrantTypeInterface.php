@@ -9,12 +9,14 @@ interface GrantTypeInterface
 {
     /**
      * @param Request $request
+     *
      * @return OauthAccessToken
      */
     public function createToken(Request $request);
 
     /**
      * @param OauthAccessToken $token
+     *
      * @return array
      */
     public function format(OauthAccessToken $token);

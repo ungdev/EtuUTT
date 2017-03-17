@@ -1,50 +1,66 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: services.yml }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+parameters:
+    locale: fr
 
 framework:
     #esi:             ~
-    translator:      { fallback: %locale% }
-    secret:          %secret%
+    translator:      { fallbacks: ["%locale%"] }
+    secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
-        strict_requirements: %kernel.debug%
+        strict_requirements: "%kernel.debug%"
     form:            ~
     csrf_protection: ~
     validation:      { enable_annotations: true }
+    #serializer:      { enable_annotations: true }
     templating:
         engines: ['twig']
-        assets_version: %assets_version%
+#        assets_version: "%version_id%"
     default_locale:  "%locale%"
+    trusted_hosts:   ~
     trusted_proxies: ~
-    session:         ~
+    session:
+        handler_id: session.handler.pdo
     fragments:       ~
+    http_method_override: true
+    assets: ~
 
 # Twig Configuration
 twig:
-    debug:            %kernel.debug%
-    strict_variables: %kernel.debug%
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
     cache:            "%kernel.cache_dir%/twig"
+    form_themes:
+        - 'form/theme-default.html.twig'
 
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   %database_driver%
-        host:     %database_host%
-        port:     %database_port%
-        dbname:   %database_name%
-        user:     %database_user%
-        password: %database_password%
+        driver:   "%database_driver%"
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
         charset:  UTF8
-        # if using pdo_sqlite as your database driver, add the path in parameters.yml
-        # e.g. database_path: %kernel.root_dir%/data/data.db3
-        # path:     %database_path%
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #     path:     "%database_path%"
         mapping_types:
             enum: string
 
     orm:
-        auto_generate_proxy_classes: %kernel.debug%
-
+        auto_generate_proxy_classes: "%kernel.debug%"
+#        naming_strategy: doctrine.orm.naming_strategy.underscore
+#        auto_mapping: true
         entity_managers:
             default:
                 auto_mapping: true
@@ -60,12 +76,6 @@ doctrine:
                         class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
                         enabled: true
 
-# Minifier Assetic filters names
-minifier:
-    filter:
-        name:
-            css: minifier_css
-            js: minifier_js
 
 # Assetic Configuration
 assetic:
@@ -73,19 +83,26 @@ assetic:
     use_controller: false
     bundles: [ ]
     filters:
-        cssrewrite: ~
-        lessphp:
-            file: %kernel.root_dir%/../vendor/oyejorge/less.php/lessc.inc.php
-            apply_to: "\.less$"
+        scssphp:
+            formatter: 'Leafo\ScssPhp\Formatter\Compressed'
+        jsqueeze: ~
+
+
+# Minifier Assetic filters names
+#minifier:
+#    filter:
+#        name:
+#            css: minifier_css
+#            js: minifier_js
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: %mailer_transport%
-    host:      %mailer_host%
-    port:      %mailer_port%
-    username:  %mailer_user%
-    password:  %mailer_password%
-    #spool:     { type: memory }
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    spool:     { type: memory }
+
 
 # KnpPaginator
 knp_paginator:
@@ -101,7 +118,7 @@ knp_paginator:
 
 # Doctrine extensions
 stof_doctrine_extensions:
-    default_locale: %locale%
+    default_locale: "%locale%"
     orm:
         default:
             # Extensions activated
@@ -114,17 +131,6 @@ stof_doctrine_extensions:
             softdeleteable: true
             uploadable:     false
 
-## FMBbcode
-fm_bbcode:
-    emoticon:
-        path: /src/img/emoticons/
-    filter_sets:
-        default_filter:
-            locale: %locale%
-            xhtml: true
-            filters: [ default, block, text, code, image, list, table, quote, video, url ]
-            hooks: [ clickable, emoticon ]
-
 # API Doc
 nelmio_api_doc:
     name: EtuUTT API endpoints reference
@@ -133,10 +139,30 @@ nelmio_api_doc:
             name: access_token
             delivery: query
             custom_endpoint: true
+# API Cross-Origin Resource Sharing configuration
+nelmio_cors:
+    defaults:
+        allow_credentials: false
+        allow_origin: []
+        allow_headers: []
+        allow_methods: []
+        expose_headers: []
+        max_age: 0
+        hosts: []
+        origin_regex: false
+    paths:
+        '^/api/':
+            allow_origin: ['*']
+            allow_methods: ['POST', 'GET', 'OPTIONS']
+            allow_headers: ['*']
+        '^/api/oauth/authorize':
+            allow_origin: []
+            allow_methods: []
+            allow_headers: []
 
 # EtuUTT
 etu_core:
-    domain: etu.utt.fr
+    domain: "%domain%"
     translation:
         languages: ['en', 'fr', 'de']
 
@@ -152,4 +178,11 @@ etu_user:
         path: '/cas/'
         change_session_id: false
 
-
+# Logger
+monolog:
+    channels: ['admin']
+    handlers:
+        admin:
+            type:     stream
+            path:     '%kernel.logs_dir%/admin.log'
+            channels: ['admin']

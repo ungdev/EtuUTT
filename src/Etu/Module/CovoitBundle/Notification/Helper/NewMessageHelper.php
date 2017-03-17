@@ -6,7 +6,7 @@ use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Notification\Helper\HelperInterface;
 
 /**
- * Notification for a new message on a followed covoit
+ * Notification for a new message on a followed covoit.
  */
 class NewMessageHelper implements HelperInterface
 {
@@ -33,12 +33,13 @@ class NewMessageHelper implements HelperInterface
 
     /**
      * @param Notification $notification
+     *
      * @return string
      */
     public function render(Notification $notification)
     {
-        return $this->twig->render('EtuModuleCovoitBundle:Notification:newMessage.html.twig', array(
-            'notif' => $notification
-        ));
+        return $this->twig->render('EtuModuleCovoitBundle:Notification:newMessage.html.twig', [
+            'notif' => $notification,
+        ]);
     }
 }

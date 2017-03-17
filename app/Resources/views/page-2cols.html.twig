@@ -1,66 +1,87 @@
-{% extends '::base.html.twig' %}
+{% extends '::layout-default.html.twig' %}
 
 {% block page %}
-	<section class="page">
-		<div class="container page-container">
+    <section class="page">
+        <div class="container page-container">
 
-			<h2 class="page-title source-sans-pro">
-				{% block titleIcon %}
-					<img src="{{ asset('src/img/titles/flux.png') }}" alt="{{ 'base.page_icon.alt'|trans }}" title="{{ 'base.page_icon.alt'|trans }}" class="page-title-icon" />
-				{% endblock %}
+            <h2 class="page-title source-sans-pro">
+                {% block titleIcon %}
+                    <img src="{{ asset('assets/img/titles/flux.png') }}" alt="{{ 'base.page_icon.alt'|trans }}" title="{{ 'base.page_icon.alt'|trans }}" class="page-title-icon" />
+                {% endblock %}
 
-				{{ block('title') }}
-			</h2>
+                {% block icontitle %}{% block title %}{% endblock %}{% endblock %}
+            </h2>
 
-			{% if message %}
-				<div class="page-alert-mobile alert alert-{{ message.type }}">
-					{{ message.message|trans }}
-				</div>
-			{% endif %}
+            <div id="change-locale-choices">
+              <ul class="list-vertical list-vertical-linked overlay-menu">
+                <li class="first">
+                  <a href="{{ path('change_locale', {'lang': 'fr'}) }}">
+                    <img src="{{ asset('assets/img/lang/fr.png') }}"/>
+                    Français
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ path('change_locale', {'lang': 'en'}) }}">
+                    <img src="{{ asset('assets/img/lang/en.png') }}"/>
+                    English
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ path('change_locale', {'lang': 'de'}) }}">
+                    <img src="{{ asset('assets/img/lang/de.png') }}"/>
+                    Deutsh
+                  </a>
+                </li>
+              </ul>
+            </div>
 
-			<div class="content">
-				{% block content %}{% endblock %}
-			</div>
+            {% if message %}
+                <div class="page-alert-mobile alert alert-{{ message.type }}">
+                    {{ message.message|trans }}
+                </div>
+            {% endif %}
 
-			<div class="sidebar">
-				{% block sidebar %}
-					{{ render_sidebar() }}
-				{% endblock %}
-			</div>
+            <div class="content">
+                {% block content %}{% endblock %}
+            </div>
 
-			<footer class="footer">
-				<p>
-                    {#
-					<a href="#" class="footer-link change-locale">
-						{{ 'base.footer.change_locale'|trans }}
-					</a>
-                    #}
-					<br />
-					<a href="{{ path('page_view', {'slug': 'mentions-legales'}) }}" id="next-change-locale-link" class="footer-link">
-						{{ 'base.footer.legalities'|trans }}
-					</a>
-					<br />
-					<a href="{{ path('page_view', {'slug': 'nous-aider'}) }}" class="footer-link">
-						{{ 'base.footer.help_us'|trans }}
-					</a>
-					<br />
-					<a href="{{ path('devs_panel_index') }}" class="footer-link">
-						{{ 'base.footer.developers'|trans }}
-					</a>
-					{% if app.request.cookies.has('disable_responsive') %}
-						<br />
-						<a href="{{ path('mobile_version') }}" class="footer-link">
-							{{ 'base.footer.mobile_version'|trans }}
-						</a>
-					{% endif %}
-				</p>
-				<p class="clear footer-description">
-					{{ 'base.footer.text'|trans|raw }}
-					<br /><br />
-					{% include '::version.html.twig' %}
-				</p>
-			</footer>
+            <div class="sidebar">
+                {% block sidebar %}
+                    {{ render_sidebar() }}
+                {% endblock %}
+            </div>
 
-		</div>
-	</section>
+            <footer class="footer">
+                <p>
+                    <a href="#" class="footer-link change-locale">
+                        {{ 'base.footer.change_locale'|trans }}
+                    </a>
+                    <br />
+                    <a href="{{ path('page_view', {'slug': 'mentions-legales'}) }}" id="next-change-locale-link" class="footer-link">
+                        {{ 'base.footer.legalities'|trans }}
+                    </a>
+                    <br />
+                    <a href="{{ path('page_view', {'slug': 'nous-aider'}) }}" class="footer-link">
+                        {{ 'base.footer.help_us'|trans }}
+                    </a>
+                    <br />
+                    <a href="{{ path('devs_panel_index') }}" class="footer-link">
+                        {{ 'base.footer.developers'|trans }}
+                    </a>
+                    {% if app.request.cookies.has('disable_responsive') %}
+                        <br />
+                        <a href="{{ path('mobile_version') }}" class="footer-link">
+                            {{ 'base.footer.mobile_version'|trans }}
+                        </a>
+                    {% endif %}
+                </p>
+                <p class="clear footer-description">
+                    {{ 'base.footer.text'|trans|raw }}
+                    <br /><br />
+                    {% include '::version.html.twig' %}
+                </p>
+            </footer>
+
+        </div>
+    </section>
 {% endblock %}

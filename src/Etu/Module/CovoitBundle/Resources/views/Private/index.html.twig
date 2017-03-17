@@ -3,7 +3,7 @@
 {% block title %}{{ 'covoit.private_index.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-    <img src="{{ asset('src/img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block stylesheets %}
@@ -86,7 +86,7 @@
                         {{ covoit.date|format_date }}
                     </span>
                     <br />
-                    {{ covoit.startHour|format_time(null, null, null, constant('IntlDateFormatter::SHORT')) }}
+                    {{ covoit.startHour|format_time(null, null, 'Europe/Paris', constant('IntlDateFormatter::SHORT')) }}
                 </div>
 
                 <div class="item-infos">

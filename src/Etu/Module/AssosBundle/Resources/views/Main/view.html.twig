@@ -5,99 +5,116 @@
 {% block meta_desc %}{{ orga.descriptionShort }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/assos.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/assos.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block sidebar %}
-	{% if app.user %}
-		{{ render_subscribe_button('orga', orga.id) }}
-	{% endif %}
+    {% if is_granted('ROLE_CORE_SUBSCRIBE') %}
+        {{ render_subscribe_button('orga', orga.id) }}
+    {% endif %}
 
-	{{ parent() }}
+    {{ parent() }}
 {% endblock %}
 
 {% block content %}
-	<ul class="nav nav-tabs page-tabs">
-		<li>
+    <ul class="nav nav-tabs page-tabs">
+        <li>
             {% if isElus %}
-			<a href="{{ path('elus_index') }}">
+            <a href="{{ path('elus_index') }}">
             {% else %}
             <a href="{{ path('orgas_index') }}">
             {% endif %}
-				<i class="icon-chevron-left"></i>
-				{{ 'assos.main.view.back'|trans }}
-			</a>
-		</li>
-		{% if app.user %}
-		<li class="pull-right">
-			<a href="{{ path('orgas_members', {'login': orga.login}) }}">
-				{{ 'assos.main.menu.members'|trans }}
-			</a>
-		</li>
-		{% endif %}
-		<li class="pull-right active page-tabs-resolved-active">
-			<a href="{{ path('orgas_view', {'login': orga.login}) }}">
-				{{ 'assos.main.menu.description'|trans }}
-			</a>
-		</li>
-	</ul>
+                <i class="icon-chevron-left"></i>
+                {{ 'assos.main.view.back'|trans }}
+            </a>
+        </li>
+        {% if is_granted('ROLE_ASSOS_MEMBERS') %}
+        <li class="pull-right">
+            <a href="{{ path('orgas_members', {'login': orga.login}) }}">
+                {{ 'assos.main.menu.members'|trans }}
+            </a>
+        </li>
+        {% endif %}
+        <li class="pull-right active page-tabs-resolved-active">
+            <a href="{{ path('orgas_view', {'login': orga.login}) }}">
+                {{ 'assos.main.menu.description'|trans }}
+            </a>
+        </li>
 
-	<div class="padding20-all">
+        {% if etu.modules.isEnabled('wiki') %}
+            {% if wikirights.getHomeSlug(orga) %}
+                <li class="pull-right">
+                    <a href="{{ path('wiki_view', {'slug': wikirights.getHomeSlug(orga), 'organization': orga.login}) }}">
+                        {{ 'assos.main.menu.wiki'|trans }}
+                    </a>
+                </li>
+            {% else %}
+                <li class="pull-right">
+                    <a href="{{ path('wiki_index', {'organization': orga.login}) }}">
+                        {{ 'assos.main.menu.wiki'|trans }}
+                    </a>
+                </li>
+            {% endif %}
+        {% endif %}
 
-		<div class="row-fluid">
-			<div class="span3">
-				<div class="profileEdit-avatar">
-					<img src="{{ asset('uploads/logos/'~orga.logo) }}" alt="{{ orga.name }}" title="{{ orga.name }}" />
-				</div>
+    </ul>
 
-				<hr />
+    <div class="padding20-all">
 
-				<p>
-					<strong>{{ 'assos.main.view.name'|trans }}</strong><br />
-					{{ orga.name }}
-				</p>
+        <div class="row-fluid">
+            <div class="span3">
+                <div class="profileEdit-avatar">
+                    <img src="{{ asset('uploads/logos/'~orga.logo) }}" alt="{{ orga.name }}" title="{{ orga.name }}" />
+                </div>
 
-				{% if orga.president %}
-					<p>
-						<strong>{{ 'assos.main.members.president'|trans }}</strong><br />
-						{% if app.user %}
-							<a href="{{ path('user_view', {'login': orga.president.login}) }}">
-								{{ orga.president.fullName }}
-							</a>
-						{% else %}
-							{{ orga.president.fullName }}
-						{% endif %}
-					</p>
-				{% endif %}
+                <hr />
 
-				{% if orga.contactMail %}
-				<p>
-					<strong>{{ 'assos.main.view.contactMail'|trans }}</strong><br />
-					<a href="mailto:{{ orga.contactMail }}">{{ orga.contactMail }}</a>
-				</p>
-				{% endif %}
+                <p>
+                    <strong>{{ 'assos.main.view.name'|trans }}</strong><br />
+                    {{ orga.name }}
+                </p>
 
-				{% if orga.website %}
-					<p>
-						<strong>{{ 'assos.main.view.website'|trans }}</strong><br />
-						<a href="{{ orga.website }}">{{ orga.website }}</a>
-					</p>
-				{% endif %}
+                {% if orga.president %}
+                    <p>
+                        <strong>{{ 'assos.main.members.president'|trans }}</strong><br />
+                        {% if is_granted('ROLE_ASSOS_MEMBERS') %}
+                            <a href="{{ path('user_view', {'login': orga.president.login}) }}">
+                                {{ orga.president.fullName }}
+                            </a>
+                        {% else %}
+                            {{ orga.president.fullName }}
+                        {% endif %}
+                    </p>
+                {% endif %}
 
-				{% if orga.contactPhone %}
-					<p>
-						<strong>{{ 'assos.main.view.contactPhone'|trans }}</strong><br />
-						{{ orga.contactPhone }}
-					</p>
-				{% endif %}
-			</div>
-			<div class="span9">
-				{% if orga.description %}
-					{{ orga.description|bbcode_filter('default_filter') }}
-				{% else %}
-					{{ orga.descriptionShort }}
-				{% endif %}
-			</div>
-		</div>
-	</div>
+                {% if orga.contactMail %}
+                <p>
+                    <strong>{{ 'assos.main.view.contactMail'|trans }}</strong><br />
+                    <a href="mailto:{{ orga.contactMail }}">{{ orga.contactMail }}</a>
+                </p>
+                {% endif %}
+
+                {% if orga.website %}
+                    <p>
+                        <strong>{{ 'assos.main.view.website'|trans }}</strong><br />
+                        <a href="{{ orga.website }}">{{ orga.website }}</a>
+                    </p>
+                {% endif %}
+
+                {% if orga.contactPhone %}
+                    <p>
+                        <strong>{{ 'assos.main.view.contactPhone'|trans }}</strong><br />
+                        {{ orga.contactPhone }}
+                    </p>
+                {% endif %}
+            </div>
+            <div class="span9">
+                {% if orga.description %}
+                    {{ orga.description|purify }}
+                {% else %}
+                    {{ orga.descriptionShort }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

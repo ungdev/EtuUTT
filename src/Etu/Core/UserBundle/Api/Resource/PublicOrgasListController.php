@@ -8,10 +8,10 @@ use Etu\Core\ApiBundle\Framework\Controller\ApiController;
 use Etu\Core\ApiBundle\Framework\Embed\EmbedBag;
 use Etu\Core\UserBundle\Entity\Organization;
 use Knp\Component\Pager\Pagination\SlidingPagination;
-use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class PublicOrgasListController extends ApiController
 {
@@ -70,9 +70,9 @@ class PublicOrgasListController extends ApiController
                 'previous' => $previous,
                 'next' => $next,
             ],
-            'embed' => $embedBag->getMap([ 'members' ]),
-            'data' => $this->get('etu.api.orga.transformer')->transform($pagination->getItems(), $embedBag)
-        ]);
+            'embed' => $embedBag->getMap(['members']),
+            'data' => $this->get('etu.api.orga.transformer')->transform($pagination->getItems(), $embedBag),
+        ], 200, [], $request);
     }
 
     /**
@@ -89,12 +89,12 @@ class PublicOrgasListController extends ApiController
      * @Route("/public/orgas/{login}", name="api_public_orgas_view")
      * @Method("GET")
      */
-    public function viewAction(Organization $orga)
+    public function viewAction(Organization $orga, Request $request)
     {
         return $this->format([
-            'embed' => [ 'members' => true ],
-            'data' => $this->get('etu.api.orga.transformer')->transform($orga, new EmbedBag([ 'members' ]))
-        ]);
+            'embed' => ['members' => true],
+            'data' => $this->get('etu.api.orga.transformer')->transform($orga, new EmbedBag(['members'])),
+        ], 200, [], $request);
     }
 
     /**
@@ -114,7 +114,7 @@ class PublicOrgasListController extends ApiController
     public function membersAction(Organization $orga)
     {
         return $this->format([
-            'data' => $this->get('etu.api.orga_member.transformer')->transform($orga->getMemberships()->toArray(), new EmbedBag([ 'user' ]))
+            'data' => $this->get('etu.api.orga_member.transformer')->transform($orga->getMemberships()->toArray(), new EmbedBag(['user'])),
         ]);
     }
 

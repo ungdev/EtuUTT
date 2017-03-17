@@ -2,20 +2,187 @@
 security:
 
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_ORGA:
+            - ROLE_CORE_PROFIL # Can read public profiles
+            - ROLE_CORE_ORGAS # Can read organization list of an user
+            - ROLE_CORE_SCHEDULE # Can read others schedule
+            - ROLE_ASSOS_MEMBERS # Read assos member list
+            - ROLE_EVENTS_INTERNAL # can read Private/internal calendar and events
+            - ROLE_TROMBI # Can search on trombi
+            - ROLE_EVENTS_INTERNAL # can read Private/internal calendar and events
+
+        ROLE_USER:
+
+        ROLE_STUDENT:
+            - ROLE_CORE_SUBSCRIBE # User can receive and use subscriptions
+            - ROLE_CORE_PROFIL # Can read public profiles except 'Nickname', 'hobbies' and 'Formerly'
+            - ROLE_CORE_PROFIL_HOBBIES # Can read profiles 'Nickname', 'hobbies' and 'Formerly'
+            - ROLE_CORE_MEMBERSHIPS # Can be in an association and edit the association if authorized
+            - ROLE_CORE_ORGAS # Can read organization list of an user
+            - ROLE_CORE_SCHEDULE # Can read others schedule
+            - ROLE_CORE_SCHEDULE_OWN # Can read his own schedule
+            - ROLE_CORE_HOMEPAGE # Can see the private homepage
+            - ROLE_ARGENTIQUE_READ # View pictures
+            - ROLE_ASSOS_MEMBERS # Read assos member list
+            - ROLE_BUGS # read bugs list
+            - ROLE_BUGS_POST # Post on bugs list
+            - ROLE_COVOIT # Can read covoit bundle
+            - ROLE_COVOIT_EDIT # Can answer, post and set alerts on covoit bundle
+            - ROLE_CUMUL # Can cumul timetables
+            - ROLE_DAYMAIL_EDIT # Can edit daymail of his organization if authorized
+            - ROLE_EVENTS_INTERNAL # can read Private/internal calendar and events
+            - ROLE_EVENTS_ANSWER # Can see answer list
+            - ROLE_EVENTS_ANSWER_POST # Can post an answer
+            - ROLE_EVENTS_EDIT # Can edit event of his organization if authorized
+            - ROLE_FORUM # Can read forum
+            - ROLE_FORUM_POST # Can post on forum
+            - ROLE_TROMBI # Can search on trombi
+            - ROLE_UPLOAD # Can upload image to post them
+            - ROLE_UV # Read UV list and description but not reviews
+            - ROLE_UV_REVIEW # Can read UV review and annals
+            - ROLE_UV_REVIEW_POST # Can post UV review and old exams
+            - ROLE_API_USE # Can use api with external applications
+            - ROLE_API_CREATE # Can create external application
+            - ROLE_WIKI_EDIT # Can write on the wiki
+
+        ROLE_STAFFUTT:
+            - ROLE_CORE_HOMEPAGE # Can see the private homepage
+            - ROLE_CORE_SCHEDULE # Can read others schedule
+            - ROLE_CORE_MEMBERSHIPS # Can be in an association and edit the association if authorized
+            - ROLE_CORE_ORGAS # Can read organization list of an user
+            - ROLE_CORE_SUBSCRIBE # User can receive and use subscriptions
+            - ROLE_ASSOS_MEMBERS # Read assos member list
+            - ROLE_BUGS # read bugs list
+            - ROLE_BUGS_POST # Post on bugs list
+            - ROLE_COVOIT # Can read covoit bundle
+            - ROLE_COVOIT_EDIT # Can answer, post and set alerts on covoit bundle
+            - ROLE_CUMUL # Can cumul timetables
+            - ROLE_DAYMAIL_EDIT # Can edit daymail of his organization if authorized
+            - ROLE_EVENTS_INTERNAL # can read Private/internal calendar and events
+            - ROLE_EVENTS_EDIT # Can edit event of his organization if authorized
+            - ROLE_TROMBI # Can search on trombi
+            - ROLE_CORE_PROFIL # Can read public profiles except 'Nickname', 'hobbies' and 'Formerly'
+            - ROLE_UPLOAD # Can upload image to post them
+            - ROLE_UV # Read UV list and description but not reviews
+            - ROLE_API_CREATE # Can create external application
+            - ROLE_WIKI_EDIT # Can write on the wiki
+            - ROLE_API_USE # Can use api with external applications
+
+        ROLE_EXTERNAL:
+            - ROLE_CORE_MEMBERSHIPS # Can be in an association and edit the association if authorized
+            - ROLE_CORE_ORGAS # Can read organization list of an user
+            - ROLE_CORE_SUBSCRIBE # User can receive and use subscriptions
+            - ROLE_ASSOS_MEMBERS # Read assos member list
+            - ROLE_BUGS # read bugs list
+            - ROLE_BUGS_POST # Post on bugs list
+            - ROLE_COVOIT # Can read covoit bundle
+            - ROLE_COVOIT_EDIT # Can answer, post and set alerts on covoit bundle
+            - ROLE_DAYMAIL_EDIT # Can edit daymail of his organization if authorized
+            - ROLE_EVENTS_INTERNAL # can read Private/internal calendar and events
+            - ROLE_EVENTS_EDIT # Can edit event of his organization if authorized
+            - ROLE_TROMBI # Can search on trombi
+            - ROLE_CORE_PROFIL # Can read public profiles except 'Nickname', 'hobbies' and 'Formerly'
+            - ROLE_UPLOAD # Can upload image to post them
+            - ROLE_UV # Read UV list and description but not reviews
+            - ROLE_CORE_HOMEPAGE # Can see the private homepage
+            - ROLE_API_CREATE # Can create external application
+            - ROLE_WIKI_EDIT # Can write on the wiki
+            - ROLE_API_USE # Can use api with external applications
+
+
+        ROLE_ADMIN:
+            - ROLE_CORE_ADMIN_HOME # Can see admin homepage
+            - ROLE_CORE_ADMIN_SERVER # Can access server status page
+            - ROLE_CORE_ADMIN_PROFIL # Can edit others profil, put in read only mode
+            - ROLE_CORE_ADMIN_MODULES # Can edit loaded modules
+            - ROLE_CORE_ADMIN_PAGES # Can edit static pages
+            - ROLE_ARGENTIQUE_ADMIN # Read documentation to upload pictures
+            - ROLE_BUGS_ADMIN # Administrate bugs list
+            - ROLE_FORUM_ADMIN # Can moderate forum
+            - ROLE_UV_REVIEW_ADMIN # Can moderate and remove UV review and old exams
+            - ROLE_WIKI_ADMIN # Can lock, read and write on every admin page on the wiki
+
+        ROLE_SUPERADMIN:
+            - ROLE_ADMIN
+            - ROLE_ALLOWED_TO_SWITCH # Can connect as another user
+            - ROLE_CORE_ADMIN_ROLES # Can give other peoples roles
+
+        ROLE_EDITOR:
+            - ROLE_CORE_ADMIN_HOME # Can see admin homepage
+            - ROLE_CORE_ADMIN_PAGES # Can edit static pages
+            - ROLE_WIKI_ADMIN # Can lock, read and write on every admin page on the wiki
+        ROLE_DEVELOPER:
+            - ROLE_BUGS_ADMIN # Administrate bugs list
+        ROLE_MODERATOR:
+            - ROLE_CORE_ADMIN_HOME # Can see admin homepage
+            - ROLE_FORUM_ADMIN # Can moderate forum
+            - ROLE_UV_REVIEW_ADMIN # Can moderate and remove UV review and old exams
+
+        ROLE_ARGENTIQUE:
+            - ROLE_CORE_ADMIN_HOME # Can see admin homepage
+            - ROLE_ARGENTIQUE_ADMIN
+
+        # If readonly or ban is set, user will have only this role and :
+        # - ROLE_USER
+        # - ROLE_CAS
+        # - ROLE_EXTERNAL
+        # Any other role, even ROLE_ADMIN, will be ignored
+        ROLE_BANNED:
+            # Nothing :)
+        ROLE_READONLY:
+            - ROLE_CORE_SUBSCRIBE # User can receive and use subscriptions
+            - ROLE_CORE_PROFIL # Can read public profiles except 'Nickname', 'hobbies' and 'Formerly'
+            - ROLE_CORE_PROFIL_HOBBIES # Can read profiles 'Nickname', 'hobbies' and 'Formerly'
+            - ROLE_CORE_ORGAS # Can read organization list of an user
+            - ROLE_CORE_SCHEDULE # Can read others schedule
+            - ROLE_CORE_SCHEDULE_OWN # Can read his own schedule
+            - ROLE_CORE_HOMEPAGE # Can see the private homepage
+            - ROLE_ARGENTIQUE_READ # View pictures
+            - ROLE_ASSOS_MEMBERS # Read assos member list
+            - ROLE_BUGS # read bugs list
+            - ROLE_COVOIT # Can read covoit bundle
+            - ROLE_CUMUL # Can cumul timetables
+            - ROLE_EVENTS_INTERNAL # can read Private/internal calendar and events
+            - ROLE_EVENTS_ANSWER # Can see answer list
+            - ROLE_FORUM # Can read forum
+            - ROLE_TROMBI # Can search on trombi
+            - ROLE_UV # Read UV list and description but not reviews
+            - ROLE_UV_REVIEW # Can read UV review and annals
+
+
+    encoders:
+        Etu\Core\UserBundle\Entity\User:
+            algorithm: bcrypt
+            cost: 12
 
     providers:
-        in_memory:
-            memory:
-                users: ~
+        passwords:
+            entity:
+                class: Etu\Core\UserBundle\Entity\User
+                property: login
+        orga:
+            entity:
+                class: Etu\Core\UserBundle\Entity\Organization
+                property: login
+        every_user:
+            id: etu.user.every_user.provider
 
     firewalls:
-        secured_area:
-            pattern:    ^/demo/secured/
-            form_login:
-                check_path: _security_check
-                login_path: _demo_login
+        default:
+            provider: every_user
+            switch_user: true
+            access_denied_url: /forbidden
+            anonymous: ~
             logout:
-                path:   _demo_logout
-                target: _demo
+                path:   /user/logout/external
+                target: /user/logout
+            cas: true
+            form_login:
+                login_path: user_connect
+                check_path: user_connect_external
+                provider: passwords
+            remember_me:
+                secret:   '%secret%'
+                lifetime: 31536000 # 1 year in seconds
+                path:     /
+                always_remember_me: true

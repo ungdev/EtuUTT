@@ -3,8 +3,8 @@
 namespace Etu\Module\UVBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
@@ -13,26 +13,26 @@ use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
  */
 class UV
 {
-	const CATEGORY_CS = 'cs';
-	const CATEGORY_TM = 'tm';
-	const CATEGORY_CT = 'ct';
-	const CATEGORY_ME = 'me';
-	const CATEGORY_EC = 'ec';
-	const CATEGORY_ST = 'st';
-	const CATEGORY_OTHER = 'other';
+    public const CATEGORY_CS = 'cs';
+    public const CATEGORY_TM = 'tm';
+    public const CATEGORY_CT = 'ct';
+    public const CATEGORY_ME = 'me';
+    public const CATEGORY_EC = 'ec';
+    public const CATEGORY_ST = 'st';
+    public const CATEGORY_OTHER = 'other';
 
-	public static $categories = array(
-		self::CATEGORY_CS,
-		self::CATEGORY_TM,
-		self::CATEGORY_CT,
-		self::CATEGORY_ME,
-		self::CATEGORY_EC,
-		self::CATEGORY_ST,
-		self::CATEGORY_OTHER,
-	);
+    public static $categories = [
+        self::CATEGORY_CS,
+        self::CATEGORY_TM,
+        self::CATEGORY_CT,
+        self::CATEGORY_ME,
+        self::CATEGORY_EC,
+        self::CATEGORY_ST,
+        self::CATEGORY_OTHER,
+    ];
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -40,78 +40,78 @@ class UV
      */
     protected $id;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(type="string", length=20, nullable = true)
-	 */
-	protected $category = self::CATEGORY_OTHER;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(type="string", length=10)
-	 */
-	protected $code;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(type="string", length=10)
-	 */
-	protected $slug;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(type="string", length=100)
-	 */
-	protected $name;
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=20, nullable = true)
+     */
+    protected $category = self::CATEGORY_OTHER;
 
     /**
-     * @var integer
+     * @var string
+     *
+     * @ORM\Column(type="string", length=10)
+     */
+    protected $code;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=10)
+     */
+    protected $slug;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=100)
+     */
+    protected $name;
+
+    /**
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
     protected $cm;
 
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(type="integer")
-	 */
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
     protected $td;
 
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(type="integer")
-	 */
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
     protected $tp;
 
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(type="integer")
-	 */
-	protected $the;
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $the;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
     protected $automne;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
     protected $printemps;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="smallint")
      */
@@ -122,59 +122,59 @@ class UV
      */
     protected $objectifs;
 
-	/**
-	 * @ORM\Column(type="text")
-	 */
-	protected $programme;
-
-	/**
-	 * @ORM\Column(type="boolean")
-	 */
-	protected $isOld = false;
-
-	/**
-	 * @var \DateTime
-	 *
-	 * @Gedmo\Timestampable(on="create")
-	 * @ORM\Column(type="datetime")
-	 */
-	protected $createdAt;
-
-	/**
-	 * @var \DateTime
-	 *
-	 * @Gedmo\Timestampable(on="update")
-	 * @ORM\Column(type="datetime")
-	 */
-	protected $updatedAt;
-
-	/**
-	 * @var \DateTime $deletedAt
-	 *
-	 * @ORM\Column(type="datetime", nullable = true)
-	 */
-	protected $deletedAt;
-
-	/**
-	 * @var Review[] $reviews
-	 *
-	 * @ORM\OneToMany(targetEntity="Review", mappedBy="uv")
-	 * @ORM\JoinColumn()
-	 */
-	protected $reviews;
-
-	/**
-	 * @var Comment[] $comments
-	 *
-	 * @ORM\OneToMany(targetEntity="Comment", mappedBy="uv")
-	 * @ORM\JoinColumn()
-	 */
-	protected $comments;
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $programme;
 
     /**
-     * Get id
+     * @ORM\Column(type="boolean")
+     */
+    protected $isOld = false;
+
+    /**
+     * @var \DateTime
      *
-     * @return integer
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    protected $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+     */
+    protected $updatedAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable = true)
+     */
+    protected $deletedAt;
+
+    /**
+     * @var Review[]
+     *
+     * @ORM\OneToMany(targetEntity="Review", mappedBy="uv")
+     * @ORM\JoinColumn()
+     */
+    protected $reviews;
+
+    /**
+     * @var Comment[]
+     *
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="uv")
+     * @ORM\JoinColumn()
+     */
+    protected $comments;
+
+    /**
+     * Get id.
+     *
+     * @return int
      */
     public function getId()
     {
@@ -182,9 +182,10 @@ class UV
     }
 
     /**
-     * Set category
+     * Set category.
      *
      * @param string $category
+     *
      * @return UV
      */
     public function setCategory($category)
@@ -195,7 +196,7 @@ class UV
     }
 
     /**
-     * Get category
+     * Get category.
      *
      * @return string
      */
@@ -205,21 +206,22 @@ class UV
     }
 
     /**
-     * Set code
+     * Set code.
      *
      * @param string $code
+     *
      * @return UV
      */
     public function setCode($code)
     {
         $this->code = $code;
-	    $this->slug = StringManipulationExtension::slugify($this->code);
+        $this->slug = StringManipulationExtension::slugify($this->code);
 
         return $this;
     }
 
     /**
-     * Get code
+     * Get code.
      *
      * @return string
      */
@@ -229,9 +231,10 @@ class UV
     }
 
     /**
-     * Set slug
+     * Set slug.
      *
      * @param string $slug
+     *
      * @return UV
      */
     public function setSlug($slug)
@@ -242,7 +245,7 @@ class UV
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
      * @return string
      */
@@ -252,9 +255,10 @@ class UV
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return UV
      */
     public function setName($name)
@@ -265,7 +269,7 @@ class UV
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -275,9 +279,10 @@ class UV
     }
 
     /**
-     * Set cm
+     * Set cm.
      *
-     * @param integer $cm
+     * @param int $cm
+     *
      * @return UV
      */
     public function setCm($cm)
@@ -288,9 +293,9 @@ class UV
     }
 
     /**
-     * Get cm
+     * Get cm.
      *
-     * @return integer
+     * @return int
      */
     public function getCm()
     {
@@ -298,9 +303,10 @@ class UV
     }
 
     /**
-     * Set td
+     * Set td.
      *
-     * @param integer $td
+     * @param int $td
+     *
      * @return UV
      */
     public function setTd($td)
@@ -311,9 +317,9 @@ class UV
     }
 
     /**
-     * Get td
+     * Get td.
      *
-     * @return integer
+     * @return int
      */
     public function getTd()
     {
@@ -321,9 +327,10 @@ class UV
     }
 
     /**
-     * Set tp
+     * Set tp.
      *
-     * @param integer $tp
+     * @param int $tp
+     *
      * @return UV
      */
     public function setTp($tp)
@@ -334,9 +341,9 @@ class UV
     }
 
     /**
-     * Get tp
+     * Get tp.
      *
-     * @return integer
+     * @return int
      */
     public function getTp()
     {
@@ -344,9 +351,10 @@ class UV
     }
 
     /**
-     * Set the
+     * Set the.
      *
-     * @param integer $the
+     * @param int $the
+     *
      * @return UV
      */
     public function setThe($the)
@@ -357,9 +365,9 @@ class UV
     }
 
     /**
-     * Get the
+     * Get the.
      *
-     * @return integer
+     * @return int
      */
     public function getThe()
     {
@@ -367,9 +375,10 @@ class UV
     }
 
     /**
-     * Set automne
+     * Set automne.
      *
-     * @param boolean $automne
+     * @param bool $automne
+     *
      * @return UV
      */
     public function setAutomne($automne)
@@ -380,9 +389,9 @@ class UV
     }
 
     /**
-     * Get automne
+     * Get automne.
      *
-     * @return boolean
+     * @return bool
      */
     public function getAutomne()
     {
@@ -390,9 +399,10 @@ class UV
     }
 
     /**
-     * Set printemps
+     * Set printemps.
      *
-     * @param boolean $printemps
+     * @param bool $printemps
+     *
      * @return UV
      */
     public function setPrintemps($printemps)
@@ -403,9 +413,9 @@ class UV
     }
 
     /**
-     * Get printemps
+     * Get printemps.
      *
-     * @return boolean
+     * @return bool
      */
     public function getPrintemps()
     {
@@ -413,9 +423,10 @@ class UV
     }
 
     /**
-     * Set credits
+     * Set credits.
      *
-     * @param integer $credits
+     * @param int $credits
+     *
      * @return UV
      */
     public function setCredits($credits)
@@ -426,9 +437,9 @@ class UV
     }
 
     /**
-     * Get credits
+     * Get credits.
      *
-     * @return integer
+     * @return int
      */
     public function getCredits()
     {
@@ -436,9 +447,10 @@ class UV
     }
 
     /**
-     * Set objectifs
+     * Set objectifs.
      *
      * @param string $objectifs
+     *
      * @return UV
      */
     public function setObjectifs($objectifs)
@@ -449,7 +461,7 @@ class UV
     }
 
     /**
-     * Get objectifs
+     * Get objectifs.
      *
      * @return string
      */
@@ -459,9 +471,10 @@ class UV
     }
 
     /**
-     * Set programme
+     * Set programme.
      *
      * @param string $programme
+     *
      * @return UV
      */
     public function setProgramme($programme)
@@ -472,7 +485,7 @@ class UV
     }
 
     /**
-     * Get programme
+     * Get programme.
      *
      * @return string
      */
@@ -482,9 +495,10 @@ class UV
     }
 
     /**
-     * Set isOld
+     * Set isOld.
      *
-     * @param boolean $isOld
+     * @param bool $isOld
+     *
      * @return UV
      */
     public function setIsOld($isOld)
@@ -495,9 +509,9 @@ class UV
     }
 
     /**
-     * Get isOld
+     * Get isOld.
      *
-     * @return boolean
+     * @return bool
      */
     public function getIsOld()
     {

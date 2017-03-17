@@ -7,11 +7,12 @@ use Etu\Core\UserBundle\Entity\Organization;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 
 class CreateOrgaCommand extends ContainerAwareCommand
 {
     /**
-     * Configure the command
+     * Configure the command.
      */
     protected function configure()
     {
@@ -21,14 +22,14 @@ class CreateOrgaCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Input\InputInterface   $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return void
+     *
      * @throws \RuntimeException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getHelperSet()->get('dialog');
+        $helper = $this->getHelper('question');
 
         $output->writeln(
             '
@@ -42,8 +43,8 @@ This command helps you to create an organization using the command.
         $em = $this->getContainer()->get('doctrine')->getManager();
 
         $orga = new Organization();
-        $orga->setName($dialog->ask($output, 'Name: '));
-        $orga->setLogin($dialog->ask($output, 'Identifier: '));
+        $orga->setName($helper->ask($input, $output, new Question('Name: ')));
+        $orga->setLogin($helper->ask($input, $output, new Question('Identifier: ')));
 
         $em->persist($orga);
         $em->flush();

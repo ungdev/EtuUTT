@@ -9,12 +9,12 @@ class ImageResponse extends Response
 {
     /**
      * @param Image $image
-     * @param int $format
+     * @param int   $format
      */
     public function __construct(Image $image, $format)
     {
         parent::__construct($image->get($format), 200, [
-            'Content-type' => 'image/' . $format
+            'Content-type' => 'image/'.$format,
         ]);
     }
 }

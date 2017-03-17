@@ -1,21 +1,22 @@
-
 trombi:
-    main:
-        index:
-            title: Group photo
-            uncomplete_profile:
-                title: Your profile is incomplete
-                desc: Your profile must be complete (private or public) in order to use the XXX
-                link: My account
-            search_title: Search for a student
-            search: Search
-            more: More criteriasPlus de critères
-            name: Name
-            studentId: Student ID
-            uv: Courses (seperated with commas)
-            phone: Phone number
-            personnalMail: Personal e-mail
-            branche: Branche
-            explainations: Use the above form to search
-            no_results: No results
-            count: %count% result|%count% results
+  main:
+    index:
+      branche: Major
+      count: "%count% result|%count% results"
+      explainations: "Use the above form to search"
+      less_options: "Less options"
+      more: "More criteria"
+      more_options: "More options"
+      name: "First name, surname or nickname"
+      no_results: "No results"
+      personnalMail: "Personal e-mail"
+      phone: "Phone number"
+      search: Search
+      search_title: "Search for a student"
+      studentId: "Student ID"
+      title: Directory
+      uncomplete_profile:
+        desc: "Your profile must be complete (private or public) in order to use the directory"
+        link: "My account"
+        title: "Your profile is incomplete"
+      uv: "Courses (seperated with commas)"

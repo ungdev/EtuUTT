@@ -5,11 +5,11 @@ namespace Etu\Module\CovoitBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\CovoitBundle\Entity\CovoitAlert;
-use Symfony\Component\HttpFoundation\Request;
-
-// Import annotations
+use Etu\Module\CovoitBundle\Form\CovoitAlertType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+// Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/covoiturage/private/alerts")
@@ -20,12 +20,12 @@ class AlertsController extends Controller
     /**
      * @Route("/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="covoiturage_my_alerts")
      * @Template()
+     *
+     * @param mixed $page
      */
     public function indexAction($page = 1)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_COVOIT_EDIT');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -44,7 +44,7 @@ class AlertsController extends Controller
 
         return [
             'pagination' => $covoits,
-            'today' => new \DateTime()
+            'today' => new \DateTime(),
         ];
     }
 
@@ -54,9 +54,7 @@ class AlertsController extends Controller
      */
     public function createAction(Request $request)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_COVOIT_EDIT');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -64,19 +62,20 @@ class AlertsController extends Controller
         $alert = new CovoitAlert();
         $alert->setUser($this->getUser());
 
-        $form = $this->createForm($this->get('etu.covoit.form.alert'), $alert);
+        $form = $this->createForm(CovoitAlertType::class, $alert);
 
-        if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($alert);
             $em->flush();
 
             // Add current user as subscriber of the specific alert
             $this->getSubscriptionsManager()->subscribe($this->getUser(), 'covoit-alert', $alert->getId());
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
-                'message' => 'covoit.messages.alert_created'
-            ));
+                'message' => 'covoit.messages.alert_created',
+            ]);
 
             return $this->redirect($this->generateUrl('covoiturage_my_alerts'));
         }
@@ -89,26 +88,28 @@ class AlertsController extends Controller
     /**
      * @Route("/{id}/edit", name="covoiturage_my_alerts_edit")
      * @Template()
+     *
+     * @param mixed $id
      */
-    public function editAction(Request $request, CovoitAlert $alert)
+    public function editAction(Request $request, $id)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_COVOIT_EDIT');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+        $alert = $em->getRepository('EtuModuleCovoitBundle:CovoitAlert')->find($id);
 
-        $form = $this->createForm($this->get('etu.covoit.form.alert'), $alert);
+        $form = $this->createForm(CovoitAlertType::class, $alert);
 
-        if ($request->getMethod() == 'POST' && $form->submit($alert)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($alert);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                     'type' => 'success',
-                    'message' => 'covoit.messages.alert_edited'
-                ));
+                    'message' => 'covoit.messages.alert_edited',
+                ]);
 
             return $this->redirect($this->generateUrl('covoiturage_my_alerts'));
         }
@@ -121,15 +122,16 @@ class AlertsController extends Controller
 
     /**
      * @Route("/{id}/delete", name="covoiturage_my_alerts_delete")
+     *
+     * @param mixed $id
      */
-    public function deleteAction(CovoitAlert $alert)
+    public function deleteAction($id)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_COVOIT_EDIT');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+        $alert = $em->getRepository('EtuModuleCovoitBundle:CovoitAlert')->find($id);
 
         // Add current user as subscriber of the specific alert
         $this->getSubscriptionsManager()->unsubscribe($this->getUser(), 'covoit-alert', $alert->getId());
@@ -137,10 +139,10 @@ class AlertsController extends Controller
         $em->remove($alert);
         $em->flush();
 
-        $this->get('session')->getFlashBag()->set('message', array(
+        $this->get('session')->getFlashBag()->set('message', [
             'type' => 'success',
-            'message' => 'covoit.messages.alert_deleted'
-        ));
+            'message' => 'covoit.messages.alert_deleted',
+        ]);
 
         return $this->redirect($this->generateUrl('covoiturage_my_alerts'));
     }

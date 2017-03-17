@@ -18,7 +18,7 @@ class View
     protected $id;
 
     /**
-     * @var User $user
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
      * @ORM\JoinColumn(onDelete="SET NULL")
@@ -26,23 +26,22 @@ class View
     protected $user;
 
     /**
-     * @var Thread $thread
+     * @var Thread
      *
-     * @ORM\ManyToOne(targetEntity="thread")
+     * @ORM\ManyToOne(targetEntity="thread", inversedBy="viewed")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     protected $thread;
 
-
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -51,6 +50,7 @@ class View
 
     /**
      * @param int $user
+     *
      * @return View
      */
     public function setUser($user)
@@ -70,6 +70,7 @@ class View
 
     /**
      * @param int $thread
+     *
      * @return View
      */
     public function setThread($thread)

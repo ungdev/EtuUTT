@@ -11,18 +11,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
- * Covoit
+ * Covoit.
  *
  * @ORM\Table(name="etu_covoits")
  * @ORM\Entity
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
- *
- * @Assert\Callback(methods={"isBlaBlaCarUrlValid"})
  */
 class Covoit
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -55,7 +53,7 @@ class Covoit
     private $notes;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="smallint")
      *
@@ -65,7 +63,7 @@ class Covoit
     private $capacity = 3;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
@@ -195,7 +193,7 @@ class Covoit
     private $messages;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -206,7 +204,7 @@ class Covoit
     /**
      * @return string
      */
-    function __toString()
+    public function __toString()
     {
         $parts = [];
 
@@ -231,15 +229,16 @@ class Covoit
 
     /**
      * @param ExecutionContextInterface $context
+     * @Assert\Callback
      */
     public function isBlaBlaCarUrlValid(ExecutionContextInterface $context)
     {
         if (!empty($this->blablacarUrl)) {
-            if (strpos($this->blablacarUrl, 'http') === false) {
-                $this->blablacarUrl = 'http://'.$this->blablacarUrl;
+            if (mb_strpos($this->blablacarUrl, 'http') === false) {
+                $this->blablacarUrl = 'https://'.$this->blablacarUrl;
             }
 
-            if (!in_array(parse_url($this->blablacarUrl, PHP_URL_HOST), ['www.covoiturage.fr', 'covoiturage.fr'])) {
+            if (!in_array(parse_url($this->blablacarUrl, PHP_URL_HOST), ['www.covoiturage.fr', 'covoiturage.fr', 'www.blablacar.fr', 'blablacar.fr'])) {
                 $context->buildViolation('Cette URL n\'est pas une URL BlaBlaCar valide')
                     ->atPath('blablacarUrl')
                     ->addViolation();
@@ -248,9 +247,9 @@ class Covoit
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -258,9 +257,10 @@ class Covoit
     }
 
     /**
-     * Set phoneNumber
+     * Set phoneNumber.
      *
      * @param string $phoneNumber
+     *
      * @return Covoit
      */
     public function setPhoneNumber($phoneNumber)
@@ -271,7 +271,7 @@ class Covoit
     }
 
     /**
-     * Get phoneNumber
+     * Get phoneNumber.
      *
      * @return string
      */
@@ -281,9 +281,10 @@ class Covoit
     }
 
     /**
-     * Set notes
+     * Set notes.
      *
      * @param string $notes
+     *
      * @return Covoit
      */
     public function setNotes($notes)
@@ -294,7 +295,7 @@ class Covoit
     }
 
     /**
-     * Get notes
+     * Get notes.
      *
      * @return string
      */
@@ -304,9 +305,10 @@ class Covoit
     }
 
     /**
-     * Set capacity
+     * Set capacity.
      *
-     * @param integer $capacity
+     * @param int $capacity
+     *
      * @return Covoit
      */
     public function setCapacity($capacity)
@@ -317,9 +319,9 @@ class Covoit
     }
 
     /**
-     * Get capacity
+     * Get capacity.
      *
-     * @return integer
+     * @return int
      */
     public function getCapacity()
     {
@@ -327,9 +329,10 @@ class Covoit
     }
 
     /**
-     * Set isFull
+     * Set isFull.
      *
-     * @param boolean $isFull
+     * @param bool $isFull
+     *
      * @return Covoit
      */
     public function setIsFull($isFull)
@@ -340,9 +343,9 @@ class Covoit
     }
 
     /**
-     * Get isFull
+     * Get isFull.
      *
-     * @return boolean
+     * @return bool
      */
     public function getIsFull()
     {
@@ -350,9 +353,10 @@ class Covoit
     }
 
     /**
-     * Set price
+     * Set price.
      *
      * @param string $price
+     *
      * @return Covoit
      */
     public function setPrice($price)
@@ -363,7 +367,7 @@ class Covoit
     }
 
     /**
-     * Get price
+     * Get price.
      *
      * @return string
      */
@@ -373,9 +377,10 @@ class Covoit
     }
 
     /**
-     * Set date
+     * Set date.
      *
      * @param \DateTime $date
+     *
      * @return Covoit
      */
     public function setDate($date)
@@ -386,7 +391,7 @@ class Covoit
     }
 
     /**
-     * Get date
+     * Get date.
      *
      * @return \DateTime
      */
@@ -396,7 +401,7 @@ class Covoit
     }
 
     /**
-     * Get date
+     * Get date.
      *
      * @return \DateTime
      */
@@ -409,9 +414,10 @@ class Covoit
     }
 
     /**
-     * Set blablacarUrl
+     * Set blablacarUrl.
      *
      * @param string $blablacarUrl
+     *
      * @return Covoit
      */
     public function setBlablacarUrl($blablacarUrl)
@@ -422,7 +428,7 @@ class Covoit
     }
 
     /**
-     * Get blablacarUrl
+     * Get blablacarUrl.
      *
      * @return string
      */
@@ -432,9 +438,10 @@ class Covoit
     }
 
     /**
-     * Set startAdress
+     * Set startAdress.
      *
      * @param string $startAdress
+     *
      * @return Covoit
      */
     public function setStartAdress($startAdress)
@@ -445,7 +452,7 @@ class Covoit
     }
 
     /**
-     * Get startAdress
+     * Get startAdress.
      *
      * @return string
      */
@@ -455,9 +462,10 @@ class Covoit
     }
 
     /**
-     * Set startHour
+     * Set startHour.
      *
      * @param string $startHour
+     *
      * @return Covoit
      */
     public function setStartHour($startHour)
@@ -468,7 +476,7 @@ class Covoit
     }
 
     /**
-     * Get startHour
+     * Get startHour.
      *
      * @return string
      */
@@ -478,9 +486,10 @@ class Covoit
     }
 
     /**
-     * Set endAdress
+     * Set endAdress.
      *
      * @param string $endAdress
+     *
      * @return Covoit
      */
     public function setEndAdress($endAdress)
@@ -491,7 +500,7 @@ class Covoit
     }
 
     /**
-     * Get endAdress
+     * Get endAdress.
      *
      * @return string
      */
@@ -501,9 +510,10 @@ class Covoit
     }
 
     /**
-     * Set endHour
+     * Set endHour.
      *
      * @param string $endHour
+     *
      * @return Covoit
      */
     public function setEndHour($endHour)
@@ -514,7 +524,7 @@ class Covoit
     }
 
     /**
-     * Get endHour
+     * Get endHour.
      *
      * @return string
      */
@@ -524,9 +534,10 @@ class Covoit
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
+     *
      * @return Covoit
      */
     public function setCreatedAt($createdAt)
@@ -537,7 +548,7 @@ class Covoit
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -547,9 +558,10 @@ class Covoit
     }
 
     /**
-     * Set updatedAt
+     * Set updatedAt.
      *
      * @param \DateTime $updatedAt
+     *
      * @return Covoit
      */
     public function setUpdatedAt($updatedAt)
@@ -560,7 +572,7 @@ class Covoit
     }
 
     /**
-     * Get updatedAt
+     * Get updatedAt.
      *
      * @return \DateTime
      */
@@ -570,9 +582,10 @@ class Covoit
     }
 
     /**
-     * Set deletedAt
+     * Set deletedAt.
      *
      * @param \DateTime $deletedAt
+     *
      * @return Covoit
      */
     public function setDeletedAt($deletedAt)
@@ -583,7 +596,7 @@ class Covoit
     }
 
     /**
-     * Get deletedAt
+     * Get deletedAt.
      *
      * @return \DateTime
      */
@@ -593,9 +606,10 @@ class Covoit
     }
 
     /**
-     * Set author
+     * Set author.
      *
      * @param User $author
+     *
      * @return Covoit
      */
     public function setAuthor(User $author = null)
@@ -606,7 +620,7 @@ class Covoit
     }
 
     /**
-     * Get author
+     * Get author.
      *
      * @return User
      */
@@ -616,9 +630,10 @@ class Covoit
     }
 
     /**
-     * Set startCity
+     * Set startCity.
      *
      * @param City $startCity
+     *
      * @return Covoit
      */
     public function setStartCity(City $startCity = null)
@@ -629,7 +644,7 @@ class Covoit
     }
 
     /**
-     * Get startCity
+     * Get startCity.
      *
      * @return City
      */
@@ -639,9 +654,10 @@ class Covoit
     }
 
     /**
-     * Set endCity
+     * Set endCity.
      *
      * @param City $endCity
+     *
      * @return Covoit
      */
     public function setEndCity(City $endCity = null)
@@ -652,7 +668,7 @@ class Covoit
     }
 
     /**
-     * Get endCity
+     * Get endCity.
      *
      * @return City
      */
@@ -662,9 +678,10 @@ class Covoit
     }
 
     /**
-     * Add subscriptions
+     * Add subscriptions.
      *
      * @param CovoitSubscription $subscriptions
+     *
      * @return Covoit
      */
     public function addSubscription(CovoitSubscription $subscriptions)
@@ -675,7 +692,7 @@ class Covoit
     }
 
     /**
-     * Remove subscriptions
+     * Remove subscriptions.
      *
      * @param CovoitSubscription $subscriptions
      */
@@ -685,7 +702,7 @@ class Covoit
     }
 
     /**
-     * Get subscriptions
+     * Get subscriptions.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -696,6 +713,7 @@ class Covoit
 
     /**
      * @param User $user
+     *
      * @return bool
      */
     public function hasUser(User $user)
@@ -714,9 +732,10 @@ class Covoit
     }
 
     /**
-     * Add messages
+     * Add messages.
      *
      * @param CovoitMessage $messages
+     *
      * @return Covoit
      */
     public function addMessage(CovoitMessage $messages)
@@ -727,7 +746,7 @@ class Covoit
     }
 
     /**
-     * Remove messages
+     * Remove messages.
      *
      * @param CovoitMessage $messages
      */
@@ -737,7 +756,7 @@ class Covoit
     }
 
     /**
-     * Get messages
+     * Get messages.
      *
      * @return \Doctrine\Common\Collections\Collection
      */

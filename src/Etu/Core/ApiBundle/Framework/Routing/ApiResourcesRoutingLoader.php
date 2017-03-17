@@ -9,33 +9,35 @@ use Symfony\Component\Routing\RouteCollection;
 
 class ApiResourcesRoutingLoader implements LoaderInterface
 {
-	/**
-	 * @var \AppKernel
-	 */
-	private $kernel;
+    /**
+     * @var \AppKernel
+     */
+    private $kernel;
 
-	/**
-	 * @var LoaderResolverInterface
-	 */
-	private $resolver;
+    /**
+     * @var LoaderResolverInterface
+     */
+    private $resolver;
 
-	/**
-	 * @param \AppKernel $kernel
-	 */
-	public function __construct(\AppKernel $kernel)
-	{
-		$this->kernel = $kernel;
-	}
+    /**
+     * @param \AppKernel $kernel
+     */
+    public function __construct(\AppKernel $kernel)
+    {
+        $this->kernel = $kernel;
+    }
 
-	/**
-	 * @param mixed $resource
-	 * @param null $type
-	 * @return \Symfony\Component\Routing\RouteCollection
-	 * @throws \RuntimeException
-	 */
-	public function load($resource, $type = null)
-	{
-		$routes = new RouteCollection();
+    /**
+     * @param mixed $resource
+     * @param null  $type
+     *
+     * @throws \RuntimeException
+     *
+     * @return \Symfony\Component\Routing\RouteCollection
+     */
+    public function load($resource, $type = null)
+    {
+        $routes = new RouteCollection();
 
         /*
          * For each core bunle then for each module
@@ -56,43 +58,46 @@ class ApiResourcesRoutingLoader implements LoaderInterface
         }
 
         /** @var $module Module */
-		foreach ($this->kernel->getModulesDefinitions() as $module) {
+        foreach ($this->kernel->getModulesDefinitions() as $module) {
             $routing = $module->getApiRouting();
             $loader = $this->resolver->resolve($routing['resource'], $routing['type']);
 
             if ($loader) {
                 $routes->addCollection($loader->load($routing['resource'], $routing['type']));
             }
-		}
+        }
 
-		return $routes;
-	}
+        return $routes;
+    }
 
-	/**
-	 * @param mixed $resource
-	 * @param string|null $type
-	 * @return bool
-	 */
-	public function supports($resource, $type = null)
-	{
-		return $type === 'api';
-	}
+    /**
+     * @param mixed       $resource
+     * @param string|null $type
+     *
+     * @return bool
+     */
+    public function supports($resource, $type = null)
+    {
+        return $type === 'api';
+    }
 
-	/**
-	 * @return \Symfony\Component\Config\Loader\LoaderResolverInterface
-	 */
-	public function getResolver()
-	{
-		return $this->resolver;
-	}
+    /**
+     * @return \Symfony\Component\Config\Loader\LoaderResolverInterface
+     */
+    public function getResolver()
+    {
+        return $this->resolver;
+    }
 
-	/**
-	 * @param \Symfony\Component\Config\Loader\LoaderResolverInterface $resolver
-	 * @return ApiResourcesRoutingLoader
-	 */
-	public function setResolver(LoaderResolverInterface $resolver)
-	{
-		$this->resolver = $resolver;
-		return $this;
-	}
+    /**
+     * @param \Symfony\Component\Config\Loader\LoaderResolverInterface $resolver
+     *
+     * @return ApiResourcesRoutingLoader
+     */
+    public function setResolver(LoaderResolverInterface $resolver)
+    {
+        $this->resolver = $resolver;
+
+        return $this;
+    }
 }

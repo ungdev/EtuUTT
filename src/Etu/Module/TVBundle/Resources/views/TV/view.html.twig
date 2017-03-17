@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8" />
+
+        <title>{% block title %}{{ 'upload.main.index.title'|trans }}{% endblock %} - {{ 'base.title'|trans }}</title>
+
+        <meta name="description" content="{{ 'upload.main.index.title'|trans }}" />
+
+        <link rel="stylesheet" href="{{ asset('min/etuutt.css') }}" type="text/css" />
+    </head>
+    <body id="tv">
+        {% set message = false %}
+
+        {% if app.session.flashBag.has('message') %}
+            {% set message = app.session.flashBag.get('message') %}
+
+            <div class="alert alert-{{ message.type }} hidden-for-1024">
+                {{ message.message|trans }}
+            </div>
+        {% endif %}
+
+        <div class="tv-sidepanel"></div>
+        <div class="tv-text-panel-right"></div>
+        <div class="tv-main">
+            <div class="tv-container"></div>
+            <div class="tv-text-panel-bottom"></div>
+        </div>
+
+        <script type="text/javascript" src="{{ asset('min/etuutt.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/bundles/tv.js') }}"></script>
+        <script type="text/javascript">
+            var tv = new Tv(30, '{{ asset('assets/js/bundles/tvtest.json') }}');
+        </script>
+
+    </body>
+</html>

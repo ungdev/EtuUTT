@@ -1,108 +1,106 @@
 <!DOCTYPE html>
 <html lang="fr">
-	<head>
-		<meta charset="utf-8" />
+    <head>
+        <meta charset="utf-8" />
 
-		<title>{{ 'user.schedule.schedulePrint.title'|trans }} - {{ 'base.title'|trans }}</title>
+        <title>{{ 'user.schedule.schedulePrint.title'|trans }} - {{ 'base.title'|trans }}</title>
 
-		<meta name="description" content="{{ 'base.title'|trans }}" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="description" content="{{ 'base.title'|trans }}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-		<link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}" type="text/css" />
-		<link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" />
-		<link rel="stylesheet" href="{{ asset('min/etuutt.css') }}" type="text/css" />
-	</head>
-	<body>
-		<div class="row schedule schedule-days schedule-days-print">
-			<div class="span2 day hidden-phone">
-				{{ 'user.schedule.days.monday'|trans }}
-			</div>
-			<div class="span2 day hidden-phone">
-				{{ 'user.schedule.days.tuesday'|trans }}
-			</div>
-			<div class="span2 day hidden-phone">
-				{{ 'user.schedule.days.wednesday'|trans }}
-			</div>
-			<div class="span2 day hidden-phone">
-				{{ 'user.schedule.days.thursday'|trans }}
-			</div>
-			<div class="span2 day hidden-phone">
-				{{ 'user.schedule.days.friday'|trans }}
-			</div>
-			<div class="span2 day hidden-phone">
-				{{ 'user.schedule.days.sathurday'|trans }}
-			</div>
-		</div>
+        <link rel="stylesheet" href="{{ asset('min/etuutt.css') }}" type="text/css" />
+    </head>
+    <body>
+        <div class="row schedule schedule-days schedule-days-print">
+            <div class="span2 day hidden-phone">
+                {{ 'user.schedule.days.monday'|trans }}
+            </div>
+            <div class="span2 day hidden-phone">
+                {{ 'user.schedule.days.tuesday'|trans }}
+            </div>
+            <div class="span2 day hidden-phone">
+                {{ 'user.schedule.days.wednesday'|trans }}
+            </div>
+            <div class="span2 day hidden-phone">
+                {{ 'user.schedule.days.thursday'|trans }}
+            </div>
+            <div class="span2 day hidden-phone">
+                {{ 'user.schedule.days.friday'|trans }}
+            </div>
+            <div class="span2 day hidden-phone">
+                {{ 'user.schedule.days.sathurday'|trans }}
+            </div>
+        </div>
 
-		<div class="clear"></div>
+        <div class="clear"></div>
 
-		<div class="schedule-hours schedule-hours-print">
-			<div class="hour">08:00</div>
-			<div class="hour">09:00</div>
-			<div class="hour">10:00</div>
-			<div class="hour">11:00</div>
-			<div class="hour">12:00</div>
-			<div class="hour">13:00</div>
-			<div class="hour">14:00</div>
-			<div class="hour">15:00</div>
-			<div class="hour">16:00</div>
-			<div class="hour">17:00</div>
-			<div class="hour">18:00</div>
-			<div class="hour">19:00</div>
-		</div>
-		<div class="row schedule schedule-print">
-			{% for day, dayCourses in courses %}
-				<div class="span2 schedule-col">
-					{% for hour, item in dayCourses %}
-						{% if item.type == 'void' %}
-							<div class="item item-void item1 {% if loop.index == 1 %} item-first{% endif %}"></div>
-						{% elseif item.type == 'course' %}
-							<div class="item item-course item{{ item.size }}
-										{% if loop.index == 1 %} item-first{% endif %}">
-								<span class="schedule-course-uv">{{ item.course.uv }}</span><br />
-								<span class="schedule-course-room">{{ item.course.room }}</span>
-								<span class="schedule-course-type">- {{ item.course.type }}</span>
-							</div>
-						{% elseif item.type == 'course_half' %}
-							{% if item.courses.hasCourseBothWeeks %}
-								<div class="item item-half item-half-left item-course item-half-course item{{ item.size }}
-										{% if loop.index == 1 %} item-first{% endif %}">
-									<span class="schedule-course-uv">{{ item.courses.courseWeekA.uv }}</span> (A)<br />
-									<span class="schedule-course-room">{{ item.courses.courseWeekA.room }}</span>
-									<span class="schedule-course-type">- {{ item.courses.courseWeekA.type }}</span>
-								</div>
-								<div class="item item-half item-half-right item-course item-half-course item{{ item.size }}
-										{% if loop.index == 1 %} item-first{% endif %}">
-									<span class="schedule-course-uv">{{ item.courses.courseWeekB.uv }}</span> (B)<br />
-									<span class="schedule-course-room">{{ item.courses.courseWeekB.room }}</span>
-									<span class="schedule-course-type">- {{ item.courses.courseWeekB.type }}</span>
-								</div>
-								<div class="clear-right"></div>
-							{% elseif item.courses.hasCourseWeekA %}
-								<div class="item item-half item-half-left item-course item-half-course item{{ item.size }}
-										{% if loop.index == 1 %} item-first{% endif %}">
-									<span class="schedule-course-uv">{{ item.courses.courseWeekA.uv }}</span> (A)<br />
-									<span class="schedule-course-room">{{ item.courses.courseWeekA.room }}</span>
-									<span class="schedule-course-type">- {{ item.courses.courseWeekA.type }}</span>
-								</div>
-								<div class="item item-half item-half-right item-void item{{ item.size }}
-										{% if loop.index == 1 %} item-first{% endif %}"></div>
-								<div class="clear-right"></div>
-							{% elseif item.courses.hasCourseWeekB %}
-								<div class="item item-half item-half-left item-void item{{ item.size }}
-										{% if loop.index == 1 %} item-first{% endif %}"></div>
-								<div class="item item-half item-half-right item-course item-half-course item{{ item.size }}
-										{% if loop.index == 1 %} item-first{% endif %}">
-									<span class="schedule-course-uv">{{ item.courses.courseWeekB.uv }}</span> (B)<br />
-									<span class="schedule-course-room">{{ item.courses.courseWeekB.room }}</span>
-									<span class="schedule-course-type">- {{ item.courses.courseWeekB.type }}</span>
-								</div>
-								<div class="clear-right"></div>
-							{% endif %}
-						{% endif %}
-					{% endfor %}
-				</div>
-			{% endfor %}
-		</div>
-	</body>
+        <div class="schedule-hours schedule-hours-print">
+            <div class="hour">08:00</div>
+            <div class="hour">09:00</div>
+            <div class="hour">10:00</div>
+            <div class="hour">11:00</div>
+            <div class="hour">12:00</div>
+            <div class="hour">13:00</div>
+            <div class="hour">14:00</div>
+            <div class="hour">15:00</div>
+            <div class="hour">16:00</div>
+            <div class="hour">17:00</div>
+            <div class="hour">18:00</div>
+            <div class="hour">19:00</div>
+        </div>
+        <div class="row schedule schedule-print">
+            {% for day, dayCourses in courses %}
+                <div class="span2 schedule-col">
+                    {% for hour, item in dayCourses %}
+                        {% if item.type == 'void' %}
+                            <div class="item item-void item1 {% if loop.index == 1 %} item-first{% endif %}"></div>
+                        {% elseif item.type == 'course' %}
+                            <div class="item item-course item{{ item.size }}
+                                        {% if loop.index == 1 %} item-first{% endif %}">
+                                <span class="schedule-course-uv">{{ item.course.uv }}</span><br />
+                                <span class="schedule-course-room">{{ item.course.room }}</span>
+                                <span class="schedule-course-type">- {{ item.course.type }}</span>
+                            </div>
+                        {% elseif item.type == 'course_half' %}
+                            {% if item.courses.hasCourseBothWeeks %}
+                                <div class="item item-half item-half-left item-course item-half-course item{{ item.size }}
+                                        {% if loop.index == 1 %} item-first{% endif %}">
+                                    <span class="schedule-course-uv">{{ item.courses.courseWeekA.uv }}</span> (A)<br />
+                                    <span class="schedule-course-room">{{ item.courses.courseWeekA.room }}</span>
+                                    <span class="schedule-course-type">- {{ item.courses.courseWeekA.type }}</span>
+                                </div>
+                                <div class="item item-half item-half-right item-course item-half-course item{{ item.size }}
+                                        {% if loop.index == 1 %} item-first{% endif %}">
+                                    <span class="schedule-course-uv">{{ item.courses.courseWeekB.uv }}</span> (B)<br />
+                                    <span class="schedule-course-room">{{ item.courses.courseWeekB.room }}</span>
+                                    <span class="schedule-course-type">- {{ item.courses.courseWeekB.type }}</span>
+                                </div>
+                                <div class="clear-right"></div>
+                            {% elseif item.courses.hasCourseWeekA %}
+                                <div class="item item-half item-half-left item-course item-half-course item{{ item.size }}
+                                        {% if loop.index == 1 %} item-first{% endif %}">
+                                    <span class="schedule-course-uv">{{ item.courses.courseWeekA.uv }}</span> (A)<br />
+                                    <span class="schedule-course-room">{{ item.courses.courseWeekA.room }}</span>
+                                    <span class="schedule-course-type">- {{ item.courses.courseWeekA.type }}</span>
+                                </div>
+                                <div class="item item-half item-half-right item-void item{{ item.size }}
+                                        {% if loop.index == 1 %} item-first{% endif %}"></div>
+                                <div class="clear-right"></div>
+                            {% elseif item.courses.hasCourseWeekB %}
+                                <div class="item item-half item-half-left item-void item{{ item.size }}
+                                        {% if loop.index == 1 %} item-first{% endif %}"></div>
+                                <div class="item item-half item-half-right item-course item-half-course item{{ item.size }}
+                                        {% if loop.index == 1 %} item-first{% endif %}">
+                                    <span class="schedule-course-uv">{{ item.courses.courseWeekB.uv }}</span> (B)<br />
+                                    <span class="schedule-course-room">{{ item.courses.courseWeekB.room }}</span>
+                                    <span class="schedule-course-type">- {{ item.courses.courseWeekB.type }}</span>
+                                </div>
+                                <div class="clear-right"></div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </body>
 </html>

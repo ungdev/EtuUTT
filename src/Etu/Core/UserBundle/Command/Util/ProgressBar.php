@@ -8,55 +8,63 @@ namespace Etu\Core\UserBundle\Command\Util;
 class ProgressBar
 {
     /**
-     * Skeleton for use with sprintf
+     * Skeleton for use with sprintf.
      */
     protected $_skeleton;
     /**
-     * The bar gets filled with this
+     * The bar gets filled with this.
      */
     protected $_bar;
     /**
-     * The width of the bar
+     * The width of the bar.
      */
     protected $_blen;
     /**
-     * The total width of the display
+     * The total width of the display.
      */
     protected $_tlen;
     /**
-     * The position of the counter when the job is `done'
+     * The position of the counter when the job is `done'.
      */
     protected $_target_num;
     /**
-     * Options, like the precision used to display the numbers
+     * Options, like the precision used to display the numbers.
      */
-    protected $_options = array();
+    protected $_options = [];
     /**
-     * Length to erase
+     * Length to erase.
      */
     protected $_rlen = 0;
     /**
-     * When the progress started
+     * When the progress started.
      */
     protected $_start_time = null;
-    protected $_rate_datapoints = array();
+    protected $_rate_datapoints = [];
     /**
-     * Time when the bar was last drawn
+     * Time when the bar was last drawn.
      */
     protected $_last_update_time = 0.0;
 
     /**
      * Constructor, sets format and size
      * See the reset() method for documentation.
+     *
      * @param string       The format string
      * @param string       The string filling the progress bar
      * @param string       The string filling empty space in the bar
      * @param int          The width of the display
      * @param float        The target number for the bar
      * @param array        Options for the progress bar
+     * @param mixed $formatstring
+     * @param mixed $bar
+     * @param mixed $prefill
+     * @param mixed $width
+     * @param mixed $target_num
+     * @param mixed $options
+     *
      * @see reset
      */
-    public function __construct($formatstring, $bar, $prefill, $width, $target_num, $options = array())
+    public function __construct($formatstring, $bar, $prefill, $width, $target_num, $options = [])
     {
         $this->reset($formatstring, $bar, $prefill, $width, $target_num, $options);
     }
@@ -130,16 +138,20 @@ class ProgressBar
      *     min_draw_interval  | 0.0   |  If the last call to update() was less
      *                        |       |  than this amount of seconds ago,
      *                        |       |  don't update.
-     * </pre>
-     * @param string $formatString The format string
-     * @param string $bar The string filling the progress bar
-     * @param string $prefill The string filling empty space in the bar
-     * @param int $width The width of the display
-     * @param float $target_num The target number for the bar
-     * @param array $optionsOptions for the progress bar
+     * </pre>.
+     *
+     * @param string $formatString   The format string
+     * @param string $bar            The string filling the progress bar
+     * @param string $prefill        The string filling empty space in the bar
+     * @param int    $width          The width of the display
+     * @param float  $target_num     The target number for the bar
+     * @param array  $optionsOptions for the progress bar
+     * @param mixed  $formatstring
+     * @param mixed  $options
+     *
      * @return bool
      */
-    public function reset($formatstring, $bar, $prefill, $width, $target_num, $options = array())
+    public function reset($formatstring, $bar, $prefill, $width, $target_num, $options = [])
     {
         if ($target_num == 0) {
             throw new \ErrorException(
@@ -150,7 +162,7 @@ class ProgressBar
             $this->_target_num = $target_num;
         }
 
-        $default_options = array(
+        $default_options = [
             'percent_precision' => 2,
             'fraction_precision' => 0,
             'percent_pad' => ' ',
@@ -160,9 +172,9 @@ class ProgressBar
             'ansi_clear' => false,
             'num_datapoints' => 5,
             'min_draw_interval' => 0.0,
-        );
+        ];
 
-        $intopts = array();
+        $intopts = [];
 
         foreach ($default_options as $key => $value) {
             if (!isset($options[$key])) {
@@ -176,10 +188,11 @@ class ProgressBar
         $this->_options = $options = $intopts;
 
         // placeholder
-        $cur = '%2$\''.$options['fraction_pad']{0}.strlen((int)$target_num).'.'.$options['fraction_precision'].'f';
+        $cur = '%2$\''.$options['fraction_pad'][0]
+        .mb_strlen((int) $target_num).'.'.$options['fraction_precision'].'f';
 
         $max = $cur;
-        $max{1} = 3;
+        $max[1] = 3;
 
         // pre php-4.3.7 %3.2f meant 3 characters before . and two after
         // php-4.3.7 and later it means 3 characters for the whole number
@@ -189,9 +202,10 @@ class ProgressBar
             $padding = 3;
         }
 
-        $perc = '%4$\''.$options['percent_pad']{0}.$padding.'.'.$options['percent_precision'].'f';
+        $perc = '%4$\''.$options['percent_pad'][0]
+        .$padding.'.'.$options['percent_precision'].'f';
 
-        $transitions = array(
+        $transitions = [
             '%%' => '%%',
             '%fraction%' => $cur.'/'.$max,
             '%current%' => $cur,
@@ -200,11 +214,11 @@ class ProgressBar
             '%bar%' => '%1$s',
             '%elapsed%' => '%5$s',
             '%estimate%' => '%6$s',
-        );
+        ];
 
         $this->_skeleton = strtr($formatstring, $transitions);
 
-        $slen = strlen(sprintf($this->_skeleton, '', 0, 0, 0, '00:00:00', '00:00:00'));
+        $slen = mb_strlen(sprintf($this->_skeleton, '', 0, 0, 0, '00:00:00', '00:00:00'));
 
         if ($options['width_absolute']) {
             $blen = $width - $slen;
@@ -214,21 +228,23 @@ class ProgressBar
             $blen = $width;
         }
 
-        $lbar = str_pad($bar, $blen, $bar{0}, STR_PAD_LEFT);
-        $rbar = str_pad($prefill, $blen, substr($prefill, -1, 1));
+        $lbar = str_pad($bar, $blen, $bar[0], STR_PAD_LEFT);
+        $rbar = str_pad($prefill, $blen, mb_substr($prefill, -1, 1));
 
-        $this->_bar = substr($lbar, -$blen).substr($rbar, 0, $blen);
+        $this->_bar = mb_substr($lbar, -$blen).mb_substr($rbar, 0, $blen);
         $this->_blen = $blen;
         $this->_tlen = $tlen;
         $this->_first = true;
-
 
         return true;
     }
 
     /**
-     * Updates the bar with new progress information
+     * Updates the bar with new progress information.
+     *
      * @param int current position of the progress counter
+     * @param mixed $current
+     *
      * @return bool
      */
     public function update($current)
@@ -237,7 +253,6 @@ class ProgressBar
         $this->_addDatapoint($current, $time);
 
         if ($this->_first) {
-
             if ($this->_options['ansi_terminal']) {
                 echo "\x1b[s"; // save cursor position
             }
@@ -250,7 +265,6 @@ class ProgressBar
         }
 
         if ($time - $this->_last_update_time < $this->_options['min_draw_interval'] and $current != $this->_target_num) {
-
             return;
         }
 
@@ -278,21 +292,24 @@ class ProgressBar
             array_shift($this->_rate_datapoints);
         }
 
-        $this->_rate_datapoints[] = array('time' => $time, 'value' => $val,);
+        $this->_rate_datapoints[] = ['time' => $time, 'value' => $val];
     }
 
     /**
      * Prints the bar. Usually, you don't need this method, just use update()
      * which handles erasing the previously printed bar also. If you use a
      * custom function (for whatever reason) to erase the bar, use this method.
+     *
      * @param int current position of the progress counter
+     * @param mixed $current
+     *
      * @return bool
      */
     public function display($current)
     {
         $percent = $current / $this->_target_num;
         $filled = round($percent * $this->_blen);
-        $visbar = substr($this->_bar, $this->_blen - $filled, $this->_blen);
+        $visbar = mb_substr($this->_bar, $this->_blen - $filled, $this->_blen);
 
         $elapsed = $this->_formatSeconds($this->_fetchTime() - $this->_start_time);
 
@@ -309,7 +326,7 @@ class ProgressBar
         );
 
         // fix for php-versions where printf doesn't return anything
-        if (is_null($this->_rlen)) {
+        if (null === $this->_rlen) {
             $this->_rlen = $this->_tlen;
             // fix for php versions between 4.3.7 and 5.x.y(?)
         } elseif ($this->_rlen < $this->_tlen) {
@@ -321,8 +338,11 @@ class ProgressBar
     }
 
     /**
-     * Returns a string containing the formatted number of seconds
+     * Returns a string containing the formatted number of seconds.
+     *
      * @param float The number of seconds
+     * @param mixed $seconds
+     *
      * @return string
      */
     protected function _formatSeconds($seconds)
@@ -360,8 +380,11 @@ class ProgressBar
 
     /**
      * Erases a previously printed bar.
+     *
      * @param bool if the bar should be cleared in addition to resetting the
      *             cursor position
+     * @param mixed $clear
+     *
      * @return bool
      */
     public function erase($clear = false)
@@ -383,4 +406,3 @@ class ProgressBar
         }
     }
 }
-

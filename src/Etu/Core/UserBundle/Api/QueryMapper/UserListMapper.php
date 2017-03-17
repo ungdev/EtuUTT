@@ -11,6 +11,7 @@ class UserListMapper implements QueryMapper
     /**
      * @param QueryBuilder $query
      * @param ParameterBag $request
+     *
      * @return QueryBuilder
      */
     public function map(QueryBuilder $query, ParameterBag $request)
@@ -23,6 +24,11 @@ class UserListMapper implements QueryMapper
         if ($request->has('login')) {
             $query->andWhere('u.login = :login')
                 ->setParameter('login', $request->get('login'));
+        }
+
+        if ($request->has('student_id')) {
+            $query->andWhere('u.studentId = :student_id')
+                ->setParameter('student_id', $request->get('student_id'));
         }
 
         if ($request->has('lastname')) {

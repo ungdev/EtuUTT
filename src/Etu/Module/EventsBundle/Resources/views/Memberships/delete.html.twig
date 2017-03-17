@@ -1,125 +1,126 @@
-{% extends '::page-2cols.html.twig' %}
+{% extends '@EtuUser/Memberships/layout.html.twig' %}
+{% set tab = 'memberships_orga_events' %}
 
 {% block title %}{{ membership.organization.name }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
-	<div class="padding20-all">
-		<div class="row-fluid">
-			<div class="span3 memberships">
-				<ul class="nav nav-list">
-					{% for m in memberships %}
-						<li{% if membership.id == m.id %} class="active"{% endif %}>
-							<a href="{{ path('memberships_orga', {'login': m.organization.login}) }}">
-								{{ m.organization.name }}<br />
-								{% if membership.id == m.id %}
-									{{ ('user.orga.role.'~m.role)|trans }}
-								{% else %}
-									<span class="muted">{{ ('user.orga.role.'~m.role)|trans }}</span>
-								{% endif %}
-							</a>
-						</li>
-					{% endfor %}
-				</ul>
-			</div>
+    <div class="padding20-all">
+        <div class="row-fluid">
+            <div class="span3 memberships">
+                <ul class="nav nav-list">
+                    {% for m in memberships %}
+                        <li{% if membership.id == m.id %} class="active"{% endif %}>
+                            <a href="{{ path('memberships_orga', {'login': m.organization.login}) }}">
+                                {{ m.organization.name }}<br />
+                                {% if membership.id == m.id %}
+                                    {{ ('user.orga.role.'~m.role)|trans }}
+                                {% else %}
+                                    <span class="muted">{{ ('user.orga.role.'~m.role)|trans }}</span>
+                                {% endif %}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
 
-			<div class="span9">
-				<div class="navbar navbar-etu-membership">
-					<div class="navbar-inner">
-						<button type="button" class="btn btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-						<div class="nav-collapse collapse" style="height: 0;">
-							<ul class="nav">
-								<li>
-									<a href="{{ path('memberships_orga', {'login': membership.organization.login}) }}">
-										{{ 'user.memberships.menu.position'|trans }}
-									</a>
-								</li>
-								{% if membership.hasPermission('edit_desc') %}
-									<li>
-										<a href="{{ path('memberships_orga_desc', {'login': membership.organization.login}) }}">
-											{{ 'user.memberships.menu.orga'|trans }}
-										</a>
-									</li>
-								{% endif %}
+            <div class="span9">
+                <div class="navbar navbar-etu-membership">
+                    <div class="navbar-inner">
+                        <button type="button" class="btn btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <div class="nav-collapse collapse" style="height: 0;">
+                            <ul class="nav">
+                                <li>
+                                    <a href="{{ path('memberships_orga', {'login': membership.organization.login}) }}">
+                                        {{ 'user.memberships.menu.position'|trans }}
+                                    </a>
+                                </li>
+                                {% if membership.hasPermission('edit_desc') %}
+                                    <li>
+                                        <a href="{{ path('memberships_orga_desc', {'login': membership.organization.login}) }}">
+                                            {{ 'user.memberships.menu.orga'|trans }}
+                                        </a>
+                                    </li>
+                                {% endif %}
 
-								{% if membership.hasPermission('deleguate') %}
-									<li>
-										<a href="{{ path('memberships_orga_permissions', {'login': membership.organization.login}) }}">
-											{{ 'user.memberships.menu.permissions'|trans }}
-										</a>
-									</li>
-								{% endif %}
+                                {% if membership.hasPermission('deleguate') %}
+                                    <li>
+                                        <a href="{{ path('memberships_orga_permissions', {'login': membership.organization.login}) }}">
+                                            {{ 'user.memberships.menu.permissions'|trans }}
+                                        </a>
+                                    </li>
+                                {% endif %}
 
-								{% if membership.hasPermission('notify') %}
-									<li>
-										<a href="{{ path('memberships_orga_notifications', {'login': membership.organization.login}) }}">
-											{{ 'user.memberships.menu.notifications'|trans }}
-										</a>
-									</li>
-								{% endif %}
+                                {% if membership.hasPermission('notify') %}
+                                    <li>
+                                        <a href="{{ path('memberships_orga_notifications', {'login': membership.organization.login}) }}">
+                                            {{ 'user.memberships.menu.notifications'|trans }}
+                                        </a>
+                                    </li>
+                                {% endif %}
 
-								{% if membership.hasPermission('events') %}
-									<li class="active">
-										<a href="{{ path('memberships_orga_events', {'login': membership.organization.login}) }}">
-											{{ 'user.memberships.menu.event'|trans }}
-										</a>
-									</li>
-								{% endif %}
+                                {% if membership.hasPermission('events') %}
+                                    <li class="active">
+                                        <a href="{{ path('memberships_orga_events', {'login': membership.organization.login}) }}">
+                                            {{ 'user.memberships.menu.event'|trans }}
+                                        </a>
+                                    </li>
+                                {% endif %}
 
-								{% if membership.hasPermission('daymail') and etu.modules.isEnabled('daymail') %}
-									<li>
-										<a href="{{ path('memberships_orga_daymail', {'login': membership.organization.login}) }}">
-											{{ 'user.memberships.menu.daymail'|trans }}
-										</a>
-									</li>
-								{% endif %}
+                                {% if membership.hasPermission('daymail') and etu.modules.isEnabled('daymail') %}
+                                    <li>
+                                        <a href="{{ path('memberships_orga_daymail', {'login': membership.organization.login}) }}">
+                                            {{ 'user.memberships.menu.daymail'|trans }}
+                                        </a>
+                                    </li>
+                                {% endif %}
 
-								{% if etu.modules.isEnabled('assos') %}
-									<li>
-										<a href="{{ path('orgas_view', {'login': membership.organization.login}) }}">
-											{{ 'user.memberships.menu.public'|trans }}
-										</a>
-									</li>
-								{% endif %}
-							</ul>
-						</div>
-					</div>
-				</div>
+                                {% if etu.modules.isEnabled('assos') %}
+                                    <li>
+                                        <a href="{{ path('orgas_view', {'login': membership.organization.login}) }}">
+                                            {{ 'user.memberships.menu.public'|trans }}
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-				<p>
-					<a href="{{ path('memberships_orga_events', {'login': orga.login, 'month': event.begin|date('m-Y')}) }}">
-						<i class="icon-chevron-left"></i>
-						{{ 'events.memberships.edit.back'|trans }}
-					</a>
+                <p>
+                    <a href="{{ path('memberships_orga_events', {'login': orga.login}) }}">
+                        <i class="icon-chevron-left"></i>
+                        {{ 'events.memberships.edit.back'|trans }}
+                    </a>
 
-					<a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}" class="pull-right">
-						{{ 'events.memberships.edit.publicView'|trans }}
-					</a>
-				</p>
+                    <a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}" class="pull-right">
+                        {{ 'events.memberships.edit.publicView'|trans }}
+                    </a>
+                </p>
 
-				<p>
-					{{ 'events.memberships.delete.question'|trans({'%title%': event.title}) }}
-				</p>
-				<p>
-					<a href="{{ path('memberships_orga_events_delete', {
-						'login': orga.login, 'id': event.id, 'slug': event.title|slugify, 'confirm': 'confirm'
-					}) }}" class="btn btn-primary">
-						{{ 'events.memberships.delete.yes'|trans }}
-					</a>
-					<a href="{{ path('memberships_orga_events_edit', {
-						'login': orga.login, 'id': event.id, 'slug': event.title|slugify
-					}) }}" class="btn">
-						{{ 'events.memberships.delete.no'|trans }}
-					</a>
-				</p>
-			</div>
-		</div>
-	</div>
+                <p>
+                    {{ 'events.memberships.delete.question'|trans({'%title%': event.title}) }}
+                </p>
+                <p>
+                    <a href="{{ path('memberships_orga_events_delete', {
+                        'login': orga.login, 'id': event.id, 'slug': event.title|slugify, 'confirm': 'confirm'
+                    }) }}" class="btn btn-primary">
+                        {{ 'events.memberships.delete.yes'|trans }}
+                    </a>
+                    <a href="{{ path('memberships_orga_events_edit', {
+                        'login': orga.login, 'id': event.id, 'slug': event.title|slugify
+                    }) }}" class="btn">
+                        {{ 'events.memberships.delete.no'|trans }}
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
 {% endblock %}

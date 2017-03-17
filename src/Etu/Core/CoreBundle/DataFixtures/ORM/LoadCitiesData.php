@@ -5,24 +5,23 @@ namespace Etu\Core\CoreBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-
 use Etu\Core\CoreBundle\Entity\City;
 
 class LoadCitiesData extends AbstractFixture implements OrderedFixtureInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getOrder()
-	{
-		return 2;
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function getOrder()
+    {
+        return 2;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function load(ObjectManager $manager)
-	{
+    /**
+     * {@inheritdoc}
+     */
+    public function load(ObjectManager $manager)
+    {
         $troyes = new City();
         $troyes->setName('Troyes')
             ->setSlug('troyes')
@@ -45,5 +44,5 @@ class LoadCitiesData extends AbstractFixture implements OrderedFixtureInterface
 
         $this->addReference('city_troyes', $troyes);
         $this->addReference('city_paris', $paris);
-	}
+    }
 }

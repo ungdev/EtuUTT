@@ -1,0 +1,37 @@
+<?php
+
+$finder = PhpCsFixer\Finder::create()
+    ->notPath('var')
+    ->notPath('web/config.php')
+    ->in(__DIR__);
+
+return PhpCsFixer\Config::create()
+    ->setRules([
+        '@Symfony' => true,
+        '@Symfony:risky' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'combine_consecutive_unsets' => true,
+        'dir_constant' => true,
+        'ereg_to_preg' => true,
+        'heredoc_to_nowdoc' => true,
+        'mb_str_functions' => true,
+        'modernize_types_casting' => true,
+        'no_multiline_whitespace_before_semicolons' => true,
+        'no_php4_constructor' => true,
+        'no_short_echo_tag' => true,
+        'no_unreachable_default_argument_value' => true,
+        'no_useless_else' => true,
+        'no_useless_return' => true,
+        'ordered_imports' => true,
+        'php_unit_strict' => true,
+        'phpdoc_add_missing_param_annotation' => true,
+        'phpdoc_order' => true,
+        'protected_to_private' => true,
+        'psr0' => true,
+        'psr4' => true,
+        '@PHP71Migration' => true,
+        'semicolon_after_instruction' => true,
+        'ternary_to_null_coalescing' => true,
+    ])
+    ->setRiskyAllowed(true)
+    ->setFinder($finder);

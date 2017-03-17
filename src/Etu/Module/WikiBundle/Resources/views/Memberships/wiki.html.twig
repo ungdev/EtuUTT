@@ -1,0 +1,38 @@
+{% extends '@EtuUser/Memberships/layout.html.twig' %}
+{% set tab = 'memberships_wiki' %}
+
+{% block title %}{{ organization.name }}{% endblock %}
+
+{% block titleIcon %}
+    <img src="{{ asset('assets/img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block membership_content %}
+    <p class="alert alert-info">
+        {{ 'wiki.membership.wiki.intro'|trans }}
+    </p>
+
+        {% if rights.getHomeSlug(organization) %}
+                <a href="{{ path('wiki_view', {'slug': rights.getHomeSlug(organization), 'organization': organization.login}) }}" class="btn btn-primary">
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                    {{ 'wiki.membership.wiki.home'|trans }}
+                </a>
+        {% endif %}
+
+        <a href="{{ path('wiki_index', {'organization': organization.login}) }}" class="btn">
+            <i class="fa fa-list" aria-hidden="true"></i>
+            {{ 'wiki.membership.wiki.index'|trans }}
+        </a>
+
+        <button class="btn upload-popup" data-organization="{{organization.login}}">
+            <i class="fa fa-file" aria-hidden="true"></i>
+            {{ 'wiki.membership.wiki.file'|trans({'%orga%': organization.fullName}) }}
+        </button>
+
+    {% if rights.canSetHome(organization) %}
+        <hr />
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+    {% endif %}
+{% endblock %}

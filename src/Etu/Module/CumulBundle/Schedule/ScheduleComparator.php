@@ -22,6 +22,7 @@ class ScheduleComparator
 
     /**
      * @param ScheduleBuilder $builder
+     *
      * @return $this
      */
     public function addBuilder(ScheduleBuilder $builder)
@@ -33,6 +34,7 @@ class ScheduleComparator
 
     /**
      * @param ScheduleBuilder $builders
+     *
      * @return $this
      */
     public function setBuilders($builders)
@@ -73,23 +75,23 @@ class ScheduleComparator
         // Availability
         $avWeek = [];
 
-        $days = array(
+        $days = [
             Course::DAY_MONDAY,
             Course::DAY_TUESDAY,
             Course::DAY_WENESDAY,
             Course::DAY_THURSDAY,
             Course::DAY_FRIDAY,
             Course::DAY_SATHURDAY,
-        );
+        ];
 
-        $hours = array('08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19');
+        $hours = ['08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19'];
 
         foreach ($days as $day) {
-            $avWeek[$day] = array();
+            $avWeek[$day] = [];
 
             foreach ($hours as $hour) {
-                $avWeek[$day][(int)$hour.'00'] = [];
-                $avWeek[$day][(int)$hour.'30'] = [];
+                $avWeek[$day][(int) $hour.'00'] = [];
+                $avWeek[$day][(int) $hour.'30'] = [];
             }
         }
 

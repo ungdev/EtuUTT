@@ -3,7 +3,7 @@
 {% block title %}{{ 'covoit.index.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-    <img src="{{ asset('src/img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block stylesheets %}
@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script type='text/javascript' src='{{ asset('src/js/bundles/covoit.js') }}'></script>
+    <script type='text/javascript' src='{{ asset('assets/js/bundles/covoit.js') }}'></script>
     <script type='text/javascript' src='https://www.google.com/jsapi'></script>
     <script type='text/javascript'>
         google.load('visualization', '1', {'packages': ['geochart']});
@@ -108,7 +108,7 @@
                         {{ covoit.date|format_date }}
                     </span>
                     <br />
-                    {{ covoit.startHour|format_time(null, null, null, constant('IntlDateFormatter::SHORT')) }}
+                    {{ covoit.startHour|format_time(null, null, 'Europe/Paris', constant('IntlDateFormatter::SHORT')) }}
                 </div>
 
                 <div class="item-infos">

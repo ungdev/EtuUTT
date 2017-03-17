@@ -3,43 +3,47 @@
 {% block title %}{{ 'user.schedule.course.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
-	<div class="padding20-all">
-		<p>
-			{{ 'user.schedule.course.desc'|trans({
-				'%uv%': course.uv,
-				'%day%': ('user.schedule.days_lower.'~course.day)|trans,
-				'%start%': course.start
-			}) }}
+    <div class="padding20-all">
+        <p>
+            {{ 'user.schedule.course.desc'|trans({
+                '%uv%': course.uv,
+                '%type%': course.type,
+                '%day%': ('user.schedule.days_lower.'~course.day)|trans,
+                '%start%': course.start
+            }) }}
 
-			{#<span class="pull-right">
-				<a href=""{{ path('uvs_goto', {'code': course.uv}) }}>{{ 'user.schedule.course.uv'|trans }}</a>
-			</span>#}
-		</p>
+            <span class="pull-right">
+                <a href="{{ path('uvs_goto', {'code': course.uv}) }}">{{ 'user.schedule.course.uv'|trans }}</a>
+            </span>
 
-		<p class="align-center">
-			{{ 'user.schedule.course.students'|transchoice(students|count, {'%count%': students|count}) }}
-		</p>
+            <br/>
+            <a href="{{ path('uvs_goto_courses', {'code': course.uv}) }}">{{ 'user.schedule.course.other'|trans }}</a>
+        </p>
 
-		<ul id="search-results" class="asso-members">
-			<ul class="asso-members">
-				{% for student in students %}
-					<li class="asso-members-item asso-members-item-member">
-						<a href="{{ path('user_view', {'login': student.user.login}) }}">
-							<img src="{{ asset('uploads/photos/'~student.user.avatar) }}" alt="{{ student.user.fullName }}" title="{{ student.user.fullName }}" />
-							<h5>{{ student.user.fullName }}</h5>
-							<p>
-								{{ student.user.branch~student.user.niveau }} {{ student.user.filiere }}
-							</p>
+        <p class="align-center">
+            {{ 'user.schedule.course.students'|transchoice(students|count, {'%count%': students|count}) }}
+        </p>
 
-							<div class="clear"></div>
-						</a>
-					</li>
-				{% endfor %}
-			</ul>
-		</ul>
-	</div>
+        <ul id="search-results" class="asso-members">
+            <ul class="asso-members">
+                {% for student in students %}
+                    <li class="asso-members-item asso-members-item-member">
+                        <a href="{{ path('user_view', {'login': student.user.login}) }}">
+                            <img src="{{ asset('uploads/photos/'~student.user.avatar) }}" alt="{{ student.user.fullName }}" title="{{ student.user.fullName }}" />
+                            <h5>{{ student.user.fullName }}</h5>
+                            <p>
+                                {{ student.user.branch~student.user.niveau }} {{ student.user.filiere }}
+                            </p>
+
+                            <div class="clear"></div>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </ul>
+    </div>
 {% endblock %}

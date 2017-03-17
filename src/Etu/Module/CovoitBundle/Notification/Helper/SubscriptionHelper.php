@@ -6,7 +6,7 @@ use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Notification\Helper\HelperInterface;
 
 /**
- * Notification for a new subscription on a followed covoit
+ * Notification for a new subscription on a followed covoit.
  */
 class SubscriptionHelper implements HelperInterface
 {
@@ -33,12 +33,13 @@ class SubscriptionHelper implements HelperInterface
 
     /**
      * @param Notification $notification
+     *
      * @return string
      */
     public function render(Notification $notification)
     {
-        return $this->twig->render('EtuModuleCovoitBundle:Notification:subscription.html.twig', array(
-            'notif' => $notification
-        ));
+        return $this->twig->render('EtuModuleCovoitBundle:Notification:subscription.html.twig', [
+            'notif' => $notification,
+        ]);
     }
 }

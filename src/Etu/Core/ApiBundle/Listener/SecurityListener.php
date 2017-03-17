@@ -2,9 +2,9 @@
 
 namespace Etu\Core\ApiBundle\Listener;
 
+use Doctrine\Common\Annotations\Reader;
 use Etu\Core\ApiBundle\Formatter\DataFormatter;
 use Etu\Core\ApiBundle\Oauth\OauthServer;
-use Doctrine\Common\Annotations\Reader;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 class SecurityListener
@@ -25,8 +25,8 @@ class SecurityListener
     protected $formatter;
 
     /**
-     * @param OauthServer $server
-     * @param Reader $reader
+     * @param OauthServer   $server
+     * @param Reader        $reader
      * @param DataFormatter $formatter
      */
     public function __construct(OAuthServer $server, Reader $reader, DataFormatter $formatter)
@@ -38,14 +38,14 @@ class SecurityListener
 
     /**
      * @param GetResponseEvent $event
+     *
      * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     *
      * @return bool
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
-        if (strpos($event->getRequest()->attributes->get('_controller'), 'Api\\Resource') !== false) {
-            header('Access-Control-Allow-Origin: *');
-
+        if (mb_strpos($event->getRequest()->attributes->get('_controller'), 'Api\\Resource') !== false) {
             $controller = explode('::', $event->getRequest()->attributes->get('_controller'));
             $reflection = new \ReflectionMethod($controller[0], $controller[1]);
 
@@ -57,17 +57,24 @@ class SecurityListener
                 $requiredScope = null;
             }
 
-            if (! $requiredScope) {
+            if (!$requiredScope) {
                 $requiredScope = 'public';
             }
 
             $request = $event->getRequest();
 
             $token = $request->query->get('access_token');
+            if ($request->headers->has('Authorization')) {
+                $authorizationHeader = $request->headers->get('Authorization');
+                preg_match('/Bearer (.*)/i', $authorizationHeader, $matches);
+                if (!empty($matches[1])) {
+                    $token = $matches[1];
+                }
+            }
 
             $access = $this->server->checkAccess($token, $requiredScope);
 
-            if (! $access->isGranted()) {
+            if (!$access->isGranted()) {
                 $event->setResponse($this->formatter->format($event->getRequest(), [
                     'error' => $access->getError(),
                     'error_message' => $access->getErrorMessage(),

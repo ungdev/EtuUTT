@@ -10,11 +10,10 @@ use Etu\Core\CoreBundle\Framework\Definition\Module;
 use Etu\Core\CoreBundle\Framework\Twig\GlobalAccessorObject;
 use Etu\Core\UserBundle\Entity\Course;
 use Etu\Core\UserBundle\Entity\User;
-use Etu\Module\ArgentiqueBundle\Entity\Photo;
 use Etu\Module\ArgentiqueBundle\EtuModuleArgentiqueBundle;
 use Etu\Module\EventsBundle\Entity\Event;
 use Etu\Module\UVBundle\Entity\Review;
-use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 class HomeBuilder
@@ -40,18 +39,18 @@ class HomeBuilder
     protected $stopwatch;
 
     /**
-     * @param EntityManager $manager
-     * @param SecurityContext $context
+     * @param EntityManager        $manager
+     * @param TokenStorage         $tokenStorage
      * @param GlobalAccessorObject $globalAccessorObject
-     * @param Stopwatch $stopwatch
+     * @param Stopwatch            $stopwatch
      */
     public function __construct(EntityManager $manager,
-                                SecurityContext $context,
+                                TokenStorage $tokenStorage,
                                 GlobalAccessorObject $globalAccessorObject,
                                 Stopwatch $stopwatch = null)
     {
         $this->manager = $manager;
-        $this->user = $context->getToken()->getUser();
+        $this->user = $tokenStorage->getToken()->getUser();
         $this->globalAccessorObject = $globalAccessorObject;
         $this->stopwatch = $stopwatch;
     }
@@ -78,7 +77,26 @@ class HomeBuilder
     }
 
     /**
+     * @return User UV list
+     */
+    public function getUVs()
+    {
+        if ($this->stopwatch) {
+            $this->stopwatch->start('block_uv', 'home_blocks');
+        }
+
+        $result = explode('|', $this->user->getUvs());
+
+        if ($this->stopwatch) {
+            $this->stopwatch->stop('block_uv');
+        }
+
+        return $result;
+    }
+
+    /**
      * @param Module[] $enabledModules
+     *
      * @return \Etu\Core\CoreBundle\Entity\Notification[]
      */
     public function getNotifications($enabledModules)
@@ -103,34 +121,34 @@ class HomeBuilder
         /** @var $notifications Notification[] */
         $notifications = [];
 
-        if (! empty($subscriptions)) {
+        if (!empty($subscriptions)) {
             if ($this->stopwatch) {
                 $this->stopwatch->start('block_notifications_filters', 'home_blocks');
             }
 
-            if (Apc::enabled() && Apc::has('etuutt_home_subscription_' . $this->user->getId())) {
-                $subscriptionsWhere = Apc::fetch('etuutt_home_subscription_' . $this->user->getId());
+            if (Apc::enabled() && Apc::has('etuutt_home_subscription_'.$this->user->getId())) {
+                $subscriptionsWhere = Apc::fetch('etuutt_home_subscription_'.$this->user->getId());
             } else {
                 foreach ($subscriptions as $key => $subscription) {
-                    $subscriptionsWhere[] =   '(n.entityType = \'' . $subscription->getEntityType() . '\'
-                                                AND n.entityId = ' . intval($subscription->getEntityId()) . ')';
+                    $subscriptionsWhere[] = '(n.entityType = \''.$subscription->getEntityType().'\'
+                                                AND n.entityId = '.(int) ($subscription->getEntityId()).')';
                 }
 
                 $subscriptionsWhere = implode(' OR ', $subscriptionsWhere);
 
                 if (Apc::enabled()) {
-                    Apc::store('etuutt_home_subscription_' . $this->user->getId(), $subscriptionsWhere, 1200);
+                    Apc::store('etuutt_home_subscription_'.$this->user->getId(), $subscriptionsWhere, 1200);
                 }
             }
 
-            if (! empty($subscriptionsWhere)) {
+            if (!empty($subscriptionsWhere)) {
                 $query = $query->andWhere($subscriptionsWhere);
             }
 
             /*
              * Modules
              */
-            $modulesWhere = array('n.module = \'core\'', 'n.module = \'user\'');
+            $modulesWhere = ['n.module = \'core\'', 'n.module = \'user\''];
 
             foreach ($enabledModules as $module) {
                 $identifier = $module->getIdentifier();
@@ -139,7 +157,7 @@ class HomeBuilder
                 $query->setParameter('module_'.$identifier, $identifier);
             }
 
-            if (! empty($modulesWhere)) {
+            if (!empty($modulesWhere)) {
                 $query = $query->andWhere(implode(' OR ', $modulesWhere));
             }
 
@@ -213,7 +231,7 @@ class HomeBuilder
             ->setMaxResults(3)
             ->getQuery();
 
-        $query->useResultCache(true, 1200);
+        // $query->useResultCache(true, 1200);
 
         $result = $query->getResult();
 
@@ -235,17 +253,22 @@ class HomeBuilder
 
         /** @var string $root */
         $root = EtuModuleArgentiqueBundle::getPhotosRoot();
+        $collection = null;
+        $set = null;
 
-        if (! file_exists($root)) {
+        if (!file_exists($root)) {
             return [];
         }
 
         /*
          * Select most recent collection, find most recent set in it and get 5 random images from this set
          */
+        $photos = [];
+        $collection = '';
+        $set = '';
 
-        // Collection
-        $collections = glob($root . '/*', GLOB_ONLYDIR);
+        // Get and sort collection list
+        $collections = glob($root.'/*', GLOB_ONLYDIR);
         $collectionsRegistry = [];
 
         foreach ($collections as $collection) {
@@ -253,47 +276,55 @@ class HomeBuilder
         }
 
         arsort($collectionsRegistry);
-        $collectionsRegistry = array_flip($collectionsRegistry);
+        $collectionsRegistry = array_keys($collectionsRegistry);
 
-        $collection = reset($collectionsRegistry);
+        // Select collection
+        while (count($collectionsRegistry) && empty($photos)) {
+            $collection = array_shift($collectionsRegistry);
+            if ($collection === null) {
+                break;
+            }
 
+            // Get and sort 'set' list
+            $sets = glob($collection.'/*', GLOB_ONLYDIR);
+            $setsRegistry = [];
 
-        // Set
-        $sets = glob($collection . '/*', GLOB_ONLYDIR);
-        $setsRegistry = [];
+            foreach ($sets as $set) {
+                $setsRegistry[$set] = filemtime($set);
+            }
 
-        foreach ($sets as $set) {
-            $setsRegistry[$set] = filemtime($set);
-        }
+            arsort($setsRegistry);
+            $setsRegistry = array_keys($setsRegistry);
 
-        arsort($setsRegistry);
-        $setsRegistry = array_flip($setsRegistry);
-
-        $set = reset($setsRegistry);
-
-
-        // Random
-        /** @var \SplFileInfo[] $iterator */
-        $iterator = new \DirectoryIterator($set);
-
-        $i = 0;
-
-        /** @var array $photos */
-        $photos = [];
-
-        foreach ($iterator as $file) {
-            if ($file->getExtension() == 'jpg' || $file->getExtension() == 'jpeg') {
-                $photos[] = [
-                    'extension' => $file->getExtension(),
-                    'pathname' => str_replace($root . '/', '', $file->getPathname()),
-                    'basename' => $file->getBasename(),
-                    'filename' => $file->getBasename('.' . $file->getExtension()),
-                ];
-
-                $i++;
-
-                if ($i == 10) {
+            // Select 'set'
+            while (count($setsRegistry) && empty($photos)) {
+                $set = array_shift($setsRegistry);
+                if ($set === null) {
                     break;
+                }
+
+                // Find all pictures
+                $paths = glob($set.'/*.{jpg,jpeg,JPG,JPEG}', GLOB_BRACE);
+                if (count($paths) < 5) {
+                    continue;
+                }
+
+                // Select random pictures
+                $count = 10;
+                if (count($paths) < $count) {
+                    $count = count($paths);
+                }
+                $keys = array_rand($paths, $count);
+
+                foreach ($keys as $key) {
+                    $path = $paths[$key];
+                    $pathinfo = pathinfo($path);
+                    $photos[] = [
+                        'extension' => $pathinfo['extension'],
+                        'pathname' => str_replace($root.'/', '', $pathinfo['dirname'].'/'.$pathinfo['basename']),
+                        'basename' => $pathinfo['basename'],
+                        'filename' => $pathinfo['filename'],
+                    ];
                 }
             }
         }
@@ -302,7 +333,11 @@ class HomeBuilder
             $this->stopwatch->stop('block_photos');
         }
 
-        return $photos;
+        return [
+            'collection' => basename($collection),
+            'set' => basename($set),
+            'list' => $photos,
+        ];
     }
 
     /**
@@ -340,11 +375,11 @@ class HomeBuilder
             $usersWeights[$key] = 0;
 
             if ($user->getBranch() == $this->user->getBranch()) {
-                $usersWeights[$key]++;
+                ++$usersWeights[$key];
             }
 
             if ($user->getNiveau() == $this->user->getNiveau()) {
-                $usersWeights[$key]++;
+                ++$usersWeights[$key];
             }
         }
 

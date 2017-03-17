@@ -2,414 +2,210 @@
 
 namespace Etu\Core\UserBundle\Controller;
 
-use Doctrine\Common\Persistence\ObjectRepository;
-use Doctrine\ORM\EntityManager;
-use Etu\Core\UserBundle\Entity\Session;
-use Etu\Core\UserBundle\Ldap\LdapManager;
-use Etu\Core\UserBundle\Sync\Iterator\Element\ElementToImport;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
-use Etu\Core\UserBundle\Ldap\Model\User;
-use Etu\Core\UserBundle\Ldap\Model\Organization;
-use Etu\Module\BuckUTTBundle\Soap\SoapManager;
-
+use Etu\Core\UserBundle\Exception\OrganizationNotAuthorizedException;
+use Etu\Core\UserBundle\Security\Authentication\Token\CasToken;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+// Import annotations
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class AuthController extends Controller
 {
-	/**
-	 * Connect the user or the organization automatically if possible,
-	 * ask for method to connect otherwise.
-	 *
-	 * @Route("/user", name="user_connect")
-	 * @Template()
-	 */
-	public function connectAction()
-	{
-		if ($this->getUserLayer()->isConnected()) {
-			return $this->redirect($this->generateUrl('homepage'));
-		}
-
-		if ($this->get('session')->has('etu.last_url')) {
-			$this->get('session')->set('etu.login_target', $this->get('session')->get('etu.last_url'));
-		} else {
-			$this->get('session')->set('etu.login_target', $this->generateUrl('homepage'));
-		}
-
-		if ($this->getKernel()->getEnvironment() != 'test') {
-			$this->initializeCAS();
-			\phpCAS::setNoCasServerValidation();
-
-			if (\phpCAS::isAuthenticated()) {
-				// Try to connect user automatically
-				$login = \phpCAS::getUser();
-
-				$em = $this->getDoctrine()->getManager();
-
-				$user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
-
-				if ($user && $user->getIsBanned()) {
-					$this->get('session')->getFlashBag()->set('message', array(
-						'type' => 'error',
-						'message' => 'Vous avez été banni d\'EtuUTT.'
-					));
-
-					return $this->redirect($this->generateUrl('homepage'));
-				}
-
-				// If the user can't be loaded from database, we try for an organization
-				if (! $user) {
-					$orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(array('login' => $login));
-
-					if ($orga) {
-						$user = $orga;
-					}
-				}
-
-				// If the user can't be loaded even as organization, we try using LDAP
-				if (! $user) {
-					/** @var $ldap LdapManager */
-					$ldap = $this->get('etu.user.ldap');
-
-					$ldapUser = $ldap->getUser($login);
-
-					// If we can't use a classic user, try with an organization
-					if (! $ldapUser) {
-						$ldapUser = $ldap->getOrga($login);
-					}
-
-					// We caught a user that is not in the database : we import it !
-					if ($ldapUser instanceof User) {
-						$import = new ElementToImport($this->getDoctrine(), $ldapUser);
-						$user = $import->import(true);
-					} elseif ($ldapUser instanceof Organization) {
-						$this->get('session')->getFlashBag()->set('message', array(
-							'type' => 'error',
-							'message' => 'user.auth.connect.orga_exists_ldap'
-						));
-
-						return $this->redirect($this->generateUrl('homepage'));
-					}
-				}
-
-				if ($user instanceof \Etu\Core\UserBundle\Entity\User) {
-                    $this->createSession(Session::TYPE_USER, $user);
-
-					// Remove BuckUTT cookie
-					$this->get('session')->remove(SoapManager::cookie_name);
-
-					$this->get('session')->getFlashBag()->set('message', array(
-						'type' => 'success',
-						'message' => 'user.auth.connect.confirm'
-					));
-
-					if (in_array($user->getLanguage(), $this->container->getParameter('etu.translation.languages'))) {
-						$this->get('session')->set('_locale', $user->getLanguage());
-					}
-
-					if ($this->get('session')->has('etu.login_target')) {
-						return $this->redirect($this->get('session')->get('etu.login_target'));
-					} else {
-						return $this->redirect($this->generateUrl('homepage'));
-					}
-				} elseif ($user instanceof \Etu\Core\UserBundle\Entity\Organization) {
-                    $this->createSession(Session::TYPE_ORGA, $user);
-
-					// Remove BuckUTT cookie
-					$this->get('session')->remove(SoapManager::cookie_name);
-
-					$this->get('session')->getFlashBag()->set('message', array(
-						'type' => 'success',
-						'message' => 'user.auth.connect.confirm'
-					));
-
-					if ($this->get('session')->has('etu.login_target')) {
-						return $this->redirect($this->get('session')->get('etu.login_target'));
-					} else {
-						return $this->redirect($this->generateUrl('homepage'));
-					}
-				}
-			}
-		}
-
-		// If we can't auto-connect, we ask for the method
-		return array();
-	}
-
-	/**
-	 * @Route("/user/cas", name="user_connect_cas")
-	 */
-	public function connectCasAction()
-	{
-		if ($this->getUserLayer()->isConnected()) {
-			return $this->redirect($this->generateUrl('homepage'));
-		}
-
-		// Catch the CAS ticket to connect emails
-		$ticket = $this->getRequest()->get('ticket', false);
-
-		if (! empty($ticket) && is_string($ticket)) {
-			$this->get('session')->set('ticket', $ticket);
-		}
-
-		// Otherwise, load phpCAS
-		$this->initializeCAS();
-		\phpCAS::setNoCasServerValidation();
-		\phpCAS::forceAuthentication();
-
-		// Try to connect user
-		$login = \phpCAS::getUser();
-
-		/** @var EntityManager $em */
-		$em = $this->getDoctrine()->getManager();
-
-		/** @var \Etu\Core\UserBundle\Entity\User $user */
-		$user = $em->getRepository('EtuUserBundle:User')->findOneBy(array('login' => $login));
-
-		if ($user && $user->getIsBanned()) {
-			$this->get('session')->getFlashBag()->set('message', array(
-				'type' => 'error',
-				'message' => 'Vous avez été banni d\'EtuUTT.'
-			));
-
-			return $this->redirect($this->generateUrl('homepage'));
-		}
-
-		// If the user can't be loaded from database, we try for an organization
-		if (! $user) {
-			$orga = $em->getRepository('EtuUserBundle:Organization')->findOneBy(array('login' => $login));
-
-			if ($orga) {
-				$user = $orga;
-			}
-		}
-
-		// If the user can't be loaded even as organization, we try using LDAP
-		if (! $user) {
-			/** @var $ldap LdapManager */
-			$ldap = $this->get('etu.user.ldap');
-
-			$ldapUser = $ldap->getUser($login);
-
-			// If we can't use a classic user, try with an organization
-			if (! $ldapUser) {
-				$ldapUser = $ldap->getOrga($login);
-			}
-
-			// We caught a user that is not in the database : we import it !
-			if ($ldapUser instanceof User) {
-				$import = new ElementToImport($this->getDoctrine(), $ldapUser);
-				$user = $import->import(true);
-			} elseif ($ldapUser instanceof Organization) {
-				$this->get('session')->set('orga', null);
-				$this->get('session')->set('user', null);
-				$this->get('session')->clear();
-
-				if (ini_get('session.use_cookies')) {
-					$params = session_get_cookie_params();
-					setcookie(session_name(), '', time() - 42000,
-						$params['path'], $params['domain'],
-						$params['secure'], $params['httponly']
-					);
-				}
-
-				$this->get('session')->getFlashBag()->set('message', array(
-					'type' => 'success',
-					'message' => 'user.auth.connect.orga_exists_ldap'
-				));
-
-				return $this->redirect($this->generateUrl('homepage'));
-			} else {
-				$this->get('session')->getFlashBag()->set('message', array(
-					'type' => 'error',
-					'message' => 'user.auth.connect.error'
-				));
-
-				return $this->redirect($this->generateUrl('user_connect'));
-			}
-		}
-
-
-        // Create the session
-		if ($user instanceof \Etu\Core\UserBundle\Entity\User) {
-            $this->createSession(Session::TYPE_USER, $user);
-
-			// Remove BuckUTT cookie
-			$this->get('session')->remove(SoapManager::cookie_name);
-
-			$this->get('session')->getFlashBag()->set('message', array(
-				'type' => 'success',
-				'message' => 'user.auth.connect.confirm'
-			));
-
-			if (in_array($user->getLanguage(), $this->container->getParameter('etu.translation.languages'))) {
-				$this->get('session')->set('_locale', $user->getLanguage());
-			}
-		} elseif ($user instanceof \Etu\Core\UserBundle\Entity\Organization) {
-            $this->createSession(Session::TYPE_ORGA, $user);
-
-			// Remove BuckUTT cookie
-			$this->get('session')->remove(SoapManager::cookie_name);
-
-			$this->get('session')->getFlashBag()->set('message', array(
-				'type' => 'success',
-				'message' => 'user.auth.connect.confirm'
-			));
-		} else {
-			$this->get('session')->getFlashBag()->set('message', array(
-				'type' => 'success',
-				'message' => 'user.auth.connect.error'
-			));
-
-			return $this->redirect($this->generateUrl('user_connect'));
-		}
-
-		if ($this->get('session')->has('etu.login_target')) {
-			return $this->redirect($this->get('session')->get('etu.login_target'));
-		} else {
-			return $this->redirect($this->generateUrl('homepage'));
-		}
-	}
-
-	/**
-	 * @Route("/user/external", name="user_connect_external")
-	 * @Template()
-	 */
-	public function connectExternalAction()
-	{
-		if ($this->getUserLayer()->isConnected()) {
-			return $this->redirect($this->generateUrl('homepage'));
-		}
-
-		$em = $this->getDoctrine()->getManager();
-
-		$user = new \Etu\Core\UserBundle\Entity\User();
-
-		$form = $this->createFormBuilder($user)
-			->add('login')
-			->add('password', 'password')
-			->getForm();
-
-		$request = $this->getRequest();
-
-		if ($request->getMethod() == 'POST' && $form->submit($request)->isValid()) {
-			/** @var \Etu\Core\UserBundle\Entity\User $result */
-			$result = $em->getRepository('EtuUserBundle:User')->findOneBy(array(
-				'login' => $user->getLogin(),
-				'password' => $this->get('etu.user.crypting')->encrypt($user->getPassword())
-			));
-
-			if ($result) {
-                $this->createSession(Session::TYPE_USER, $result);
-
-				$this->get('session')->getFlashBag()->set('message', array(
-					'type' => 'success',
-					'message' => 'user.auth.connect.confirm'
-				));
-
-				if (in_array($user->getLanguage(), $this->container->getParameter('etu.translation.languages'))) {
-					$this->get('session')->set('_locale', $user->getLanguage());
-				}
-
-				if ($this->get('session')->has('etu.login_target')) {
-					return $this->redirect($this->get('session')->get('etu.login_target'));
-				} else {
-					return $this->redirect($this->generateUrl('homepage'));
-				}
-			} else {
-				$this->get('session')->getFlashBag()->set('message', array(
-					'type' => 'error',
-					'message' => 'user.auth.connect.error'
-				));
-
-				return $this->redirect($this->generateUrl('user_connect_external'));
-			}
-		}
-
-		return array(
-			'form' => $form->createView()
-		);
-	}
-
-	/**
-	 * @Route("/user/disconnect", name="user_disconnect")
-	 */
-	public function disconnectAction()
-	{
-		if (! $this->getUserLayer()->isConnected()) {
-			return $this->redirect($this->generateUrl('homepage'));
-		}
-
-        if ($this->getUserLayer()->isConnected()) {
-            /** @var EntityManager $em */
-            $em = $this->getDoctrine()->getManager();
-
-            $query = $em->createQueryBuilder()
-                ->delete()
-                ->from('EtuUserBundle:Session', 's')
-                ->where('s.entityType = :type')
-                ->andWhere('s.entityId = :id')
-                ->setParameter('id', $this->getUser()->getId());
-
-            if ($this->getUserLayer()->isOrga()) {
-                $query->setParameter('type', Session::TYPE_ORGA);
-            } else {
-                $query->setParameter('type', Session::TYPE_USER);
-            }
-
-            $query->getQuery()->execute();
+    /**
+     * Connect the user or the organization automatically if possible,
+     * ask for method to connect otherwise.
+     *
+     * @Route("/user", name="user_connect")
+     * @Template()
+     */
+    public function connectAction()
+    {
+        // Redirect to home if user is already authenticated
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY') || $this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('homepage'));
         }
 
-        setcookie(md5('etuutt-session-cookie-name'), '', time() - 10, '/');
+        // If we are here because we fail to fill the external login form
+        if (!empty($this->get('security.authentication_utils')->getLastUsername())) {
+            return $this->redirect($this->generateUrl('user_connect_external'));
+        }
 
-		$this->get('session')->set('orga', null);
-		$this->get('session')->set('user', null);
-		$this->get('session')->clear();
+        // Save login target if we have the precedent page
+        if ($this->get('session')->has('etu.last_url')) {
+            $this->get('session')->set('etu.login_target', $this->get('session')->get('etu.last_url'));
+        } else {
+            $this->get('session')->set('etu.login_target', $this->generateUrl('homepage'));
+        }
 
-		if (ini_get('session.use_cookies')) {
-			$params = session_get_cookie_params();
-			setcookie(session_name(), '', time() - 42000,
-				$params['path'], $params['domain'],
-				$params['secure'], $params['httponly']
-			);
-		}
+        // Try to connect user automatically
+        if ($this->getKernel()->getEnvironment() != 'test') {
+            $this->initializeCAS();
+            if (\phpCAS::isAuthenticated()) {
+                return $this->redirect($this->generateUrl('user_connect_cas'));
+            }
+        }
 
-		$this->initializeCAS();
-		\phpCAS::setNoCasServerValidation();
-		\phpCAS::logoutWithRedirectService('http://'.$this->container->getParameter('etu.domain'));
-
-		return $this->redirect($this->generateUrl('homepage'));
-	}
-
-	/**
-	 * Initialize the CAS connection
-	 */
-	private function initializeCAS()
-	{
-		\phpCAS::client(
-			$this->container->getParameter('etu.cas.version'),
-			$this->container->getParameter('etu.cas.host'),
-			$this->container->getParameter('etu.cas.port'),
-			$this->container->getParameter('etu.cas.path'),
-			$this->container->getParameter('etu.cas.change_session_id')
-		);
-	}
+        // If we can't auto-connect, we ask for the method
+        return [];
+    }
 
     /**
-     * @param $type
-     * @param User|Organization $user
+     * Get the answer from the CAS here then save user as logged in.
+     * But if visitor is not comming from cas, he will be redirect to cas
+     * to log in.
+     *
+     * @Route("/user/cas", name="user_connect_cas")
      */
-    private function createSession($type, $user)
+    public function connectCasAction()
     {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
+        // Redirect to home if user is already authenticated
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY') || $this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('homepage'));
+        }
 
-        $session = new Session($type, $user->getId());
-        $session->createName($_SERVER);
+        // Force cas login
+        $this->initializeCAS();
+        \phpCAS::forceAuthentication();
 
-        $em->persist($session);
-        $em->flush();
+        // Save login token
+        try {
+            if (\phpCAS::isAuthenticated()) {
+                $login = \phpCAS::getUser();
+                $authToken = $this->get('security.authentication.manager')->authenticate(new CasToken($login));
+                $this->get('security.token_storage')->setToken($authToken);
+            }
+        } catch (OrganizationNotAuthorizedException $e) {
+            // Organization found on the LDAP, but not authorized by an admin
+            $this->get('session')->getFlashBag()->set('message', [
+                'type' => 'error',
+                'message' => 'user.auth.connect.orga_exists_ldap',
+            ]);
 
-        setcookie(md5('etuutt-session-cookie-name'), $session->getToken(), $session->getExpireAt()->format('U'), '/');
+            return $this->redirect($this->generateUrl('homepage'));
+        } catch (AuthenticationException $e) {
+            // If user is authorized by cas, we shouldn't have an exception
+            $this->get('session')->getFlashBag()->set('message', [
+                'type' => 'error',
+                'message' => 'user.auth.connect.unknownError',
+            ]);
+
+            return $this->redirect($this->generateUrl('homepage'));
+        }
+
+        // Select final redirection
+        $redirection = $this->redirect($this->generateUrl('homepage'));
+        if ($this->get('session')->has('etu.login_target') && !empty($this->get('session')->get('etu.login_target'))) {
+            $redirection = $this->redirect($this->get('session')->get('etu.login_target'));
+            $this->get('session')->remove('etu.login_target');
+        }
+
+        return $redirection;
+    }
+
+    /**
+     * Show a form to let external user login. If submitted,
+     * authentication_utils will log in the user automatically.
+     * Cannot be used to log organization or user without password.
+     *
+     * @Route("/user/external", name="user_connect_external")
+     * @Template()
+     */
+    public function connectExternalAction()
+    {
+        // Redirect to home if user is already authenticated
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY') || $this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('homepage'));
+        }
+
+        $authenticationUtils = $this->get('security.authentication_utils');
+
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        if ($error) {
+            $this->get('session')->getFlashBag()->set('message', [
+                'type' => 'error',
+                'message' => 'user.auth.connect.error',
+            ]);
+        }
+
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return [
+            'last_username' => $lastUsername,
+        ];
+    }
+
+    /**
+     * Redirect user to the right logout way for him : CAS or external.
+     *
+     * @Route("/user/logout", name="user_logout")
+     */
+    public function logoutAction()
+    {
+        // Logout from CAS
+        $this->initializeCAS();
+        if (\phpCAS::isAuthenticated()) {
+            \phpCAS::logoutWithRedirectService($this->generateUrl('user_logout', [], UrlGeneratorInterface::ABSOLUTE_URL));
+        }
+
+        // Logout from EtuUTT
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY') || $this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('user_logout_external'));
+        }
+
+        // Yeah ! We are logged out !
+        $this->get('session')->getFlashBag()->set('message', [
+            'type' => 'success',
+            'message' => 'user.auth.connect.loggedOut',
+        ]);
+
+        return $this->redirect($this->generateUrl('homepage'));
+    }
+
+    /**
+     * Log out user from EtuUTT.
+     *
+     * Can also be used with CAS user, but they will not be logged out from
+     * the CAS server.
+     * This uri is set as logout route `app/config/security.yml`
+     * All the logout process is done by security.authentication_utils
+     *
+     * @Route("/user/logout/external", name="user_logout_external")
+     */
+    public function logoutExternalAction()
+    {
+    }
+
+    /**
+     * Route triggered when an authenticated user try to access a forbidden page.
+     *
+     * @Route("/forbidden", name="forbidden")
+     */
+    public function forbidden()
+    {
+        $this->get('session')->getFlashBag()->set('message', [
+            'type' => 'error',
+            'message' => 'user.denied',
+        ]);
+
+        return $this->redirect($this->generateUrl('homepage'));
+    }
+
+    /**
+     * Initialize the CAS connection.
+     */
+    private function initializeCAS()
+    {
+        \phpCAS::client(
+            $this->container->getParameter('etu.cas.version'),
+            $this->container->getParameter('etu.cas.host'),
+            $this->container->getParameter('etu.cas.port'),
+            $this->container->getParameter('etu.cas.path'),
+            $this->container->getParameter('etu.cas.change_session_id')
+        );
+        \phpCAS::setNoCasServerValidation();
     }
 }

@@ -1,3 +1,26 @@
-<script type="text/javascript">
-	window.top.window.uploadEnd('{{ result }}', {{ data|raw }});
-</script>
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'user.profile.profileAvatar.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+    <img src="{{ asset('assets/img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+    <ul class="nav nav-tabs page-tabs">
+        <li>
+            <a href="{{ path('admin_user_edit', {'login': app.user.login}) }}">
+                <i class="icon-chevron-left"></i>
+                {{ 'user.admin.userAvatar.back'|trans }}
+            </a>
+        </li>
+    </ul>
+
+    <div class="padding20-sides profile-avatar">
+        <img src="{{ asset('uploads/photos/'~app.user.avatar) }}" alt="{{ app.user.fullName }}" title="{{ app.user.fullName }}" />
+        <hr/>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

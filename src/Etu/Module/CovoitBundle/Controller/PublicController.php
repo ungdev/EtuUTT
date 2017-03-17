@@ -7,8 +7,9 @@ use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\CovoitBundle\Entity\Covoit;
 use Etu\Module\CovoitBundle\Entity\CovoitMessage;
-
 // Import annotations
+use Etu\Module\CovoitBundle\Form\CovoitMessageType;
+use Etu\Module\CovoitBundle\Form\SearchType;
 use Etu\Module\CovoitBundle\Model\Search;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -23,12 +24,12 @@ class PublicController extends Controller
     /**
      * @Route("/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="covoiturage_index")
      * @Template()
+     *
+     * @param mixed $page
      */
     public function indexAction($page = 1)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_COVOIT');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -48,24 +49,24 @@ class PublicController extends Controller
         $search = new Search();
         $search->startCity = $em->getRepository('EtuCoreBundle:City')->find(749);
 
-        $searchForm = $this->createForm($this->get('etu.covoit.form.search'), $search);
+        $form = $this->createForm(SearchType::class, $search, ['action' => $this->generateUrl('covoiturage_search')]);
 
         return [
             'pagination' => $covoits,
-            'searchForm' => $searchForm->createView(),
-            'today' => new \DateTime()
+            'searchForm' => $form->createView(),
+            'today' => new \DateTime(),
         ];
     }
 
     /**
      * @Route("/search/{page}", defaults={"page" = 1}, requirements={"page" = "\d+"}, name="covoiturage_search")
      * @Template()
+     *
+     * @param mixed $page
      */
     public function searchAction(Request $request, $page = 1)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_COVOIT');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -73,10 +74,11 @@ class PublicController extends Controller
         $search = new Search();
         $search->startCity = $em->getRepository('EtuCoreBundle:City')->find(749);
 
-        $searchForm = $this->createForm($this->get('etu.covoit.form.search'), $search);
+        $form = $this->createForm(SearchType::class, $search);
         $pagination = false;
 
-        if ($searchForm->submit($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             // Search covoits
             $query = $this->get('etu.covoit.query_mapper.search')->map($em->createQueryBuilder(), $search)->getQuery();
 
@@ -85,20 +87,21 @@ class PublicController extends Controller
 
         return [
             'pagination' => $pagination,
-            'searchForm' => $searchForm->createView(),
-            'today' => new \DateTime()
+            'searchForm' => $form->createView(),
+            'today' => new \DateTime(),
         ];
     }
 
     /**
      * @Route("/{slug}-{id}", requirements={"slug"=".+"}, name="covoiturage_view")
      * @Template()
+     *
+     * @param mixed $id
+     * @param mixed $slug
      */
     public function viewAction(Request $request, $id, $slug)
     {
-        if (! $this->getUserLayer()->isUser()) {
-            return $this->createAccessDeniedResponse();
-        }
+        $this->denyAccessUnlessGranted('ROLE_COVOIT');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -114,15 +117,15 @@ class PublicController extends Controller
             ->getQuery()
             ->getOneOrNullResult();
 
-        if (! $covoit) {
+        if (!$covoit) {
             throw $this->createNotFoundException('Covoit not found');
         }
 
         // One URL to rule them all
-        if ($slug != $covoit->getStartCity()->getSlug() . '-' . $covoit->getEndCity()->getSlug()) {
+        if ($slug != $covoit->getStartCity()->getSlug().'-'.$covoit->getEndCity()->getSlug()) {
             return $this->redirect($this->generateUrl('covoiturage_view', [
                 'id' => $covoit->getId(),
-                'slug' => $covoit->getStartCity()->getSlug() . '-' . $covoit->getEndCity()->getSlug()
+                'slug' => $covoit->getStartCity()->getSlug().'-'.$covoit->getEndCity()->getSlug(),
             ]), 301);
         }
 
@@ -130,9 +133,10 @@ class PublicController extends Controller
         $message->setAuthor($this->getUser());
         $message->setCovoit($covoit);
 
-        $messageForm = $this->createForm($this->get('etu.covoit.form.message'), $message);
+        $messageForm = $this->createForm(CovoitMessageType::class, $message);
 
-        if ($request->getMethod() == 'POST' && $messageForm->submit($request)->isValid()) {
+        $messageForm->handleRequest($request);
+        if ($this->isGranted('ROLE_COVOIT_EDIT') && $messageForm->isSubmitted() && $messageForm->isValid()) {
             $em->persist($message);
             $em->flush();
 
@@ -140,7 +144,7 @@ class PublicController extends Controller
             $notif = new Notification();
 
             $notif
-                ->setModule($this->getCurrentBundle()->getIdentifier())
+                ->setModule('covoit')
                 ->setHelper('covoit_new_message')
                 ->setAuthorId($this->getUser()->getId())
                 ->setEntityType('covoit')
@@ -152,20 +156,20 @@ class PublicController extends Controller
             // Add current user as subscriber
             $this->getSubscriptionsManager()->subscribe($this->getUser(), 'covoit', $covoit->getId());
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
-                'message' => 'covoit.messages.message_sent'
-            ));
+                'message' => 'covoit.messages.message_sent',
+            ]);
 
             return $this->redirect($this->generateUrl('covoiturage_view', [
                 'id' => $covoit->getId(),
-                'slug' => $covoit->getStartCity()->getSlug() . '-' . $covoit->getEndCity()->getSlug()
+                'slug' => $covoit->getStartCity()->getSlug().'-'.$covoit->getEndCity()->getSlug(),
             ]));
         }
 
         return [
             'covoit' => $covoit,
-            'messageForm' => $messageForm->createView()
+            'messageForm' => $messageForm->createView(),
         ];
     }
 }

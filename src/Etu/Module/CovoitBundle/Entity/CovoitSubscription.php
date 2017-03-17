@@ -7,7 +7,7 @@ use Etu\Core\UserBundle\Entity\User;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * CovoitSubscription
+ * CovoitSubscription.
  *
  * @ORM\Table(name="etu_covoits_subscriptions")
  * @ORM\Entity
@@ -16,7 +16,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class CovoitSubscription
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -63,9 +63,9 @@ class CovoitSubscription
     private $deletedAt;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -73,9 +73,10 @@ class CovoitSubscription
     }
 
     /**
-     * Set phoneNumber
+     * Set phoneNumber.
      *
      * @param string $phoneNumber
+     *
      * @return CovoitSubscription
      */
     public function setPhoneNumber($phoneNumber)
@@ -86,7 +87,7 @@ class CovoitSubscription
     }
 
     /**
-     * Get phoneNumber
+     * Get phoneNumber.
      *
      * @return string
      */
@@ -96,9 +97,10 @@ class CovoitSubscription
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
+     *
      * @return CovoitSubscription
      */
     public function setCreatedAt($createdAt)
@@ -109,7 +111,7 @@ class CovoitSubscription
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -119,9 +121,10 @@ class CovoitSubscription
     }
 
     /**
-     * Set deletedAt
+     * Set deletedAt.
      *
      * @param \DateTime $deletedAt
+     *
      * @return CovoitSubscription
      */
     public function setDeletedAt($deletedAt)
@@ -132,7 +135,7 @@ class CovoitSubscription
     }
 
     /**
-     * Get deletedAt
+     * Get deletedAt.
      *
      * @return \DateTime
      */
@@ -142,9 +145,10 @@ class CovoitSubscription
     }
 
     /**
-     * Set covoit
+     * Set covoit.
      *
      * @param Covoit $covoit
+     *
      * @return CovoitSubscription
      */
     public function setCovoit(Covoit $covoit = null)
@@ -155,7 +159,7 @@ class CovoitSubscription
     }
 
     /**
-     * Get covoit
+     * Get covoit.
      *
      * @return Covoit
      */
@@ -165,9 +169,10 @@ class CovoitSubscription
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param User $user
+     *
      * @return CovoitSubscription
      */
     public function setUser(User $user = null)
@@ -178,7 +183,7 @@ class CovoitSubscription
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return User
      */

@@ -26,6 +26,7 @@ class AuthorizationCodeGrantType implements GrantTypeInterface
 
     /**
      * @param Request $request
+     *
      * @return OauthAccessToken
      */
     public function createToken(Request $request)
@@ -33,15 +34,15 @@ class AuthorizationCodeGrantType implements GrantTypeInterface
         /** @var OauthClient $client */
         $client = $request->attributes->get('_oauth_client');
 
-        if (! $client) {
+        if (!$client) {
             throw new \RuntimeException('Client not found');
         }
 
         /** @var OauthAuthorizationCode $authorizationCode */
         $authorizationCode = $this->manager->getRepository('EtuCoreApiBundle:OauthAuthorizationCode')
-            ->findOneBy([ 'code' => $request->request->get('authorization_code') ]);
+            ->findOneBy(['code' => $request->request->get('code', $request->request->get('authorization_code'))]);
 
-        if (! $authorizationCode) {
+        if (!$authorizationCode) {
             throw new \RuntimeException('Authorization code not found');
         }
 
@@ -78,6 +79,7 @@ class AuthorizationCodeGrantType implements GrantTypeInterface
 
     /**
      * @param OauthAccessToken $token
+     *
      * @return array
      */
     public function format(OauthAccessToken $token)
@@ -91,8 +93,10 @@ class AuthorizationCodeGrantType implements GrantTypeInterface
         return [
             'access_token' => $token->getToken(),
             'expires_at' => $token->getExpireAt()->format('U'),
+            'expires' => $token->getExpireAt()->format('U'),
             'scopes' => $scopes,
-            'refresh_token' => $token->getRefreshToken()->getToken()
+            'refresh_token' => $token->getRefreshToken()->getToken(),
+            'token_type' => 'Bearer',
         ];
     }
 

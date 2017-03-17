@@ -1,0 +1,99 @@
+{% extends '::base.html.twig' %}
+
+{% block layout %}
+    <header class="bg-dark-blue fixed head">
+        <div class="container container-dev" id="top">
+            <div class="pull-left title">
+                <h1 class="seo-title">{{ block('title') }} - {{ 'base.title'|trans }}</h1>
+
+                <a href="{{ path('devs_panel_index') }}">
+                    <img src="{{ asset('assets/img/logo_devs.jpg') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="logo" />
+                </a>
+            </div>
+
+            <nav class="pull-right">
+                <ul class="list-horizontal list-horizontal-linked menu" id="head-menu-list">
+                    <li class="first">
+                        <a href="{{ path('devs_panel_index') }}">
+                            <span class="menu-link-text" id="menu_home">Tableau de bord</span>
+                            <div class="clear"></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('homepage') }}">
+                            <span class="menu-link-text" id="menu_home">Retour à EtuUTT</span>
+                            <div class="clear"></div>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    {# Overlay #}
+    <div id="overlay"></div>
+
+    {# Change the locale (available languages) #}
+    <div id="change-locale-choices">
+        <ul class="list-vertical list-vertical-linked overlay-menu">
+            <li class="first">
+                <a href="{{ path('change_locale', {'lang': 'fr'}) }}">
+                    <img src="{{ asset('assets/img/lang/fr.png') }}" />
+                    Français
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('change_locale', {'lang': 'en'}) }}">
+                    <img src="{{ asset('assets/img/lang/en.png') }}" />
+                    English
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('change_locale', {'lang': 'de'}) }}">
+                    <img src="{{ asset('assets/img/lang/de.png') }}" />
+                    Deutsh
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <section class="page">
+        <div class="container page-container container-dev">
+            <div class="content content-dev">
+                {% if message %}
+                    <div class="page-alert-mobile alert alert-{{ message.type }}">
+                        {{ message.message|trans }}
+                    </div>
+                {% endif %}
+
+                {% block content %}{% endblock %}
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="container footer-bottom">
+        <p>
+            <a href="#" class="footer-link change-locale">
+                {{ 'base.footer.change_locale'|trans }}
+            </a>
+            <a href="{{ path('page_view', {'slug': 'mentions-legales'}) }}" id="next-change-locale-link" class="footer-link">
+                {{ 'base.footer.legalities'|trans }}
+            </a>
+            <a href="{{ path('page_view', {'slug': 'nous-aider'}) }}" class="footer-link">
+                {{ 'base.footer.help_us'|trans }}
+            </a>
+            <a href="{{ path('page_view', {'slug': 'developpeurs'}) }}" class="footer-link">
+                {{ 'base.footer.developers'|trans }}
+            </a>
+            {% if app.request.cookies.has('disable_responsive') %}
+                <a href="{{ path('mobile_version') }}" class="footer-link">
+                    {{ 'base.footer.mobile_version'|trans }}
+                </a>
+            {% endif %}
+            <span class="pull-right">
+            {{ 'base.footer.1col_text'|trans|raw }} - {% include '::version.html.twig' %}
+        </span>
+        </p>
+    </footer>
+{% endblock %}

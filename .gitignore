@@ -1,28 +1,81 @@
 # EtuUTT #
 ##########
 
-/app/config/parameters.yml
-/app/cache/*
-/app/logs/*
-/app/check.php
-/app/bootstrap.php.cache
-/app/SymfonyRequirements.php
+/src/Etu/Module/UVBundle/Resources/objects/current-guide.pdf
+/src/Etu/Module/UVBundle/Resources/objects/current-guide.xml
+/src/Etu/Module/UVBundle/Resources/objects/registry.json
 /src/Etu/Module/LoggerBundle/Resources/objects/errors
 /src/Etu/Module/ArgentiqueBundle/Resources/photos/*
-
-/web/vendor/
-/web/min/
-/web/bundles/
-/web/uploads/
 /web/argentique/cache/
-/web/app.php
-/web/etu_dev.php
-/web/config.php
+/tmp
 
-/vendor/
-/bin/
+# Used to store schedules
+/src/Etu/Core/UserBundle/Resources/temp
+
+# Upload directory
+!/web/uploads/apps
+/web/uploads/apps/*
+!/web/uploads/apps/.gitkeep
+!/web/uploads/apps/default.png
+
+!/web/uploads/events
+/web/uploads/events/*
+!/web/uploads/events/.gitkeep
+
+!/web/uploads/logos
+/web/uploads/logos/*
+!/web/uploads/logos/.gitkeep
+!/web/uploads/logos/default-logo.png
+
+!/web/uploads/photos
+/web/uploads/photos/*
+!/web/uploads/photos/.gitkeep
+!/web/uploads/photos/default-avatar.png
+
+!/web/uploads/users_files
+/web/uploads/users_files/*
+!/web/uploads/users_files/.gitkeep
+
+!/web/uploads/uvs
+/web/uploads/uvs/*
+!/web/uploads/uvs/.gitkeep
+
+
+# Vagrant #
+############
+/.vagrant
+
+# Composer #
+############
 /composer.phar
+
+# Symfony #
+###########
+/app/config/parameters.yml
+/app/config/modules.yml
+/build/
+/var/*
+!/var/cache
+/var/cache/*
+!var/cache/.gitkeep
+!/var/logs
+/var/logs/*
+!var/logs/.gitkeep
+!/var/sessions
+/var/sessions/*
+!var/sessions/.gitkeep
+!var/SymfonyRequirements.php
+/vendor
+/web/assets/vendor/
+/web/assets/min/
+/web/bundles/
 *.php~
+
+# php-cs-fixer #
+#######
+
+.php_cs.cache
+.php_cs
 
 # IDE #
 #######
@@ -56,6 +109,7 @@
 
 *.log
 *.sqlite
+*.sql
 
 # OS generated files #
 ######################

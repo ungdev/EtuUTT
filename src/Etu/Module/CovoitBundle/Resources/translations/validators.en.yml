@@ -1,0 +1,7 @@
+covoit:
+  proposal:
+    date:
+      past: "The date of the carpooling can not have passed already"
+  proposal_step:
+    price:
+      not_numeric: "The price must be a number"

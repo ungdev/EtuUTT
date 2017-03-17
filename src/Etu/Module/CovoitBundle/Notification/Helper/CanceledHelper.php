@@ -6,7 +6,7 @@ use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Notification\Helper\HelperInterface;
 
 /**
- * Notification for an canceled covoit
+ * Notification for an canceled covoit.
  */
 class CanceledHelper implements HelperInterface
 {
@@ -33,12 +33,13 @@ class CanceledHelper implements HelperInterface
 
     /**
      * @param Notification $notification
+     *
      * @return string
      */
     public function render(Notification $notification)
     {
-        return $this->twig->render('EtuModuleCovoitBundle:Notification:canceled.html.twig', array(
-            'notif' => $notification
-        ));
+        return $this->twig->render('EtuModuleCovoitBundle:Notification:canceled.html.twig', [
+            'notif' => $notification,
+        ]);
     }
 }

@@ -5,66 +5,66 @@
 {% block main_menu_link_homepage %} active{% endblock %}
 
 {% block content %}
-	<div class="padding20-all">
+    <div class="padding20-all">
 
-		<div class="row-fluid">
-			<div class="span4">
-				<img src="{{ asset('src/img/home.jpg') }}" alt="Accueil du site étudiant de l'UTT" />
-			</div>
-			<div class="span8 home-intro">
-				<h3>Bienvenue sur le site étudiant de l'Université de Technologie de Troyes</h3>
+        <div class="row-fluid">
+            <div class="span4">
+                <img src="{{ asset('assets/img/home.jpg') }}" alt="Accueil du site étudiant de l'UTT" />
+            </div>
+            <div class="span8 home-intro">
+                <h3>Bienvenue sur le site étudiant de l'Université de Technologie de Troyes</h3>
 
-				<h5>
-					Découvre les 40 clubs et associations présentes à l’UTT ainsi que les services indispensables pour faciliter ton
-					intégration et ta vie d’étudiant.
-				</h5>
-				<h5>
-					Sport, culture ou loisirs, de nombreux évènements et activités t’attendent ... tu n’as plus qu’à choisir
-					l’association qui te correspond le mieux et il y en a vraiment pour tous !
-				</h5>
-				<h6>
-					Bonne visite !<br />
-					Toute l’équipe de l'UNG (association informatique de l'UTT)
-				</h6>
-			</div>
-		</div>
+                <h5>
+                    Découvre les 40 clubs et associations présentes à l’UTT ainsi que les services indispensables pour faciliter ton
+                    intégration et ta vie d’étudiant.
+                </h5>
+                <h5>
+                    Sport, culture ou loisirs, de nombreux évènements et activités t’attendent ... tu n’as plus qu’à choisir
+                    l’association qui te correspond le mieux et il y en a vraiment pour tous !
+                </h5>
+                <h6>
+                    Bonne visite !<br />
+                    Toute l’équipe de l'UNG (association informatique de l'UTT)
+                </h6>
+            </div>
+        </div>
 
-		<br />
+        <br />
 
-		{% if etu.modules.isEnabled('events') and events|count > 0 %}
-			<h4>{{ 'core.main.indexAnonymous.events'|trans }}</h4>
+        {% if etu.modules.isEnabled('events') and events|count > 0 %}
+            <h4>{{ 'core.main.indexAnonymous.events'|trans }}</h4>
 
-			<hr />
+            <hr />
 
-			<div class="row-fluid">
-				{% for event in events %}
-					<div class="span4">
-						<a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}" class="homepage-event">
-							<img src="{{ asset('events/'~event.id~'.png') }}" alt="{{ event.title }}" class="pull-left event-tooltip-image" />
+            <div class="row-fluid">
+                {% for event in events %}
+                    <div class="span4">
+                        <a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}" class="homepage-event">
+                            <img src="{{ asset('uploads/events/'~event.id~'.png') }}" alt="{{ event.title }}" class="pull-left event-tooltip-image" />
 
-							<div class="homepage-event-meta">
-								<h5>{{ event.title }}</h5>
+                            <div class="homepage-event-meta">
+                                <h5>{{ event.title }}</h5>
 
-								<small class="muted">
-									{{ 'core.main.indexAnonymous.date'|trans({'%date%': event.begin|date('d/m/Y')}) }}
-								</small>
-							</div>
+                                <small class="muted">
+                                    {{ 'core.main.indexAnonymous.date'|trans({'%date%': event.begin|date('d/m/Y')}) }}
+                                </small>
+                            </div>
 
-							<div class="clear"></div>
-						</a>
-					</div>
-				{% endfor %}
-			</div>
+                            <div class="clear"></div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
 
-			<div class="clear"></div>
+            <div class="clear"></div>
 
-			<hr />
+            <hr />
 
-			<p class="pull-right">
-				<a href="{{ path('events_index') }}">
-					{{ 'core.main.indexAnonymous.allEvents'|trans }}
-				</a>
-			</p>
-		{% endif %}
-	</div>
+            <p class="pull-right">
+                <a href="{{ path('events_index') }}">
+                    {{ 'core.main.indexAnonymous.allEvents'|trans }}
+                </a>
+            </p>
+        {% endif %}
+    </div>
 {% endblock %}

@@ -1,76 +1,76 @@
 
 <a class="notif{% if notif.isSuper %} super-notif{% elseif notif.isNew(app.user.lastVisitHome) %} notif-new{% endif %}"
-		{% if notif.countEntities == 1 %}
-	href="{{ path('events_view', {'id': notif.firstEntity.event.id, 'slug': notif.firstEntity.event.title|slugify}) }}"
+        {% if notif.countEntities == 1 %}
+    href="{{ path('events_view', {'id': notif.firstEntity.event.id, 'slug': notif.firstEntity.event.title|slugify}) }}"
 {% else %}
-	href="{{ path('events_index') }}"
-		{% endif %}>
-	<img src="{{ asset('src/img/icons-big/event.png') }}" />
+    href="{{ path('events_index') }}"
+        {% endif %}>
+    <img src="{{ asset('assets/img/icons-big/event.png') }}" />
 
-	<h4 class="notif-title">
-		{% if notif.countEntities == 1 %}
-			{% set entity = notif.firstEntity %}
+    <h4 class="notif-title">
+        {% if notif.countEntities == 1 %}
+            {% set entity = notif.firstEntity %}
 
-			{% if entity.changes.location
-					and not entity.changes.begin
-					and not entity.changes.end
-					and not entity.changes.other %}
-				{{ 'events.notifs.eventEdited.location'|trans({
-					'%title%': highlight_notif_data(entity.event.title),
-					'%newLocation%': highlight_notif_data(entity.event.location)
-				})|raw }}
-			{% elseif entity.changes.begin
-					and not entity.changes.location
-					and not entity.changes.end
-					and not entity.changes.other %}
-				{% if entity.changes.beginDate and not entity.changes.beginHour %}
-					{{ 'events.notifs.eventEdited.beginDate'|trans({
-						'%title%': highlight_notif_data(entity.event.title)
-					})|raw }}
-				{% elseif entity.changes.beginHour and not entity.changes.beginDate %}
-					{{ 'events.notifs.eventEdited.beginHour'|trans({
-						'%title%': highlight_notif_data(entity.event.title)
-					})|raw }}
-				{% else %}
-					{{ 'events.notifs.eventEdited.beginBoth'|trans({
-						'%title%': highlight_notif_data(entity.event.title)
-					})|raw }}
-				{% endif %}
-			{% elseif entity.changes.end
-					and not entity.changes.location
-					and not entity.changes.begin
-					and not entity.changes.other %}
-				{% if entity.changes.beginDate and not entity.changes.beginHour %}
-					{{ 'events.notifs.eventEdited.endDate'|trans({
-						'%title%': highlight_notif_data(entity.event.title)
-					})|raw }}
-				{% elseif entity.changes.beginHour and not entity.changes.beginDate %}
-					{{ 'events.notifs.eventEdited.endHour'|trans({
-						'%title%': highlight_notif_data(entity.event.title)
-					})|raw }}
-				{% else %}
-					{{ 'events.notifs.eventEdited.endBoth'|trans({
-						'%title%': highlight_notif_data(entity.event.title)
-					})|raw }}
-				{% endif %}
-			{% elseif entity.changes.location
-					and (entity.changes.begin or entity.changes.end)
-					and not entity.changes.other %}
-				{{ 'events.notifs.eventEdited.locationHour'|trans({
-					'%title%': highlight_notif_data(entity.event.title),
-					'%newLocation%': highlight_notif_data(entity.event.location)
-				})|raw }}
-			{% else %}
-				{{ 'events.notifs.eventEdited.other'|trans({
-					'%title%': highlight_notif_data(entity.event.title)
-				})|raw }}
-			{% endif %}
-		{% endif %}
-	</h4>
+            {% if entity.changes.location
+                    and not entity.changes.begin
+                    and not entity.changes.end
+                    and not entity.changes.other %}
+                {{ 'events.notifs.eventEdited.location'|trans({
+                    '%title%': highlight_notif_data(entity.event.title),
+                    '%newLocation%': highlight_notif_data(entity.event.location)
+                })|raw }}
+            {% elseif entity.changes.begin
+                    and not entity.changes.location
+                    and not entity.changes.end
+                    and not entity.changes.other %}
+                {% if entity.changes.beginDate and not entity.changes.beginHour %}
+                    {{ 'events.notifs.eventEdited.beginDate'|trans({
+                        '%title%': highlight_notif_data(entity.event.title)
+                    })|raw }}
+                {% elseif entity.changes.beginHour and not entity.changes.beginDate %}
+                    {{ 'events.notifs.eventEdited.beginHour'|trans({
+                        '%title%': highlight_notif_data(entity.event.title)
+                    })|raw }}
+                {% else %}
+                    {{ 'events.notifs.eventEdited.beginBoth'|trans({
+                        '%title%': highlight_notif_data(entity.event.title)
+                    })|raw }}
+                {% endif %}
+            {% elseif entity.changes.end
+                    and not entity.changes.location
+                    and not entity.changes.begin
+                    and not entity.changes.other %}
+                {% if entity.changes.beginDate and not entity.changes.beginHour %}
+                    {{ 'events.notifs.eventEdited.endDate'|trans({
+                        '%title%': highlight_notif_data(entity.event.title)
+                    })|raw }}
+                {% elseif entity.changes.beginHour and not entity.changes.beginDate %}
+                    {{ 'events.notifs.eventEdited.endHour'|trans({
+                        '%title%': highlight_notif_data(entity.event.title)
+                    })|raw }}
+                {% else %}
+                    {{ 'events.notifs.eventEdited.endBoth'|trans({
+                        '%title%': highlight_notif_data(entity.event.title)
+                    })|raw }}
+                {% endif %}
+            {% elseif entity.changes.location
+                    and (entity.changes.begin or entity.changes.end)
+                    and not entity.changes.other %}
+                {{ 'events.notifs.eventEdited.locationHour'|trans({
+                    '%title%': highlight_notif_data(entity.event.title),
+                    '%newLocation%': highlight_notif_data(entity.event.location)
+                })|raw }}
+            {% else %}
+                {{ 'events.notifs.eventEdited.other'|trans({
+                    '%title%': highlight_notif_data(entity.event.title)
+                })|raw }}
+            {% endif %}
+        {% endif %}
+    </h4>
 
-	<div class="notif-date">
-		{{ time_diff(notif.date)|ucfirst }}
-	</div>
+    <div class="notif-date">
+        {{ time_diff(notif.date)|ucfirst }}
+    </div>
 
-	<div class="clear"></div>
+    <div class="clear"></div>
 </a>

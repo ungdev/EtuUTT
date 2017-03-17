@@ -4,6 +4,9 @@ core:
         index:
             title: Tableau de bord
             server_status: Etat du serveur
+            welcome: Bienvenue sur le panneau d'administration d'EtuUTT !
+            description: Ce panneau de contrôle vous permet d'administrer le site etu grâce au menu disponible sur la droite. Notez tout de même qu'une mauvaise utilisation de certaines options pourrait empêcher le fonctionnement du site. Merci donc d'utiliser cet outil avec précautions !
+            setup: Configuration du serveur
             load: Charge
             disk: Disque
             processes: Processus

@@ -1,0 +1,65 @@
+
+.api-auth-app {
+    display: inline-block;
+    margin: 30px 0;
+    background: #f5f5f5;
+    border: 1px solid #e5e5e5;
+    padding: 20px 40px;
+
+    .api-auth-app-image {
+        display: inline-block;
+        vertical-align: top;
+        text-align: right;
+        margin-right: 40px;
+    }
+    .api-auth-app-infos {
+        display: inline-block;
+        vertical-align: top;
+        text-align: left;
+
+        ul, li {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            color: #3a87ad;
+            background: #d9edf7;
+            border: 1px solid #bce8f1;
+            padding: 5px 10px;
+            margin-bottom: 5px;
+        }
+    }
+}
+
+#etu_api_client_scopes {
+    margin-top: 15px;
+
+    input {
+        float: left;
+        margin: 10px 8px;
+    }
+    label, div.scope {
+        color: #3a87ad;
+        background: #d9edf7;
+        border: 1px solid #bce8f1;
+        padding: 5px 10px;
+        display: block;
+    }
+    div.scope {
+        margin-bottom: 5px;
+    }
+}
+
+.api-app-image-icon {
+    display: inline;
+    vertical-align: text-top;
+    height: 16px;
+    margin-right: 10px;
+}
+
+#stats {
+    width: 600px;
+    height: 300px;
+}

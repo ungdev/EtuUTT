@@ -2,7 +2,7 @@ parameters:
     database_driver:   pdo_mysql
     database_host:     127.0.0.1
     database_port:     ~
-    database_name:     symfony
+    database_name:     etuutt
     database_user:     root
     database_password: ~
 
@@ -12,7 +12,8 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
 
-    locale:            fr
     secret:            YourSecretHere
 
-    assets_version: v10.1.1
+    domain:            etu.utt.fr
+
+    version_id: local

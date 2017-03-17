@@ -33,6 +33,7 @@ class OauthServer
      *
      * @param string $token
      * @param string $requiredScope
+     *
      * @return ApiAccess
      */
     public function checkAccess($token, $requiredScope = null)
@@ -43,7 +44,7 @@ class OauthServer
             'token' => $token,
         ]);
 
-        if (! $accessToken) {
+        if (!$accessToken) {
             $access->setIsGranted(false);
             $access->setError('invalid_token');
             $access->setErrorMessage('Access token is invalid');
@@ -59,7 +60,7 @@ class OauthServer
             return $access;
         }
 
-        if ($requiredScope && ! $accessToken->hasScope($requiredScope)) {
+        if ($requiredScope && !$accessToken->hasScope($requiredScope)) {
             $access->setIsGranted(false);
             $access->setError('unauthrorized_scope');
             $access->setErrorMessage('Access token does not have required scope');
@@ -74,8 +75,9 @@ class OauthServer
     }
 
     /**
-     * @param string $grantTypeName
+     * @param string  $grantTypeName
      * @param Request $request
+     *
      * @return bool|\Etu\Core\ApiBundle\Entity\OauthAccessToken
      */
     public function createToken($grantTypeName, Request $request)
@@ -92,6 +94,7 @@ class OauthServer
     /**
      * @param string $grantTypeName
      * @param $token $request
+     *
      * @return bool|array
      */
     public function formatToken($grantTypeName, OauthAccessToken $token)

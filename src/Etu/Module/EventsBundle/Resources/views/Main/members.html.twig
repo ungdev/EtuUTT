@@ -3,132 +3,130 @@
 {% block title %}{{ 'events.main.subscribers.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/events.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/events.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block sidebar %}
-	{% if app.user %}
-		{{ render_subscribe_button('event', event.id) }}
-	{% endif %}
+    {% if is_granted('ROLE_CORE_SUBSCRIBE') %}
+        {{ render_subscribe_button('event', event.id) }}
+    {% endif %}
 
-	{{ parent() }}
+    {{ parent() }}
 {% endblock %}
 
 {% block content %}
-	<ul class="nav nav-tabs page-tabs">
-		<li>
-			<a href="{{ path('events_index') }}">
-				<i class="icon-chevron-left"></i>
-				{{ 'events.main.view.back'|trans }}
-			</a>
-		</li>
-		{% if app.user %}
-			<li class="active page-tabs-resolved-active pull-right">
-				<a href="{{ path('events_members', {'id': event.id, 'slug': event.title|slugify}) }}">
-					{{ 'events.main.view.menu.subscribers'|trans }}
-				</a>
-			</li>
-			<li class="pull-right">
-				<a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}">
-					{{ 'events.main.view.menu.description'|trans }}
-				</a>
-			</li>
-		{% endif %}
-	</ul>
+    <ul class="nav nav-tabs page-tabs">
+        <li>
+            <a href="{{ path('events_index') }}">
+                <i class="icon-chevron-left"></i>
+                {{ 'events.main.view.back'|trans }}
+            </a>
+        </li>
+            <li class="active page-tabs-resolved-active pull-right">
+                <a href="{{ path('events_members', {'id': event.id, 'slug': event.title|slugify}) }}">
+                    {{ 'events.main.view.menu.subscribers'|trans }}
+                </a>
+            </li>
+            <li class="pull-right">
+                <a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}">
+                    {{ 'events.main.view.menu.description'|trans }}
+                </a>
+            </li>
+    </ul>
 
-	<div class="padding20-sides">
+    <div class="padding20-sides">
 
-		<h3>{{ event.title }}</h3>
+        <h3>{{ event.title }}</h3>
 
-		<div class="event-view-orga-logo">
-			<img src="{{ asset('uploads/events/'~event.id~'.png') }}" alt="{{ event.title }}" title="{{ event.title }}" />
-		</div>
+        <div class="event-view-orga-logo">
+            <img src="{{ asset('uploads/events/'~event.id~'.png') }}" alt="{{ event.title }}" title="{{ event.title }}" />
+        </div>
 
-		<div class="event-view-infos">
-			<p class="muted event-view-category">
-				{{ 'events.main.view.in'|trans({'%category%': ('events.categories.'~event.category)|trans}) }},
-				{{ 'events.main.view.by'|trans }}
-				{% if etu.modules.isEnabled('assos') %}
-					<a href="{{ path('orgas_view', {'login': event.orga.login}) }}">
-						{{ event.orga.name }}
-					</a>
-				{% else %}
-					{{ event.orga.name }}
-				{% endif %}
-			</p>
-			<div class="row-fluid">
-				<div class="span1"></div>
-				<div class="span1">
-					<p>
-						<strong>{{ 'events.main.view.start'|trans }}</strong><br />
-						<strong>{{ 'events.main.view.end'|trans }}</strong><br />
-						<strong>{{ 'events.main.view.location'|trans }}</strong>
-					</p>
-				</div>
-				<div class="span3">
-					<p>
-						{{ event.begin|date('d/m/Y H:i') }}<br />
-						{{ event.end|date('d/m/Y H:i') }}<br />
-						{{ event.location }}
-					</p>
-				</div>
-				<div class="span1"></div>
-			</div>
-		</div>
+        <div class="event-view-infos">
+            <p class="muted event-view-category">
+                {{ 'events.main.view.in'|trans({'%category%': ('events.categories.'~event.category)|trans}) }},
+                {{ 'events.main.view.by'|trans }}
+                {% if etu.modules.isEnabled('assos') %}
+                    <a href="{{ path('orgas_view', {'login': event.orga.login}) }}">
+                        {{ event.orga.name }}
+                    </a>
+                {% else %}
+                    {{ event.orga.name }}
+                {% endif %}
+            </p>
+            <div class="row-fluid">
+                <div class="span1"></div>
+                <div class="span1">
+                    <p>
+                        <strong>{{ 'events.main.view.start'|trans }}</strong><br />
+                        <strong>{{ 'events.main.view.end'|trans }}</strong><br />
+                        <strong>{{ 'events.main.view.location'|trans }}</strong>
+                    </p>
+                </div>
+                <div class="span3">
+                    <p>
+                        {{ event.begin|date('d/m/Y H:i') }}<br />
+                        {{ event.end|date('d/m/Y H:i') }}<br />
+                        {{ event.location }}
+                    </p>
+                </div>
+                <div class="span1"></div>
+            </div>
+        </div>
 
-		<div class="clear"></div>
+        <div class="clear"></div>
 
-		<hr />
+        <hr />
 
-		<div class="row-fluid event-members">
-			<div class="span4">
-				<h4 class="event-members-type">
-					{{ 'events.main.subscribers.yes'|trans }}
-					({{ answersYesCount }})
-				</h4>
+        <div class="row-fluid event-members">
+            <div class="span4">
+                <h4 class="event-members-type">
+                    {{ 'events.main.subscribers.yes'|trans }}
+                    ({{ answersYesCount }})
+                </h4>
 
-				<ul class="nav nav-list">
-					{% for answer in answersYes %}
-						<li>
-							<a href="{{ path('user_view', {'login': answer.user.login}) }}">
-								{{ answer.user.fullName }}
-							</a>
-						</li>
-					{% endfor %}
-				</ul>
-			</div>
-			<div class="span4">
-				<h4 class="event-members-type">
-					{{ 'events.main.subscribers.probably'|trans }}
-					({{ answersProbablyCount }})
-				</h4>
+                <ul class="nav nav-list">
+                    {% for answer in answersYes %}
+                        <li>
+                            <a href="{{ path('user_view', {'login': answer.user.login}) }}">
+                                {{ answer.user.fullName }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="span4">
+                <h4 class="event-members-type">
+                    {{ 'events.main.subscribers.probably'|trans }}
+                    ({{ answersProbablyCount }})
+                </h4>
 
-				<ul class="nav nav-list">
-					{% for answer in answersProbably %}
-						<li>
-							<a href="{{ path('user_view', {'login': answer.user.login}) }}">
-								{{ answer.user.fullName }}
-							</a>
-						</li>
-					{% endfor %}
-				</ul>
-			</div>
-			<div class="span4">
-				<h4 class="event-members-type">
-					{{ 'events.main.subscribers.no'|trans }}
-					({{ answersNoCount }})
-				</h4>
+                <ul class="nav nav-list">
+                    {% for answer in answersProbably %}
+                        <li>
+                            <a href="{{ path('user_view', {'login': answer.user.login}) }}">
+                                {{ answer.user.fullName }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="span4">
+                <h4 class="event-members-type">
+                    {{ 'events.main.subscribers.no'|trans }}
+                    ({{ answersNoCount }})
+                </h4>
 
-				<ul class="nav nav-list">
-					{% for answer in answersNo %}
-						<li>
-							<a href="{{ path('user_view', {'login': answer.user.login}) }}">
-								{{ answer.user.fullName }}
-							</a>
-						</li>
-					{% endfor %}
-				</ul>
-			</div>
-		</div>
-	</div>
+                <ul class="nav nav-list">
+                    {% for answer in answersNo %}
+                        <li>
+                            <a href="{{ path('user_view', {'login': answer.user.login}) }}">
+                                {{ answer.user.fullName }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -7,267 +7,312 @@ namespace Etu\Core\CoreBundle\Menu\Sidebar;
  */
 class SidebarItem
 {
-	/**
-	 * @var string
-	 */
-	protected $icon;
+    /**
+     * @var string
+     */
+    protected $icon;
 
-	/**
-	 * @var string
-	 */
-	protected $url;
+    /**
+     * @var string
+     */
+    protected $url;
 
-	/**
-	 * @var string
-	 */
-	protected $translation;
+    /**
+     * @var string
+     */
+    protected $translation;
 
-	/**
-	 * @var array
-	 */
-	protected $linkAttributes;
+    /**
+     * @var array
+     */
+    protected $linkAttributes;
 
-	/**
-	 * @var array
-	 */
-	protected $itemAttributes;
+    /**
+     * @var array
+     */
+    protected $itemAttributes;
 
-	/**
-	 * @var integer
-	 */
-	protected $position;
+    /**
+     * @var int
+     */
+    protected $position;
 
-	/**
-	 * @var SidebarBlockBuilder
-	 */
-	protected $builder;
+    /**
+     * @var string If not empty, item will be shown only if user has the role
+     */
+    protected $role;
 
-	/**
-	 * @param SidebarBlockBuilder $builder
-	 * @param string $translation
-	 */
-	public function __construct(SidebarBlockBuilder $builder, $translation = '')
-	{
-		$this->builder = $builder;
-		$this->icon = false;
-		$this->position = 0;
-		$this->linkAttributes = array();
-		$this->itemAttributes = array();
+    /**
+     * @var SidebarBlockBuilder
+     */
+    protected $builder;
 
-		$this->setTranslation($translation);
-	}
+    /**
+     * @param SidebarBlockBuilder $builder
+     * @param string              $translation
+     */
+    public function __construct(SidebarBlockBuilder $builder, $translation = '')
+    {
+        $this->builder = $builder;
+        $this->icon = false;
+        $this->position = 0;
+        $this->linkAttributes = [];
+        $this->itemAttributes = [];
 
-	/**
-	 * @return SidebarBlockBuilder
-	 */
-	public function getBuilder()
-	{
-		return $this->builder;
-	}
+        $this->setTranslation($translation);
+    }
 
-	/**
-	 * @param string $icon
-	 * @return SidebarItem
-	 */
-	public function setIcon($icon)
-	{
-		$this->icon = (string) $icon;
-		return $this;
-	}
+    /**
+     * @return SidebarBlockBuilder
+     */
+    public function getBuilder()
+    {
+        return $this->builder;
+    }
 
-	/**
-	 * @return bool
-	 */
-	public function hasIcon()
-	{
-		return $this->icon !== false;
-	}
+    /**
+     * @param string $icon
+     *
+     * @return SidebarItem
+     */
+    public function setIcon($icon)
+    {
+        $this->icon = (string) $icon;
 
-	/**
-	 * @return bool|string
-	 */
-	public function getIcon()
-	{
-		return $this->icon;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param $key
-	 * @param $value
-	 * @return SidebarItem
-	 */
-	public function setItemAttribute($key, $value)
-	{
-		$this->itemAttributes[(string) $key] = $value;
-		return $this;
-	}
+    /**
+     * @return bool
+     */
+    public function hasIcon()
+    {
+        return $this->icon !== false;
+    }
 
-	/**
-	 * @param $key
-	 * @return bool
-	 */
-	public function hasItemAttribute($key)
-	{
-		return isset($this->itemAttributes[(string) $key]);
-	}
+    /**
+     * @return bool|string
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
 
-	/**
-	 * @param $key
-	 * @return mixed
-	 */
-	public function getItemAttribute($key)
-	{
-		if (! $this->hasItemAttribute((string) $key)) {
-			return null;
-		}
+    /**
+     * @param $key
+     * @param $value
+     *
+     * @return SidebarItem
+     */
+    public function setItemAttribute($key, $value)
+    {
+        $this->itemAttributes[(string) $key] = $value;
 
-		return $this->itemAttributes[(string) $key];
-	}
+        return $this;
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getItemAttributes()
-	{
-		return $this->itemAttributes;
-	}
+    /**
+     * @param $key
+     *
+     * @return bool
+     */
+    public function hasItemAttribute($key)
+    {
+        return isset($this->itemAttributes[(string) $key]);
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getItemAttributesString()
-	{
-		$string = '';
+    /**
+     * @param $key
+     *
+     * @return mixed
+     */
+    public function getItemAttribute($key)
+    {
+        if (!$this->hasItemAttribute((string) $key)) {
+            return null;
+        }
 
-		foreach ($this->itemAttributes as $name => $value) {
-			$string .= $name.'="'.$value.'" ';
-		}
+        return $this->itemAttributes[(string) $key];
+    }
 
-		return trim($string);
-	}
+    /**
+     * @return array
+     */
+    public function getItemAttributes()
+    {
+        return $this->itemAttributes;
+    }
 
-	/**
-	 * @param $key
-	 * @param $value
-	 * @return SidebarItem
-	 */
-	public function setLinkAttribute($key, $value)
-	{
-		$this->linkAttributes[(string) $key] = $value;
-		return $this;
-	}
+    /**
+     * @return string
+     */
+    public function getItemAttributesString()
+    {
+        $string = '';
 
-	/**
-	 * @param $key
-	 * @return bool
-	 */
-	public function hasLinkAttribute($key)
-	{
-		return isset($this->linkAttributes[(string) $key]);
-	}
+        foreach ($this->itemAttributes as $name => $value) {
+            $string .= $name.'="'.$value.'" ';
+        }
 
-	/**
-	 * @param $key
-	 * @return mixed
-	 */
-	public function getLinkAttribute($key)
-	{
-		if (! $this->hasLinkAttribute((string) $key)) {
-			return null;
-		}
+        return trim($string);
+    }
 
-		return $this->linkAttributes[$key];
-	}
+    /**
+     * @param $key
+     * @param $value
+     *
+     * @return SidebarItem
+     */
+    public function setLinkAttribute($key, $value)
+    {
+        $this->linkAttributes[(string) $key] = $value;
 
-	/**
-	 * @return array
-	 */
-	public function getLinkAttributes()
-	{
-		return $this->linkAttributes;
-	}
+        return $this;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getLinkAttributesString()
-	{
-		$string = '';
+    /**
+     * @param $key
+     *
+     * @return bool
+     */
+    public function hasLinkAttribute($key)
+    {
+        return isset($this->linkAttributes[(string) $key]);
+    }
 
-		foreach ($this->linkAttributes as $name => $value) {
-			$string .= $name.'="'.$value.'" ';
-		}
+    /**
+     * @param $key
+     *
+     * @return mixed
+     */
+    public function getLinkAttribute($key)
+    {
+        if (!$this->hasLinkAttribute((string) $key)) {
+            return null;
+        }
 
-		return trim($string);
-	}
+        return $this->linkAttributes[$key];
+    }
 
-	/**
-	 * @param string $translation
-	 * @return SidebarItem
-	 */
-	public function setTranslation($translation)
-	{
-		$this->translation = (string) $translation;
-		return $this;
-	}
+    /**
+     * @return array
+     */
+    public function getLinkAttributes()
+    {
+        return $this->linkAttributes;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getTranslation()
-	{
-		return $this->translation;
-	}
+    /**
+     * @return string
+     */
+    public function getLinkAttributesString()
+    {
+        $string = '';
 
-	/**
-	 * @param string $url
-	 * @return SidebarItem
-	 */
-	public function setUrl($url)
-	{
-		$this->url = (string) $url;
-		return $this;
-	}
+        foreach ($this->linkAttributes as $name => $value) {
+            $string .= $name.'="'.$value.'" ';
+        }
 
-	/**
-	 * @return string
-	 */
-	public function getUrl()
-	{
-		return $this->url;
-	}
+        return trim($string);
+    }
 
-	/**
-	 * @param int $position
-	 * @return SidebarItem
-	 */
-	public function setPosition($position)
-	{
-		$this->position = (integer) $position;
-		return $this;
-	}
+    /**
+     * @param string $translation
+     *
+     * @return SidebarItem
+     */
+    public function setTranslation($translation)
+    {
+        $this->translation = (string) $translation;
 
-	/**
-	 * @return int
-	 */
-	public function getPosition()
-	{
-		return $this->position;
-	}
+        return $this;
+    }
 
-	/**
-	 * @return bool
-	 */
-	public function isSeparator()
-	{
-		return false;
-	}
+    /**
+     * @return string
+     */
+    public function getTranslation()
+    {
+        return $this->translation;
+    }
 
-	/**
-	 * @return SidebarBlockBuilder
-	 */
-	public function end()
-	{
-		return $this->builder;
-	}
+    /**
+     * @param string $url
+     *
+     * @return SidebarItem
+     */
+    public function setUrl($url)
+    {
+        $this->url = (string) $url;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param int $position
+     *
+     * @return SidebarItem
+     */
+    public function setPosition($position)
+    {
+        $this->position = (int) $position;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * Sets the role to use.
+     *
+     * @param string $role
+     *
+     * @return $this
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * Retrieves the currently set role.
+     *
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSeparator()
+    {
+        return false;
+    }
+
+    /**
+     * @return SidebarBlockBuilder
+     */
+    public function end()
+    {
+        return $this->builder;
+    }
 }

@@ -2,122 +2,150 @@
 
 use Etu\Core\CoreBundle\Framework\Definition\Module;
 use Etu\Core\CoreBundle\Framework\EtuKernel;
-
-use Symfony\Component\Debug\Exception\FatalErrorException;
 use Symfony\Component\Config\Loader\LoaderInterface;
-
 
 /**
  * EtuUTT AppKernel. Redefine the way to load bundles for the modules system.
  */
 class AppKernel extends EtuKernel
 {
-	/**
-	 * Register the bundles (and by the way the modules).
-	 *
-	 * @return array|\Symfony\Component\HttpKernel\Bundle\BundleInterface[]
-	 * @throws RuntimeException
-	 * @throws Symfony\Component\Debug\Exception\FatalErrorException
-	 */
-	public function registerBundles()
+    /**
+     * Register the bundles (and by the way the modules).
+     *
+     * @throws RuntimeException
+     * @throws \ErrorException
+     *
+     * @return array|\Symfony\Component\HttpKernel\Bundle\BundleInterface[]
+     */
+    public function registerBundles()
     {
-	    /*
-	     * Basic bundles, required to load the website
-	     */
-        $bundles = array(
-	        // Symfony
-            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(), // Symfony
-            new Symfony\Bundle\SecurityBundle\SecurityBundle(), // Security management (authorization and authentication)
-            new Symfony\Bundle\TwigBundle\TwigBundle(), // Tempalting engine
-            new Symfony\Bundle\MonologBundle\MonologBundle(), // Logger library
-            new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(), // Mailing library
-	        new Symfony\Bundle\AsseticBundle\AsseticBundle(), // Assets management
+        $bundles = [
+            // Symfony
+            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            // Security management (authorization and authentication)
+            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
+            // Tempalting engine
+            new Symfony\Bundle\TwigBundle\TwigBundle(),
+            // Logger library
+            new Symfony\Bundle\MonologBundle\MonologBundle(),
+            // Mailing library
+            new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
+            // Assets management
+            new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+            // Libraies
+            new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
-	        // Doctrine
-            new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(), // Doctrine ORM
-	        new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(), // Fixtures are data which are used during testing
-	        new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(), // Doctrine extensions
+            // Doctrine
+            new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
-	        // Libraies
-	        new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-	        new Knp\Bundle\TimeBundle\KnpTimeBundle(), // Time library to display pretty dates
-	        new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(), // Useful paginator
-	        new FOS\JsRoutingBundle\FOSJsRoutingBundle(), // Generate routes from Javascript
-	        new FrequenceWeb\Bundle\CalendRBundle\FrequenceWebCalendRBundle(), // Calendar and events library
-	        new FM\BbcodeBundle\FMBbcodeBundle(),
+            // Time library to display pretty dates
+            new Knp\Bundle\TimeBundle\KnpTimeBundle(),
+            // Useful paginator
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            // Generate routes from Javascript
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            // Calendar and events library
+            new FrequenceWeb\Bundle\CalendRBundle\FrequenceWebCalendRBundle(),
+            // Internationalization
             new Sonata\IntlBundle\SonataIntlBundle(),
-            new Nelmio\ApiDocBundle\NelmioApiDocBundle(), // API documentation
-            new Minifier\MinifierBundle(),
+            // Api documentation
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
+            // Api Cross-origin configuration
+            new Nelmio\CorsBundle\NelmioCorsBundle(),
 
-	        // EtuUTT
+            // EtuUTT
             new Etu\Core\CoreBundle\EtuCoreBundle(),
             new Etu\Core\UserBundle\EtuUserBundle(),
             new Etu\Core\ApiBundle\EtuCoreApiBundle(),
-        );
+        ];
 
-        if (in_array($this->getEnvironment(), array('dev', 'test'))) {
-            $bundles[] = new Elao\WebProfilerExtraBundle\WebProfilerExtraBundle();
+        if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
+            $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+            $bundles[] = new Elao\WebProfilerExtraBundle\WebProfilerExtraBundle();
         }
 
-	    /*
-	     * Modules bundles, loaded dynamically from app/config/modules.yml
-	     */
-	    $modules = Symfony\Component\Yaml\Yaml::parse($this->getRootDir().'/config/modules.yml');
+        /*
+         * Modules bundles, loaded dynamically from app/config/modules.yml
+         */
+        $modules = Symfony\Component\Yaml\Yaml::parse(file_get_contents($this->getRootDir().'/config/modules.yml'));
 
-	    if (isset($modules['modules'])) {
-		    if (! is_array($modules['modules'])) {
-			    throw new FatalErrorException('Key "modules" in app/config/modules.yml must be an array');
-		    }
+        if (array_key_exists('modules', $modules)) {
+            if (!is_array($modules['modules'])) {
+                throw new \ErrorException('Key "modules" in app/config/modules.yml must be an array');
+            }
 
-		    foreach ($modules['modules'] as $module) {
-			    $bundleFile = 'src/'.str_replace('\\', '/', $module).'.php';
+            foreach ($modules['modules'] as $module) {
+                $bundleFile = 'src/'.str_replace('\\', '/', $module).'.php';
 
-			    if (! class_exists($module, false)) {
-				    if (file_exists($this->getRootDir().'/../'.$bundleFile)) {
-					    require $this->getRootDir().'/../'.$bundleFile;
-				    } else {
-					    throw new \RuntimeException(sprintf(
-						    'Module "%s" can not be loaded (file "%s" not found)', $module, $bundleFile
-					    ));
-				    }
-			    }
+                if (!class_exists($module, false)) {
+                    if (file_exists($this->getRootDir().'/../'.$bundleFile)) {
+                        require $this->getRootDir().'/../'.$bundleFile;
+                    } else {
+                        throw new \RuntimeException(
+                            sprintf(
+                                'Module "%s" can not be loaded (file "%s" not found)', $module, $bundleFile
+                            )
+                        );
+                    }
+                }
 
-			    if (class_exists($module, false)) {
-				    $module = new ReflectionClass($module);
-				    $module = $module->newInstance();
+                if (class_exists($module, false)) {
+                    $module = new ReflectionClass($module);
+                    $module = $module->newInstance();
 
-					if ($module instanceof Module) {
-						$bundles[] = $module;
-						$this->registerModuleDefinition($module);
-					} else {
-						throw new FatalErrorException(sprintf(
-							'Module "%s" must be an instance of Etu\Core\CoreBundle\Framework\Definition\Module.',
-							get_class($module)
-						));
-					}
-			    } else {
-				    throw new \RuntimeException(sprintf(
-					    'Module "%s" can not be loaded (class not found)', $module
-				    ));
-			    }
-		    }
-	    }
+                    if ($module instanceof Module) {
+                        $bundles[] = $module;
+                        $this->registerModuleDefinition($module);
+                    } else {
+                        throw new \ErrorException(
+                            sprintf('Module "%s" must be an instance of Etu\Core\CoreBundle\Framework\Definition\Module.', get_class($module))
+                        );
+                    }
+                } else {
+                    throw new \RuntimeException(
+                        sprintf('Module "%s" can not be loaded (class not found)', get_class($module))
+                    );
+                }
+            }
+        } else {
+            throw new \RuntimeException('No modules defined ??');
+        }
 
-		$this->checkModulesIntegrity();
+        $this->checkModulesIntegrity();
 
         return $bundles;
     }
 
-	/**
-	 * Register the configuration.
-	 *
-	 * @param Symfony\Component\Config\Loader\LoaderInterface $loader
-	 */
-	public function registerContainerConfiguration(LoaderInterface $loader)
+    public function getRootDir()
     {
-        $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
+        return __DIR__;
+    }
+
+    public function getCacheDir()
+    {
+        if (!empty($this->getEnvParameters()['kernel.cache_dir'])) {
+            return $this->getEnvParameters()['kernel.cache_dir'].'/'.$this->environment;
+        }
+
+        return dirname(__DIR__).'/var/cache/'.$this->getEnvironment();
+    }
+
+    public function getLogDir()
+    {
+        if (!empty($this->getEnvParameters()['kernel.logs_dir'])) {
+            return $this->getEnvParameters()['kernel.logs_dir'];
+        }
+
+        return dirname(__DIR__).'/var/logs';
+    }
+
+    public function registerContainerConfiguration(LoaderInterface $loader)
+    {
+        $loader->load($this->getRootDir().'/config/config_'.$this->getEnvironment().'.yml');
     }
 }

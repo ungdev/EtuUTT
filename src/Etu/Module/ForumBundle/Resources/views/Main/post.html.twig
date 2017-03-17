@@ -1,60 +1,35 @@
-{% extends '::page-1col.html.twig' %}
+{% extends '::page-2cols.html.twig' %}
 
 {% block title %}{{ 'forum.main.post.title'|trans }}{% endblock %}
 
 {% block content %}
-	<ul class="breadcrumb">
-		<li>
-			<a href="{{ path('forum_index') }}">Forum</a>
-			<span class="divider">/</span>
-		</li>
-		{% for parent in parents %}
-			<li>
-				<a href="{{ path('forum_category', {'id': parent.id, 'slug': parent.slug}) }}">
-					{{ parent.title }}</a>
-				{% if not loop.last %}
-				<span class="divider">/</span>
-				{% endif %}
-			</li>
-		{% endfor %}
-	</ul>
+    <ul class="breadcrumb">
+        <li>
+            <a href="{{ path('forum_index') }}">Forum</a>
+            <span class="divider">/</span>
+        </li>
+        {% for parent in parents %}
+            <li>
+                <a href="{{ path('forum_category', {'id': parent.id, 'slug': parent.slug}) }}">
+                    {{ parent.title }}</a>
+                {% if not loop.last %}
+                <span class="divider">/</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
 
-	<div class="padding20-sides">
-		<form class="form-horizontal" action="{{ path('forum_post', {'id': category.id, 'slug': category.slug}) }}" method="post" {{ form_enctype(form) }}>
-			{{ form_errors(form) }}
+    <div class="padding20-sides">
+        {{ form_start(form) }}
 
-			<div class="control-group">
-				<label class="control-label">{{ form_label(form.title, 'forum.main.post.threadTitle'|trans) }}</label>
-				<div class="controls">
-					{{ form_widget(form.title) }}
-					<span class="text-error">{{ form_errors(form.title) }}</span>
-				</div>
-			</div>
+            {{ form_row(form.title) }}
 
-			{% if forum_can_sticky(app.user, category) %}
-				<div class="control-group">
-					<label class="control-label">{{ form_label(form.weight, 'forum.main.post.sticky'|trans) }}</label>
-					<div class="controls">
-						{{ form_widget(form.weight) }}
-						<span class="text-error">{{ form_errors(form.weight) }}</span>
-					</div>
-				</div>
-			{% endif %}
+            {% if forum_can_sticky(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
+                {{ form_row(form.weight) }}
+            {% endif %}
 
-			<div class="control-group">
-				<label class="control-label">{{ form_label(form.lastMessage.content, 'forum.main.post.content'|trans) }}</label>
-				<div class="controls">
-					{{ form_widget(form.lastMessage.content) }}
-					<span class="text-error">{{ form_errors(form.lastMessage.content) }}</span>
-				</div>
-			</div>
-
-			<div class="control-group">
-				<div class="controls">
-					{{ form_rest(form) }}
-					<button type="submit" class="btn btn-primary">Créer</button>
-				</div>
-			</div>
-		</form>
-	</div>
+            {{ form_row(form.lastMessage.content) }}
+            {{ form_row(form.submit) }}
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

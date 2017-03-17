@@ -24,6 +24,7 @@ class ClientCredentialsGrantType implements GrantTypeInterface
 
     /**
      * @param Request $request
+     *
      * @return OauthAccessToken
      */
     public function createToken(Request $request)
@@ -31,7 +32,7 @@ class ClientCredentialsGrantType implements GrantTypeInterface
         /** @var OauthClient $client */
         $client = $request->attributes->get('_oauth_client');
 
-        if (! $client) {
+        if (!$client) {
             throw new \RuntimeException('Client not found');
         }
 
@@ -52,6 +53,7 @@ class ClientCredentialsGrantType implements GrantTypeInterface
 
     /**
      * @param OauthAccessToken $token
+     *
      * @return array
      */
     public function format(OauthAccessToken $token)
@@ -65,7 +67,9 @@ class ClientCredentialsGrantType implements GrantTypeInterface
         return [
             'access_token' => $token->getToken(),
             'expires_at' => $token->getExpireAt()->format('U'),
+            'expires' => $token->getExpireAt()->format('U'),
             'scopes' => $scopes,
+            'token_type' => 'Bearer',
         ];
     }
 

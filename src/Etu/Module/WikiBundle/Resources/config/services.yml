@@ -1,0 +1,12 @@
+
+parameters:
+
+services:
+
+    # Notifications helper
+    etu.wiki.permissions_checker:
+        class: Etu\Module\WikiBundle\Services\PermissionsChecker
+        arguments:
+            - "@security.token_storage"
+            - "@security.authorization_checker"
+            - "@doctrine.orm.entity_manager"

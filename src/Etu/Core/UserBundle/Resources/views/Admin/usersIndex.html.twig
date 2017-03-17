@@ -3,144 +3,122 @@
 {% block title %}{{ 'user.admin.userIndex.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/gear.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
 
-	<div class="trombi-search-box">
-		<form method="get" action="{{ path('admin_users_index') }}">
-			<h4 class="pull-left">
-				{{ 'user.admin.userIndex.search_title'|trans }}
-			</h4>
+    <div class="trombi-search-box">
+        {{ form_start(form) }}
+            <h4 class="pull-left">
+                {{ 'user.admin.userIndex.search_title'|trans }}
+            </h4>
 
-			<p class="pull-right padding10-all">
-				<a href="{{ path('admin_user_create') }}" class="btn btn-primary">
-					<i class="icon-plus icon-white"></i>
-					{{ 'user.admin.userIndex.create'|trans }}
-				</a>
-			</p>
+            <p class="pull-right padding10-all">
+                <a href="{{ path('admin_log-as') }}" class="btn">
+                    {{ 'user.admin.logAs.button'|trans }}
+                </a>
 
-			<div class="clear"></div>
+                <a href="{{ path('admin_user_roles_list') }}" class="btn btn-success">
+                    <i class="icon-user icon-white"></i>
+                    {{ 'user.admin.userIndex.userRoles'|trans }}
+                </a>
 
-			<div class="row-fluid">
-				<div class="span4">
-					<div class="form-vertical">
-						<div class="control-group">
-							{{ form_label(form.fullName, 'user.admin.userIndex.name'|trans) }}
-							<div class="controls">
-								{{ form_widget(form.fullName) }}
-							</div>
-							<span class="help-block">{{ form_errors(form.fullName) }}</span>
-						</div>
-						<div class="control-group">
-							{{ form_label(form.uvs, 'user.admin.userIndex.uv'|trans) }}
-							<div class="controls">
-								{{ form_widget(form.uvs) }}
-							</div>
-							<span class="help-block">{{ form_errors(form.uvs) }}</span>
-						</div>
-					</div>
-				</div>
-				<div class="span4 hidden-phone">
-					<div class="form-vertical">
-						<div class="control-group">
-							{{ form_label(form.studentId, 'user.admin.userIndex.studentId'|trans) }}
-							<div class="controls">
-								{{ form_widget(form.studentId) }}
-							</div>
-							<span class="help-block">{{ form_errors(form.studentId) }}</span>
-						</div>
-						<div class="control-group">
-							{{ form_label(form.filiere, 'user.admin.userIndex.branche'|trans) }}
-							<div class="controls">
-								{{ form_widget(form.filiere, {'attr': {'class': 'span4'} }) }}
-								{{ form_widget(form.niveau, {'attr': {'class': 'span4'} }) }}
-							</div>
-							<span class="help-block">
-								{{ form_errors(form.filiere) }}
-								{{ form_errors(form.niveau) }}
-							</span>
-						</div>
-					</div>
-				</div>
-				<div class="span4 hidden-phone">
-					<div class="form-vertical">
-						<div class="control-group">
-							{{ form_label(form.phoneNumber, 'user.admin.userIndex.phone'|trans) }}
-							<div class="controls">
-								{{ form_widget(form.phoneNumber) }}
-							</div>
-							<span class="help-block">{{ form_errors(form.phoneNumber) }}</span>
-						</div>
-						<div class="control-group">
-							{{ form_label(form.personnalMail, 'user.admin.userIndex.personnalMail'|trans) }}
-							<div class="controls">
-								{{ form_widget(form.personnalMail) }}
-							</div>
-							<span class="help-block">{{ form_errors(form.personnalMail) }}</span>
-						</div>
-					</div>
-				</div>
-			</div>
+                <a href="{{ path('admin_user_create') }}" class="btn btn-primary">
+                    <i class="icon-plus icon-white"></i>
+                    {{ 'user.admin.userIndex.create'|trans }}
+                </a>
+            </p>
 
-			<div class="trombi-search-submit">
-				{{ form_rest(form) }}
-				<button type="submit" class="btn">{{ 'user.admin.userIndex.search'|trans }}</button>
-			</div>
-		</form>
-	</div>
+            <div class="clear"></div>
 
-	<div class="trombi-search-results">
-		{% if not search %}
-			<p id="explainations" class="muted trombi-search-explainations">
-				{{ 'user.admin.userIndex.explainations'|trans }}
-			</p>
-		{% elseif pagination.count == 0 %}
-			<p class="muted trombi-search-explainations">
-				{{ 'user.admin.userIndex.no_results'|trans }}
-			</p>
-		{% else %}
-			{# display navigation #}
-			<div class="navigation">
-				<br />
-				<p>
-					{{ 'user.admin.userIndex.count'|transchoice(pagination.totalItemCount, {'%count%': pagination.totalItemCount}) }}
-				</p>
-				{{ knp_pagination_render(pagination) }}
-			</div>
+            <div class="row-fluid">
+                <div class="span4">
+                    <div class="form-vertical">
+                        {{ form_row(form.fullName) }}
+                        {{ form_row(form.uvs) }}
+                    </div>
+                </div>
+                <div class="span4 hidden-phone">
+                    <div class="form-vertical">
+                        {{ form_row(form.studentId) }}
+                        <div class="control-group form-field">
+                            {{ form_label(form.filiere, 'user.admin.userIndex.branche'|trans) }}
+                            <div class="controls">
+                                {{ form_widget(form.filiere, {'attr': {'class': 'span6'} }) }}
+                                {{ form_widget(form.niveau, {'attr': {'class': 'span6'} }) }}
+                            </div>
+                            <span class="help-block">
+                                {{ form_errors(form.filiere) }}
+                                {{ form_errors(form.niveau) }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="span4 hidden-phone">
+                    <div class="form-vertical">
+                        {{ form_row(form.phoneNumber) }}
+                        {{ form_row(form.personnalMail) }}
+                    </div>
+                </div>
+            </div>
 
-			<ul id="search-results" class="trombi-search-results">
-				{% for user in pagination %}
-					<li class="trombi-search-results-item">
-						<a href="{{ path('user_view', {'login': user.login}) }}?from=admin">
-							<img src="{{ asset('uploads/photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
-							<h5>{{ user.fullName }}</h5>
-							<p>
-								{{ user.branch~user.niveau }} {{ user.filiere }} ({{ user.formation }})<br />
-								{{ user.mail }}
-								{% if is_public(user.personnalMailPrivacy) and user.personnalMail %}
-									<br />
-									{{ user.personnalMail }}
-								{% endif %}
-								{% if is_public(user.phoneNumberPrivacy) and user.phoneNumber %}
-									<br />
-									{{ user.phoneNumber }}
-								{% endif %}
-							</p>
+            <div class="trombi-search-submit">
+                {{ form_row(form.submit) }}
+            </div>
+        {{ form_end(form) }}
+    </div>
 
-							<div class="clear"></div>
-						</a>
-					</li>
-				{% endfor %}
-			</ul>
+    <div class="trombi-search-results">
+        {% if not search %}
+            <p id="explainations" class="muted trombi-search-explainations">
+                {{ 'user.admin.userIndex.explainations'|trans }}
+            </p>
+        {% elseif pagination.count == 0 %}
+            <p class="muted trombi-search-explainations">
+                {{ 'user.admin.userIndex.no_results'|trans }}
+            </p>
+        {% else %}
+            {# display navigation #}
+            <div class="navigation">
+                <br />
+                <p>
+                    {{ 'user.admin.userIndex.count'|transchoice(pagination.totalItemCount, {'%count%': pagination.totalItemCount}) }}
+                </p>
+                {{ knp_pagination_render(pagination) }}
+            </div>
 
-			<div class="clear"></div>
+            <ul id="search-results" class="trombi-search-results">
+                {% for user in pagination %}
+                    <li class="trombi-search-results-item">
+                        <a href="{{ path('user_view', {'login': user.login}) }}?from=admin">
+                            <img src="{{ asset('uploads/photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
+                            <h5>{{ user.fullName }}</h5>
+                            <p>
+                                {{ user.branch~user.niveau }} {{ user.filiere }} ({{ user.formation }})<br />
+                                {{ user.mail }}
+                                {% if is_public(user.personnalMailPrivacy) and user.personnalMail %}
+                                    <br />
+                                    {{ user.personnalMail }}
+                                {% endif %}
+                                {% if is_public(user.phoneNumberPrivacy) and user.phoneNumber %}
+                                    <br />
+                                    {{ user.phoneNumber }}
+                                {% endif %}
+                            </p>
 
-			{# display navigation #}
-			<div class="navigation">
-				{{ knp_pagination_render(pagination) }}
-			</div>
-		{% endif %}
-	</div>
+                            <div class="clear"></div>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <div class="clear"></div>
+
+            {# display navigation #}
+            <div class="navigation">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

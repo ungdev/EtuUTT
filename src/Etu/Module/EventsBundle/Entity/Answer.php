@@ -11,58 +11,58 @@ use Etu\Core\UserBundle\Entity\User;
  */
 class Answer
 {
-	const ANSWER_YES = 'yes';
-	const ANSWER_PROBABLY = 'probably';
-	const ANSWER_NO = 'no';
-
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	protected $id;
-
-	/**
-	 * @var Event $event
-	 *
-	 * @ORM\ManyToOne(targetEntity="Event")
-	 * @ORM\JoinColumn()
-	 */
-	protected $event;
-
-	/**
-	 * @var User $user
-	 *
-	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
-	 * @ORM\JoinColumn()
-	 */
-	protected $user;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(type="string", length=20)
-	 */
-	protected $answer;
-
-	/**
-	 * @param Event $event
-	 * @param User  $user
-	 * @param string $answer
-	 */
-	public function __construct(Event $event, User $user, $answer)
-	{
-		$this->event = $event;
-		$this->user = $user;
-		$this->answer = $answer;
-	}
+    public const ANSWER_YES = 'yes';
+    public const ANSWER_PROBABLY = 'probably';
+    public const ANSWER_NO = 'no';
 
     /**
-     * Get id
+     * @var int
      *
-     * @return integer
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @var Event
+     *
+     * @ORM\ManyToOne(targetEntity="Event")
+     * @ORM\JoinColumn()
+     */
+    protected $event;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
+     * @ORM\JoinColumn()
+     */
+    protected $user;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=20)
+     */
+    protected $answer;
+
+    /**
+     * @param Event  $event
+     * @param User   $user
+     * @param string $answer
+     */
+    public function __construct(Event $event, User $user, $answer)
+    {
+        $this->event = $event;
+        $this->user = $user;
+        $this->answer = $answer;
+    }
+
+    /**
+     * Get id.
+     *
+     * @return int
      */
     public function getId()
     {
@@ -70,9 +70,10 @@ class Answer
     }
 
     /**
-     * Set answer
+     * Set answer.
      *
      * @param string $answer
+     *
      * @return Answer
      */
     public function setAnswer($answer)
@@ -83,7 +84,7 @@ class Answer
     }
 
     /**
-     * Get answer
+     * Get answer.
      *
      * @return string
      */
@@ -93,9 +94,10 @@ class Answer
     }
 
     /**
-     * Set event
+     * Set event.
      *
      * @param Event $event
+     *
      * @return Answer
      */
     public function setEvent(Event $event = null)
@@ -106,7 +108,7 @@ class Answer
     }
 
     /**
-     * Get event
+     * Get event.
      *
      * @return Event
      */
@@ -116,9 +118,10 @@ class Answer
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param User $user
+     *
      * @return Answer
      */
     public function setUser(User $user = null)
@@ -129,7 +132,7 @@ class Answer
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return User
      */

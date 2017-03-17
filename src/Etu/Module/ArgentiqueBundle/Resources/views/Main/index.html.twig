@@ -1,12 +1,12 @@
 {% extends '::page-2cols.html.twig' %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('vendor/Justified-Gallery/dist/css/justifiedGallery.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/justified-gallery/dist/css/justifiedGallery.min.css') }}" />
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('vendor/Justified-Gallery/dist/js/jquery.justifiedGallery.min.js') }}"></script>
-    <script src="{{ asset('vendor/swipebox/src/js/jquery.swipebox.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendor/justified-gallery/dist/js/jquery.justifiedGallery.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/swipebox/src/js/jquery.swipebox.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         var gallery = $('.argentique-gallery'),
             swipebox = $('.swipebox');
@@ -34,7 +34,7 @@
 {% block title %}{{ 'argentique.main.index.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-    <img src="{{ asset('src/img/titles/argentique.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/argentique.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}

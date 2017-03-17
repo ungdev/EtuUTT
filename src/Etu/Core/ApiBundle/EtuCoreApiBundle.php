@@ -5,13 +5,12 @@ namespace Etu\Core\ApiBundle;
 use Etu\Core\ApiBundle\DependencyInjection\CompilerPass\GrantTypeCompilerPass;
 use Etu\Core\ApiBundle\DependencyInjection\CompilerPass\SerializerCompilerPass;
 use Etu\Core\CoreBundle\Framework\Definition\Module;
-
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class EtuCoreApiBundle extends Module
 {
     /**
-     * @var boolean
+     * @var bool
      */
     protected $enabled = true;
 
@@ -27,15 +26,7 @@ class EtuCoreApiBundle extends Module
     }
 
     /**
-     * @return bool
-     */
-    public function mustBoot()
-    {
-        return true;
-    }
-
-    /**
-     * Module identifier (to be required by other modules)
+     * Module identifier (to be required by other modules).
      *
      * @return string
      */
@@ -45,7 +36,7 @@ class EtuCoreApiBundle extends Module
     }
 
     /**
-     * Module title (describe shortly its aim)
+     * Module title (describe shortly its aim).
      *
      * @return string
      */
@@ -55,7 +46,7 @@ class EtuCoreApiBundle extends Module
     }
 
     /**
-     * Module author
+     * Module author.
      *
      * @return string
      */
@@ -65,7 +56,7 @@ class EtuCoreApiBundle extends Module
     }
 
     /**
-     * Module description
+     * Module description.
      *
      * @return string
      */
@@ -79,6 +70,6 @@ class EtuCoreApiBundle extends Module
      */
     public function getRequirements()
     {
-        return array();
+        return [];
     }
 }

@@ -4,392 +4,423 @@ namespace Etu\Core\UserBundle\Ldap\Model;
 
 class User
 {
-	/**
-	 * User identifier
-	 *      => ldap[user][uid]
-	 * @var string
-	 */
-	protected $login;
+    /**
+     * User identifier
+     *      => ldap[user][uid].
+     *
+     * @var string
+     */
+    protected $login;
 
-	/**
-	 * Student number
-	 *      => ldap[user][supannempid]
-	 * @var integer
-	 */
-	protected $studentId;
+    /**
+     * Student number
+     *      => ldap[user][supannempid].
+     *
+     * @var int
+     */
+    protected $studentId;
 
-	/**
-	 * E-mail
-	 *      => ldap[user][mail]
-	 * @var string
-	 */
-	protected $mail;
+    /**
+     * E-mail
+     *      => ldap[user][mail].
+     *
+     * @var string
+     */
+    protected $mail;
 
-	/**
-	 * Full name (first and last name)
-	 *      => ldap[user][cn]
-	 * @var string
-	 */
-	protected $fullName;
+    /**
+     * Full name (first and last name)
+     *      => ldap[user][cn].
+     *
+     * @var string
+     */
+    protected $fullName;
 
-	/**
-	 * First name
-	 *      => ldap[user][givenname]
-	 * @var string
-	 */
-	protected $firstName;
+    /**
+     * First name
+     *      => ldap[user][givenname].
+     *
+     * @var string
+     */
+    protected $firstName;
 
-	/**
-	 * Last name
-	 *      => ldap[user][sn]
-	 * @var string
-	 */
-	protected $lastName;
+    /**
+     * Last name
+     *      => ldap[user][sn].
+     *
+     * @var string
+     */
+    protected $lastName;
 
-	/**
-	 * Formation
-	 *      => ldap[user][formation]
-	 * @var string
-	 */
-	protected $formation;
+    /**
+     * Formation
+     *      => ldap[user][formation].
+     *
+     * @var string
+     */
+    protected $formation;
 
-	/**
-	 * Level
-	 *      => ldap[user][niveau]
-	 * @var string
-	 */
-	protected $niveau;
+    /**
+     * Level
+     *      => ldap[user][niveau].
+     *
+     * @var string
+     */
+    protected $niveau;
 
-	/**
-	 * Filiere
-	 *      => ldap[user][filiere]
-	 * @var string
-	 */
-	protected $filiere;
+    /**
+     * Filiere
+     *      => ldap[user][filiere].
+     *
+     * @var string
+     */
+    protected $filiere;
 
-	/**
-	 * UVs
-	 *      => ldap[user][uv]
-	 * @var array
-	 */
-	protected $uvs;
+    /**
+     * UVs
+     *      => ldap[user][uv].
+     *
+     * @var array
+     */
+    protected $uvs;
 
-	/**
-	 * Phone number
-	 *      => ldap[user][telephonenumber]
-	 * @var string
-	 */
-	protected $phoneNumber;
+    /**
+     * Phone number
+     *      => ldap[user][telephonenumber].
+     *
+     * @var string
+     */
+    protected $phoneNumber;
 
-	/**
-	 * Title
-	 *      => ldap[user][title]
-	 * @var string
-	 */
-	protected $title;
+    /**
+     * Title
+     *      => ldap[user][title].
+     *
+     * @var string
+     */
+    protected $title;
 
-	/**
-	 * Room
-	 *      => ldap[user][roomnumber]
-	 * @var string
-	 */
-	protected $room;
+    /**
+     * Room
+     *      => ldap[user][roomnumber].
+     *
+     * @var string
+     */
+    protected $room;
 
-	/**
-	 * Photo URL
-	 *      => ldap[user][employeetype]
-	 * @var string
-	 */
-	protected $jpegPhoto;
+    /**
+     * Photo URL
+     *      => ldap[user][employeetype].
+     *
+     * @var string
+     */
+    protected $jpegPhoto;
 
-	/**
-	 * Is a student?
-	 *      => ldap[user][employeetype]
-	 * @var boolean
-	 */
-	protected $isStudent;
+    /**
+     * Is a student?
+     *      => ldap[user][employeetype].
+     *
+     * @var bool
+     */
+    protected $isStudent;
 
-	/**
-	 * @param string $filiere
-	 * @return User
-	 */
-	public function setFiliere($filiere)
-	{
-		$this->filiere = $filiere;
+    /**
+     * @param string $filiere
+     *
+     * @return User
+     */
+    public function setFiliere($filiere)
+    {
+        $this->filiere = $filiere;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getFiliere()
-	{
-		return $this->filiere;
-	}
+    /**
+     * @return string
+     */
+    public function getFiliere()
+    {
+        return $this->filiere;
+    }
 
-	/**
-	 * @param string $firstName
-	 * @return User
-	 */
-	public function setFirstName($firstName)
-	{
-		$this->firstName = $firstName;
+    /**
+     * @param string $firstName
+     *
+     * @return User
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getFirstName()
-	{
-		return $this->firstName;
-	}
+    /**
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
 
-	/**
-	 * @param string $formation
-	 * @return User
-	 */
-	public function setFormation($formation)
-	{
-		$this->formation = $formation;
+    /**
+     * @param string $formation
+     *
+     * @return User
+     */
+    public function setFormation($formation)
+    {
+        $this->formation = $formation;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getFormation()
-	{
-		return $this->formation;
-	}
+    /**
+     * @return string
+     */
+    public function getFormation()
+    {
+        return $this->formation;
+    }
 
-	/**
-	 * @param string $fullName
-	 * @return User
-	 */
-	public function setFullName($fullName)
-	{
-		$this->fullName = $fullName;
+    /**
+     * @param string $fullName
+     *
+     * @return User
+     */
+    public function setFullName($fullName)
+    {
+        $this->fullName = $fullName;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getFullName()
-	{
-		return $this->fullName;
-	}
-	/**
-	 * @param boolean $isStudent
-	 * @return User
-	 */
-	public function setIsStudent($isStudent)
-	{
-		$this->isStudent = $isStudent;
+    /**
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->fullName;
+    }
 
-		return $this;
-	}
+    /**
+     * @param bool $isStudent
+     *
+     * @return User
+     */
+    public function setIsStudent($isStudent)
+    {
+        $this->isStudent = $isStudent;
 
-	/**
-	 * @return boolean
-	 */
-	public function getIsStudent()
-	{
-		return $this->isStudent;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param string $jpegPhoto
-	 * @return User
-	 */
-	public function setJpegPhoto($jpegPhoto)
-	{
-		$this->jpegPhoto = $jpegPhoto;
+    /**
+     * @return bool
+     */
+    public function getIsStudent()
+    {
+        return $this->isStudent;
+    }
 
-		return $this;
-	}
+    /**
+     * @param string $jpegPhoto
+     *
+     * @return User
+     */
+    public function setJpegPhoto($jpegPhoto)
+    {
+        $this->jpegPhoto = $jpegPhoto;
 
-	/**
-	 * @return string
-	 */
-	public function getJpegPhoto()
-	{
-		return $this->jpegPhoto;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param string $lastName
-	 * @return User
-	 */
-	public function setLastName($lastName)
-	{
-		$this->lastName = $lastName;
+    /**
+     * @return string
+     */
+    public function getJpegPhoto()
+    {
+        return $this->jpegPhoto;
+    }
 
-		return $this;
-	}
+    /**
+     * @param string $lastName
+     *
+     * @return User
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
 
-	/**
-	 * @return string
-	 */
-	public function getLastName()
-	{
-		return $this->lastName;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param string $login
-	 * @return User
-	 */
-	public function setLogin($login)
-	{
-		$this->login = $login;
+    /**
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
 
-		return $this;
-	}
+    /**
+     * @param string $login
+     *
+     * @return User
+     */
+    public function setLogin($login)
+    {
+        $this->login = $login;
 
-	/**
-	 * @return string
-	 */
-	public function getLogin()
-	{
-		return $this->login;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param string $mail
-	 * @return User
-	 */
-	public function setMail($mail)
-	{
-		$this->mail = $mail;
+    /**
+     * @return string
+     */
+    public function getLogin()
+    {
+        return $this->login;
+    }
 
-		return $this;
-	}
+    /**
+     * @param string $mail
+     *
+     * @return User
+     */
+    public function setMail($mail)
+    {
+        $this->mail = $mail;
 
-	/**
-	 * @return string
-	 */
-	public function getMail()
-	{
-		return $this->mail;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param string $niveau
-	 * @return User
-	 */
-	public function setNiveau($niveau)
-	{
-		$this->niveau = $niveau;
+    /**
+     * @return string
+     */
+    public function getMail()
+    {
+        return $this->mail;
+    }
 
-		return $this;
-	}
+    /**
+     * @param string $niveau
+     *
+     * @return User
+     */
+    public function setNiveau($niveau)
+    {
+        $this->niveau = $niveau;
 
-	/**
-	 * @return string
-	 */
-	public function getNiveau()
-	{
-		return $this->niveau;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param string $phoneNumber
-	 * @return User
-	 */
-	public function setPhoneNumber($phoneNumber)
-	{
-		$this->phoneNumber = $phoneNumber;
+    /**
+     * @return string
+     */
+    public function getNiveau()
+    {
+        return $this->niveau;
+    }
 
-		return $this;
-	}
+    /**
+     * @param string $phoneNumber
+     *
+     * @return User
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
 
-	/**
-	 * @return string
-	 */
-	public function getPhoneNumber()
-	{
-		return $this->phoneNumber;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param string $room
-	 * @return User
-	 */
-	public function setRoom($room)
-	{
-		$this->room = $room;
+    /**
+     * @return string
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
 
-		return $this;
-	}
+    /**
+     * @param string $room
+     *
+     * @return User
+     */
+    public function setRoom($room)
+    {
+        $this->room = $room;
 
-	/**
-	 * @return string
-	 */
-	public function getRoom()
-	{
-		return $this->room;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param int $studentId
-	 * @return User
-	 */
-	public function setStudentId($studentId)
-	{
-		$this->studentId = $studentId;
+    /**
+     * @return string
+     */
+    public function getRoom()
+    {
+        return $this->room;
+    }
 
-		return $this;
-	}
+    /**
+     * @param int $studentId
+     *
+     * @return User
+     */
+    public function setStudentId($studentId)
+    {
+        $this->studentId = $studentId;
 
-	/**
-	 * @return int
-	 */
-	public function getStudentId()
-	{
-		return $this->studentId;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param string $title
-	 * @return User
-	 */
-	public function setTitle($title)
-	{
-		$this->title = $title;
+    /**
+     * @return int
+     */
+    public function getStudentId()
+    {
+        return $this->studentId;
+    }
 
-		return $this;
-	}
+    /**
+     * @param string $title
+     *
+     * @return User
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
 
-	/**
-	 * @return string
-	 */
-	public function getTitle()
-	{
-		return $this->title;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param array $uvs
-	 * @return User
-	 */
-	public function setUvs($uvs)
-	{
-		$this->uvs = $uvs;
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
 
-		return $this;
-	}
+    /**
+     * @param array $uvs
+     *
+     * @return User
+     */
+    public function setUvs($uvs)
+    {
+        $this->uvs = $uvs;
 
-	/**
-	 * @return array
-	 */
-	public function getUvs()
-	{
-		return $this->uvs;
-	}
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getUvs()
+    {
+        return $this->uvs;
+    }
 }

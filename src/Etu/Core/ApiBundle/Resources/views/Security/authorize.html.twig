@@ -1,4 +1,4 @@
-{% extends '::oauth.html.twig' %}
+{% extends '::layout-oauth.html.twig' %}
 
 {% block content %}
     <div class="padding20-all">
@@ -35,23 +35,16 @@
         <div class="align-center">
             <p>
                 Vous êtes connecté en tant que <strong>{{ app.user.fullName }}</strong>
-                (<a href="{{ path('user_disconnect') }}">se déconnecter</a>).
+                (<a href="{{ path('user_logout') }}">se déconnecter</a>).
             </p>
 
             <p>
                 Acceptez-vous de donner ces informations à l'application <strong>{{ client.name }}</strong> ?
             </p>
 
-            <form method="post">
-                {{ form_errors(form) }}
-
-                <p>
-                    {{ form_widget(form.accept) }}
-                    {{ form_widget(form.cancel) }}
-                </p>
-
-                {{ form_rest(form) }}
-            </form>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
         </div>
     </div>
 {% endblock %}

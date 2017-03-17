@@ -1,0 +1,21 @@
+argentique:
+  admin:
+    menu: "Manage the Argentique's photo gallery"
+    title: "Argentique's administration"
+  error:
+    no_collection: "No folder has been found for import"
+  main:
+    index:
+      drop_here: "Slide here the pictures you want to send."
+      lasts: "Last pictures"
+      manage_galleries: "Manage the photo galleries"
+      public: "Public page"
+      synchronize: "Synchronize with Flickr"
+      title: Argentique
+    synchronizing:
+      explainations: |
+        Argentique's pictures are not available at the moment because they are being imported.
+        Please come back in a few minutes !
+      title: "Importing"
+  sidebar:
+    service: "Photo gallery (Argentique)"

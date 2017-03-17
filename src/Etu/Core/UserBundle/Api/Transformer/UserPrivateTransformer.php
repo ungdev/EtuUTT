@@ -24,6 +24,7 @@ class UserPrivateTransformer extends AbstractTransformer
     /**
      * @param $user
      * @param EmbedBag $includes
+     *
      * @return array
      */
     public function transformUnique($user, EmbedBag $includes)
@@ -33,6 +34,7 @@ class UserPrivateTransformer extends AbstractTransformer
 
     /**
      * @param User $user
+     *
      * @return array
      */
     private function getData(User $user)
@@ -53,8 +55,8 @@ class UserPrivateTransformer extends AbstractTransformer
             'sexPrivacy' => $this->displayPrivacy($user->getSexPrivacy()),
             'nationality' => $user->getNationality(),
             'nationalityPrivacy' => $this->displayPrivacy($user->getNationalityPrivacy()),
-            'adress' => $user->getAdress(),
-            'adressPrivacy' => $this->displayPrivacy($user->getAdressPrivacy()),
+            'address' => $user->getaddress(),
+            'addressPrivacy' => $this->displayPrivacy($user->getaddressPrivacy()),
             'postalCode' => $user->getPostalCode(),
             'postalCodePrivacy' => $this->displayPrivacy($user->getPostalCodePrivacy()),
             'city' => $user->getCity(),
@@ -80,6 +82,7 @@ class UserPrivateTransformer extends AbstractTransformer
 
     /**
      * @param User $user
+     *
      * @return array
      */
     private function getLinks(User $user)
@@ -88,33 +91,34 @@ class UserPrivateTransformer extends AbstractTransformer
             '_links' => [
                 [
                     'rel' => 'self',
-                    'uri' => '/api/public/users/' . $user->getLogin()
+                    'uri' => '/api/public/users/'.$user->getLogin(),
                 ],
                 [
                     'rel' => 'user.badges',
-                    'uri' => '/api/public/users/' . $user->getLogin() . '/badges'
+                    'uri' => '/api/public/users/'.$user->getLogin().'/badges',
                 ],
                 [
                     'rel' => 'user.image',
-                    'uri' => '/uploads/photos/' . $user->getAvatar()
+                    'uri' => '/uploads/photos/'.$user->getAvatar(),
                 ],
                 [
                     'rel' => 'user.official_image',
-                    'uri' => '/uploads/photos/'.$user->getLogin().'_official.jpg'
-                ]
-            ]
+                    'uri' => '/uploads/photos/'.$user->getLogin().'_official.jpg',
+                ],
+            ],
         ];
     }
 
     /**
-     * @param User $user
+     * @param User     $user
      * @param EmbedBag $includes
+     *
      * @return array
      */
     private function getIncludes(User $user, EmbedBag $includes)
     {
         $embed = [
-            'badges' => []
+            'badges' => [],
         ];
 
         if ($includes->has('badges')) {
@@ -128,7 +132,7 @@ class UserPrivateTransformer extends AbstractTransformer
         }
 
         return [
-            '_embed' => $embed
+            '_embed' => $embed,
         ];
     }
 
@@ -136,8 +140,8 @@ class UserPrivateTransformer extends AbstractTransformer
     {
         if ($privacy == User::PRIVACY_PUBLIC) {
             return 'public';
-        } else {
-            return 'private';
         }
+
+        return 'private';
     }
 }

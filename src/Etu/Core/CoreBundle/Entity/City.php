@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class City
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -41,7 +41,7 @@ class City
     protected $postalCodes;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
@@ -61,7 +61,6 @@ class City
      */
     protected $latitude;
 
-
     /**
      * @return string
      */
@@ -71,9 +70,9 @@ class City
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -81,22 +80,23 @@ class City
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return City
      */
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
-     * Get name
+     * Get name.
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -104,22 +104,23 @@ class City
     }
 
     /**
-     * Set slug
+     * Set slug.
      *
      * @param string $slug
+     *
      * @return City
      */
     public function setSlug($slug)
     {
         $this->slug = $slug;
-    
+
         return $this;
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
@@ -127,22 +128,23 @@ class City
     }
 
     /**
-     * Set postalCodes
+     * Set postalCodes.
      *
      * @param string $postalCodes
+     *
      * @return City
      */
     public function setPostalCodes($postalCodes)
     {
         $this->postalCodes = $postalCodes;
-    
+
         return $this;
     }
 
     /**
-     * Get postalCodes
+     * Get postalCodes.
      *
-     * @return string 
+     * @return string
      */
     public function getPostalCodes()
     {
@@ -150,22 +152,23 @@ class City
     }
 
     /**
-     * Set population
+     * Set population.
      *
-     * @param integer $population
+     * @param int $population
+     *
      * @return City
      */
     public function setPopulation($population)
     {
         $this->population = $population;
-    
+
         return $this;
     }
 
     /**
-     * Get population
+     * Get population.
      *
-     * @return integer 
+     * @return int
      */
     public function getPopulation()
     {
@@ -173,22 +176,23 @@ class City
     }
 
     /**
-     * Set longitude
+     * Set longitude.
      *
      * @param string $longitude
+     *
      * @return City
      */
     public function setLongitude($longitude)
     {
         $this->longitude = $longitude;
-    
+
         return $this;
     }
 
     /**
-     * Get longitude
+     * Get longitude.
      *
-     * @return string 
+     * @return string
      */
     public function getLongitude()
     {
@@ -196,22 +200,23 @@ class City
     }
 
     /**
-     * Set latitude
+     * Set latitude.
      *
      * @param string $latitude
+     *
      * @return City
      */
     public function setLatitude($latitude)
     {
         $this->latitude = $latitude;
-    
+
         return $this;
     }
 
     /**
-     * Get latitude
+     * Get latitude.
      *
-     * @return string 
+     * @return string
      */
     public function getLatitude()
     {

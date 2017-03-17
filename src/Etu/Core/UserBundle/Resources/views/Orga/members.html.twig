@@ -3,60 +3,63 @@
 {% block title %}{{ 'user.orga.members.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
-	<div class="trombi-search-box">
-		<div class="form-inline add-member-form">
-			<form method="post" action="{{ path('orga_admin_members') }}">
-				{{ form_widget(form.user, {'attr': { 'placeholder': 'user.orga.members.add_member_user'|trans } } ) }}
-				{{ form_widget(form.role, {'attr': { 'class': 'span2' } } ) }}
-				{{ form_rest(form) }}
-				<button type="submit" class="btn">
-					<i class="icon-plus"></i>
-					{{ 'user.orga.members.add_member_btn'|trans }}
-				</button>
+    <div class="trombi-search-box">
+        <div class="form-inline add-member-form">
 
-				<p>
-					<span class="help-block">{{ form_errors(form.user) }}</span>
-				</p>
-				<p>
-					<span class="help-block">{{ form_errors(form.role) }}</span>
-				</p>
-			</form>
-		</div>
-	</div>
+            {% form_theme form 'form/theme-inline.html.twig' %}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+                {# form_widget(form.user, {'attr': { 'placeholder': ''|trans } } ) }}
+                {{ form_widget(form.role, {'attr': { 'class': 'span2' } } ) }}
+                {{ form_rest(form) }}
+                <button type="submit" class="btn">
+                    <i class="icon-plus"></i>
+                    {{ 'user.orga.members.add_member_btn'|trans }}
+                </button>
 
-	<div class="padding20-all">
-		<div class="navigation">
-			<p>
-				{{ 'user.orga.members.count'|transchoice(pagination.totalItemCount, {'%count%': pagination.totalItemCount}) }}
-			</p>
-			{{ knp_pagination_render(pagination) }}
-		</div>
+                <p>
+                    <span class="help-block">{{ form_errors(form.user) }}</span>
+                </p>
+                <p>
+                    <span class="help-block">{{ form_errors(form.role) }}</span>
+                </p> #}
+            {{ form_end(form) }}
+        </div>
+    </div>
 
-		<ul id="search-results" class="asso-members">
-			{% for member in pagination %}
-				<li class="asso-members-item">
-					<a href="{{ path('orga_admin_members_edit', {'login': member.user.login}) }}">
-						<img src="{{ asset('uploads/photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
-						<h5>{{ member.user.fullName }}</h5>
-						<p>
-							{{ ('user.orga.role.'~member.role)|trans }}
-						</p>
+    <div class="padding20-all">
+        <div class="navigation">
+            <p>
+                {{ 'user.orga.members.count'|transchoice(pagination.totalItemCount, {'%count%': pagination.totalItemCount}) }}
+            </p>
+            {{ knp_pagination_render(pagination) }}
+        </div>
 
-						<div class="clear"></div>
-					</a>
-				</li>
-			{% endfor %}
-		</ul>
+        <ul id="search-results" class="asso-members">
+            {% for member in pagination %}
+                <li class="asso-members-item">
+                    <a href="{{ path('orga_admin_members_edit', {'login': member.user.login}) }}">
+                        <img src="{{ asset('uploads/photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
+                        <h5>{{ member.user.fullName }}</h5>
+                        <p>
+                            {{ ('user.orga.role.'~member.role)|trans }}
+                        </p>
 
-		<div class="clear"></div>
+                        <div class="clear"></div>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
 
-		{# display navigation #}
-		<div class="navigation">
-			{{ knp_pagination_render(pagination) }}
-		</div>
-	</div>
+        <div class="clear"></div>
+
+        {# display navigation #}
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
 {% endblock %}

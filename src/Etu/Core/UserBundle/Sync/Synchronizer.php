@@ -8,94 +8,93 @@ use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Ldap\LdapManager;
 
 /**
- * Synchronization process manager
+ * Synchronization process manager.
  */
 class Synchronizer
 {
-	/**
-	 * @var LdapManager
-	 */
-	protected $ldap;
+    /**
+     * @var LdapManager
+     */
+    protected $ldap;
 
-	/**
-	 * @var Doctrine
-	 */
-	protected $doctrine;
+    /**
+     * @var Doctrine
+     */
+    protected $doctrine;
 
-	/**
-	 * @param LdapManager $ldap
-	 * @param Doctrine    $doctrine
-	 */
-	public function __construct(LdapManager $ldap, Doctrine $doctrine)
-	{
-		$this->ldap = $ldap;
-		$this->doctrine = $doctrine;
-	}
+    /**
+     * @param LdapManager $ldap
+     * @param Doctrine    $doctrine
+     */
+    public function __construct(LdapManager $ldap, Doctrine $doctrine)
+    {
+        $this->ldap = $ldap;
+        $this->doctrine = $doctrine;
+    }
 
-	/**
-	 * Create a process to synchronize users between the LDAP and the database
-	 * (import LDAP users and remove old databse users)
-	 *
-	 * @return Process
-	 */
-	public function createUsersSyncProcess()
-	{
-		// LDAP
-		$ldapUsers = $this->ldap->getUsers();
-		$ldapLogins = array();
+    /**
+     * Create a process to synchronize users between the LDAP and the database
+     * (import LDAP users and set old LDAP users as not in LDAP anymoe).
+     *
+     * @return Process
+     */
+    public function createUsersSyncProcess()
+    {
+        // LDAP
+        $ldapUsers = $this->ldap->getUsers();
+        $ldapLogins = [];
 
-		foreach ($ldapUsers as $key => $ldapUser) {
-			$ldapLogins[] = $ldapUser->getLogin();
+        foreach ($ldapUsers as $key => $ldapUser) {
+            $ldapLogins[] = $ldapUser->getLogin();
 
-			unset($ldapUsers[$key]);
-			$ldapUsers[$ldapUser->getLogin()] = $ldapUser;
-		}
+            unset($ldapUsers[$key]);
+            $ldapUsers[$ldapUser->getLogin()] = $ldapUser;
+        }
 
-		// Database
-		/** @var EntityManager $em */
-		$em = $this->doctrine->getManager();
+        // Database
+        /** @var EntityManager $em */
+        $em = $this->doctrine->getManager();
 
-		/** @var User[] $dbUsers */
-		$dbUsers = $em->getRepository('EtuUserBundle:User')->findAll();
-		$dbLogins = array();
+        /** @var User[] $dbUsers */
+        $dbUsers = $em->getRepository('EtuUserBundle:User')->findAll();
+        $dbLogins = [];
 
-		foreach ($dbUsers as $key => $dbUser) {
-			$dbLogins[] = $dbUser->getLogin();
+        foreach ($dbUsers as $key => $dbUser) {
+            $dbLogins[] = $dbUser->getLogin();
 
-			unset($dbUsers[$key]);
-			$dbUsers[$dbUser->getLogin()] = $dbUser;
-		}
+            unset($dbUsers[$key]);
+            $dbUsers[$dbUser->getLogin()] = $dbUser;
+        }
 
-		// Differences
-		$toAddInDb = array_diff($ldapLogins, $dbLogins);
-		$toRemoveFromDb = array_diff($dbLogins, $ldapLogins);
-		$toUpdate = $dbUsers;
+        // Differences
+        $toAddInDb = array_diff($ldapLogins, $dbLogins);
+        $toRemoveFromDb = array_diff($dbLogins, $ldapLogins);
+        $toUpdate = $dbUsers;
 
-		foreach ($toAddInDb as $key => $login) {
-			unset($toAddInDb[$key]);
+        foreach ($toAddInDb as $key => $login) {
+            unset($toAddInDb[$key]);
 
-			$toAddInDb[$login] = $ldapUsers[$login];
-		}
+            $toAddInDb[$login] = $ldapUsers[$login];
+        }
 
-		foreach ($toRemoveFromDb as $key => $login) {
-			unset($toRemoveFromDb[$key]);
-
-            if (! $dbUsers[$login]->getKeepActive()) {
+        foreach ($toRemoveFromDb as $key => $login) {
+            unset($toRemoveFromDb[$key]);
+            if ($dbUsers[$login]->getIsInLdap()) {
                 $toRemoveFromDb[$login] = $dbUsers[$login];
             }
-		}
+        }
 
-		foreach ($toUpdate as $login => $dbUser) {
-			if (isset($ldapUsers[$login]) && isset($dbUsers[$login])) {
-				$toUpdate[$login] = array(
-					'database' => $dbUsers[$login],
-					'ldap' => $ldapUsers[$login]
-				);
-			} else {
-				unset($toUpdate[$login]);
-			}
-		}
+        foreach ($toUpdate as $login => $dbUser) {
+            if (isset($ldapUsers[$login]) && isset($dbUsers[$login])) {
+                $toUpdate[$login] = [
+                    'database' => $dbUsers[$login],
+                    'ldap' => $ldapUsers[$login],
+                ];
+            } else {
+                unset($toUpdate[$login]);
+            }
+        }
 
-		return new Process($this->doctrine, $toAddInDb, $toRemoveFromDb, $toUpdate);
-	}
+        return new Process($this->doctrine, $toAddInDb, $toRemoveFromDb, $toUpdate);
+    }
 }

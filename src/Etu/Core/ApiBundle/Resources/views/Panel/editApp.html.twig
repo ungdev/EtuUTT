@@ -1,4 +1,6 @@
-{% extends '::developpers.html.twig' %}
+{% extends '::layout-developpers.html.twig' %}
+
+{% block title %}Développeurs{% endblock %}
 
 {% block content %}
     <div class="padding20-all">
@@ -46,8 +48,7 @@
 
                 <hr />
 
-                <form method="post" {{ form_enctype(form) }}>
-                    {{ form_errors(form) }}
+                {{ form_start(form) }}
 
                     {{ form_row(form.name) }}
 
@@ -76,12 +77,11 @@
 
                     <hr />
 
-                    {{ form_rest(form) }}
 
                     <p class="align-center">
                         <input type="submit" value="Modifier" class="btn btn-primary" />
                     </p>
-                </form>
+                {{ form_end(form) }}
             </div>
         </div>
     </div>

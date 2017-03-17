@@ -9,8 +9,9 @@ use Etu\Core\UserBundle\Entity\Badge;
 class BadgeTransformer extends AbstractTransformer
 {
     /**
-     * @param Badge $badge
+     * @param Badge    $badge
      * @param EmbedBag $includes
+     *
      * @return array
      */
     public function transformUnique($badge, EmbedBag $includes)
@@ -20,6 +21,7 @@ class BadgeTransformer extends AbstractTransformer
 
     /**
      * @param Badge $badge
+     *
      * @return array
      */
     private function getData(Badge $badge)
@@ -34,6 +36,7 @@ class BadgeTransformer extends AbstractTransformer
 
     /**
      * @param Badge $badge
+     *
      * @return array
      */
     private function getLinks(Badge $badge)
@@ -42,13 +45,13 @@ class BadgeTransformer extends AbstractTransformer
             '_links' => [
                 [
                     'rel' => 'self',
-                    'uri' => '/api/public/badges/' . $badge->getId()
+                    'uri' => '/api/public/badges/'.$badge->getId(),
                 ],
                 [
                     'rel' => 'badge.image',
-                    'uri' => '/img/badges/' . $badge->getPicture()
-                ]
-            ]
+                    'uri' => '/img/badges/'.$badge->getPicture(),
+                ],
+            ],
         ];
     }
 }

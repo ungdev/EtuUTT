@@ -5,199 +5,199 @@
 {% block meta_desc %}{{ event.title }}, le {{ event.begin|date('d/m/Y à H:i') }}, {{ event.location }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/events.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/events.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block sidebar %}
-	{% if app.user %}
-		{{ render_subscribe_button('event', event.id) }}
-	{% endif %}
+    {% if is_granted('ROLE_CORE_SUBSCRIBE') %}
+        {{ render_subscribe_button('event', event.id) }}
+    {% endif %}
 
-	{{ parent() }}
+    {{ parent() }}
 {% endblock %}
 
 {% block javascripts %}
-	<script type="text/javascript">
-		var subscriber = {
-			button: $('#subscriber_button'),
-			loader: $('#subscriber_loader'),
-			current: $('#subscriber_current'),
-			yes: $('#subscriber_yes'),
-			probably: $('#subscriber_probably'),
-			no: $('#subscriber_no')
-		};
+    <script type="text/javascript">
+        var subscriber = {
+            button: $('#subscriber_button'),
+            loader: $('#subscriber_loader'),
+            current: $('#subscriber_current'),
+            yes: $('#subscriber_yes'),
+            probably: $('#subscriber_probably'),
+            no: $('#subscriber_no')
+        };
 
-		var eventId = subscriber.button.attr('data-event-id');
+        var eventId = subscriber.button.attr('data-event-id');
 
-		subscriber.yes.click(function() {
-			subscriber.current.text($(this).text());
-			subscriber.button.addClass('disabled');
-			subscriber.loader.show();
+        subscriber.yes.click(function() {
+            subscriber.current.text($(this).text());
+            subscriber.button.addClass('disabled');
+            subscriber.loader.show();
 
-			subscriber.button.click();
+            subscriber.button.click();
 
-			$.get(Routing.generate('events_answer', {'id': eventId, 'answer': 'yes'}), function() {
-				subscriber.button.removeClass('disabled');
-				subscriber.loader.hide();
-			});
+            $.get(Routing.generate('events_answer', {'id': eventId, 'answer': 'yes'}), function() {
+                subscriber.button.removeClass('disabled');
+                subscriber.loader.hide();
+            });
 
-			return false;
-		});
+            return false;
+        });
 
-		subscriber.probably.click(function() {
-			subscriber.current.text($(this).text());
-			subscriber.button.addClass('disabled');
-			subscriber.loader.show();
+        subscriber.probably.click(function() {
+            subscriber.current.text($(this).text());
+            subscriber.button.addClass('disabled');
+            subscriber.loader.show();
 
-			subscriber.button.click();
+            subscriber.button.click();
 
-			$.get(Routing.generate('events_answer', {'id': eventId, 'answer': 'probably'}), function() {
-				subscriber.button.removeClass('disabled');
-				subscriber.loader.hide();
-			});
+            $.get(Routing.generate('events_answer', {'id': eventId, 'answer': 'probably'}), function() {
+                subscriber.button.removeClass('disabled');
+                subscriber.loader.hide();
+            });
 
-			return false;
-		});
+            return false;
+        });
 
-		subscriber.no.click(function() {
-			subscriber.current.text($(this).text());
-			subscriber.button.addClass('disabled');
-			subscriber.loader.show();
+        subscriber.no.click(function() {
+            subscriber.current.text($(this).text());
+            subscriber.button.addClass('disabled');
+            subscriber.loader.show();
 
-			subscriber.button.click();
+            subscriber.button.click();
 
-			$.get(Routing.generate('events_answer', {'id': eventId, 'answer': 'no'}), function() {
-				subscriber.button.removeClass('disabled');
-				subscriber.loader.hide();
-			});
+            $.get(Routing.generate('events_answer', {'id': eventId, 'answer': 'no'}), function() {
+                subscriber.button.removeClass('disabled');
+                subscriber.loader.hide();
+            });
 
-			return false;
-		});
-	</script>
+            return false;
+        });
+    </script>
 {% endblock %}
 
 {% block content %}
-	<ul class="nav nav-tabs page-tabs">
-		<li>
-			<a href="{{ path('events_index') }}">
-				<i class="icon-chevron-left"></i>
-				{{ 'events.main.view.back'|trans }}
-			</a>
-		</li>
-		{% if app.user and app.user.isStudent %}
-			<li class="pull-right">
-				<a href="{{ path('events_members', {'id': event.id, 'slug': event.title|slugify}) }}">
-					{{ 'events.main.view.menu.subscribers'|trans }}
-				</a>
-			</li>
-			<li class="active page-tabs-resolved-active pull-right">
-				<a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}">
-					{{ 'events.main.view.menu.description'|trans }}
-				</a>
-			</li>
-		{% endif %}
-	</ul>
+    <ul class="nav nav-tabs page-tabs">
+        <li>
+            <a href="{{ path('events_index') }}">
+                <i class="icon-chevron-left"></i>
+                {{ 'events.main.view.back'|trans }}
+            </a>
+        </li>
+        {% if is_granted('ROLE_EVENTS_ANSWER') %}
+            <li class="pull-right">
+                <a href="{{ path('events_members', {'id': event.id, 'slug': event.title|slugify}) }}">
+                    {{ 'events.main.view.menu.subscribers'|trans }}
+                </a>
+            </li>
+            <li class="active page-tabs-resolved-active pull-right">
+                <a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}">
+                    {{ 'events.main.view.menu.description'|trans }}
+                </a>
+            </li>
+        {% endif %}
+    </ul>
 
-	<div class="padding20-sides">
-		{% if app.user and app.user.isStudent %}
-		<div class="pull-right">
-			<div class="btn-group">
-				<a class="btn dropdown-toggle" id="subscriber_button" data-event-id="{{ event.id }}" data-toggle="dropdown" href="#">
-					<img src="{{ asset('src/img/loader.gif') }}" id="subscriber_loader" style="display: none;" />
+    <div class="padding20-sides">
+        {% if is_granted('ROLE_EVENTS_ANSWER_POST') %}
+        <div class="pull-right">
+            <div class="btn-group">
+                <a class="btn dropdown-toggle" id="subscriber_button" data-event-id="{{ event.id }}" data-toggle="dropdown" href="#">
+                    <img src="{{ asset('assets/img/loader.gif') }}" id="subscriber_loader" style="display: none;" />
 
-					<span id="subscriber_current">
-						{% if userAnswer %}
-							{{ ('events.main.subscribers.'~userAnswer.answer)|trans }}
-						{% else %}
-							{{ 'events.main.view.willYouCome'|trans }}
-						{% endif %}
-					</span>
+                    <span id="subscriber_current">
+                        {% if userAnswer %}
+                            {{ ('events.main.subscribers.'~userAnswer.answer)|trans }}
+                        {% else %}
+                            {{ 'events.main.view.willYouCome'|trans }}
+                        {% endif %}
+                    </span>
 
-					<span class="caret"></span>
-				</a>
-				<ul class="dropdown-menu">
-					<li>
-						<a href="#" id="subscriber_yes">{{ 'events.main.subscribers.yes'|trans }}</a>
-					</li>
-					<li>
-						<a href="#" id="subscriber_probably">{{ 'events.main.subscribers.probably'|trans }}</a>
-					</li>
-					<li>
-						<a href="#" id="subscriber_no">{{ 'events.main.subscribers.no'|trans }}</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-		{% endif %}
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#" id="subscriber_yes">{{ 'events.main.subscribers.yes'|trans }}</a>
+                    </li>
+                    <li>
+                        <a href="#" id="subscriber_probably">{{ 'events.main.subscribers.probably'|trans }}</a>
+                    </li>
+                    <li>
+                        <a href="#" id="subscriber_no">{{ 'events.main.subscribers.no'|trans }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {% endif %}
 
-		<h3>{{ event.title }}</h3>
+        <h3>{{ event.title }}</h3>
 
-		<div class="event-view-orga-logo">
-			<img src="{{ asset('uploads/events/'~event.id~'.png') }}" alt="{{ event.title }}" title="{{ event.title }}" />
-		</div>
+        <div class="event-view-orga-logo">
+            <img src="{{ asset('uploads/events/'~event.id~'.png') }}" alt="{{ event.title }}" title="{{ event.title }}" />
+        </div>
 
-		<div class="event-view-infos">
-			<p class="muted event-view-category">
-				{{ 'events.main.view.in'|trans({'%category%': ('events.categories.'~event.category)|trans}) }},
-				{{ 'events.main.view.by'|trans }}
-				{% if etu.modules.isEnabled('assos') %}
-					<a href="{{ path('orgas_view', {'login': event.orga.login}) }}">
-						{{ event.orga.name }}
-					</a>
-				{% else %}
-					{{ event.orga.name }}
-				{% endif %}
-			</p>
-			<div class="row-fluid">
-				<div class="span1"></div>
-				<div class="span1">
-					<p>
-						{% if useOn %}
-							<strong>{{ 'events.main.view.on'|trans }}</strong>
-						{% else %}
-							<strong>{{ 'events.main.view.start'|trans }}</strong>
-							<br />
-							<strong>{{ 'events.main.view.end'|trans }}</strong>
-						{% endif %}
-						<br />
-						<strong>{{ 'events.main.view.location'|trans }}</strong>
-					</p>
-				</div>
-				<div class="span3">
-					<p>
-						{% if useOn %}
-							{{ event.begin|date('d/m/Y') }}
-						{% else %}
-							{{ event.begin|date('d/m/Y H:i') }}
-							<br />
-							{{ event.end|date('d/m/Y H:i') }}
-						{% endif %}
-						<br />
-						{{ event.location }}
-					</p>
-				</div>
-				<div class="span3 event-view-count-members">
-					<h4 class="event-view-count-members-number" id="count-yes">{{ answersYesCount }}</h4>
-					<p class="event-view-count-members-sentence muted">
-						{{ 'events.main.subscribers.yes'|trans }}
-					</p>
-				</div>
-				<div class="span3 event-view-count-members">
-					<h4 class="event-view-count-members-number" id="count-probably">{{ answersProbablyCount }}</h4>
-					<p class="event-view-count-members-sentence muted">
-						{{ 'events.main.subscribers.probably'|trans }}
-					</p>
-				</div>
-				<div class="span1"></div>
-			</div>
-		</div>
+        <div class="event-view-infos">
+            <p class="muted event-view-category">
+                {{ 'events.main.view.in'|trans({'%category%': ('events.categories.'~event.category)|trans}) }},
+                {{ 'events.main.view.by'|trans }}
+                {% if etu.modules.isEnabled('assos') %}
+                    <a href="{{ path('orgas_view', {'login': event.orga.login}) }}">
+                        {{ event.orga.name }}
+                    </a>
+                {% else %}
+                    {{ event.orga.name }}
+                {% endif %}
+            </p>
+            <div class="row-fluid">
+                <div class="span1"></div>
+                <div class="span1">
+                    <p>
+                        {% if useOn %}
+                            <strong>{{ 'events.main.view.on'|trans }}</strong>
+                        {% else %}
+                            <strong>{{ 'events.main.view.start'|trans }}</strong>
+                            <br />
+                            <strong>{{ 'events.main.view.end'|trans }}</strong>
+                        {% endif %}
+                        <br />
+                        <strong>{{ 'events.main.view.location'|trans }}</strong>
+                    </p>
+                </div>
+                <div class="span3">
+                    <p>
+                        {% if useOn %}
+                            {{ event.begin|date('d/m/Y') }}
+                        {% else %}
+                            {{ event.begin|date('d/m/Y H:i') }}
+                            <br />
+                            {{ event.end|date('d/m/Y H:i') }}
+                        {% endif %}
+                        <br />
+                        {{ event.location }}
+                    </p>
+                </div>
+                <div class="span3 event-view-count-members">
+                    <h4 class="event-view-count-members-number" id="count-yes">{{ answersYesCount }}</h4>
+                    <p class="event-view-count-members-sentence muted">
+                        {{ 'events.main.subscribers.yes'|trans }}
+                    </p>
+                </div>
+                <div class="span3 event-view-count-members">
+                    <h4 class="event-view-count-members-number" id="count-probably">{{ answersProbablyCount }}</h4>
+                    <p class="event-view-count-members-sentence muted">
+                        {{ 'events.main.subscribers.probably'|trans }}
+                    </p>
+                </div>
+                <div class="span1"></div>
+            </div>
+        </div>
 
-		<div class="clear"></div>
+        <div class="clear"></div>
 
-		<hr />
+        <hr />
 
-		<div class="description">
-			{{ event.description|bbcode_filter('default_filter') }}
-		</div>
-	</div>
+        <div class="description">
+            {{ event.description|purify }}
+        </div>
+    </div>
 {% endblock %}

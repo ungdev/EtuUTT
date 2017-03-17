@@ -2,6 +2,7 @@
 
 namespace Etu\Module\CovoitBundle\Form;
 
+use Etu\Core\CoreBundle\Form\EditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -11,12 +12,12 @@ class CovoitMessageType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('text', 'redactor_limited');
+            ->add('text', EditorType::class);
     }
 
     /**
@@ -29,13 +30,5 @@ class CovoitMessageType extends AbstractType
                 'data_class' => 'Etu\Module\CovoitBundle\Entity\CovoitMessage',
             ]
         );
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'etu_module_covoitbundle_covoitmessage';
     }
 }

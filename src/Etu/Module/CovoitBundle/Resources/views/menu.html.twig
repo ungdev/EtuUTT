@@ -1,4 +1,5 @@
 <ul class="nav nav-tabs page-tabs">
+    {% if is_granted('ROLE_COVOIT_EDIT') %}
     <li class="pull-right{% if active == 'alerts' %} active page-tabs-resolved-active{% endif %}">
         <a href="{{ path('covoiturage_my_alerts') }}">
             {{ 'covoit.menu.alerts'|trans }}
@@ -14,4 +15,5 @@
             {{ 'covoit.menu.home'|trans }}
         </a>
     </li>
+    {% endif %}
 </ul>

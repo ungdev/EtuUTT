@@ -3,20 +3,16 @@
 {% block title %}{{ 'covoit.private_edit_message.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-    <img src="{{ asset('src/img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
     {% include 'EtuModuleCovoitBundle::menu.html.twig' with {'active': 'none'} %}
 
     <div class="padding20-sides covoit-edit-message">
-        <form method="post" action="">
-            {{ form_widget(form.text) }}
-            {{ form_errors(form.text) }}
-
+        {{ form_start(form) }}
+            {{ form_row(form.text) }}
             {{ form_rest(form) }}
-
-            <br />
 
             <p>
                 <input type="submit" class="btn btn-primary" value="{{ 'covoit.private_edit_message.submit'|trans }}" />
@@ -25,6 +21,6 @@
                     {{ 'covoit.private_edit_message.cancel'|trans }}
                 </a>
             </p>
-        </form>
+        {{ form_end(form) }}
     </div>
 {% endblock %}

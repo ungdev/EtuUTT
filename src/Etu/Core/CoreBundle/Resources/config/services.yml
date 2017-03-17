@@ -1,215 +1,182 @@
 
 parameters:
-    etu.core.modules_manager.class: Etu\Core\CoreBundle\Framework\Module\ModulesManager
-    etu.core.routing_loader.class: Etu\Core\CoreBundle\Framework\Routing\ModulesRoutingLoader
-
-    etu.menu.user_builder.class: Etu\Core\CoreBundle\Menu\UserMenu\UserMenuBuilder
-    etu.menu.user_renderer.class: Etu\Core\CoreBundle\Menu\UserMenu\UserMenuRenderer
-    etu.menu.user_twig_extension.class: Etu\Core\CoreBundle\Twig\Extension\UserMenuRendererExtension
-
-    etu.menu.orga_builder.class: Etu\Core\CoreBundle\Menu\OrgaMenu\OrgaMenuBuilder
-    etu.menu.orga_renderer.class: Etu\Core\CoreBundle\Menu\OrgaMenu\OrgaMenuRenderer
-    etu.menu.orga_twig_extension.class: Etu\Core\CoreBundle\Twig\Extension\OrgaMenuRendererExtension
-
-    etu.menu.sidebar_builder.class: Etu\Core\CoreBundle\Menu\Sidebar\SidebarBuilder
-    etu.menu.sidebar_renderer.class: Etu\Core\CoreBundle\Menu\Sidebar\SidebarRenderer
-    etu.menu.sidebar_twig_extension.class: Etu\Core\CoreBundle\Twig\Extension\SidebarRendererExtension
-
-    etu.menu.admin_builder.class: Etu\Core\CoreBundle\Menu\AdminMenu\AdminBuilder
-    etu.menu.admin_twig_extension.class: Etu\Core\CoreBundle\Twig\Extension\AdminMenuRendererExtension
-
-    etu.modules_boot_listener.class: Etu\Core\CoreBundle\Framework\Listener\ModulesBootListener
-    etu.locale_listener.class: Etu\Core\CoreBundle\Framework\Listener\LocaleListener
-    etu.response_listener.class: Etu\Core\CoreBundle\Framework\Listener\ResponseListener
-
-    etu.twig.string_manipulation.class: Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension
-    etu.twig.array_manipulation.class: Etu\Core\CoreBundle\Twig\Extension\ArrayManipulationExtension
-    etu.twig.notif_helper.class: Etu\Core\CoreBundle\Twig\Extension\NotificationHelperExtension
-
-    etu.twig.global_accessor.class: Etu\Core\CoreBundle\Framework\Twig\GlobalAccessorObject
-    etu.twig.global_listener.class: Etu\Core\CoreBundle\Framework\Listener\TwigGlobalListener
-
-    etu.notifs.listener.class: Etu\Core\CoreBundle\Notification\Listener\NewNotifsListener
-    etu.notifs.sender.class: Etu\Core\CoreBundle\Notification\NotificationSender
-    etu.notifs.subscriber.class: Etu\Core\CoreBundle\Notification\SubscriptionsManager
-    etu.notifs.subscriber.twig.class: Etu\Core\CoreBundle\Twig\Extension\SubscriptionsManagerExtension
-
-    etu.notifs.helper_manager.class: Etu\Core\CoreBundle\Notification\Helper\HelperManager
-
-    etu.redactor_type.class: Etu\Core\CoreBundle\Form\RedactorType
-    etu.redactor_limited_type.class: Etu\Core\CoreBundle\Form\RedactorLimitedType
-    etu.redactor_html_type.class: Etu\Core\CoreBundle\Form\RedactorHtmlType
-
-    etu.form.date_picker_type.class: Etu\Core\CoreBundle\Form\DatePickerType
-    etu.form.birthday_picker_type.class: Etu\Core\CoreBundle\Form\BirthdayPickerType
-
-    etu.core.home_builder.class: Etu\Core\CoreBundle\Home\HomeBuilder
-    etu.core.home_renderer.class: Etu\Core\CoreBundle\Home\HomeRenderer
 
 services:
 
     # Modules manager
     etu.core.modules_manager:
-        class: %etu.core.modules_manager.class%
-        arguments: [@kernel]
+        class: Etu\Core\CoreBundle\Framework\Module\ModulesManager
+        arguments: ["@kernel"]
 
     # Router register
     etu.core.routing_loader:
-        class: %etu.core.routing_loader.class%
-        arguments: [@kernel]
+        class: Etu\Core\CoreBundle\Framework\Routing\ModulesRoutingLoader
+        arguments: ["@kernel"]
         tags:
             - { name: routing.loader }
 
     # Users menu
     etu.menu.user_builder:
-        class: %etu.menu.user_builder.class%
-        arguments: [@router]
+        class: Etu\Core\CoreBundle\Menu\UserMenu\UserMenuBuilder
+        arguments: ["@router"]
     etu.menu.user_renderer:
-        class: %etu.menu.user_renderer.class%
-        arguments: [@twig]
+        class: Etu\Core\CoreBundle\Menu\UserMenu\UserMenuRenderer
+        arguments: ["@twig"]
     etu.menu.user_twig_extension:
-        class: %etu.menu.user_twig_extension.class%
-        arguments: [@etu.menu.user_builder, @etu.menu.user_renderer]
+        class: Etu\Core\CoreBundle\Twig\Extension\UserMenuRendererExtension
+        arguments: ["@etu.menu.user_builder", "@etu.menu.user_renderer"]
         tags:
             - { name: twig.extension }
-
     # Organizations menu
     etu.menu.orga_builder:
-        class: %etu.menu.orga_builder.class%
-        arguments: [@router]
+        class: Etu\Core\CoreBundle\Menu\OrgaMenu\OrgaMenuBuilder
+        arguments: ["@router"]
     etu.menu.orga_renderer:
-        class: %etu.menu.orga_renderer.class%
-        arguments: [@twig]
+        class: Etu\Core\CoreBundle\Menu\OrgaMenu\OrgaMenuRenderer
+        arguments: ["@twig"]
     etu.menu.orga_twig_extension:
-        class: %etu.menu.orga_twig_extension.class%
-        arguments: [@etu.menu.orga_builder, @etu.menu.orga_renderer]
+        class: Etu\Core\CoreBundle\Twig\Extension\OrgaMenuRendererExtension
+        arguments: ["@etu.menu.orga_builder", "@etu.menu.orga_renderer"]
         tags:
             - { name: twig.extension }
 
     # Sidebar
     etu.menu.sidebar_builder:
-        class: %etu.menu.sidebar_builder.class%
-        arguments: [@router]
+        class: Etu\Core\CoreBundle\Menu\Sidebar\SidebarBuilder
+        arguments: ["@router"]
     etu.menu.sidebar_renderer:
-        class: %etu.menu.sidebar_renderer.class%
-        arguments: [@twig]
+        class: Etu\Core\CoreBundle\Menu\Sidebar\SidebarRenderer
+        arguments: ["@twig"]
     etu.menu.sidebar_twig_extension:
-        class: %etu.menu.sidebar_twig_extension.class%
-        arguments: [@etu.menu.sidebar_builder, @etu.menu.sidebar_renderer]
+        class: Etu\Core\CoreBundle\Twig\Extension\SidebarRendererExtension
+        arguments: ["@etu.menu.sidebar_builder", "@etu.menu.sidebar_renderer"]
         tags:
             - { name: twig.extension }
 
     # Admin menu
     etu.menu.admin_builder:
-        class: %etu.menu.admin_builder.class%
-        arguments: [@router]
+        class: Etu\Core\CoreBundle\Menu\AdminMenu\AdminBuilder
+        arguments: ["@router"]
     etu.menu.admin_twig_extension:
-        class: %etu.menu.admin_twig_extension.class%
-        arguments: [@etu.menu.admin_builder, @etu.menu.sidebar_renderer]
+        class: Etu\Core\CoreBundle\Twig\Extension\AdminMenuRendererExtension
+        arguments: ["@etu.menu.admin_builder", "@etu.menu.sidebar_renderer"]
         tags:
             - { name: twig.extension }
 
     # Listeners
     etu.modules_boot_listener:
-        class: %etu.modules_boot_listener.class%
-        arguments: [@router, @etu.core.modules_manager, @etu.twig.global_accessor, @service_container]
+        class: Etu\Core\CoreBundle\Framework\Listener\ModulesBootListener
+        arguments: ["@router", "@etu.core.modules_manager", "@etu.twig.global_accessor", "@service_container"]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
     etu.locale_listener:
-        class: %etu.locale_listener.class%
-        arguments: [@session, @translator]
+        class: Etu\Core\CoreBundle\Framework\Listener\LocaleListener
+        arguments: ["@session", "@translator"]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
     etu.response_listener:
-        class: %etu.response_listener.class%
-        arguments: [@session]
+        class: Etu\Core\CoreBundle\Framework\Listener\ResponseListener
+        arguments: ["@session"]
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
     # String manipulation
     etu.twig.string_manipulation:
-        class: %etu.twig.string_manipulation.class%
+        class: Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension
         tags:
             - { name: twig.extension }
     etu.twig.array_manipulation:
-        class: %etu.twig.array_manipulation.class%
+        class: Etu\Core\CoreBundle\Twig\Extension\ArrayManipulationExtension
+        tags:
+            - { name: twig.extension }
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
         tags:
             - { name: twig.extension }
 
     # Global accessor
     etu.twig.global_accessor:
-        class: %etu.twig.global_accessor.class%
-        arguments: [{domain: %etu.domain%}]
+        class: Etu\Core\CoreBundle\Framework\Twig\GlobalAccessorObject
+        arguments: [{domain: "%etu.domain%"}]
     etu.twig.global_listener:
-        class: %etu.twig.global_listener.class%
-        arguments: [@twig, @etu.twig.global_accessor]
+        class: Etu\Core\CoreBundle\Framework\Listener\TwigGlobalListener
+        arguments: ["@twig", "@etu.twig.global_accessor"]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
     # Notifications helpers
     etu.notifs.helper_manager:
-        class: %etu.notifs.helper_manager.class%
+        class: Etu\Core\CoreBundle\Notification\Helper\HelperManager
 
     etu.twig.notif_helper:
-        class: %etu.twig.notif_helper.class%
-        arguments: [@etu.notifs.helper_manager]
+        class: Etu\Core\CoreBundle\Twig\Extension\NotificationHelperExtension
+        arguments: ["@etu.notifs.helper_manager"]
         tags:
             - { name: twig.extension }
 
     # Notifications mangement
     etu.notifs.sender:
-        class: %etu.notifs.sender.class%
-        arguments: [@doctrine]
+        class: Etu\Core\CoreBundle\Notification\NotificationSender
+        arguments: ["@doctrine"]
 
     etu.notifs.subscriber:
-        class: %etu.notifs.subscriber.class%
-        arguments: [@doctrine]
+        class: Etu\Core\CoreBundle\Notification\SubscriptionsManager
+        arguments: ["@doctrine"]
 
     etu.notifs.subscriber.twig:
-        class: %etu.notifs.subscriber.twig.class%
-        arguments: [@etu.notifs.subscriber, @twig]
+        class: Etu\Core\CoreBundle\Twig\Extension\SubscriptionsManagerExtension
+        arguments: ["@etu.notifs.subscriber", "@twig"]
         tags:
             - { name: twig.extension }
 
     etu.notifs.listener:
-        class: %etu.notifs.listener.class%
-        arguments: [@security.context, @doctrine, @etu.twig.global_accessor, @kernel]
+        class: Etu\Core\CoreBundle\Notification\Listener\NewNotifsListener
+        arguments: ["@security.token_storage", "@security.authorization_checker", "@doctrine", "@etu.twig.global_accessor", "@kernel"]
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelRequest }
 
-    # Redactor
+    # Editor
     etu.redactor_type:
-        class: %etu.redactor_type.class%
+        class: Etu\Core\CoreBundle\Form\RedactorType
         tags:
             - { name: form.type, alias: redactor }
 
     etu.redactor_limited_type:
-        class: %etu.redactor_limited_type.class%
+        class: Etu\Core\CoreBundle\Form\RedactorLimitedType
         tags:
             - { name: form.type, alias: redactor_limited }
 
     etu.redactor_html_type:
-        class: %etu.redactor_html_type.class%
+        class: Etu\Core\CoreBundle\Form\RedactorHtmlType
         tags:
             - { name: form.type, alias: redactor_html }
 
     # Form
     etu.form.date_picker_type:
-        class: %etu.form.date_picker_type.class%
+        class: Etu\Core\CoreBundle\Form\DatePickerType
         tags:
             - { name: form.type, alias: date_picker }
     etu.form.birthday_picker_type:
-        class: %etu.form.birthday_picker_type.class%
+        class: Etu\Core\CoreBundle\Form\BirthdayPickerType
         tags:
             - { name: form.type, alias: birthday_picker }
+    etu.form.datetime_picker_type:
+        class: Etu\Core\CoreBundle\Form\DatetimePickerType
+        tags:
+            - { name: form.type, alias: datetime_picker }
 
 
     # Home builder
     etu.core.home_builder:
-        class: %etu.core.home_builder.class%
-        arguments: [ @doctrine.orm.entity_manager, @security.context, @etu.twig.global_accessor, @?debug.stopwatch ]
+        class: Etu\Core\CoreBundle\Home\HomeBuilder
+        arguments: [ "@doctrine.orm.entity_manager", "@security.token_storage", "@etu.twig.global_accessor", "@?debug.stopwatch" ]
 
     etu.core.home_renderer:
-        class: %etu.core.home_renderer.class%
-        arguments: [ @etu.core.home_builder, @etu.core.modules_manager, @form.factory ]
-
+        class: Etu\Core\CoreBundle\Home\HomeRenderer
+        arguments: [ "@etu.core.home_builder", "@etu.core.modules_manager", "@form.factory" ]
+    # HTML purifier
+    etu.menu.html_purifier:
+        class: Etu\Core\CoreBundle\Twig\Extension\HTMLPurifierExtension
+        arguments: ["@service_container"]
+        tags:
+            - { name: twig.extension }

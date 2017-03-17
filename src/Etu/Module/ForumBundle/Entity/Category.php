@@ -40,42 +40,42 @@ class Category
     protected $description;
 
     /**
-     * @var integer $left
+     * @var int
      *
      * @ORM\Column(name="left", type="integer")
      */
     protected $left;
 
     /**
-     * @var integer $depth
+     * @var int
      *
      * @ORM\Column(name="depth", type="integer")
      */
     protected $depth;
 
     /**
-     * @var integer $right
+     * @var int
      *
      * @ORM\Column(name="right", type="integer")
      */
     protected $right;
 
     /**
-     * @var integer $countThreads
+     * @var int
      *
      * @ORM\Column(name="countThreads", type="integer")
      */
     protected $countThreads;
 
     /**
-     * @var integer $countMessages
+     * @var int
      *
      * @ORM\Column(name="countMessages", type="integer")
      */
     protected $countMessages;
 
     /**
-     * @var \Etu\Module\ForumBundle\Entity\Message $lastMessage
+     * @var \Etu\Module\ForumBundle\Entity\Message
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Module\ForumBundle\Entity\Message", cascade={"persist"})
      * @ORM\JoinColumn(onDelete="SET NULL", nullable=true)
@@ -92,9 +92,8 @@ class Category
      */
     protected $categoryViewed;
 
-
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -109,7 +108,7 @@ class Category
     public function __toString()
     {
         $addSpaces = '';
-        for ($i = 0; $i < $this->depth; $i++) {
+        for ($i = 0; $i < $this->depth; ++$i) {
             $addSpaces .= '_';
         }
 
@@ -117,7 +116,7 @@ class Category
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -126,11 +125,12 @@ class Category
 
     /**
      * @param int $countMessages
+     *
      * @return Category
      */
     public function setCountMessages($countMessages)
     {
-        $this->countMessages = (integer)$countMessages;
+        $this->countMessages = (int) $countMessages;
 
         return $this;
     }
@@ -145,11 +145,12 @@ class Category
 
     /**
      * @param int $countThreads
+     *
      * @return Category
      */
     public function setCountThreads($countThreads)
     {
-        $this->countThreads = (integer)$countThreads;
+        $this->countThreads = (int) $countThreads;
 
         return $this;
     }
@@ -164,11 +165,12 @@ class Category
 
     /**
      * @param int $depth
+     *
      * @return Category
      */
     public function setDepth($depth)
     {
-        $this->depth = (integer)$depth;
+        $this->depth = (int) $depth;
 
         return $this;
     }
@@ -183,11 +185,12 @@ class Category
 
     /**
      * @param string $description
+     *
      * @return Category
      */
     public function setDescription($description)
     {
-        $this->description = (string)$description;
+        $this->description = (string) $description;
 
         return $this;
     }
@@ -202,6 +205,7 @@ class Category
 
     /**
      * @param \Etu\Module\ForumBundle\Entity\Message $lastMessage
+     *
      * @return Category
      */
     public function setLastMessage(Message $lastMessage = null)
@@ -221,11 +225,12 @@ class Category
 
     /**
      * @param int $left
+     *
      * @return Category
      */
     public function setLeft($left)
     {
-        $this->left = (integer)$left;
+        $this->left = (int) $left;
 
         return $this;
     }
@@ -240,11 +245,12 @@ class Category
 
     /**
      * @param int $right
+     *
      * @return Category
      */
     public function setRight($right)
     {
-        $this->right = (integer)$right;
+        $this->right = (int) $right;
 
         return $this;
     }
@@ -259,11 +265,12 @@ class Category
 
     /**
      * @param string $slug
+     *
      * @return Category
      */
     public function setSlug($slug)
     {
-        $this->slug = (string)$slug;
+        $this->slug = (string) $slug;
 
         return $this;
     }
@@ -278,11 +285,12 @@ class Category
 
     /**
      * @param string $title
+     *
      * @return Category
      */
     public function setTitle($title)
     {
-        $this->title = (string)$title;
+        $this->title = (string) $title;
 
         return $this;
     }

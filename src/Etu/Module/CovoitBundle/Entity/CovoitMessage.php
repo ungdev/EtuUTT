@@ -7,7 +7,7 @@ use Etu\Core\UserBundle\Entity\User;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * CovoitMessage
+ * CovoitMessage.
  *
  * @ORM\Table(name="etu_covoits_messages")
  * @ORM\Entity
@@ -16,7 +16,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class CovoitMessage
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -27,7 +27,7 @@ class CovoitMessage
     /**
      * @var Covoit
      *
-     * @ORM\ManyToOne(targetEntity="Covoit")
+     * @ORM\ManyToOne(targetEntity="Covoit", inversedBy="messages")
      * @ORM\JoinColumn()
      */
     private $covoit;
@@ -71,9 +71,9 @@ class CovoitMessage
     private $deletedAt;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -81,9 +81,10 @@ class CovoitMessage
     }
 
     /**
-     * Set text
+     * Set text.
      *
      * @param string $text
+     *
      * @return CovoitMessage
      */
     public function setText($text)
@@ -94,7 +95,7 @@ class CovoitMessage
     }
 
     /**
-     * Get text
+     * Get text.
      *
      * @return string
      */
@@ -104,9 +105,10 @@ class CovoitMessage
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
+     *
      * @return CovoitMessage
      */
     public function setCreatedAt($createdAt)
@@ -117,7 +119,7 @@ class CovoitMessage
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -127,9 +129,10 @@ class CovoitMessage
     }
 
     /**
-     * Set updatedAt
+     * Set updatedAt.
      *
      * @param \DateTime $updatedAt
+     *
      * @return CovoitMessage
      */
     public function setUpdatedAt($updatedAt)
@@ -140,7 +143,7 @@ class CovoitMessage
     }
 
     /**
-     * Get updatedAt
+     * Get updatedAt.
      *
      * @return \DateTime
      */
@@ -150,9 +153,10 @@ class CovoitMessage
     }
 
     /**
-     * Set deletedAt
+     * Set deletedAt.
      *
      * @param \DateTime $deletedAt
+     *
      * @return CovoitMessage
      */
     public function setDeletedAt($deletedAt)
@@ -163,7 +167,7 @@ class CovoitMessage
     }
 
     /**
-     * Get deletedAt
+     * Get deletedAt.
      *
      * @return \DateTime
      */
@@ -173,9 +177,10 @@ class CovoitMessage
     }
 
     /**
-     * Set covoit
+     * Set covoit.
      *
      * @param Covoit $covoit
+     *
      * @return CovoitMessage
      */
     public function setCovoit(Covoit $covoit = null)
@@ -186,7 +191,7 @@ class CovoitMessage
     }
 
     /**
-     * Get covoit
+     * Get covoit.
      *
      * @return Covoit
      */
@@ -196,9 +201,10 @@ class CovoitMessage
     }
 
     /**
-     * Set author
+     * Set author.
      *
      * @param User $author
+     *
      * @return CovoitMessage
      */
     public function setAuthor(User $author = null)
@@ -209,7 +215,7 @@ class CovoitMessage
     }
 
     /**
-     * Get author
+     * Get author.
      *
      * @return User
      */

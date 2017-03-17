@@ -1,0 +1,53 @@
+wiki:
+  membership:
+    wiki:
+      intro: "Le wiki permet la création et la modification collaboratives de pages par et pour les membres de votre organisation. Vous pouvez donc vous servir de cet outil comme support permettant de transmettre vos connaissances et experiences aux membres reprenant votre projet."
+      file: "Gestionnaire de fichier de %orga%"
+      home: "Page d'accueil du wiki"
+      index: "Index du wiki"
+      placeholder: "Index des pages"
+      homepage: "Page d'accueil du wiki"
+      submit: "Valider"
+  main:
+    menu:
+      view: "Lire"
+      new: "Nouvelle page"
+      edit: "Modifier"
+      back: "Parent"
+      index: "Index"
+      home: "Accueil"
+      wikilist: Liste des Wiki
+    right-orga:
+      0: "Administrateur du wiki"
+      100: "Administrateur du wiki de %orga%"
+      200: "Membre de %orga%"
+      300: "Etudiant"
+      400: "Etudiant et Exterieur"
+    right:
+      0: "Administrateur du wiki"
+      100: "Administrateur du wiki de l'association"
+      200: "Membre de l'association"
+      300: "Etudiant"
+      400: "Etudiant et Exterieur"
+    view:
+      last-edit: "Dernière modification par"
+      can-read: "Page visible par"
+      can-edit: "Page modifiable par"
+      title: Wiki %orga%
+    edit:
+        new-title: Nouvelle page
+        title: Titre
+        parentPage: Page parent
+        content: Contenu de la page
+        readRight: Qui peut voir la page ?
+        editRight: Qui peut modifier la page ?
+        submit: Sauvegarder les modifications
+        success: Votre modification a été enregistré
+    index:
+        title: Index du Wiki %orga%
+        subtitle: Liste des pages du Wiki %orga%
+        nopage: Il n'y a aucune page dans ce wiki
+    wikilist:
+        title: Listes des wiki
+        general_name: Wiki UTT
+        general_description: Wiki général d'EtuUTT permettant aux étudiants de l'UTT de partager leurs connaissances sur différents sujets.

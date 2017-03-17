@@ -6,7 +6,7 @@ framework:
     session:
         storage_id: session.storage.mock_file
     profiler:
-        enabled: false
+        collect: false
 
 web_profiler:
     toolbar: false
@@ -21,7 +21,7 @@ doctrine:
         host:     ~
         port:     ~
         dbname:   ~
-        user:     %database_user%
-        password: %database_password%
-        path:     %kernel.root_dir%/cache/tests.db
+        user:     "%database_user%"
+        password: "%database_password%"
+        path:     "%kernel.root_dir%/../var/tests.db"
         charset:  UTF8

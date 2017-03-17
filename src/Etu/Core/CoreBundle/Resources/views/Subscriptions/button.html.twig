@@ -1,46 +1,46 @@
 
 {% if not app.user.isOrga %}
-	<div class="subscription-state">
-		{% if is_subscriber(app.user, entityType, entityId) %}
-			<a href="#"
-			   id="{{ entityType~'-'~entityId~'-unsubscribe' }}"
-			   data-entityType="{{ entityType }}"
-			   data-entityId="{{ entityId }}"
-			   class="btn btn-primary subscription-unsubscribe subscription-first"
-			   title="{{ 'core.subscriptions.button.follower'|trans }}">
-				{{ 'core.subscriptions.button.unfollow'|trans }}
-			</a>
+    <div class="subscription-state">
+        {% if is_subscriber(app.user, entityType, entityId) %}
+            <a href="#"
+               id="{{ entityType~'-'~entityId~'-unsubscribe' }}"
+               data-entityType="{{ entityType }}"
+               data-entityId="{{ entityId }}"
+               class="btn btn-primary subscription-unsubscribe subscription-first"
+               title="{{ 'core.subscriptions.button.follower'|trans }}">
+                {{ 'core.subscriptions.button.unfollow'|trans }}
+            </a>
 
-			<a href="#"
-			   id="{{ entityType~'-'~entityId~'-subscribe' }}"
-			   data-entityType="{{ entityType }}"
-			   data-entityId="{{ entityId }}"
-			   class="btn subscription-subscribe subscription-hidden subscription-second"
-			   title="{{ 'core.subscriptions.button.follow'|trans }}">
-				{{ 'core.subscriptions.button.follow'|trans }}
-			</a>
-		{% else %}
-			<a href="#"
-			   id="{{ entityType~'-'~entityId~'-subscribe' }}"
-			   data-entityType="{{ entityType }}"
-			   data-entityId="{{ entityId }}"
-			   class="btn subscription-subscribe subscription-first"
-			   title="{{ 'core.subscriptions.button.follow'|trans }}">
-				{{ 'core.subscriptions.button.follow'|trans }}
-			</a>
+            <a href="#"
+               id="{{ entityType~'-'~entityId~'-subscribe' }}"
+               data-entityType="{{ entityType }}"
+               data-entityId="{{ entityId }}"
+               class="btn subscription-subscribe subscription-hidden subscription-second"
+               title="{{ 'core.subscriptions.button.follow'|trans }}">
+                {{ 'core.subscriptions.button.follow'|trans }}
+            </a>
+        {% else %}
+            <a href="#"
+               id="{{ entityType~'-'~entityId~'-subscribe' }}"
+               data-entityType="{{ entityType }}"
+               data-entityId="{{ entityId }}"
+               class="btn subscription-subscribe subscription-first"
+               title="{{ 'core.subscriptions.button.follow'|trans }}">
+                {{ 'core.subscriptions.button.follow'|trans }}
+            </a>
 
-			<a href="#"
-			   id="{{ entityType~'-'~entityId~'-unsubscribe' }}"
-			   data-entityType="{{ entityType }}"
-			   data-entityId="{{ entityId }}"
-			   class="btn btn-primary subscription-unsubscribe subscription-hidden subscription-second"
-			   title="{{ 'core.subscriptions.button.follower'|trans }}">
-				{{ 'core.subscriptions.button.unfollow'|trans }}
-			</a>
-		{% endif %}
+            <a href="#"
+               id="{{ entityType~'-'~entityId~'-unsubscribe' }}"
+               data-entityType="{{ entityType }}"
+               data-entityId="{{ entityId }}"
+               class="btn btn-primary subscription-unsubscribe subscription-hidden subscription-second"
+               title="{{ 'core.subscriptions.button.follower'|trans }}">
+                {{ 'core.subscriptions.button.unfollow'|trans }}
+            </a>
+        {% endif %}
 
-		<img src="{{ asset('src/img/loader.gif') }}" class="subscription-hidden subscription-loader" id="{{ entityType~'-'~entityId~'-loader' }}" />
-	</div>
+        <img src="{{ asset('assets/img/loader.gif') }}" class="subscription-hidden subscription-loader" id="{{ entityType~'-'~entityId~'-loader' }}" />
+    </div>
 
-	<br class="clear" /><br />
+    <br class="clear" /><br />
 {% endif %}

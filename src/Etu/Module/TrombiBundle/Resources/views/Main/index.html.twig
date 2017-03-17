@@ -3,196 +3,196 @@
 {% block title %}{{ 'trombi.main.index.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block javascripts %}
-	<script type="text/javascript">
-		var moreOptions = $('#more-options'),
-			lessOptions = $('#less-options');
+    <script type="text/javascript">
+        var moreOptions = $('#more-options'),
+            lessOptions = $('#less-options');
 
-		var phonesElements = $('.hidden-phone');
+        var phonesElements = $('.hidden-phone');
 
-		moreOptions.click(function() {
-			phonesElements.removeClass('hidden-phone');
-			moreOptions.hide();
-			lessOptions.show();
+        moreOptions.click(function() {
+            phonesElements.removeClass('hidden-phone');
+            moreOptions.hide();
+            lessOptions.show();
 
-			return false;
-		});
+            return false;
+        });
 
-		lessOptions.click(function() {
-			phonesElements.addClass('hidden-phone');
-			lessOptions.hide();
-			moreOptions.show();
+        lessOptions.click(function() {
+            phonesElements.addClass('hidden-phone');
+            lessOptions.hide();
+            moreOptions.show();
 
-			return false;
-		});
-	</script>
+            return false;
+        });
+    </script>
 {% endblock %}
 
 {% block content %}
-	{% if not app.user.isOrga and app.user.profileCompletion < 1 and not app.user.isAdmin %}
-		<div class="no-notif padding20-all">
-			<h4>{{ 'trombi.main.index.uncomplete_profile.title'|trans }}</h4>
-			<p>
-				{{ 'trombi.main.index.uncomplete_profile.desc'|trans }}
-			</p>
-			<p class="pull-right">
-				<a href="{{ path('user_profile') }}" class="btn">
-					{{ 'trombi.main.index.uncomplete_profile.link'|trans }}
-				</a>
-			</p>
-			<div class="clear"></div>
-		</div>
-	{% else %}
-		<div class="trombi-search-box">
-			<form method="get" action="{{ path('trombi_index') }}">
-				<h4>{{ 'trombi.main.index.search_title'|trans }}</h4>
+    {% if not app.user.isOrga and app.user.profileCompletion < 1 and not is_granted('ROLE_PROFIL_ADMIN') %}
+        <div class="no-notif padding20-all">
+            <h4>{{ 'trombi.main.index.uncomplete_profile.title'|trans }}</h4>
+            <p>
+                {{ 'trombi.main.index.uncomplete_profile.desc'|trans }}
+            </p>
+            <p class="pull-right">
+                <a href="{{ path('user_profile') }}" class="btn">
+                    {{ 'trombi.main.index.uncomplete_profile.link'|trans }}
+                </a>
+            </p>
+            <div class="clear"></div>
+        </div>
+    {% else %}
+        <div class="trombi-search-box">
+            {{ form_start(form) }}
+                <h4>{{ 'trombi.main.index.search_title'|trans }}</h4>
 
-				{{ form_errors(form) }}
+                {{ form_errors(form) }}
 
-				<div class="row-fluid">
-					<div class="span4">
-						<div class="form-vertical">
-							<div class="control-group">
-								{{ form_label(form.fullName, 'trombi.main.index.name'|trans) }}
-								<div class="controls">
-									{{ form_widget(form.fullName) }}
-								</div>
-								<span class="help-block">{{ form_errors(form.fullName) }}</span>
-							</div>
-							<div class="control-group hidden-phone">
-								{{ form_label(form.uvs, 'trombi.main.index.uv'|trans) }}
-								<div class="controls">
-									{{ form_widget(form.uvs) }}
-								</div>
-								<span class="help-block">{{ form_errors(form.uvs) }}</span>
-							</div>
-						</div>
-					</div>
-					<div class="span4">
-						<div class="form-vertical">
-							<div class="control-group hidden-phone">
-								{{ form_label(form.studentId, 'trombi.main.index.studentId'|trans) }}
-								<div class="controls">
-									{{ form_widget(form.studentId) }}
-								</div>
-								<span class="help-block">{{ form_errors(form.studentId) }}</span>
-							</div>
-							<div class="control-group hidden-phone">
-								{{ form_label(form.branch, 'trombi.main.index.branche'|trans) }}
-								<div class="controls">
-									{{ form_widget(form.branch, {'attr': {'class': 'span4'} }) }}
-									{{ form_widget(form.niveau, {'attr': {'class': 'span4'} }) }}
-								</div>
-								<span class="help-block">
-									{{ form_errors(form.branch) }}
-									{{ form_errors(form.niveau) }}
-								</span>
-							</div>
-						</div>
-					</div>
-					<div class="span4">
-						<div class="form-vertical">
-							<div class="control-group">
-								{{ form_label(form.phoneNumber, 'trombi.main.index.phone'|trans) }}
-								<div class="controls">
-									{{ form_widget(form.phoneNumber) }}
-								</div>
-								<span class="help-block">{{ form_errors(form.phoneNumber) }}</span>
-							</div>
-							<div class="control-group hidden-phone">
-								{{ form_label(form.personnalMail, 'trombi.main.index.personnalMail'|trans) }}
-								<div class="controls">
-									{{ form_widget(form.personnalMail) }}
-								</div>
-								<span class="help-block">{{ form_errors(form.personnalMail) }}</span>
-							</div>
-						</div>
-					</div>
-				</div>
+                <div class="row-fluid">
+                    <div class="span4">
+                        <div class="form-vertical">
+                            <div class="control-group">
+                                {{ form_label(form.fullName, 'trombi.main.index.name'|trans) }}
+                                <div class="controls">
+                                    {{ form_widget(form.fullName) }}
+                                </div>
+                                <span class="help-block">{{ form_errors(form.fullName) }}</span>
+                            </div>
+                            <div class="control-group hidden-phone">
+                                {{ form_label(form.uvs, 'trombi.main.index.uv'|trans) }}
+                                <div class="controls">
+                                    {{ form_widget(form.uvs) }}
+                                </div>
+                                <span class="help-block">{{ form_errors(form.uvs) }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span4">
+                        <div class="form-vertical">
+                            <div class="control-group hidden-phone">
+                                {{ form_label(form.studentId, 'trombi.main.index.studentId'|trans) }}
+                                <div class="controls">
+                                    {{ form_widget(form.studentId) }}
+                                </div>
+                                <span class="help-block">{{ form_errors(form.studentId) }}</span>
+                            </div>
+                            <div class="control-group hidden-phone">
+                                {{ form_label(form.branch, 'trombi.main.index.branche'|trans) }}
+                                <div class="controls">
+                                    {{ form_widget(form.branch, {'attr': {'class': 'span4'} }) }}
+                                    {{ form_widget(form.niveau, {'attr': {'class': 'span4'} }) }}
+                                </div>
+                                <span class="help-block">
+                                    {{ form_errors(form.branch) }}
+                                    {{ form_errors(form.niveau) }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span4">
+                        <div class="form-vertical">
+                            <div class="control-group">
+                                {{ form_label(form.phoneNumber, 'trombi.main.index.phone'|trans) }}
+                                <div class="controls">
+                                    {{ form_widget(form.phoneNumber) }}
+                                </div>
+                                <span class="help-block">{{ form_errors(form.phoneNumber) }}</span>
+                            </div>
+                            <div class="control-group hidden-phone">
+                                {{ form_label(form.personnalMail, 'trombi.main.index.personnalMail'|trans) }}
+                                <div class="controls">
+                                    {{ form_widget(form.personnalMail) }}
+                                </div>
+                                <span class="help-block">{{ form_errors(form.personnalMail) }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-				<div class="trombi-search-submit">
-					{{ form_rest(form) }}
+                <div class="trombi-search-submit">
+                    {{ form_rest(form) }}
 
-					<button type="submit" class="btn">
-						{{ 'trombi.main.index.search'|trans }}
-					</button>
+                    <button type="submit" class="btn">
+                        {{ 'trombi.main.index.search'|trans }}
+                    </button>
 
-					<div class="visible-phone">
-						<br />
-						<button type="button" class="btn" id="more-options">
-							<i class="fa fa-plus"></i>
-							{{ 'trombi.main.index.more_options'|trans }}
-						</button>
-						<button type="button" class="btn" id="less-options" style="display: none;">
-							<i class="fa fa-minus"></i>
-							{{ 'trombi.main.index.less_options'|trans }}
-						</button>
-					</div>
-				</div>
-			</form>
-		</div>
+                    <div class="visible-phone">
+                        <br />
+                        <button type="button" class="btn" id="more-options">
+                            <i class="fa fa-plus"></i>
+                            {{ 'trombi.main.index.more_options'|trans }}
+                        </button>
+                        <button type="button" class="btn" id="less-options" style="display: none;">
+                            <i class="fa fa-minus"></i>
+                            {{ 'trombi.main.index.less_options'|trans }}
+                        </button>
+                    </div>
+                </div>
+            {{ form_end(form) }}
+        </div>
 
-		<div class="trombi-search-results">
-			{% if not search %}
-				<p id="explainations" class="muted trombi-search-explainations">
-					{{ 'trombi.main.index.explainations'|trans }}
-				</p>
-			{% elseif pagination.count == 0 %}
-				<p class="muted trombi-search-explainations">
-					{{ 'trombi.main.index.no_results'|trans }}
-				</p>
-			{% else %}
-				{# display navigation #}
-				<div class="navigation">
-					<br />
-					<p>
-						{{ 'trombi.main.index.count'|transchoice(pagination.totalItemCount, {'%count%': pagination.totalItemCount}) }}
-					</p>
-					{{ knp_pagination_render(pagination) }}
-				</div>
+        <div class="trombi-search-results">
+            {% if not search %}
+                <p id="explainations" class="muted trombi-search-explainations">
+                    {{ 'trombi.main.index.explainations'|trans }}
+                </p>
+            {% elseif pagination.count == 0 %}
+                <p class="muted trombi-search-explainations">
+                    {{ 'trombi.main.index.no_results'|trans }}
+                </p>
+            {% else %}
+                {# display navigation #}
+                <div class="navigation">
+                    <br />
+                    <p>
+                        {{ 'trombi.main.index.count'|transchoice(pagination.totalItemCount, {'%count%': pagination.totalItemCount}) }}
+                    </p>
+                    {{ knp_pagination_render(pagination) }}
+                </div>
 
-				<ul id="search-results" class="trombi-search-results">
-					{% for user in pagination %}
-					<li class="trombi-search-results-item">
-						<a href="{{ path('user_view', {'login': user.login}) }}?from=trombi">
-							<img src="{{ asset('uploads/photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
-							<h5>
-								{{ user.fullName }}
-								{% if user.surnom %}
-									<span class="muted">- {{ user.surnom }}</span>
-								{% endif %}
-							</h5>
-							<p>
-								{% if user.formation %}
-								{{ user.branch~user.niveau }} {{ user.filiere }} ({{ user.formation }})<br />
-								{% endif %}
-								{{ user.mail }}
-								{% if is_public(user.personnalMailPrivacy) and user.personnalMail %}
-									<br />
-									{{ user.personnalMail }}
-								{% endif %}
-								{% if is_public(user.phoneNumberPrivacy) and user.phoneNumber %}
-									<br />
-									{{ user.phoneNumber }}
-								{% endif %}
-							</p>
+                <ul id="search-results" class="trombi-search-results">
+                    {% for user in pagination %}
+                    <li class="trombi-search-results-item">
+                        <a href="{{ path('user_view', {'login': user.login}) }}?from=trombi">
+                            <img src="{{ asset('uploads/photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
+                            <h5>
+                                {{ user.fullName }}
+                                {% if user.surnom and is_granted('ROLE_CORE_PROFIL_HOBBIES') %}
+                                    <span class="muted">- {{ user.surnom }}</span>
+                                {% endif %}
+                            </h5>
+                            <p>
+                                {% if user.formation %}
+                                {{ user.branch~user.niveau }} {{ user.filiere }} ({{ user.formation }})<br />
+                                {% endif %}
+                                {{ user.mail }}
+                                {% if is_public(user.personnalMailPrivacy) and user.personnalMail %}
+                                    <br />
+                                    {{ user.personnalMail }}
+                                {% endif %}
+                                {% if is_public(user.phoneNumberPrivacy) and user.phoneNumber %}
+                                    <br />
+                                    {{ user.phoneNumber }}
+                                {% endif %}
+                            </p>
 
-							<div class="clear"></div>
-						</a>
-					</li>
-					{% endfor %}
-				</ul>
+                            <div class="clear"></div>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
 
-				<div class="clear"></div>
+                <div class="clear"></div>
 
-				{# display navigation #}
-				<div class="navigation">
-					{{ knp_pagination_render(pagination) }}
-				</div>
-			{% endif %}
-		</div>
-	{% endif %}
+                {# display navigation #}
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
 {% endblock %}

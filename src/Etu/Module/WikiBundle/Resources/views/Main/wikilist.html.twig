@@ -1,0 +1,50 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'wiki.main.wikilist.title'|trans }}{% endblock %}
+
+{% block meta_desc %}{{ 'wiki.main.wikilist.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+    <img src="{{ asset('assets/img/titles/page.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+    {% include "@EtuModuleWiki/Main/part_headbar.html.twig" with {'action': 'wikilist', 'organization': null}  %}
+
+        <div class="padding20-sides">
+                {% if rights.getHomeSlug() %}
+                <a href="{{ path('wiki_view', {'slug': rights.getHomeSlug(), 'organization': 'general'}) }}" class="asso asso-first">
+                {% else %}
+                <a href="{{ path('wiki_index', {'organization': 'general'})}}" class="asso asso-first">
+                {% endif %}
+
+                    <img src="{{ asset('favicon-96x96.png') }}" alt="{{ 'wiki.main.wikilist.general_name'|trans }}" title="{{ 'wiki.main.wikilist.general_name'|trans }}" class="asso-logo" />
+
+                    <h5 class="asso-name asso-info">
+                        {{ 'wiki.main.wikilist.general_name'|trans }}
+                    </h5>
+
+                    <p class="muted asso-info hidden-phone">{{ 'wiki.main.wikilist.general_description'|trans }}</p>
+
+                    <div class="clear"></div>
+                </a>
+
+            {% for organization in organizations %}
+                {% if rights.getHomeSlug(organization) %}
+                <a href="{{ path('wiki_view', {'slug': rights.getHomeSlug(organization), 'organization': organization.login ?? 'general'}) }}" class="asso">
+                {% else %}
+                <a href="{{ path('wiki_index', {'organization': organization.login ?? 'general'})}}" class="asso">
+                {% endif %}
+                    <img src="{{ asset('uploads/logos/'~organization.logo) }}" alt="{{ organization.name }}" title="{{ organization.name }}" class="asso-logo" />
+
+                    <h5 class="asso-name asso-info">
+                        {{ organization.name }}
+                    </h5>
+
+                    <p class="muted asso-info hidden-phone">{{ organization.descriptionShort }}</p>
+
+                    <div class="clear"></div>
+                </a>
+            {% endfor %}
+        </div>
+{% endblock %}

@@ -1,65 +1,62 @@
 uvs:
-    notifs:
-        newComment: Neuer Kommentar für diesen Kurs %uv% (von %user%)
-        newReview: Neue Annalen für diesen Kurs %uv% (von %user%)
-
-    categories:
-        cs: Wissenschaftliche Kenntnisse
-        tm: Techniken und Methoden
-        ct: Kultur und Technik
-        me: Betriebswissenschaft
-        ec: Kommunikation
-        st: Praktikum
-        other: Andere
-
-    reviews:
-        partiel: Klausur
-        midterm: Midterm
-        final: Abschlussklausur
-
-    main:
-        index:
-            title: Die Kurse
-            my: Meine Kurse
-            noResult: Sie scheinen keinen Kurs zu folgen !
-        category:
-            title: Kurskategorie
-            noResult : Keinen Kurs in dieser Kategorie
-        search:
-            title: Einen Kurs suchen
-            noResult: Kein Ergebnis
-        view:
-            title: Einzelheiten eines Kurses - %code%
-            dontExists: Dieser Kurs existiert nicht mehr
-            credits: Kredite
-            cm: Vorträge
-            td: Tutorien
-            tp: Praktiche Arbeiten
-            the: Persönliche Arbeiten
-            available: Verfügbarkeit
-            autumn: Herbst
-            spring: Frühling
-            autumnAndSpring: Herbst und Frühling
-            content: Programme
-            aims: Ziele
-            reviews: Annalen
-            approuved: Vom Team bestätigt
-            pending: Warten auf bestätigung
-            countReviews: %count% Annalen|%count% annales
-            sendReview: Annalen senden
-            winBadges: Annalen senden um Ausweise zu gewinnen !
-            comments: Kommentare
-            noComment: Kein Kommentar
-            body: Ein Kommentar hinzufügen
-            submit: Kommentieren
-        sendReview:
-            title: Annalen senden
-            back: Zurück
-            type: Klausurtyp
-            semester: Annalensemester
-            file: Datei (angenommen : pdf, jpg, jpeg, png)
-            submit: Annalen senden
-            cancel: Abbrechen
-            confirm: Annalen wurden gesendet. Danke !
-        comment:
-            confirm: Kommentar wurde gesendet. Danke !
+  categories:
+    cs: "Wissenschaftliche Kenntnisse"
+    ct: "Kultur und Technik"
+    ec: "Kommunikation"
+    me: "Betriebswissenschaft"
+    other: Andere
+    st: Praktikum
+    tm: "Techniken und Methoden"
+  main:
+    category:
+      noResult: "Keinen Kurs in dieser Kategorie"
+      title: "Kurskategorie"
+    comment:
+      confirm: "Kommentar wurde gesendet. Danke !"
+    index:
+      my: "Meine Kurse"
+      noResult: "Sie scheinen keinen Kurs zu folgen !"
+      title: "Die Kurse"
+    search:
+      noResult: "Kein Ergebnis"
+      title: "Einen Kurs suchen"
+    sendReview:
+      back: Zurück
+      cancel: Abbrechen
+      confirm: "Annalen wurden gesendet. Danke !"
+      file: "Datei (angenommen : pdf, jpg, jpeg, png)"
+      semester: "Annalensemester"
+      submit: "Annalen senden"
+      title: "Annalen senden"
+      type: "Klausurtyp"
+    view:
+      aims: Ziele
+      approuved: "Vom Team bestätigt"
+      autumn: Herbst
+      autumnAndSpring: "Herbst und Frühling"
+      available: Verfügbarkeit
+      body: "Ein Kommentar hinzufügen"
+      cm: "Vorträge"
+      comments: Kommentare
+      content: Programme
+      countReviews: "%count% Annalen|%count% annales"
+      credits: Kredite
+      dontExists: "Dieser Kurs existiert nicht mehr"
+      noComment: "Kein Kommentar"
+      pending: "Warten auf bestätigung"
+      reviews: Annalen
+      sendReview: "Annalen senden"
+      spring: Frühling
+      submit: Kommentieren
+      td: "Tutorien"
+      the: "Persönliche Arbeiten"
+      title: "Einzelheiten eines Kurses - %code%"
+      tp: "Praktiche Arbeiten"
+      winBadges: "Annalen senden um Ausweise zu gewinnen !"
+  notifs:
+    newComment: "Neuer Kommentar für diesen Kurs %uv% (von %user%)"
+    newReview: "Neue Annalen für diesen Kurs %uv% (von %user%)"
+  reviews:
+    final: Abschlussklausur
+    midterm: Midterm
+    partiel: Klausur

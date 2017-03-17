@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Etu\Core\UserBundle\Entity\User;
 
 /**
- * OauthAuthorizationCodes
+ * OauthAuthorizationCodes.
  *
  * @ORM\Table(name="oauth_authorization_codes", indexes={ @ORM\Index(name="authorization_code_index", columns={ "code" }) })
  * @ORM\Entity
@@ -14,7 +14,7 @@ use Etu\Core\UserBundle\Entity\User;
 class OauthAuthorizationCode
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -23,7 +23,7 @@ class OauthAuthorizationCode
     private $id;
 
     /**
-     * @var OauthClient $client
+     * @var OauthClient
      *
      * @ORM\ManyToOne(targetEntity="OauthClient")
      * @ORM\JoinColumn()
@@ -31,7 +31,7 @@ class OauthAuthorizationCode
     private $client;
 
     /**
-     * @var User $user
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
      * @ORM\JoinColumn()
@@ -60,7 +60,7 @@ class OauthAuthorizationCode
     private $expireAt;
 
     /**
-     * @var OauthScope[] $scopes
+     * @var OauthScope[]
      *
      * @ORM\ManyToMany(targetEntity="OauthScope")
      * @ORM\JoinTable(name="oauth_authorization_codes_scopes")
@@ -68,7 +68,7 @@ class OauthAuthorizationCode
     private $scopes;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -84,11 +84,11 @@ class OauthAuthorizationCode
     {
         return $this->code = md5(uniqid(time(), true));
     }
-    
+
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -96,22 +96,23 @@ class OauthAuthorizationCode
     }
 
     /**
-     * Set code
+     * Set code.
      *
      * @param string $code
+     *
      * @return OauthAuthorizationCode
      */
     public function setCode($code)
     {
         $this->code = $code;
-    
+
         return $this;
     }
 
     /**
-     * Get code
+     * Get code.
      *
-     * @return string 
+     * @return string
      */
     public function getCode()
     {
@@ -119,22 +120,23 @@ class OauthAuthorizationCode
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
+     *
      * @return OauthAuthorizationCode
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -142,22 +144,23 @@ class OauthAuthorizationCode
     }
 
     /**
-     * Set expireAt
+     * Set expireAt.
      *
      * @param \DateTime $expireAt
+     *
      * @return OauthAuthorizationCode
      */
     public function setExpireAt($expireAt)
     {
         $this->expireAt = $expireAt;
-    
+
         return $this;
     }
 
     /**
-     * Get expireAt
+     * Get expireAt.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getExpireAt()
     {
@@ -165,20 +168,21 @@ class OauthAuthorizationCode
     }
 
     /**
-     * Set client
+     * Set client.
      *
      * @param OauthClient $client
+     *
      * @return OauthAuthorizationCode
      */
     public function setClient(OauthClient $client = null)
     {
         $this->client = $client;
-    
+
         return $this;
     }
 
     /**
-     * Get client
+     * Get client.
      *
      * @return OauthClient
      */
@@ -188,20 +192,21 @@ class OauthAuthorizationCode
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param User $user
+     *
      * @return OauthAuthorizationCode
      */
     public function setUser(User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return User
      */
@@ -211,20 +216,21 @@ class OauthAuthorizationCode
     }
 
     /**
-     * Add scopes
+     * Add scopes.
      *
      * @param OauthScope $scopes
+     *
      * @return OauthAuthorizationCode
      */
     public function addScope(OauthScope $scopes)
     {
         $this->scopes[] = $scopes;
-    
+
         return $this;
     }
 
     /**
-     * Remove scopes
+     * Remove scopes.
      *
      * @param OauthScope $scopes
      */
@@ -234,9 +240,9 @@ class OauthAuthorizationCode
     }
 
     /**
-     * Get scopes
+     * Get scopes.
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getScopes()
     {

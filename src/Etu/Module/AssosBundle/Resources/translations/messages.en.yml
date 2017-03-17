@@ -1,29 +1,34 @@
 assos:
-    main:
-        menu:
-            description: Description
-            members: Members
-        index:
-            title: The associations
-            meta: Meet the associations & clubs of UTT !
-            president: President
-        view:
-            title: Details of an association
-            back: Back to the list
-            name: Name
-            president: President
-            contactMail: E-mail contact
-            contactPhone: Phone number
-            description: Description
-            website: Website
-        members:
-            title: Members of an assocation
-            back: Back to the list
-            name: Name
-            president: President
-            contactMail: E-mail contact
-            contactPhone: Phone number
-            description: Description
-            website: Website
-            office: Board
-            members: Members
+  main:
+    elus:
+      meta: "Students representatives"
+      title: "Students representatives"
+    index:
+      meta: "Discover the students clubs and societies of the UTT !"
+      president: President
+      title: "The societies"
+    members:
+      back: "Back to the list"
+      contactMail: "E-mail contact"
+      contactPhone: "Phone number"
+      description: Description
+      members: Members
+      name: Name
+      office: Board
+      president: President
+      title: "Society members"
+      website: "Website"
+    menu:
+      description: Description
+      elus: "Student representatives"
+      members: Members
+      orgas: "Clubs and societies"
+    view:
+      back: "Back to the list"
+      contactMail: "E-mail contact"
+      contactPhone: "Phone number"
+      description: Description
+      name: Name
+      president: President
+      title: "Society details"
+      website: "Website"

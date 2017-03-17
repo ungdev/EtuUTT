@@ -31,7 +31,6 @@ class ModulesBootListener
      */
     protected $container;
 
-
     public function __construct(
         Router $router,
         ModulesManager $modulesManager,
@@ -42,8 +41,6 @@ class ModulesBootListener
         $this->router = $router;
         $this->globalAccessorObject = $globalAccessorObject;
         $this->container = $container;
-
-        $this->container->get('kernel')->freezePermissions();
     }
 
     /**
@@ -62,12 +59,10 @@ class ModulesBootListener
         /** @var $module Module */
         /** @var $modules \Iterator<Module> */
         foreach ($modules as $module) {
-            if ($module->mustBoot()) {
-                $module->setContainer($this->container);
-                $module->setRouter($this->router);
-                $module->onModuleBoot();
-                $module->setEnabled(true);
-            }
+            $module->setContainer($this->container);
+            $module->setRouter($this->router);
+            $module->onModuleBoot();
+            $module->setEnabled(true);
         }
 
         // Give an access from Twig

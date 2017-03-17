@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class CovoitAlert
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -101,7 +101,7 @@ class CovoitAlert
     /**
      * @return string
      */
-    function __toString()
+    public function __toString()
     {
         $parts = [];
 
@@ -129,9 +129,9 @@ class CovoitAlert
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -139,9 +139,10 @@ class CovoitAlert
     }
 
     /**
-     * Set priceMax
+     * Set priceMax.
      *
      * @param string $priceMax
+     *
      * @return CovoitAlert
      */
     public function setPriceMax($priceMax)
@@ -152,7 +153,7 @@ class CovoitAlert
     }
 
     /**
-     * Get priceMax
+     * Get priceMax.
      *
      * @return string
      */
@@ -162,9 +163,10 @@ class CovoitAlert
     }
 
     /**
-     * Set startDate
+     * Set startDate.
      *
      * @param \DateTime $startDate
+     *
      * @return CovoitAlert
      */
     public function setStartDate($startDate)
@@ -175,7 +177,7 @@ class CovoitAlert
     }
 
     /**
-     * Get startDate
+     * Get startDate.
      *
      * @return \DateTime
      */
@@ -185,9 +187,10 @@ class CovoitAlert
     }
 
     /**
-     * Set endDate
+     * Set endDate.
      *
      * @param \DateTime $endDate
+     *
      * @return CovoitAlert
      */
     public function setEndDate($endDate)
@@ -198,7 +201,7 @@ class CovoitAlert
     }
 
     /**
-     * Get endDate
+     * Get endDate.
      *
      * @return \DateTime
      */
@@ -208,9 +211,10 @@ class CovoitAlert
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
+     *
      * @return CovoitAlert
      */
     public function setCreatedAt($createdAt)
@@ -221,7 +225,7 @@ class CovoitAlert
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -231,9 +235,10 @@ class CovoitAlert
     }
 
     /**
-     * Set updatedAt
+     * Set updatedAt.
      *
      * @param \DateTime $updatedAt
+     *
      * @return CovoitAlert
      */
     public function setUpdatedAt($updatedAt)
@@ -244,7 +249,7 @@ class CovoitAlert
     }
 
     /**
-     * Get updatedAt
+     * Get updatedAt.
      *
      * @return \DateTime
      */
@@ -254,9 +259,10 @@ class CovoitAlert
     }
 
     /**
-     * Set deletedAt
+     * Set deletedAt.
      *
      * @param \DateTime $deletedAt
+     *
      * @return CovoitAlert
      */
     public function setDeletedAt($deletedAt)
@@ -267,7 +273,7 @@ class CovoitAlert
     }
 
     /**
-     * Get deletedAt
+     * Get deletedAt.
      *
      * @return \DateTime
      */
@@ -277,9 +283,10 @@ class CovoitAlert
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param User $user
+     *
      * @return CovoitAlert
      */
     public function setUser(User $user = null)
@@ -290,7 +297,7 @@ class CovoitAlert
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return User
      */
@@ -300,9 +307,10 @@ class CovoitAlert
     }
 
     /**
-     * Set startCity
+     * Set startCity.
      *
      * @param City $startCity
+     *
      * @return CovoitAlert
      */
     public function setStartCity(City $startCity = null)
@@ -313,7 +321,7 @@ class CovoitAlert
     }
 
     /**
-     * Get startCity
+     * Get startCity.
      *
      * @return City
      */
@@ -323,9 +331,10 @@ class CovoitAlert
     }
 
     /**
-     * Set endCity
+     * Set endCity.
      *
      * @param City $endCity
+     *
      * @return CovoitAlert
      */
     public function setEndCity(City $endCity = null)
@@ -336,7 +345,7 @@ class CovoitAlert
     }
 
     /**
-     * Get endCity
+     * Get endCity.
      *
      * @return City
      */

@@ -3,8 +3,8 @@
 namespace Etu\Core\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Etu\Core\UserBundle\Entity\User;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Table(name="etu_subscriptions")
@@ -14,7 +14,7 @@ use Etu\Core\UserBundle\Entity\User;
 class Subscription
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -22,112 +22,116 @@ class Subscription
      */
     protected $id;
 
-	/**
-	 * @var User $user
-	 *
-	 * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
-	 * @ORM\JoinColumn()
-	 */
-	protected $user;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(type="string", length=50)
-	 */
-	protected $entityType;
-
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(type="integer")
-	 */
-	protected $entityId;
-
-	/**
-	 * @var \DateTime $created
-	 *
-	 * @Gedmo\Timestampable(on="create")
-	 * @ORM\Column(type="datetime")
-	 */
-	protected $createdAt;
-
-	/**
-	 * @var \DateTime $deletedAt
-	 *
-	 * @ORM\Column(type="datetime", nullable = true)
-	 */
-	protected $deletedAt;
-
-	/**
-	 * @param int $entityId
-	 * @return Subscription
-	 */
-	public function setEntityId($entityId)
-	{
-		$this->entityId = $entityId;
-
-		return $this;
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getEntityId()
-	{
-		return $this->entityId;
-	}
-
-	/**
-	 * @param string $entityType
-	 * @return Subscription
-	 */
-	public function setEntityType($entityType)
-	{
-		$this->entityType = $entityType;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getEntityType()
-	{
-		return $this->entityType;
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
-
-	/**
-	 * @param \Etu\Core\UserBundle\Entity\User $user
-	 * @return Subscription
-	 */
-	public function setUser(User $user)
-	{
-		$this->user = $user;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Etu\Core\UserBundle\Entity\User
-	 */
-	public function getUser()
-	{
-		return $this->user;
-	}
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
+     * @ORM\JoinColumn()
+     */
+    protected $user;
 
     /**
-     * Set createdAt
+     * @var string
+     *
+     * @ORM\Column(type="string", length=50)
+     */
+    protected $entityType;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $entityId;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    protected $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable = true)
+     */
+    protected $deletedAt;
+
+    /**
+     * @param int $entityId
+     *
+     * @return Subscription
+     */
+    public function setEntityId($entityId)
+    {
+        $this->entityId = $entityId;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getEntityId()
+    {
+        return $this->entityId;
+    }
+
+    /**
+     * @param string $entityType
+     *
+     * @return Subscription
+     */
+    public function setEntityType($entityType)
+    {
+        $this->entityType = $entityType;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEntityType()
+    {
+        return $this->entityType;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param \Etu\Core\UserBundle\Entity\User $user
+     *
+     * @return Subscription
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return \Etu\Core\UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
+     *
      * @return Subscription
      */
     public function setCreatedAt($createdAt)
@@ -138,7 +142,7 @@ class Subscription
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -148,9 +152,10 @@ class Subscription
     }
 
     /**
-     * Set deletedAt
+     * Set deletedAt.
      *
      * @param \DateTime $deletedAt
+     *
      * @return Subscription
      */
     public function setDeletedAt($deletedAt)
@@ -161,7 +166,7 @@ class Subscription
     }
 
     /**
-     * Get deletedAt
+     * Get deletedAt.
      *
      * @return \DateTime
      */

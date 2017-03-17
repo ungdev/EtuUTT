@@ -1,26 +1,23 @@
 
 parameters:
-    etu.notifs.bugs_new_comment.class: Etu\Module\BugsBundle\Notification\Helper\NewCommentHelper
-    etu.notifs.bugs_new_opened.class: Etu\Module\BugsBundle\Notification\Helper\NewOpenedHelper
-    etu.notifs.bugs_closed.class: Etu\Module\BugsBundle\Notification\Helper\BugClosedHelper
 
 services:
 
     # Notifications helper
     etu.notifs.bugs_new_comment:
-        class: %etu.notifs.bugs_new_comment.class%
-        arguments: [@twig]
+        class: Etu\Module\BugsBundle\Notification\Helper\NewCommentHelper
+        arguments: ["@twig"]
         tags:
             - { name: etu.notifs_helper }
 
     etu.notifs.bugs_new_opened:
-        class: %etu.notifs.bugs_new_opened.class%
-        arguments: [@twig]
+        class: Etu\Module\BugsBundle\Notification\Helper\NewOpenedHelper
+        arguments: ["@twig"]
         tags:
             - { name: etu.notifs_helper }
 
     etu.notifs.bugs_closed:
-        class: %etu.notifs.bugs_closed.class%
-        arguments: [@twig]
+        class: Etu\Module\BugsBundle\Notification\Helper\BugClosedHelper
+        arguments: ["@twig"]
         tags:
             - { name: etu.notifs_helper }

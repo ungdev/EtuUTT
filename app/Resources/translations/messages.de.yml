@@ -1,6 +1,4 @@
-
-# Global strings: title, logo, footer, etc.
-# Used in base.html.twig
+---
 base:
     title: UTT Studenten Webseite
     description: Webseite kreiert und geführt von den Studenten der Technischen Universität von Troyes, UTT
@@ -45,6 +43,8 @@ base:
             members: Mitglieder
             pages: Statische Seiten
             orgas: Meine Vereine
+            nutt: NUTT
+            wiki: Wiki
 
         # Sex
         sex:
@@ -93,8 +93,8 @@ base:
         mobile_version: Handy Version
 
         # Authors and version
-        text: "Entwickelt von UNG<br />Angetrieben von Symfony 2"
-        1col_text: "Entwickelt von UNG - Angetrieben von Symfony 2"
+        text: "Entwickelt von UNG<br />Angetrieben von Symfony 3"
+        1col_text: "Entwickelt von UNG - Angetrieben von Symfony 3"
         mobile_text: "Entwickelt von UNG"
         version: Version
 

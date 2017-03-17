@@ -3,40 +3,36 @@
 namespace Etu\Module\CumulBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
-use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Entity\Course;
+use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Schedule\Helper\ScheduleBuilder;
 use Etu\Module\CumulBundle\Schedule\ScheduleComparator;
-
-// Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+// Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 
 class MainController extends Controller
 {
-	/**
-	 * @Route("/cumul", name="cumul_index")
-	 * @Template()
-	 */
-	public function indexAction()
-	{
-		if (! $this->getUserLayer()->isStudent()) {
-			return $this->createAccessDeniedResponse();
-		}
+    /**
+     * @Route("/cumul", name="cumul_index")
+     * @Template()
+     */
+    public function indexAction()
+    {
+        $this->denyAccessUnlessGranted('ROLE_CUMUL');
 
-		/** @var $em EntityManager */
-		$em = $this->getDoctrine()->getManager();
+        /** @var $em EntityManager */
+        $em = $this->getDoctrine()->getManager();
 
         /*
          * Parse the request, find users, remove invalid logins and find courses
          */
-        $logins = (isset($_GET['q']) && ! empty($_GET['q'])) ? explode(':', $_GET['q']) : [];
+        $logins = (isset($_GET['q']) && !empty($_GET['q'])) ? explode(':', $_GET['q']) : [];
 
         if (empty($logins)) {
-            return $this->redirect($this->generateUrl('cumul_index') . '?q=' . $this->getUser()->getLogin());
+            return $this->redirect($this->generateUrl('cumul_index').'?q='.$this->getUser()->getLogin());
         }
 
         $qb = $em->createQueryBuilder();
@@ -55,16 +51,16 @@ class MainController extends Controller
                 $found[] = $user->getLogin();
             }
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'error',
                 'message' => $this->get('translator')->transChoice(
                         'cumul.main.errors.invalid_logins',
                         count(array_diff($logins, $found)),
                         ['%items%' => implode('", "', array_diff($logins, $found))]
-                    )
-            ));
+                    ),
+            ]);
 
-            return $this->redirect($this->generateUrl('cumul_index') . '?q=' . implode(':', $found));
+            return $this->redirect($this->generateUrl('cumul_index').'?q='.implode(':', $found));
         }
 
         $usersIds = [];
@@ -104,11 +100,11 @@ class MainController extends Controller
                 continue;
             }
 
-            if (! isset($addBranchs[$branch]['all'])) {
+            if (!isset($addBranchs[$branch]['all'])) {
                 $addBranchs[$branch]['all'] = $logins;
             }
 
-            if (! isset($addBranchs[$branch][$branchsUser['niveau']])) {
+            if (!isset($addBranchs[$branch][$branchsUser['niveau']])) {
                 $addBranchs[$branch][$branchsUser['niveau']] = $logins;
             }
 
@@ -159,13 +155,13 @@ class MainController extends Controller
          * Compare schedules
          */
         /** @var $builders ScheduleBuilder[] */
-        $builders = array();
+        $builders = [];
 
         /** @var $users User[] */
-        $users = array();
+        $users = [];
 
         foreach ($courses as $course) {
-            if (! isset($builders[$course->getUser()->getLogin()])) {
+            if (!isset($builders[$course->getUser()->getLogin()])) {
                 $builders[$course->getUser()->getLogin()] = new ScheduleBuilder();
             }
 
@@ -174,7 +170,7 @@ class MainController extends Controller
         }
 
         foreach ($logins as $login) {
-            if (! isset($users[$login])) {
+            if (!isset($users[$login])) {
                 $builders[$login] = new ScheduleBuilder();
                 $users[$login] = $em->getRepository('EtuUserBundle:User')->findOneByLogin($login);
             }
@@ -194,14 +190,18 @@ class MainController extends Controller
             'removeUrlsLogins' => $removeUrlsLogins,
             'removeUrlsBranchs' => $removeUrlsBranchs,
         ];
-	}
+    }
 
     /**
      * @Route("/import/{type}", name="cumul_import")
      * @Template()
+     *
+     * @param mixed $type
      */
     public function importAction(Request $request, $type)
     {
+        $this->denyAccessUnlessGranted('ROLE_CUMUL');
+
         $post = $request->request;
         $files = $request->files;
 
@@ -221,14 +221,14 @@ class MainController extends Controller
             // Data type
             $dataType = $post->get('import-data-type');
 
-            if (! in_array($dataType, ['fullName', 'login', 'studentId'])) {
+            if (!in_array($dataType, ['fullName', 'login', 'studentId'])) {
                 $dataType = 'fullName';
             }
 
             // Separator
             $separator = "\n";
 
-            if ($post->get('separator-textarea') != 'new-line' && strlen($post->get('separator-char')) >= 1) {
+            if ($post->get('separator-textarea') != 'new-line' && mb_strlen($post->get('separator-char')) >= 1) {
                 $separator = $post->get('separator-char');
             }
 
@@ -244,14 +244,14 @@ class MainController extends Controller
             // Data type
             $dataType = $post->get('import-data-type');
 
-            if (! in_array($dataType, ['fullName', 'login', 'studentId'])) {
+            if (!in_array($dataType, ['fullName', 'login', 'studentId'])) {
                 $dataType = 'fullName';
             }
 
             // Separator
             $separator = "\n";
 
-            if ($post->get('separator-textarea') != 'new-line' && strlen($post->get('separator-char')) >= 1) {
+            if ($post->get('separator-textarea') != 'new-line' && mb_strlen($post->get('separator-char')) >= 1) {
                 $separator = $post->get('separator-char');
             }
 
@@ -265,7 +265,7 @@ class MainController extends Controller
             ->from('EtuUserBundle:User', 'u')
             ->where($qb->expr()->in('u.'.$dataType, $dataItems))
             ->getQuery()
-            ->getArrayResult();
+            ->getResult();
 
         if (count($dataItems) > count($users)) {
             $dbItems = [];
@@ -288,18 +288,18 @@ class MainController extends Controller
                 $errorType = 'cumul.main.errors.invalid_ids';
             }
 
-            $this->get('session')->getFlashBag()->set('message', array(
+            $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'error',
                 'message' => $this->get('translator')->transChoice(
                         $errorType,
                         count(array_diff($dataItems, $dbItems)),
                         ['%items%' => implode('", "', array_diff($dataItems, $dbItems))]
-                    )
-            ));
+                    ),
+            ]);
         }
 
         foreach ($users as $user) {
-            $logins[] = $user['login'];
+            $logins[] = $user->getLogin();
         }
 
         return $this->redirect($this->generateUrl('cumul_index').'?q='.implode(':', $logins));

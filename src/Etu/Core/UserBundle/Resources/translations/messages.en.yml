@@ -30,7 +30,7 @@ user:
             phoneNumber: Phone number.
             sex: Sex
             nationality: Nationality
-            adress: Adress
+            address: address
             postalCode: Postal code
             city: City
             country: Country
@@ -73,11 +73,25 @@ user:
             branche: Branche
             explainations: Use the above form to search
             no_results: No results
-            count: %count% results|%count% results
+            count: "%count% results|%count% results"
         userReadOnly:
             confirm_set: The user now has access to read only.
             confirm_unset: The user now has complete access.
-
+        logAs:
+            title: Log in as someone
+            back: Back
+            logAsUser: Log in as an user
+            logAsUser_placeholder: User
+            logAsUser_submit: Log in
+            logAsOrga: Log in as an association
+            logAsOrga_placeholder: Association
+            logAsOrga_submit: Log in
+            orga_not_found: Association not found
+            user_not_found: User not found
+            button: Log in as ...
+            badCookie: Impossible to log in. Please try to log in normally.
+            welcomeBack: Welcome back to your original account
+            loginBack: Back to your account
     auth:
         connect:
             title: Log in
@@ -86,10 +100,11 @@ user:
             external: With a guest account
             confirm: You are logged in
             error: Authentification failed, your login / password is incorrect
+            loggedOut: Bye !
             orga_exists_ldap: This association exist but must be authorized to log in by the UNG
         connectExternal:
             title: Log in as a guest
-            desc: Use the login and the password given to you by the UNG to log in :
+            desc: "Use the login and the password given to you by the UNG to log in :"
             identifier: Login
             password: Password
             submit: Log in
@@ -147,9 +162,9 @@ user:
             sex: Sex
             personnalMail: Personal e-mail
             phoneNumber: Phone number
-            adress: Adress
+            address: address
             birthday: Date of birth
-            age: %age% years old
+            age: "%age% years old"
             trombi: Group photo
             apps: Applications you allowed to access your informations
             surname: Nickname
@@ -165,6 +180,7 @@ user:
             back: Back to my account
             edit: Edit
         profileEdit:
+            privacy: Privacy
             title: Edit About Me
             confirm: You have successfully edited About Me
             back: Back to my account
@@ -183,7 +199,7 @@ user:
             phoneNumber: Phone number
             sex: Sex
             nationality: Nationality
-            adress: Adress
+            address: address
             postalCode: Postal code
             city: City
             country: Country
@@ -225,7 +241,7 @@ user:
             formation: Studies
             sex: Sex
             nationality: Nationality
-            adress: Adress
+            address: address
             birthday: Date of birth
             age: Age
             surname: Nickname

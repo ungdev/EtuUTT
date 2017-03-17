@@ -1,16 +1,11 @@
 
 parameters:
-    etu.notifs.event_created_all.class: Etu\Module\EventsBundle\Notification\Helper\EventCreatedAllHelper
-    etu.notifs.event_created_category.class: Etu\Module\EventsBundle\Notification\Helper\EventCreatedCategoryHelper
-    etu.notifs.event_edited.class: Etu\Module\EventsBundle\Notification\Helper\EventEditedHelper
-    etu.notifs.event_deleted.class: Etu\Module\EventsBundle\Notification\Helper\EventDeletedHelper
 
 services:
 
     events_repository:
         class:           Doctrine\ORM\EntityRepository
-        factory_service: doctrine.orm.default_entity_manager
-        factory_method:  getRepository
+        factory:         ["@doctrine.orm.default_entity_manager", getRepository]
         arguments:       ['EtuModuleEventsBundle:Event']
         tags:
             - { name: calendr.event_provider }
@@ -18,25 +13,25 @@ services:
 
     # Notifications helper
     etu.notifs.event_created_all:
-        class: %etu.notifs.event_created_all.class%
-        arguments: [@twig]
+        class: Etu\Module\EventsBundle\Notification\Helper\EventCreatedAllHelper
+        arguments: ["@twig"]
         tags:
             - { name: etu.notifs_helper }
 
     etu.notifs.event_created_category:
-        class: %etu.notifs.event_created_category.class%
-        arguments: [@twig]
+        class: Etu\Module\EventsBundle\Notification\Helper\EventCreatedCategoryHelper
+        arguments: ["@twig"]
         tags:
             - { name: etu.notifs_helper }
 
     etu.notifs.event_edited:
-        class: %etu.notifs.event_edited.class%
-        arguments: [@twig]
+        class: Etu\Module\EventsBundle\Notification\Helper\EventEditedHelper
+        arguments: ["@twig"]
         tags:
             - { name: etu.notifs_helper }
 
     etu.notifs.event_deleted:
-        class: %etu.notifs.event_deleted.class%
-        arguments: [@twig]
+        class: Etu\Module\EventsBundle\Notification\Helper\EventDeletedHelper
+        arguments: ["@twig"]
         tags:
             - { name: etu.notifs_helper }

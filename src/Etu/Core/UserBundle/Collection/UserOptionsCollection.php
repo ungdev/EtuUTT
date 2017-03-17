@@ -5,7 +5,7 @@ namespace Etu\Core\UserBundle\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * User options collection
+ * User options collection.
  */
 class UserOptionsCollection extends ArrayCollection
 {

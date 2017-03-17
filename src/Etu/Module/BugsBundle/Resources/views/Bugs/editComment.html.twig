@@ -3,43 +3,30 @@
 {% block title %}{{ 'bugs.bugs.editComment.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/bugs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/bugs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
-	<ul class="nav nav-tabs page-tabs">
-		<li>
-			<a href="{{ path('bugs_index') }}">{{ 'bugs.bugs.state.opened'|trans }}</a>
-		</li>
-		<li>
-			<a href="{{ path('bugs_closed') }}">{{ 'bugs.bugs.state.resolved'|trans }}</a>
-		</li>
-		{% if app.user.hasPermission('bugs.add') %}
-			<li class="pull-right">
-				<a href="{{ path('bugs_create') }}">
-					<i class="icon-plus"></i>
-					{{ 'bugs.bugs.create.title'|trans }}
-				</a>
-			</li>
-		{% endif %}
-	</ul>
+    <ul class="nav nav-tabs page-tabs">
+        <li>
+            <a href="{{ path('bugs_index') }}">{{ 'bugs.bugs.state.opened'|trans }}</a>
+        </li>
+        <li>
+            <a href="{{ path('bugs_closed') }}">{{ 'bugs.bugs.state.resolved'|trans }}</a>
+        </li>
+        {% if is_granted('ROLE_BUGS_POST') %}
+            <li class="pull-right">
+                <a href="{{ path('bugs_create') }}">
+                    <i class="icon-plus"></i>
+                    {{ 'bugs.bugs.create.title'|trans }}
+                </a>
+            </li>
+        {% endif %}
+    </ul>
 
-	<div class="padding20-sides">
-		<form method="post" action="" class="form-horizontal">
-			<div class="control-group">
-				<label class="control-label">{{ form_label(form.body, 'bugs.bugs.view.comment_body'|trans) }}</label>
-				<div class="controls">
-					{{ form_widget(form.body, {'attr': {'class': 'bugs-view-comment-textarea redactor'}}) }}
-					<span class="help-block">{{ form_errors(form.body) }}</span>
-				</div>
-			</div>
-			<div class="control-group">
-				<div class="controls">
-					{{ form_rest(form) }}
-
-					<button type="submit" class="btn">{{ 'bugs.bugs.edit.submit'|trans }}</button>
-				</div>
-			</div>
-		</form>
-	</div>
+    <div class="padding20-sides">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

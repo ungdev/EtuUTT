@@ -1,0 +1,58 @@
+{% extends '::page-popup.html.twig' %}
+
+{% block title %}{{ 'upload.main.description.title'|trans }}{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        window.opener.selectEditorFile('{{ path('upload_download', { 'download': 'view', 'id': file.id, 'fullname': file.name~'.'~file.extension }) }}');
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="pull-right align-right">
+        {% if rights.canEdit(file) %}
+            <a class="btn btn-warning" href="{{ path('upload_edit', { 'id': file.id }) }}">{{ 'upload.main.description.edit'|trans }}</a>
+        {% endif %}
+        {% if rights.canDelete(file) %}
+            <a class="btn btn-danger" href="{{ path('upload_delete', { 'id': file.id }) }}">{{ 'upload.main.description.delete'|trans }}</a>
+        {% endif %}
+    </div>
+    <h1>{{ 'upload.main.description.title'|trans }}</h1>
+    <div class="media">
+        <a class="pull-left media-border" href="{{ path('upload_download', { 'download': 'view', 'id': file.id, 'fullname': file.name~'.'~file.extension }) }}">
+            {% if file.extension in ["jpg", "jpeg", "gif", "png"] %}
+                <img class="media-object" alt="{{ file.name|e }}" src="{{ path('upload_download', { 'download': 'view', 'id': file.id, 'fullname': file.name~'.'~file.extension }) }}">
+            {% else %}
+                <div class="media-object">.{{ file.extension }}</div>
+            {% endif %}
+        </a>
+        <div class="media-body">
+            <h4 class="media-heading">{{ file.name|e }}.{{ file.extension }}</h4>
+            <p>{{ file.description|e|nl2br }}</p>
+            <ul>
+                <li>{{ 'upload.main.description.created'|trans }}{{ file.createdAt|localizeddate('long','short') }}</li>
+                <li>{{ 'upload.main.description.updated'|trans }}{{ file.updatedAt|localizeddate('long','short') }}</li>
+                <li>{{ 'upload.main.description.creator'|trans }}{{ file.author.fullName }}</li>
+                {% if file.organization %}
+                    <li>{{ 'upload.main.description.organization'|trans }}{{ file.organization.fullName }}</li>
+                    <li>{{ 'upload.main.description.readright'|trans }}{{ ('upload.main.right.'~file.readRight)|trans({ 'organization': file.organization.fullName}) }}</li>
+                {% else %}
+                    <li>{{ 'upload.main.description.readright'|trans }}{{ ('upload.main.right.'~file.readRight)|trans }}</li>
+                {% endif %}
+            </ul>
+            <a class="btn btn-success" href="{{ path('upload_download', { 'download': 'view', 'id': file.id, 'fullname': file.name~'.'~file.extension }) }}">{{ 'upload.main.description.view'|trans }}</a>
+            <a class="btn btn-primary" href="{{ path('upload_download', { 'download': 'download', 'id': file.id, 'fullname': file.name~'.'~file.extension }) }}">{{ 'upload.main.description.download'|trans }}</a>
+
+        </div>
+    </div>
+
+    <hr />
+    {% if file.organization %}
+        <a class="btn btn-primary pull-right" href="{{ path('upload_index', { 'organization': file.organization.login }) }}">{{ 'upload.main.description.new'|trans }}</a>
+        <h2>{{ 'upload.main.description.fileof'|trans }} {{ file.organization.fullName }}</h2>
+    {% else %}
+        <a class="btn btn-primary pull-right" href="{{ path('upload_index') }}">{{ 'upload.main.description.new'|trans }}</a>
+        <h2>{{ 'upload.main.description.yourfiles'|trans }}</h2>
+    {% endif %}
+    {% include "@EtuModuleUpload/Main/part_list.html.twig" %}
+{% endblock %}

@@ -11,7 +11,7 @@ class ArrayNormalizer extends SerializerAwareNormalizer implements NormalizerInt
     /**
      * {@inheritdoc}
      */
-    public function normalize($object, $format = null, array $context = array())
+    public function normalize($object, $format = null, array $context = [])
     {
         return $object;
     }
@@ -19,13 +19,13 @@ class ArrayNormalizer extends SerializerAwareNormalizer implements NormalizerInt
     /**
      * {@inheritdoc}
      */
-    public function denormalize($data, $class, $format = null, array $context = array())
+    public function denormalize($data, $class, $format = null, array $context = [])
     {
         return $data;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supportsNormalization($data, $format = null)
     {
@@ -33,7 +33,7 @@ class ArrayNormalizer extends SerializerAwareNormalizer implements NormalizerInt
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supportsDenormalization($data, $type, $format = null)
     {

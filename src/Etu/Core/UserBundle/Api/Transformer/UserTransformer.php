@@ -24,6 +24,7 @@ class UserTransformer extends AbstractTransformer
     /**
      * @param $user
      * @param EmbedBag $includes
+     *
      * @return array
      */
     public function transformUnique($user, EmbedBag $includes)
@@ -33,6 +34,7 @@ class UserTransformer extends AbstractTransformer
 
     /**
      * @param User $user
+     *
      * @return array
      */
     private function getData(User $user)
@@ -63,6 +65,7 @@ class UserTransformer extends AbstractTransformer
 
     /**
      * @param User $user
+     *
      * @return array
      */
     private function getLinks(User $user)
@@ -71,33 +74,34 @@ class UserTransformer extends AbstractTransformer
             '_links' => [
                 [
                     'rel' => 'self',
-                    'uri' => '/api/public/users/' . $user->getLogin()
+                    'uri' => '/api/public/users/'.$user->getLogin(),
                 ],
                 [
                     'rel' => 'user.badges',
-                    'uri' => '/api/public/users/' . $user->getLogin() . '/badges'
+                    'uri' => '/api/public/users/'.$user->getLogin().'/badges',
                 ],
                 [
                     'rel' => 'user.image',
-                    'uri' => '/uploads/photos/' . $user->getAvatar()
+                    'uri' => '/uploads/photos/'.$user->getAvatar(),
                 ],
                 [
                     'rel' => 'user.official_image',
-                    'uri' => '/uploads/photos/'.$user->getLogin().'_official.jpg'
-                ]
-            ]
+                    'uri' => '/uploads/photos/'.$user->getLogin().'_official.jpg',
+                ],
+            ],
         ];
     }
 
     /**
-     * @param User $user
+     * @param User     $user
      * @param EmbedBag $includes
+     *
      * @return array
      */
     private function getIncludes(User $user, EmbedBag $includes)
     {
         $embed = [
-            'badges' => []
+            'badges' => [],
         ];
 
         if ($includes->has('badges')) {
@@ -111,7 +115,7 @@ class UserTransformer extends AbstractTransformer
         }
 
         return [
-            '_embed' => $embed
+            '_embed' => $embed,
         ];
     }
 }

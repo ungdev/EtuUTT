@@ -3,18 +3,18 @@
 {% block title %}{{ 'covoit.alerts.create.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-    <img src="{{ asset('src/img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/covoiturage.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block javascripts %}
-    <script type='text/javascript' src='{{ asset('src/js/bundles/covoit_alerts.js') }}'></script>
+    <script type='text/javascript' src='{{ asset('assets/js/bundles/covoit_alerts.js') }}'></script>
 {% endblock %}
 
 {% block content %}
     {% include 'EtuModuleCovoitBundle::menu.html.twig' with {'active': 'none'} %}
 
     <div class="padding20-sides">
-        <form method="post">
+        {{ form_start(form) }}
             <h4>{{ 'covoit.alerts.create.subtitle'|trans }}</h4>
 
             <p>
@@ -28,26 +28,28 @@
             <div class="row-fluid">
                 <div class="span6">
                     {{ form_row(form.startCity) }}
-                    {{ form_row(form.endCity) }}
-                    {{ form_row(form.priceMax) }}
                 </div>
                 <div class="span6">
-                    <p>
-                        <em class="muted"><small>{{ 'covoit.alerts.create.precise_date'|trans }}</small></em>
-                    </p>
-
+                    {{ form_row(form.endCity) }}
+                </div>
+            </div>
+            <hr/>
+            <div class="row-fluid">
+                <div class="span6">
                     {{ form_row(form.startDate) }}
+                </div>
+                <div class="span6">
                     {{ form_row(form.endDate) }}
                 </div>
             </div>
-
-            {{ form_rest(form) }}
+            <hr/>
+            {{ form_row(form.priceMax) }}
 
             <hr />
 
             <p class="align-center">
                 <input type="submit" class="btn" value="{{ 'covoit.alerts.create.submit'|trans }}" />
             </p>
-        </form>
+        {{ form_end(form) }}
     </div>
 {% endblock %}

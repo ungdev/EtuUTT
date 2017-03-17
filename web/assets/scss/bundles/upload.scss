@@ -1,0 +1,41 @@
+.content-full {
+    box-sizing: border-box;
+}
+
+.upload-form {
+    text-align: left;
+}
+
+.media-border {
+    border: solid #d8d8d8 1px;
+    border-radius: 3px;
+    padding: 3px;
+    height: 200px;
+    width: 200px;
+    line-height: 200px;
+    text-align: center;
+
+    display: flex;
+
+    img, div {
+        margin: auto;
+        max-width: 100%;
+        max-height: 100%;
+        font-size: 100px;
+        color: #333;
+    }
+}
+.upload-image-container {
+    display: inline-block;
+    vertical-align: top;
+    width: 215px;
+    margin-bottom: 15px;
+    text-align: center;
+    overflow:hidden;
+
+
+    .upload-label {
+        width: 200px;
+        overflow: hidden;
+    }
+}

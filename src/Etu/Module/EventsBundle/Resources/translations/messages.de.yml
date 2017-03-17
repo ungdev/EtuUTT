@@ -1,106 +1,103 @@
 events:
-    notifs:
-        eventCreated: Das Event %title% wurde von %orga% hergestellt
-        eventEdited:
-            location: Das Event %title% befindet sich jetzt in (%newLocation%)
-            beginDate: Das Anfangsdatum des Events %title% wurde geändert
-            beginHour: Die Anfangsuhrzeit des Events %title% wurde geändert
-            beginBoth: Die Anfangsuhrzeit und das Anfangsdatum des Events %title% wurden geändert
-            endDate: Das Enddatum des Events %title% wurde geändert
-            endHour: Die Enduhrzeit des Events %title% wurde geändert
-            endBoth: Das Enddatum und die Enduhrzeit des Events %title% wurden geändert
-            locationHour:  Das Event %title% befindet sich jetzt in  (%newLocation%) und die Uhrzeiten wurden geändert
-            other: Das Event %title% wurde geändert
-        eventDeleted: Das Event %title% wurde gelöscht
-
-    categories:
-        culture: Kultur
-        sport: Sport
-        formation: Ausbildung
-        soiree: Parties
-        autre: Andere
-        all: Alle Events
-
-    main:
-        days:
-            mon: Montag
-            tue: Dienstag
-            wed: Mittwoch
-            thu: Donnerstag
-            fri: Freitag
-            sat: Samstag
-            sun: Sonnatg
-        menu:
-            month: Monat
-            week: Woche
-        months:
-            jan: Januar
-            feb: Februar
-            mar: März
-            apr: April
-            may: Mai
-            jun: Juni
-            jul: Juli
-            aug: August
-            sep: September
-            oct: Oktober
-            nov: November
-            dec: Dezember
-        index:
-            title: Events
-            meta: Entdecken Sie die Studentenevents von der UTT !
-            category_orga: In %category%, organiesiert von %orga%
-        week:
-            week: Woche
-        view:
-            title: Einzelheiten eines Events
-            willYouCome: Werden Sie kommen ?
-            back: Zurück zum Kalendar
-            in: In %category%
-            by: Organiesiert von
-            start: Anfang
-            end: Ende
-            location: Ort
-            menu:
-                description: Beschreibung
-                subscribers: Teilnehmer
-        subscribers:
-            title: Teilnehmer an einem Event
-            yes: Ja, ich komme
-            probably: Ich werde vielleicht kommen
-            no: Nein, ich komme nicht
-
-    memberships:
-        events:
-            create: Ein Event herstellen
-        create:
-            back: Zurück zum Kalendar
-            title: Titel
-            image:
-                label: Bild
-                desc: Wird in 200x200 pixels wieder dimensioniert
-            category: Kategorie
-            begin: Anfang
-            end: Ende
-            location: Ort
-            description: Beschreibung
-            submit: Das Event herstellen
-            confirm: Event wurde erfolgreich hergestellt
-        edit:
-            back: Zurück zum Kalendar
-            publicView: Die Seite des Events sehen
-            title: Titel
-            category: Kategorie
-            image: Bild
-            begin: Anfang
-            end: Ende
-            location: Ort
-            description: Beschreibung
-            submit: Event ändern
-            delete: Event löschen
-            confirm: Event wurde erfolgreich geändert
-        delete:
-            question: Wollen Sie das Event %title% wirklich löschen ?
-            yes: Ja, löschen
-            no: Nein, abbrechen
-            confirm: Event wurde gelöscht
+  categories:
+    all: "Alle Events"
+    autre: Andere
+    culture: Kultur
+    formation: Ausbildung
+    soiree: Parties
+    sport: Sport
+  main:
+    days:
+      fri: Freitag
+      mon: Montag
+      sat: Samstag
+      sun: Sonnatg
+      thu: Donnerstag
+      tue: Dienstag
+      wed: Mittwoch
+    index:
+      category_orga: "In %category%, organiesiert von %orga%"
+      meta: "Entdecken Sie die Studentenevents von der UTT !"
+      title: Events
+    menu:
+      month: Monat
+      week: Woche
+    months:
+      apr: April
+      aug: August
+      dec: Dezember
+      feb: Februar
+      jan: Januar
+      jul: Juli
+      jun: Juni
+      mar: März
+      may: Mai
+      nov: November
+      oct: Oktober
+      sep: September
+    subscribers:
+      'no': "Nein, ich komme nicht"
+      probably: "Ich werde vielleicht kommen"
+      title: "Teilnehmer an einem Event"
+      'yes': "Ja, ich komme"
+    view:
+      back: "Zurück zum Kalendar"
+      by: "Organiesiert von"
+      end: Ende
+      in: "In %category%"
+      location: Ort
+      menu:
+        description: Beschreibung
+        subscribers: Teilnehmer
+      start: Anfang
+      title: "Einzelheiten eines Events"
+      willYouCome: "Werden Sie kommen ?"
+    week:
+      week: Woche
+  memberships:
+    create:
+      back: "Zurück zum Kalendar"
+      begin: Anfang
+      category: Kategorie
+      confirm: "Event wurde erfolgreich hergestellt"
+      description: Beschreibung
+      end: Ende
+      image:
+        desc: "Wird in 200x200 pixels wieder dimensioniert"
+        label: Bild
+      location: Ort
+      submit: "Das Event herstellen"
+      title: Titel
+    delete:
+      confirm: "Event wurde gelöscht"
+      'no': "Nein, abbrechen"
+      question: "Wollen Sie das Event %title% wirklich löschen ?"
+      'yes': "Ja, löschen"
+    edit:
+      back: "Zurück zum Kalendar"
+      begin: Anfang
+      category: Kategorie
+      confirm: "Event wurde erfolgreich geändert"
+      delete: "Event löschen"
+      description: Beschreibung
+      end: Ende
+      image: Bild
+      location: Ort
+      publicView: "Die Seite des Events sehen"
+      submit: "Event ändern"
+      title: Titel
+    events:
+      create: "Ein Event herstellen"
+  notifs:
+    eventCreated: "Das Event %title% wurde von %orga% hergestellt"
+    eventDeleted: "Das Event %title% wurde gelöscht"
+    eventEdited:
+      beginBoth: "Die Anfangsuhrzeit und das Anfangsdatum des Events %title% wurden geändert"
+      beginDate: "Das Anfangsdatum des Events %title% wurde geändert"
+      beginHour: "Die Anfangsuhrzeit des Events %title% wurde geändert"
+      endBoth: "Das Enddatum und die Enduhrzeit des Events %title% wurden geändert"
+      endDate: "Das Enddatum des Events %title% wurde geändert"
+      endHour: "Die Enduhrzeit des Events %title% wurde geändert"
+      location: "Das Event %title% befindet sich jetzt in (%newLocation%)"
+      locationHour: "Das Event %title% befindet sich jetzt in  (%newLocation%) und die Uhrzeiten wurden geändert"
+      other: "Das Event %title% wurde geändert"

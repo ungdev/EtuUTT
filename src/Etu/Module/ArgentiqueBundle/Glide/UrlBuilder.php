@@ -2,12 +2,12 @@
 
 namespace Etu\Module\ArgentiqueBundle\Glide;
 
-use League\Glide\Http\UrlBuilder as Builder;
-use League\Glide\Http\UrlBuilderFactory as BuilderFactory;
+use League\Glide\Urls\UrlBuilder as Builder;
+use League\Glide\Urls\UrlBuilderFactory as BuilderFactory;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * URL builder
+ * URL builder.
  *
  * Used to create photos URLs
  */
@@ -39,15 +39,16 @@ class UrlBuilder
     }
 
     /**
-     * Generate a photo URL
+     * Generate a photo URL.
      *
      * @param string $photo
-     * @param array $options
+     * @param array  $options
+     *
      * @return string
      */
     public function generate($photo, $options = [])
     {
-        return $this->webPath.'/argentique/p.php'.$this->builder->getUrl($photo, $options);
+        return $this->webPath.'/argentique/photo'.$this->builder->getUrl($photo, $options);
     }
 
     /**

@@ -1,0 +1,14 @@
+modules:
+  - Etu\Module\ArgentiqueBundle\EtuModuleArgentiqueBundle
+  - Etu\Module\AssosBundle\EtuModuleAssosBundle
+  - Etu\Module\BugsBundle\EtuModuleBugsBundle
+  - Etu\Module\CumulBundle\EtuModuleCumulBundle
+  - Etu\Module\CovoitBundle\EtuModuleCovoitBundle
+  - Etu\Module\DaymailBundle\EtuModuleDaymailBundle
+  - Etu\Module\EventsBundle\EtuModuleEventsBundle
+  - Etu\Module\ForumBundle\EtuModuleForumBundle
+  - Etu\Module\TrombiBundle\EtuModuleTrombiBundle
+  - Etu\Module\TVBundle\EtuModuleTVBundle
+  - Etu\Module\UVBundle\EtuModuleUVBundle
+  - Etu\Module\WikiBundle\EtuModuleWikiBundle
+  - Etu\Module\UploadBundle\EtuModuleUploadBundle

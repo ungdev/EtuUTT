@@ -4,16 +4,18 @@
     <ul>
         {% for event in events %}
             <li>
-                <div class="date">
-                    <span class="day">
-                        {{ event.begin|date('d/m') }}
-                    </span>
-                </div>
-                <h5>
-                    <a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}">
+                <a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}">
+                    <img src="{{ asset('uploads/events/'~event.id~'.png') }}" alt="{{ event.title }}"/>
+                    <h5>
                         {{ event.title }}
-                    </a>
-                </h5>
+                    </h5>
+                    <div class="date">
+                        {{ ('events.main.days.' ~ event.begin.format('D'))|lower|trans }}
+                        {{ event.begin.format('d') }}
+                        {{ ('events.main.months.' ~ event.begin.format('M'))|lower|trans }} -
+                        {{ event.begin.format('G:i') }}
+                    </div>
+                </a>
             </li>
         {% endfor %}
     </ul>

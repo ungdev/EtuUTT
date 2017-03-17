@@ -3,84 +3,52 @@
 {% block title %}{{ 'forum.main.edit.title'|trans }}{% endblock %}
 
 {% block content %}
-	<ul class="breadcrumb">
-		<li>
-			<a href="{{ path('forum_index') }}">Forum</a>
-			<span class="divider">/</span>
-		</li>
-		{% for parent in parents %}
-			<li>
-				<a href="{{ path('forum_category', {'id': parent.id, 'slug': parent.slug}) }}">
-					{{ parent.title }}</a>
-				<span class="divider">/</span>
-			</li>
-		{% endfor %}
-		<li class="active">
-			{{ thread.title }}
-		</li>
-	</ul>
+    <ul class="breadcrumb">
+        <li>
+            <a href="{{ path('forum_index') }}">Forum</a>
+            <span class="divider">/</span>
+        </li>
+        {% for parent in parents %}
+            <li>
+                <a href="{{ path('forum_category', {'id': parent.id, 'slug': parent.slug}) }}">
+                    {{ parent.title }}</a>
+                <span class="divider">/</span>
+            </li>
+        {% endfor %}
+        <li class="active">
+            {{ thread.title }}
+        </li>
+    </ul>
 
-	<div class="padding20-sides">
-		{% if typeForm == 'thread' %}
-			<form class="form-horizontal" action="{{ path('forum_edit', {'messageId': messageContent.id, 'threadId': thread.id, 'slug': thread.slug}) }}" method="post" {{ form_enctype(form) }}>
-				{{ form_errors(form) }}
+    <div class="padding20-sides">
+        {% if typeForm == 'thread' %}
+            {{ form_start(form) }}
 
-				<div class="control-group">
-					<label class="control-label">{{ form_label(form.thread.title, 'forum.main.post.threadTitle'|trans) }}</label>
-					<div class="controls">
-						{{ form_widget(form.thread.title) }}
-						<span class="text-error">{{ form_errors(form.thread.title) }}</span>
-					</div>
-				</div>
+                {{ form_row(form.thread.title) }}
 
-				{% if forum_can_sticky(app.user, category) %}
-				<div class="control-group">
-					<label class="control-label">{{ form_label(form.thread.weight, 'forum.main.post.sticky'|trans) }}</label>
-					<div class="controls">
-						{{ form_widget(form.thread.weight) }}
-						<span class="text-error">{{ form_errors(form.thread.weight) }}</span>
-					</div>
-				</div>
-				{% endif %}
+                {% if forum_can_sticky(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
+                    {{ form_row(form.thread.weight) }}
+                {% endif %}
 
-				<div class="control-group">
-					<label class="control-label">{{ form_label(form.content, 'forum.main.post.content'|trans) }}</label>
-					<div class="controls">
-						{{ form_widget(form.content) }}
-						<span class="text-error">{{ form_errors(form.content) }}</span>
-					</div>
-				</div>
+                {{ form_row(form.content) }}
 
-				<div class="control-group">
-					<div class="controls">
-						{{ form_rest(form) }}
-						<button type="submit" class="btn btn-primary">Modifier</button>
-						<a href="{{ path('forum_thread', {'id': thread.id, 'slug': thread.slug}) }}"
-						   class="btn">Annuler</a>
-					</div>
-				</div>
-			</form>
-		{% elseif typeForm == 'message' %}
-			<form class="form-horizontal" action="{{ path('forum_edit', {'messageId': messageContent.id, 'threadId': thread.id, 'slug': thread.slug}) }}" method="post" {{ form_enctype(form) }}>
-				{{ form_errors(form) }}
 
-				<div class="control-group">
-					<label class="control-label">{{ form_label(form.content, 'forum.main.post.content'|trans) }}</label>
-					<div class="controls">
-						{{ form_widget(form.content) }}
-						<span class="text-error">{{ form_errors(form.content) }}</span>
-					</div>
-				</div>
+                <button type="submit" class="btn btn-primary">Modifier</button>
+                <a href="{{ path('forum_thread', {'id': thread.id, 'slug': thread.slug}) }}"
+                   class="btn">Annuler</a>
 
-				<div class="control-group">
-					<div class="controls">
-						{{ form_rest(form) }}
-						<button type="submit" class="btn btn-primary">Modifier</button>
-						<a href="{{ path('forum_thread', {'id': thread.id, 'slug': thread.slug}) }}"
-						   class="btn">Annuler</a>
-					</div>
-				</div>
-			</form>
-		{% endif %}
-	</div>
+            {{ form_end(form) }}
+        {% elseif typeForm == 'message' %}
+            {{ form_start(form) }}
+
+                {{ form_row(form.content) }}
+
+
+                <button type="submit" class="btn btn-primary">Modifier</button>
+                <a href="{{ path('forum_thread', {'id': thread.id, 'slug': thread.slug}) }}"
+                   class="btn">Annuler</a>
+
+            {{ form_end(form) }}
+        {% endif %}
+    </div>
 {% endblock %}

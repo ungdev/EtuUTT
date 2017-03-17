@@ -21,6 +21,7 @@ class EmbedBag
 
     /**
      * @param Request $request
+     *
      * @return EmbedBag
      */
     public static function createFromRequest(Request $request)
@@ -32,6 +33,7 @@ class EmbedBag
 
     /**
      * @param $key
+     *
      * @return bool
      */
     public function has($key)
@@ -41,6 +43,7 @@ class EmbedBag
 
     /**
      * @param array $availableFields
+     *
      * @return array
      */
     public function getMap($availableFields = [])

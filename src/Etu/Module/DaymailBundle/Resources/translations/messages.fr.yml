@@ -1,36 +1,36 @@
-
+--- 
 daymail:
-    memberships:
-        daymail:
-            days:
-                mon: Lundi
-                tue: Mardi
-                wed: Mercredi
-                thu: Jeudi
-                fri: Vendredi
-                sat: Samedi
-                sun: Dimanche
-            months:
-                jan: janvier
-                feb: février
-                mar: mars
-                apr: avril
-                may: mai
-                jun: juin
-                jul: juillet
-                aug: août
-                sep: septembre
-                oct: octobre
-                nov: novembre
-                dec: décembre
-            title:
-                label: Sujet
-            body:
-                label: Contenu
-            date:
-                label: Date de publication
-            create: Créer un daymail pour le %day%
-            edit: Modifier le daymail du %day%
-            preview: Prévisualiser le daymail du %day%
-            remove: Supprimer le daymail du %day%
-            confirm: Vous avez bien modifié ce daymail
+  memberships:
+    daymail:
+      body:
+        label: Contenu
+      confirm: "Vous avez bien modifié ce daymail"
+      create: "Créer un daymail pour le %day%"
+      date:
+        label: "Date de publication"
+      days:
+        fri: Vendredi
+        mon: Lundi
+        sat: Samedi
+        sun: Dimanche
+        thu: Jeudi
+        tue: Mardi
+        wed: Mercredi
+      edit: "Modifier le daymail du %day%"
+      months:
+        apr: avril
+        aug: août
+        dec: décembre
+        feb: février
+        jan: janvier
+        jul: juillet
+        jun: juin
+        mar: mars
+        may: mai
+        nov: novembre
+        oct: octobre
+        sep: septembre
+      preview: "Prévisualiser le daymail du %day%"
+      remove: "Supprimer le daymail du %day%"
+      title:
+        label: Sujet

@@ -3,356 +3,358 @@
 {% block title %}{{ 'user.profile.view.title'|trans }}{% endblock %}
 
 {% block stylesheets %}
-	{% if user.login == 'richardb' %}
-	<style>
-		.bg-soft-grey {
-			background: url('/src/img/back_etuutt.jpg') #950014 !important;
-		}
-		.page-container, .footer {
-			background: none !important;
-		}
-		.page-title, .footer, .footer a {
-			color: #a6843c !important;
-		}
-	</style>
-	{% endif %}
+    {% if user.login == 'richardb' %}
+    <style>
+        .bg-soft-grey {
+            background: url('/assets/img/back_etuutt.jpg') #950014 !important;
+        }
+        .page-container, .footer {
+            background: none !important;
+        }
+        .page-title, .footer, .footer a {
+            color: #a6843c !important;
+        }
+    </style>
+    {% endif %}
 {% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
-	<ul class="nav nav-tabs page-tabs">
-		{% if from == 'search' %}
-			<li>
-				<a href="">
-					<i class="icon-chevron-left"></i>
-					{{ 'user.profile.view.back_search'|trans }}
-				</a>
-			</li>
-		{% elseif from == 'profile' %}
-			<li>
-				<a href="{{ path('user_profile') }}">
-					<i class="icon-chevron-left"></i>
-					{{ 'user.profile.view.back_profile'|trans }}
-				</a>
-			</li>
-		{% elseif from == 'trombi' and etu.modules.isEnabled('trombi') %}
-			<li>
-				<a href="{{ path('trombi_index') }}">
-					<i class="icon-chevron-left"></i>
-					{{ 'user.profile.view.back_trombi'|trans }}
-				</a>
-			</li>
-		{% elseif from == 'admin' and app.user.isAdmin %}
-			<li>
-				<a href="{{ path('admin_users_index') }}">
-					<i class="icon-chevron-left"></i>
-					{{ 'user.profile.view.back_admin'|trans }}
-				</a>
-			</li>
-		{% endif %}
-		<li class="pull-right">
-			<a href="{{ path('user_view_badges', {'login': user.login}) }}?from={{ from }}">
-				{{ 'user.profile.menu.badges'|trans }}
-			</a>
-		</li>
-		<li class="pull-right">
-			<a href="{{ path('user_view_schedule', {'login': user.login}) }}?from={{ from }}">
-				{{ 'user.profile.menu.schedule'|trans }}
-			</a>
-		</li>
-		<li class="pull-right">
-			<a href="{{ path('user_organizations', {'login': user.login}) }}?from={{ from }}">
-				{{ 'user.profile.menu.organizations'|trans }}
-			</a>
-		</li>
-		<li class="pull-right active page-tabs-resolved-active">
-			<a href="{{ path('user_view', {'login': user.login}) }}?from={{ from }}">
-				{{ 'user.profile.menu.profile'|trans }}
-			</a>
-		</li>
-	</ul>
+    <ul class="nav nav-tabs page-tabs">
+        {% if from == 'search' %}
+            <li>
+                <a href="">
+                    <i class="icon-chevron-left"></i>
+                    {{ 'user.profile.view.back_search'|trans }}
+                </a>
+            </li>
+        {% elseif from == 'profile' %}
+            <li>
+                <a href="{{ path('user_profile') }}">
+                    <i class="icon-chevron-left"></i>
+                    {{ 'user.profile.view.back_profile'|trans }}
+                </a>
+            </li>
+        {% elseif from == 'trombi' and etu.modules.isEnabled('trombi') %}
+            <li>
+                <a href="{{ path('trombi_index') }}">
+                    <i class="icon-chevron-left"></i>
+                    {{ 'user.profile.view.back_trombi'|trans }}
+                </a>
+            </li>
+        {% elseif from == 'admin' and is_granted('ROLE_CORE_ADMIN_PROFIL') %}
+            <li>
+                <a href="{{ path('admin_users_index') }}">
+                    <i class="icon-chevron-left"></i>
+                    {{ 'user.profile.view.back_admin'|trans }}
+                </a>
+            </li>
+        {% endif %}
+        <li class="pull-right">
+            <a href="{{ path('user_view_badges', {'login': user.login}) }}?from={{ from }}">
+                {{ 'user.profile.menu.badges'|trans }}
+            </a>
+        </li>
+        <li class="pull-right">
+            <a href="{{ path('user_view_schedule', {'login': user.login}) }}?from={{ from }}">
+                {{ 'user.profile.menu.schedule'|trans }}
+            </a>
+        </li>
+        <li class="pull-right">
+            <a href="{{ path('user_organizations', {'login': user.login}) }}?from={{ from }}">
+                {{ 'user.profile.menu.organizations'|trans }}
+            </a>
+        </li>
+        <li class="pull-right active page-tabs-resolved-active">
+            <a href="{{ path('user_view', {'login': user.login}) }}?from={{ from }}">
+                {{ 'user.profile.menu.profile'|trans }}
+            </a>
+        </li>
+    </ul>
 
-	<div class="padding20-all">
-		<div class="row-fluid">
-			<div class="span3">
-				<div class="align-center">
-					<img src="{{ asset('uploads/photos/'~user.avatar) }}" class="view-avatar"
-						 alt="{{ user.fullName }}" title="{{ user.fullName }}" />
+    <div class="padding20-all">
+        <div class="row-fluid">
+            <div class="span3">
+                <div class="align-center">
+                    <img src="{{ asset('uploads/photos/'~user.avatar) }}" class="view-avatar"
+                         alt="{{ user.fullName }}" title="{{ user.fullName }}" />
 
-					<hr />
+                    <hr />
 
-					<strong>{{ user.fullName }}</strong><br />
-					{% if user.formation %}
-					<em>{{ user.branch~user.niveau }} {{ user.filiere }} ({{ user.formation }})</em>
-					{% endif %}
-				</div>
+                    <strong>{{ user.fullName }}</strong><br />
+                    {% if user.formation %}
+                    <em>{{ user.branch~user.niveau }} {{ user.filiere }} ({{ user.formation }})</em>
+                    {% endif %}
+                </div>
 
-				<hr />
+                <hr />
 
-				<div class="hidden-for-phones">
-					{% if app.user.isAdmin %}
-						<p>
-							<strong>{{ 'user.profile.view.admin'|trans }}</strong>
-						</p>
-						<p>
-							<a href="{{ path('admin_user_edit', {'login': user.login}) }}" class="btn btn-small">
-								{{ 'user.profile.view.admin_edit'|trans }}
-							</a>
-							<a href="{{ path('admin_user_delete', {'login': user.login}) }}" class="btn btn-small">
-								{{ 'user.profile.view.admin_delete'|trans }}
-							</a>
-						</p>
-						<p>
-							<a href="{{ path('admin_user_permissions', {'login': user.login}) }}" class="btn btn-small">
-								{{ 'user.profile.view.admin_permissions'|trans }}
-							</a>
-						</p>
-						<p>
-							<a href="{{ path('admin_user_toggle_readonly', {'login': user.login}) }}" class="btn btn-small">
-								{% if user.isReadOnly %}
-									{{ 'user.profile.view.admin_disable_readonly'|trans }}
-								{% else %}
-									{{ 'user.profile.view.admin_enable_readonly'|trans }}
-								{% endif %}
-							</a>
-						</p>
-					{% endif %}
+                <div class="hidden-for-phones">
+                    {% if is_granted('ROLE_CORE_ADMIN_PROFIL') %}
+                        <p>
+                            <strong>{{ 'user.profile.view.admin'|trans }}</strong>
+                        </p>
+                        <p>
+                            <a href="{{ path('admin_user_edit', {'login': user.login}) }}" class="btn btn-small">
+                                {{ 'user.profile.view.admin_edit'|trans }}
+                            </a>
+                            <a href="{{ path('admin_user_delete', {'login': user.login}) }}" class="btn btn-small">
+                                {{ 'user.profile.view.admin_delete'|trans }}
+                            </a>
+                        </p>
+                        <p>
+                            <a href="{{ path('admin_user_roles', {'login': user.login, 'from': 'profile'}) }}" class="btn btn-small">
+                                {{ 'user.profile.view.admin_permissions'|trans }}
+                            </a>
+                        </p>
+                        <p>
+                            <a href="{{ path('admin_user_toggle_readonly', {'login': user.login}) }}" class="btn btn-small">
+                                {% if user.isReadOnly %}
+                                    {{ 'user.profile.view.admin_disable_readonly'|trans }}
+                                {% else %}
+                                    {{ 'user.profile.view.admin_enable_readonly'|trans }}
+                                {% endif %}
+                            </a>
+                        </p>
+                    {% endif %}
 
-					{% if user.website %}
-						<p>
-							<strong>{{ 'user.profile.view.website'|trans }}</strong><br />
-							<a href="{{ user.website }}">{{ user.website }}</a>
-						</p>
-					{% endif %}
+                    {% if user.website %}
+                        <p>
+                            <strong>{{ 'user.profile.view.website'|trans }}</strong><br />
+                            <a href="{{ user.website }}">{{ user.website }}</a>
+                        </p>
+                    {% endif %}
 
-					{% if user.facebook %}
-						<p>
-							<strong>{{ 'user.profile.view.facebook'|trans }}</strong><br />
-							<a href="{{ user.facebook }}">{{ user.facebook }}</a>
-						</p>
-					{% endif %}
+                    {% if user.facebook %}
+                        <p>
+                            <strong>{{ 'user.profile.view.facebook'|trans }}</strong><br />
+                            <a href="{{ user.facebook }}">{{ user.facebook }}</a>
+                        </p>
+                    {% endif %}
 
-					{% if user.twitter %}
-						<p>
-							<strong>{{ 'user.profile.view.twitter'|trans }}</strong><br />
-							<a href="{{ user.twitter }}">{{ user.twitter }}</a>
-						</p>
-					{% endif %}
+                    {% if user.twitter %}
+                        <p>
+                            <strong>{{ 'user.profile.view.twitter'|trans }}</strong><br />
+                            <a href="{{ user.twitter }}">{{ user.twitter }}</a>
+                        </p>
+                    {% endif %}
 
-					{% if user.linkedin %}
-						<p>
-							<strong>{{ 'user.profile.view.linkedin'|trans }}</strong><br />
-							<a href="{{ user.linkedin }}">{{ user.linkedin }}</a>
-						</p>
-					{% endif %}
+                    {% if user.linkedin %}
+                        <p>
+                            <strong>{{ 'user.profile.view.linkedin'|trans }}</strong><br />
+                            <a href="{{ user.linkedin }}">{{ user.linkedin }}</a>
+                        </p>
+                    {% endif %}
 
-					{% if user.viadeo %}
-						<p>
-							<strong>{{ 'user.profile.view.viadeo'|trans }}</strong><br />
-							<a href="{{ user.viadeo }}">{{ user.viadeo }}</a>
-						</p>
-					{% endif %}
-				</div>
-			</div>
+                    {% if user.viadeo %}
+                        <p>
+                            <strong>{{ 'user.profile.view.viadeo'|trans }}</strong><br />
+                            <a href="{{ user.viadeo }}">{{ user.viadeo }}</a>
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
 
-			<div class="span9">
-				<div class="view-group view-group-first">
-					<div class="view-icon"><i class="icon-user"></i></div>
-					<div class="view-label">{{ 'user.profile.view.name'|trans }}</div>
-					<div class="view-value">
-						{{ user.fullName }}
-					</div>
-				</div>
+            <div class="span9">
+                <div class="view-group view-group-first">
+                    <div class="view-icon"><i class="icon-user"></i></div>
+                    <div class="view-label">{{ 'user.profile.view.name'|trans }}</div>
+                    <div class="view-value">
+                        {{ user.fullName }}
+                    </div>
+                </div>
 
-				{% if user.studentId %}
-				<div class="view-group">
-					<div class="view-icon"><i class="icon-barcode"></i></div>
-					<div class="view-label">{{ 'user.profile.view.studentId'|trans }}</div>
-					<div class="view-value">
-						{{ user.studentId  }}
-					</div>
-				</div>
-				{% endif %}
+                {% if user.studentId %}
+                <div class="view-group">
+                    <div class="view-icon"><i class="icon-barcode"></i></div>
+                    <div class="view-label">{{ 'user.profile.view.studentId'|trans }}</div>
+                    <div class="view-value">
+                        {{ user.studentId  }}
+                    </div>
+                </div>
+                {% endif %}
 
-				{% if user.mail %}
-					<div class="view-group">
-						<div class="view-icon"><i class="icon-envelope"></i></div>
-						<div class="view-label">{{ 'user.profile.view.mail'|trans }}</div>
-						<div class="view-value">
-							<a href="mailto:{{ user.mail }}">{{ user.mail }}</a>
-						</div>
-					</div>
-				{% endif %}
+                {% if user.mail %}
+                    <div class="view-group">
+                        <div class="view-icon"><i class="icon-envelope"></i></div>
+                        <div class="view-label">{{ 'user.profile.view.mail'|trans }}</div>
+                        <div class="view-value">
+                            <a href="mailto:{{ user.mail }}">{{ user.mail }}</a>
+                        </div>
+                    </div>
+                {% endif %}
 
-				{% if user.uvs %}
-					<div class="view-group">
-						<div class="view-label">{{ 'user.profile.view.uvs'|trans }}</div>
-						<div class="view-value">
-							{% if etu.modules.isEnabled('uv') %}
-								{% for uv in user.uvsList %}{% if loop.index > 1 %}, {% endif %}
-									<a href="{{ path('uvs_goto', {'code': uv}) }}">
-										{{ uv }}
-									</a>
-								{% endfor %}
-							{% else %}
-								{{ user.displayUvs }}
-							{% endif %}
-						</div>
-					</div>
-				{% endif %}
+                {% if user.uvs %}
+                    <div class="view-group">
+                        <div class="view-label">{{ 'user.profile.view.uvs'|trans }}</div>
+                        <div class="view-value">
+                            {% if etu.modules.isEnabled('uv') %}
+                                {% for uv in user.uvsList %}{% if loop.index > 1 %}, {% endif %}
+                                    <a href="{{ path('uvs_goto', {'code': uv}) }}">
+                                        {{ uv }}
+                                    </a>
+                                {% endfor %}
+                            {% else %}
+                                {{ user.displayUvs }}
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
 
-				{% if is_public(user.phoneNumberPrivacy) and user.phoneNumber %}
-					<div class="view-group">
-						<div class="view-label">{{ 'user.profile.view.phoneNumber'|trans }}</div>
-						<div class="view-value">
-							{{ user.phoneNumber }}
-						</div>
-					</div>
-				{% endif %}
+                {% if is_public(user.phoneNumberPrivacy) and user.phoneNumber %}
+                    <div class="view-group">
+                        <div class="view-label">{{ 'user.profile.view.phoneNumber'|trans }}</div>
+                        <div class="view-value">
+                            {{ user.phoneNumber }}
+                        </div>
+                    </div>
+                {% endif %}
 
-				{% if is_public(user.personnalMailPrivacy) and user.personnalMail %}
-					<div class="view-group">
-						<div class="view-icon"><i class="icon-envelope"></i></div>
-						<div class="view-label">{{ 'user.profile.view.personnalMail'|trans }}</div>
-						<div class="view-value">
-							<a href="mailto:{{ user.personnalMail }}">{{ user.personnalMail }}</a>
-						</div>
-					</div>
-				{% endif %}
+                {% if is_public(user.personnalMailPrivacy) and user.personnalMail %}
+                    <div class="view-group">
+                        <div class="view-icon"><i class="icon-envelope"></i></div>
+                        <div class="view-label">{{ 'user.profile.view.personnalMail'|trans }}</div>
+                        <div class="view-value">
+                            <a href="mailto:{{ user.personnalMail }}">{{ user.personnalMail }}</a>
+                        </div>
+                    </div>
+                {% endif %}
 
-				{% if user.niveau or user.filiere or user.formation %}
-				<div class="view-group">
-					<div class="view-icon"><i class="icon-book"></i></div>
-					<div class="view-label">{{ 'user.profile.view.formation'|trans }}</div>
-					<div class="view-value">
-						{{ user.branch~user.niveau }} {{ user.filiere }} ({{ user.formation }})
-					</div>
-				</div>
-				{% endif %}
+                {% if user.niveau or user.filiere or user.formation %}
+                <div class="view-group">
+                    <div class="view-icon"><i class="icon-book"></i></div>
+                    <div class="view-label">{{ 'user.profile.view.formation'|trans }}</div>
+                    <div class="view-value">
+                        {{ user.branch~user.niveau }} {{ user.filiere }} ({{ user.formation }})
+                    </div>
+                </div>
+                {% endif %}
 
-				{% if is_public(user.sexPrivacy) and user.sex %}
-					<div class="view-group">
-						<div class="view-label">{{ 'user.profile.view.sex'|trans }}</div>
-						<div class="view-value">
-							{{ ('base.user.sex.'~user.sex)|trans }}
-						</div>
-					</div>
-				{% endif %}
+                {% if is_public(user.sexPrivacy) and user.sex %}
+                    <div class="view-group">
+                        <div class="view-label">{{ 'user.profile.view.sex'|trans }}</div>
+                        <div class="view-value">
+                            {{ ('base.user.sex.'~user.sex)|trans }}
+                        </div>
+                    </div>
+                {% endif %}
 
-				{% if is_public(user.nationalityPrivacy) and user.nationality %}
-					<div class="view-group">
-						<div class="view-label">{{ 'user.profile.view.nationality'|trans }}</div>
-						<div class="view-value">
-							{{ user.nationality }}
-						</div>
-					</div>
-				{% endif %}
+                {% if is_public(user.nationalityPrivacy) and user.nationality %}
+                    <div class="view-group">
+                        <div class="view-label">{{ 'user.profile.view.nationality'|trans }}</div>
+                        <div class="view-value">
+                            {{ user.nationality }}
+                        </div>
+                    </div>
+                {% endif %}
 
-				{% if
-					(user.adress and is_public(user.adressPrivacy))
-					or
-					(user.postalCode and is_public(user.postalCodePrivacy))
-					or
-					(user.city and is_public(user.cityPrivacy))
-					or
-					(user.country and is_public(user.countryPrivacy))
-				%}
-					<div class="view-group">
-						<div class="view-icon"><i class="icon-map-marker"></i></div>
-						<div class="view-label">{{ 'user.profile.view.adress'|trans }}</div>
-						<div class="view-value">
+                {% if
+                    (user.address and is_public(user.addressPrivacy))
+                    or
+                    (user.postalCode and is_public(user.postalCodePrivacy))
+                    or
+                    (user.city and is_public(user.cityPrivacy))
+                    or
+                    (user.country and is_public(user.countryPrivacy))
+                %}
+                    <div class="view-group">
+                        <div class="view-icon"><i class="icon-map-marker"></i></div>
+                        <div class="view-label">{{ 'user.profile.view.address'|trans }}</div>
+                        <div class="view-value">
 
-							{% if is_public(user.adressPrivacy) and user.adress %}
-								{{ user.adress }}
-								<br />
-							{% endif %}
+                            {% if is_public(user.addressPrivacy) and user.address %}
+                                {{ user.address }}
+                                <br />
+                            {% endif %}
 
-							{% if is_public(user.postalCodePrivacy) and user.postalCode %}
-								{{ user.postalCode }}
-								<br />
-							{% endif %}
+                            {% if is_public(user.postalCodePrivacy) and user.postalCode %}
+                                {{ user.postalCode }}
+                                <br />
+                            {% endif %}
 
-							{% if is_public(user.cityPrivacy) and user.city %}
-								{{ user.city }}
-								<br />
-							{% endif %}
+                            {% if is_public(user.cityPrivacy) and user.city %}
+                                {{ user.city }}
+                                <br />
+                            {% endif %}
 
-							{% if is_public(user.countryPrivacy) and user.country %}
-								{{ user.country }}
-								<br />
-							{% endif %}
-						</div>
-					</div>
-				{% endif %}
+                            {% if is_public(user.countryPrivacy) and user.country %}
+                                {{ user.country }}
+                                <br />
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
 
-				{% if is_public(user.birthdayPrivacy) and user.birthday %}
-					<div class="view-group">
-						<div class="view-icon"><i class="icon-map-marker"></i></div>
-						<div class="view-label">{{ 'user.profile.view.birthday'|trans }}</div>
-						<div class="view-value">
-							{{ user.birthday|date('d/m/Y') }}
-						</div>
-					</div>
-				{% elseif user.birthdayDisplayOnlyAge and user.birthday %}
-					<div class="view-group">
-						<div class="view-icon"><i class="icon-calendar"></i></div>
-						<div class="view-label">{{ 'user.profile.view.age'|trans }}</div>
-						<div class="view-value">
-							{{ 'user.profile.view.age_display'|trans({'%age%': user.age}) }}
-						</div>
-					</div>
-				{% endif %}
+                {% if is_public(user.birthdayPrivacy) and user.birthday %}
+                    <div class="view-group">
+                        <div class="view-icon"><i class="icon-map-marker"></i></div>
+                        <div class="view-label">{{ 'user.profile.view.birthday'|trans }}</div>
+                        <div class="view-value">
+                            {{ user.birthday|date('d/m/Y') }}
+                        </div>
+                    </div>
+                {% elseif user.birthdayDisplayOnlyAge and user.birthday %}
+                    <div class="view-group">
+                        <div class="view-icon"><i class="icon-calendar"></i></div>
+                        <div class="view-label">{{ 'user.profile.view.age'|trans }}</div>
+                        <div class="view-value">
+                            {{ 'user.profile.view.age_display'|trans({'%age%': user.age}) }}
+                        </div>
+                    </div>
+                {% endif %}
 
-				{% if user.surnom %}
-					<div class="view-group">
-						<div class="view-label">{{ 'user.profile.view.surname'|trans }}</div>
-						<div class="view-value">
-							{{ user.surnom }}
-						</div>
-					</div>
-				{% endif %}
+                {% if is_granted('ROLE_CORE_PROFIL_HOBBIES') %}
+                    {% if user.surnom %}
+                        <div class="view-group">
+                            <div class="view-label">{{ 'user.profile.view.surname'|trans }}</div>
+                            <div class="view-value">
+                                {{ user.surnom }}
+                            </div>
+                        </div>
+                    {% endif %}
 
-				{% if user.jadis %}
-					<div class="view-group">
-						<div class="view-icon"><i class="icon-edit"></i></div>
-						<div class="view-label">{{ 'user.profile.view.jadis'|trans }}</div>
-						<div class="view-value">
-							{{ user.jadis|e|nl2br }}
-						</div>
-					</div>
-				{% endif %}
+                    {% if user.jadis %}
+                        <div class="view-group">
+                            <div class="view-icon"><i class="icon-edit"></i></div>
+                            <div class="view-label">{{ 'user.profile.view.jadis'|trans }}</div>
+                            <div class="view-value">
+                                {{ user.jadis|e|nl2br }}
+                            </div>
+                        </div>
+                    {% endif %}
 
-				{% if user.passions %}
-					<div class="view-group">
-						<div class="view-icon"><i class="icon-headphones"></i></div>
-						<div class="view-label">{{ 'user.profile.view.passions'|trans }}</div>
-						<div class="view-value">
-							{{ user.passions|e|nl2br }}
-						</div>
-					</div>
-				{% endif %}
-			</div>
+                    {% if user.passions %}
+                        <div class="view-group">
+                            <div class="view-icon"><i class="icon-headphones"></i></div>
+                            <div class="view-label">{{ 'user.profile.view.passions'|trans }}</div>
+                            <div class="view-value">
+                                {{ user.passions|e|nl2br }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
 
-			<div class="clear"></div>
-			<hr />
+            <div class="clear"></div>
+            <hr />
 
-			<h4>{{ 'user.profile.view.last_badges'|trans }}</h4>
+            <h4>{{ 'user.profile.view.last_badges'|trans }}</h4>
 
-			<hr />
+            <hr />
 
-			<ul class="badges-list badges-list-big">
-			{% for badge in user.lastBadges %}
-				<li>
-					<img src="{{ asset('src/img/badges/'~badge.picture~'.png') }}" class="tip"
-						 title="<strong style='font-size: 13px;'>{{ badge.name }}</strong><br />{{ badge.description }}" />
-				</li>
-			{% endfor %}
-			</ul>
-			<div class="clear"></div>
-			<hr />
-		</div>
-	</div>
+            <ul class="badges-list badges-list-big">
+            {% for badge in user.lastBadges %}
+                <li>
+                    <img src="{{ asset('assets/img/badges/'~badge.picture~'.png') }}" class="tip"
+                         title="<strong style='font-size: 13px;'>{{ badge.name }}</strong><br />{{ badge.description }}" />
+                </li>
+            {% endfor %}
+            </ul>
+            <div class="clear"></div>
+            <hr />
+        </div>
+    </div>
 {% endblock %}

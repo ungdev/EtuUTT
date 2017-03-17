@@ -1,0 +1,72 @@
+{#
+Variables:
+* rights : Rights manager
+* organization : Organization or null
+* action : string to active the right tab : index,read,edit,new
+* parentSlug (facultative): string of parent slug
+* page (facultative): current WikiPage
+#}
+
+<ul class="nav nav-tabs page-tabs">
+    {# Parent page button #}
+    {% if parentSlug is defined and parentSlug and page is defined %}
+        <li>
+            <a href="{{ path('wiki_view', {'slug': parentSlug, 'organization': organization.login ?? 'general'})}}">
+                <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                {{ 'wiki.main.menu.back'|trans }}
+            </a>
+        </li>
+    {%endif%}
+
+    {# Wiki index #}
+    <li class="{% if action == 'index' %}active page-tabs-resolved-active{% endif %}">
+        <a href="{{ path('wiki_index', {'organization': organization.login ?? 'general'})}}">
+            <i class="fa fa-list" aria-hidden="true"></i>
+            {{ 'wiki.main.menu.index'|trans }}
+        </a>
+    </li>
+
+    {% if rights.getHomeSlug(organization) %}
+        <li class="{% if page.slug is defined and page.slug == rights.getHomeSlug(organization) %}active page-tabs-resolved-active{% endif %}">
+            <a href="{{ path('wiki_view', {'slug': rights.getHomeSlug(organization), 'organization': organization.login ?? 'general'}) }}">
+                <i class="fa fa-home" aria-hidden="true"></i>
+                {{ 'wiki.main.menu.home'|trans }}
+            </a>
+        </li>
+    {% endif %}
+
+    {# Wiki list #}
+    <li class="{% if action == 'wikilist' %}active page-tabs-resolved-active{% endif %}">
+        <a href="{{ path('wiki_list') }}">
+            <i class="fa fa-wikipedia-w" aria-hidden="true"></i>
+            {{ 'wiki.main.menu.wikilist'|trans }}
+        </a>
+    </li>
+
+
+
+    {% if page.slug is defined and page.slug and rights.canRead(page) %}
+        <li class="pull-right {% if action == 'read' %}active page-tabs-resolved-active{% endif %}">
+            <a href="{{ path('wiki_view', {'slug': page.slug, 'organization': page.organization.login ?? 'general'})}}">
+                <i class="fa fa-file-text" aria-hidden="true"></i>
+                {{ 'wiki.main.menu.view'|trans }}
+            </a>
+        </li>
+    {% endif %}
+    {% if page.slug is defined and page.slug and rights.canEdit(page) %}
+        <li class="pull-right {% if action == 'edit' %}active page-tabs-resolved-active{% endif %}">
+            <a href="{{ path('wiki_edit', {'slug': page.getSlug(), 'organization': page.organization.login ?? 'general'})}}">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+                {{ 'wiki.main.menu.edit'|trans }}
+            </a>
+        </li>
+    {% endif %}
+    {% if rights.canCreate(organization) %}
+        <li class="pull-right {% if action == 'new' %}active page-tabs-resolved-active{% endif %}">
+            <a href="{{ path('wiki_new', {'slug': parentSlug ?? '', 'organization': organization.login ?? 'general'}) }}">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                {{ 'wiki.main.menu.new'|trans }}
+            </a>
+        </li>
+    {% endif %}
+</ul>

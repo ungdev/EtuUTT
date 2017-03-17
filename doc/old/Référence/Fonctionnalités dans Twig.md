@@ -10,9 +10,9 @@ Les templates
 
 Il existe trois templates de bases :
 
-	- `base.html.twig` qui est la base du layout
-	- `page-1col.html.twig` qui est le layout pour une page à une seule colonne
-	- `page-2cols.html.twig` qui est le layout pour une page à deux colonnes
+    - `base.html.twig` qui est la base du layout
+    - `page-1col.html.twig` qui est le layout pour une page à une seule colonne
+    - `page-2cols.html.twig` qui est le layout pour une page à deux colonnes
 
 Bien sûr, la plupart du temps, vous hériterez de `page-2cols.html.twig`. Cependant,
 `page-1col.html.twig` pourra vous être utile afin de mettre en place de grands éléments,
@@ -112,32 +112,30 @@ de Symfony.
 
 #### Vérifier l'existence d'un module (même désactivé)
 
-	``` twig
-	etu.hasModule($identifier)
-	```
+    ``` twig
+    etu.hasModule($identifier)
+    ```
 
 #### Vérifier l'état d'activation d'un module
 
-	``` twig
-	etu.moduleEnabled($identifier)
-	```
+    ``` twig
+    etu.moduleEnabled($identifier)
+    ```
 
 #### Récupération des abonnements de l'utilisateur courant
 
-	``` twig
-	etu.notifs.subscriptions
-	```
+    ``` twig
+    etu.notifs.subscriptions
+    ```
 
 #### Récupération des nouvelles notifications de l'utilisateur courant
 
-	``` twig
-	etu.notifs.new
-	```
+    ``` twig
+    etu.notifs.new
+    ```
 
 #### Récupération du nombre de nouvelles notifications de l'utilisateur courant
 
-	``` twig
-	etu.notifs.new_count
-	```
-
-
+    ``` twig
+    etu.notifs.new_count
+    ```

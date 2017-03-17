@@ -1,0 +1,19 @@
+{% if files|length > 0 %}
+    {% for file in files %}
+        {% if rights.canRead(file) %}
+            <div class="upload-image-container">
+
+                <a class="media-border" href="{{ path('upload_description', { 'id': file.id }) }}">
+                    {% if file.extension in ["jpg", "jpeg", "gif", "png"] %}
+                        <img class="media-object" alt="{{ file.name|e }}" src="{{ path('upload_download', { 'download': 'view', 'id': file.id, 'fullname': file.name~'.'~file.extension }) }}">
+                    {% else %}
+                        <div class="media-object">.{{ file.extension }}</div>
+                    {% endif %}
+                </a>
+                <div class="upload-label">
+                    {{ file.name|e }}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}

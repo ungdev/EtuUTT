@@ -26,7 +26,7 @@ class ExceptionListener
      */
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
-        if (strpos($event->getRequest()->attributes->get('_controller'), 'Api\\Resource') !== false) {
+        if (mb_strpos($event->getRequest()->attributes->get('_controller'), 'Api\\Resource') !== false) {
             $exception = $event->getException();
 
             if ($exception instanceof HttpException) {

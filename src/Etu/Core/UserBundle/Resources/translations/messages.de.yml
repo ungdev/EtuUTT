@@ -35,7 +35,7 @@ user:
             phoneNumber: Telefonnummer
             sex: Geschlecht
             nationality: Nationalität
-            adress: Addresse
+            address: Addresse
             postalCode: Postleitzahl
             city: Stadt
             country: Land
@@ -253,7 +253,7 @@ user:
             sex: Geschlecht
             personnalMail: Persönliche E-mail Adresse
             phoneNumber: Telefonnummer
-            adress: Adresse
+            address: Adresse
             birthday: Geburtsdatum
             age: %age% Jahre
             trombi: Jahrbuch
@@ -287,7 +287,7 @@ user:
             phoneNumber: Telefonnummer
             sex: Geschlecht
             nationality: Nationalität
-            adress: Adresse
+            address: Adresse
             postalCode: Postleitzahl
             city: Stadt
             country: Land
@@ -330,7 +330,7 @@ user:
             formation: Ausbildung
             sex: Geschlecht
             nationality: Nationalität
-            adress: Adresse
+            address: Adresse
             birthday: Geburtsdatum
             age_display: %age% Jahre
             surname: Spitzname

@@ -3,6 +3,8 @@
 namespace Etu\Core\CoreBundle\Home;
 
 use Etu\Core\CoreBundle\Framework\Module\ModulesManager;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormFactory;
 
 class HomeRenderer
@@ -28,9 +30,9 @@ class HomeRenderer
     protected $blocks;
 
     /**
-     * @param HomeBuilder $builder
+     * @param HomeBuilder    $builder
      * @param ModulesManager $modulesManager
-     * @param FormFactory $formFactory
+     * @param FormFactory    $formFactory
      */
     public function __construct(HomeBuilder $builder,
                                 ModulesManager $modulesManager,
@@ -47,7 +49,9 @@ class HomeRenderer
             'template' => 'EtuCoreBundle:Main/index_blocks:courses.html.twig',
             'context' => [
                 'nextCourses' => $this->builder->getNextCourses(),
-            ]
+                'UVs' => $this->builder->getUVs(),
+            ],
+            'role' => 'ROLE_CORE_SCHEDULE_OWN',
         ];
 
         return $block;
@@ -56,20 +60,21 @@ class HomeRenderer
     public function createTrombiBlock()
     {
         $trombiFrom = $this->formFactory->createBuilder()
-            ->add('fullName', 'text', array('required' => false))
-            ->add('studentId', 'hidden', array('required' => false))
-            ->add('phoneNumber', 'hidden', array('required' => false))
-            ->add('uvs', 'hidden', array('required' => false))
-            ->add('branch', 'hidden', array('required' => false))
-            ->add('niveau', 'hidden', array('required' => false))
-            ->add('personnalMail', 'hidden', array('required' => false))
+            ->add('fullName', TextType::class, ['required' => false])
+            ->add('studentId', HiddenType::class, ['required' => false])
+            ->add('phoneNumber', HiddenType::class, ['required' => false])
+            ->add('uvs', HiddenType::class, ['required' => false])
+            ->add('branch', HiddenType::class, ['required' => false])
+            ->add('niveau', HiddenType::class, ['required' => false])
+            ->add('personnalMail', HiddenType::class, ['required' => false])
             ->getForm();
 
         $block = [
             'template' => 'EtuCoreBundle:Main/index_blocks:trombi.html.twig',
             'context' => [
                 'trombiForm' => $trombiFrom->createView(),
-            ]
+            ],
+            'role' => 'ROLE_TROMBI',
         ];
 
         return $block;
@@ -81,7 +86,8 @@ class HomeRenderer
             'template' => 'EtuCoreBundle:Main/index_blocks:notifications.html.twig',
             'context' => [
                 'notifications' => $this->builder->getNotifications($this->modulesManager->getEnabledModules()),
-            ]
+            ],
+            'role' => 'ROLE_CORE_SUBSCRIBE',
         ];
 
         return $block;
@@ -97,7 +103,7 @@ class HomeRenderer
                     'template' => 'EtuCoreBundle:Main/index_blocks:events.html.twig',
                     'context' => [
                         'events' => $events,
-                    ]
+                    ],
                 ];
             }
         }
@@ -115,7 +121,8 @@ class HomeRenderer
                     'template' => 'EtuCoreBundle:Main/index_blocks:reviews.html.twig',
                     'context' => [
                         'reviews' => $reviews,
-                    ]
+                    ],
+                    'role' => 'ROLE_UV_REVIEW',
                 ];
             }
         }
@@ -128,12 +135,15 @@ class HomeRenderer
         if ($this->modulesManager->getModuleByIdentifier('argentique')->isEnabled()) {
             $photos = $this->builder->getPhotos();
 
-            if (count($photos) > 0) {
+            if (isset($photos['list']) && count($photos['list']) > 0) {
                 $block = [
                     'template' => 'EtuCoreBundle:Main/index_blocks:photos.html.twig',
                     'context' => [
-                        'photos' => $photos,
-                    ]
+                        'photos' => $photos['list'],
+                        'collection' => $photos['collection'],
+                        'set' => $photos['set'],
+                    ],
+                    'role' => 'ROLE_ARGENTIQUE_READ',
                 ];
             }
         }
@@ -150,7 +160,8 @@ class HomeRenderer
                 'template' => 'EtuCoreBundle:Main/index_blocks:birthdays.html.twig',
                 'context' => [
                     'birthdays' => $birthdays,
-                ]
+                ],
+                'role' => 'ROLE_CORE_PROFIL',
             ];
         }
 
@@ -177,10 +188,6 @@ class HomeRenderer
 
         if ($birthdays = $this->createBirthdaysBlock()) {
             $columns[0][] = $birthdays;
-        }
-
-        if ($reviewsBlock = $this->createReviewsBlock()) {
-            $columns[0][] = $reviewsBlock;
         }
 
         $columns[1][] = $this->createNotificationsBlock();

@@ -1,33 +1,32 @@
 daymail:
-    memberships:
-        daymail:
-            days:
-                mon: Montag
-                tue: Dienstag
-                wed: Mittwoch
-                thu: Donnerstag
-                fri: Freitag
-                sat: Samstag
-                sun: Sonntag
-            months:
-                jan: Januar
-                feb: Februar
-                mar: März
-                apr: April
-                may: Mai
-                jun: Juni
-                jul: Juli
-                aug: August
-                sep: September
-                oct: October
-                nov: November
-                dec: Dezember
-            title:
-                label: Thema
-            body:
-                label: Inhalt
-            date:
-                label: Datum der Herausgabe
-            submit: Diesen Daymail ändern
-            preview: Vorschau
-            confirm: Sie haben diesen Daymail erfolgreich geändert
+  memberships:
+    daymail:
+      body:
+        label: Inhalt
+      confirm: "Sie haben diesen Daymail erfolgreich geändert"
+      date:
+        label: "Datum der Herausgabe"
+      days:
+        fri: Freitag
+        mon: Montag
+        sat: Samstag
+        sun: Sonntag
+        thu: Donnerstag
+        tue: Dienstag
+        wed: Mittwoch
+      months:
+        apr: April
+        aug: August
+        dec: Dezember
+        feb: Februar
+        jan: Januar
+        jul: Juli
+        jun: Juni
+        mar: März
+        may: Mai
+        nov: November
+        oct: October
+        sep: September
+      preview: "Vorschau"
+      title:
+        label: Thema

@@ -1,7 +1,7 @@
 {% extends '::page-2cols.html.twig' %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/forum.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/forum.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block title %}{{ 'forum.main.index.forum'|trans }}{% endblock %}
@@ -9,48 +9,48 @@
 {% block meta_desc %}{{ 'forum.main.index.meta'|trans }}{% endblock %}
 
 {% block content %}
-	<div class="padding20-sides">
-		<table class="forum-table">
-			{% for category in categories %}
-				{% if forum_can_read(app.user, category) %}
-					{% if category.depth == 0 %}
-						<tr>
-							<td colspan="4" class="forum-table-title">
-								<a href="{{ path('forum_category', {'id': category.id, 'slug': category.slug}) }}">{{ category.title }}</a>
-							</td>
-						</tr>
-						<tr>
-							<th class="forum-table-legend">{{ 'forum.main.index.forum'|trans }}</th>
-							<th class="forum-table-legend forum-table-count">{{ 'forum.main.index.nbThreads'|trans }}</th>
-							<th class="forum-table-legend forum-table-count">{{ 'forum.main.index.nbMessages'|trans }}</th>
-							<th class="forum-table-legend forum-table-lastMessage">{{ 'forum.main.index.lastMessage'|trans }}</th>
-						</tr>
-					{% elseif category.depth == 1 %}
-						<tr class="forum-table-list">
-							<td class="forum-table-category">
-							{% if app.user and category.getCategoryViewed().count == 0 %}
-								<span class="label label-info">{{'forum.main.index.new'|trans}}</span>
-							{% endif %}
-								<a href="{{ path('forum_category', {'id': category.id, 'slug': category.slug}) }}"
-										class="forum-table-category-link">{{ category.title }}</a>
-								<br />
-								<span class="forum-table-category-description">
-									{{ category.description }}
-								</span>
-							</td>
-							<td class="forum-table-count">{{ category.countThreads }}</td>
-							<td class="forum-table-count">{{ category.countMessages }}</td>
-							<td class="forum-table-lastMessage">
-								{% if category.getLastMessage() == NULL %}
-									{{ 'forum.main.index.noMessage'|trans }}
-								{% else %}
-									{{ 'forum.main.thread.in'|trans }} <a href="{{ path('forum_thread', {'id': category.getLastMessage().getThread().getId(), 'slug': category.getLastMessage().getThread().getSlug(), 'page': (category.getLastMessage().getThread().getCountMessages()/10)|ceil}) }}#{{ category.getLastMessage().getId() }}">{{ category.getLastMessage().getThread().getTitle() }}</a><br />{{ 'forum.main.thread.datePrefix'|trans }} {{ category.getLastMessage().createdAt|date('forum.main.thread.dateFormat'|trans) }}  {{ 'forum.main.thread.dateHour'|trans }} {{ category.getLastMessage().createdAt|date("H:i") }} {{ 'forum.main.thread.by'|trans|lower }} <a href="{{ path('user_view', {'login': category.getLastMessage().author.getLogin()}) }}">{{ category.getLastMessage().author.getFullName() }}</a>
-								{% endif %}
-							</td>
-						</tr>
-					{% endif %}
-				{% endif %}
-			{% endfor %}
-		</table>
-	</div>
+    <div class="padding20-sides">
+        <table class="forum-table">
+            {% for category in categories %}
+                {% if forum_can_read(app.user, category) or is_granted('ROLE_FORUM_ADMIN') %}
+                    {% if category.depth == 0 %}
+                        <tr>
+                            <td colspan="4" class="forum-table-title">
+                                <a href="{{ path('forum_category', {'id': category.id, 'slug': category.slug}) }}">{{ category.title }}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="forum-table-legend">{{ 'forum.main.index.forum'|trans }}</th>
+                            <th class="forum-table-legend forum-table-count">{{ 'forum.main.index.nbThreads'|trans }}</th>
+                            <th class="forum-table-legend forum-table-count">{{ 'forum.main.index.nbMessages'|trans }}</th>
+                            <th class="forum-table-legend forum-table-lastMessage">{{ 'forum.main.index.lastMessage'|trans }}</th>
+                        </tr>
+                    {% elseif category.depth == 1 %}
+                        <tr class="forum-table-list">
+                            <td class="forum-table-category">
+                            {% if app.user and category.getCategoryViewed().count == 0 %}
+                                <span class="label label-info">{{'forum.main.index.new'|trans}}</span>
+                            {% endif %}
+                                <a href="{{ path('forum_category', {'id': category.id, 'slug': category.slug}) }}"
+                                        class="forum-table-category-link">{{ category.title }}</a>
+                                <br />
+                                <span class="forum-table-category-description">
+                                    {{ category.description }}
+                                </span>
+                            </td>
+                            <td class="forum-table-count">{{ category.countThreads }}</td>
+                            <td class="forum-table-count">{{ category.countMessages }}</td>
+                            <td class="forum-table-lastMessage">
+                                {% if category.getLastMessage() == NULL %}
+                                    {{ 'forum.main.index.noMessage'|trans }}
+                                {% else %}
+                                    {{ 'forum.main.thread.in'|trans }} <a href="{{ path('forum_thread', {'id': category.getLastMessage().getThread().getId(), 'slug': category.getLastMessage().getThread().getSlug(), 'page': (category.getLastMessage().getThread().getCountMessages()/10)|ceil}) }}#{{ category.getLastMessage().getId() }}">{{ category.getLastMessage().getThread().getTitle() }}</a><br />{{ 'forum.main.thread.datePrefix'|trans }} {{ category.getLastMessage().createdAt|date('forum.main.thread.dateFormat'|trans) }}  {{ 'forum.main.thread.dateHour'|trans }} {{ category.getLastMessage().createdAt|date("H:i") }} {{ 'forum.main.thread.by'|trans|lower }} <a href="{{ path('user_view', {'login': category.getLastMessage().author.getLogin()}) }}">{{ category.getLastMessage().author.getFullName() }}</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </table>
+    </div>
 {% endblock %}

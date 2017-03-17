@@ -1,4 +1,6 @@
-{% extends '::developpers.html.twig' %}
+{% extends '::layout-developpers.html.twig' %}
+
+{% block title %}Développeurs{% endblock %}
 
 {% block content %}
     <div class="padding20-all">
@@ -13,7 +15,8 @@
 
         <hr />
 
-        <form method="post" {{ form_enctype(form) }}>
+
+        {{ form_start(form) }}
             <div class="row-fluid">
                 <div class="span6">
                     {{ form_row(form.name) }}
@@ -79,8 +82,6 @@
                 <input type="submit" value="Créer" class="btn btn-primary" />
                 <a href="{{ path('devs_panel_index') }}" class="btn btn-default">Annuler</a>
             </p>
-
-            {{ form_rest(form) }}
-        </form>
+        {{ form_end(form) }}
     </div>
 {% endblock %}

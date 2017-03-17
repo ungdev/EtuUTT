@@ -1,0 +1,135 @@
+#tv {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-color: #f5f5f5;
+    box-sizing: border-box;
+    overflow: hidden;
+    line-height: normal;
+}
+
+#tv h1 {
+    font-size: 50px;
+    margin: 0 0 0 52px;
+    padding: 15px 0 0 0;
+    font-weight:normal;
+    text-shadow: 0 0 4px #f5f5f5;
+}
+
+#tv h1 span {
+    text-shadow: none;
+    display:inline-block;
+    margin-right:10px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color:blue;
+    text-align:center;
+    line-height:70px;
+    font-size: 80%;
+    color: white;
+    background: radial-gradient(#292e35,#262a31, #14171a);
+}
+
+#tv .tv-sidepanel {
+    float:left;
+    width: 25%;
+    height: 100%;
+    margin:0;
+    padding:15px;
+    border-right: 1px solid #ccc;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+#tv .tv-block {
+    width:auto;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px 0 #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    font-size: 26px;
+}
+
+#tv .tv-block h4 {
+    margin-top: 0px;
+    font-size: 31px;
+    padding-bottom:10px;
+}
+
+#tv .tv-sidepanel .tv-progress {
+    display:none;
+    width:0%;
+    background-color: #bbb;
+    height:5px;
+    margin: -15px -15px 15px -15px;
+}
+
+#tv .tv-sidepanel .tv-pageIndicator {
+    float:right;
+    color: #bbb;
+    margin: -8px -5px 10px -10px;
+}
+
+#tv .tv-main {
+    max-height:100%;
+    width:auto;
+    overflow:hidden;
+}
+
+#tv .tv-container {
+    position: relative;
+    padding-bottom: 5px;
+    box-sizing: border-box;
+}
+
+#tv .tv-container .tv-subblock {
+    height:100%;
+}
+
+#tv .tv-container .tv-progress {
+    position:absolute;
+    bottom:0;
+    display:none;
+    width:0%;
+    background-color: #333;
+    height:5px;
+    box-shadow: 0px 0px 5px 1px #fff;
+}
+
+#tv .tv-container .tv-pageIndicator {
+    position:absolute;
+    display:none;
+    bottom:15px;
+    right:20px;
+    color: #333;
+    font-size: 30px;
+    text-shadow: 0 0 8px #fff;
+}
+
+#tv .tv-text-panel-right {
+    box-sizing: border-box;
+    float:right;
+    height:100%;
+    width:25%;
+    margin:0;
+    padding:15px;
+    border-left: 1px solid #ccc;
+    background-color: #fff;
+    font-size:35px;
+    display:none;
+}
+
+#tv .tv-text-panel-bottom {
+    box-sizing: border-box;
+    position:absolute;
+    bottom:0;
+    right:0;
+    width:75%;
+    margin:0;
+    padding:15px;
+    border-top: 1px solid #ccc;
+    background-color: #fff;
+    font-size:35px;
+    display:none;
+}

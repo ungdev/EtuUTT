@@ -1,4 +1,10 @@
 
 parameters: ~
 
-services: ~
+services:
+    etu.upload.permissions_checker:
+        class: Etu\Module\UploadBundle\Services\PermissionsChecker
+        arguments:
+            - "@security.token_storage"
+            - "@security.authorization_checker"
+            - "@doctrine.orm.entity_manager"

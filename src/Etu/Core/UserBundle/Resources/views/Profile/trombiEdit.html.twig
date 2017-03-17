@@ -3,59 +3,22 @@
 {% block title %}{{ 'user.profile.trombiEdit.title'|trans }}{% endblock %}
 
 {% block titleIcon %}
-	<img src="{{ asset('src/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/user.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
 {% block content %}
-	<ul class="nav nav-tabs page-tabs">
-		<li>
-			<a href="{{ path('user_profile') }}">
-				<i class="icon-chevron-left"></i>
-				{{ 'user.profile.trombiEdit.back'|trans }}
-			</a>
-		</li>
-	</ul>
+    <ul class="nav nav-tabs page-tabs">
+        <li>
+            <a href="{{ path('user_profile') }}">
+                <i class="icon-chevron-left"></i>
+                {{ 'user.profile.trombiEdit.back'|trans }}
+            </a>
+        </li>
+    </ul>
 
-	<div class="padding20-sides">
-		<form method="post">
-			{{ form_errors(form) }}
-
-			<div class="row-fluid">
-				<div class="span3"></div>
-				<div class="span6">
-					<div class="control-group">
-						<label class="control-label">{{ form_label(form.surnom, 'user.profile.trombiEdit.surname'|trans) }}</label>
-						<div class="controls">
-							{{ form_widget(form.surnom) }}
-							<span class="help-block">{{ form_errors(form.surnom) }}</span>
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label">{{ form_label(form.jadis, 'user.profile.trombiEdit.jadis'|trans) }}</label>
-						<div class="controls">
-							{{ form_widget(form.jadis) }}
-							<span class="help-block">{{ form_errors(form.jadis) }}</span>
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label">{{ form_label(form.passions, 'user.profile.trombiEdit.passions'|trans) }}</label>
-						<div class="controls">
-							{{ form_widget(form.passions) }}
-							<span class="help-block">{{ form_errors(form.passions) }}</span>
-						</div>
-					</div>
-					<div class="control-group">
-						<div class="controls">
-							{{ form_rest(form) }}
-
-							<button type="submit" class="btn btn-primary">
-								{{ 'user.profile.trombiEdit.edit'|trans }}
-							</button>
-						</div>
-					</div>
-				</div>
-				<div class="span3"></div>
-			</div>
-		</form>
-	</div>
+    <div class="padding20-sides">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

@@ -9,16 +9,17 @@ class SearchMapper
 {
     /**
      * @param QueryBuilder $qb
-     * @param Search $search
+     * @param Search       $search
+     *
      * @return QueryBuilder
      */
     public function map(QueryBuilder $qb, Search $search)
     {
-        $qb ->select('c, s')
+        $qb->select('c, s')
             ->from('EtuModuleCovoitBundle:Covoit', 'c')
             ->leftJoin('c.subscriptions', 's');
 
-        if (! $search->olds) {
+        if (!$search->olds) {
             $qb->andWhere('c.date > CURRENT_DATE()');
         }
 
@@ -41,11 +42,11 @@ class SearchMapper
                 $after->add(\DateInterval::createFromDateString('1 day'));
 
                 $qb->andWhere('c.date BETWEEN :before AND :after')
-                    ->setParameter('before', $before->format('Y-m-d') . ' 00:00:00')
-                    ->setParameter('after', $after->format('Y-m-d') . ' 00:00:00');
+                    ->setParameter('before', $before->format('Y-m-d').' 00:00:00')
+                    ->setParameter('after', $after->format('Y-m-d').' 00:00:00');
             } else {
                 $qb->andWhere('c.date = :date')
-                    ->setParameter('date', $search->date->format('Y-m-d') . ' 00:00:00');
+                    ->setParameter('date', $search->date->format('Y-m-d').' 00:00:00');
             }
         }
 
@@ -66,7 +67,7 @@ class SearchMapper
 
         if ($search->keywords) {
             $qb->andWhere('c.notes LIKE :keywords')
-                ->setParameter('keywords', '%'. implode('%', explode(' ', $search->keywords)) .'%');
+                ->setParameter('keywords', '%'.implode('%', explode(' ', $search->keywords)).'%');
         }
 
         if ($search->placesLeft) {

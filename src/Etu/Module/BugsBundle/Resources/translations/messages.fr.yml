@@ -1,111 +1,106 @@
-
+---
 bugs:
-    menu:
-        sidebar:
-            bugs: Signaler un bug
-
+  bugs:
+    closed:
+      by: par
+      count: "%count% bug résolu|%count% bugs résolus"
+      no_bug: "Aucun bug résolu pour le moment"
+      title: "Bugs résolus"
+    create:
+      body: Explications
+      confirm: "Votre problème a été signalé. Merci de votre participation !"
+      criticality: Criticité
+      name: Titre
+      submit: Signaler
+      title: "Signaler un bug"
+    edit:
+      body: Explications
+      confirm: "Votre problème a bien été modifié"
+      criticality: Criticité
+      submit: Modifier
+      title: "Modifier un bug"
+    editComment:
+      title: "Modifier un commentaire"
+    index:
+      assigned_to: "Assigné à %name%"
+      by: par
+      count: "%count% bug ouvert|%count% bugs ouverts"
+      no_bug: "Aucun bug ouvert pour le moment"
+      title: "Bugs ouverts"
+    state:
+      opened: Ouverts
+      resolved: Résolus
+    view:
+      admin_assign: Assigner
+      admin_assign_placeholder: "Assigner à ..."
+      admin_edit: Modifier
+      admin_edit_criticality: "Modifier la criticité"
+      admin_fix: Résoudre
+      admin_state: Etat
+      admin_title: Administrer
+      admin_unassign: "Supprimer l'assignation de %name%"
+      admin_unfix: Réouvrir
+      assigned_to: "Ce bug est assigné à %name%"
+      comment_body: Commentaire
+      comment_confirm: "Votre commentaire a été ajouté"
+      comment_submit: Commenter
+      comment_title: Commenter
+      delete: Supprimer
+      edit: Modifier
+      posted_at: "Posté le"
+      resolved: "Ce bug a été résolu"
+      resolved_by: "Ce bug a été résolu par %name%"
+      title: "Détails d'un bug"
+  bugs_admin:
+    assign:
+      assignee_not_found: "L'utilisateur n'a pas été trouvé"
+      message: "%adminName% a assigné %userName% au bug"
+      success: "L'utilisateur a bien été assigné au bug"
+    close:
+      message: "Fermé par %adminName%"
+      success: "Le bug a bien été marqué comme résolu"
     criticality:
-        10: Coquille
-        20: Problème visuel
-        30: Problème mineur
-        40: Problème majeur
-        50: Problème critique
-        60: Problème de sécurité
-
-    bugs:
-        state:
-            opened: Ouverts
-            resolved: Résolus
-        closed:
-            title: Bugs résolus
-            no_bug: Aucun bug résolu pour le moment
-            count: %count% bug résolu|%count% bugs résolus
-            by: par
-        create:
-            title: Signaler un bug
-            confirm: Votre problème a été signalé. Merci de votre participation !
-            name: Titre
-            criticality: Criticité
-            body: Explications
-            submit: Signaler
-        edit:
-            title: Modifier un bug
-            confirm: Votre problème a bien été modifié
-            criticality: Criticité
-            body: Explications
-            submit: Modifier
-        editComment:
-            title: Modifier un commentaire
-        index:
-            title: Bugs ouverts
-            assigned_to: Assigné à %name%
-            no_bug: Aucun bug ouvert pour le moment
-            count: %count% bug ouvert|%count% bugs ouverts
-            by: par
-        view:
-            title: Détails d'un bug
-            assigned_to: assigné à %name%
-            posted_at: Posté le
-            assigned_to: Ce bug est assigné à %name%
-            resolved: Ce bug a été résolu
-            resolved_by: Ce bug a été résolu par %name%
-            admin_title: Administrer
-            admin_assign: Assigner
-            admin_assign_placeholder: Assigner à ...
-            admin_unassign: Supprimer l'assignation de %name%
-            admin_edit_criticality: Modifier la criticité
-            admin_edit: Modifier
-            admin_state: Etat
-            admin_fix: Résoudre
-            admin_unfix: Réouvrir
-            edit: Modifier
-            delete: Supprimer
-            comment_title: Commenter
-            comment_body: Commentaire
-            comment_submit: Commenter
-            comment_confirm: Votre commentaire a été ajouté
-
-    bugs_admin:
-        assign:
-            assignee_not_found: L'utilisateur n'a pas été trouvé
-            success: L'utilisateur a bien été assigné au bug
-            message: %adminName% a assigné %userName% au bug
-        unassign:
-            success: L'utilisateur a bien été désassigné du bug
-            message: %adminName% a supprimé l'assignation de %userName% au bug
-        criticality:
-            success: La criticté du bug a bien été modifiée
-            message: %adminName% a changé la criticité de ce bug de %before% à %after%
-        open:
-            success: Le bug a bien été réouvert
-            message: Réouvert par %adminName%
-        close:
-            success: Le bug a bien été marqué comme résolu
-            message: Fermé par %adminName%
-        delete:
-            title: Supprimer un bug
-            sure: Voulez-vous vraiment supprimer le bug %bugName% ?
-            yes: Oui, supprimer
-            no: Non, annuler
-            success: Le bug a bien été supprimé
-
-    notifs:
-        newComment:
-            your:
-                one: %userName% a commenté votre bug %bugName%
-                two: %first% et %second% ont commenté votre bug %bugName%
-                more_single: %first%, %second% et 1 autre personne ont commenté votre bug %bugName%
-                more_many: %first%, %second% et %count% autres personnes ont commenté votre bug %bugName%
-            other:
-                one: %userName% a commenté le bug %bugName%
-                two: %first% et %second% ont commenté le bug %bugName%
-                more_single: %first%, %second% et 1 autre personne ont commenté le bug %bugName%
-                more_many: %first%, %second% et %count% autres personnes ont commenté le bug %bugName%
-        newOpened:
-            one: %userName% a signalé un nouveau bug (%bugName%)
-            two: %first% et %second% ont signalé de nouveaux bugs
-            more_single: %first%, %second% et 1 autre personne ont signalé de nouveaux bugs
-            more_many: %first%, %second% et %count% autres personnes ont signalé de nouveaux bugs
-        closed:
-            by: Le bug %bugName% a été résolu par %userName%
-            anyone: Le bug %bugName% a été résolu
+      message: "%adminName% a changé la criticité de ce bug de %before% à %after%"
+      success: "La criticté du bug a bien été modifiée"
+    delete:
+      no: "Non, annuler"
+      success: "Le bug a bien été supprimé"
+      sure: "Voulez-vous vraiment supprimer le bug %bugName% ?"
+      title: "Supprimer un bug"
+      yes: "Oui, supprimer"
+    open:
+      message: "Réouvert par %adminName%"
+      success: "Le bug a bien été réouvert"
+    unassign:
+      message: "%adminName% a supprimé l'assignation de %userName% au bug"
+      success: "L'utilisateur a bien été désassigné du bug"
+  criticality:
+    10: Coquille
+    20: "Problème visuel"
+    30: "Problème mineur"
+    40: "Problème majeur"
+    50: "Problème critique"
+    60: "Problème de sécurité"
+  menu:
+    sidebar:
+      bugs: "Signaler un bug"
+  notifs:
+    closed:
+      anyone: "Le bug %bugName% a été résolu"
+      by: "Le bug %bugName% a été résolu par %userName%"
+    newComment:
+      other:
+        more_many: "%first%, %second% et %count% autres personnes ont commenté le bug %bugName%"
+        more_single: "%first%, %second% et 1 autre personne ont commenté le bug %bugName%"
+        one: "%userName% a commenté le bug %bugName%"
+        two: "%first% et %second% ont commenté le bug %bugName%"
+      your:
+        more_many: "%first%, %second% et %count% autres personnes ont commenté votre bug %bugName%"
+        more_single: "%first%, %second% et 1 autre personne ont commenté votre bug %bugName%"
+        one: "%userName% a commenté votre bug %bugName%"
+        two: "%first% et %second% ont commenté votre bug %bugName%"
+    newOpened:
+      more_many: "%first%, %second% et %count% autres personnes ont signalé de nouveaux bugs"
+      more_single: "%first%, %second% et 1 autre personne ont signalé de nouveaux bugs"
+      one: "%userName% a signalé un nouveau bug (%bugName%)"
+      two: "%first% et %second% ont signalé de nouveaux bugs"

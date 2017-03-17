@@ -1,60 +1,59 @@
-
+---
 forum:
-    meta: Les forums du site étudiant de l'UTT
-
-    main:
-        index:
-            meta: Les forums du site étudiant de l'UTT : discutez et débattez !
-            noMessage: Pas de message
-            forum: Forum
-            category: Catégorie
-            nbThreads: Sujets
-            nbMessages: Messages
-            lastMessage: Dernier message
-            noMessage: Il n'y a pas de message dans cette catégorie.
-            new: Nouveau
-        thread:
-            thread: Sujet
-            in: Dans
-            by: Par
-            date: Date
-            datePrefix: Le
-            dateHour: à
-            dateFormat: d/m/Y
-            messages: Messages
-            lastMessage: Dernier message
-            post: Créer un nouveau sujet
-            answer: Répondre
-            read: Lire
-            sticky: Epinglé
-            locked: Bloqué
-            edit: Editer
-            new: Non lu
-        post:
-            title: Création d'un sujet
-            threadTitle: Titre du sujet
-            content: Message
-            sticky: Epinglé ?
-            yes: Oui
-            no: Non
-        answer:
-            title: Répondre
-        edit:
-            title: Editer un message
-        mod:
-            title: Panneau de modération
-            lock: Bloquer
-            unlock: Débloquer
-            remove: Supprimer
-            removeThreadWarning: Attention, la suppression de ce message entraine la suppression du sujet. Êtes-vous sûr de vouloir le supprimer ?
-            removeThread: Êtes-vous sûr de vouloir supprimer ce sujet ?
-            removeMessage: Êtes-vous sûr de vouloir supprimer ce message ?
-            back: Retour
-            locked: Le sujet a bien été bloqué
-            unlocked: Le sujet a bien été débloqué
-            moderation: Modération
-            move: Déplacer
-            where: Vers où déplacer le sujet ?
-
-    notifs:
-            threadCreated: %author% a répondu à %title%
+  main:
+    answer:
+      title: Répondre
+    edit:
+      title: "Editer un message"
+    index:
+      category: Catégorie
+      forum: Forum
+      lastMessage: "Dernier message"
+      meta: "Les forums du site étudiant de l'UTT : discutez et débattez !"
+      nbMessages: Messages
+      nbThreads: Sujets
+      new: Nouveau
+      noMessage: "Il n'y a pas de message dans cette catégorie."
+    mod:
+      back: Retour
+      lock: Bloquer
+      locked: "Le sujet a bien été bloqué"
+      moderation: Modération
+      move: Déplacer
+      remove: Supprimer
+      removeMessage: "Êtes-vous sûr de vouloir supprimer ce message ?"
+      removeThread: "Êtes-vous sûr de vouloir supprimer ce sujet ?"
+      removeThreadWarning: "Attention, la suppression de ce message entraine la suppression du sujet. Êtes-vous sûr de vouloir le supprimer ?"
+      title: "Panneau de modération"
+      unlock: Débloquer
+      unlocked: "Le sujet a bien été débloqué"
+      where: "Vers où déplacer le sujet ?"
+      submit: Modifier
+    post:
+      content: Message
+      no: Non
+      sticky: "Epinglé ?"
+      threadTitle: "Titre du sujet"
+      title: "Création d'un sujet"
+      yes: Oui
+      submit: Créer
+    thread:
+      answer: Répondre
+      by: Par
+      date: Date
+      dateFormat: d/m/Y
+      dateHour: à
+      datePrefix: Le
+      edit: Editer
+      in: Dans
+      lastMessage: "Dernier message"
+      locked: Bloqué
+      messages: Messages
+      new: "Non lu"
+      post: "Créer un nouveau sujet"
+      read: Lire
+      sticky: Epinglé
+      thread: Sujet
+  meta: "Les forums du site étudiant de l'UTT"
+  notifs:
+    threadCreated: "%author% a répondu à %title%"
