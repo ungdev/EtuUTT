@@ -13,6 +13,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -178,7 +179,7 @@ class SecurityController extends ApiController
             $em->persist($authorizationCode);
             $em->flush();
 
-            return $this->redirect($client->getRedirectUri().'?authorization_code='.$authorizationCode->getCode().'&code='.$authorizationCode->getCode());
+            return $this->redirect($client->getRedirectUri().'?authorization_code='.$authorizationCode->getCode().'&code='.$authorizationCode->getCode().'&state='.$request->query->get('state', ''));
         } elseif ($authorization) {
             $authorizationScopes = [];
 
@@ -202,7 +203,7 @@ class SecurityController extends ApiController
                 $em->persist($authorizationCode);
                 $em->flush();
 
-                return $this->redirect($client->getRedirectUri().'?authorization_code='.$authorizationCode->getCode().'&code='.$authorizationCode->getCode());
+                return $this->redirect($client->getRedirectUri().'?authorization_code='.$authorizationCode->getCode().'&code='.$authorizationCode->getCode().'&state='.$request->query->get('state', ''));
             }
         }
 
@@ -219,6 +220,7 @@ class SecurityController extends ApiController
 
         // If the use didn't already approve the app, ask him / her
         $form = $this->createFormBuilder()
+            ->add('state', HiddenType::class, ['data' => $request->query->get('state', '')])
             ->add('accept', SubmitType::class, ['label' => 'Oui, accepter', 'attr' => ['class' => 'btn btn-primary', 'value' => '1']])
             ->add('cancel', SubmitType::class, ['label' => 'Non, annuler', 'attr' => ['class' => 'btn btn-default', 'value' => '0']])
             ->getForm();
@@ -264,7 +266,7 @@ class SecurityController extends ApiController
 
                 $em->flush();
 
-                return $this->redirect($client->getRedirectUri().'?authorization_code='.$authorizationCode->getCode().'&code='.$authorizationCode->getCode());
+                return $this->redirect($client->getRedirectUri().'?authorization_code='.$authorizationCode->getCode().'&code='.$authorizationCode->getCode().'&state='.($formData['state'] ?? ''));
             }
 
             return $this->redirect($client->getRedirectUri().'?error=authentification_canceled&error_message=L\'utilisateur a annulé l\'authentification.');
