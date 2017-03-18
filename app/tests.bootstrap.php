@@ -4,6 +4,13 @@ $symfonyDir = __DIR__.'/../vendor/symfony/symfony/src';
 $etuUttDir = __DIR__.'/../src';
 
 /*
+ * Polyfill from https://github.com/symfony/symfony/issues/21534
+ */
+class PHPUnit_Framework_TestCase extends \PHPUnit\Framework\TestCase
+{
+}
+
+/*
  * Clear the cache
  */
 if (isset($_ENV['BOOTSTRAP_CLEAR_CACHE_ENV'])) {
