@@ -179,7 +179,11 @@ class SecurityController extends ApiController
             $em->persist($authorizationCode);
             $em->flush();
 
-            return $this->redirect($client->getRedirectUri().'?authorization_code='.$authorizationCode->getCode().'&code='.$authorizationCode->getCode().'&state='.$request->query->get('state', ''));
+            if ($request->query->has('state')) {
+                return $this->redirect($client->getRedirectUri().'?authorization_code='.$authorizationCode->getCode().'&code='.$authorizationCode->getCode().'&state='.$request->query->get('state', ''));
+            }
+
+            return $this->redirect($client->getRedirectUri().'?authorization_code='.$authorizationCode->getCode().'&code='.$authorizationCode->getCode());
         } elseif ($authorization) {
             $authorizationScopes = [];
 
@@ -203,7 +207,11 @@ class SecurityController extends ApiController
                 $em->persist($authorizationCode);
                 $em->flush();
 
-                return $this->redirect($client->getRedirectUri().'?authorization_code='.$authorizationCode->getCode().'&code='.$authorizationCode->getCode().'&state='.$request->query->get('state', ''));
+                if ($request->query->has('state')) {
+                    return $this->redirect($client->getRedirectUri().'?authorization_code='.$authorizationCode->getCode().'&code='.$authorizationCode->getCode().'&state='.$request->query->get('state', ''));
+                }
+
+                return $this->redirect($client->getRedirectUri().'?authorization_code='.$authorizationCode->getCode().'&code='.$authorizationCode->getCode());
             }
         }
 
