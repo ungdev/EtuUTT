@@ -47,6 +47,7 @@ class OrgaTransformer extends AbstractTransformer
     private function getData(Organization $orga)
     {
         return [
+            'id' => $orga->getId(),
             'login' => $orga->getLogin(),
             'name' => $orga->getName(),
             'mail' => $orga->getContactMail(),
