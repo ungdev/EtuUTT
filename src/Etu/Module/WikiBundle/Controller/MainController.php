@@ -380,7 +380,7 @@ class MainController extends Controller
             if ($rights->has($value->getReadRight(), $value->getOrganization())) {
                 $pagelist[$value->getSlug()] = [
                     'title' => (mb_substr_count($value->getSlug(), '/') ? str_repeat(' ', mb_substr_count($value->getSlug(), '/')).'↳' : '').$value->getTitle(),
-                    'value' => $this->generateUrl('wiki_view', ['organization' => $organization, 'slug' => $value->getSlug()], true),
+                    'value' => $this->generateUrl('wiki_view', ['organization' => $organization->getLogin(), 'slug' => $value->getSlug()], true),
                 ];
             }
         }
