@@ -108,7 +108,7 @@ class UploadedFile
      *
      * @var file
      *
-     * @Assert\File(maxSize = "5M",
+     * @Assert\File(maxSize = "10M",
      *     mimeTypes = {"application/pdf", "text/plain", "text/html", "application/zip", "video/webm", "audio/webm", "audio/mpeg", "audio/mp3", "image/jpeg", "image/png", "image/gif"},
      * )
      */
