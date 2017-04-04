@@ -38,11 +38,97 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public const PRIVACY_PUBLIC = 100;
     public const PRIVACY_PRIVATE = 200;
 
-    public static $branches = [
-        'ISI' => 'ISI', 'MTE' => 'MTE', 'SI' => 'SI',
-        'SIT' => 'SIT', 'SM' => 'SM', 'SRT' => 'SRT',
-        'TC' => 'TC', 'PMOM' => 'PMOM',
+    static public $formations = [
+        'Ingénieur' => 'Ingénieur',
+        'Master sciences et technologies' => 'Master Sciences et Technologies',
+        'Mastère spécialisé®' => 'Mastère spécialisé®'
     ];
+
+    static public $branches = [
+        'Ingénieur' => [
+            'A2I'    => 'A',
+            'ISI'  => 'ISI',
+            'MTE'  => 'MTE',
+            'PMOM' => 'PMOM',
+            'SI'   => 'SI',
+            'GM'   => 'SM',
+            'RT'  => 'SRT',
+            'TC'   => 'TC'
+        ],
+        'Master sciences et technologies' => [
+            'IM'   => 'IM',
+            'MP'   => 'MP',
+            'STIC' => 'STIC'
+        ],
+        'Mastère spécialisé®' => [
+            'EBAM' => 'EBAM',
+            'EFC'  => 'EFC'
+        ]
+    ];
+
+    static public $filieres = [
+        'Ingénieur' => [
+            'A' =>[
+                'SPI'  => 'SPI',
+                'TEI'  => 'TEI'
+            ],
+            'ISI' => [
+                'MPL'  => 'MPL',
+                'MSI'  => 'MSI',
+                'MRI'  => 'MRI',
+                'Libre'=> 'Libre'
+            ],
+            'MTE' => [
+                'EME'  => 'EME',
+                'Libre'=> 'Libre',
+                'TCMC' => 'TCMC',
+                'TQM'  => 'TQM'
+            ],
+            'SI' => [
+                'LET'  => 'LET',
+                'LIP'  => 'LIP',
+                'SFERE'=> 'SFERE',
+                'Libre'=> 'Libre'
+            ],
+            'SM' => [
+                'CEISME'=> 'CEISME',
+                'CSP'   => 'CSP',
+                'Libre' => 'LIBRE',
+                'SNM'   => 'SNM',
+                'TIM'   => 'TIM',
+            ],
+            'SRT' => [
+                'CSR'  => 'CSR',
+                'Libre'=> 'Libre',
+                'SSC'  => 'SSC',
+                'TMSE' => 'TMSE',
+            ],
+            'TC' => [],
+            'PMOM' => [],
+        ],
+        'Master sciences et technologies' => [
+            'IM' => [
+                'IMEDD'  => 'IMEDD',
+                'IMSGA'  => 'IMSGA',
+                'SMI-LES'=> 'SMI-LES'
+            ],
+            'MP' => [
+                'IAMC' => 'IAMC',
+                'MERI' => 'MERI',
+                'ONT'  => 'ONT',
+                'TEMMA'=> 'TEMMA'
+            ],
+            'STIC' => [
+                'OSS' => 'OSS',
+                'SSI' => 'SSI'
+            ]
+        ],
+        'Mastère spécialisé®' => [
+            'EBAM' => [],
+            'EFC' => [],
+        ]
+    ];
+
 
     public static $levels = [
         '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5',
@@ -969,6 +1055,14 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
+     * @return string
+     */
+    public function getFiliere()
+    {
+        return $this->filiere;
+    }
+
+    /**
      * @param string $niveau
      *
      * @return User
@@ -1008,16 +1102,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
         $this->filiere = $filiere;
 
         return $this;
-    }
-
-    /**
-     * Get filiere.
-     *
-     * @return string
-     */
-    public function getFiliere()
-    {
-        return $this->filiere;
     }
 
     /**

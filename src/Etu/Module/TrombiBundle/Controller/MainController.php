@@ -33,7 +33,9 @@ class MainController extends Controller
             ->add('studentId', null, ['required' => false])
             ->add('phoneNumber', null, ['required' => false])
             ->add('uvs', null, ['required' => false])
+            ->add('formation', ChoiceType::class, ['choices' => User::$formations, 'required' => false])
             ->add('branch', ChoiceType::class, ['choices' => User::$branches, 'required' => false])
+            ->add('filiere', ChoiceType::class, ['choices' => User::$filieres, 'required' => false])
             ->add('niveau', ChoiceType::class, ['choices' => User::$levels, 'required' => false])
             ->add('personnalMail', null, ['required' => false])
             ->getForm();
@@ -53,7 +55,7 @@ class MainController extends Controller
                 ->orderBy('u.lastName');
 
             if (!$user->getFullName() && !$user->getStudentId() && !$user->getPhoneNumber() && !$user->getUvs() &&
-                !$user->getBranch() && !$user->getNiveau() && !$user->getPersonnalMail()) {
+                !$user->getFormation() && !$user->getBranch() && !$user->getFiliere() && !$user->getNiveau() && !$user->getPersonnalMail()) {
                 return $this->redirect($this->generateUrl('trombi_index'));
             }
 
@@ -108,9 +110,19 @@ class MainController extends Controller
                 }
             }
 
+            if ($user->getFormation()) {
+                $users->andWhere('u.formation = :formation')
+                    ->setParameter('formation', $user->getFormation());
+            }
+
             if ($user->getBranch()) {
                 $users->andWhere('u.branch = :branch')
                     ->setParameter('branch', $user->getBranch());
+            }
+
+            if ($user->getFiliere()) {
+                $users->andWhere('u.filiere = :filiere')
+                    ->setParameter('filiere', $user->getFiliere());
             }
 
             if ($user->getNiveau()) {

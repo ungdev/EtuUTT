@@ -83,12 +83,16 @@
                             <div class="control-group hidden-phone">
                                 {{ form_label(form.branch, 'trombi.main.index.branche'|trans) }}
                                 <div class="controls">
-                                    {{ form_widget(form.branch, {'attr': {'class': 'span4'} }) }}
-                                    {{ form_widget(form.niveau, {'attr': {'class': 'span4'} }) }}
+                                    {{ form_widget(form.formation, {'attr': {'class': 'span3'} }) }}
+                                    {{ form_widget(form.branch, {'attr': {'class': 'span3'} }) }}
+                                    {{ form_widget(form.filiere, {'attr': {'class': 'span3'} }) }}
+                                    {{ form_widget(form.niveau, {'attr': {'class': 'span2'} }) }}
                                 </div>
                                 <span class="help-block">
                                     {{ form_errors(form.branch) }}
                                     {{ form_errors(form.niveau) }}
+                                    {{ form_errors(form.formation) }}
+                                    {{ form_errors(form.filiere) }}
                                 </span>
                             </div>
                         </div>
@@ -167,7 +171,11 @@
                             </h5>
                             <p>
                                 {% if user.formation %}
-                                {{ user.branch~user.niveau }} {{ user.filiere }} ({{ user.formation }})<br />
+                                     {% if user.branch == "SRT" %}
+                                         {{ "RT"~user.niveau }} {{ user.filiere }} ({{ user.formation }})<br />
+                                     {% else %}
+                                        {{ user.branch~user.niveau }} {{ user.filiere }} ({{ user.formation }})<br />
+                                     {% endif %}
                                 {% endif %}
                                 {{ user.mail }}
                                 {% if is_public(user.personnalMailPrivacy) and user.personnalMail %}
