@@ -38,69 +38,69 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public const PRIVACY_PUBLIC = 100;
     public const PRIVACY_PRIVATE = 200;
 
-    static public $formations = [
+    public static $formations = [
         'Ingénieur' => 'Ingénieur',
         'Master sciences et technologies' => 'Master Sciences et Technologies',
-        'Mastère spécialisé®' => 'Mastère spécialisé®'
+        'Mastère spécialisé®' => 'Mastère spécialisé®',
     ];
 
-    static public $branches = [
+    public static $branches = [
         'Ingénieur' => [
-            'A2I'    => 'A',
-            'ISI'  => 'ISI',
-            'MTE'  => 'MTE',
+            'A2I' => 'A',
+            'ISI' => 'ISI',
+            'MTE' => 'MTE',
             'PMOM' => 'PMOM',
-            'SI'   => 'SI',
-            'GM'   => 'SM',
-            'RT'  => 'SRT',
-            'TC'   => 'TC'
+            'SI' => 'SI',
+            'GM' => 'SM',
+            'RT' => 'SRT',
+            'TC' => 'TC',
         ],
         'Master sciences et technologies' => [
-            'IM'   => 'IM',
-            'MP'   => 'MP',
-            'STIC' => 'STIC'
+            'IM' => 'IM',
+            'MP' => 'MP',
+            'STIC' => 'STIC',
         ],
         'Mastère spécialisé®' => [
             'EBAM' => 'EBAM',
-            'EFC'  => 'EFC'
-        ]
+            'EFC' => 'EFC',
+        ],
     ];
 
-    static public $filieres = [
+    public static $filieres = [
         'Ingénieur' => [
-            'A' =>[
-                'SPI'  => 'SPI',
-                'TEI'  => 'TEI'
+            'A' => [
+                'SPI' => 'SPI',
+                'TEI' => 'TEI',
             ],
             'ISI' => [
-                'MPL'  => 'MPL',
-                'MSI'  => 'MSI',
-                'MRI'  => 'MRI',
-                'Libre'=> 'Libre'
+                'MPL' => 'MPL',
+                'MSI' => 'MSI',
+                'MRI' => 'MRI',
+                'Libre' => 'Libre',
             ],
             'MTE' => [
-                'EME'  => 'EME',
-                'Libre'=> 'Libre',
+                'EME' => 'EME',
+                'Libre' => 'Libre',
                 'TCMC' => 'TCMC',
-                'TQM'  => 'TQM'
+                'TQM' => 'TQM',
             ],
             'SI' => [
-                'LET'  => 'LET',
-                'LIP'  => 'LIP',
-                'SFERE'=> 'SFERE',
-                'Libre'=> 'Libre'
+                'LET' => 'LET',
+                'LIP' => 'LIP',
+                'SFERE' => 'SFERE',
+                'Libre' => 'Libre',
             ],
             'SM' => [
-                'CEISME'=> 'CEISME',
-                'CSP'   => 'CSP',
+                'CEISME' => 'CEISME',
+                'CSP' => 'CSP',
                 'Libre' => 'LIBRE',
-                'SNM'   => 'SNM',
-                'TIM'   => 'TIM',
+                'SNM' => 'SNM',
+                'TIM' => 'TIM',
             ],
             'SRT' => [
-                'CSR'  => 'CSR',
-                'Libre'=> 'Libre',
-                'SSC'  => 'SSC',
+                'CSR' => 'CSR',
+                'Libre' => 'Libre',
+                'SSC' => 'SSC',
                 'TMSE' => 'TMSE',
             ],
             'TC' => [],
@@ -108,27 +108,26 @@ class User implements UserInterface, EquatableInterface, \Serializable
         ],
         'Master sciences et technologies' => [
             'IM' => [
-                'IMEDD'  => 'IMEDD',
-                'IMSGA'  => 'IMSGA',
-                'SMI-LES'=> 'SMI-LES'
+                'IMEDD' => 'IMEDD',
+                'IMSGA' => 'IMSGA',
+                'SMI-LES' => 'SMI-LES',
             ],
             'MP' => [
                 'IAMC' => 'IAMC',
                 'MERI' => 'MERI',
-                'ONT'  => 'ONT',
-                'TEMMA'=> 'TEMMA'
+                'ONT' => 'ONT',
+                'TEMMA' => 'TEMMA',
             ],
             'STIC' => [
                 'OSS' => 'OSS',
-                'SSI' => 'SSI'
-            ]
+                'SSI' => 'SSI',
+            ],
         ],
         'Mastère spécialisé®' => [
             'EBAM' => [],
             'EFC' => [],
-        ]
+        ],
     ];
-
 
     public static $levels = [
         '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5',
