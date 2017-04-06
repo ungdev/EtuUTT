@@ -2146,6 +2146,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     {
         $history = [
             'formation' => $this->formation,
+            'branch' => $this->branch,
             'niveau' => $this->niveau,
             'filiere' => $this->filiere,
             'uvs' => $this->getUvsList(),
