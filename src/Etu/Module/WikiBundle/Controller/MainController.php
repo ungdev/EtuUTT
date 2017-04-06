@@ -309,7 +309,7 @@ class MainController extends Controller
         // Find page tree
         $em = $this->getDoctrine()->getManager();
         $result = $em->createQueryBuilder()
-            ->select('p')
+            ->select(['p as page, CONCAT(p.slug, \'/\') as orderValue'])
             ->from('EtuModuleWikiBundle:WikiPage', 'p')
             ->leftJoin('EtuModuleWikiBundle:WikiPage', 'p2', 'WITH', 'p.slug = p2.slug AND p.createdAt < p2.createdAt')
             ->where('p2.slug IS NULL');
@@ -318,7 +318,7 @@ class MainController extends Controller
         } else {
             $result = $result->where('p.organization is NULL');
         }
-        $result = $result->orderBy('p.slug', 'ASC')
+        $result = $result->orderBy('orderValue', 'ASC')
             ->getQuery()
             ->getResult();
 
@@ -326,6 +326,7 @@ class MainController extends Controller
         $rights = $this->get('etu.wiki.permissions_checker');
         $pagelist = [];
         foreach ($result as $value) {
+            $value = $value['page'];
             if ($rights->has($value->getReadRight(), $value->getOrganization())) {
                 $pagelist[$value->getSlug()] = [
                     'title' => $value->getTitle(),
