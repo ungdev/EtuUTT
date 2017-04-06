@@ -368,8 +368,13 @@ class MainController extends Controller
             ->select('p')
             ->from('EtuModuleWikiBundle:WikiPage', 'p')
             ->leftJoin('EtuModuleWikiBundle:WikiPage', 'p2', 'WITH', 'p.slug = p2.slug AND p.createdAt < p2.createdAt')
-            ->where('p2.slug IS NULL')
-            ->where('p.organization = :organization')->setParameter(':organization', $organization)
+            ->where('p2.slug IS NULL');
+        if ($organization) {
+            $result = $result->andWhere('p.organization = :organization')->setParameter(':organization', $organization);
+        } else {
+            $result = $result->andWhere('p.organization is NULL');
+        }
+        $result = $result
             ->orderBy('p.slug', 'ASC')
             ->getQuery()
             ->getResult();
@@ -381,7 +386,7 @@ class MainController extends Controller
             if ($rights->has($value->getReadRight(), $value->getOrganization())) {
                 $pagelist[$value->getSlug()] = [
                     'title' => (mb_substr_count($value->getSlug(), '/') ? str_repeat(' ', mb_substr_count($value->getSlug(), '/')).'↳' : '').$value->getTitle(),
-                    'value' => $this->generateUrl('wiki_view', ['organization' => $organization->getLogin(), 'slug' => $value->getSlug()], true),
+                    'value' => $this->generateUrl('wiki_view', ['organization' => ($organization ? $organization->getLogin() : 'general'), 'slug' => $value->getSlug()], true),
                 ];
             }
         }
