@@ -164,7 +164,6 @@ class LdapManager
             !isset($values['uid'])
             || !isset($values['supannempid'])
             || !isset($values['mail'])
-            || !isset($values['employeetype'])
         ) {
             $log = 'uid => '.$values['uid'][0]."\n";
 
@@ -184,6 +183,10 @@ class LdapManager
             $this->logs[] = $log;
 
             return false;
+        }
+
+        if (!isset($values['employeetype'])) {
+            $values['employeetype'] = [];
         }
 
         if (!isset($values['uv'])) {
@@ -207,7 +210,8 @@ class LdapManager
 
         $user->setIsStudent(
             in_array('student', $values['edupersonaffiliation'])
-                || in_array('student', $values['employeetype'])
+            || in_array('epf', $values['edupersonaffiliation']) // EPF students but not EPF staff
+            || in_array('student', $values['employeetype'])
         );
 
         $uvs = [];
