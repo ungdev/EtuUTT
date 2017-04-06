@@ -93,10 +93,10 @@ class ElementToImport
         $niveau = null;
         $branch = $this->element->getNiveau();
 
-        preg_match('/^[^0-9]+/i', $this->element->getNiveau(), $match);
+        preg_match('/^(.+)[0-9]$/i', $this->element->getNiveau(), $match);
 
-        if (isset($match[0])) {
-            $branch = $match[0];
+        if (isset($match[1])) {
+            $branch = $match[1];
             $niveau = str_replace($branch, '', $this->element->getNiveau());
         }
 

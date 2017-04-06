@@ -82,10 +82,10 @@ class ElementToUpdate
         $niveau = null;
         $branch = $this->ldap->getNiveau();
 
-        preg_match('/^[^0-9]+/i', $this->ldap->getNiveau(), $match);
+        preg_match('/^(.+)[0-9]$/i', $this->ldap->getNiveau(), $match);
 
-        if (isset($match[0])) {
-            $branch = $match[0];
+        if (isset($match[1])) {
+            $branch = $match[1];
             $niveau = str_replace($branch, '', $this->ldap->getNiveau());
         }
 
