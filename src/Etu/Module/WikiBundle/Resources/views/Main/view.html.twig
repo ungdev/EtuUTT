@@ -11,10 +11,16 @@
 
 {% block content %}
     {% include "@EtuModuleWiki/Main/part_headbar.html.twig" with {'action': 'read'}  %}
-    <div class="padding20-sides mathjax">
-        <h2>{{ page.title }}</h2>
-        {{ (page.content??'')|purify }}
-    </div>
+    {% if not page.isDeleted() %}
+        <div class="padding20-sides mathjax">
+            <h2>{{ page.title }}</h2>
+            {{ (page.content??'')|purify }}
+        </div>
+    {% else %}
+        <div class="padding20 align-center">
+            <big>{{ 'wiki.main.view.deleted'|trans }}</big>
+        </div>
+    {% endif %}
 
     {% if pagelist|count %}
     <hr/>

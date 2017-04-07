@@ -17,6 +17,8 @@ wiki:
       index: "Index"
       home: "Accueil"
       wikilist: Liste des Wiki
+      move: Déplacer
+      delete: Supprimer
     right-orga:
       0: "Administrateur du wiki"
       100: "Administrateur du wiki de %orga%"
@@ -34,6 +36,7 @@ wiki:
       can-read: "Page visible par"
       can-edit: "Page modifiable par"
       title: Wiki %orga%
+      deleted: Cette page a été supprimée.
     edit:
         new-title: Nouvelle page
         title: Titre
@@ -47,6 +50,22 @@ wiki:
         title: Index du Wiki %orga%
         subtitle: Liste des pages du Wiki %orga%
         nopage: Il n'y a aucune page dans ce wiki
+    delete:
+        title: Suppression d'une page
+        hasChildren: Impossible de supprimer la page "%pageName%". Il faut au préalable supprimer ou déplacer les pages filles suivantes :
+        confirm: Voulez-vous vraiment supprimer la page "%pageName%" ?
+        yes: Oui, supprimer cette page
+        no: Annuler
+        success: La page a bien été supprimée
+        isHomepage: Vous ne pouvez pas supprimer la page d'accueil du wiki
+    move:
+        title: Déplacement d'une page
+        preslug: URI de la page parent
+        titleSlug: Titre de cette page
+        submit: Déplacer la page et ses filles
+        text: Attention ! En déplacant cette page, toutes les pages filles seront aussi déplacés. Si des liens pointent vers ces pages, il faudra les mettre à jour manuellement.
+        alreadyUsed: Cet URI est déjà utilisé
+        success: La page et ses filles ont bien été déplacées
     wikilist:
         title: Listes des wiki
         general_name: Wiki UTT

@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -63,7 +64,8 @@ class MainController extends Controller
             ->select('p')
             ->from('EtuModuleWikiBundle:WikiPage', 'p')
             ->leftJoin('EtuModuleWikiBundle:WikiPage', 'p2', 'WITH', 'p.slug = p2.slug AND p.createdAt < p2.createdAt')
-            ->where('p2.slug IS NULL');
+            ->where('p2.slug IS NULL')
+            ->andWhere('p.content != \'\'');
         if ($slug) {
             $result = $result->andWhere('p.slug LIKE CONCAT(:slug, \'/%\')')->setParameter(':slug', $slug);
         }
@@ -165,11 +167,12 @@ class MainController extends Controller
                 ->select('p.title, p.slug, p.readRight, IDENTITY(p.organization) as organization_id')
                 ->from('EtuModuleWikiBundle:WikiPage', 'p', 'p.slug')
                 ->leftJoin('EtuModuleWikiBundle:WikiPage', 'p2', 'WITH', 'p.slug = p2.slug AND p.createdAt < p2.createdAt')
-                ->where('p2.slug IS NULL');
+                ->where('p2.slug IS NULL')
+                ->andWhere('p.content != \'\'');
             if ($organization) {
-                $result = $result->where('p.organization = :organization')->setParameter(':organization', $organization);
+                $result = $result->andWhere('p.organization = :organization')->setParameter(':organization', $organization);
             } else {
-                $result = $result->where('p.organization is NULL');
+                $result = $result->andWhere('p.organization is NULL');
             }
             $result = $result->orderBy('p.slug', 'ASC')
                 ->getQuery()
@@ -312,11 +315,12 @@ class MainController extends Controller
             ->select(['p as page, CONCAT(p.slug, \'/\') as orderValue'])
             ->from('EtuModuleWikiBundle:WikiPage', 'p')
             ->leftJoin('EtuModuleWikiBundle:WikiPage', 'p2', 'WITH', 'p.slug = p2.slug AND p.createdAt < p2.createdAt')
-            ->where('p2.slug IS NULL');
+            ->where('p2.slug IS NULL')
+            ->andWhere('p.content != \'\'');
         if ($organization) {
-            $result = $result->where('p.organization = :organization')->setParameter(':organization', $organization);
+            $result = $result->andWhere('p.organization = :organization')->setParameter(':organization', $organization);
         } else {
-            $result = $result->where('p.organization is NULL');
+            $result = $result->andWhere('p.organization is NULL');
         }
         $result = $result->orderBy('orderValue', 'ASC')
             ->getQuery()
@@ -368,7 +372,8 @@ class MainController extends Controller
             ->select('p')
             ->from('EtuModuleWikiBundle:WikiPage', 'p')
             ->leftJoin('EtuModuleWikiBundle:WikiPage', 'p2', 'WITH', 'p.slug = p2.slug AND p.createdAt < p2.createdAt')
-            ->where('p2.slug IS NULL');
+            ->where('p2.slug IS NULL')
+            ->andWhere('p.content != \'\'');
         if ($organization) {
             $result = $result->andWhere('p.organization = :organization')->setParameter(':organization', $organization);
         } else {
@@ -395,6 +400,8 @@ class MainController extends Controller
     }
 
     /**
+     * Called by rich text editor to show a list of available links.
+     *
      * @Route("/wiki/list", name="wiki_list")
      * @Template()
      */
@@ -418,6 +425,252 @@ class MainController extends Controller
         return [
             'organizations' => $organizations,
             'rights' => $this->get('etu.wiki.permissions_checker'),
+        ];
+    }
+
+    /**
+     * @Route("/wiki/delete/{organization}/{slug}", requirements={"slug" = "[a-z0-9-/]+"}, name="wiki_delete")
+     * @Template()
+     *
+     * @param mixed $organization
+     * @param mixed $slug
+     * @param mixed $confirm
+     */
+    public function deleteAction($organization, $slug, Request $request)
+    {
+        // Find organization
+        $em = $this->getDoctrine()->getManager();
+        if ($organization && $organization != 'general') {
+            $organization = $em->getRepository('EtuUserBundle:Organization')
+                ->findOneBy(['login' => $request->get('organization')]);
+            if (!$organization) {
+                throw $this->createNotFoundException('Organization not found');
+            }
+        } else {
+            $organization = null;
+        }
+
+        // Find last version of a page
+        $repo = $this->getDoctrine()->getRepository('EtuModuleWikiBundle:WikiPage');
+        $page = $repo->findOneBy([
+            'slug' => $slug,
+            'organization' => $organization,
+        ], ['createdAt' => 'DESC']);
+
+        // If not found
+        $rights = $this->get('etu.wiki.permissions_checker');
+        if (count($page) != 1) {
+            throw $this->createNotFoundException('Wiki page not found');
+        } elseif (!$rights->canDelete($page)) {
+            return $this->createAccessDeniedResponse();
+        }
+
+        // Check for children pages
+        $em = $this->getDoctrine()->getManager();
+        $result = $em->createQueryBuilder()
+            ->select('p')
+            ->from('EtuModuleWikiBundle:WikiPage', 'p')
+            ->leftJoin('EtuModuleWikiBundle:WikiPage', 'p2', 'WITH', 'p.slug = p2.slug AND p.createdAt < p2.createdAt')
+            ->where('p2.slug IS NULL')
+            ->andWhere('p.content != \'\'')
+            ->andWhere('p.slug like CONCAT( :slug, \'/%\')')->setParameter(':slug', $page->getSlug());
+        if ($organization) {
+            $result = $result->andwhere('p.organization = :organization')->setParameter(':organization', $organization);
+        } else {
+            $result = $result->andwhere('p.organization is NULL');
+        }
+        $childrenPages = $result->orderBy('p.slug', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        // Check if the page is homepage
+        if ($rights->getHomeSlug($organization) === $page->getSlug()) {
+            // Emit flash message
+            $this->get('session')->getFlashBag()->set('message', [
+                'type' => 'danger',
+                'message' => 'wiki.main.delete.isHomepage',
+            ]);
+
+            // Redirect
+            return $this->redirect($this->generateUrl('wiki_view', [
+                'slug' => $page->getSlug(),
+                'organization' => ($organization ? $organization->getLogin() : 'general'),
+                ]
+            ), 301);
+
+            return;
+        }
+
+        // Submit yes
+        if ($request->query->get('confirm') === 'yes' && !$childrenPages) {
+            // Force insertion
+            $page = clone $page;
+
+            // Set modification author and date
+            $page->setAuthor($this->getUser());
+            $page->setCreatedAt(new \DateTime());
+            $page->setValidated(false);
+            $page->delete();
+
+            // Save to db
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($page);
+            $em->flush();
+
+            // Emit flash message
+            $this->get('session')->getFlashBag()->set('message', [
+                'type' => 'success',
+                'message' => 'wiki.main.delete.success',
+            ]);
+
+            // Redirect
+            return $this->redirect($this->generateUrl('wiki_index', [
+                'organization' => ($organization ? $organization->getLogin() : 'general'),
+                ]
+            ), 301);
+        }
+
+        return [
+            'page' => $page,
+            'rights' => $this->get('etu.wiki.permissions_checker'),
+            'organization' => $organization,
+            'childrenPages' => $childrenPages,
+        ];
+    }
+
+    /**
+     * @Route("/wiki/move/{organization}/{slug}", requirements={"slug" = "[a-z0-9-/]+"}, name="wiki_move")
+     * @Template()
+     *
+     * @param mixed $slug
+     * @param mixed $organization
+     */
+    public function moveAction($organization, $slug, Request $request)
+    {
+        // Find organization
+        $em = $this->getDoctrine()->getManager();
+        if ($organization && $organization != 'general') {
+            $organization = $em->getRepository('EtuUserBundle:Organization')
+                ->findOneBy(['login' => $request->get('organization')]);
+            if (!$organization) {
+                throw $this->createNotFoundException('Organization not found');
+            }
+        } else {
+            $organization = null;
+        }
+
+        // Find last version of a page
+        $repo = $this->getDoctrine()->getRepository('EtuModuleWikiBundle:WikiPage');
+        $page = $repo->findOneBy([
+            'slug' => $slug,
+            'organization' => $organization,
+        ], ['createdAt' => 'DESC']);
+
+        // If not found
+        $rights = $this->get('etu.wiki.permissions_checker');
+        if (count($page) != 1) {
+            throw $this->createNotFoundException('Wiki page not found');
+        } elseif (!$rights->canMove($page)) {
+            return $this->createAccessDeniedResponse();
+        }
+
+        // Genereate preSlug select field
+        $em = $this->getDoctrine()->getManager();
+        $result = $em->createQueryBuilder()
+            ->select('p.title, p.slug, p.readRight, IDENTITY(p.organization) as organization_id')
+            ->from('EtuModuleWikiBundle:WikiPage', 'p', 'p.slug')
+            ->leftJoin('EtuModuleWikiBundle:WikiPage', 'p2', 'WITH', 'p.slug = p2.slug AND p.createdAt < p2.createdAt')
+            ->where('p2.slug IS NULL')
+            ->andWhere('p.content != \'\'');
+        if ($organization) {
+            $result = $result->andWhere('p.organization = :organization')->setParameter(':organization', $organization);
+        } else {
+            $result = $result->andWhere('p.organization is NULL');
+        }
+        $result = $result->orderBy('p.slug', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        // Create form
+        $form = $this->createFormBuilder();
+        $pagelist = [];
+        foreach ($result as $key => $value) {
+            if ($rights->has($value['readRight'], $organization)
+                && mb_strpos($key, $page->getSlug()) !== 0) {
+                $pagelist[$key] = $key.'/';
+            }
+        }
+        $form = $form->add('preslug', ChoiceType::class, [
+            'choices' => array_flip($pagelist),
+            'choice_attr' => function ($val) {
+                $level = mb_substr_count($val, '/');
+
+                return ['class' => 'choice_level_'.$level];
+            },
+            'data' => mb_substr($slug, 0, mb_strrpos($slug, '/')),
+            'placeholder' => '-',
+            'required' => false,
+            'label' => 'wiki.main.move.preslug',
+            'mapped' => false,
+        ]);
+        $form = $form->add('titleSlug', TextType::class, [
+            'data' => mb_substr($slug, mb_strrpos($slug, '/')),
+            'required' => true,
+            'label' => 'wiki.main.move.titleSlug',
+            'mapped' => false,
+        ]);
+        $form = $form->add('submit', SubmitType::class, ['label' => 'wiki.main.move.submit'])
+            ->getForm();
+
+        // On form submit
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $oldSlug = $page->getSlug();
+            // Create slug
+            if (empty($form->get('preslug')->getData())) {
+                $newSlug = StringManipulationExtension::slugify($form->get('titleSlug')->getData());
+            } else {
+                $newSlug = $form->get('preslug')->getData().'/'.StringManipulationExtension::slugify($form->get('titleSlug')->getData());
+            }
+
+            // Check if slug is not already used
+            $pageTest = $repo->findOneBy([
+                'slug' => $newSlug,
+                'organization' => $organization,
+            ]);
+            if ($pageTest) {
+                $form->get('titleSlug')->addError(new FormError($this->get('translator')->trans('wiki.main.move.alreadyUsed')));
+            } else {
+                // Move all modification of this page and all childrens
+                $result = $em->createQueryBuilder()
+                    ->update('EtuModuleWikiBundle:WikiPage', 'p')
+                    ->set('p.slug', 'CONCAT(:newslug, SUBSTRING(p.slug, LENGTH(:oldslug)+1))')
+                    ->where('p.slug like CONCAT(:oldslug, \'%\')')
+                    ->setParameter(':newslug', $newSlug)
+                    ->setParameter(':oldslug', $oldSlug)
+                    ->getQuery()
+                    ->execute();
+
+                // Emit flash message
+                $this->get('session')->getFlashBag()->set('message', [
+                    'type' => 'success',
+                    'message' => 'wiki.main.move.success',
+                ]);
+
+                // Redirect
+                return $this->redirect($this->generateUrl('wiki_view', [
+                    'organization' => ($organization ? $organization->getLogin() : 'general'),
+                    'slug' => $newSlug,
+                    ]
+                ), 301);
+            }
+        }
+
+        return [
+            'page' => $page,
+            'form' => $form->createView(),
+            'rights' => $this->get('etu.wiki.permissions_checker'),
+            'organization' => $organization,
         ];
     }
 }
