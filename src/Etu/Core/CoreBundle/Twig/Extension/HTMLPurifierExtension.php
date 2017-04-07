@@ -45,8 +45,8 @@ class HTMLPurifierExtension extends \Twig_Extension
             $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
             $config->set('Cache.SerializerPath', '/tmp');
             // set from param:
-            $config->set('HTML.Allowed', 'h3,h4,h5,h6,b,i,strong,em,p[style|align],li,ul,ol,img[src|alt|style|height|width|align],a[href|title|target|rel],br');
-            $config->set('CSS.AllowedProperties', 'width,height,text-align,padding-left,max-width,max-height');
+            $config->set('HTML.Allowed', 'h3,h4,h5,h6,strong,em,p[style],li,ul,ol,img[src|alt|style|height|width],a[href|title|target|rel],br');
+            $config->set('CSS.AllowedProperties', 'width,height,text-align,padding-left,max-width,max-height,margin-left,margin-right');
             $config->set('Attr.AllowedClasses', '');
         }
         // default profile

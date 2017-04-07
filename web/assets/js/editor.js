@@ -262,7 +262,7 @@ tinymce.init({
     selector: '.editor-email',
     menubar: false,
     plugins: [
-        'autolink autoresize autosave charmap code emoticons fullscreen hr lists legacyoutput',
+        'autolink autoresize autosave charmap code emoticons fullscreen hr lists',
         'image imagetools link paste searchreplace spellchecker textpattern visualblocks visualchars wordcount'
     ],
     toolbar2: 'formatselect | bold italic str1ikethrough removeformat | alignleft aligncenter alignright alignjustify '
