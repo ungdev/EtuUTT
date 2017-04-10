@@ -262,7 +262,7 @@ tinymce.init({
     selector: '.editor-email',
     menubar: false,
     plugins: [
-        'autolink autoresize autosave charmap code emoticons fullscreen hr lists legacyoutput',
+        'autolink autoresize autosave charmap code emoticons fullscreen hr lists',
         'image imagetools link paste searchreplace spellchecker textpattern visualblocks visualchars wordcount'
     ],
     toolbar2: 'formatselect | bold italic str1ikethrough removeformat | alignleft aligncenter alignright alignjustify '
@@ -281,7 +281,7 @@ tinymce.init({
     link_assume_external_targets: false,
     link_title: false,
     spellchecker_language: 'fr_FR',
-    content_style: 'img[align="center"],img[align="middle"] {display: block; margin-left: auto; margin-right: auto; }',
+    content_style: 'img {max-width: 100%; max-height:400px;}',
 
     textpattern_patterns: [
         {start: '*', end: '*', format: 'italic'},

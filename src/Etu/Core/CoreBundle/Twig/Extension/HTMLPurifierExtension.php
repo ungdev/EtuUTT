@@ -45,15 +45,15 @@ class HTMLPurifierExtension extends \Twig_Extension
             $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
             $config->set('Cache.SerializerPath', '/tmp');
             // set from param:
-            $config->set('HTML.Allowed', 'h3,h4,h5,h6,b,i,strong,em,p[style|align],li,ul,ol,img[src|alt|style|height|width|align],a[href|title|target|rel]');
-            $config->set('CSS.AllowedProperties', 'width,height,text-align,padding-left,max-width,max-height');
+            $config->set('HTML.Allowed', 'h3,h4,h5,h6,strong,em,p[style],li,ul,ol,img[src|alt|style|height],a[href|title|target|rel],br');
+            $config->set('CSS.AllowedProperties', 'width,height,text-align,padding-left,max-width,max-height,margin-left,margin-right');
             $config->set('Attr.AllowedClasses', '');
         }
         // default profile
         else {
             // Load HTML5 purifier config
             $config = load_htmlpurifier([
-                'HTML.Allowed' => 'h2[id],h3[id],h4[id],h5[id],h6[id],pre[class],code,div[class|style],strong,em,p[style],li,ul,ol,img[src|alt|style|height|width],a[href|title|target|rel],video[controls|width|height],source[src|type],table[class|style],tbody,tr,td,iframe[src|width|height|allowfullscreen]',
+                'HTML.Allowed' => 'h2[id],h3[id],h4[id],h5[id],h6[id],pre[class],code,div[class|style],strong,em,p[style],li,ul,ol,img[src|alt|style|height|width],a[href|title|target|rel],video[controls|width|height],source[src|type],table[class|style],tbody,tr,td,iframe[src|width|height|allowfullscreen],br',
                 'CSS.AllowTricky' => true,
                 'CSS.AllowedProperties' => 'width,height,text-align,padding-left,max-width,max-height,margin-left,margin-right,display',
                 'Attr.AllowedClasses' => 'alert,alert-error,alert-warning,alert-info,alert-success,pull-left,pull-right,mce-toc,table,table-bordered,'
@@ -69,7 +69,7 @@ class HTMLPurifierExtension extends \Twig_Extension
         // Additionnal rules
         if ($profile == 'email') {
             // Add max-width:100% for all images on emails
-            $string = str_replace('<img', '<img style="max-width:100%;"', $string);
+            $string = str_replace('<img', '<img style="max-width:100%;max-height:400px;"', $string);
         }
 
         return $string;
