@@ -68,6 +68,21 @@ class UserListMapper implements QueryMapper
                 ->setParameter('now', new \DateTime('now'));
         }
 
+        if ($request->has('multifield')) {
+            $multifield = str_replace(' ', '%', trim($request->get('multifield')));
+            $query->andWhere(
+                'u.firstName LIKE :multifieldLike
+                OR u.lastName LIKE :multifieldLike
+                OR u.fullName LIKE :multifieldLike
+                OR u.mail LIKE :multifieldLike
+                OR u.surnom LIKE :multifieldLike
+                OR u.login = :multifield
+                OR u.personnalMail = :multifield
+                OR (u.studentId = :multifield AND u.studentId != 0)')
+                ->setParameter('multifield', $multifield)
+                ->setParameter('multifieldLike', '%'.$multifield.'%');
+        }
+
         return $query;
     }
 }

@@ -22,15 +22,17 @@ class PublicUsersListController extends ApiController
      *   filters = {
      *      { "name"="firstname",       "dataType"="string"     },
      *      { "name"="lastname",        "dataType"="string"     },
+     *      { "name"="name",            "dataType"="string", "description"="Search in firstname, lastname or fullname"     },
      *      { "name"="branch",          "dataType"="string"     },
      *      { "name"="level",           "dataType"="string"     },
      *      { "name"="speciality",      "dataType"="string"     },
      *      { "name"="is_student",      "dataType"="boolean"    },
      *      { "name"="bde_member",      "dataType"="boolean"    },
-     *      { "name"="student_id",      "dataType"="integer"    }
+     *      { "name"="student_id",      "dataType"="integer"    },
+     *      { "name"="multifield",      "dataType"="string", "description"="Search between firstname, lastname, fullname, login, student_id, nickname, and emails"     }
      *   },
      *   parameters={
-     *      { "name"="embed", "dataType"="string", "description"="Embed foreign entities in the users data (available: badges)" }
+     *      { "name"="embed", "dataType"="string", "description"="Embed foreign entities in the users data (available: badges)", "required"=false }
      *   }
      * )
      *
