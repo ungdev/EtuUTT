@@ -14,11 +14,18 @@ class UserTransformer extends AbstractTransformer
     protected $badgeTransformer;
 
     /**
-     * @param BadgeTransformer $badgeTransformer
+     * @var KernelRootDir
      */
-    public function __construct(BadgeTransformer $badgeTransformer)
+    protected $kernelRootDir;
+
+    /**
+     * @param BadgeTransformer $badgeTransformer
+     * @param string           $kernelRootDir    path to app directory
+     */
+    public function __construct(BadgeTransformer $badgeTransformer, $kernelRootDir)
     {
         $this->badgeTransformer = $badgeTransformer;
+        $this->kernelRootDir = $kernelRootDir;
     }
 
     /**
@@ -70,25 +77,33 @@ class UserTransformer extends AbstractTransformer
      */
     private function getLinks(User $user)
     {
-        return [
-            '_links' => [
-                [
-                    'rel' => 'self',
-                    'uri' => '/api/public/users/'.$user->getLogin(),
-                ],
-                [
-                    'rel' => 'user.badges',
-                    'uri' => '/api/public/users/'.$user->getLogin().'/badges',
-                ],
-                [
-                    'rel' => 'user.image',
-                    'uri' => '/uploads/photos/'.$user->getAvatar(),
-                ],
-                [
-                    'rel' => 'user.official_image',
-                    'uri' => '/uploads/photos/'.$user->getLogin().'_official.jpg',
-                ],
+        $links = [
+            [
+                'rel' => 'self',
+                'uri' => '/api/public/users/'.$user->getLogin(),
             ],
+            [
+                'rel' => 'user.badges',
+                'uri' => '/api/public/users/'.$user->getLogin().'/badges',
+            ],
+            [
+                'rel' => 'user.image',
+                'uri' => '/uploads/photos/'.$user->getAvatar(),
+            ],
+        ];
+
+        // add official image only if it exists
+        $officialImage = [
+            'rel' => 'user.official_image',
+            'uri' => '/uploads/photos/'.$user->getLogin().'_official.jpg',
+        ];
+
+        if (file_exists($this->kernelRootDir.'/../web'.$officialImage['uri'])) {
+            array_push($links, $officialImage);
+        }
+
+        return [
+            '_links' => $links,
         ];
     }
 
