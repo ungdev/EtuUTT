@@ -62,7 +62,7 @@ services:
 
     etu.api.user.transformer:
         class: Etu\Core\UserBundle\Api\Transformer\UserTransformer
-        arguments: [ "@etu.api.badge.transformer" ]
+        arguments: [ "@etu.api.badge.transformer", %kernel.root_dir% ]
 
     etu.api.user.private_transformer:
         class: Etu\Core\UserBundle\Api\Transformer\UserPrivateTransformer
