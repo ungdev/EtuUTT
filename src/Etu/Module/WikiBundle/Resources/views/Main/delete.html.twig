@@ -1,0 +1,43 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'wiki.main.delete.title'|trans }}{% endblock %}
+
+{% block meta_desc %}{{ 'wiki.main.delete.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+    <img src="{{ asset('assets/img/titles/page.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+    {% include "@EtuModuleWiki/Main/part_headbar.html.twig" with {'action': 'delete'}  %}
+
+    {% if childrenPages %}
+        <div class="padding20-sides">
+            <p>
+                {{ 'wiki.main.delete.hasChildren'|trans({'%pageName%': page.title}) }}
+            </p>
+            <ul>
+                {% for child in childrenPages %}
+                <li><a href="{{ path('wiki_view', {'slug': child.slug, 'organization': child.organization.login ?? 'general'})}}">
+                    {{ child.title }}
+                </a></li>
+                {% endfor %}
+            <ul>
+        </div>
+    {% else %}
+        <div class="padding20-sides align-center">
+            <p>
+                {{ 'wiki.main.delete.confirm'|trans({'%pageName%': page.title}) }}
+            </p>
+            <p>
+                <a href="{{ path('wiki_delete', {'slug': page.slug, 'organization': page.organization.login ?? 'general', 'confirm' : 'yes'})}}" class="btn btn-primary">
+                    {{ 'wiki.main.delete.yes'|trans }}
+                </a>
+                <a href="{{ path('wiki_view', {'slug': page.slug, 'organization': page.organization.login ?? 'general'})}}" class="btn">
+                    {{ 'wiki.main.delete.no'|trans }}
+                </a>
+            </p>
+
+        </div>
+    {% endif %}
+{% endblock %}

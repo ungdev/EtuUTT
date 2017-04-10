@@ -1,0 +1,31 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'wiki.main.move.title'|trans }}{% endblock %}
+
+{% block meta_desc %}{{ 'wiki.main.move.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+    <img src="{{ asset('assets/img/titles/page.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+    {% include "@EtuModuleWiki/Main/part_headbar.html.twig" with {'action': 'move'}  %}
+
+    <div class="padding20-sides">
+        <p class="alert alert-warning">
+            {{ 'wiki.main.move.text'|trans }}
+        </p>
+
+        {{ form_start(form) }}
+            <div class="row-fluid">
+                <div class="span6">
+                    {{ form_row(form.preslug) }}
+                </div>
+                <div class="span6">
+                    {{ form_row(form.titleSlug) }}
+                </div>
+            </div>
+        {{ form_end(form) }}
+
+    </div>
+{% endblock %}
