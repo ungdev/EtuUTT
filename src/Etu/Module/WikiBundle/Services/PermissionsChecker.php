@@ -142,6 +142,34 @@ class PermissionsChecker
     }
 
     /**
+     * @param Page $page
+     *
+     * @return bool
+     */
+    public function canDelete(WikiPage $page)
+    {
+        if (!$this->authorizationChecker->isGranted('ROLE_WIKI_EDIT')) {
+            return false;
+        }
+
+        return $this->has($page->getEditRight(), $page->getOrganization());
+    }
+
+    /**
+     * @param Page $page
+     *
+     * @return bool
+     */
+    public function canMove(WikiPage $page)
+    {
+        if (!$this->authorizationChecker->isGranted('ROLE_WIKI_EDIT')) {
+            return false;
+        }
+
+        return $this->has($page->getEditRight(), $page->getOrganization());
+    }
+
+    /**
      * Check if user has the given right.
      *
      * @param int          $right        WikiPage::RIGHT['*']

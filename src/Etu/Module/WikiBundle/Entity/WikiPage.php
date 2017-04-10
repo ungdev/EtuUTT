@@ -347,7 +347,6 @@ class WikiPage
     public function delete()
     {
         $this->content = '';
-        $this->title = '';
     }
 
     /**
@@ -357,6 +356,6 @@ class WikiPage
      */
     public function isDeleted()
     {
-        return $this->content == '' && $this->title = '';
+        return $this->content == '';
     }
 }
