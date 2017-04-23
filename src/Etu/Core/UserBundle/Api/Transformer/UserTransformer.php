@@ -47,6 +47,7 @@ class UserTransformer extends AbstractTransformer
     private function getData(User $user)
     {
         return [
+            'id' => $user->getId(),
             'login' => $user->getLogin(),
             'studentId' => $user->getStudentId(),
             'email' => $user->getMail(),
