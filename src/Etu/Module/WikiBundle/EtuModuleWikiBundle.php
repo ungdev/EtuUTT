@@ -26,7 +26,7 @@ class EtuModuleWikiBundle extends Module
                 ->setUrl($this->getRouter()->generate('wiki_view', ['slug' => 'archives-des-nutt-lectures', 'organization' => 'nutt']))
                 ->setPosition(10)
             ->end()
-        ->end()
+        ->end();
     }
 
     /**
