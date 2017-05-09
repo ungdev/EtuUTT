@@ -12,14 +12,21 @@ class EtuModuleWikiBundle extends Module
      */
     public function onModuleBoot()
     {
-        // $this->getSidebarBuilder()
-        //     ->getBlock('base.sidebar.services.title')
-        //     ->add('base.user.menu.wiki')
-        //         ->setIcon('wiki.png')
-        //         ->setUrl($this->getRouter()->generate('wiki_view', ['slug' => 'home', 'organization' => 'general']))
-        //         ->setPosition(2)
-        //     ->end()
-        // ->end();
+        $this->getSidebarBuilder()
+             ->getBlock('base.sidebar.services.title')
+             ->add('base.user.menu.wiki')
+                 ->setIcon('wiki.png')
+                 ->setUrl($this->getRouter()->generate('wiki_list'))
+                 ->setPosition(2)
+             ->end()
+        ->end()
+        ->getBlock('base.sidebar.services.title')
+            ->add('base.user.menu.nutt')
+                ->setIcon('newspaper.png')
+                ->setUrl($this->getRouter()->generate('wiki_view', ['slug' => 'archives-des-nutt-lectures', 'organization' => 'nutt']))
+                ->setPosition(10)
+            ->end()
+        ->end();
     }
 
     /**
