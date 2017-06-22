@@ -71,8 +71,7 @@
 		{% block layout %}{% endblock %}
 
         {# JS CDN #}
-	    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-        <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+	    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 
 	    {% javascripts
 	        'assets/vendor/jquery/jquery.min.js'
@@ -97,9 +96,12 @@
 	    %}
             <script src="{{ asset_url }}"></script>
 	    {% endjavascripts %}
+        
+        <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 
-	    <!-- Piwik -->
+
+        <!-- Piwik -->
 	    <script type="text/javascript">
 	        var _paq = _paq || [];
 	        _paq.push(["setDomains", ["*.etu.utt.fr"]]);
