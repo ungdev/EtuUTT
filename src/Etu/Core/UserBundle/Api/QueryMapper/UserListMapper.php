@@ -67,8 +67,7 @@ class UserListMapper implements QueryMapper
             if ((bool) $request->get('bde_member')) {
                 $query->andWhere('u.bdeMembershipEnd > CURRENT_TIMESTAMP()')
                     ->andWhere('u.bdeMembershipEnd IS NOT NULL');
-            }
-            else {
+            } else {
                 $query->andWhere('u.bdeMembershipEnd < CURRENT_TIMESTAMP() OR u.bdeMembershipEnd IS NULL');
             }
         }

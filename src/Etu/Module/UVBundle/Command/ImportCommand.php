@@ -19,7 +19,7 @@ class ImportCommand extends ContainerAwareCommand
     {
         $this
             ->setName('etu:uv:import')
-            ->setDescription('Import UV informations from the PDF official guide. Script made for the 2015-2016 version of the guide')
+            ->setDescription("Import UV informations from the PDF official guide.\u{a0}Script made for the 2015-2016 version of the guide")
             ->addArgument('url', InputArgument::REQUIRED, 'The file URL to download');
     }
 
@@ -47,7 +47,7 @@ class ImportCommand extends ContainerAwareCommand
         $output->writeln('
 	Welcome to the EtuUTT UV manager
 
-This command helps you to import the official UTT UV guide.
+This command helps you to import the official UTT\u{a0}UV guide.
 This command has been updated for the 2015-2016 guide. If you want to use it
 for another version, you will have to update this parser.');
 
@@ -73,13 +73,13 @@ for another version, you will have to update this parser.');
          */
         $part = [];
 
-        // Cut everything before UV descriptions
+        // Cut everything before UV descriptions
         $tmp = explode('<text top="71" left="296" width="367" height="52" font="34">Connaissances</text>
 <text top="139" left="373" width="290" height="52" font="34">scientiﬁ ques</text>
 <text top="194" left="476" width="187" height="27" font="35">Tronc commun</text>', $xml);
         $xml = $tmp[1];
 
-        // Get "CS of TC"
+        // Get "CS of TC"
         $output->writeln('Isolate CS of TC');
         $tmp = explode('<text top="71" left="343" width="320" height="52" font="34">Techniques &amp;</text>
 <text top="139" left="424" width="239" height="52" font="34">Méthodes</text>
@@ -87,7 +87,7 @@ for another version, you will have to update this parser.');
         $part['cs tc'] = $tmp[0];
         $xml = $tmp[1];
 
-        // Get "TM of TC"
+        // Get "TM of TC"
         $output->writeln('Isolate TM of TC');
         $tmp = explode('<text top="71" left="296" width="367" height="52" font="34">Connaissances</text>
 <text top="139" left="373" width="290" height="52" font="34">scientiﬁ ques</text>
@@ -95,7 +95,7 @@ for another version, you will have to update this parser.');
         $part['tm tc'] = $tmp[0];
         $xml = $tmp[1];
 
-        // Get "CS of BR"
+        // Get "CS of BR"
         $output->writeln('Isolate CS of BR');
         $tmp = explode('<text top="71" left="343" width="320" height="52" font="34">Techniques &amp;</text>
 <text top="139" left="424" width="239" height="52" font="34">Méthodes</text>
@@ -103,47 +103,47 @@ for another version, you will have to update this parser.');
         $part['cs br'] = $tmp[0];
         $xml = $tmp[1];
 
-        // Get "TM of BR"
+        // Get "TM of BR"
         $output->writeln('Isolate TM of BR');
         $tmp = explode('<text top="71" left="355" width="308" height="52" font="34">Expression &amp;</text>
 <text top="139" left="290" width="373" height="52" font="34">Communication</text>', $xml);
         $part['tm br'] = $tmp[0];
         $xml = $tmp[1];
 
-        // Get "EC"
+        // Get "EC"
         $output->writeln('Isolate EC');
         $tmp = explode('<text top="71" left="274" width="389" height="52" font="34">Management de</text>
 <text top="139" left="406" width="257" height="52" font="34">l’Entreprise</text>', $xml);
         $part['ec'] = $tmp[0];
         $xml = $tmp[1];
 
-        // Get "ME"
+        // Get "ME"
         $output->writeln('Isolate ME');
         $tmp = explode('<text top="71" left="411" width="252" height="52" font="34">Humanités</text>', $xml);
         $part['me'] = $tmp[0];
         $xml = $tmp[1];
 
-        // Get "CT"
+        // Get "CT"
         $output->writeln('Isolate CT');
         $tmp = explode('<text top="71" left="551" width="112" height="52" font="34">Hors</text>
 <text top="139" left="551" width="112" height="52" font="34">Proﬁ l</text>', $xml);
         $part['ct'] = $tmp[0];
         $xml = $tmp[1];
 
-        // Get "HP"
+        // Get "HP"
         $output->writeln('Isolate HP');
         $tmp = explode('<text top="71" left="496" width="167" height="52" font="34">Stages</text>', $xml);
         $part['hp'] = $tmp[0];
         $xml = $tmp[1];
 
-        // Get "ST"
+        // Get "ST"
         $output->writeln('Isolate ST');
         $tmp = explode('<text top="71" left="486" width="193" height="52" font="34">Travaux </text>
 <text top="139" left="160" width="503" height="52" font="34">Personnels Encadrés</text>', $xml);
         $part['st'] = $tmp[0];
         $xml = $tmp[1];
 
-        // Get "TPE"
+        // Get "TPE"
         $output->writeln('Isolate TPE');
         $tmp = explode('<text top="92" left="117" width="75" height="34" font="4">Index </text>
 <text top="137" left="71" width="166" height="34" font="4">alphabétique </text>', $xml);
@@ -152,7 +152,7 @@ for another version, you will have to update this parser.');
 
         $uv = [];
 
-        // Parse UV header (not description)
+        // Parse UV header (not description)
         foreach ($part as $category => $text) {
             $output->writeln('Parse UV from '.$category);
 
@@ -160,7 +160,7 @@ for another version, you will have to update this parser.');
 
             $descBegin = -1;
             for ($i = 0; $i < count($match[1]); ++$i) {
-                // Create raw description of the precedent UV
+                // Create raw description of the precedent UV
                 if ($descBegin > 0) {
                     $uv[$this->sanitizer($match[1][$i - 1][0])] =
                         array_merge(
@@ -168,14 +168,14 @@ for another version, you will have to update this parser.');
                         $this->parseDesc(mb_substr($text, $descBegin, $match[0][$i][1] - $descBegin)));
                 }
 
-                // Find index : UV Code
+                // Find index : UV Code
                 $code = $this->sanitizer($match[1][$i][0]);
                 $uv[$code] = [];
 
-                // Set the UV name
+                // Set the UV name
                 $uv[$code]['name'] = $this->sanitizer($match[2][$i][0].' '.$match[3][$i][0].' '.$match[4][$i][0]);
 
-                //  Set target (ing or master)
+                //  Set target (ing or master)
                 switch ($this->sanitizer($match[5][$i][0])) {
                     case 'MAST.':
                         $uv[$code]['target'] = 'mast';
@@ -194,7 +194,7 @@ for another version, you will have to update this parser.');
                         $uv[$code]['target'] = 'ing';
                 }
 
-                //  Set UV category
+                //  Set UV category
                 switch ($category) {
                     case 'cs tc':
                     case 'cs br':
@@ -222,7 +222,7 @@ for another version, you will have to update this parser.');
             }
         }
 
-        // Debug usefull to check what's parsed
+        // Debug usefull to check what's parsed
         /*
         $content = '';
         foreach ($uv as $key => $value) {
@@ -359,7 +359,7 @@ for another version, you will have to update this parser.');
                 continue;
             }
 
-            // append to cadre and programme
+            // append to cadre and programme
             if (!empty($line) && !empty($currentList) && preg_match('/[a-z]/i', $this->sanitizer($line))) {
                 if (mb_strpos(strip_tags($line), "\n  ") === 0) {
                     $uv[$currentList] .= "\n• ".ucfirst($this->sanitizer($line));
@@ -368,7 +368,7 @@ for another version, you will have to update this parser.');
                 }
             }
 
-            // append to comment
+            // append to comment
             if (preg_match('/top="[0-9]+" left="([0-9]+)" width="[0-9]+" height="[0-9]+" font="[0-9]+">(.*)$/', $line, $match) && $match[1] == 43) {
                 if (mb_strpos($match[2], '  ') === 0) {
                     $uv['comment'] .= ucfirst($this->sanitizer($line));
