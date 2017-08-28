@@ -510,6 +510,20 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * @var \DateTime
      *
+     * @ORM\Column(type="datetime", nullable = true)
+     */
+    protected $bdeMembershipStart;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable = true)
+     */
+    protected $bdeMembershipEnd;
+
+    /**
+     * @var \DateTime
+     *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
@@ -537,14 +551,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
      * @ORM\JoinColumn()
      */
     protected $memberships;
-
-    /**
-     * @var UserBde[]
-     *
-     * @ORM\OneToMany(targetEntity="UserBde", mappedBy="user")
-     * @ORM\JoinColumn()
-     */
-    protected $bdeMemberships;
 
     /**
      * @var bool
@@ -2413,47 +2419,32 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @param \Etu\Core\UserBundle\Entity\UserBde[] $bdeMemberships
+     * @param \DateTime
      *
      * @return $this
      */
-    public function setBdeMemberships($bdeMemberships)
+    public function setBdeMembershipEnd($bdeMembershipEnd)
     {
-        $this->bdeMemberships = $bdeMemberships;
+        $this->bdeMembershipEnd = $bdeMembershipEnd;
 
         return $this;
     }
 
     /**
-     * @return \Etu\Core\UserBundle\Entity\UserBde[]
+     * @return \DateTime
      */
-    public function getBdeMemberships()
+    public function getBdeMembershipEnd()
     {
-        return $this->bdeMemberships;
-    }
-
-    /**
-     * @return UserBde
-     */
-    public function getActiveMembership()
-    {
-        $now = new \DateTime();
-
-        foreach ($this->getBdeMemberships() as $membership) {
-            if ($membership->getStart() < $now && $membership->getEnd() > $now) {
-                return $membership;
-            }
-        }
-
-        return false;
+        return $this->bdeMembershipEnd;
     }
 
     /**
      * @return bool
      */
-    public function hasActiveMembership()
+    public function isBdeMember()
     {
-        return is_object($this->getActiveMembership());
+        return $this->bdeMembershipEnd
+            && $this->bdeMembershipEnd > new \DateTime();
     }
 
     /**

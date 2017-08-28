@@ -165,6 +165,16 @@
                         {{ 'user.profile.organizations.not_asso'|trans({'%name%': user.fullName}) }}
                     </p>
                 {% endif %}
+                <hr/>
+                {% if user.isBdeMember() %}
+                    <p>
+                        {{ 'user.profile.organizations.bde_member'|trans({'%name%': user.fullName, '%end%': user.bdeMembershipEnd|date('d/m/Y')}) }}
+                    </p>
+                {% else %}
+                    <p>
+                        {{ 'user.profile.organizations.not_bde_member'|trans({'%name%': user.fullName}) }}
+                    </p>
+                {% endif %}
             </div>
         </div>
     </div>

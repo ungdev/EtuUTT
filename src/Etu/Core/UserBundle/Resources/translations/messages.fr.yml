@@ -393,6 +393,8 @@ user:
         organizations:
             is_in: "%name% fait partie de %count% association(s) :"
             not_asso: "%name% ne fait partie d'aucune association"
+            bde_member: "%name% cotise au BDE jusqu'au %end%"
+            not_bde_member: "%name% ne cotise pas au BDE"
         badges:
             by: "Badges obtenus par %name%"
 

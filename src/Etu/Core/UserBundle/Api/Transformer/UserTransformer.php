@@ -66,7 +66,8 @@ class UserTransformer extends AbstractTransformer
             'linkedin' => $user->getLinkedin(),
             'viadeo' => $user->getViadeo(),
             'isStudent' => $user->getIsStudent(),
-            'bdeMember' => $user->hasActiveMembership(),
+            'bdeMember' => $user->isBdeMember(),
+            'bdeMembershipEnd' => $user->getBdeMembershipEnd(),
         ];
     }
 
