@@ -63,9 +63,14 @@ class UserListMapper implements QueryMapper
                 ->setParameter('is_student', (bool) $request->get('is_student'));
         }
 
-        if ($request->has('bde_member') && $request->get('bde_member') == '1') {
-            $query->andWhere('m.end > :now')
-                ->setParameter('now', new \DateTime('now'));
+        if ($request->has('bde_member')) {
+            if ((bool) $request->get('bde_member')) {
+                $query->andWhere('u.bdeMembershipEnd > CURRENT_TIMESTAMP()')
+                    ->andWhere('u.bdeMembershipEnd IS NOT NULL');
+            }
+            else {
+                $query->andWhere('u.bdeMembershipEnd < CURRENT_TIMESTAMP() OR u.bdeMembershipEnd IS NULL');
+            }
         }
 
         if ($request->has('multifield')) {

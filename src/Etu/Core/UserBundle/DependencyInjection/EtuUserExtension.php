@@ -28,6 +28,9 @@ class EtuUserExtension extends Extension
         $container->setParameter('etu.ldap.host', $config['ldap']['host']);
         $container->setParameter('etu.ldap.port', $config['ldap']['port']);
 
+        $container->setParameter('etu.dolibarr.host', $config['dolibarr']['host']);
+        $container->setParameter('etu.dolibarr.key', $config['dolibarr']['key']);
+
         $container->setParameter('etu.cas.version', $config['cas']['version']);
         $container->setParameter('etu.cas.host', $config['cas']['host']);
         $container->setParameter('etu.cas.port', $config['cas']['port']);

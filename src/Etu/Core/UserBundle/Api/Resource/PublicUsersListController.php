@@ -48,9 +48,8 @@ class PublicUsersListController extends ApiController
 
         /** @var $query QueryBuilder */
         $query = $em->createQueryBuilder()
-            ->select('u, m')
+            ->select('u')
             ->from('EtuUserBundle:User', 'u')
-            ->leftJoin('u.bdeMemberships', 'm')
             ->orderBy('u.lastName');
 
         $query = $this->get('etu.api.user.mapper')->map($query, $request->query);

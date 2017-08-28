@@ -170,6 +170,9 @@ etu_user:
     ldap:
         host: ldap.utt.fr
         port: 389
+    dolibarr:
+        host: https://picsou.uttnetgroup.fr
+        key: "%dolibarr_key%"
 
     cas:
         version: '1.0'
