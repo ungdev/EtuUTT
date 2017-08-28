@@ -2420,6 +2420,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     /**
      * @param \DateTime
+     * @param mixed $bdeMembershipEnd
      *
      * @return $this
      */

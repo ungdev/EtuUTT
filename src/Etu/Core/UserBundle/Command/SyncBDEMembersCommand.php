@@ -2,12 +2,8 @@
 
 namespace Etu\Core\UserBundle\Command;
 
-use Doctrine\ORM\EntityManager;
 use Etu\Core\UserBundle\Command\Util\ProgressBar;
 use Etu\Core\UserBundle\Entity\User;
-use Etu\Core\UserBundle\Schedule\Browser\CriBrowser;
-use Etu\Core\UserBundle\Schedule\Model\Course;
-use Etu\Core\UserBundle\Schedule\ScheduleApi;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -42,11 +38,11 @@ This command helps you to synchronise database with BDE member db.
 ');
 
         // Pull all user informations
-        $output->writeln("\nGetting BDE member list from " . $container->getParameter('etu.dolibarr.host') . "... (may take a few minutes)");
+        $output->writeln("\nGetting BDE member list from ".$container->getParameter('etu.dolibarr.host').'... (may take a few minutes)');
         $data = json_decode(file_get_contents(
             $container->getParameter('etu.dolibarr.host')
-            . '/api/index.php/members?DOLAPIKEY='
-            .  $container->getParameter('etu.dolibarr.key')));
+            .'/api/index.php/members?DOLAPIKEY='
+            .$container->getParameter('etu.dolibarr.key')));
 
         $output->writeln('Sync it with our database...');
         $bar = new ProgressBar('%fraction% [%bar%] %percent%', '=>', ' ', 80, count($data));
@@ -68,14 +64,13 @@ This command helps you to synchronise database with BDE member db.
                 $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['personnalMail' => $userdata->email]);
             }
 
-
             // Update bde membership if found
             if ($user) {
                 $user->setBdeMembershipEnd($userdata->datefin ? \DateTime::createFromFormat('U', $userdata->datefin) : null);
                 $em->persist($user);
 
                 // Flush every X to not reach memory limit
-                if ($i%25 == 0) {
+                if ($i % 25 == 0) {
                     $em->flush();
                 }
             }

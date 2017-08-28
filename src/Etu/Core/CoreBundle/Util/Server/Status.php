@@ -130,7 +130,7 @@ class Status
     protected function initVersions()
     {
         $this->versions = [
-            'php' => phpversion(),
+            'php' => PHP_VERSION,
             'mysql' => mysqli_get_client_info(),
             'zend' => zend_version(),
         ];
