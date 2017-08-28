@@ -19,7 +19,7 @@ class ImportCommand extends ContainerAwareCommand
     {
         $this
             ->setName('etu:uv:import')
-            ->setDescription("Import UV informations from the PDF official guide.\u{a0}Script made for the 2015-2016 version of the guide")
+            ->setDescription('Import UV informations from the PDF official guide. Script made for the 2015-2016 version of the guide')
             ->addArgument('url', InputArgument::REQUIRED, 'The file URL to download');
     }
 
@@ -47,7 +47,7 @@ class ImportCommand extends ContainerAwareCommand
         $output->writeln('
 	Welcome to the EtuUTT UV manager
 
-This command helps you to import the official UTT\u{a0}UV guide.
+This command helps you to import the official UTT UV guide.
 This command has been updated for the 2015-2016 guide. If you want to use it
 for another version, you will have to update this parser.');
 
