@@ -196,6 +196,20 @@
                         <div class="clear"></div>
                     </div>
 
+                    <div class="subblock">
+                        <div class="profile-infos-label hidden-for-phones">
+                            {{ 'user.profile.profile.daymail'|trans }}
+                        </div>
+                        <div class="profile-infos-value">
+                            {% if app.user.daymail %}
+                                {{ 'user.profile.profile.daymail_yes'|trans }}
+                            {% else %}
+                                {{ 'user.profile.profile.daymail_no'|trans }}
+                            {% endif %}
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+
                     <p class="profile-block-action">
                         <a href="{{ path('user_profile_edit') }}" class="btn">
                             {{ 'user.profile.profile.edit'|trans }}

@@ -50,6 +50,8 @@ but if they want to connect, you will have to set a password for them.
 
         $container = $this->getContainer();
 
+        $sympaCommands = '';
+
         // Users
         $output->writeln('Finding users differences ...');
 
@@ -105,6 +107,9 @@ but if they want to connect, you will have to set a password for them.
             /** @var $user ElementToImport */
             foreach ($usersImportIterator as $user) {
                 $user->import(false, $bde);
+                if ($user->getElement() instanceof User && $user->getElement()->getDaymail()) {
+                    $sympaCommands .= 'QUIET ADD daymail '.$user->getElement()->getMail().' '.$user->getElement()->getFullName()."\n";
+                }
                 $bar->update($i);
                 ++$i;
             }
@@ -154,6 +159,7 @@ but if they want to connect, you will have to set a password for them.
                     'There is 1 user (`%s`) which is not in the LDAP but in the database.',
                     $item->getElement()->getLogin()
                 ));
+                $sympaCommands .= 'QUIET DELETE daymail '.$item->getElement()->getMail()."\n";
                 $item->remove();
                 $output->writeln("\n1 flagged as not in LDAP anymore");
             } else {
@@ -179,6 +185,7 @@ but if they want to connect, you will have to set a password for them.
                 // Flag them as not in LDAP anymore
                 $remove = $usersRemoveIterator->all();
                 foreach ($remove as $item) {
+                    $sympaCommands .= 'QUIET DELETE daymail '.$item->getElement()->getMail()."\n";
                     $item->remove();
                 }
 
@@ -187,6 +194,15 @@ but if they want to connect, you will have to set a password for them.
                 $output->writeln(sprintf("\n%s user(s) flagged as not in LDAP anymore", count($remove)));
             }
         }
+
+        // Update daymail list
+        $mailer = $this->getContainer()->get('mailer');
+        $output->writeln("Commands sent to sympa to update daymail list: \n".$sympaCommands."\n\n");
+        $message = \Swift_Message::newInstance('Daymail subscription')
+           ->setFrom(['ung@utt.fr' => 'UNG'])
+           ->setTo(['sympa@utt.fr'])
+           ->setBody($sympaCommands);
+        $result = $mailer->send($message);
 
         $output->writeln("Done.\n");
     }

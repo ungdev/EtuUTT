@@ -62,6 +62,7 @@ class ElementToRemove
         $user->setRoom(null);
         $user->setTitle(null);
         $user->setIsInLDAP(false);
+        $user->setDaymail(false);
         if (mb_substr($user->getPhoneNumber(), 0, 5) === '03257') {
             $user->setPhoneNumber(null);
         }

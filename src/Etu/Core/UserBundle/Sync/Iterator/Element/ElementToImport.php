@@ -118,6 +118,7 @@ class ElementToImport
         $user->setIsStudent($this->element->getIsStudent());
         $user->setIsStaffUTT(!$this->element->getIsStudent());
         $user->setIsInLDAP(true);
+        $user->setDaymail($this->element->getIsStudent() && !in_array('epf', $values['edupersonaffiliation']));
         $user->setUvs(implode('|', $this->element->getUvs()));
 
         $this->doctrine->getManager()->persist($user);

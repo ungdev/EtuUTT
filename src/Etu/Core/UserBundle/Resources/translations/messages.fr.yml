@@ -313,6 +313,9 @@ user:
             uploads: Gestionnaire de fichiers envoyés
             uploads_explain: Le gestionnaire de fichier permet d'envoyer, de modifier ou de supprimer les fichiers que vous avez envoyé à partir de l'éditeur de message.
             uploads_action: Accéder au gestionnaire de fichier
+            daymail: Reçoit le Daymail
+            daymail_yes: Oui
+            daymail_no: Non
         profileAvatar:
             title: Ma photo
             file: Image
@@ -347,6 +350,7 @@ user:
             birthdayOnlyAge:
                 label: Afficher mon âge
                 desc: Afficher seulement l'âge sur le profil (si la date de naissance est privée)
+            daymail: Recevoir le daymail
             no_badge: Aucun badge pour le moment. Participez pour en gagner !
         trombiEdit:
             title: Mon trombinoscope

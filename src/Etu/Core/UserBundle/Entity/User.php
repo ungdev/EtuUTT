@@ -522,6 +522,13 @@ class User implements UserInterface, EquatableInterface, \Serializable
     protected $bdeMembershipEnd;
 
     /**
+     * @var bool Subscribed to daymail
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $daymail;
+
+    /**
      * @var \DateTime
      *
      * @Gedmo\Timestampable(on="create")
@@ -1966,6 +1973,31 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public function getReadOnlyExpirationDate()
     {
         return $this->readOnlyExpirationDate;
+    }
+
+    /**
+     * Set daymail.
+     *
+     * @param bool daymail
+     * @param mixed $daymail
+     *
+     * @return User
+     */
+    public function setDaymail($daymail)
+    {
+        $this->daymail = $daymail;
+
+        return $this;
+    }
+
+    /**
+     * Get daymail.
+     *
+     * @return bool
+     */
+    public function getDaymail()
+    {
+        return $this->daymail;
     }
 
     /**
