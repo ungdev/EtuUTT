@@ -14,6 +14,7 @@ use Etu\Core\UserBundle\Model\CountriesManager;
 use Etu\Core\UserBundle\Schedule\Helper\ScheduleBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -169,7 +170,7 @@ class ProfileController extends Controller
             ->add('twitter', null, ['required' => false, 'label' => 'user.profile.profileEdit.twitter'])
             ->add('linkedin', null, ['required' => false, 'label' => 'user.profile.profileEdit.linkedin'])
             ->add('viadeo', null, ['required' => false, 'label' => 'user.profile.profileEdit.viadeo'])
-            ->add('daymail', null, [
+            ->add('daymail', CheckboxType::class, [
                 'required' => false,
                 'label' => 'user.profile.profileEdit.daymail', ])
             ->add('submit', SubmitType::class, ['label' => 'user.profile.profileEdit.edit'])
