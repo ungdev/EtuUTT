@@ -169,6 +169,9 @@ class ProfileController extends Controller
             ->add('twitter', null, ['required' => false, 'label' => 'user.profile.profileEdit.twitter'])
             ->add('linkedin', null, ['required' => false, 'label' => 'user.profile.profileEdit.linkedin'])
             ->add('viadeo', null, ['required' => false, 'label' => 'user.profile.profileEdit.viadeo'])
+            ->add('daymail', null, [
+                'required' => false,
+                'label' => 'user.profile.profileEdit.daymail', ])
             ->add('submit', SubmitType::class, ['label' => 'user.profile.profileEdit.edit'])
             ->getForm();
 
@@ -176,15 +179,34 @@ class ProfileController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
+            // Badges
             if ($user->getProfileCompletion() == 100) {
                 BadgesManager::userAddBadge($user, 'profile_completed');
             } else {
                 BadgesManager::userRemoveBadge($user, 'profile_completed');
             }
-
             BadgesManager::userPersistBadges($user);
+
             $em->persist($user);
             $em->flush();
+
+            // (Un)Subscribe to daymail
+            $mailer = $this->get('mailer');
+            if (!empty($user->getMail())) {
+                if ($user->getDaymail()) {
+                    $message = \Swift_Message::newInstance('Daymail subscription')
+                       ->setFrom(['ung@utt.fr' => 'UNG'])
+                       ->setTo(['sympa@utt.fr'])
+                       ->setBody('QUIET ADD daymail '.$user->getMail().' '.$user->getFullName());
+                    $result = $mailer->send($message);
+                } else {
+                    $message = \Swift_Message::newInstance('Daymail subscription')
+                       ->setFrom(['ung@utt.fr' => 'UNG'])
+                       ->setTo(['sympa@utt.fr'])
+                       ->setBody('QUIET DELETE daymail '.$user->getMail());
+                    $result = $mailer->send($message);
+                }
+            }
 
             $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',

@@ -65,6 +65,14 @@ class EveryUserProvider implements UserProviderInterface
             if ($ldapUser instanceof ldapUser) {
                 $import = new ElementToImport($this->doctrine, $ldapUser);
                 $user = $import->import(true);
+
+                if ($user instanceof UserEntity && $user->getDaymail()) {
+                    $message = \Swift_Message::newInstance('Daymail subscription')
+                       ->setFrom(['ung@utt.fr' => 'UNG'])
+                       ->setTo(['sympa@utt.fr'])
+                       ->setBody('QUIET ADD daymail '.$user->getMail().' '.$user->getFullName());
+                    $result = $mailer->send($message);
+                }
             }
             // We caught an organization not in database, we ask them to call and administrator
             elseif ($ldapUser instanceof LdapOrganization) {
