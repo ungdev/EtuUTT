@@ -106,9 +106,9 @@ but if they want to connect, you will have to set a password for them.
 
             /** @var $user ElementToImport */
             foreach ($usersImportIterator as $user) {
-                $user->import(false, $bde);
-                if ($user->getElement() instanceof User && $user->getElement()->getDaymail()) {
-                    $sympaCommands .= 'QUIET ADD daymail '.$user->getElement()->getMail().' '.$user->getElement()->getFullName()."\n";
+                $newUser = $user->import(false, $bde);
+                if ($newUser instanceof User && $newUser->getDaymail()) {
+                    $sympaCommands .= 'QUIET ADD daymail '.$newUser->getMail().' '.$newUser->getFullName()."\n";
                 }
                 $bar->update($i);
                 ++$i;
