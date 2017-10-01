@@ -282,11 +282,185 @@ class SecurityController extends ApiController
 
         return [
             'client' => $client,
+            'clientName' => $client->getName(),
             'user' => $client->getUser(),
             'scopes' => $scopes,
             'form' => $form->createView(),
         ];
     }
+
+    /**
+     * Classic Oauth2 auth cannot be used for a client application (android app for instance) because it would
+     * require to store the app_secret in the local code of the application wich would make it not really secret.
+     *
+     * To solve this problem, you can redirect the user to this page `https://etu.utt.fr/api/oauth/client-create?name=Name of your app&device=Android OnePlus 5&device_uid=ABCDEFGXYZ&scope=public private_user_account`
+     * (via a webview). User will authenticate and then be redirected to `http://etuutt.invalid/?client_id=XXXXX&client_secret=YYYY`.
+     * This URI is invalid and will show nothing, but you can easily detect it from you application, close the webview
+     * and parse the uri to get the generated `client_id` and `client_secret`.
+     *
+     * Once you got those parameters you can send them to `/api/oauth/token` with `grant_type=client_credentials` to get
+     * a token that you can use with the whole api
+     *
+     * In case of failure, user will be redirected to: `http://etuutt.invalid/?error=authentification_canceled&error_message=L\'utilisateur a annulé l\'authentification.`
+     *
+     * @ApiDoc(
+     *   section = "OAuth",
+     *   description = "Display the authorization page for user to generate new client credential for client applciations (android app for instance)",
+     *   parameters = {
+     *      {
+     *          "name" = "name",
+     *          "required" = true,
+     *          "dataType" = "string",
+     *          "description" = "Name of the application that will be shown for the granting page. (3 to 32 characters)"
+     *      },
+     *      {
+     *          "name" = "device",
+     *          "required" = true,
+     *          "dataType" = "string",
+     *          "description" = "Name of the device (please try to be explicit by giving a lot of details: OS, Brand, model, etc.) (3 to 128 characters)"
+     *      },
+     *      {
+     *          "name" = "device_uid",
+     *          "required" = true,
+     *          "dataType" = "string",
+     *          "description" = "Universal ID of the device: try to give here and ID that will no change if the application is reinstalled but is different for all devices. If you don't have something like this, you can generate a hash from all device data you got. (3 to 128 characters)"
+     *      },
+     *      {
+     *          "name" = "scope",
+     *          "required" = false,
+     *          "dataType" = "string",
+     *          "description" = "List of the scopes you need for the token, separated by spaces, for instance: `public private_user_account`. If not provided, grant only access to public scope."
+     *      },
+     *   }
+     * )
+     *
+     * @Route("/client-create", name="oauth_client_create")
+     * @Method({"GET", "POST"})
+     * @Template()
+     */
+    public function clientCreateAction(Request $request)
+    {
+        /*
+         * Initialize
+         */
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        if (!$request->query->has('name') || !$request->query->has('device') || !$request->query->has('device_uid')
+            || strlen(trim($request->query->get('name'))) < 3
+            || strlen(trim($request->query->get('device'))) < 3
+            || strlen(trim($request->query->get('device_uid'))) < 3
+        ) {
+            $this->get('session')->getFlashBag()->set('message', [
+                'type' => 'error',
+                'message' => 'L\'authentification n\'a pas été possible car les parametres donné par l\'application ne sont pas valide. Contactez l\'auteur de l\'application.',
+            ]);
+
+            return $this->redirect($this->generateUrl('homepage'));
+        }
+
+        // Check if user is logged in and can use external applications
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY') && !$this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            $this->get('session')->getFlashBag()->set('message', [
+                'type' => 'error',
+                'message' => $this->get('translator')->trans('user.api_login.login', ['%name%' => $client->getName()]),
+            ]);
+        } elseif (!$this->isGranted('ROLE_API_USE')) {
+            $this->get('session')->getFlashBag()->set('message', [
+                'type' => 'error',
+                'message' => $this->get('translator')->trans('user.api_login.orga'),
+            ]);
+
+            return $this->redirect($this->generateUrl('homepage'));
+        }
+        $this->denyAccessUnlessGranted('ROLE_API_USE');
+
+        // Get current user
+        $user = $this->getUser();
+
+        // Read scope
+        $requestedScopes = ['public'];
+        if ($request->query->has('scope')) {
+            $requestedScopes = array_unique(array_merge($requestedScopes, explode(' ', $request->query->get('scope'))));
+        }
+
+        // Scopes
+        $qb = $em->createQueryBuilder();
+
+        /** @var OauthScope[] $scopes */
+        $scopes = $qb->select('s')
+            ->from('EtuCoreApiBundle:OauthScope', 's')
+            ->where($qb->expr()->in('s.name', $requestedScopes))
+            ->orderBy('s.weight', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        // Approve form
+        $form = $this->createFormBuilder()
+            ->add('state', HiddenType::class, ['data' => $request->query->get('state', '')])
+            ->add('name', HiddenType::class, ['data' => $request->query->get('name', '')])
+            ->add('device', HiddenType::class, ['data' => $request->query->get('device', '')])
+            ->add('device_uid', HiddenType::class, ['data' => $request->query->get('device_uid', '')])
+            ->add('accept', SubmitType::class, ['label' => 'Oui, accepter', 'attr' => ['class' => 'btn btn-primary', 'value' => '1']])
+            ->add('cancel', SubmitType::class, ['label' => 'Non, annuler', 'attr' => ['class' => 'btn btn-default', 'value' => '0']])
+            ->getForm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $formData = $request->request->get('form');
+
+            if (isset($formData['accept'])) {
+                // Remove same app name on same device of same user
+                $em->createQueryBuilder()
+                    ->delete()
+                    ->from('EtuCoreApiBundle:OauthClient', 'c')
+                    ->where('c.native = 1')
+                    ->andWhere('c.name = :name')
+                    ->andWhere('c.device = :device')
+                    ->andWhere('c.deviceUID = :deviceUID')
+                    ->andWhere('c.user = :user')
+                    ->setParameter('name', $formData['name'])
+                    ->setParameter('device', $formData['device'])
+                    ->setParameter('deviceUID', $formData['device_uid'])
+                    ->setParameter('user', $this->getUser()->getId())
+                    ->getQuery()
+                    ->execute();
+
+                // Create the new one
+                $client = new OauthClient();
+                $client->setUser($this->getUser());
+
+                foreach ($scopes as $scope) {
+                    $client->addScope($scope);
+                }
+
+                $client->setRedirectUri('http://etuutt.invalid');
+                $client->setName($formData['name']);
+                $client->setDevice($formData['device']);
+                $client->setDeviceUID($formData['device_uid']);
+                $client->setNative(1);
+
+                $client->generateClientId();
+                $client->generateClientSecret();
+
+                $em->persist($client);
+                $em->flush();
+
+                $client->upload();
+
+                return $this->redirect('http://etuutt.invalid/?client_id='.$client->getClientId().'&client_secret='.$client->getClientSecret().'&state='.$formData['state']);
+            }
+
+            return $this->redirect('http://etuutt.invalid/?error=authentification_canceled&error_message=L\'utilisateur a annulé l\'authentification.');
+        }
+
+        return $this->render('EtuCoreApiBundle:Security:authorize.html.twig', [
+            'scopes' => $scopes,
+            'form' => $form->createView(),
+            'clientName' => substr(trim($request->query->get('name')), 0, 32),
+        ]);
+    }
+
 
     /**
      * Create an `access_token` to use the API.

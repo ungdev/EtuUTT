@@ -1,22 +1,28 @@
 {% extends '::layout-oauth.html.twig' %}
 
+{% block title %}{{ clientName }}{% endblock %}
+
 {% block content %}
     <div class="padding20-all">
         <br />
 
         <h4 class="align-center">
-            L'application <strong>{{ client.name }}</strong> souhaite accéder à vos informations
+            L'application <em>{{ clientName }}</em> souhaite accéder à vos informations
         </h4>
 
         <div class="align-center">
             <div class="api-auth-app">
-                <div class="api-auth-app-image">
-                    <img src="{{ asset('uploads/apps/' ~ client.icon) }}" />
-                </div>
+                {% if client.icon is defined %}
+                    <div class="api-auth-app-image">
+                        <img src="{{ asset('uploads/apps/' ~ client.icon) }}" />
+                    </div>
+                {% endif %}
                 <div class="api-auth-app-infos">
                     <p>
-                        <strong>{{ client.name }}</strong><br />
-                        <em><small class="muted">Gérée par {{ user.fullName }}</small></em>
+                        <strong>{{ clientName }}</strong><br />
+                        {% if user.fullName is defined %}
+                            <em><small class="muted">Gérée par {{ user.fullName }}</small></em>
+                        {% endif %}
                     </p>
 
                     <p class="muted">
@@ -39,7 +45,7 @@
             </p>
 
             <p>
-                Acceptez-vous de donner ces informations à l'application <strong>{{ client.name }}</strong> ?
+                Acceptez-vous de donner ces informations à l'application <strong>{{ clientName }}</strong> ?
             </p>
 
             {{ form_start(form) }}
