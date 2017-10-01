@@ -306,6 +306,8 @@ user:
             passions: Passions
             badges: Badges
             no_badge: "%firstName% n'a aucun badge pour le moment"
+            native_apps: Application mobiles
+            native_apps_explain: Les applications mobiles suivantes ont accès à vos données :
             apps: Applications externes
             apps_explain: Les applications suivantes ont accès à vos données :
             revoke_app: Révoquer l'accès

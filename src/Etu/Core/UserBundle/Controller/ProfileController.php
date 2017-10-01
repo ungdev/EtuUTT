@@ -45,9 +45,18 @@ class ProfileController extends Controller
             ->getQuery()
             ->getResult();
 
+        $nativeApps = $em->createQueryBuilder()
+            ->select('c')
+            ->from('EtuCoreApiBundle:OauthClient', 'c')
+            ->where('c.native = 1')
+            ->andWhere('c.user = :user')
+            ->setParameter('user', $this->getUser()->getId())
+            ->getQuery()
+            ->getResult();
+
         return [
-            'hasApps' => !empty($apps),
             'apps' => $apps,
+            'nativeApps' => $nativeApps,
         ];
     }
 
@@ -104,6 +113,25 @@ class ProfileController extends Controller
             ->setParameter('user', $this->getUser()->getId())
             ->getQuery()
             ->execute();
+
+        return $this->redirect($this->generateUrl('user_profile'));
+    }
+
+
+
+    /**
+     * @Route("/user/apps/revoke-native/{clientId}", name="user_profile_revoke_native_app")
+     */
+    public function nativeAppRevokeAction(OauthClient $client)
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        // Remove client
+        $em->remove($client);
+        $em->flush();
 
         return $this->redirect($this->generateUrl('user_profile'));
     }

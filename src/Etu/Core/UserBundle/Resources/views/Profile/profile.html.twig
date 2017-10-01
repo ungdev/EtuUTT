@@ -288,7 +288,55 @@
                     </p>
                 </div>
 
-                {% if hasApps %}
+                {% if nativeApps is not empty %}
+                    <div class="block">
+                        <div class="block-title">{{ 'user.profile.profile.native_apps'|trans }}</div>
+
+                        <p class="padding20-sides">
+                            {{ 'user.profile.profile.native_apps_explain'|trans }}
+                        </p>
+
+                        <ul class="nav nav-list">
+                            {% for client in nativeApps %}
+
+                                <li>
+                                    <a href="javascript:void(0);"
+                                       onclick="$('#revoke-{{ client.clientId }}').show(); return false;">
+                                       {{ client.name }} ({{ client.device }})
+                                    </a>
+
+                                    <div id="revoke-{{ client.clientId }}" class="overlay">
+                                        <div class="confirmation">
+                                            <p>
+                                                L'application <strong>{{ client.name }}</strong> peut lire les données
+                                                suivantes de votre compte :
+                                            </p>
+
+                                            <ul>
+                                                {% for scope in client.scopes %}
+                                                    <li>{{ scope.description }}</li>
+                                                {% endfor %}
+                                            </ul>
+
+                                            <hr />
+
+                                            <a href="{{ path('user_profile_revoke_native_app', { 'clientId': client.clientId }) }}" class="btn btn-primary">
+                                                {{ 'user.profile.profile.revoke_app'|trans }}
+                                            </a>
+                                            <a href="javascript:void(0);" class="btn btn-default"
+                                               onclick="$('#revoke-{{ client.clientId }}').hide(); return false;">
+                                                {{ 'user.profile.profile.revoke_cancel'|trans }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+                    </div>
+                {% endif %}
+
+                {% if apps is not empty %}
                     <div class="block">
                         <div class="block-title">{{ 'user.profile.profile.apps'|trans }}</div>
 
