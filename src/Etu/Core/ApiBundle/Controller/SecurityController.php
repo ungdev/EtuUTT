@@ -302,9 +302,9 @@ class SecurityController extends ApiController
         $em = $this->getDoctrine()->getManager();
 
         if (!$request->query->has('name') || !$request->query->has('device') || !$request->query->has('device_uid')
-            || strlen(trim($request->query->get('name'))) < 3
-            || strlen(trim($request->query->get('device'))) < 3
-            || strlen(trim($request->query->get('device_uid'))) < 3
+            || mb_strlen(trim($request->query->get('name'))) < 3
+            || mb_strlen(trim($request->query->get('device'))) < 3
+            || mb_strlen(trim($request->query->get('device_uid'))) < 3
         ) {
             $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'error',
@@ -412,10 +412,9 @@ class SecurityController extends ApiController
         return $this->render('EtuCoreApiBundle:Security:authorize.html.twig', [
             'scopes' => $scopes,
             'form' => $form->createView(),
-            'clientName' => substr(trim($request->query->get('name')), 0, 32),
+            'clientName' => mb_substr(trim($request->query->get('name')), 0, 32),
         ]);
     }
-
 
     /**
      * Create an `access_token` to use the API.

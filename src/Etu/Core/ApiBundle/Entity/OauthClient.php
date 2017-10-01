@@ -60,7 +60,7 @@ class OauthClient
     private $name;
 
     /**
-     * Device UID for native applications
+     * Device UID for native applications.
      *
      * @var string
      *
@@ -69,7 +69,7 @@ class OauthClient
     private $deviceUID;
 
     /**
-     * Readeable device name that will be shown to user for native applications
+     * Readeable device name that will be shown to user for native applications.
      *
      * @var string
      *
@@ -272,6 +272,7 @@ class OauthClient
      * Set deviceUID.
      *
      * @param string deviceUID
+     * @param mixed $deviceUID
      *
      * @return OauthClient
      */
@@ -296,6 +297,7 @@ class OauthClient
      * Set device.
      *
      * @param string device
+     * @param mixed $device
      *
      * @return OauthClient
      */
@@ -320,6 +322,7 @@ class OauthClient
      * Set if native.
      *
      * @param bool native
+     * @param mixed $native
      *
      * @return OauthClient
      */
