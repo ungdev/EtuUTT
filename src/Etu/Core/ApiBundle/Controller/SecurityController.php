@@ -38,13 +38,6 @@ class SecurityController extends ApiController
      *
      * And using this code (in the parameter `code`), you are now able to get an `access_token` using `/api/oauth/token`.
      *
-     * For trusted application, access will be granted without user authentication and without asking. This trusted mode
-     * has been created for a specific situation, where user is authenticated whith its student card. In this
-     * case, user is authenticated by the client application, and not EtuUTT. EtuUTT have to trust the client application.
-     * Please use only this mode if it's really necessary. The application has to give a stuend_id or a login parameter
-     * to automatically authenticate user. Note that it's not possible to restrict scope of this application, because
-     * user will automatically accept if more scope are requested by application.
-     *
      * If an error occured on the page and the client_id is provided, the user will be redirect to:
      * `http://myapp.com/?error=<error_type>&error_description=<error_description>` so you can handle the problem.
      *
@@ -115,43 +108,24 @@ class SecurityController extends ApiController
             return $this->redirect($this->generateUrl('homepage'));
         }
 
-        // Automatically authenticate user for trusted applications
-        $user = null;
-        if ($client->getTrusted()) {
-            if ($request->query->get('login')) {
-                $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => $request->query->get('student_id')]);
-            } elseif ($request->query->get('student_id')) {
-                $user = $em->getRepository('EtuUserBundle:User')->findOneBy(['studentId' => $request->query->get('student_id')]);
-            }
+        // Check if user is logged in and can use external applications
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY') && !$this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            $this->get('session')->getFlashBag()->set('message', [
+                'type' => 'error',
+                'message' => $this->get('translator')->trans('user.api_login.login', ['%name%' => $client->getName()]),
+            ]);
+        } elseif (!$this->isGranted('ROLE_API_USE')) {
+            $this->get('session')->getFlashBag()->set('message', [
+                'type' => 'error',
+                'message' => $this->get('translator')->trans('user.api_login.orga'),
+            ]);
 
-            if (!$user) {
-                $this->get('session')->getFlashBag()->set('message', [
-                    'type' => 'error',
-                    'message' => 'L\'utilisateur n\'a pas pus être identifié.',
-                ]);
-
-                return $this->redirect($this->generateUrl('homepage'));
-            }
-        } else {
-            // Check if user is logged in and can use external applications
-            if (!$this->isGranted('IS_AUTHENTICATED_FULLY') && !$this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-                $this->get('session')->getFlashBag()->set('message', [
-                    'type' => 'error',
-                    'message' => $this->get('translator')->trans('user.api_login.login', ['%name%' => $client->getName()]),
-                ]);
-            } elseif (!$this->isGranted('ROLE_API_USE')) {
-                $this->get('session')->getFlashBag()->set('message', [
-                    'type' => 'error',
-                    'message' => $this->get('translator')->trans('user.api_login.orga'),
-                ]);
-
-                return $this->redirect($this->generateUrl('homepage'));
-            }
-            $this->denyAccessUnlessGranted('ROLE_API_USE');
-
-            // Get current user
-            $user = $this->getUser();
+            return $this->redirect($this->generateUrl('homepage'));
         }
+        $this->denyAccessUnlessGranted('ROLE_API_USE');
+
+        // Get current user
+        $user = $this->getUser();
 
         $requestedScopes = ['public'];
 
@@ -165,26 +139,7 @@ class SecurityController extends ApiController
             'user' => $user,
         ]);
 
-        if ($client->getTrusted()) {
-            $authorizationCode = new OauthAuthorizationCode();
-            $authorizationCode->setUser($user);
-            $authorizationCode->setClient($client);
-            $authorizationCode->generateCode();
-
-            // We take all scope decler
-            foreach ($authorization->getScopes() as $scope) {
-                $authorizationCode->addScope($scope);
-            }
-
-            $em->persist($authorizationCode);
-            $em->flush();
-
-            if ($request->query->has('state')) {
-                return $this->redirect($client->getRedirectUri().'?authorization_code='.$authorizationCode->getCode().'&code='.$authorizationCode->getCode().'&state='.$request->query->get('state', ''));
-            }
-
-            return $this->redirect($client->getRedirectUri().'?authorization_code='.$authorizationCode->getCode().'&code='.$authorizationCode->getCode());
-        } elseif ($authorization) {
+        if ($authorization) {
             $authorizationScopes = [];
 
             foreach ($authorization->getScopes() as $scope) {
