@@ -138,7 +138,8 @@ nelmio_api_doc:
         authentication:
             name: access_token
             delivery: query
-            custom_endpoint: true
+            custom_endpoint: false
+            
 # API Cross-Origin Resource Sharing configuration
 nelmio_cors:
     defaults:

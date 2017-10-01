@@ -2,12 +2,35 @@
 
 {% block title %}Développeurs{% endblock %}
 
+{% block javascripts %}
+    <script>
+    $("#generate-token-button").click(function(){
+        $.post("/api/oauth/token", {
+            grant_type: 'client_credentials',
+            client_id: '{{client.clientId}}',
+            client_secret: '{{client.clientSecret}}',
+            scopes: '{% for scope in client.scopes %}{{ scope.name }} {% endfor %}',
+        },
+        function(data, status){
+            if(!data.access_token) {
+                $("#generate-token-button").replaceWith('<div class="alert alert-danger">La génération du token a échoué</div>')
+            }
+            else {
+                $("#generate-token-button").replaceWith('<div class="alert alert-success">Votre token est <code>' + data.access_token + '</code></div>')
+            }
+        });
+    });
+    </script>
+{% endblock %}
+
+
 {% block content %}
     <div class="padding20-all">
         {% if app.request.locale != 'fr' %}
             <div class="alert alert-warning">
                 The EtuUTT developpers panel is not available in your language.
-                For the moment, it exists only in French.
+                For the moment, it exists only in French. If you don't speak french and need a translation,
+                please send an email to ung@utt.fr and we will translate it.
             </div>
         {% endif %}
 
@@ -44,6 +67,7 @@
             </div>
 
             <div class="span8">
+                <button class="btn btn-primary pull-right" id="generate-token-button" title="Génère un token temporaire en votre nom sur cette application" >Génerer un token</button>
                 <h4>{{ client.name }} <small>(Client ID: {{ client.clientId }})</small></h4>
 
                 <hr />
