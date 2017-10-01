@@ -60,6 +60,35 @@ class OauthClient
     private $name;
 
     /**
+     * Device UID for native applications
+     *
+     * @var string
+     *
+     * @ORM\Column(type="string", length=128)
+     */
+    private $deviceUID;
+
+    /**
+     * Readeable device name that will be shown to user for native applications
+     *
+     * @var string
+     *
+     * @ORM\Column(type="string", length=64)
+     */
+    private $device;
+
+    /**
+     * If native client application. Only `client_credentials` mode is possible
+     * and it will appear as "mobile application" on user profile and not in dev
+     * pannel.
+     *
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $native = false;
+
+    /**
      * A trusted app don't needs user authencation and autorisation
      * to access user data.
      *
@@ -247,6 +276,78 @@ class OauthClient
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set deviceUID.
+     *
+     * @param string deviceUID
+     *
+     * @return OauthClient
+     */
+    public function setDeviceUID($deviceUID)
+    {
+        $this->deviceUID = $deviceUID;
+
+        return $this;
+    }
+
+    /**
+     * Get deviceUID.
+     *
+     * @return string
+     */
+    public function getDeviceUID()
+    {
+        return $this->deviceUID;
+    }
+
+    /**
+     * Set device.
+     *
+     * @param string device
+     *
+     * @return OauthClient
+     */
+    public function setDevice($device)
+    {
+        $this->device = $device;
+
+        return $this;
+    }
+
+    /**
+     * Get device.
+     *
+     * @return string
+     */
+    public function getDevice()
+    {
+        return $this->device;
+    }
+
+    /**
+     * Set if native.
+     *
+     * @param bool native
+     *
+     * @return OauthClient
+     */
+    public function setNative($native)
+    {
+        $this->native = $native;
+
+        return $this;
+    }
+
+    /**
+     * Is native.
+     *
+     * @return bool
+     */
+    public function getNative()
+    {
+        return $this->native;
     }
 
     /**
