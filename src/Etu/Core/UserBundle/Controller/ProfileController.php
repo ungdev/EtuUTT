@@ -117,8 +117,6 @@ class ProfileController extends Controller
         return $this->redirect($this->generateUrl('user_profile'));
     }
 
-
-
     /**
      * @Route("/user/apps/revoke-native/{clientId}", name="user_profile_revoke_native_app")
      */
