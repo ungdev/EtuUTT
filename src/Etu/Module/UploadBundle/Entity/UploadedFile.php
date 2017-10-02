@@ -37,7 +37,7 @@ class UploadedFile
      *
      * @ORM\Column(type="string", length=30)
      * @Assert\NotBlank()
-     * @Assert\Length(min = "3", max = "30")
+     * @Assert\Length(min = "3", max = "128")
      */
     protected $name;
 

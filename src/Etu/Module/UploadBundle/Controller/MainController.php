@@ -45,7 +45,7 @@ class MainController extends Controller
         $file->setValidated(false);
 
         $form = $this->createFormBuilder($file)
-            ->add('name', TextType::class, ['label' => 'upload.main.index.name'])
+            ->add('name', TextType::class, ['label' => 'upload.main.index.name', 'attr' => ['maxlength' => 128]])
             ->add('description', TextareaType::class, ['label' => 'upload.main.index.description', 'required' => false]);
 
         $organization_id = ($organization) ? $organization->getId() : null;

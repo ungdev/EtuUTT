@@ -29,7 +29,7 @@ tinymce.init({
     ],
     toolbar2: 'formatselect styleselect | bold italic str1ikethrough removeformat | alignleft aligncenter alignright alignjustify '
         + '| bullist numlist outdent indent | charmap emoticons | codesample hr toc blockquote | image link media | table',
-    toolbar1: ' undo redo restoredraft | copy cut paste | fullscreen searchreplace spellchecker code | visualblocks visualchars',
+    toolbar1: ' undo redo restoredraft | copy cut paste | searchreplace spellchecker code | visualblocks visualchars',
     content_css: '/assets/min/etuutt.css',
 
     block_formats: 'Titre 1=h2;Titre 2=h3;Titre 3=h4;Titre 4=h5;Titre 5=h6;Paragraph=p;Preformatted=pre;',
@@ -263,11 +263,11 @@ tinymce.init({
     menubar: false,
     plugins: [
         'autolink autoresize autosave charmap code emoticons fullscreen hr lists',
-        'image imagetools link paste searchreplace spellchecker textpattern visualblocks visualchars wordcount'
+        'image imagetools link paste searchreplace textpattern visualblocks visualchars wordcount'
     ],
     toolbar2: 'formatselect | bold italic str1ikethrough removeformat | alignleft aligncenter alignright alignjustify '
     + '| bullist numlist outdent indent | charmap emoticons | hr | image link',
-    toolbar1: ' undo redo restoredraft | copy cut paste | fullscreen searchreplace spellchecker code | visualblocks visualchars',
+    toolbar1: ' undo redo restoredraft | copy cut paste | fullscreen searchreplace code | visualblocks visualchars',
 
     block_formats: 'Titre 1=h3;Titre 2=h4;Titre 3=h5;Titre 4=h6;Paragraph=p;',
     relative_urls: false,

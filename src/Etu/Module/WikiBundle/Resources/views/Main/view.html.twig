@@ -12,7 +12,7 @@
 {% block content %}
     {% include "@EtuModuleWiki/Main/part_headbar.html.twig" with {'action': 'read'}  %}
     {% if not page.isDeleted() %}
-        <div class="padding20-sides mathjax">
+        <div class="padding20-sides mathjax etu-wiki-content">
             <h2>{{ page.title }}</h2>
             {{ (page.content??'')|purify }}
         </div>
