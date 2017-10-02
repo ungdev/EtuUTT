@@ -39,9 +39,10 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public const PRIVACY_PRIVATE = 200;
 
     public static $branches = [
-        'ISI' => 'ISI', 'MTE' => 'MTE', 'SI' => 'SI',
-        'SIT' => 'SIT', 'SM' => 'SM', 'SRT' => 'SRT',
-        'TC' => 'TC', 'PMOM' => 'PMOM',
+        'A2I' => 'A2I', 'GI' => 'GI',
+        'GM' => 'GM', 'ISI' => 'ISI',
+        'MTE' => 'MTE',  'MM' => 'MM',
+        'RT' => 'RT', 'TC' => 'TC',
     ];
 
     public static $levels = [
