@@ -23,12 +23,14 @@ class MainController extends Controller
 {
     /**
      * @param mixed $file
+     *
      * @return bool
      */
     public function isAcceptableImage($file)
     {
-        $acceptedPhotosExtensions = array("jpg", "jpeg", "png");
-        return in_array(strtolower($file->getExtension()), $acceptedPhotosExtensions);
+        $acceptedPhotosExtensions = ['jpg', 'jpeg', 'png'];
+
+        return in_array(mb_strtolower($file->getExtension()), $acceptedPhotosExtensions);
     }
 
     /**
