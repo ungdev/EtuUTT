@@ -22,6 +22,16 @@ use Symfony\Component\HttpFoundation\Request;
 class MainController extends Controller
 {
     /**
+     * @param mixed $file
+     * @return bool
+     */
+    public function isAcceptableImage($file)
+    {
+        $acceptedPhotosExtensions = array("jpg", "jpeg");
+        return in_array($file->getExtension(), $acceptedPhotosExtensions);
+    }
+
+    /**
      * @Route("/photo/{file}", requirements={"file"=".+"}, name="argentique_view")
      *
      * @param mixed $file
@@ -81,7 +91,7 @@ class MainController extends Controller
         $photo = false;
 
         foreach ($iterator as $file) {
-            if ($file->getExtension() == 'jpg' || $file->getExtension() == 'jpeg') {
+            if ($this->isAcceptableImage($file)) {
                 $size = getimagesize($file->getPathname());
 
                 // Landscape images only
@@ -195,7 +205,7 @@ class MainController extends Controller
                     'basename' => $basename,
                     'score' => $score,
                 ];
-            } elseif ($file->getExtension() == 'jpg' || $file->getExtension() == 'jpeg') {
+            } elseif ($this->isAcceptableImage($file)) {
                 $size = getimagesize($file->getPathname());
 
                 $photos[] = [
