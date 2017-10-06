@@ -28,7 +28,7 @@ class MainController extends Controller
     public function isAcceptableImage($file)
     {
         $acceptedPhotosExtensions = array("jpg", "jpeg");
-        return in_array($file->getExtension(), $acceptedPhotosExtensions);
+        return in_array(strtolower($file->getExtension()), $acceptedPhotosExtensions);
     }
 
     /**
