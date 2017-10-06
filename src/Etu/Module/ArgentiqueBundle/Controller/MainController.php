@@ -22,9 +22,11 @@ use Symfony\Component\HttpFoundation\Request;
 class MainController extends Controller
 {
     /**
-     * @param mixed $file
+     * Checks wether a file's extension is acceptable.
      *
-     * @return bool
+     * @param mixed $file File to check
+     *
+     * @return bool Test result
      */
     public function isAcceptableImage($file)
     {
