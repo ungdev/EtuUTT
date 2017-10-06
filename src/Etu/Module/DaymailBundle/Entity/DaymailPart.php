@@ -36,9 +36,9 @@ class DaymailPart
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=60)
      * @Assert\NotBlank()
-     * @Assert\Length(min = "10", max = "50")
+     * @Assert\Length(min = "10", max = "60")
      */
     protected $title;
 
