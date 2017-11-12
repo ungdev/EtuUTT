@@ -380,19 +380,21 @@ class MainController extends Controller
 
         $array = [];
         foreach ($events->all() as $event) {
-            if ($event->getPrivacy() == Event::PRIVACY_ORGAS && $this->getUser()->getMemberships()->count() <= 0) {
+            if ($event->getPrivacy() == Event::PRIVACY_ORGAS && (!($this->getUser() instanceof User) || $this->getUser()->getMemberships()->count() <= 0)) {
                 continue;
             }
             if ($event->getPrivacy() == Event::PRIVACY_MEMBERS) {
                 $continue = true;
-                foreach ($this->getUser()->getMemberships() as $membership) {
-                    if ($membership->getOrganization()->getId() == $event->getOrga()->getId()) {
-                        $continue = false;
-                        break;
+                if (!($this->getUser() instanceof User)) {
+                    foreach ($this->getUser()->getMemberships() as $membership) {
+                        if ($membership->getOrganization()->getId() == $event->getOrga()->getId()) {
+                            $continue = false;
+                            break;
+                        }
                     }
-                }
-                if ($continue) {
-                    continue;
+                    if ($continue) {
+                        continue;
+                    }
                 }
             }
             $array[] = [
