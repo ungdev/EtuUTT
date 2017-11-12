@@ -24,6 +24,11 @@ class UrlBuilder
     protected $webPath;
 
     /**
+     * @var string
+     */
+    protected $assetsVersion;
+
+    /**
      * @param $secret
      * @param ContainerInterface $container
      */
@@ -36,6 +41,8 @@ class UrlBuilder
         } else {
             $this->webPath = '';
         }
+
+        $this->assetsVersion = $container->get('assets.packages')->getVersion('');
     }
 
     /**
@@ -48,6 +55,9 @@ class UrlBuilder
      */
     public function generate($photo, $options = [])
     {
+        // Add cache parameter at the beginning
+        $options = [$this->assetsVersion => true] + $options;
+
         return $this->webPath.'/argentique/photo'.$this->builder->getUrl($photo, $options);
     }
 

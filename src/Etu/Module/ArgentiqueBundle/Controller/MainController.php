@@ -232,6 +232,12 @@ class MainController extends Controller
             }
         );
 
+        usort(
+            $photos, function ($a, $b) {
+                return strcasecmp($a['basename'], $b['basename']);
+            }
+        );
+
         return [
             'breadcrumb' => $breadcrumb,
             'directory' => $directory,
