@@ -28,7 +28,8 @@ framework:
         handler_id: session.handler.pdo
     fragments:       ~
     http_method_override: true
-    assets: ~
+    assets:
+        version: "cachebuster-%version_id%"
 
 # Twig Configuration
 twig:
