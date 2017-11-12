@@ -25,11 +25,11 @@ tinymce.init({
     menubar: false,
     plugins: [
         'autolink autoresize autosave charmap code codesample emoticons fullscreen hr   lists',
-        'image imagetools link media paste searchreplace spellchecker table textpattern toc visualblocks visualchars wordcount'
+        'image imagetools link media paste searchreplace table textpattern toc visualblocks visualchars wordcount'
     ],
     toolbar2: 'formatselect styleselect | bold italic str1ikethrough removeformat | alignleft aligncenter alignright alignjustify '
         + '| bullist numlist outdent indent | charmap emoticons | codesample hr toc blockquote | image link media | table',
-    toolbar1: ' undo redo restoredraft | copy cut paste | searchreplace spellchecker code | visualblocks visualchars',
+    toolbar1: ' undo redo restoredraft | copy cut paste | searchreplace code | visualblocks visualchars',
     content_css: '/assets/min/etuutt.css',
 
     block_formats: 'Titre 1=h2;Titre 2=h3;Titre 3=h4;Titre 4=h5;Titre 5=h6;Paragraph=p;Preformatted=pre;',
@@ -53,7 +53,7 @@ tinymce.init({
     image_caption: true,
     link_assume_external_targets: false,
     link_title: false,
-    spellchecker_language: 'fr_FR',
+    browser_spellcheck: true,
     textpattern_patterns: [
         {start: '*', end: '*', format: 'italic'},
         {start: '**', end: '**', format: 'bold'},
@@ -280,7 +280,7 @@ tinymce.init({
     image_caption: true,
     link_assume_external_targets: false,
     link_title: false,
-    spellchecker_language: 'fr_FR',
+    browser_spellcheck: true,
     content_style: 'img {max-width: 100%; max-height:400px;}',
 
     textpattern_patterns: [
