@@ -5,7 +5,6 @@ namespace Etu\Module\UploadBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Etu\Core\UserBundle\Entity\Organization;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Imagine\Gd\Image;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -108,9 +107,7 @@ class UploadedFile
      *
      * @var file
      *
-     * @Assert\File(maxSize = "10M",
-     *     mimeTypes = {"application/pdf", "text/plain", "text/html", "application/zip", "video/webm", "audio/webm", "audio/mpeg", "audio/mp3", "image/jpeg", "image/png", "image/gif"},
-     * )
+     * @Assert\File(maxSize = "10M")
      */
     public $file;
 
