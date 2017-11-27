@@ -20,8 +20,8 @@
         window.onload = function () {
             {% for photo in photos|slice(43) %}
                 gallery.append(
-                    '<a href="{{ argentique_photo(photo.pathname) }}" class="swipebox">' +
-                        '<img src="{{ argentique_photo(photo.pathname, { 'h': 240 }) }}" />' +
+                    '<a href="{{ argentique_photo(photo.pathname, { 'mode': 'slideshow' }) }}" class="swipebox">' +
+                        '<img src="{{ argentique_photo(photo.pathname, { 'mode': 'thumbnail' }) }}" />' +
                     '</a>'
                 );
             {% endfor %}
@@ -85,9 +85,8 @@
 
             <div class="argentique-gallery">
                 {% for photo in photos|slice(0, 43) %}
-                    <a href="{{ argentique_photo(photo.pathname) }}" class="swipebox">
-                        <img src="{{ argentique_photo(photo.pathname, { 'h': 240 }) }}"
-                                height="150px" width="{{ (photo.size.width / photo.size.ratio)|round }}px" />
+                    <a href="{{ argentique_photo(photo.pathname, { 'mode': 'slideshow' }) }}" class="swipebox">
+                        <img src="{{ argentique_photo(photo.pathname, { 'mode': 'thumbnail' }) }}" />
                     </a>
                 {% endfor %}
             </div>

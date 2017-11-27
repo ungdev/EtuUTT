@@ -4,12 +4,11 @@ namespace Etu\Module\ArgentiqueBundle\Controller;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\ArgentiqueBundle\EtuModuleArgentiqueBundle;
+use Etu\Module\ArgentiqueBundle\Glide\ImageBuilder;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Point;
-use League\Glide\Responses\SymfonyResponseFactory;
-use League\Glide\ServerFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +27,7 @@ class MainController extends Controller
      *
      * @return bool Test result
      */
-    public function isAcceptableImage($file)
+    public static function isAcceptableImage($file)
     {
         $acceptedPhotosExtensions = ['jpg', 'jpeg', 'png'];
 
@@ -40,27 +39,11 @@ class MainController extends Controller
      *
      * @param mixed $file
      */
-    public function viewAction($file)
+    public function viewAction(Request $request, $file)
     {
         $this->denyAccessUnlessGranted('ROLE_ARGENTIQUE_READ');
 
-        /** @var string $root */
-        $root = EtuModuleArgentiqueBundle::getPhotosRoot();
-        $cache_root = $this->container->getParameter('kernel.cache_dir').'/';
-
-        if (!file_exists($root.'/'.$file)) {
-            throw $this->createNotFoundException('Picture not found');
-        }
-
-        $glide = ServerFactory::create(
-            [
-                'source' => $root,
-                'cache' => $cache_root,
-                'response' => new SymfonyResponseFactory(),
-            ]
-        );
-
-        return $glide->getImageResponse($file, $_GET);
+        return ImageBuilder::createImageResponse($this->container, $file, $request->query->get('mode'));
     }
 
     /**
