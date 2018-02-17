@@ -20,16 +20,6 @@ class EtuModuleArgentiqueBundle extends Module
                     ->setRole('ROLE_ARGENTIQUE_READ')
                 ->end()
             ->end();
-
-        $this->getAdminMenuBuilder()
-            ->getBlock('base.admin_menu.title')
-                ->add('argentique.admin.menu')
-                    ->setIcon('argentique.png')
-                    ->setUrl($this->getRouter()->generate('argentique_admin'))
-                    ->setPosition(7)
-                    ->setRole('ROLE_ARGENTIQUE_ADMIN')
-                ->end()
-            ->end();
     }
 
     /**

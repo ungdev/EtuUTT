@@ -140,7 +140,7 @@ nelmio_api_doc:
             name: access_token
             delivery: query
             custom_endpoint: false
-            
+
 # API Cross-Origin Resource Sharing configuration
 nelmio_cors:
     defaults:
@@ -182,6 +182,11 @@ etu_user:
         port: 443
         path: '/cas/'
         change_session_id: false
+
+etu_module_argentique:
+    jwt:
+        key: "%argentique_jwt_key%"
+        algo: HS256
 
 # Logger
 monolog:

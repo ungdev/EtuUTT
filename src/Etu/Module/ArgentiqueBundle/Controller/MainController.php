@@ -4,7 +4,6 @@ namespace Etu\Module\ArgentiqueBundle\Controller;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\ArgentiqueBundle\EtuModuleArgentiqueBundle;
-use Etu\Module\ArgentiqueBundle\Glide\ImageBuilder;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
@@ -41,9 +40,7 @@ class MainController extends Controller
      */
     public function viewAction(Request $request, $file)
     {
-        $this->denyAccessUnlessGranted('ROLE_ARGENTIQUE_READ');
-
-        return ImageBuilder::createImageResponse($this->container, $file, $request->query->get('mode'));
+        throw \Exception('Wrong http server configuration. /argentique/photo/* should be rewrite to web/ArgentiqueEntrypoint.php');
     }
 
     /**

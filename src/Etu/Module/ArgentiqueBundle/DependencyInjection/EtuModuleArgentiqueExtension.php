@@ -24,5 +24,8 @@ class EtuModuleArgentiqueExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        $container->setParameter('argentique.jwt.key', $config['jwt']['key']);
+        $container->setParameter('argentique.jwt.algo', $config['jwt']['algo']);
     }
 }

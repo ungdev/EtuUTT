@@ -19,3 +19,5 @@ parameters:
     dolibarr_key:      ~
 
     version_id: local
+
+    argentique_jwt_key: ~

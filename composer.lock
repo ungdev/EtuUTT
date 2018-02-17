@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b2d87c7c750b73623cdfed0abe48d56b",
+    "content-hash": "800b0686790133a9a281a3be73665902",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -1620,21 +1620,67 @@
             "time": "2017-01-13T12:31:37+00:00"
         },
         {
-            "name": "frequence-web/calendr-bundle",
-            "version": "dev-patch-2",
+            "name": "firebase/php-jwt",
+            "version": "v5.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/garak/FrequenceWebCalendRBundle.git",
-                "reference": "68276ea0e7c093aec9907da5675b79f2206c3000"
+                "url": "https://github.com/firebase/php-jwt.git",
+                "reference": "9984a4d3a32ae7673d6971ea00bae9d0a1abba0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/garak/FrequenceWebCalendRBundle/zipball/68276ea0e7c093aec9907da5675b79f2206c3000",
-                "reference": "68276ea0e7c093aec9907da5675b79f2206c3000",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/9984a4d3a32ae7673d6971ea00bae9d0a1abba0e",
+                "reference": "9984a4d3a32ae7673d6971ea00bae9d0a1abba0e",
                 "shasum": ""
             },
             "require": {
-                "symfony/framework-bundle": "2.*|3.*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": " 4.8.35"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Firebase\\JWT\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Neuman Vong",
+                    "email": "neuman+pear@twilio.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Anant Narayanan",
+                    "email": "anant@php.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
+            "homepage": "https://github.com/firebase/php-jwt",
+            "time": "2017-06-27T22:17:23+00:00"
+        },
+        {
+            "name": "frequence-web/calendr-bundle",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/frequence-web/FrequenceWebCalendRBundle.git",
+                "reference": "7082b2539ce32723ef56b9626a5001664e98f020"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/frequence-web/FrequenceWebCalendRBundle/zipball/7082b2539ce32723ef56b9626a5001664e98f020",
+                "reference": "7082b2539ce32723ef56b9626a5001664e98f020",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/framework-bundle": "^2.8 || ^3.0",
                 "yohang/calendr": ">=1.0"
             },
             "type": "symfony-bundle",
@@ -1643,6 +1689,7 @@
                     "FrequenceWeb\\Bundle\\CalendRBundle\\": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1656,10 +1703,7 @@
             "keywords": [
                 "calendar"
             ],
-            "support": {
-                "source": "https://github.com/garak/FrequenceWebCalendRBundle/tree/patch-2"
-            },
-            "time": "2016-04-17 16:08:49"
+            "time": "2017-06-15T09:55:51+00:00"
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",
@@ -2074,12 +2118,12 @@
             "version": "1.3.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Jasig/phpCAS.git",
+                "url": "https://github.com/apereo/phpCAS.git",
                 "reference": "8c74d21630f74278270830fdbdb0c1317bce3f0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Jasig/phpCAS/zipball/8c74d21630f74278270830fdbdb0c1317bce3f0a",
+                "url": "https://api.github.com/repos/apereo/phpCAS/zipball/8c74d21630f74278270830fdbdb0c1317bce3f0a",
                 "reference": "8c74d21630f74278270830fdbdb0c1317bce3f0a",
                 "shasum": ""
             },
@@ -3275,12 +3319,12 @@
             "version": "3.5.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fruux/sabre-vobject.git",
+                "url": "https://github.com/sabre-io/vobject.git",
                 "reference": "129d80533a9ec0d9cacfb50b51180c34edb6874c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fruux/sabre-vobject/zipball/129d80533a9ec0d9cacfb50b51180c34edb6874c",
+                "url": "https://api.github.com/repos/sabre-io/vobject/zipball/129d80533a9ec0d9cacfb50b51180c34edb6874c",
                 "reference": "129d80533a9ec0d9cacfb50b51180c34edb6874c",
                 "shasum": ""
             },
@@ -4686,7 +4730,7 @@
         },
         {
             "name": "fxp/composer-asset-plugin",
-            "version": "v1.2.2",
+            "version": "v1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fxpio/composer-asset-plugin.git",
@@ -5061,9 +5105,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "frequence-web/calendr-bundle": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

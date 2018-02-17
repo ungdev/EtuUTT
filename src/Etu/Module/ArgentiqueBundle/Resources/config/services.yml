@@ -11,3 +11,9 @@ services:
         arguments: [ "@argentique.url_builder" ]
         tags:
             - { name: twig.extension }
+
+    argentique.SessionUpdater:
+        class: Etu\Module\ArgentiqueBundle\EventListener\SessionUpdater
+        arguments: ["@security.authorization_checker", "@service_container"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.response }
