@@ -81,4 +81,12 @@ class EtuModuleArgentiqueBundle extends Module
     {
         return __DIR__.'/Resources/photos';
     }
+
+    /**
+     * @return string
+     */
+    public static function getPhotosCacheRoot()
+    {
+        return __DIR__.'/../../../../var/argentique';
+    }
 }

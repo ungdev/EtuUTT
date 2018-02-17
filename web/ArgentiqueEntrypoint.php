@@ -11,7 +11,6 @@ use Symfony\Component\Yaml\Yaml;
  */
 
 // Config
-$argentiqueCacheDir = '../var/cache/argentique/';
 $parameterFile = '../app/config/parameters.yml';
 $regex = '/^\/argentique\/photo\/([^\?]+)\??.*$/';
 $jwtAlgo = 'HS256';
@@ -49,4 +48,4 @@ if (!$authorized) {
 }
 
 // Build image
-ImageBuilder::createImageResponse($argentiqueCacheDir, $path, $_GET['mode'] ?? '')->send();
+ImageBuilder::createImageResponse($path, $_GET['mode'] ?? '')->send();

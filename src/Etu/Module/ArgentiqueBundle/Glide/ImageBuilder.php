@@ -12,11 +12,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ImageBuilder
 {
-    public static function createImageResponse($cacheDir, $path, $mode = '')
+    public static function createImageResponse($path, $mode = '')
     {
         /** @var string $root */
         $root = EtuModuleArgentiqueBundle::getPhotosRoot();
-        $cache_root = $cacheDir.'/argentique/';
+        $cache_root = EtuModuleArgentiqueBundle::getPhotosCacheRoot();
 
         if (!file_exists($root.'/'.$path)) {
             throw new NotFoundHttpException('Picture not found');

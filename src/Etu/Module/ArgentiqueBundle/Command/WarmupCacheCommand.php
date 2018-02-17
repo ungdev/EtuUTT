@@ -49,9 +49,9 @@ class WarmupCacheCommand extends ContainerAwareCommand
             $image = mb_substr($image, mb_strlen($root));
 
             // Generate each type of image
-            ImageBuilder::createImageResponse($container->getParameter('kernel.cache_dir'), $image, '');
-            ImageBuilder::createImageResponse($container->getParameter('kernel.cache_dir'), $image, 'slideshow');
-            ImageBuilder::createImageResponse($container->getParameter('kernel.cache_dir'), $image, 'thumbnail');
+            ImageBuilder::createImageResponse($image, '');
+            ImageBuilder::createImageResponse($image, 'slideshow');
+            ImageBuilder::createImageResponse($image, 'thumbnail');
         }
         $progress->update(count($imageList));
 
