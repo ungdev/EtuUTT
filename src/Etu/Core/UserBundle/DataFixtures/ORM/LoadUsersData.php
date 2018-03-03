@@ -36,6 +36,7 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
         $admin->setBirthday(new \DateTime());
         $admin->setLastVisitHome(new \DateTime());
         $admin->setReadOnlyExpirationDate(new \DateTime());
+        $admin->setDaymail(false);
 
         $user = new User();
 
@@ -48,6 +49,7 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
         $user->setBirthday(new \DateTime());
         $user->setLastVisitHome(new \DateTime());
         $user->setReadOnlyExpirationDate(new \DateTime());
+        $user->setDaymail(false);
 
         $orga = new Organization();
 
