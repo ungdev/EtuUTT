@@ -63,9 +63,9 @@
             {% endif %}
 
             {% if page.organization %}
-                {{ 'wiki.main.view.can-read' |trans }} <em>{{ ('wiki.main.right-orga.'~page.editRight)|trans({'%orga%': page.organization}) }}</em>
+                {{ 'wiki.main.view.can-read' |trans }} <em>{{ ('wiki.main.right-orga.'~page.readRight)|trans({'%orga%': page.organization}) }}</em>
             {% else %}
-                {{ 'wiki.main.view.can-read' |trans }} <em>{{ ('wiki.main.right.'~page.editRight)|trans }}</em>
+                {{ 'wiki.main.view.can-read' |trans }} <em>{{ ('wiki.main.right.'~page.readRight)|trans }}</em>
             {% endif %}
 
         </small>
