@@ -190,7 +190,7 @@ class SecurityController extends ApiController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $formData = $request->request->get('form');
+            $formData = $form->getData();
 
             if (isset($formData['accept'])) {
                 // Remove old authorizations
@@ -362,7 +362,7 @@ class SecurityController extends ApiController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $formData = $request->request->get('form');
+            $formData = $form->getData();
 
             if (isset($formData['accept'])) {
                 // Remove same app name on same device of same user
