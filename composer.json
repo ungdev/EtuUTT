@@ -120,7 +120,9 @@
                     "database_user": "ETUUTT_DATABASE_USER",
                     "database_password": "ETUUTT_DATABASE_PASSWORD",
                     "domain": "ETUUTT_DOMAIN",
-                    "version_id": "ETUUTT_VERSION_ID"
+                    "version_id": "ETUUTT_VERSION_ID",
+                    "dolibarr_key": "ETUUTT_DOLIBARR_KEY",
+                    "argentique_jwt_key": "ETUUTT_ARGENTIQUE_JWT"
                 }
             },
             {
