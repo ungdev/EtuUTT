@@ -24,6 +24,7 @@ Déploiement continu
 -------------------
 
 Ce projet utilise l'intégration continue (TravisCI), et la branche `master` est directement à jour avec la production.
+Depuis peu, ce dernier est déployé sur un cluster openshift. Chaque push déclenche une reconstruction de l'image et la mise à jour automatique de la version en prod (Rolling Update)
 
 Branche `dev` (développement) :
 [![Build Status](https://travis-ci.org/ungdev/EtuUTT.svg?branch=dev)](https://travis-ci.org/ungdev/EtuUTT)
