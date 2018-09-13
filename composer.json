@@ -74,6 +74,7 @@
         "bower-asset/font-awesome": "4.6.0",
         "bower-asset/highlightjs": "9.7.0",
         "bower-asset/videojs": "5.11.7",
+
         "firebase/php-jwt": "^5.0"
     },
     "minimum-stability": "stable",
