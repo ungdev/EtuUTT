@@ -104,11 +104,19 @@ but if they want to connect, you will have to set a password for them.
             $bar->update(0);
             $i = 1;
 
+            $twig = $this->getContainer()->get('twig');
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Hello world')
+                ->setFrom(['ung@utt.fr' => 'UNG'])
+                ->setBody($twig->render('EtuUserBundle:Mail:newcomer_mail.html.twig'), 'text/html');
+
             /** @var $user ElementToImport */
             foreach ($usersImportIterator as $user) {
                 $newUser = $user->import(false, $bde);
                 if ($newUser instanceof User && $newUser->getDaymail()) {
                     $sympaCommands .= 'QUIET ADD daymail '.$newUser->getMail().' '.$newUser->getFullName()."\n";
+                    $message->setTo($newUser->getMail());
+                    $container->get('mailer')->send($message);
                 }
                 $bar->update($i);
                 ++$i;
