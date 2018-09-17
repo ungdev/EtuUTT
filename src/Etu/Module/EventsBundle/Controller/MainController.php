@@ -361,6 +361,7 @@ class MainController extends Controller
 
     /**
      * @Route("/events/tv/", name="events_tv")
+     * @Route("/events/tv/index")
      * @Template()
      */
     public function tvAction()
