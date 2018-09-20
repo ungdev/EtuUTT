@@ -41,7 +41,7 @@ This command helps you to synchronise database with BDE member db.
         $output->writeln("\nGetting BDE member list from ".$container->getParameter('etu.dolibarr.host').'... (may take a few minutes)');
         $data = json_decode(file_get_contents(
             $container->getParameter('etu.dolibarr.host')
-            .'/api/index.php/members?DOLAPIKEY='
+            .'/api/index.php/members?limit=999999999999999999&DOLAPIKEY='
             .$container->getParameter('etu.dolibarr.key')));
 
         $output->writeln('Sync it with our database...');
