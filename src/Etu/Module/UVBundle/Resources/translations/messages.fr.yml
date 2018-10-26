@@ -13,11 +13,11 @@ uvs:
       review: Annale
       reviews: "Toutes les annales"
       sender: Auteur
-      title: "Gérer les UV"
+      title: "Gérer les UE"
       unvalidate: Dévalider
-      uv: UV
+      uv: UE
       validate: Valider
-    menu_item: "Gestion des UV"
+    menu_item: "Gestion des UE"
     unvalidateReview:
       confirm: "Vous avez bien dévalidé cette annale"
     validateReview:
@@ -32,19 +32,19 @@ uvs:
     tm: "Techniques et méthodes"
   main:
     category:
-      noResult: "Aucune UV dans cette catégorie"
-      title: "Catégorie d'UV"
+      noResult: "Aucune UE dans cette catégorie"
+      title: "Catégorie d'UE"
     comment:
-      confirm: "Votre commentaire a bien été envoyée. Merci de votre participation !"
+      confirm: "Votre commentaire a bien été envoyé. Merci de votre participation !"
     courses:
       title: "Créneaux de %uv%"
     index:
-      my: "Mes UV"
-      noResult: "Vous semblez ne suivre aucune UV !"
-      title: "Les UV"
+      my: "Mes UE"
+      noResult: "Vous semblez ne suivre aucune UE !"
+      title: "Les UE"
     search:
       noResult: "Aucun résultat"
-      title: "Rechercher une UV"
+      title: "Rechercher une UE"
     sendReview:
       back: Retour
       cancel: Annuler
@@ -66,7 +66,7 @@ uvs:
       content: Programme
       countReviews: "%count% annale|%count% annales"
       credits: Crédits
-      dontExists: "Cette UV n'existe plus"
+      dontExists: "Cette UE n'existe plus"
       noComment: "Aucun commentaire pour le moment"
       pending: "En attente de validation"
       reviews: Annales
@@ -75,13 +75,13 @@ uvs:
       submit: Commenter
       td: "Travaux dirigés"
       the: "Travail personnel"
-      title: "Détail d'une UV - %code%"
+      title: "Détail d'une UE - %code%"
       tp: "Travaux pratiques"
-      viewCourses: "Voir les créneaux de cette UV"
+      viewCourses: "Voir les créneaux de cette UE"
       winBadges: "Envoyez des annales pour gagner des badges !"
   notifs:
-    newComment: "Nouveau commentaire dans l'UV %uv% (par %user%)"
-    newReview: "Nouvelle annale dans l'UV %uv% (par %user%)"
+    newComment: "Nouveau commentaire dans l'UE %uv% (par %user%)"
+    newReview: "Nouvelle annale dans l'UE %uv% (par %user%)"
   reviews:
     dm: "Devoir Maison"
     final: Final

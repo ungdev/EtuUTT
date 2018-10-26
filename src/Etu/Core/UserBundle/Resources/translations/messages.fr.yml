@@ -382,7 +382,7 @@ user:
             name: Nom
             studentId: Numéro étudiant
             mail: E-mail
-            uvs: UVs actuelles
+            uvs: UEs actuelles
             phoneNumber: Numéro de tél.
             personnalMail: E-mail perso.
             formation: Formation
@@ -432,6 +432,6 @@ user:
         course:
             title: Créneau de cours
             desc: Créneau de %type% de %uv%, le %day% à %start%
-            uv: Voir la description de l'UV
+            uv: Voir la description de l'UE
             other: Voir les autre créneaux
             students: "%count% étudiant inscrit à ce créneau|%count% étudiants inscrits à ce créneau"
