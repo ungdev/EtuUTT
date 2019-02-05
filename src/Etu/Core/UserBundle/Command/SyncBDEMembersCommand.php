@@ -42,7 +42,7 @@ This command helps you to synchronise database with BDE member db.
         $data = [];
         $url = $container->getParameter('etu.dolibarr.host').'/api/index.php/members?limit=500&DOLAPIKEY='.$container->getParameter('etu.dolibarr.key').'&page=';
         $page = 0;
-        while($data_temp = file_get_contents($url.$page))
+        while($data_temp = @file_get_contents($url.$page))
         {
             $data = array_merge($data, json_decode($data_temp));
             $page++;
