@@ -57,7 +57,7 @@ base:
         services:
             title: Services
             items:
-                uvs: Guide des UV
+                uvs: Guide des UE
                 trombi: Trombinoscope
                 table: Cumul d'emplois du temps
                 wiki: Wiki des associations
@@ -176,7 +176,7 @@ role:
 
     ROLE_UPLOAD: Mettre en lignes des images pour les daymails par exemple
 
-    ROLE_UV: Voir le guide des UVs
-    ROLE_UV_REVIEW: Voir les annales et commentaires des UVs
-    ROLE_UV_REVIEW_POST: Poster des annnales et commenter les UVs
-    ROLE_UV_REVIEW_ADMIN: Modérer les annales et commentaires d'UVs
+    ROLE_UV: Voir le guide des UE
+    ROLE_UV_REVIEW: Voir les annales et commentaires des UE
+    ROLE_UV_REVIEW_POST: Poster des annnales et commenter les UE
+    ROLE_UV_REVIEW_ADMIN: Modérer les annales et commentaires d'UE

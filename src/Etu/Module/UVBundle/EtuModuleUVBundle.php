@@ -47,7 +47,7 @@ class EtuModuleUVBundle extends Module
      */
     public function getTitle()
     {
-        return 'UV';
+        return 'UE';
     }
 
     /**
@@ -67,7 +67,7 @@ class EtuModuleUVBundle extends Module
      */
     public function getDescription()
     {
-        return 'Module de gestion des UV';
+        return 'Module de gestion des UE';
     }
 
     /**

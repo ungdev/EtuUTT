@@ -42,7 +42,7 @@
     {% endif %}
 
     {% if UVs|length > 0 and UVs[0] is not empty %}
-        <h5>Toutes vos UV</h5>
+        <h5>Toutes vos UE</h5>
         <div class="uv-list">
             {% for UV in UVs %}
                 <a  href="{{ path('uvs_goto', {'code': UV}) }}">{{ UV }}</a>
