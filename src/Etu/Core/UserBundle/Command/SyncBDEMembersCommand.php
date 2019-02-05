@@ -39,10 +39,14 @@ This command helps you to synchronise database with BDE member db.
 
         // Pull all user informations
         $output->writeln("\nGetting BDE member list from ".$container->getParameter('etu.dolibarr.host').'... (may take a few minutes)');
-        $data = json_decode(file_get_contents(
-            $container->getParameter('etu.dolibarr.host')
-            .'/api/index.php/members?limit=999999999999999999&DOLAPIKEY='
-            .$container->getParameter('etu.dolibarr.key')));
+        $data = [];
+        $url = $container->getParameter('etu.dolibarr.host').'/api/index.php/members?limit=500&DOLAPIKEY='.$container->getParameter('etu.dolibarr.key').'&page=';
+        $page = 0;
+        while($data_temp = file_get_contents($url.$page))
+        {
+            $data = array_merge($data, json_decode($data_temp));
+            $page++;
+        }
 
         $output->writeln('Sync it with our database...');
         $bar = new ProgressBar('%fraction% [%bar%] %percent%', '=>', ' ', 80, count($data));
