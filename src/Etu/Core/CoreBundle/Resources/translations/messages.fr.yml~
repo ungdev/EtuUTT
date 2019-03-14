@@ -56,7 +56,7 @@ base:
         services:
             title: Services
             items:
-                uvs: Les UV
+                uvs: Les UEs
                 trombi: Le trombinoscope
                 table: Cumul d'emplois du temps
                 wiki: Wiki des associations
