@@ -20,4 +20,4 @@ trombi:
         desc: "Votre profil doit être complet (privé ou public) pour pouvoir utiliser le trombinoscope"
         link: "Mon compte"
         title: "Votre profil est incomplet"
-      uv: "UVs (séparées par des virgules)"
+      uv: "UEs (séparées par des virgules)"

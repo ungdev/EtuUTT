@@ -24,7 +24,7 @@ uvs:
       confirm: "Vous avez bien validé cette annale"
   categories:
     cs: "Connaissances scientifiques"
-    ct: "Culture et technologie"
+    ct: "Humanités"
     ec: "Expression et communication"
     me: "Management de l'entreprise"
     other: Autre
