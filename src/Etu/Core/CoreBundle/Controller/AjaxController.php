@@ -4,7 +4,6 @@ namespace Etu\Core\CoreBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
-use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Model\BadgesManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 // Import @Route() and @Template() annotations
