@@ -129,8 +129,8 @@ class SecurityController extends ApiController
 
         $requestedScopes = ['public'];
 
-        if ($request->query->has('scopes')) {
-            $requestedScopes = array_unique(array_merge($requestedScopes, explode(' ', $request->query->get('scopes'))));
+        if ($request->query->has('scope')) {
+            $requestedScopes = array_unique(array_merge($requestedScopes, explode(' ', $request->query->get('scope'))));
         }
 
         // Search if user already approved the app
