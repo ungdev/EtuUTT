@@ -134,7 +134,7 @@ class SecurityController extends ApiController
         }
         if ($request->query->has('scopes')) { //deprecated
           $requestedScopes = array_unique(array_merge($requestedScopes, explode(' ', $request->query->get('scopes'))));
-      }
+        }
 
         // Search if user already approved the app
         $authorization = $em->getRepository('EtuCoreApiBundle:OauthAuthorization')->findOneBy([
