@@ -79,5 +79,6 @@ class ImportBadgesCommand extends ContainerAwareCommand
         ['serie' => 'duck_hunter', 'name' => 'Duck Hunter', 'picture' => 'duck_hunt_00', 'description' => 'A trouvé le canard caché', 'level' => '1', 'countLevels' => '1', 'deletedAt' => null],
         ['serie' => 'cereales', 'name' => 'Team Céréales', 'picture' => 'cereales_00', 'description' => 'A mangé des céréales', 'level' => '1', 'countLevels' => '1', 'deletedAt' => null],
         ['serie' => 'aigri', 'name' => 'Aigri !', 'picture' => 'aigri_00', 'description' => 'A déjà fait partie du bureau d\'une association.', 'level' => '1', 'countLevels' => '1', 'deletedAt' => null],
+        ['serie' => 'ban', 'name' => 'Le Ban Hammer', 'picture' => 'ban_00', 'description' => 'A causé le ban de quelqu\'un.', 'level' => '1', 'countLevels' => '1', 'deletedAt' => null],
     ];
 }

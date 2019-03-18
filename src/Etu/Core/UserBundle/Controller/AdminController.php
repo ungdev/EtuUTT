@@ -7,7 +7,6 @@ use Doctrine\ORM\QueryBuilder;
 use Etu\Core\CoreBundle\Form\BirthdayPickerType;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\Organization;
-use Etu\Core\UserBundle\Entity\Session;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Model\BadgesManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
