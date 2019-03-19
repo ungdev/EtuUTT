@@ -67,8 +67,6 @@ class UEsListController extends ApiController
         }
         if ($request->query->has('automne')) {
             $automne = $request->query->get('automne');
-            $logger = $this->get('monolog.logger.admin');
-            $logger->info($automne);
             $query->andWhere('u.automne = :automne')
                 ->setParameter('automne', $automne);
         }
