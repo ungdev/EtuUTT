@@ -97,7 +97,7 @@ class SecurityController extends ApiController
         /** @var OauthClient $client */
         $client = $em->getRepository('EtuCoreApiBundle:OauthClient')->findOneBy([
             'clientId' => $request->query->get('client_id'),
-            'deletedAt' => null
+            'deletedAt' => null,
         ]);
 
         if (!$client) {
@@ -488,7 +488,7 @@ class SecurityController extends ApiController
         $client = $em->getRepository('EtuCoreApiBundle:OauthClient')->findOneBy([
             'clientId' => $clientId,
             'clientSecret' => $clientSecret,
-            'deletedAt' => null
+            'deletedAt' => null,
         ]);
 
         if (!$client) {
