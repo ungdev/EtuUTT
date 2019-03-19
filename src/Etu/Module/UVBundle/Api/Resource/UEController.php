@@ -10,8 +10,44 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-class UEsListController extends ApiController
+class UEController extends ApiController
 {
+    /**
+     * You can get all the informations of an UE with this endpoint, using the UE's slug.
+     *
+     * @ApiDoc(
+     *   section = "UEs",
+     *   description = "Details of an UE (scope: public)"
+     * )
+     *
+     * @Route("/ues/{slug}", name="api_ue_details", options={"expose"=true})
+     * @Method("GET")
+     *
+     * @param mixed $slug
+     */
+    public function detailAction($slug, Request $request)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var $query QueryBuilder */
+        $query = $em->createQueryBuilder()
+            ->select('u.slug, u.code, u.name, u.category, u.cm, u.td, u.tp, u.the, u.automne, u.printemps, u.credits, u.objectifs, u.programme')
+            ->from('EtuModuleUVBundle:UV', 'u')
+            ->where('u.deletedAt IS NULL')
+            ->andWhere('u.isOld = 0')
+            ->andWhere('u.slug = :slug')
+            ->setParameter('slug', $slug);
+
+        /** @var UV[] $uv */
+        $uv = $query->getQuery()->getResult();
+        if (count($uv) <= 0) {
+            return $this->format(['error' => 'Not found'], 404, [], $request);
+        }
+
+        return $this->format($uv[0], 200, [], $request); // get only first element (there's no other one)
+    }
+
     /**
      * To access an UE's information, you need to know the slug of that UE. For exemple,
      * TN02's slug is "tn02".
