@@ -4,8 +4,8 @@ namespace Etu\Module\UVBundle\Api\Resource;
 
 use Doctrine\ORM\EntityManager;
 use Etu\Core\ApiBundle\Framework\Controller\ApiController;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Etu\Module\UVBundle\Entity\UV;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +14,7 @@ class UEDetailsController extends ApiController
 {
     /**
      * You can get all the informations of an UE with this endpoint, using the UE's slug.
-     * 
+     *
      * @ApiDoc(
      *   section = "UEs",
      *   description = "Details of an UE (scope: public)"
@@ -22,6 +22,7 @@ class UEDetailsController extends ApiController
      *
      * @Route("/ues/{slug}", name="api_ue_details", options={"expose"=true})
      * @Method("GET")
+     *
      * @param mixed $slug
      */
     public function listAction($slug, Request $request)
@@ -37,13 +38,13 @@ class UEDetailsController extends ApiController
             ->andWhere('u.isOld = 0')
             ->andWhere('u.slug = :slug')
             ->setParameter('slug', $slug);
-       
-        /** @var UV[] $uvs */
+
+        /** @var UV[] $uv */
         $uv = $query->getQuery()->getResult();
-        if(sizeof($uv) <= 0) {
-          return $this->format(['error' => 'Not found'], 404, [], $request);
+        if (count($uv) <= 0) {
+            return $this->format(['error' => 'Not found'], 404, [], $request);
         }
 
-        return $this->format($uv[0], 200, [], $request);// get only first element (there's no other one)
+        return $this->format($uv[0], 200, [], $request); // get only first element (there's no other one)
     }
 }
