@@ -30,7 +30,7 @@ class PanelController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /** @var OauthClient[] $clients */
-        $clients = $em->getRepository('EtuCoreApiBundle:OauthClient')->findBy(['user' => $this->getUser()]);
+        $clients = $em->getRepository('EtuCoreApiBundle:OauthClient')->findBy(['user' => $this->getUser(), 'native' => 0]);
 
         return [
             'clients' => $clients,
@@ -98,7 +98,7 @@ class PanelController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /** @var OauthClient[] $clients */
-        $clients = $em->getRepository('EtuCoreApiBundle:OauthClient')->findBy(['user' => $this->getUser()]);
+        $clients = $em->getRepository('EtuCoreApiBundle:OauthClient')->findBy(['user' => $this->getUser(), 'native' => 0]);
 
         return [
             'client' => $client,
@@ -139,7 +139,7 @@ class PanelController extends Controller
         }
 
         /** @var OauthClient[] $clients */
-        $clients = $em->getRepository('EtuCoreApiBundle:OauthClient')->findBy(['user' => $this->getUser()]);
+        $clients = $em->getRepository('EtuCoreApiBundle:OauthClient')->findBy(['user' => $this->getUser(), 'native' => 0]);
 
         return [
             'client' => $client,
@@ -185,7 +185,7 @@ class PanelController extends Controller
         }
 
         /** @var OauthClient[] $clients */
-        $clients = $em->getRepository('EtuCoreApiBundle:OauthClient')->findBy(['user' => $this->getUser()]);
+        $clients = $em->getRepository('EtuCoreApiBundle:OauthClient')->findBy(['user' => $this->getUser(), 'native' => 0]);
 
         return [
             'client' => $client,

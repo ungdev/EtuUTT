@@ -97,6 +97,7 @@ class SecurityController extends ApiController
         /** @var OauthClient $client */
         $client = $em->getRepository('EtuCoreApiBundle:OauthClient')->findOneBy([
             'clientId' => $request->query->get('client_id'),
+            'deletedAt' => null,
         ]);
 
         if (!$client) {
@@ -369,19 +370,17 @@ class SecurityController extends ApiController
 
             if (isset($formData['accept'])) {
                 // Remove same app name on same device of same user
-                $em->createQueryBuilder()
-                    ->delete()
-                    ->from('EtuCoreApiBundle:OauthClient', 'c')
-                    ->where('c.native = 1')
-                    ->andWhere('c.name = :name')
-                    ->andWhere('c.device = :device')
-                    ->andWhere('c.deviceUID = :deviceUID')
-                    ->andWhere('c.user = :user')
+                $em->createQuery('UPDATE EtuCoreApiBundle:OauthClient c
+                                  SET c.deletedAt = :now
+                                  WHERE (c.name = :name
+                                  and c.device = :device
+                                  and c.deviceUID = :deviceUID
+                                  and c.user = :user)')
                     ->setParameter('name', $formData['name'])
                     ->setParameter('device', $formData['device'])
                     ->setParameter('deviceUID', $formData['device_uid'])
                     ->setParameter('user', $this->getUser()->getId())
-                    ->getQuery()
+                    ->setParameter('now', new \DateTime())
                     ->execute();
 
                 // Create the new one
@@ -489,6 +488,7 @@ class SecurityController extends ApiController
         $client = $em->getRepository('EtuCoreApiBundle:OauthClient')->findOneBy([
             'clientId' => $clientId,
             'clientSecret' => $clientSecret,
+            'deletedAt' => null,
         ]);
 
         if (!$client) {
@@ -503,7 +503,7 @@ class SecurityController extends ApiController
 
         $request->attributes->set('_oauth_client', $client);
 
-        $grantType = $request->request->get('grant_type');
+        $grantType = $request->get('grant_type');
 
         try {
             $token = $server->createToken($grantType, $request);
