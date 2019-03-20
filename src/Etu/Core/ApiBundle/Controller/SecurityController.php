@@ -322,7 +322,7 @@ class SecurityController extends ApiController
         if (!$this->isGranted('IS_AUTHENTICATED_FULLY') && !$this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'error',
-                'message' => $this->get('translator')->trans('user.api_login.login', ['%name%' => $client->getName()]),
+                'message' => $this->get('translator')->trans('user.api_login.login', ['%name%' => $request->query->get('name')]),
             ]);
         } elseif (!$this->isGranted('ROLE_API_USE')) {
             $this->get('session')->getFlashBag()->set('message', [
