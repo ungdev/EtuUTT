@@ -94,8 +94,76 @@
         ];
 
         $.prompt(tourStates);
-    {% endif %}
+
     </script>
+    {% else %}
+      <script type="text/javascript" src="{{ asset('assets/vendor/jquery-impromptu/dist/jquery-impromptu.min.js') }}"></script>
+      <script type="text/javascript">
+        var tourSubmitFunc = function(e,v,m,f){
+                    if(v === -1){
+                        $.prompt.prevState();
+                        return false;
+                    }
+                    else if(v === 1){
+                        $.prompt.nextState();
+                        return false;
+                    }
+        },
+        tourStates = [
+            {
+                title: 'Bienvenue !',
+                html: 'Ce site t\'es proposé par l\'association du SEL, l\'UNG',
+                buttons: { Suivant: 1 },
+                focus: 0,
+                position: { container: '.page-container', x: 25, y: 15, width: 200, arrow: 'tc' },
+                submit: tourSubmitFunc
+            },
+            {
+                title: 'C\'est quoi l\'UNG ?',
+                html: 'Nous sommes l\'association d\'informatique de l\'UTT. Ce site, mais aussi le site du Gala, de l\'UTT Arena, les diverses billetteries pour les événements (SDF, R2D, NC3,...),... Tout ça c\'est nous !',
+                buttons: { Précédent: -1, Suivant: 1 },
+                focus: 1,
+                position: { container: '.page-container', x: 492, y: -3, width: 305, arrow: 'tc' },
+                submit: tourSubmitFunc
+            },
+            {
+                title: 'C\'est quoi l\'UNG ?',
+                html: 'Nous possédons également une infrastructure capable d\'héberger tout ces sites, et pourquoi pas le tiens ?',
+                buttons: { Précédent: -1, Suivant: 1 },
+                focus: 1,
+                position: { container: '.sidebar-title', x: -280, y: 0, width: 250, arrow: 'rt' },
+                submit: tourSubmitFunc
+            },
+            {
+                title: 'Ce soir, soirée Projet !',
+                html: 'A partir de 18h au foyer, nous organisons une soirée projet, tu as un projet de cours ? Une TX, un projet Mind ? Ou juste envie de découvrir des projets ? Rejoins-nous ;) Nous pourrons t\'apporter de l\'aide, et il y aura à manger :D',
+                buttons: { Précédent: -1, Suivant: 1 },
+                focus: 1,
+                position: { container: '.page-container', x: 930, y: 15, width: 250, arrow: 'tc' },
+                submit: tourSubmitFunc
+            },
+            {
+                title: 'Demain, amphi de présentation !',
+                html: 'RDV 12h30 en A001 pour plus de détails ;)',
+                buttons: { Précédent: -1, Suivant: 1 },
+                focus: 1,
+                position: { container: '.sidebar-title', x: -280, y: 0, width: 250, arrow: 'rt' },
+                submit: tourSubmitFunc
+            },
+            {
+                title: 'Promis on enlève ce message demain',
+                html: 'Ouai c\'est un peu intrusif, mais on trouvait ça drole, ducoup ça passe',
+                buttons: { Précédent: -1, Compris: 2 },
+                focus: 1,
+                position: { container: '.page-container', x: 25, y: 15, width: 500, arrow: 'tl' },
+                submit: tourSubmitFunc
+            }
+        ];
+
+        $.prompt(tourStates);
+
+    </script>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
