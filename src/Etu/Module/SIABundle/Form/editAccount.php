@@ -25,7 +25,7 @@ class editAccount extends AbstractType
                     'label' => 'Mot de passe',
                 ],
                 'second_options' => [
-                    'label' => 'Répête ton mot de passe',
+                    'label' => 'Répète ton mot de passe',
                 ],
             ]);
     }

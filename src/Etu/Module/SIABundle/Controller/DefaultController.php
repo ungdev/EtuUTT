@@ -76,7 +76,7 @@ class DefaultController extends Controller
                     $ipa->create($user);
                     $this->get('session')->getFlashBag()->set('message', [
                         'type' => 'success',
-                        'message' => 'Compte crée !',
+                        'message' => 'Compte créé !',
                     ]);
                     return $this->redirectToRoute('sia_index');
                 }
