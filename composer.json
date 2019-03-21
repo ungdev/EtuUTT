@@ -76,7 +76,7 @@
         "bower-asset/videojs": "5.11.7",
 
         "firebase/php-jwt": "^5.0",
-        "symfony/ldap": "^3.1"
+        "gnumoksha/php-freeipa": "^0.2.0"
     },
     "minimum-stability": "stable",
     "require-dev": {
@@ -124,7 +124,10 @@
                     "domain": "ETUUTT_DOMAIN",
                     "version_id": "ETUUTT_VERSION_ID",
                     "dolibarr_key": "ETUUTT_DOLIBARR_KEY",
-                    "argentique_jwt_key": "ETUUTT_ARGENTIQUE_JWT"
+                    "argentique_jwt_key": "ETUUTT_ARGENTIQUE_JWT",
+                    "sia_ipa_host": "ETUUTT_IPA_HOST",
+                    "sia_ipa_user": "ETUUTT_IPA_USER",
+                    "sia_ipa_password": "ETUUTT_IPA_PASSWORD"
                 }
             },
             {

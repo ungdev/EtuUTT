@@ -1,0 +1,8 @@
+
+parameters: ~
+
+services:
+  etu.sia.ldap:
+    class: Etu\Module\SIABundle\Ldap\LdapManager
+    arguments: ["%sia.ipa.host%", "%sia.ipa.user%", "%sia.ipa.password%", "%sia.ipa.certificat%"]
+

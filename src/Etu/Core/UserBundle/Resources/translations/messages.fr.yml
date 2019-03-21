@@ -172,6 +172,7 @@ user:
             daymail: Daymail
             wiki: Wiki
             public: Page publique
+            sia: Gestionnaire sia
         index:
             title: Associatif
             desc_1: Vous faites partie de %count% association|Vous faites partie de %count% associations
