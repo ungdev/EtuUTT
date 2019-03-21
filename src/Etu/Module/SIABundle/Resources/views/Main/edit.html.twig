@@ -1,0 +1,14 @@
+    <h5>Editer un compte utilisateur</h5>
+
+    {{ form_start(createForm) }}
+    {{ form_row(createForm.username) }}
+    {{ form_row(createForm.plainPassword) }}
+
+    <div class="control-group">
+        <div class="controls">
+            {{ form_rest(createForm) }}
+            <button type="submit" class="btn">Modifier mon compte !</button>
+        </div>
+    </div>
+    {{ form_end(createForm) }}
+    <br />

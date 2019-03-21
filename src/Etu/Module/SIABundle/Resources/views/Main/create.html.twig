@@ -1,0 +1,45 @@
+    <h5>Créer un compte utilisateur</h5>
+
+    <div class="alert alert-info">
+        Vous ne possédez actuellement aucun compte sur le SIA.
+    </div>
+
+    {{ form_start(createForm) }}
+    {{ form_row(createForm.username) }}
+    {{ form_row(createForm.plainPassword) }}
+    <div class="form-group">
+        <label class="col-xs-3 control-label">Conditions d'utilisation</label>
+        <div class="col-xs-9">
+            <div style="border: 1px solid #e5e5e5; height: 200px; overflow: auto; padding: 10px;">
+                <center><b>CHARTE POUR L’UTILISATION DES RESSOURCES INFORMATIQUES DE L'UNIVERSITÉ DE TECHNOLOGIE DE TROYES VIA LE RÉSEAU DE L’UNG. </b></center>
+                <br>
+                <p>En tout premier lieu il convient de préciser que cette charte ne remplace en aucun cas la <a
+                            href="https://geode.utt.fr/nuxeo/site/nuxeo-utt/file/0/DSI/CRI/Charte/charte%20informatique%20d%C3%A9cl">charte pour l’utilisation des ressources informatiques de l’Université de Technologie de Troyes</a>. Elle en est une extension. Les ressources informatiques proposées via le réseau de l’UTT Net Group sont placées sous la responsabilité juridique du l’Université de technologie de Troyes. Leur utilisation est soumise aux lois qui régissent toute publication. Nous considérons donc qu’en acceptant notre charte, vous acceptez ipso facto  de respecter la charte informatique de l’Université de technologie de Troyes sur notre réseau.  Nous rappelons que les grands principes sont les suivants : les principes généraux, droits et devoirs des utilisateurs, les conséquences au manquements à la charte, les principaux textes juridiques de référence. </p>
+                <p>Cette charte définit donc les règles et les usages que doivent respecter toutes les associations et membres d’associations qui disposent d’un accès au réseau fourni par l’UTT Net Group. Elle est mise en œuvre sous la responsabilité des autorités académiques et peut être révisée dès lors que les règles ainsi définies seraient jugées défaillantes pour assurer le respect des principes énoncés et de la loi en la matière.</p>
+                <br>
+                <p> 1.  Droits & Devoirs des utilisateurs : utilisation des ressources.</p>
+                <p>     - Téléchargement via le réseau de l’UNG</p>
+                <p>En téléchargeant via les ressources informatiques mises en place par l’UNG, les utilisateurs acceptent les conditions d'utilisation ainsi que les règles concernant le téléchargement définies par la CNIL. Ils s’engagent également à le faire de manière modérée. </p>
+                <p>     - Hébergement sur les serveurs de l’UNG</p>
+                <p>Lors de la création de sites ou pages qui seront à terme hébergés sur les serveurs de l’UNG ; celle-ci n'est pas responsable juridiquement des contenus mis en ligne sur les sites définis, les contenus sont mis en ligne sous la responsabilité de ceux qui les publient. Les utilisateurs s'interdisent toute diffamation, injure publique ou propos condamnables. Tout manquement à cette règle doit être signalé aux administrateurs qui ont la possibilité d'interrompre la diffusion des pages concernées et de suspendre à titre conservatoire le site posant problème des associations en tord.</p>
+                <p>     - Service Cloud de l’UNG</p>
+                <p>En utilisant le système de cloud de l’UNG, les utilisateurs acceptent les conditions d'utilisation ainsi que les règles concernant la protection des données à caractère personnel.
+                </p>
+                <br>
+                <p> 1.  Droits & Devoirs des utilisateurs : utilisation des ressources.</p>
+                <p>Les administrateurs sont toutes les personnes qui interviennent sur un ou plusieurs éléments d’une ressource informatique :  les postes de travail individuels ;  les bases de données ;  les serveurs ;  le réseau ;  les applications (serveur/client) ;  la téléphonie. Ils assurent le bon fonctionnement général du système d’information. Ils ont un devoir d’information vis-à-vis des utilisateurs et sont tenus au respect de la confidentialité des informations qu’ils peuvent détenir. Les administrateurs peuvent être amenés à interrompre le fonctionnement du réseau, complet ou partiel à des fins de maintenance. Les utilisateurs en seront préalablement informés. </p>
+                <p>     - Fichiers de traces (journaux informatiques).</p>
+                <p>L’utilisation des différents services génère des fichiers de traces (journaux informatiques) qui sont conservés à des fins d’identification des utilisateurs en cas d’infraction. Ainsi en cas de tentative de piratage d’un réseau privé via notre réseau, l’administrateur doit être en mesure de fournir l’identité de la personne grâce aux logs de connexion, en respectant le principe de confidentialité et les dispositions énumérées ci-dessus.</p>
+            </div>
+        </div>
+    </div>
+
+    {{ form_row(createForm.termsAccepted) }}
+    <div class="control-group">
+        <div class="controls">
+            {{ form_rest(createForm) }}
+            <button type="submit" class="btn">Créer mon compte !</button>
+        </div>
+    </div>
+    {{ form_end(createForm) }}
+    <br />

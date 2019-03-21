@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "82c73d7a072793a9adf3646c8437a9ba",
+    "content-hash": "9c46bc0cc7ce9f18338cd2188e7a7737",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -2219,6 +2219,54 @@
                 "uploadable"
             ],
             "time": "2018-07-26T12:16:35+00:00"
+        },
+        {
+            "name": "gnumoksha/php-freeipa",
+            "version": "0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gnumoksha/php-freeipa.git",
+                "reference": "1bb428df958a940af7a2b02ee89b8268ad8caabd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gnumoksha/php-freeipa/zipball/1bb428df958a940af7a2b02ee89b8268ad8caabd",
+                "reference": "1bb428df958a940af7a2b02ee89b8268ad8caabd",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpdocumentor/phpdocumentor": "2.*",
+                "phpunit/phpunit": "4.8.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FreeIPA\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Sette",
+                    "email": "contato@tobias.ws",
+                    "homepage": "http://tobias.ws",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A PHP library for connect and use some features of the freeIPA / Red Hat Identity Management",
+            "homepage": "https://github.com/gnumoksha/php-freeipa",
+            "keywords": [
+                "freeipa",
+                "rh idm"
+            ],
+            "time": "2015-11-24T08:06:05+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -5065,16 +5113,16 @@
     "packages-dev": [
         {
             "name": "composer/semver",
-            "version": "1.4.2",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/semver.git",
-                "reference": "c7cb9a2095a074d131b65a8a0cd294479d785573"
+                "reference": "46d9139568ccb8d9e7cdd4539cab7347568a5e2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/semver/zipball/c7cb9a2095a074d131b65a8a0cd294479d785573",
-                "reference": "c7cb9a2095a074d131b65a8a0cd294479d785573",
+                "url": "https://api.github.com/repos/composer/semver/zipball/46d9139568ccb8d9e7cdd4539cab7347568a5e2e",
+                "reference": "46d9139568ccb8d9e7cdd4539cab7347568a5e2e",
                 "shasum": ""
             },
             "require": {
@@ -5123,7 +5171,7 @@
                 "validation",
                 "versioning"
             ],
-            "time": "2016-08-30T16:08:34+00:00"
+            "time": "2019-03-19T17:25:45+00:00"
         },
         {
             "name": "elao/web-profiler-extra-bundle",

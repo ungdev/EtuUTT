@@ -44,6 +44,7 @@ security:
             - ROLE_API_USE # Can use api with external applications
             - ROLE_API_CREATE # Can create external application
             - ROLE_WIKI_EDIT # Can write on the wiki
+            - ROLE_SIA_EDIT # Can create their SIA account
 
         ROLE_STAFFUTT:
             - ROLE_CORE_HOMEPAGE # Can see the private homepage
@@ -88,6 +89,7 @@ security:
             - ROLE_API_CREATE # Can create external application
             - ROLE_WIKI_EDIT # Can write on the wiki
             - ROLE_API_USE # Can use api with external applications
+            - ROLE_SIA_EDIT # Can create a SIA account
 
 
         ROLE_ADMIN:

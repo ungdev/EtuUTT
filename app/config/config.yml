@@ -188,6 +188,13 @@ etu_module_argentique:
         key: "%argentique_jwt_key%"
         algo: HS256
 
+etu_module_sia:
+    ipa:
+        user: "%sia_ipa_user%"
+        password: "%sia_ipa_password%"
+        host: "%sia_ipa_host%"
+        certificat: "%kernel.root_dir%/../ca.crt"
+
 # Logger
 monolog:
     channels: ['admin']

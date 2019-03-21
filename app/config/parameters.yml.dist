@@ -21,3 +21,7 @@ parameters:
     version_id: local
 
     argentique_jwt_key: ~
+
+    sia_ipa_host: ipa.uttnetgroup.net
+    sia_ipa_user: ~
+    sia_ipa_password: ~
