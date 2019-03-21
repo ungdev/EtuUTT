@@ -29,6 +29,5 @@ class EtuModuleSIAExtension extends Extension
         $container->setParameter('sia.ipa.user', $config['ipa']['user']);
         $container->setParameter('sia.ipa.password', $config['ipa']['password']);
         $container->setParameter('sia.ipa.certificat', $config['ipa']['certificat']);
-
     }
 }

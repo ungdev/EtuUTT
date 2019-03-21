@@ -21,6 +21,9 @@ class LdapManager
     /**
      * @param $host
      * @param $port
+     * @param mixed $user
+     * @param mixed $pass
+     * @param mixed $certificate
      *
      * @throws \RuntimeException
      */
@@ -50,19 +53,16 @@ class LdapManager
         }
 
         $uid_inuse = [];
-        foreach ($infos as $info)
-        {
-            $uid_inuse[]= $info->uid[0];
+        foreach ($infos as $info) {
+            $uid_inuse[] = $info->uid[0];
         }
 
         $i = 0;
         $freeUid = $uid;
-        while(in_array($freeUid, $uid_inuse))
-        {
+        while (in_array($freeUid, $uid_inuse)) {
             ++$i;
             $freeUid = $uid.$i;
         }
-
 
         return $freeUid;
     }
@@ -75,7 +75,7 @@ class LdapManager
     public function getUserByEtuId($userId)
     {
         $this->connect();
-        $infos = $user_info = $this->connection->user()->findBy('carlicense', 'etu:'.intval($userId));
+        $infos = $user_info = $this->connection->user()->findBy('carlicense', 'etu:'.(int) $userId);
 
         if (empty($infos[0]) || !isset($infos[0])) {
             return false;
@@ -92,7 +92,7 @@ class LdapManager
     public function getUserByStudentId($studentId)
     {
         $this->connect();
-        $infos = $user_info = $this->connection->user()->findBy('employeenumber', intval($studentId));
+        $infos = $user_info = $this->connection->user()->findBy('employeenumber', (int) $studentId);
 
         if (empty($infos[0]) || !isset($infos[0])) {
             return false;
@@ -108,18 +108,17 @@ class LdapManager
      */
     private function map(array $values)
     {
-
         $user = new User();
         $user->setLogin($values['uid'][0]);
         $user->setMail($values['mail'][0]);
         $user->setFirstName($values['givenname'][0]);
         $user->setLastName($values['sn'][0]);
 
-        if(isset($values['employeenumber'][0]))
+        if (isset($values['employeenumber'][0])) {
             $user->setStudentId($values['employeenumber'][0]);
+        }
 
-        if(isset($values['carlicense'][0]))
-        {
+        if (isset($values['carlicense'][0])) {
             $ids = explode(':', $values['carlicense'][0]);
             $user->setEtuUttId($ids[1]);
         }
@@ -132,8 +131,9 @@ class LdapManager
         if ($this->connection) {
             return;
         }
-        if(!file_exists($this->certificate))
+        if (!file_exists($this->certificate)) {
             file_put_contents($this->certificate, fopen('https://'.$this->host.'/ipa/config/ca.crt', 'r'));
+        }
 
         $this->connection = new Main($this->host, $this->certificate);
         $this->connection->connection()->authenticate($this->user, $this->user_password);
@@ -143,18 +143,21 @@ class LdapManager
     {
         $data = [
             'givenname' => $user->getFirstName(),
-            'sn'    => $user->getLastName(),
-            'uid'   => $user->getLogin(),
-            'mail'  => $user->getMail(),
-            'carlicense'    => 'etu:'.$user->getEtuUttId()
+            'sn' => $user->getLastName(),
+            'uid' => $user->getLogin(),
+            'mail' => $user->getMail(),
+            'carlicense' => 'etu:'.$user->getEtuUttId(),
         ];
-        if($user->getStudentId())
+        if ($user->getStudentId()) {
             $data['employeenumber'] = $user->getStudentId();
-        if($user->getUserPassword())
+        }
+        if ($user->getUserPassword()) {
             $data['userpassword'] = $user->getUserPassword();
+        }
 
         return $data;
     }
+
     public function create(User $user)
     {
         $this->connect();
@@ -171,6 +174,7 @@ class LdapManager
         $data = $this->mapToIpa($user);
         $uid = $data['uid'];
         unset($data['uid']);
+
         return $this->connection->user()->modify($uid, $data);
     }
 }

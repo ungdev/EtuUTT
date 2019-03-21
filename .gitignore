@@ -11,6 +11,9 @@ composer.lock
 /web/argentique/cache/
 /tmp
 
+#IPA crt
+ca.crt
+
 # Used to store schedules
 /src/Etu/Core/UserBundle/Resources/temp
 

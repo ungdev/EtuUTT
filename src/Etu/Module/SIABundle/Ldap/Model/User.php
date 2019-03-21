@@ -28,7 +28,6 @@ class User
      */
     protected $mail;
 
-
     /**
      * First name
      *      => ldap[user][givenname].
@@ -70,7 +69,7 @@ class User
     protected $userpassword;
 
     /**
-     * EtuUttID
+     * EtuUttID.
      *
      *
      * @var int
@@ -216,5 +215,4 @@ class User
     {
         return $this->etuUttId;
     }
-
 }
