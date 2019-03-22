@@ -132,9 +132,9 @@ class LdapManager
             return;
         }
         if (!file_exists($this->certificate)) {
-            $context = stream_context_create(array('ssl'=>array(
-                'verify_peer' => false
-            )));
+            $context = stream_context_create(['ssl' => [
+                'verify_peer' => false,
+            ]]);
             file_put_contents($this->certificate, fopen('https://'.$this->host.'/ipa/config/ca.crt', 'r', false, $context));
         }
 
