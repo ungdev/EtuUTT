@@ -27,7 +27,7 @@ class createAccount extends AbstractType
                     'label' => 'Mot de passe',
                 ],
                 'second_options' => [
-                    'label' => 'Répète ton mot de passe',
+                    'label' => 'Confirmation de ton mot de passe',
                 ],
             ])
             ->add('termsAccepted', CheckboxType::class, [
