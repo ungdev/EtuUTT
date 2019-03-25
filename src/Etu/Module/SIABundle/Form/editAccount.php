@@ -28,12 +28,7 @@ class editAccount extends AbstractType
                 'second_options' => [
                     'label' => 'Répète ton mot de passe',
                 ],
-            ])
-        ->add('test', CollectionType::class, [
-            'entry_type' => TextType::class,
-            'allow_add' => true,
-            'allow_delete' => true,
-        ]);
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
