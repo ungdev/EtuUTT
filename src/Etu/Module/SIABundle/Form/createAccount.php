@@ -27,7 +27,7 @@ class createAccount extends AbstractType
                     'label' => 'Mot de passe',
                 ],
                 'second_options' => [
-                    'label' => 'Répète ton mot de passe',
+                    'label' => 'Confirmation de ton mot de passe',
                 ],
             ])
             ->add('termsAccepted', CheckboxType::class, [
@@ -40,7 +40,7 @@ class createAccount extends AbstractType
                 'required' => true,
                 'mapped' => false,
                 'constraints' => new IsTrue(),
-                'label' => "J'accepte la transmission de mes informations personnelles nécéssaires à la création de mon compte (nom, prénom, adresse mail, numéro étudiant)",
+                'label' => "J'accepte la transmission de certaines de mes informations personnelles, nécessaires à la création de mon compte, à l'UNG. Ceci inclut : nom, prénom, adresse mail et numéro étudiant",
             ]);
     }
 
