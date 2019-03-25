@@ -92,7 +92,7 @@ class UEController extends ApiController
 
         /** @var $query QueryBuilder */
         $query = $em->createQueryBuilder()
-            ->select('u.slug, u.code, u.name')
+            ->select('u.slug, u.code, u.name, u.category, u.automne, u.printemps')
             ->from('EtuModuleUVBundle:UV', 'u')
             ->where('u.deletedAt IS NULL')
             ->andWhere('u.isOld = 0');
@@ -106,6 +106,11 @@ class UEController extends ApiController
             $query->andWhere('u.automne = :automne')
                 ->setParameter('automne', $automne);
         }
+        if ($request->query->has('printemps')) {
+          $printemps = $request->query->get('printemps');
+          $query->andWhere('u.printemps = :printemps')
+              ->setParameter('printemps', $printemps);
+      }
         /** @var UV[] $uvs */
         $uvs = $query->getQuery()->getResult();
 
