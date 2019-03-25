@@ -77,8 +77,14 @@
         "bower-asset/selectize": "0.12.*",
 
         "firebase/php-jwt": "^5.0",
-        "gnumoksha/php-freeipa": "^0.2.0"
+        "gnumoksha/php-freeipa": "dev-master"
     },
+    "repositories": [
+        {
+            "url": "https://github.com/ChrisdAutume/php-freeipa.git",
+            "type": "git"
+        }
+    ],
     "minimum-stability": "stable",
     "require-dev": {
         "fxp/composer-asset-plugin": "^1.4",
