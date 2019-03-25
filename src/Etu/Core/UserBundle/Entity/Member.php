@@ -64,6 +64,14 @@ class Member
     protected $organization;
 
     /**
+     * @var OrganizationGroup
+     *
+     * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\OrganizationGroup", inversedBy="memberships")
+     * @ORM\JoinColumn()
+     */
+    protected $group;
+
+    /**
      * @var int
      *
      * @ORM\Column(type="smallint")

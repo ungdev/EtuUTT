@@ -143,6 +143,14 @@ class Organization implements UserInterface, \Serializable
     protected $memberships;
 
     /**
+     * @var Organization[]
+     *
+     * @ORM\OneToMany(targetEntity="\Etu\Core\UserBundle\Entity\Organization", mappedBy="organization")
+     * @ORM\JoinColumn()
+     */
+    protected $groups;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string", length=100, nullable=true)
@@ -662,5 +670,41 @@ class Organization implements UserInterface, \Serializable
     public function removeMembership(\Etu\Core\UserBundle\Entity\Member $membership)
     {
         $this->memberships->removeElement($membership);
+    }
+
+    /**
+     * Add group.
+     *
+     * @param \Etu\Core\UserBundle\Entity\Organization $group
+     *
+     * @return Organization
+     */
+    public function addGroup(\Etu\Core\UserBundle\Entity\Organization $group)
+    {
+        $this->groups[] = $group;
+
+        return $this;
+    }
+
+    /**
+     * Remove group.
+     *
+     * @param \Etu\Core\UserBundle\Entity\Organization $group
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removeGroup(\Etu\Core\UserBundle\Entity\Organization $group)
+    {
+        return $this->groups->removeElement($group);
+    }
+
+    /**
+     * Get groups.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGroups()
+    {
+        return $this->groups;
     }
 }
