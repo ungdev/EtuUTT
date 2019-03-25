@@ -36,6 +36,27 @@ class OrganizationGroup
     /**
      * @var string
      *
+     * @Gedmo\Slug(unique=true, fields={"name"}, separator="_", updatable=false,
+     *     handlers={@Gedmo\SlugHandler(class="Gedmo\Sluggable\RelativeSlugHandler", options={
+     *          @Gedmo\SlugHandlerOption(name="relationField", value="organization"),
+     *          @Gedmo\SlugHandlerOption(name="relationSlugField", value="name"),
+     *          @Gedmo\SlugHandlerOption(name="separator", value="_")
+     *          }
+     *     )})
+     * @ORM\Column(type="string")
+     */
+    protected $slug;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $visible;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $description;
@@ -85,6 +106,7 @@ class OrganizationGroup
     public function __construct()
     {
         $this->members = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->visible = true;
     }
 
     /**
@@ -251,5 +273,89 @@ class OrganizationGroup
     public function getOrganization()
     {
         return $this->organization;
+    }
+
+    /**
+     * Set visible.
+     *
+     * @param bool $visible
+     *
+     * @return OrganizationGroup
+     */
+    public function setVisible($visible)
+    {
+        $this->visible = $visible;
+
+        return $this;
+    }
+
+    /**
+     * Get visible.
+     *
+     * @return bool
+     */
+    public function getVisible()
+    {
+        return $this->visible;
+    }
+
+    /**
+     * Add action.
+     *
+     * @param \Etu\Core\UserBundle\Entity\OrganizationGroupAction $action
+     *
+     * @return OrganizationGroup
+     */
+    public function addAction(\Etu\Core\UserBundle\Entity\OrganizationGroupAction $action)
+    {
+        $this->actions[] = $action;
+
+        return $this;
+    }
+
+    /**
+     * Remove action.
+     *
+     * @param \Etu\Core\UserBundle\Entity\OrganizationGroupAction $action
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeAction(\Etu\Core\UserBundle\Entity\OrganizationGroupAction $action)
+    {
+        return $this->actions->removeElement($action);
+    }
+
+    /**
+     * Get actions.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getActions()
+    {
+        return $this->actions;
+    }
+
+    /**
+     * Set slug.
+     *
+     * @param string $slug
+     *
+     * @return OrganizationGroup
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug.
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }
