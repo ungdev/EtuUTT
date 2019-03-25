@@ -107,10 +107,10 @@ class UEController extends ApiController
                 ->setParameter('automne', $automne);
         }
         if ($request->query->has('printemps')) {
-          $printemps = $request->query->get('printemps');
-          $query->andWhere('u.printemps = :printemps')
+            $printemps = $request->query->get('printemps');
+            $query->andWhere('u.printemps = :printemps')
               ->setParameter('printemps', $printemps);
-      }
+        }
         /** @var UV[] $uvs */
         $uvs = $query->getQuery()->getResult();
 
