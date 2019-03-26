@@ -23,6 +23,7 @@ class Member
     public const ROLE_SECRETARY = 20;
     public const ROLE_V_SECRETARY = 19;
 
+    public const ROLE_MANAGER = 15;
     public const ROLE_MEMBER = 10;
 
     public static $roles = [
@@ -34,6 +35,8 @@ class Member
 
         self::ROLE_SECRETARY => 'secretary',
         self::ROLE_V_SECRETARY => 'vice_secretary',
+
+        self::ROLE_MANAGER => 'manager',
 
         self::ROLE_MEMBER => 'member',
     ];
@@ -133,6 +136,7 @@ class Member
             self::ROLE_V_PRESIDENT => self::ROLE_V_PRESIDENT,
             self::ROLE_V_SECRETARY => self::ROLE_V_SECRETARY,
             self::ROLE_V_TREASURER => self::ROLE_V_TREASURER,
+            self::ROLE_MANAGER => self::ROLE_MANAGER,
         ];
     }
 
@@ -330,5 +334,29 @@ class Member
     public function getDeletedAt()
     {
         return $this->deletedAt;
+    }
+
+    /**
+     * Set group.
+     *
+     * @param \Etu\Core\UserBundle\Entity\OrganizationGroup|null $group
+     *
+     * @return Member
+     */
+    public function setGroup(\Etu\Core\UserBundle\Entity\OrganizationGroup $group = null)
+    {
+        $this->group = $group;
+
+        return $this;
+    }
+
+    /**
+     * Get group.
+     *
+     * @return \Etu\Core\UserBundle\Entity\OrganizationGroup|null
+     */
+    public function getGroup()
+    {
+        return $this->group;
     }
 }

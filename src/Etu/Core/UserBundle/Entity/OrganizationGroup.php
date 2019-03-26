@@ -43,7 +43,7 @@ class OrganizationGroup
      *          @Gedmo\SlugHandlerOption(name="separator", value="_")
      *          }
      *     )})
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=false)
      */
     protected $slug;
 

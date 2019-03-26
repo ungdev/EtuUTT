@@ -8,6 +8,7 @@
 
 {% block content %}
     <div class="trombi-search-box">
+        <h5>Ajout d'un utilisateur</h5>
         <div class="form-inline add-member-form">
 
             {% form_theme form 'form/theme-inline.html.twig' %}
@@ -29,6 +30,14 @@
                 </p> #}
             {{ form_end(form) }}
         </div>
+        <h5>Création d'un groupe utilisateur</h5>
+        <div class="form-inline add-member-form">
+
+            {% form_theme form 'form/theme-inline.html.twig' %}
+            {{ form_start(groupForm) }}
+            {{ form_widget(groupForm) }}
+            {{ form_end(groupForm) }}
+        </div>
     </div>
 
     <div class="padding20-all">
@@ -47,6 +56,9 @@
                         <h5>{{ member.user.fullName }}</h5>
                         <p>
                             {{ ('user.orga.role.'~member.role)|trans }}
+                        </p>
+                        <p>
+                            Groupe: {{ member.group.name | default('aucun') }}
                         </p>
 
                         <div class="clear"></div>

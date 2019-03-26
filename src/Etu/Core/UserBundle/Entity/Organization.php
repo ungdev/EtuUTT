@@ -143,9 +143,9 @@ class Organization implements UserInterface, \Serializable
     protected $memberships;
 
     /**
-     * @var Organization[]
+     * @var OrganizationGroup[]
      *
-     * @ORM\OneToMany(targetEntity="\Etu\Core\UserBundle\Entity\Organization", mappedBy="organization")
+     * @ORM\OneToMany(targetEntity="\Etu\Core\UserBundle\Entity\OrganizationGroup", mappedBy="organization")
      * @ORM\JoinColumn()
      */
     protected $groups;

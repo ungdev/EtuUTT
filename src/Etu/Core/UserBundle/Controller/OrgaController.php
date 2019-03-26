@@ -6,10 +6,12 @@ use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Form\EditorType;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\Member;
+use Etu\Core\UserBundle\Entity\OrganizationGroup;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Form\UserAutocompleteType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Doctrine\Form\Type\DoctrineType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -167,10 +169,25 @@ class OrgaController extends Controller
             $roles['user.orga.role.'.$role] = $key;
         }
 
+
         $form = $this->createFormBuilder($member)
             ->add('user', UserAutocompleteType::class, ['label' => 'user.orga.members.add_member_user'])
+            ->add('group', ChoiceType::class, [
+                'choices'=> $this->getUser()->getGroups(),
+                'required' => false,
+                'choice_label' => function ($value, $key, $choiceValue) {
+                    return $value->getName();
+                    }
+                ])
             ->add('role', ChoiceType::class, ['choices' => $roles])
             ->add('submit', SubmitType::class, ['label' => 'user.orga.members.add_member_btn'])
+            ->getForm();
+
+        $group = new OrganizationGroup();
+        $group->setOrganization($this->getUser());
+        $groupForm = $this->createFormBuilder()
+            ->add('name', TextType::class, ['label' => 'Nom du groupe'])
+            ->add('submit', SubmitType::class, ['label' => 'Créer un groupe utilisateur'])
             ->getForm();
 
         $form->handleRequest($request);
@@ -234,6 +251,7 @@ class OrgaController extends Controller
         return [
             'pagination' => $members,
             'form' => $form->createView(),
+            'groupForm' => $groupForm->createView()
         ];
     }
 
@@ -277,6 +295,24 @@ class OrgaController extends Controller
             ];
         }
 
+        $availableGroups = $this->getUser()->getGroups();
+
+        $groups = [];
+        $groups[0] = [
+            'identifier' => null,
+            'name' => ' ',
+            'selected' => !((boolean)$member->getGroup()),
+        ];
+        foreach ($availableGroups as $group) {
+            $groups[$group->getId()] = [
+                'identifier' => $group,
+                'name' => $group->getName(),
+                'selected' => $group == $member->getGroup(),
+            ];
+        }
+
+
+
         $availablePermissions = $this->getKernel()->getAvailableOrganizationsPermissions()->toArray();
 
         $permissions1 = [];
@@ -302,6 +338,13 @@ class OrgaController extends Controller
         if ($request->getMethod() == 'POST') {
             if ($request->get('role') != null && in_array((int) ($request->get('role')), Member::getAvailableRoles())) {
                 $member->setRole((int) ($request->get('role')));
+            }
+
+            if ($request->get('group') != null || in_array((int) ($request->get('group')), array_keys($groups))) {
+                $member->setGroup($groups[(int)($request->get('group'))]['identifier']);
+            } elseif ($request->get('group') == null)
+            {
+                $member->setGroup(null);
             }
 
             if ($member->getRole() == Member::ROLE_PRESIDENT) {
@@ -339,6 +382,7 @@ class OrgaController extends Controller
             'member' => $member,
             'user' => $member->getUser(),
             'roles' => $availableRoles,
+            'groups' => $groups,
             'permissions1' => $permissions1,
             'permissions2' => $permissions2,
         ];
