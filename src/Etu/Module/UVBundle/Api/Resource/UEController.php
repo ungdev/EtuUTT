@@ -78,6 +78,8 @@ class UEController extends ApiController
             ->join('c.uv', 'uv')
             ->join('c.user', 'u')
             ->where('c.deletedAt IS NULL')
+            ->andWhere('uv.slug = :slug')
+            ->setParameter('slug', $slug)
             ->orderBy('c.createdAt', 'DESC');
 
         /** @var UV[] $uv */
