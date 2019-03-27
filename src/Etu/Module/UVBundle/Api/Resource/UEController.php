@@ -85,7 +85,7 @@ class UEController extends ApiController
         /** @var UV[] $uv */
         $comments = $query->getQuery()->getResult();
 
-        return $this->format($comments, 200, [], $request);
+        return $this->format(["comments" => $comments], 200, [], $request);
     }
 
     /**
@@ -154,6 +154,6 @@ class UEController extends ApiController
         /** @var UV[] $uvs */
         $uvs = $query->getQuery()->getResult();
 
-        return $this->format($uvs, 200, [], $request);
+        return $this->format(["ues" => $uvs], 200, [], $request);
     }
 }
