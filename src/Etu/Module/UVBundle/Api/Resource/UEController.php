@@ -49,6 +49,44 @@ class UEController extends ApiController
     }
 
     /**
+     * You can get all UE's comments with this endpoint, using the UE's slug.
+     *
+     * @ApiDoc(
+     *   section = "UEs",
+     *   description = "comments of an UE (scope: public and is student)"
+     * )
+     *
+     * @Route("/ues/{slug}/comments", name="api_ue_comments", options={"expose"=true})
+     * @Method("GET")
+     *
+     * @param mixed $slug
+     */
+    public function commentsAction($slug, Request $request)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('EtuUserBundle:User')->find($this->getAccessToken($request)->getUser());
+        if ($user->getIsStudent() == 0) {
+            return $this->format([
+            'error' => 'You are not allowed',
+        ], 403, [], $request);
+        }
+        /** @var $query QueryBuilder */
+        $query = $em->createQueryBuilder()
+            ->select('uv.slug, u.fullName, c.body, c.createdAt')
+            ->from('EtuModuleUVBundle:Comment', 'c')
+            ->join('c.uv', 'uv')
+            ->join('c.user', 'u')
+            ->where('c.deletedAt IS NULL')
+            ->orderBy('c.createdAt', 'DESC');
+
+        /** @var UV[] $uv */
+        $comments = $query->getQuery()->getResult();
+
+        return $this->format($comments, 200, [], $request);
+    }
+
+    /**
      * To access an UE's information, you need to know the slug of that UE. For exemple,
      * TN02's slug is "tn02".
      *
