@@ -171,7 +171,7 @@ class ElementToUpdate
         $webDirectory = __DIR__.'/../../../../../../../web';
         $avatar = $this->ldap->getLogin().'_official.jpg';
         try {
-            $image = $imagine->open('http://local-sig.utt.fr/Pub/trombi/individu/'.$this->ldap->getStudentId().'.jpg');
+            $image = $imagine->open('https://local-sig.utt.fr/Pub/trombi/individu/'.$this->ldap->getStudentId().'.jpg');
 
             $image->copy()
                 ->thumbnail(new Box(200, 200), Image::THUMBNAIL_OUTBOUND)

@@ -81,7 +81,7 @@ class ElementToImport
 
         // Resize photo
         try {
-            $image = $imagine->open('http://local-sig.utt.fr/Pub/trombi/individu/'.$this->element->getStudentId().'.jpg');
+            $image = $imagine->open('https://local-sig.utt.fr/Pub/trombi/individu/'.$this->element->getStudentId().'.jpg');
 
             $image->copy()
                 ->thumbnail(new Box(200, 200), Image::THUMBNAIL_OUTBOUND)
