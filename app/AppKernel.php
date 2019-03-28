@@ -59,6 +59,9 @@ class AppKernel extends EtuKernel
             new Etu\Core\CoreBundle\EtuCoreBundle(),
             new Etu\Core\UserBundle\EtuUserBundle(),
             new Etu\Core\ApiBundle\EtuCoreApiBundle(),
+
+            // Argentique manager
+            new Artgris\Bundle\FileManagerBundle\ArtgrisFileManagerBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

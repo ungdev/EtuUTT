@@ -77,7 +77,8 @@
         "bower-asset/selectize": "0.12.*",
 
         "firebase/php-jwt": "^5.0",
-        "gnumoksha/php-freeipa": "dev-master"
+        "gnumoksha/php-freeipa": "dev-master",
+        "artgris/filemanager-bundle": "^1.4"
     },
     "repositories": [
         {

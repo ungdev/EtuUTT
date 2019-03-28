@@ -203,3 +203,9 @@ monolog:
             type:     stream
             path:     '%kernel.logs_dir%/admin.log'
             channels: ['admin']
+
+artgris_file_manager:
+    web_dir: web
+    conf:
+        argentique:
+            service: 'argentique.filemanagerconfig'

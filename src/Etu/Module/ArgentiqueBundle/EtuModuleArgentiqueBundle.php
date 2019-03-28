@@ -20,6 +20,16 @@ class EtuModuleArgentiqueBundle extends Module
                     ->setRole('ROLE_ARGENTIQUE_READ')
                 ->end()
             ->end();
+
+        $this->getSidebarBuilder()
+            ->getBlock('base.sidebar.services.title')
+                ->add('Administration galerie photo')
+                    ->setPosition(99)
+                    ->setIcon('argentique.png')
+                    ->setUrl($this->router->generate('argentique_admin'))
+                    ->setRole('ROLE_ARGENTIQUE_ADMIN')
+                ->end()
+            ->end();
     }
 
     /**

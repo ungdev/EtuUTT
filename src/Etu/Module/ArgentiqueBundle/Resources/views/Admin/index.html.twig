@@ -9,48 +9,6 @@
 {% block content %}
     <div class="padding20-all argentique-admin">
         <h4>Administrer la gallerie Argentique - Mode d'emploi</h4>
-
-        <br />
-
-        <h5>Pré-requis</h5>
-
-        <p>
-            L'administration de la gallerie Argentique passe par un outil appelé Filezilla.
-        </p>
-        <p>
-            Si vous ne l'avez pas, téléchargez-le ici :
-        </p>
-        <p>
-            <a href="https://filezilla-project.org/download.php?type=client">Télécharger Filezilla</a>
-        </p>
-        <p>
-            Installez-le, et lancez-le.
-        </p>
-
-        <br />
-
-        <h5>Utilisation de Filezilla</h5>
-
-        <p>
-            En haut de la fenêtre existent quatre champs, appelés dans l'ordre
-            <em>Hôte, Identifiant, Mot de passe, Port</em>. Remplissez-les comme suit :
-        </p>
-
-        <ul>
-            <li><strong>Hôte</strong> : sftp://etu.utt.fr</li>
-            <li><strong>Identifiant</strong> : argentiq</li>
-            <li><strong>Mot de passe</strong> : argentiq</li>
-            <li><strong>Port</strong> : 22</li>
-        </ul>
-
-        <p>
-            Puis cliquez sur "Connexion rapide".
-        </p>
-        <p>
-            Si tout se passe bien, vous devriez obtenir une liste de dossiers / fichiers dans la partie droite de
-            Filezilla. Si ce n'est pas le cas, contactez l'UNG.
-        </p>
-
         <br />
 
         <h5>Fonctionnement de la gallerie</h5>
@@ -63,12 +21,6 @@
             De cette manière, vous pouvez créer / modifier / supprimer les dossiers / les images de cet espace pour
             créer / modifier / supprimer les collections / les photos de la gallerie du site étudiant.
         </p>
-        <p>
-            Pour envoyer des images, naviguez sur votre système dans la partie de gauche de Filezilla, choisissez les
-            fichiers à envoyer, puis cliquez-droit sur eux et cliquez sur "Envoyer". Vous ne pouvez évidemment envoyer
-            des fichiers que si vous êtes connectés à l'espace de photos.
-        </p>
-
         <br />
 
         <h5>Recommandations</h5>
@@ -83,5 +35,8 @@
             <li>Créez une sous-collection pour chaque événement, sans le bon semestre évidemment</li>
             <li>N'envoyez pas de photos de plus de 2500 pixels de hauteur ou de largeur, cela ralentirait la gallerie</li>
         </ul>
+
+        <iframe id="file_manager" src="{{ path('file_manager', {module:1, conf:'argentique'}) }}" width="100%" height="800" frameborder="0"></iframe>
+
     </div>
 {% endblock %}
