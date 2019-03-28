@@ -180,4 +180,11 @@ class LdapManager
 
         return $this->connection->user()->modify($uid, $data);
     }
+
+    public function getConnection(): Main
+    {
+        $this->connect();
+
+        return $this->connection;
+    }
 }

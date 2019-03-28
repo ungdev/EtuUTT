@@ -671,6 +671,7 @@ class AdminController extends Controller
         $form = $this->createFormBuilder($orga)
             ->add('login', null, ['required' => true, 'label' => 'user.admin.orgasCreate.login'])
             ->add('name', null, ['required' => true, 'label' => 'user.admin.orgasCreate.name'])
+            ->add('sympaMail', EmailType::class, ['required' => false, 'label' => 'user.admin.orgasCreate.sympaMail'])
             ->add('descriptionShort', TextareaType::class, ['required' => true, 'label' => 'user.admin.orgasCreate.descriptionShort'])
             ->add('submit', SubmitType::class, ['label' => 'user.admin.orgasCreate.submit'])
             ->getForm();

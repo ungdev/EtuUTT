@@ -1,0 +1,56 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}{{ 'user.orga.groupEdit.title'|trans }}{% endblock %}
+
+{% block titleIcon %}
+    <img src="{{ asset('assets/img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+    <ul class="nav nav-tabs page-tabs">
+        <li>
+            <a href="{{ path('orga_admin_members') }}">
+                <i class="icon-chevron-left"></i>
+                {{ 'user.orga.memberEdit.back'|trans }}
+            </a>
+        </li>
+    </ul>
+
+
+    <div class="padding20-sides">
+        <h4>Edition des paramétres du groupe</h4>
+        {{ form_start(groupEditForm) }}
+        {{ form_widget(groupEditForm) }}
+        {{ form_end(groupEditForm) }}
+
+        <hr>
+
+        <h4>Souscription automatique</h4>
+
+            <br>
+            <p>
+                Le but de cette fonctionnalitée est d'offrir un service de souscription automatique au mailist associative utt. Ainsi un membre sera automatique ajouté / supprimé si il est ajoutè à ce groupe sur le site étu.
+            </p>
+            <br>
+        {% if not user.sympaMail %}
+            <div class="alert alert-error">
+                Aucun adresse d'authentification n'est définit sur votre profile. Veulliez contacter l'équipe de l'ung pour activer la fonctionnalitée à
+                <a href="mailto:ung@utt.fr">ung@utt.fr</a>.
+            </div>
+        {% else %}
+            {% if not group.actions.empty %}
+                <h5>Liste des souscriptions configurés</h5>
+            <ul>
+                {% for action in group.actions %}
+                    <li>Souscription à <b>{{ action.data.mailist }}</b> (<a href="{{ url('orga_admin_group_action_delete', { id: action.id }) }}"><i class="icon icon-trash"></i></a>)</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <br>
+            <h5>Ajout d'une nouvelle souscription</h5>
+            {{ form_start(mailistActionForm) }}
+            {{ form_widget(mailistActionForm) }}
+            {{ form_end(mailistActionForm) }}
+        {% endif %}
+    </div>
+{% endblock %}

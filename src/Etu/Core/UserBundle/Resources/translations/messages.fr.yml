@@ -102,6 +102,7 @@ user:
             login: Identifiant CAS
             name: Nom
             descriptionShort: Courte description
+            sympaMail: Adresse mail pour les souscriptions mailist
             submit: Créer
             confirm: L'accès a bien été créé
         orgasDelete:
@@ -219,6 +220,7 @@ user:
             29: Vice-trésorier
             20: Secrétaire
             19: Vice-secrétaire
+            15: Responsable
             10: Membre
         avatar:
             title: Modifier votre logo
@@ -278,6 +280,8 @@ user:
             yes: Oui, supprimer
             no: Non, annuler
             confirm: Le membre a bien été supprimé de votre association
+        groupEdit:
+            title: Edition d'un groupe
 
     profile:
         menu:

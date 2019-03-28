@@ -6,6 +6,8 @@ use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Form\EditorType;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\Member;
+use Etu\Core\UserBundle\Entity\OrganizationGroup;
+use Etu\Core\UserBundle\Entity\OrganizationGroupAction;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Form\UserAutocompleteType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -145,18 +147,6 @@ class OrgaController extends Controller
         /** @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
 
-        $members = $em->createQueryBuilder()
-            ->select('m, u')
-            ->from('EtuUserBundle:Member', 'm')
-            ->leftJoin('m.user', 'u')
-            ->where('m.organization = :orga')
-            ->setParameter('orga', $this->getUser()->getId())
-            ->orderBy('m.role', 'DESC')
-            ->addOrderBy('u.lastName')
-            ->getQuery();
-
-        $members = $this->get('knp_paginator')->paginate($members, $page, 20);
-
         $member = new Member();
         $member->setOrganization($this->getUser());
 
@@ -169,10 +159,25 @@ class OrgaController extends Controller
 
         $form = $this->createFormBuilder($member)
             ->add('user', UserAutocompleteType::class, ['label' => 'user.orga.members.add_member_user'])
+            ->add('group', ChoiceType::class, [
+                'choices' => $this->getUser()->getGroups(),
+                'required' => true,
+                'choice_label' => function ($value, $key, $choiceValue) {
+                    return $value->getName();
+                },
+                ])
             ->add('role', ChoiceType::class, ['choices' => $roles])
             ->add('submit', SubmitType::class, ['label' => 'user.orga.members.add_member_btn'])
             ->getForm();
 
+        $orgaGroup = new OrganizationGroup();
+        $orgaGroup->setOrganization($this->getUser());
+        $groupForm = $this->createFormBuilder($orgaGroup)
+            ->add('name', TextType::class, ['label' => 'Nom du groupe'])
+            ->add('submit', SubmitType::class, ['label' => 'Créer un groupe utilisateur'])
+            ->getForm();
+
+        // User formulaire
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var $user User */
@@ -231,10 +236,140 @@ class OrgaController extends Controller
             ));
         }
 
+        $groupForm->handleRequest($request);
+        if ($groupForm->isSubmitted() && $groupForm->isValid()) {
+            $em->persist($orgaGroup);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->set('message', [
+                'type' => 'success',
+                'message' => 'Groupe créer !',
+            ]);
+
+            return $this->redirect($this->generateUrl(
+                'orga_admin_group_edit', ['slug' => $orgaGroup->getSlug()]
+            ));
+        }
+
         return [
-            'pagination' => $members,
+            'groups' => $this->getUser()->getGroups(),
+            'orga' => $this->getUser(),
             'form' => $form->createView(),
+            'groupForm' => $groupForm->createView(),
         ];
+    }
+
+    /**
+     * @Route("/orga/group/{slug}", name="orga_admin_group_edit")
+     * @Template()
+     *
+     * @param mixed $slug
+     */
+    public function groupEditAction($slug, Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ORGA');
+
+        /** @var $em EntityManager */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var $group OrganizationGroup */
+        $group = $em->createQueryBuilder()
+            ->select('o')
+            ->from('EtuUserBundle:OrganizationGroup', 'o')
+            ->where('o.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if (!$group) {
+            throw $this->createNotFoundException('Group not found');
+        }
+
+        /**
+         * GROUP EDITION.
+         */
+        $groupEditForm = $this->createFormBuilder($group)
+            ->add('name', TextType::class, ['label' => 'Nom du groupe', 'disabled' => true])
+            ->add('slug', TextType::class, ['label' => 'Nom de groupe interne', 'disabled' => true])
+            ->add('description', TextareaType::class, ['label' => 'Description (visible sur la page membres)', 'required' => false])
+            ->add('submit', SubmitType::class, ['label' => 'Modifier les informations du groupe'])
+            ->getForm();
+
+        $groupEditForm->handleRequest($request);
+        if ($groupEditForm->isSubmitted() && $groupEditForm->isValid()) {
+            $this->get('session')->getFlashBag()->set('message', [
+                'type' => 'success',
+                'message' => 'Groupe édité !',
+            ]);
+            $em->persist($group);
+            $em->flush();
+        }
+
+        /**
+         * ADD MAILIST FONCTIONNALITY.
+         */
+        $mailistActionForm = $this->createFormBuilder()
+            ->add('mailist_name', TextType::class, ['required' => true, 'label' => 'Identifiant de la mailing-list'])
+            ->add('mail_admin', EmailType::class, ['disabled' => true, 'data' => $group->getOrganization()->getSympaMail(), 'label' => 'Compte mail adminstrateur'])
+            ->add('submit', SubmitType::class, ['label' => 'Ajout de la souscription automatique'])
+            ->getForm();
+
+        $mailistActionForm->handleRequest($request);
+        if ($mailistActionForm->isSubmitted() && $mailistActionForm->isValid()) {
+            $mailistAction = new OrganizationGroupAction();
+            $mailistAction->setGroup($group)
+                ->setAction(OrganizationGroupAction::ACTION_MAILIST_ADD_MEMBER)
+                ->setData(['mailist' => $mailistActionForm->getData()['mailist_name']]);
+            $em->persist($mailistAction);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->set('message', [
+                'type' => 'success',
+                'message' => 'Ajout de la souscription automatique reussit !',
+            ]);
+
+            return $this->redirectToRoute('orga_admin_group_edit', ['slug' => $group->getSlug()]);
+        }
+
+        return [
+            'groupEditForm' => $groupEditForm->createView(),
+            'mailistActionForm' => $mailistActionForm->createView(),
+            'group' => $group,
+            'user' => $this->getUser(),
+        ];
+    }
+
+    /**
+     * @Route("/orga/group/action/{id}/delete", name="orga_admin_group_action_delete")
+     * @Template()
+     *
+     * @param mixed $slug
+     * @param mixed $id
+     */
+    public function organizationGroupActionDeleteAction($id, Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ORGA');
+        /** @var $em EntityManager */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var $member Member */
+        $action = $this->getDoctrine()->getRepository('EtuUserBundle:OrganizationGroupAction')
+            ->find($id);
+
+        if (!$action || ($action->getGroup()->getOrganization()->getId() != $this->getUser()->getId())) {
+            throw $this->createNotFoundException('Action not found');
+        }
+
+        $em->remove($action);
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->set('message', [
+            'type' => 'success',
+            'message' => 'Action supprimé !',
+        ]);
+
+        return $this->redirectToRoute('orga_admin_group_edit', ['slug' => $action->getGroup()->getSlug()]);
     }
 
     /**
@@ -277,6 +412,17 @@ class OrgaController extends Controller
             ];
         }
 
+        $availableGroups = $this->getUser()->getGroups();
+
+        $groups = [];
+        foreach ($availableGroups as $group) {
+            $groups[$group->getId()] = [
+                'identifier' => $group,
+                'name' => $group->getName(),
+                'selected' => $group == $member->getGroup(),
+            ];
+        }
+
         $availablePermissions = $this->getKernel()->getAvailableOrganizationsPermissions()->toArray();
 
         $permissions1 = [];
@@ -302,6 +448,10 @@ class OrgaController extends Controller
         if ($request->getMethod() == 'POST') {
             if ($request->get('role') != null && in_array((int) ($request->get('role')), Member::getAvailableRoles())) {
                 $member->setRole((int) ($request->get('role')));
+            }
+
+            if ($request->get('group') != null || in_array((int) ($request->get('group')), array_keys($groups))) {
+                $member->setGroup($groups[(int) ($request->get('group'))]['identifier']);
             }
 
             if ($member->getRole() == Member::ROLE_PRESIDENT) {
@@ -339,6 +489,7 @@ class OrgaController extends Controller
             'member' => $member,
             'user' => $member->getUser(),
             'roles' => $availableRoles,
+            'groups' => $groups,
             'permissions1' => $permissions1,
             'permissions2' => $permissions2,
         ];

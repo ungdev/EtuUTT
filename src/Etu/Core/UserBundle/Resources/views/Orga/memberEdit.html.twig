@@ -43,6 +43,19 @@
                             </select>
                         </div>
                     </div>
+                    <div class="control-group">
+                        <label class="control-label" for="isAdmin">Groupe utilisateur</label>
+                        <div class="controls">
+                            <select name="group">
+                                {% for group in groups %}
+                                    <option {% if group.identifier is not null %}value="{{ group.identifier.id }} {% endif %}"
+                                            {% if group.selected %} selected="selected"{% endif %}>
+                                        {{ group.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
 
                     <p class="pull-right">
                         <button type="submit" class="btn btn-primary">
