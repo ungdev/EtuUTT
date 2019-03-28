@@ -94,48 +94,31 @@
                 {% endif %}
             </div>
             <div class="span9">
-                <h4>{{ 'assos.main.members.office'|trans }}</h4>
+                {% for group in orga.groups %}
+                    {% if group.members.count > 0 %}
+                    <h4>{{ group.name }}</h4>
+                        <p>{{ group.description }}</p>
+                        <ul class="asso-members">
+                            {% for member in group.members %}
+                                <li class="asso-members-item asso-members-item-office">
+                                    <a href="{{ path('user_view', {'login': member.user.login}) }}">
+                                        <img src="{{ asset('uploads/photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
+                                        <h5>{{ member.user.fullName }}</h5>
+                                        <p>
+                                            {{ ('user.orga.role.'~member.role)|trans }}<br />
+                                            {{ member.user.branch~member.user.niveau }} {{ member.user.filiere }}
+                                        </p>
 
-                <ul class="asso-members">
-                    {% for member in office %}
-                        <li class="asso-members-item asso-members-item-office">
-                            <a href="{{ path('user_view', {'login': member.user.login}) }}">
-                                <img src="{{ asset('uploads/photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
-                                <h5>{{ member.user.fullName }}</h5>
-                                <p>
-                                    {{ ('user.orga.role.'~member.role)|trans }}<br />
-                                    {{ member.user.branch~member.user.niveau }} {{ member.user.filiere }}
-                                </p>
+                                        <div class="clear"></div>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    <div class="clear"></div>
+                    <hr />
+                    {% endif %}
+                {% endfor %}
 
-                                <div class="clear"></div>
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-
-                <div class="clear"></div>
-
-                <hr />
-
-                <h4>{{ 'assos.main.members.members'|trans }}</h4>
-
-                <ul class="asso-members">
-                    {% for member in members %}
-                        <li class="asso-members-item asso-members-item-member">
-                            <a href="{{ path('user_view', {'login': member.user.login}) }}">
-                                <img src="{{ asset('uploads/photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
-                                <h5>{{ member.user.fullName }}</h5>
-                                <p>
-                                    {{ member.user.branch~member.user.niveau }} {{ member.user.filiere }}
-                                </p>
-
-                                <div class="clear"></div>
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-
-                <div class="clear"></div>
             </div>
         </div>
     </div>

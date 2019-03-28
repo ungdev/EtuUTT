@@ -5,11 +5,12 @@ namespace Etu\Core\UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping\Index;
 
 /**
  * Organization Group.
  *
- * @ORM\Table(name="etu_organization_groups")
+ * @ORM\Table(name="etu_organization_groups", indexes={@Index(name="sk_groupename", columns={"name", "organization_id"})})
  * @ORM\Entity()
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
@@ -27,7 +28,7 @@ class OrganizationGroup
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, unique=false)
      * @Assert\NotBlank()
      * @Assert\Length(min = "2", max = "50")
      */
@@ -35,12 +36,12 @@ class OrganizationGroup
 
     /**
      * @var string
-     *
      * @Gedmo\Slug(unique=true, fields={"name"}, separator="_", updatable=false,
-     *     handlers={@Gedmo\SlugHandler(class="Gedmo\Sluggable\RelativeSlugHandler", options={
+     *     handlers={@Gedmo\SlugHandler(class="Gedmo\Sluggable\Handler\RelativeSlugHandler", options={
      *          @Gedmo\SlugHandlerOption(name="relationField", value="organization"),
      *          @Gedmo\SlugHandlerOption(name="relationSlugField", value="name"),
-     *          @Gedmo\SlugHandlerOption(name="separator", value="_")
+     *          @Gedmo\SlugHandlerOption(name="separator", value="_"),
+     *          @Gedmo\SlugHandlerOption(name="urilize", value="true")
      *          }
      *     )})
      * @ORM\Column(type="string", nullable=false)
@@ -66,6 +67,7 @@ class OrganizationGroup
      *
      * @ORM\OneToMany(targetEntity="\Etu\Core\UserBundle\Entity\Member", mappedBy="group")
      * @ORM\JoinColumn()
+     * @ORM\OrderBy({"role" = "DESC", "createdAt" = "DESC"})
      */
     protected $members;
 

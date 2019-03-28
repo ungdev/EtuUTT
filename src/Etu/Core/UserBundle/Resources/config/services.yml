@@ -85,3 +85,10 @@ services:
     etu.api.user_orgas_private.transformer:
         class: Etu\Core\UserBundle\Api\Transformer\UserOrgasPrivateTransformer
         arguments: [ "@etu.api.orga.transformer" ]
+
+    # Mailist subscription
+    etu.mailist.subscription.listener:
+        class: Etu\Core\UserBundle\EventListener\MailistSubscription
+        arguments: ["@mailer"]
+        tags:
+            - { name: doctrine.event_subscriber, connection: default}

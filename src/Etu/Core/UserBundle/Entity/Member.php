@@ -10,6 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="etu_organizations_members")
  * @ORM\Entity()
+ * @ORM\HasLifecycleCallbacks()
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Member
@@ -69,7 +70,7 @@ class Member
     /**
      * @var OrganizationGroup
      *
-     * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\OrganizationGroup", inversedBy="memberships")
+     * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\OrganizationGroup", inversedBy="members")
      * @ORM\JoinColumn()
      */
     protected $group;
@@ -358,5 +359,17 @@ class Member
     public function getGroup()
     {
         return $this->group;
+    }
+
+    /**
+     * Clear id
+     *
+     * @return Member
+     */
+    public function clearId()
+    {
+        $this->id = null; // également essayé avec "", 0, valeur de l'auto-incrément, true, false, -1
+
+        return $this;
     }
 }

@@ -122,30 +122,6 @@ class MainController extends Controller
             throw $this->createNotFoundException('Orga not found');
         }
 
-        /** @var $memberships Member[] */
-        $memberships = $em->createQueryBuilder()
-            ->select('m, u, o')
-            ->from('EtuUserBundle:Member', 'm')
-            ->leftJoin('m.organization', 'o')
-            ->leftJoin('m.user', 'u')
-            ->where('o.login = :orga')
-            ->setParameter('orga', $login)
-            ->orderBy('m.role', 'DESC')
-            ->setMaxResults(50)
-            ->getQuery()
-            ->getResult();
-
-        $office = [];
-        $members = [];
-
-        foreach ($memberships as $membership) {
-            if ($membership->isFromBureau()) {
-                $office[] = $membership;
-            } else {
-                $members[] = $membership;
-            }
-        }
-
         // Get wiki rights
         $rights = null;
         $modulesManager = $this->get('etu.core.modules_manager');
@@ -155,8 +131,6 @@ class MainController extends Controller
 
         return [
             'orga' => $orga,
-            'office' => $office,
-            'members' => $members,
             'wikirights' => $rights,
         ];
     }

@@ -20,6 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="etu_organizations")
  * @ORM\Entity()
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Organization implements UserInterface, \Serializable
 {
@@ -64,6 +65,14 @@ class Organization implements UserInterface, \Serializable
      * @Assert\Email()
      */
     protected $contactMail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=100, nullable=true)
+     * @Assert\Email()
+     */
+    protected $sympaMail;
 
     /**
      * @var string
@@ -145,7 +154,7 @@ class Organization implements UserInterface, \Serializable
     /**
      * @var OrganizationGroup[]
      *
-     * @ORM\OneToMany(targetEntity="\Etu\Core\UserBundle\Entity\OrganizationGroup", mappedBy="organization")
+     * @ORM\OneToMany(targetEntity="\Etu\Core\UserBundle\Entity\OrganizationGroup", mappedBy="organization", cascade={"persist", "remove"})
      * @ORM\JoinColumn()
      */
     protected $groups;
@@ -190,6 +199,24 @@ class Organization implements UserInterface, \Serializable
         return $this->name;
     }
 
+    /**
+     * Create default organization group
+     * @ORM\PrePersist()
+     */
+    public function onPrePersist()
+    {
+        // Bureau group
+        $group = new OrganizationGroup();
+        $group->setName('Bureau');
+        $group->setOrganization($this);
+        $this->addGroup($group);
+
+        // Membres
+        $group = new OrganizationGroup();
+        $group->setName('Membres');
+        $group->setOrganization($this);
+        $this->addGroup($group);
+    }
     /**
      * Upload the photo.
      *
@@ -675,11 +702,11 @@ class Organization implements UserInterface, \Serializable
     /**
      * Add group.
      *
-     * @param \Etu\Core\UserBundle\Entity\Organization $group
+     * @param \Etu\Core\UserBundle\Entity\OrganizationGroup $group
      *
      * @return Organization
      */
-    public function addGroup(\Etu\Core\UserBundle\Entity\Organization $group)
+    public function addGroup(\Etu\Core\UserBundle\Entity\OrganizationGroup $group)
     {
         $this->groups[] = $group;
 
@@ -689,11 +716,11 @@ class Organization implements UserInterface, \Serializable
     /**
      * Remove group.
      *
-     * @param \Etu\Core\UserBundle\Entity\Organization $group
+     * @param \Etu\Core\UserBundle\Entity\OrganizationGroup $group
      *
-     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeGroup(\Etu\Core\UserBundle\Entity\Organization $group)
+    public function removeGroup(\Etu\Core\UserBundle\Entity\OrganizationGroup $group)
     {
         return $this->groups->removeElement($group);
     }
@@ -706,5 +733,29 @@ class Organization implements UserInterface, \Serializable
     public function getGroups()
     {
         return $this->groups;
+    }
+
+    /**
+     * Set sympaMail.
+     *
+     * @param string|null $sympaMail
+     *
+     * @return Organization
+     */
+    public function setSympaMail($sympaMail = null)
+    {
+        $this->sympaMail = $sympaMail;
+
+        return $this;
+    }
+
+    /**
+     * Get sympaMail.
+     *
+     * @return string|null
+     */
+    public function getSympaMail()
+    {
+        return $this->sympaMail;
     }
 }

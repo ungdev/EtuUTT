@@ -43,13 +43,14 @@
     <div class="padding20-all">
         <div class="navigation">
             <p>
-                {{ 'user.orga.members.count'|transchoice(pagination.totalItemCount, {'%count%': pagination.totalItemCount}) }}
+                Vous aves {{ orga.memberships.count }} membres dans l'association.
             </p>
-            {{ knp_pagination_render(pagination) }}
         </div>
-
+        {% for group in groups %}
+        <h4>{{ group.name }} <a href="{{ url('orga_admin_group_edit', { slug: group.slug}) }}"><i class="icon-edit"></i></a></h4>
+            {% if group.members.count > 0 %}
         <ul id="search-results" class="asso-members">
-            {% for member in pagination %}
+            {% for member in group.members %}
                 <li class="asso-members-item">
                     <a href="{{ path('orga_admin_members_edit', {'login': member.user.login}) }}">
                         <img src="{{ asset('uploads/photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
@@ -57,21 +58,17 @@
                         <p>
                             {{ ('user.orga.role.'~member.role)|trans }}
                         </p>
-                        <p>
-                            Groupe: {{ member.group.name | default('aucun') }}
-                        </p>
 
                         <div class="clear"></div>
                     </a>
                 </li>
             {% endfor %}
         </ul>
-
+            {% else %}
+                <p>Aucun membre dans ce groupe</p>
+            {% endif %}
         <div class="clear"></div>
+        {% endfor %}
 
-        {# display navigation #}
-        <div class="navigation">
-            {{ knp_pagination_render(pagination) }}
-        </div>
     </div>
 {% endblock %}

@@ -9,3 +9,10 @@ services:
         arguments:
             - 'mysql:host=%database_host%;dbname=%database_name%'
             - { db_username: '%database_user%', db_password: '%database_password%' }
+
+    gedmo.listener.sluggable:
+        class: Gedmo\Sluggable\SluggableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
