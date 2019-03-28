@@ -156,6 +156,7 @@ class Organization implements UserInterface, \Serializable
      *
      * @ORM\OneToMany(targetEntity="\Etu\Core\UserBundle\Entity\OrganizationGroup", mappedBy="organization", cascade={"persist", "remove"})
      * @ORM\JoinColumn()
+     * @ORM\OrderBy({"position" = "ASC", "name" = "ASC"})
      */
     protected $groups;
 
@@ -210,12 +211,14 @@ class Organization implements UserInterface, \Serializable
         $group = new OrganizationGroup();
         $group->setName('Bureau');
         $group->setOrganization($this);
+        $group->setPosition(-30000);
         $this->addGroup($group);
 
         // Membres
         $group = new OrganizationGroup();
         $group->setName('Membres');
         $group->setOrganization($this);
+        $group->setPosition(3000);
         $this->addGroup($group);
     }
 

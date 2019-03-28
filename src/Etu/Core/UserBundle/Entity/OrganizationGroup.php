@@ -49,6 +49,13 @@ class OrganizationGroup
     protected $slug;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    protected $position = 0;
+
+    /**
      * @var bool
      *
      * @ORM\Column(type="boolean", nullable=false)
@@ -359,5 +366,29 @@ class OrganizationGroup
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set position.
+     *
+     * @param int $position
+     *
+     * @return OrganizationGroup
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position.
+     *
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 }

@@ -15,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -292,6 +293,7 @@ class OrgaController extends Controller
         $groupEditForm = $this->createFormBuilder($group)
             ->add('name', TextType::class, ['label' => 'Nom du groupe', 'disabled' => true])
             ->add('slug', TextType::class, ['label' => 'Nom de groupe interne', 'disabled' => true])
+            ->add('position', IntegerType::class, ['label' => 'Ordre dans la liste (plus petit en début)', 'required' => true])
             ->add('description', TextareaType::class, ['label' => 'Description (visible sur la page membres)', 'required' => false])
             ->add('submit', SubmitType::class, ['label' => 'Modifier les informations du groupe'])
             ->getForm();
