@@ -184,6 +184,7 @@ class LdapManager
     public function getConnection(): Main
     {
         $this->connect();
+
         return $this->connection;
     }
 }

@@ -3,9 +3,9 @@
 namespace Etu\Core\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Index;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\ORM\Mapping\Index;
 
 /**
  * Organization Group.
@@ -49,7 +49,7 @@ class OrganizationGroup
     protected $slug;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
@@ -320,7 +320,7 @@ class OrganizationGroup
      *
      * @param \Etu\Core\UserBundle\Entity\OrganizationGroupAction $action
      *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
      */
     public function removeAction(\Etu\Core\UserBundle\Entity\OrganizationGroupAction $action)
     {

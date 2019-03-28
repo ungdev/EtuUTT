@@ -4,7 +4,6 @@ namespace Etu\Module\AssosBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
-use Etu\Core\UserBundle\Entity\Member;
 use Etu\Core\UserBundle\Entity\Organization;
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

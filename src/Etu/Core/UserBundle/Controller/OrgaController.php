@@ -12,7 +12,6 @@ use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Form\UserAutocompleteType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bridge\Doctrine\Form\Type\DoctrineType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -158,15 +157,14 @@ class OrgaController extends Controller
             $roles['user.orga.role.'.$role] = $key;
         }
 
-
         $form = $this->createFormBuilder($member)
             ->add('user', UserAutocompleteType::class, ['label' => 'user.orga.members.add_member_user'])
             ->add('group', ChoiceType::class, [
-                'choices'=> $this->getUser()->getGroups(),
+                'choices' => $this->getUser()->getGroups(),
                 'required' => true,
                 'choice_label' => function ($value, $key, $choiceValue) {
                     return $value->getName();
-                    }
+                },
                 ])
             ->add('role', ChoiceType::class, ['choices' => $roles])
             ->add('submit', SubmitType::class, ['label' => 'user.orga.members.add_member_btn'])
@@ -239,8 +237,7 @@ class OrgaController extends Controller
         }
 
         $groupForm->handleRequest($request);
-        if($groupForm->isSubmitted() &&  $groupForm->isValid())
-        {
+        if ($groupForm->isSubmitted() && $groupForm->isValid()) {
             $em->persist($orgaGroup);
             $em->flush();
 
@@ -248,6 +245,7 @@ class OrgaController extends Controller
                 'type' => 'success',
                 'message' => 'Groupe créer !',
             ]);
+
             return $this->redirect($this->generateUrl(
                 'orga_admin_group_edit', ['slug' => $orgaGroup->getSlug()]
             ));
@@ -257,7 +255,7 @@ class OrgaController extends Controller
             'groups' => $this->getUser()->getGroups(),
             'orga' => $this->getUser(),
             'form' => $form->createView(),
-            'groupForm' => $groupForm->createView()
+            'groupForm' => $groupForm->createView(),
         ];
     }
 
@@ -289,7 +287,7 @@ class OrgaController extends Controller
         }
 
         /**
-         * GROUP EDITION
+         * GROUP EDITION.
          */
         $groupEditForm = $this->createFormBuilder($group)
             ->add('name', TextType::class, ['label' => 'Nom du groupe', 'disabled' => true])
@@ -298,10 +296,8 @@ class OrgaController extends Controller
             ->add('submit', SubmitType::class, ['label' => 'Modifier les informations du groupe'])
             ->getForm();
 
-
         $groupEditForm->handleRequest($request);
-        if($groupEditForm->isSubmitted() && $groupEditForm->isValid())
-        {
+        if ($groupEditForm->isSubmitted() && $groupEditForm->isValid()) {
             $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'Groupe édité !',
@@ -311,19 +307,16 @@ class OrgaController extends Controller
         }
 
         /**
-         * ADD MAILIST FONCTIONNALITY
+         * ADD MAILIST FONCTIONNALITY.
          */
-
-
         $mailistActionForm = $this->createFormBuilder()
             ->add('mailist_name', TextType::class, ['required' => true, 'label' => 'Identifiant de la mailing-list'])
             ->add('mail_admin', EmailType::class, ['disabled' => true, 'data' => $group->getOrganization()->getSympaMail(), 'label' => 'Compte mail adminstrateur'])
-            ->add('submit', SubmitType::class, ['label' => "Ajout de la souscription automatique"])
+            ->add('submit', SubmitType::class, ['label' => 'Ajout de la souscription automatique'])
             ->getForm();
 
         $mailistActionForm->handleRequest($request);
-        if($mailistActionForm->isSubmitted() && $mailistActionForm->isValid())
-        {
+        if ($mailistActionForm->isSubmitted() && $mailistActionForm->isValid()) {
             $mailistAction = new OrganizationGroupAction();
             $mailistAction->setGroup($group)
                 ->setAction(OrganizationGroupAction::ACTION_MAILIST_ADD_MEMBER)
@@ -335,13 +328,15 @@ class OrgaController extends Controller
                 'type' => 'success',
                 'message' => 'Ajout de la souscription automatique reussit !',
             ]);
+
             return $this->redirectToRoute('orga_admin_group_edit', ['slug' => $group->getSlug()]);
         }
+
         return [
             'groupEditForm' => $groupEditForm->createView(),
             'mailistActionForm' => $mailistActionForm->createView(),
             'group' => $group,
-            'user'  => $this->getUser(),
+            'user' => $this->getUser(),
         ];
     }
 
@@ -350,6 +345,7 @@ class OrgaController extends Controller
      * @Template()
      *
      * @param mixed $slug
+     * @param mixed $id
      */
     public function organizationGroupActionDeleteAction($id, Request $request)
     {
@@ -374,7 +370,6 @@ class OrgaController extends Controller
         ]);
 
         return $this->redirectToRoute('orga_admin_group_edit', ['slug' => $action->getGroup()->getSlug()]);
-
     }
 
     /**
@@ -428,8 +423,6 @@ class OrgaController extends Controller
             ];
         }
 
-
-
         $availablePermissions = $this->getKernel()->getAvailableOrganizationsPermissions()->toArray();
 
         $permissions1 = [];
@@ -458,7 +451,7 @@ class OrgaController extends Controller
             }
 
             if ($request->get('group') != null || in_array((int) ($request->get('group')), array_keys($groups))) {
-                $member->setGroup($groups[(int)($request->get('group'))]['identifier']);
+                $member->setGroup($groups[(int) ($request->get('group'))]['identifier']);
             }
 
             if ($member->getRole() == Member::ROLE_PRESIDENT) {

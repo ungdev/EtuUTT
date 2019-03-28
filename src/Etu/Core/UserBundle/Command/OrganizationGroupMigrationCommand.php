@@ -4,7 +4,6 @@ namespace Etu\Core\UserBundle\Command;
 
 use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Core\UserBundle\Entity\OrganizationGroup;
-use Etu\Core\UserBundle\Sync\Synchronizer;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -36,34 +35,34 @@ class OrganizationGroupMigrationCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getManager();
         $organisations = $em->getRepository('EtuUserBundle:Organization')->findAll();
 
-        foreach ($organisations as $orga)
-        {
-            $output->write("- Organisation ".$orga->getName());
+        foreach ($organisations as $orga) {
+            $output->write('- Organisation '.$orga->getName());
 
             $bureauGroup = new OrganizationGroup();
-            $bureauGroup->setName("Bureau")
+            $bureauGroup->setName('Bureau')
                 ->setOrganization($orga);
             $em->persist($bureauGroup);
 
             $membreGroup = new OrganizationGroup();
-            $membreGroup->setName("Membres")
+            $membreGroup->setName('Membres')
                 ->setOrganization($orga);
             $em->persist($membreGroup);
             $em->flush();
 
             $i = 0;
 
-            foreach($orga->getMemberships() as $membership)
-            {
-                if($membership->getGroup())
+            foreach ($orga->getMemberships() as $membership) {
+                if ($membership->getGroup()) {
                     continue;
+                }
 
-                if($membership->isFromBureau())
+                if ($membership->isFromBureau()) {
                     $membership->setGroup($bureauGroup);
-                else
+                } else {
                     $membership->setGroup($membreGroup);
+                }
                 $em->persist($membership);
-                $i++;
+                ++$i;
             }
             $em->flush();
 
@@ -71,6 +70,5 @@ class OrganizationGroupMigrationCommand extends ContainerAwareCommand
         }
 
         $em->flush();
-
     }
 }

@@ -200,7 +200,8 @@ class Organization implements UserInterface, \Serializable
     }
 
     /**
-     * Create default organization group
+     * Create default organization group.
+     *
      * @ORM\PrePersist()
      */
     public function onPrePersist()
@@ -217,6 +218,7 @@ class Organization implements UserInterface, \Serializable
         $group->setOrganization($this);
         $this->addGroup($group);
     }
+
     /**
      * Upload the photo.
      *
@@ -718,7 +720,7 @@ class Organization implements UserInterface, \Serializable
      *
      * @param \Etu\Core\UserBundle\Entity\OrganizationGroup $group
      *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
      */
     public function removeGroup(\Etu\Core\UserBundle\Entity\OrganizationGroup $group)
     {

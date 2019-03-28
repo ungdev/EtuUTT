@@ -362,7 +362,7 @@ class Member
     }
 
     /**
-     * Clear id
+     * Clear id.
      *
      * @return Member
      */
