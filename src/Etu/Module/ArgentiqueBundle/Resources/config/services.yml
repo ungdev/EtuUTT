@@ -17,3 +17,7 @@ services:
         arguments: ["@security.authorization_checker", "@service_container"]
         tags:
             - { name: kernel.event_listener, event: kernel.response }
+
+    argentique.filemanagerconfig:
+        class: Etu\Module\ArgentiqueBundle\FileManager\FileManagerConf
+        arguments: ["@security.authorization_checker"]

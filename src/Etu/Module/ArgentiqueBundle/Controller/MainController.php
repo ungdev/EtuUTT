@@ -20,6 +20,17 @@ use Symfony\Component\HttpFoundation\Request;
 class MainController extends Controller
 {
     /**
+     * @Route("/admin", name="argentique_admin")
+     * @Template(template="EtuModuleArgentiqueBundle:Admin:index.html.twig")
+     */
+    public function adminIndexAction()
+    {
+        $this->denyAccessUnlessGranted('ROLE_ARGENTIQUE_ADMIN');
+
+        return [];
+    }
+
+    /**
      * Checks wether a file's extension is acceptable.
      *
      * @param mixed $file File to check
