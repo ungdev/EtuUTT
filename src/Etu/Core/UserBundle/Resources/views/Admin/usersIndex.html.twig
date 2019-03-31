@@ -92,7 +92,7 @@
                 {% for user in pagination %}
                     <li class="trombi-search-results-item">
                         <a href="{{ path('user_view', {'login': user.login}) }}?from=admin">
-                            <img src="{{ asset('uploads/photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
+                            <img src="{{ asset('assets/img/toury.jpg') }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
                             <h5>{{ user.fullName }}</h5>
                             <p>
                                 {{ user.branch~user.niveau }} {{ user.filiere }} ({{ user.formation }})<br />

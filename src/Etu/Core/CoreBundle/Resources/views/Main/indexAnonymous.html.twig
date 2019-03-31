@@ -40,7 +40,7 @@
                 {% for event in events %}
                     <div class="span4">
                         <a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}" class="homepage-event">
-                            <img src="{{ asset('uploads/events/'~event.id~'.png') }}" alt="{{ event.title }}" class="pull-left event-tooltip-image" />
+                            <img src="{{ asset('assets/img/asso.jpg') }}" alt="{{ event.title }}" class="pull-left event-tooltip-image" />
 
                             <div class="homepage-event-meta">
                                 <h5>{{ event.title }}</h5>

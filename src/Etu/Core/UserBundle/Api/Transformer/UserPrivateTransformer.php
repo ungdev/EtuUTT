@@ -100,11 +100,11 @@ class UserPrivateTransformer extends AbstractTransformer
                 ],
                 [
                     'rel' => 'user.image',
-                    'uri' => '/uploads/photos/'.$user->getAvatar(),
+                    'uri' => '/assets/img/toury.jpg',
                 ],
                 [
                     'rel' => 'user.official_image',
-                    'uri' => '/uploads/photos/'.$user->getLogin().'_official.jpg',
+                    'uri' => '/assets/img/toury.jpg',
                 ],
             ],
         ];
