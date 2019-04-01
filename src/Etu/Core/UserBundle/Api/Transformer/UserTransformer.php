@@ -89,14 +89,14 @@ class UserTransformer extends AbstractTransformer
             ],
             [
                 'rel' => 'user.image',
-                'uri' => '/assets/img/toury.jpg',
+                'uri' => '/uploads/photos/'.$user->getAvatar(),
             ],
         ];
 
         // add official image only if it exists
         $officialImage = [
             'rel' => 'user.official_image',
-            'uri' => '/assets/img/toury.jpg',
+            'uri' => '/uploads/photos/'.$user->getLogin().'_official.jpg',
         ];
 
         if (file_exists($this->kernelRootDir.'/../web'.$officialImage['uri'])) {

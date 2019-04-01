@@ -5,7 +5,7 @@
         {% for event in events %}
             <li>
                 <a href="{{ path('events_view', {'id': event.id, 'slug': event.title|slugify}) }}">
-                    <img src="{{ asset('assets/img/asso.jpg') }}" alt="{{ event.title }}"/>
+                    <img src="{{ asset('uploads/events/'~event.id~'.png') }}" alt="{{ event.title }}"/>
                     <h5>
                         {{ event.title }}
                     </h5>

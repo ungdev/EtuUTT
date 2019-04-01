@@ -673,7 +673,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
         $image->paste($thumbnail, $pastePoint);
 
         // Save the result
-        $image->save(__DIR__.'/../../../../../web/assets/img/toury.jpg');
+        $image->save(__DIR__.'/../../../../../web/uploads/photos/'.$this->getLogin().'.png');
 
         $this->avatar = $this->getLogin().'.png';
 
