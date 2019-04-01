@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "artgris/filemanager-bundle",
-            "version": "1.4.3",
+            "version": "1.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/artgris/FileManagerBundle.git",
-                "reference": "6f3caf8ea54425e07a451f3a0fca142bc576f04f"
+                "reference": "f93a3b3aeae76c9ca2c1b8a39f1f6272096f9093"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/artgris/FileManagerBundle/zipball/6f3caf8ea54425e07a451f3a0fca142bc576f04f",
-                "reference": "6f3caf8ea54425e07a451f3a0fca142bc576f04f",
+                "url": "https://api.github.com/repos/artgris/FileManagerBundle/zipball/f93a3b3aeae76c9ca2c1b8a39f1f6272096f9093",
+                "reference": "f93a3b3aeae76c9ca2c1b8a39f1f6272096f9093",
                 "shasum": ""
             },
             "require": {
@@ -68,7 +68,7 @@
                 "file manager",
                 "symfony"
             ],
-            "time": "2019-02-20T15:04:10+00:00"
+            "time": "2019-02-26T16:25:17+00:00"
         },
         {
             "name": "beberlei/DoctrineExtensions",
@@ -195,16 +195,16 @@
         },
         {
             "name": "bower-asset/codemirror",
-            "version": "5.44.0",
+            "version": "5.45.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/codemirror.git",
-                "reference": "0cd8da3fb1d2d0733ac1ac87ca85f1b3b6cbb266"
+                "reference": "ace323d6c64a08ccb50e74a1a88f5c0a56ae85d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/components/codemirror/zipball/0cd8da3fb1d2d0733ac1ac87ca85f1b3b6cbb266",
-                "reference": "0cd8da3fb1d2d0733ac1ac87ca85f1b3b6cbb266",
+                "url": "https://api.github.com/repos/components/codemirror/zipball/ace323d6c64a08ccb50e74a1a88f5c0a56ae85d1",
+                "reference": "ace323d6c64a08ccb50e74a1a88f5c0a56ae85d1",
                 "shasum": ""
             },
             "type": "bower-asset-library",
@@ -227,7 +227,7 @@
                     "mode/*/*.html"
                 ]
             },
-            "time": "2019-02-25T11:17:05+00:00"
+            "time": "2019-03-26T11:20:04+00:00"
         },
         {
             "name": "bower-asset/facebox",
@@ -2471,16 +2471,16 @@
         },
         {
             "name": "gedmo/doctrine-extensions",
-            "version": "v2.4.36",
+            "version": "v2.4.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Atlantic18/DoctrineExtensions.git",
-                "reference": "87c78ff9fd4b90460386f753d95622f6fbbfcb27"
+                "reference": "5dd471f656e46d815f063bf3f12c667649ec7ffb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/87c78ff9fd4b90460386f753d95622f6fbbfcb27",
-                "reference": "87c78ff9fd4b90460386f753d95622f6fbbfcb27",
+                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/5dd471f656e46d815f063bf3f12c667649ec7ffb",
+                "reference": "5dd471f656e46d815f063bf3f12c667649ec7ffb",
                 "shasum": ""
             },
             "require": {
@@ -2548,7 +2548,7 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2018-07-26T12:16:35+00:00"
+            "time": "2019-03-17T18:16:12+00:00"
         },
         {
             "name": "gnumoksha/php-freeipa",
@@ -2556,7 +2556,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ChrisdAutume/php-freeipa.git",
-                "reference": "95f7e1e213fbb91773d5039f93483490741fa5ff"
+                "reference": "1f327f62d3fdc226690c341ce478422fa67cc4ae"
             },
             "require": {
                 "ext-curl": "*",
@@ -2589,7 +2589,7 @@
                 "freeipa",
                 "rh idm"
             ],
-            "time": "2019-03-25T09:01:39+00:00"
+            "time": "2019-04-01T20:28:19+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -3261,16 +3261,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.50",
+            "version": "1.0.51",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "dab4e7624efa543a943be978008f439c333f2249"
+                "reference": "755ba7bf3fb9031e6581d091db84d78275874396"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/dab4e7624efa543a943be978008f439c333f2249",
-                "reference": "dab4e7624efa543a943be978008f439c333f2249",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/755ba7bf3fb9031e6581d091db84d78275874396",
+                "reference": "755ba7bf3fb9031e6581d091db84d78275874396",
                 "shasum": ""
             },
             "require": {
@@ -3341,7 +3341,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2019-02-01T08:50:36+00:00"
+            "time": "2019-03-30T13:22:34+00:00"
         },
         {
             "name": "league/glide",
