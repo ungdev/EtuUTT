@@ -41,6 +41,12 @@ class OrgaMemberTransformer extends AbstractTransformer
     {
         return [
             'role' => Member::$roles[$member->getRole()],
+            'group' => [
+                'id' => $member->getGroup()->getId(),
+                'name' => $member->getGroup()->getName(),
+                'description' => $member->getGroup()->getDescription(),
+                'internal_name' => $member->getGroup()->getSlug()
+            ],
         ];
     }
 
