@@ -14,6 +14,7 @@ use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Imagine\Image\Color;
 use Imagine\Image\Point;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -583,6 +584,12 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public $testingContext;
 
+    /**
+     * @var string
+     * @ORM\Column(type = "uuid")
+     */
+    protected $privateToken;
+
     /*
      * Methods
      */
@@ -615,6 +622,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
         $this->lastVisitHome = new \DateTime();
         $this->createdAt = new \DateTime();
         $this->firstLogin = false;
+        $this->generatePrivateToken();
     }
 
     public function __toString()
@@ -2648,5 +2656,60 @@ class User implements UserInterface, EquatableInterface, \Serializable
             && $this->getReadOnlyExpirationDate() == $user->getReadOnlyExpirationDate()
             && $this->getBannedExpirationDate() == $user->getBannedExpirationDate()
             && $this->getStoredRoles() == $user->getStoredRoles();
+    }
+
+    /**
+     * Set bdeMembershipStart.
+     *
+     * @param \DateTime|null $bdeMembershipStart
+     *
+     * @return User
+     */
+    public function setBdeMembershipStart($bdeMembershipStart = null)
+    {
+        $this->bdeMembershipStart = $bdeMembershipStart;
+
+        return $this;
+    }
+
+    /**
+     * Get bdeMembershipStart.
+     *
+     * @return \DateTime|null
+     */
+    public function getBdeMembershipStart()
+    {
+        return $this->bdeMembershipStart;
+    }
+
+    /**
+     * Set privateToken.
+     *
+     * @param string|null $privateToken
+     *
+     * @return User
+     */
+    public function setPrivateToken($privateToken = null)
+    {
+        $this->privateToken = $privateToken;
+
+        return $this;
+    }
+
+    /**
+     * Get privateToken.
+     *
+     * @return string|null
+     */
+    public function getPrivateToken()
+    {
+        return $this->privateToken;
+    }
+
+    public function generatePrivateToken()
+    {
+        $this->privateToken = Uuid::getFactory()->uuid4();
+
+        return $this;
     }
 }

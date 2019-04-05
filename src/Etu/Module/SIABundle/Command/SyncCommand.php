@@ -49,7 +49,6 @@ class SyncCommand extends ContainerAwareCommand
                 $to_check_groups[$group->cn[0]] = $group;
             }
         }
-
         foreach ($ipa_users_req as $user) {
             if (isset($user->carlicense) && ($match = preg_grep('/^etu:([0-9]+)$/', $user->carlicense))) {
                 preg_match('/^etu:([0-9]+)$/', $match[0], $m);
@@ -63,7 +62,10 @@ class SyncCommand extends ContainerAwareCommand
             $output->writeln('- Group '.$group->getSlug());
             if (!in_array($group->getSlug(), array_keys($to_check_groups))) {
                 $output->writeln('  creation on SIA');
-                $to_check_groups[$group->getSlug()] = $ipa->getConnection()->group()->add($group->getSlug(), 'ETUSIA');
+                var_dump(array_keys($to_check_groups));
+                var_dump($group->getSlug());
+                exit(0);
+                //$to_check_groups[$group->getSlug()] = $ipa->getConnection()->group()->add($group->getSlug(), 'ETUSIA');
             }
             $etu_existing_groups[] = $group->getSlug();
             $ipa_group = $to_check_groups[$group->getSlug()];
@@ -111,12 +113,14 @@ class SyncCommand extends ContainerAwareCommand
             }
             $output->writeln(count($ipa_account_to_add).' account membership to add: '.implode(',', $ipa_account_to_add));
 
+            /*
             if (count($ipa_account_to_add) > 0) {
                 $ipa->getConnection()->group()->addMember($group->getSlug(), ['user' => $ipa_account_to_add]);
             }
             if (count($ipa_account_to_delete) > 0) {
                 $ipa->getConnection()->group()->removeMember($group->getSlug(), ['user' => $ipa_account_to_delete]);
             }
+             * **/
         }
         $output->writeln('2- Groups to delete');
         $group_to_delete = array_diff(array_keys($to_check_groups), $etu_existing_groups);

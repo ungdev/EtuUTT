@@ -10,6 +10,7 @@ use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Module\EventsBundle\Entity\Answer;
 use Etu\Module\EventsBundle\Entity\Event;
+use Sabre\VObject\Component\VCalendar;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 // Import annotations
@@ -412,5 +413,99 @@ class MainController extends Controller
         return [
             'events' => $array,
         ];
+    }
+
+    /**
+     * @Route("/events/export", name="user_events_export")
+     * @Template()
+     */
+    public function exportAction()
+    {
+        return $this->generateVCalendar($this->getUser());
+    }
+
+    /**
+     * @Route("/events/export/{token}/schedule.ics", name="user_token_events_export")
+     * @Template()
+     *
+     * @param mixed $token
+     */
+    public function exportTokenAction($token)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->createQueryBuilder()
+            ->select('u')
+            ->from('EtuUserBundle:User', 'u')
+            ->where('u.privateToken = :token')
+            ->setParameter('token', $token)
+            ->getQuery()
+            ->getSingleResult();
+
+        if (!$user) {
+            $this->createAccessDeniedException();
+        }
+
+        return $this->generateVCalendar($user);
+    }
+
+    protected function generateVCalendar(User $user)
+    {
+        /** @var $em EntityManager */
+        $em = $this->getDoctrine()->getManager();
+
+        $vcalendar = new VCalendar();
+
+        $start = new \DateTime('last week', new \DateTimeZone('Europe/Paris'));
+        $end = new \DateTime('next year', new \DateTimeZone('Europe/Paris'));
+
+        /** @var Calendar $calendr */
+        $calendr = $this->get('calendr');
+
+        /** @var \CalendR\Event\Collection\Basic $events */
+        $events = $calendr->getEvents(new Range($start, $end), [
+            'connected' => $this->isGranted('ROLE_EVENTS_INTERNAL'),
+        ]);
+
+        /** @var array $json */
+        $json = [];
+
+        /** @var Event $event */
+        foreach ($events->all() as $event) {
+            if ($event->getPrivacy() == Event::PRIVACY_ORGAS && $user->getMemberships()->count() <= 0) {
+                continue;
+            }
+            if ($event->getPrivacy() == Event::PRIVACY_MEMBERS) {
+                $continue = true;
+                foreach ($user->getMemberships() as $membership) {
+                    if ($membership->getOrganization()->getId() == $event->getOrga()->getId()) {
+                        $continue = false;
+                        break;
+                    }
+                }
+                if ($continue) {
+                    continue;
+                }
+            }
+
+            $vcalendar->add('VEVENT', [
+                'SUMMARY' => $event->getTitle(),
+                'DTSTART' => $event->getBegin(),
+                'DTEND' => $event->getEnd(),
+                'DESCRIPTION' => $event->getDescription(),
+                'LOCATION' => $event->getLocation(),
+                'CATEGORIES' => $event->getCategory(),
+                'URL' => $this->generateUrl('events_view', [
+                            'id' => $event->getId(),
+                            'slug' => StringManipulationExtension::slugify($event->getTitle()),
+                        ]),
+            ]);
+        }
+
+        $response = new Response($vcalendar->serialize());
+
+        $response->headers->set('Content-Type', 'text/calendar; charset=utf-8');
+        $response->headers->set('Content-Disposition', 'attachment; filename="etuutt_events.ics"');
+
+        return $response;
     }
 }
