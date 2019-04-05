@@ -60,7 +60,9 @@ class SecurityListener
             if (!$requiredScope) {
                 $requiredScope = 'public';
             }
-
+            if ($requiredScope == 'external') {
+                return true;
+            }
             $request = $event->getRequest();
 
             $token = $request->query->get('access_token');

@@ -61,6 +61,7 @@ class CreateUserCommand extends ContainerAwareCommand
         $user->setIsStudent($isStudent);
         $user->setIsStaffUTT($isStaffUTT);
         $user->setIsInLDAP(false);
+        $user->setDaymail(false);
 
         // Set external user login and studentId
         $user->setLogin($user->getMail());

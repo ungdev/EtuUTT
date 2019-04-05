@@ -45,7 +45,7 @@ class OrgaMemberTransformer extends AbstractTransformer
                 'id' => $member->getGroup()->getId(),
                 'name' => $member->getGroup()->getName(),
                 'description' => $member->getGroup()->getDescription(),
-                'internal_name' => $member->getGroup()->getSlug()
+                'internal_name' => $member->getGroup()->getSlug(),
             ],
         ];
     }
