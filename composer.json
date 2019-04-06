@@ -78,7 +78,8 @@
 
         "firebase/php-jwt": "^5.0",
         "gnumoksha/php-freeipa": "dev-master",
-        "artgris/filemanager-bundle": "^1.4"
+        "artgris/filemanager-bundle": "^1.4",
+        "ramsey/uuid-doctrine": "^1.5"
     },
     "repositories": [
         {
