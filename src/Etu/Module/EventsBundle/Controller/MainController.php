@@ -10,6 +10,7 @@ use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Module\EventsBundle\Entity\Answer;
 use Etu\Module\EventsBundle\Entity\Event;
+use Html2Text\Html2Text;
 use Sabre\VObject\Component\VCalendar;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -17,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class MainController extends Controller
 {
@@ -486,18 +488,21 @@ class MainController extends Controller
                     continue;
                 }
             }
+            $description = (new Html2Text($event->getDescription()))->getText();
+            $url = $this->generateUrl('events_view', [
+                'id' => $event->getId(),
+                'slug' => StringManipulationExtension::slugify($event->getTitle()),
+            ], UrlGeneratorInterface::ABSOLUTE_URL);
 
+            $description .= "\n $url";
             $vcalendar->add('VEVENT', [
-                'SUMMARY' => $event->getTitle(),
+                'SUMMARY' => $event->getOrga()->getFullName().' : '.$event->getTitle(),
                 'DTSTART' => $event->getBegin(),
                 'DTEND' => $event->getEnd(),
-                'DESCRIPTION' => $event->getDescription(),
+                'DESCRIPTION' => $description,
                 'LOCATION' => $event->getLocation(),
                 'CATEGORIES' => $event->getCategory(),
-                'URL' => $this->generateUrl('events_view', [
-                            'id' => $event->getId(),
-                            'slug' => StringManipulationExtension::slugify($event->getTitle()),
-                        ]),
+                'URL' => $url,
             ]);
         }
 
