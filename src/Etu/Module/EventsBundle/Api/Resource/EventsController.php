@@ -61,11 +61,11 @@ class EventsController extends ApiController
 
         /** @var $query QueryBuilder */
         $query = $em->createQueryBuilder()
-            ->select('e.title, o.login as organization, e.category, e.begin, e.end, e.location, e.description')
+            ->select('e.title, o.login as organization, e.category, e.begin, e.end, e.location, e.description, e.privacy')
             ->from('EtuModuleEventsBundle:Event', 'e')
             ->leftJoin('e.orga', 'o')
             ->where('e.deletedAt IS NULL')
-            ->andWhere('e.privacy = 100');
+            ->andWhere('e.privacy <= 200');
         if ($request->query->has('category')) {
             $category = $request->query->get('category');
             $query->andWhere('e.category = :category')
