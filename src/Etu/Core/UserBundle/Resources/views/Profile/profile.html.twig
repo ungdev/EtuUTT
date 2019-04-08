@@ -234,6 +234,31 @@
 
             <div class="span6">
                 <div class="block">
+                    <div class="block-title">Calendriers</div>
+
+                    <div class="subblock subblock-first">
+                        <div class="profile-infos-label">
+                            Emploi du temps
+                        </div>
+                        <div class="profile-infos-value">
+                            {{ url('user_token_schedule_export', { token: app.user.privateToken}) }}
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+
+                    <div class="subblock">
+                        <div class="profile-infos-label">
+                            Evénements
+                        </div>
+                        <div class="profile-infos-value">
+                            {{ url('user_token_events_export', { token: app.user.privateToken}) }}
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+
+                </div>
+
+                <div class="block">
                     <div class="block-title">{{ 'user.profile.profile.trombi'|trans }}</div>
 
                     <div class="subblock subblock-first">

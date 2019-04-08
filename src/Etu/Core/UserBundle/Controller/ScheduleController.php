@@ -5,6 +5,7 @@ namespace Etu\Core\UserBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\Course;
+use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Model\SemesterManager;
 use Etu\Core\UserBundle\Schedule\Helper\ScheduleBuilder;
 use Sabre\VObject\Component\VCalendar;
@@ -83,11 +84,40 @@ class ScheduleController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_CORE_SCHEDULE_OWN');
 
+        return $this->generateVCalendar($this->getUser());
+    }
+
+    /**
+     * @Route("/schedule/export/{token}/schedule.ics", name="user_token_schedule_export")
+     * @Template()
+     *
+     * @param mixed $token
+     */
+    public function exportTokenAction($token)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->createQueryBuilder()
+            ->select('u')
+            ->from('EtuUserBundle:User', 'u')
+            ->where('u.privateToken = :token')
+            ->setParameter('token', $token)
+            ->getQuery()
+            ->getSingleResult();
+
+        if (!$user) {
+            $this->createAccessDeniedException();
+        }
+
+        return $this->generateVCalendar($user);
+    }
+
+    protected function generateVCalendar(User $user)
+    {
         /** @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
 
         /** @var $courses Course[] */
-        $courses = $em->getRepository('EtuUserBundle:Course')->findByUser($this->getUser());
+        $courses = $em->getRepository('EtuUserBundle:Course')->findByUser($user);
 
         $vcalendar = new VCalendar();
 
