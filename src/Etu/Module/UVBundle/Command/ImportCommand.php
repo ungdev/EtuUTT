@@ -150,7 +150,7 @@ for another version, you will have to update this parser.');
         $part['tpe'] = $tmp[0];
         $xml = $tmp[1];
 
-        $uv = [];
+        $uvArray = [];
 
         // Parse UV header (not description)
         foreach ($part as $category => $text) {
@@ -162,62 +162,62 @@ for another version, you will have to update this parser.');
             for ($i = 0; $i < count($match[1]); ++$i) {
                 // Create raw description of the precedent UV
                 if ($descBegin > 0) {
-                    $uv[$this->sanitizer($match[1][$i - 1][0])] =
+                    $uvArray[$this->sanitizer($match[1][$i - 1][0])] =
                         array_merge(
-                        $uv[$this->sanitizer($match[1][$i - 1][0])],
+                        $uvArray[$this->sanitizer($match[1][$i - 1][0])],
                         $this->parseDesc(mb_substr($text, $descBegin, $match[0][$i][1] - $descBegin)));
                 }
 
                 // Find index : UV Code
                 $code = $this->sanitizer($match[1][$i][0]);
-                $uv[$code] = [];
+                $uvArray[$code] = [];
 
                 // Set the UV name
-                $uv[$code]['name'] = $this->sanitizer($match[2][$i][0].' '.$match[3][$i][0].' '.$match[4][$i][0]);
+                $uvArray[$code]['name'] = $this->sanitizer($match[2][$i][0].' '.$match[3][$i][0].' '.$match[4][$i][0]);
 
                 //  Set target (ing or master)
                 switch ($this->sanitizer($match[5][$i][0])) {
                     case 'MAST.':
-                        $uv[$code]['target'] = 'mast';
+                        $uvArray[$code]['target'] = 'mast';
                         break;
                     case 'ING. OU':
                     case 'ING. OU UV CS':
                     case 'ING. OU UV MAST.':
                     case 'ING. ET MAST':
                     case 'ING. OU UV TM':
-                        $uv[$code]['target'] = 'both';
+                        $uvArray[$code]['target'] = 'both';
                         break;
                     case 'ING.':
-                        $uv[$code]['target'] = 'ing';
+                        $uvArray[$code]['target'] = 'ing';
                         break;
                     default:
-                        $uv[$code]['target'] = 'ing';
+                        $uvArray[$code]['target'] = 'ing';
                 }
 
                 //  Set UV category
                 switch ($category) {
                     case 'cs tc':
                     case 'cs br':
-                        $uv[$code]['category'] = 'cs';
+                        $uvArray[$code]['category'] = 'cs';
                         break;
                     case 'tm tc':
                     case 'tm br':
-                        $uv[$code]['category'] = 'tm';
+                        $uvArray[$code]['category'] = 'tm';
                         break;
                     case 'tpe':
                     case 'hp':
-                        $uv[$code]['category'] = 'other';
+                        $uvArray[$code]['category'] = 'other';
                         break;
                     default:
-                        $uv[$code]['category'] = $category;
+                        $uvArray[$code]['category'] = $category;
                 }
 
                 $descBegin = $match[0][$i][1] + mb_strlen($match[0][$i][0]);
             }
             if ($descBegin > 0) {
-                $uv[$this->sanitizer($match[1][$i - 1][0])] =
+                $uvArray[$this->sanitizer($match[1][$i - 1][0])] =
                     array_merge(
-                    $uv[$this->sanitizer($match[1][$i - 1][0])],
+                    $uvArray[$this->sanitizer($match[1][$i - 1][0])],
                     $this->parseDesc(mb_substr($text, $descBegin)));
             }
         }
@@ -239,17 +239,17 @@ for another version, you will have to update this parser.');
         file_put_contents(__DIR__.'/../Resources/objects/debug.txt', $content);
         */
 
-        $output->writeln("\n\n".count($uv).' UV found');
+        $output->writeln("\n\n".count($uvArray).' UV found');
 
         $output->writeln("\nImporting ...");
 
-        $bar = new ProgressBar('%fraction% [%bar%] %percent%', '=>', ' ', 80, count($uv));
+        $bar = new ProgressBar('%fraction% [%bar%] %percent%', '=>', ' ', 80, count($uvArray));
         $bar->update(0);
         $i = 1;
 
         $entities = [];
 
-        foreach ($uv as $code => $uv) {
+        foreach ($uvArray as $code => $uv) {
             $entity = new UV();
 
             $entity->setCode($code)
@@ -277,6 +277,7 @@ for another version, you will have to update this parser.');
 
         $output->writeln("Done.\n");
     }
+
 
     protected function parseDesc($raw)
     {
