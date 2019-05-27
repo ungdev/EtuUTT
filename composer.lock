@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e2de8f72ca2179e45ed553a2abbd773c",
+    "content-hash": "c556e2617d6e91e54348abbebad5d1ff",
     "packages": [
         {
             "name": "artgris/filemanager-bundle",
-            "version": "1.4.4",
+            "version": "1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/artgris/FileManagerBundle.git",
-                "reference": "f93a3b3aeae76c9ca2c1b8a39f1f6272096f9093"
+                "reference": "b2249d24baf6bc3ae33a75dc583a3fbd76330251"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/artgris/FileManagerBundle/zipball/f93a3b3aeae76c9ca2c1b8a39f1f6272096f9093",
-                "reference": "f93a3b3aeae76c9ca2c1b8a39f1f6272096f9093",
+                "url": "https://api.github.com/repos/artgris/FileManagerBundle/zipball/b2249d24baf6bc3ae33a75dc583a3fbd76330251",
+                "reference": "b2249d24baf6bc3ae33a75dc583a3fbd76330251",
                 "shasum": ""
             },
             "require": {
@@ -68,7 +68,7 @@
                 "file manager",
                 "symfony"
             ],
-            "time": "2019-02-26T16:25:17+00:00"
+            "time": "2019-05-15T09:09:26+00:00"
         },
         {
             "name": "beberlei/DoctrineExtensions",
@@ -4936,7 +4936,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "backendtea@gmail.com"
+                    "email": "BackEndTea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
@@ -5488,16 +5488,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v2.7.4",
+            "version": "v2.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "ed9c49220e09bfaeb1ba4d48077c08a7b09908dd"
+                "reference": "5240e21982885b76629552d83b4ebb6d41ccde6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/ed9c49220e09bfaeb1ba4d48077c08a7b09908dd",
-                "reference": "ed9c49220e09bfaeb1ba4d48077c08a7b09908dd",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/5240e21982885b76629552d83b4ebb6d41ccde6b",
+                "reference": "5240e21982885b76629552d83b4ebb6d41ccde6b",
                 "shasum": ""
             },
             "require": {
@@ -5513,7 +5513,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.7-dev"
+                    "dev-master": "2.10-dev"
                 }
             },
             "autoload": {
@@ -5551,7 +5551,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2019-03-23T14:28:58+00:00"
+            "time": "2019-05-14T12:03:52+00:00"
         },
         {
             "name": "willdurand/jsonp-callback-validator",
@@ -6194,7 +6194,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.5.9",
+        "php": ">=7.1",
         "ext-mbstring": "*",
         "ext-curl": "*",
         "ext-xml": "*"
