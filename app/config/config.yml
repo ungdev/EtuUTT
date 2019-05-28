@@ -213,6 +213,3 @@ artgris_file_manager:
         argentique:
             service: 'argentique.filemanagerconfig'
 
-# Expo Push Notifications (for mobile app)
-sc_expo_notifications:
-    expo_api_endpoint: '%expo_api_endpoint%'
