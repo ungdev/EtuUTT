@@ -78,7 +78,7 @@ class OauthClient
     private $device;
 
     /**
-     * Expo Push Token, used to send notifications to mobile devices
+     * Expo Push Token, used to send notifications to mobile devices.
      *
      * @var string
      *

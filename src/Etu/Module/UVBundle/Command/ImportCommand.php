@@ -278,7 +278,6 @@ for another version, you will have to update this parser.');
         $output->writeln("Done.\n");
     }
 
-
     protected function parseDesc($raw)
     {
         $currentCourseType = null;

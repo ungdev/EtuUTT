@@ -110,14 +110,12 @@ class SyncCommand extends ContainerAwareCommand
             }
             $output->writeln(count($ipa_account_to_add).' account membership to add: '.implode(',', $ipa_account_to_add));
 
-
             if (count($ipa_account_to_add) > 0) {
                 $ipa->getConnection()->group()->addMember($group->getSlug(), ['user' => $ipa_account_to_add]);
             }
             if (count($ipa_account_to_delete) > 0) {
                 $ipa->getConnection()->group()->removeMember($group->getSlug(), ['user' => $ipa_account_to_delete]);
             }
-
         }
         $output->writeln('2- Groups to delete');
         $group_to_delete = array_diff(array_keys($to_check_groups), $etu_existing_groups);

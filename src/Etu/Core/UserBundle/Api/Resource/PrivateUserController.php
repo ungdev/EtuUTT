@@ -3,11 +3,11 @@
 namespace Etu\Core\UserBundle\Api\Resource;
 
 use Doctrine\ORM\EntityManager;
+use Etu\Core\ApiBundle\Entity\OauthClient;
 use Etu\Core\ApiBundle\Framework\Annotation\Scope;
 use Etu\Core\ApiBundle\Framework\Controller\ApiController;
 use Etu\Core\ApiBundle\Framework\Embed\EmbedBag;
 use Etu\Core\UserBundle\Entity\Course;
-use Etu\Core\ApiBundle\Entity\OauthClient;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -134,10 +134,8 @@ class PrivateUserController extends ApiController
         ], 200, [], $request);
     }
 
-
-
     /**
-     * Store the expo token in database
+     * Store the expo token in database.
      *
      * @ApiDoc(
      *   section = "OAuth",
@@ -171,15 +169,15 @@ class PrivateUserController extends ApiController
             return $this->format(['error' => 'Le token n\'est pas valide. Contactez l\'auteur de l\'application.'], 400, [], $request);
         }
 
-
         /** @var OauthClient $client */
         $client = $this->getAccessToken($request)->getClient();
-        if(!$client->getNative()) {
-          return $this->format(['error' => 'l\'application n\'est pas une application native'], 401, [], $request);
+        if (!$client->getNative()) {
+            return $this->format(['error' => 'l\'application n\'est pas une application native'], 401, [], $request);
         }
         $client->setPushToken($data['token']);
         $em->persist($client);
         $em->flush();
+
         return $this->format(['message' => 'ok', 'token' => $client->getPushToken()], 200, [], $request);
     }
 }
