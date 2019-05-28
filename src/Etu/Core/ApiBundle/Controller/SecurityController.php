@@ -369,36 +369,39 @@ class SecurityController extends ApiController
             $formData = $request->request->get('form');
 
             if (isset($formData['accept'])) {
-                // Remove same app name on same device of same user
-                $em->createQuery('UPDATE EtuCoreApiBundle:OauthClient c
-                                  SET c.deletedAt = :now
-                                  WHERE (c.name = :name
-                                  and c.device = :device
-                                  and c.deviceUID = :deviceUID
-                                  and c.user = :user)')
-                    ->setParameter('name', $formData['name'])
-                    ->setParameter('device', $formData['device'])
-                    ->setParameter('deviceUID', $formData['device_uid'])
-                    ->setParameter('user', $this->getUser()->getId())
-                    ->setParameter('now', new \DateTime())
-                    ->execute();
 
-                // Create the new one
-                $client = new OauthClient();
-                $client->setUser($this->getUser());
+                //find all native client associated with that user, device, name and deviceUID
+                $clients = $em->getRepository('EtuCoreApiBundle:OauthClient')->findBy(
+                  [
+                    'user' => $user, 
+                    'native' => 1,
+                    'device' => $formData['device'],
+                    'deviceUID' => $formData['device_uid'],
+                    'name' => $formData['name']
+                  ]
+                );
+                $client = null;
+                if(sizeof($clients) == 0) {
+                  // Create a new one
+                  $client = new OauthClient();
+                  $client->setUser($this->getUser());
 
-                foreach ($scopes as $scope) {
-                    $client->addScope($scope);
+                  foreach ($scopes as $scope) {
+                      $client->addScope($scope);
+                  }
+
+                  $client->setRedirectUri('http://etuutt.invalid'); //TODO change to valid url that say "you are going to be redirected"
+                  $client->setName($formData['name']);
+                  $client->setDevice($formData['device']);
+                  $client->setDeviceUID($formData['device_uid']);
+                  $client->setNative(1);
+
+                  $client->generateClientId();
+                  $client->generateClientSecret();
+                } else {
+                  $client = $clients[0];
                 }
-
-                $client->setRedirectUri('http://etuutt.invalid');
-                $client->setName($formData['name']);
-                $client->setDevice($formData['device']);
-                $client->setDeviceUID($formData['device_uid']);
-                $client->setNative(1);
-
-                $client->generateClientId();
-                $client->generateClientSecret();
+                
 
                 $em->persist($client);
                 $em->flush();

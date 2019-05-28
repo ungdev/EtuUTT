@@ -179,6 +179,7 @@ class PrivateUserController extends ApiController
         }
         $client->setPushToken($data['token']);
         $em->persist($client);
-        return $this->format(['message' => 'ok'], 200, [], $request);
+        $em->flush();
+        return $this->format(['message' => 'ok', 'token' => $client->getPushToken()], 200, [], $request);
     }
 }
