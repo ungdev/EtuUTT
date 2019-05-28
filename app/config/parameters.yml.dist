@@ -25,3 +25,4 @@ parameters:
     sia_ipa_host: ipa.uttnetgroup.net
     sia_ipa_user: ~
     sia_ipa_password: ~
+    expo_api_endpoint: https://exp.host/--/api/v2/push/send
