@@ -78,6 +78,15 @@ class OauthClient
     private $device;
 
     /**
+     * Expo Push Token, used to send notifications to mobile devices.
+     *
+     * @var string
+     *
+     * @ORM\Column(type="string", length=64, nullable=true)
+     */
+    private $pushToken;
+
+    /**
      * If native client application. Only `client_credentials` mode is possible
      * and it will appear as "mobile application" on user profile and not in dev
      * pannel.
@@ -316,6 +325,31 @@ class OauthClient
     public function getDevice()
     {
         return $this->device;
+    }
+
+    /**
+     * Set push token.
+     *
+     * @param string pushToken
+     * @param mixed $pushToken
+     *
+     * @return OauthClient
+     */
+    public function setPushToken($pushToken)
+    {
+        $this->pushToken = $pushToken;
+
+        return $this;
+    }
+
+    /**
+     * Get push token.
+     *
+     * @return string
+     */
+    public function getPushToken()
+    {
+        return $this->pushToken;
     }
 
     /**
