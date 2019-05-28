@@ -7,6 +7,7 @@ use Etu\Core\ApiBundle\Framework\Annotation\Scope;
 use Etu\Core\ApiBundle\Framework\Controller\ApiController;
 use Etu\Core\ApiBundle\Framework\Embed\EmbedBag;
 use Etu\Core\UserBundle\Entity\Course;
+use Etu\Core\ApiBundle\Entity\OauthClient;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -131,5 +132,53 @@ class PrivateUserController extends ApiController
         return $this->format([
             'data' => $this->get('etu.api.user_orgas_private.transformer')->transform($user->getMemberships()->toArray(), EmbedBag::createFromRequest($request)),
         ], 200, [], $request);
+    }
+
+
+
+    /**
+     * Store the expo token in database
+     *
+     * @ApiDoc(
+     *   section = "OAuth",
+     *   description = "Set the expo token that will be used to send push notifications to the device (scope: public)",
+     *   parameters = {
+     *      {
+     *          "name" = "token",
+     *          "required" = true,
+     *          "dataType" = "string",
+     *          "description" = "Expo token"
+     *      }
+     *   }
+     * )
+     *
+     * @Route("/push-token", name="oauth_push_token", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function setPushToken(Request $request)
+    {
+        /*
+         * Initialize
+         */
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $data = json_decode(
+            $request->getContent(),
+            true
+        );
+        if (!$data['token'] || mb_strlen(trim($data['token'])) < 3) {
+            return $this->format(['error' => 'Le token n\'est pas valide. Contactez l\'auteur de l\'application.'], 400, [], $request);
+        }
+
+
+        /** @var OauthClient $client */
+        $client = $this->getAccessToken($request)->getClient();
+        if(!$client->getNative()) {
+          return $this->format(['error' => 'l\'application n\'est pas une application native'], 401, [], $request);
+        }
+        $client->setPushToken($data['token']);
+        $em->persist($client);
+        return $this->format(['message' => 'ok'], 200, [], $request);
     }
 }
