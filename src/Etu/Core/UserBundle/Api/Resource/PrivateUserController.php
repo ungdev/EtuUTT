@@ -203,33 +203,25 @@ class PrivateUserController extends ApiController
     public function sendNotification(Request $request)
     {
 
-        $data = json_decode(
+        $body = json_decode(
             $request->getContent(),
             true
         );
-        if (!$data['token'] || mb_strlen(trim($data['token'])) < 3) {
+        if (!$body['token'] || mb_strlen(trim($body['token'])) < 3) {
             return $this->format(['error' => 'Le token n\'est pas valide. Contactez l\'auteur de l\'application.'], 400, [], $request);
         }
 
         $notificationManager = $this->get('sc_expo_notifications.notification_manager');
-        $titles = [
-            'New Notification',
-        ];
-        $messages = [
-            'Hello there!',
-        ];
-        $tokens = [
-            $data['token'],
-        ];
-        $data = [
-          ['foo' => 'bar', 'baz' => 'boom'],
-        ];
+        $title = 'New Notification';
+        $message = 'Hello there!';
+        $token = $body['token'];
+        $data = ['title' => $title, 'message' => $message];
 
         $notificationContentModels = $notificationManager->sendNotifications(
-          $messages,
-          $tokens,
-          $titles,
-          $data
+          [$message],
+          [$token],
+          [$title],
+          [$data]
       );
 
       return $this->format(['message' => 'ok', 'machin' => $notificationContentModels], 200, [], $request);
