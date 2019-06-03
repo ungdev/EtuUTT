@@ -117,28 +117,31 @@ class NotificationSender
             'entityId' => $notification->getEntityId(),
             ]);
 
+        $mobile = $this->helperManager->getHelper($notification->getHelper())->renderMobile($notification);
+        $title = $mobile['title'];
+        $message = $mobile['message'];
+        $data = ['title' => $title, 'message' => $message];
+
+        $titles = [];
+        $messages = [];
+        $datas = [];
         $tokens = [];
         foreach ($subscriptions as $subscription) {
             $user = $subscription->getUser();
             foreach ($all_devices as $client) {
                 if ($client->getUser() == $user) {
                     array_push($tokens, $client->getPushToken());
+                    array_push($titles, $title);
+                    array_push($messages, $message);
+                    array_push($datas, $data);
                 }
             }
         }
-
-        $mobile = $this->helperManager->getHelper($notification->getHelper())->renderMobile($notification);
-        $notificationManager = $this->notification_manager;
-        $title = $mobile['title'];
-        $message = $mobile['message'];
-        //$token = $body['token'];
-        $data = ['title' => $title, 'message' => $message];
-
-        $notificationManager->sendNotifications(
-            [$message],
+        $this->notification_manager->sendNotifications(
+            $messages,
             $tokens,
-            [$title],
-            [$data]
+            $titles,
+            $datas
         );
     }
 }
