@@ -50,6 +50,6 @@ class NewCommentHelper implements HelperInterface
      */
     public function renderMobile(Notification $notification)
     {
-        return ['title' => 'Nouveau commentaire dans l\'UE '.$notification->getFirstEntity()->getUV()->getCode(), 'message' => $notification->getFirstEntity()->getAuthor()->getFullName().' a ajouté un commentaire à l\'UE '.$notification->getFirstEntity()->getUV()->getCode()];
+        return ['title' => 'Nouveau commentaire dans l\'UE '.$notification->getFirstEntity()->getUV()->getCode(), 'message' => $notification->getFirstEntity()->getUser()->getFullName().' a ajouté un commentaire à l\'UE '.$notification->getFirstEntity()->getUV()->getCode()];
     }
 }

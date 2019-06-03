@@ -50,6 +50,6 @@ class NewReviewHelper implements HelperInterface
      */
     public function renderMobile(Notification $notification)
     {
-        return ['title' => 'Nouvelle annale dans l\'UE '.$notification->getFirstEntity()->getUV()->getCode(), 'message' => $notification->getFirstEntity()->getAuthor()->getFullName().' a ajouté une annale à l\'UE '.$notification->getFirstEntity()->getUV()->getCode()];
+        return ['title' => 'Nouvelle annale dans l\'UE '.$notification->getFirstEntity()->getUV()->getCode(), 'message' => $notification->getFirstEntity()->getSender()->getFullName().' a ajouté une annale à l\'UE '.$notification->getFirstEntity()->getUV()->getCode()];
     }
 }
