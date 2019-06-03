@@ -42,4 +42,14 @@ class NewCommentHelper implements HelperInterface
             'notif' => $notification,
         ]);
     }
+
+    /**
+     * @param Notification $notification
+     *
+     * @return string
+     */
+    public function renderMobile(Notification $notification)
+    {
+        return ['title' => 'Nouveau commentaire dans l\'UE '.$notification->getFirstEntity()->getUV()->getCode(), 'message' => $notification->getFirstEntity()->getAuthor()->getFullName().' a ajouté un commentaire à l\'UE '.$notification->getFirstEntity()->getUV()->getCode()];
+    }
 }

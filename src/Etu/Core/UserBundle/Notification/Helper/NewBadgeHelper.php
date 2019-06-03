@@ -42,4 +42,14 @@ class NewBadgeHelper implements HelperInterface
             'notif' => $notification,
         ]);
     }
+
+    /**
+     * @param Notification $notification
+     *
+     * @return string
+     */
+    public function renderMobile(Notification $notification)
+    {
+        return ['title' => 'Vous avez reçu un nouveau badge', 'message' => 'Ce badge se nomme : '.$notification->getEntities()[0]->name];
+    }
 }

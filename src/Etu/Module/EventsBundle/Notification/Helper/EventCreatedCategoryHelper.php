@@ -39,4 +39,14 @@ class EventCreatedCategoryHelper implements HelperInterface
             'notif' => $notification,
         ]);
     }
+
+    /**
+     * @param Notification $notification
+     *
+     * @return string
+     */
+    public function renderMobile(Notification $notification)
+    {
+        return ['title' => 'Nouvel événement de '.$notification->getFirstEntity()['orga']['name'], 'message' => 'L\'événement '.$notification->getFirstEntity()['title'].' pourrait vous intéresser'];
+    }
 }

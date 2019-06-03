@@ -5,6 +5,7 @@ namespace Etu\Core\CoreBundle\Notification;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Entity\Notification;
+use Etu\Core\CoreBundle\Notification\Helper\HelperManager;
 use Solvecrew\ExpoNotificationsBundle\Manager\NotificationManager;
 
 class NotificationSender
@@ -17,14 +18,21 @@ class NotificationSender
      * @var NotificationManager
      */
     protected $notification_manager;
+    /**
+     * @var HelperManager
+     */
+    protected $helperManager;
 
     /**
-     * @param Registry $doctrine
+     * @param Registry            $doctrine
+     * @param NotificationManager $notification_manager
+     * @param HelperManager       $helperManager
      */
-    public function __construct(Registry $doctrine, NotificationManager $notification_manager)
+    public function __construct(Registry $doctrine, NotificationManager $notification_manager, HelperManager $helperManager)
     {
         $this->doctrine = $doctrine;
         $this->notification_manager = $notification_manager;
+        $this->helperManager = $helperManager;
     }
 
     /**
@@ -79,14 +87,13 @@ class NotificationSender
         return true;
     }
 
-
     /**
-     * 
      * Trouve tout les clients natif capable de recevoir des notifications push
      * Parmi ces devices, ne garde que ceux dont l'utilisateur peur recevoir la notification
-     * Envoie la notification
-     * 
+     * Envoie la notification.
+     *
      * @param Module[] $enabledModules
+     * @param mixed    $notification
      *
      * @return \Etu\Core\CoreBundle\Entity\Notification[]
      */
@@ -96,10 +103,10 @@ class NotificationSender
 
         $all_devices = $em->getRepository('EtuCoreApiBundle:OauthClient')->findBy(['native' => 1, 'deletedAt' => null]);
         $filter = [];
-        foreach($all_devices as $client) { //filter to get only devices with a push token
-          if($client->getPushToken() != null) {
-            array_push($filter, $client);
-          }
+        foreach ($all_devices as $client) { //filter to get only devices with a push token
+            if ($client->getPushToken() != null) {
+                array_push($filter, $client);
+            }
         }
         $all_devices = $filter;
 
@@ -107,22 +114,23 @@ class NotificationSender
         $subscriptions = $em->getRepository('EtuCoreBundle:Subscription')
           ->findBy([
             'entityType' => $notification->getEntityType(),
-            'entityId' => $notification->getEntityId()
+            'entityId' => $notification->getEntityId(),
             ]);
 
         $tokens = [];
-        foreach($subscriptions as $subscription) {
-          $user = $subscription->getUser();
-          foreach($all_devices as $client) {
-            if($client->getUser() == $user) {
-              array_push($tokens, $client->getPushToken());
+        foreach ($subscriptions as $subscription) {
+            $user = $subscription->getUser();
+            foreach ($all_devices as $client) {
+                if ($client->getUser() == $user) {
+                    array_push($tokens, $client->getPushToken());
+                }
             }
-          }
         }
 
+        $mobile = $this->helperManager->getHelper($notification->getHelper())->renderMobile($notification);
         $notificationManager = $this->notification_manager;
-        $title = 'New Notification';
-        $message = 'Hello there!';
+        $title = $mobile['title'];
+        $message = $mobile['message'];
         //$token = $body['token'];
         $data = ['title' => $title, 'message' => $message];
 
@@ -132,6 +140,5 @@ class NotificationSender
             [$title],
             [$data]
         );
-       
     }
 }

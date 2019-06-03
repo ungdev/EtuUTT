@@ -39,4 +39,14 @@ class ThreadAnsweredHelper implements HelperInterface
             'notif' => $notification,
         ]);
     }
+
+    /**
+     * @param Notification $notification
+     *
+     * @return string
+     */
+    public function renderMobile(Notification $notification)
+    {
+        return ['title' => 'Nouvelle réponse', 'message' => $notification->getFirstEntity()->getAuthor().' a répondu à '.$notification->getFirstEntity()->getThread()->getTitle()];
+    }
 }

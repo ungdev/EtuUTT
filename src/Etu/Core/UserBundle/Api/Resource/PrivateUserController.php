@@ -182,7 +182,7 @@ class PrivateUserController extends ApiController
     }
 
     /**
-     * Send notification (test route)
+     * Send notification (test route).
      *
      * @ApiDoc(
      *   section = "User - Private data",
@@ -202,7 +202,6 @@ class PrivateUserController extends ApiController
      */
     public function sendNotification(Request $request)
     {
-
         $body = json_decode(
             $request->getContent(),
             true
@@ -224,6 +223,6 @@ class PrivateUserController extends ApiController
           [$data]
       );
 
-      return $this->format(['message' => 'ok', 'machin' => $notificationContentModels], 200, [], $request);
+        return $this->format(['message' => 'ok', 'machin' => $notificationContentModels], 200, [], $request);
     }
 }

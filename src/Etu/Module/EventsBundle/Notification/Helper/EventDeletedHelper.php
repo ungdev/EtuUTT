@@ -39,4 +39,14 @@ class EventDeletedHelper implements HelperInterface
             'notif' => $notification,
         ]);
     }
+
+    /**
+     * @param Notification $notification
+     *
+     * @return string
+     */
+    public function renderMobile(Notification $notification)
+    {
+        return ['title' => 'Événement supprimé', 'message' => 'L\'événement '.$notification->getFirstEntity()->getTitle().' a été supprimé'];
+    }
 }

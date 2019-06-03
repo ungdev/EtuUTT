@@ -39,4 +39,14 @@ class EventEditedHelper implements HelperInterface
             'notif' => $notification,
         ]);
     }
+
+    /**
+     * @param Notification $notification
+     *
+     * @return string
+     */
+    public function renderMobile(Notification $notification)
+    {
+        return ['title' => 'Événement modifié', 'message' => 'L\'événement '.$notification->getFirstEntity()->getTitle().' a été modifié'];
+    }
 }
