@@ -56,8 +56,8 @@ class NewCommentHelper implements HelperInterface
             return ['title' => 'Réponse à votre bug : '.$notification->getFirstEntity()->getIssue()->getTitle(), 'message' => $notification->getFirstEntity()->getUser()->getFullName().' et '.$notification->getEntities()[1]->getUser()->getFullName().' ont répondu à votre signalement.'];
         } elseif ($notification->countEntities() == 3) {
             return ['title' => 'Réponse à votre bug : '.$notification->getFirstEntity()->getIssue()->getTitle(), 'message' => $notification->getFirstEntity()->getUser()->getFullName().', '.$notification->getEntities()[1]->getUser()->getFullName().' et 1 autre ont répondu à votre signalement.'];
-        } else {
-            return ['title' => 'Réponse à votre bug : '.$notification->getFirstEntity()->getIssue()->getTitle(), 'message' => $notification->getFirstEntity()->getUser()->getFullName().', '.$notification->getEntities()[1]->getUser()->getFullName().' et '.($notification->countEntities() - 2).' autres ont répondu à votre signalement.'];
         }
+
+        return ['title' => 'Réponse à votre bug : '.$notification->getFirstEntity()->getIssue()->getTitle(), 'message' => $notification->getFirstEntity()->getUser()->getFullName().', '.$notification->getEntities()[1]->getUser()->getFullName().' et '.($notification->countEntities() - 2).' autres ont répondu à votre signalement.'];
     }
 }
