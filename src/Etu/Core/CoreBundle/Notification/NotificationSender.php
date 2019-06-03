@@ -88,8 +88,8 @@ class NotificationSender
     }
 
     /**
-     * Trouve tout les clients natif capable de recevoir des notifications push
-     * Parmi ces devices, ne garde que ceux dont l'utilisateur peur recevoir la notification
+     * Trouve tous les clients natifs capablent de recevoir des notifications pushs
+     * Parmi ces devices, ne garde que ceux dont l'utilisateur peut recevoir la notification
      * Envoie la notification.
      *
      * @param Module[] $enabledModules
