@@ -22,4 +22,6 @@ interface HelperInterface
      * @return string
      */
     public function render(Notification $notification);
+
+    public function renderMobile(Notification $notification);
 }

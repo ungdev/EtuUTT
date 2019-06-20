@@ -108,8 +108,6 @@ class HomeBuilder
         $query = $this->manager->createQueryBuilder()
             ->select('n')
             ->from('EtuCoreBundle:Notification', 'n')
-            ->where('n.authorId != :userId')
-            ->setParameter('userId', $this->user->getId())
             ->orderBy('n.createdAt', 'DESC')
             ->setMaxResults(10);
 

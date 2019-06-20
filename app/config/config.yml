@@ -212,3 +212,4 @@ artgris_file_manager:
     conf:
         argentique:
             service: 'argentique.filemanagerconfig'
+

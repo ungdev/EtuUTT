@@ -42,4 +42,14 @@ class CanceledHelper implements HelperInterface
             'notif' => $notification,
         ]);
     }
+
+    /**
+     * @param Notification $notification
+     *
+     * @return string
+     */
+    public function renderMobile(Notification $notification)
+    {
+        return ['title' => 'Covoiturage supprimé', 'message' => 'Le covoiturage de '.$notification->getFirstEntity()->getAuthor()->getFullName().' a été supprimé'];
+    }
 }

@@ -62,6 +62,9 @@ class AppKernel extends EtuKernel
 
             // Argentique manager
             new Artgris\Bundle\FileManagerBundle\ArtgrisFileManagerBundle(),
+
+            // Push Notifications for mobile app
+            new Solvecrew\ExpoNotificationsBundle\SCExpoNotificationsBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

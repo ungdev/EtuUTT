@@ -42,4 +42,14 @@ class SubscriptionHelper implements HelperInterface
             'notif' => $notification,
         ]);
     }
+
+    /**
+     * @param Notification $notification
+     *
+     * @return string
+     */
+    public function renderMobile(Notification $notification)
+    {
+        return ['title' => 'Nouvelle réservation', 'message' => $notification->getFirstEntity()->getUser()->getFullName().' a réservé une place dans votre covoiturage'];
+    }
 }

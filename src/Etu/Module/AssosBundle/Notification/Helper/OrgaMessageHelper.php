@@ -42,4 +42,14 @@ class OrgaMessageHelper implements HelperInterface
             'notif' => $notification,
         ]);
     }
+
+    /**
+     * @param Notification $notification
+     *
+     * @return string
+     */
+    public function renderMobile(Notification $notification)
+    {
+        return ['title' => 'Message de l\'association '.$notification->getEntities()[0]->orga_name, 'message' => $notification->getEntities()[0]->content, 'link' => $notification->getEntities()[0]->link];
+    }
 }

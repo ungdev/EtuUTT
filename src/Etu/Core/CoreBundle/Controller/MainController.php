@@ -50,8 +50,6 @@ class MainController extends Controller
             ->createQueryBuilder()
             ->select('n')
             ->from('EtuCoreBundle:Notification', 'n')
-            ->where('n.authorId != :userId')
-            ->setParameter('userId', $this->getUser()->getId())
             ->orderBy('n.createdAt', 'DESC')
             ->setFirstResult(($page - 1) * 25)
             ->setMaxResults(25);

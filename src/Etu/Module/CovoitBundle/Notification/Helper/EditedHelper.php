@@ -42,4 +42,14 @@ class EditedHelper implements HelperInterface
             'notif' => $notification,
         ]);
     }
+
+    /**
+     * @param Notification $notification
+     *
+     * @return string
+     */
+    public function renderMobile(Notification $notification)
+    {
+        return ['title' => 'Covoiturage modifié', 'message' => 'Le covoiturage de '.$notification->getFirstEntity()->getAuthor()->getFullName().' a été modifié'];
+    }
 }

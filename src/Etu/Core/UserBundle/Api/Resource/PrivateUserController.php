@@ -138,7 +138,7 @@ class PrivateUserController extends ApiController
      * Store the expo token in database.
      *
      * @ApiDoc(
-     *   section = "OAuth",
+     *   section = "User - Private data",
      *   description = "Set the expo token that will be used to send push notifications to the device (scope: public)",
      *   parameters = {
      *      {

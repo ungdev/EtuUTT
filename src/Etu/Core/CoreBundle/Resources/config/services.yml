@@ -117,7 +117,7 @@ services:
     # Notifications mangement
     etu.notifs.sender:
         class: Etu\Core\CoreBundle\Notification\NotificationSender
-        arguments: ["@doctrine"]
+        arguments: ["@doctrine", "@sc_expo_notifications.notification_manager", "@etu.notifs.helper_manager"]
 
     etu.notifs.subscriber:
         class: Etu\Core\CoreBundle\Notification\SubscriptionsManager

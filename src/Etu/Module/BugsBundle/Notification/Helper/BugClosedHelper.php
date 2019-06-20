@@ -42,4 +42,18 @@ class BugClosedHelper implements HelperInterface
             'notif' => $notification,
         ]);
     }
+
+    /**
+     * @param Notification $notification
+     *
+     * @return string
+     */
+    public function renderMobile(Notification $notification)
+    {
+        if ($notification->getFirstEntity()->getAssignee() != null) {
+            return ['title' => $notification->getFirstEntity()->getAssignee()->getFullName().' a fermé un bug', 'message' => 'Le bug "'.$notification->getFirstEntity()->getTitle().'" est résolu'];
+        }
+
+        return ['title' => 'Bug fermé', 'message' => 'Le bug "'.$notification->getFirstEntity()->getTitle().'" est résolu'];
+    }
 }

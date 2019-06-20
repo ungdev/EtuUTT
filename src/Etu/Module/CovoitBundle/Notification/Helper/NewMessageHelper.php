@@ -42,4 +42,14 @@ class NewMessageHelper implements HelperInterface
             'notif' => $notification,
         ]);
     }
+
+    /**
+     * @param Notification $notification
+     *
+     * @return string
+     */
+    public function renderMobile(Notification $notification)
+    {
+        return ['title' => 'Nouveau message de '.$notification->getFirstEntity()->getAuthor()->getFullName().' pour votre covoiturage', 'message' => $notification->getFirstEntity()->getText()];
+    }
 }
