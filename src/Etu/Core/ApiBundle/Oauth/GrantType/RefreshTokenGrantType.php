@@ -42,7 +42,11 @@ class RefreshTokenGrantType implements GrantTypeInterface
             ->findOneBy(['token' => $request->request->get('refresh_token')]);
 
         if (!$refreshToken) {
-            throw new \RuntimeException('Refresh token code not found');
+            $refreshToken = $this->manager->getRepository('EtuCoreApiBundle:OauthRefreshToken')
+              ->findOneBy(['token' => $request->get('refresh_token')]);
+            if (!$refreshToken) {
+                throw new \RuntimeException('Refresh token code not found');
+            }
         }
 
         if ($refreshToken->getExpireAt() <= new \DateTime()) {

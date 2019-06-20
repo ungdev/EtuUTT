@@ -43,7 +43,11 @@ class AuthorizationCodeGrantType implements GrantTypeInterface
             ->findOneBy(['code' => $request->request->get('code', $request->request->get('authorization_code'))]);
 
         if (!$authorizationCode) {
-            throw new \RuntimeException('Authorization code not found');
+            $authorizationCode = $this->manager->getRepository('EtuCoreApiBundle:OauthAuthorizationCode')
+              ->findOneBy(['code' => $request->get('code', $request->request->get('authorization_code'))]);
+            if (!$authorizationCode) {
+                throw new \RuntimeException('Authorization code not found');
+            }
         }
 
         if ($authorizationCode->getExpireAt() <= new \DateTime()) {
