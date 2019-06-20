@@ -49,7 +49,7 @@
         "liip/imagine-bundle": "^1.3",
         "fzaninotto/faker": "^1.5",
         "symfony/assetic-bundle": "^2.3",
-        "leafo/scssphp": "^0.6.6",
+        "leafo/scssphp": "^0.8.2",
         "patchwork/jsqueeze": "^2.0",
         "nelmio/cors-bundle": "^1.4",
         "ezyang/htmlpurifier": "^4.8",

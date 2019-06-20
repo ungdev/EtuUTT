@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "71511c992d158fdb1d4baecb6d1254cd",
+    "content-hash": "e3bc5e6fc924863fecb93fb2714d8259",
     "packages": [
         {
             "name": "artgris/filemanager-bundle",
@@ -71,7 +71,7 @@
             "time": "2019-05-15T09:09:26+00:00"
         },
         {
-            "name": "beberlei/DoctrineExtensions",
+            "name": "beberlei/doctrineextensions",
             "version": "v1.2.1",
             "source": {
                 "type": "git",
@@ -3484,25 +3484,26 @@
         },
         {
             "name": "leafo/scssphp",
-            "version": "v0.6.7",
+            "version": "v0.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafo/scssphp.git",
-                "reference": "562213cd803e42ea53b0735554794c4022d8db89"
+                "reference": "1b168bfee60889547e1fe55b9afdf055f6d3c58d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafo/scssphp/zipball/562213cd803e42ea53b0735554794c4022d8db89",
-                "reference": "562213cd803e42ea53b0735554794c4022d8db89",
+                "url": "https://api.github.com/repos/leafo/scssphp/zipball/1b168bfee60889547e1fe55b9afdf055f6d3c58d",
+                "reference": "1b168bfee60889547e1fe55b9afdf055f6d3c58d",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.4.0"
             },
             "require-dev": {
-                "kherge/box": "~2.5",
-                "phpunit/phpunit": "~3.7",
-                "squizlabs/php_codesniffer": "~2.5"
+                "phpunit/phpunit": "~4.6",
+                "squizlabs/php_codesniffer": "~2.5",
+                "twbs/bootstrap": "~4.3",
+                "zurb/foundation": "~6.5"
             },
             "bin": [
                 "bin/pscss"
@@ -3533,7 +3534,7 @@
                 "scss",
                 "stylesheet"
             ],
-            "time": "2017-02-23T05:07:33+00:00"
+            "time": "2019-05-09T18:51:51+00:00"
         },
         {
             "name": "league/flysystem",
@@ -5234,7 +5235,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "backendtea@gmail.com"
+                    "email": "BackEndTea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
