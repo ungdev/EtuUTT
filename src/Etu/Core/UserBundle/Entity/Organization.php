@@ -693,22 +693,24 @@ class Organization implements UserInterface, \Serializable
 
         return $this;
     }
+
     /**
      * Has membership.
      *
      * @param \Etu\Core\UserBundle\Entity\User $user
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMembership(User $user)
     {
-        foreach($this->memberships as $membership) {
-          if($membership->getUser()->getId() == $user->getId()) return true;
+        foreach ($this->memberships as $membership) {
+            if ($membership->getUser()->getId() == $user->getId()) {
+                return true;
+            }
         }
 
         return false;
     }
-
 
     /**
      * Remove membership.
