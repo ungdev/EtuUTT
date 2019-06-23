@@ -19,7 +19,7 @@ class EventsController extends ApiController
      *
      * @ApiDoc(
      *   section = "Events",
-     *   description = "List of all events (scope: external)",
+     *   description = "List of all public events (privacy <= 200). Do not require requests to have oauth credentials (scope: external)",
      *   parameters = {
      *      {
      *          "name" = "category",
@@ -46,7 +46,7 @@ class EventsController extends ApiController
      *          "name" = "organization",
      *          "required" = false,
      *          "dataType" = "number",
-     *          "description" = "Filter by organization ID"
+     *          "description" = "Filter by organization login"
      *      },
      *      {
      *          "name" = "fields",
@@ -67,69 +67,40 @@ class EventsController extends ApiController
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $events = $em->getRepository('EtuModuleEventsBundle:Event')->findBy(
-      [
-        'deletedAt' => null,
-      ]
-    );
-
-        /** @var Event $event */
-        $events = array_filter($events, function ($event) {
-            if ($event->getPrivacy() > 200) {
-                return false;
-            }
-
-            return true;
-        });
+        /** @var $query QueryBuilder */
+        $query = $em->createQueryBuilder()
+          ->select('e')
+          ->from('EtuModuleEventsBundle:Event', 'e')
+          ->leftJoin('e.orga', 'o')
+          ->where('e.deletedAt IS NULL')
+          ->andWhere('e.privacy <= :privacy')
+          ->setParameter('privacy', Event::PRIVACY_PRIVATE);
 
         if ($request->query->has('category')) {
             $category = $request->query->get('category');
-            $tmp = [];
-            foreach ($events as $event) {
-                if ($event->getCategory() == $category) {
-                    $tmp = array_merge($tmp, [$event]);
-                }
-            }
-            $events = $tmp;
+            $query->andWhere('e.category = :category')
+            ->setParameter('category', $category);
         }
         if ($request->query->has('after')) {
             $after = $request->query->get('after');
-            $tmp = [];
-            foreach ($events as $event) {
-                if ($event->getBegin() > $after) {
-                    $tmp = array_merge($tmp, [$event]);
-                }
-            }
-            $events = $tmp;
+            $query->andWhere('e.begin > :after')
+            ->setParameter('after', $after);
         }
         if ($request->query->has('before')) {
             $before = $request->query->get('before');
-            $tmp = [];
-            foreach ($events as $event) {
-                if ($event->getBegin() < $before) {
-                    $tmp = array_merge($tmp, [$event]);
-                }
-            }
-            $events = $tmp;
+            $query->andWhere('e.begin < :before')
+            ->setParameter('before', $before);
         }
         if ($request->query->has('organization')) {
             $organization = $request->query->get('organization');
-            $tmp = [];
-            foreach ($events as $event) {
-                try {
-                    $orga = $event->getOrga()->getLogin();
-                    if ($orga == $organization) {
-                        $tmp = array_merge($tmp, [$event]);
-                    }
-                } catch (\Exception $e) {
-                }
-            }
-            $events = $tmp;
+            $query->andWhere('o.login = :orga')
+            ->setParameter('orga', $organization);
         }
         $fields = ['title', 'category', 'begin', 'end', 'isAllDay', 'privacy', 'orga'];
         if ($request->query->has('fields')) {
             $fields = explode(' ', $request->query->get('fields'));
         }
+        $events = $query->getQuery()->getResult();
 
         return $this->format([
       'events' => $this->get('etu.api.event.transformer')->transform($events, new EmbedBag($fields)),
@@ -171,6 +142,12 @@ class EventsController extends ApiController
      *          "description" = "Filter by organization ID"
      *      },
      *      {
+     *          "name" = "privacy",
+     *          "required" = false,
+     *          "dataType" = "number",
+     *          "description" = "Filter by event privacy : public events = 100, private events = 200 (student only), orga events = 300 (member of at least 1 organization), member event = 400 (member of the organization)"
+     *      },
+     *      {
      *          "name" = "fields",
      *          "required" = false,
      *          "dataType" = "string",
@@ -189,11 +166,43 @@ class EventsController extends ApiController
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $events = $em->getRepository('EtuModuleEventsBundle:Event')->findBy(
-      [
-        'deletedAt' => null,
-      ]
-    );
+        /** @var $query QueryBuilder */
+        $query = $em->createQueryBuilder()
+         ->select('e')
+         ->from('EtuModuleEventsBundle:Event', 'e')
+         ->leftJoin('e.orga', 'o')
+         ->where('e.deletedAt IS NULL');
+
+        if ($request->query->has('category')) {
+            $category = $request->query->get('category');
+            $query->andWhere('e.category = :category')
+           ->setParameter('category', $category);
+        }
+        if ($request->query->has('privacy')) {
+            $privacy = $request->query->get('privacy');
+            $query->andWhere('e.privacy = :privacy')
+          ->setParameter('privacy', $privacy);
+        }
+        if ($request->query->has('after')) {
+            $after = $request->query->get('after');
+            $query->andWhere('e.begin > :after')
+           ->setParameter('after', $after);
+        }
+        if ($request->query->has('before')) {
+            $before = $request->query->get('before');
+            $query->andWhere('e.begin < :before')
+           ->setParameter('before', $before);
+        }
+        if ($request->query->has('organization')) {
+            $organization = $request->query->get('organization');
+            $query->andWhere('o.login = :orga')
+           ->setParameter('orga', $organization);
+        }
+        $fields = ['title', 'category', 'begin', 'end', 'isAllDay', 'privacy', 'orga'];
+        if ($request->query->has('fields')) {
+            $fields = explode(' ', $request->query->get('fields'));
+        }
+        $events = $query->getQuery()->getResult();
 
         /** @var Event $event */
         $events = array_filter($events, function ($event) {
@@ -205,55 +214,6 @@ class EventsController extends ApiController
 
             return true;
         });
-
-        if ($request->query->has('category')) {
-            $category = $request->query->get('category');
-            $tmp = [];
-            foreach ($events as $event) {
-                if ($event->getCategory() == $category) {
-                    $tmp = array_merge($tmp, [$event]);
-                }
-            }
-            $events = $tmp;
-        }
-        if ($request->query->has('after')) {
-            $after = $request->query->get('after');
-            $tmp = [];
-            foreach ($events as $event) {
-                if ($event->getBegin() > $after) {
-                    $tmp = array_merge($tmp, [$event]);
-                }
-            }
-            $events = $tmp;
-        }
-        if ($request->query->has('before')) {
-            $before = $request->query->get('before');
-            $tmp = [];
-            foreach ($events as $event) {
-                if ($event->getBegin() < $before) {
-                    $tmp = array_merge($tmp, [$event]);
-                }
-            }
-            $events = $tmp;
-        }
-        if ($request->query->has('organization')) {
-            $organization = $request->query->get('organization');
-            $tmp = [];
-            foreach ($events as $event) {
-                try {
-                    $orga = $event->getOrga()->getLogin();
-                    if ($orga == $organization) {
-                        $tmp = array_merge($tmp, [$event]);
-                    }
-                } catch (\Exception $e) {
-                }
-            }
-            $events = $tmp;
-        }
-        $fields = ['title', 'category', 'begin', 'end', 'isAllDay', 'privacy', 'orga'];
-        if ($request->query->has('fields')) {
-            $fields = explode(' ', $request->query->get('fields'));
-        }
 
         return $this->format([
       'events' => $this->get('etu.api.event.transformer')->transform($events, new EmbedBag($fields)),
