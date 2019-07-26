@@ -13,6 +13,19 @@ Documentation
 
 La documentation est disponible sur [https://github.com/ungdev/EtuUTT/wiki](https://github.com/ungdev/EtuUTT/wiki).
 C'est un travail en cours, n'hésitez pas à nous contacter si jamais la ressource recherchée est manquante…
+De la documentation est aussi disponible sur le site étudiant directement : https://etu.utt.fr/wiki/view/general/etuutt/developpeur/installer-une-version-locale-d-etuutt
+
+Lancement du serveur en local
+-------------
+
+Après avoir suivit le tutoriel du lien précédent, au lieu d'utiliser nginx il est possible de lancer le serveur directement dans la console avec la commande suivante :
+```
+
+php bin/console server:run
+
+```
+
+Cela permet d'éviter d'installer nginx et de devoir tout configurer
 
 Traduction
 ----------
