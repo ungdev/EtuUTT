@@ -125,7 +125,8 @@ This command helps you to import the official UTT UE guide from CSV file.');
     }
 
     protected function parseCredits(String $credit) {
-      return (int) substr($credit, 0, strlen($credit));
+      str_replace(' crédits', '', $credit);
+      return (int) $credit;
     }
     protected function parseCategory(String $category) {
       $category = strtolower($category);
