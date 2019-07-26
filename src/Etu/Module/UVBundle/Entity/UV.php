@@ -64,7 +64,7 @@ class UV
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=150)
      */
     protected $name;
 
@@ -97,6 +97,20 @@ class UV
     protected $the;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $projet;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $stage;
+
+    /**
      * @var bool
      *
      * @ORM\Column(type="boolean")
@@ -116,6 +130,31 @@ class UV
      * @ORM\Column(type="smallint")
      */
     protected $credits;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $diplomes;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $mineurs;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $antecedents;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $languages;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $commentaire;
 
     /**
      * @ORM\Column(type="text")
@@ -375,6 +414,54 @@ class UV
     }
 
     /**
+     * Set projet.
+     *
+     * @param int $projet
+     *
+     * @return UV
+     */
+    public function setProjet($projet)
+    {
+        $this->projet = $projet;
+
+        return $this;
+    }
+
+    /**
+     * Get projet.
+     *
+     * @return int
+     */
+    public function getProjet()
+    {
+        return $this->projet;
+    }
+
+    /**
+     * Set stage.
+     *
+     * @param int $stage
+     *
+     * @return UV
+     */
+    public function setStage($stage)
+    {
+        $this->stage = $stage;
+
+        return $this;
+    }
+
+    /**
+     * Get stage.
+     *
+     * @return int
+     */
+    public function getStage()
+    {
+        return $this->stage;
+    }
+
+    /**
      * Set automne.
      *
      * @param bool $automne
@@ -468,6 +555,126 @@ class UV
     public function getObjectifs()
     {
         return $this->objectifs;
+    }
+
+    /**
+     * Set diplomes.
+     *
+     * @param string $diplomes
+     *
+     * @return UV
+     */
+    public function setDiplomes($diplomes)
+    {
+        $this->diplomes = $diplomes;
+
+        return $this;
+    }
+
+    /**
+     * Get diplomes.
+     *
+     * @return string
+     */
+    public function getDiplomes()
+    {
+        return $this->diplomes;
+    }
+
+    /**
+     * Set mineurs.
+     *
+     * @param string $mineurs
+     *
+     * @return UV
+     */
+    public function setMineurs($mineurs)
+    {
+        $this->mineurs = $mineurs;
+
+        return $this;
+    }
+
+    /**
+     * Get mineurs.
+     *
+     * @return string
+     */
+    public function getMineurs()
+    {
+        return $this->mineurs;
+    }
+
+    /**
+     * Set antecedents.
+     *
+     * @param string $antecedents
+     *
+     * @return UV
+     */
+    public function setAntecedents($antecedents)
+    {
+        $this->antecedents = $antecedents;
+
+        return $this;
+    }
+
+    /**
+     * Get antecedents.
+     *
+     * @return string
+     */
+    public function getAntecedents()
+    {
+        return $this->antecedents;
+    }
+
+    /**
+     * Set languages.
+     *
+     * @param string $languages
+     *
+     * @return UV
+     */
+    public function setLanguages($languages)
+    {
+        $this->languages = $languages;
+
+        return $this;
+    }
+
+    /**
+     * Get languages.
+     *
+     * @return string
+     */
+    public function getLanguages()
+    {
+        return $this->languages;
+    }
+
+    /**
+     * Set commentaire.
+     *
+     * @param string $commentaire
+     *
+     * @return UV
+     */
+    public function setCommentaire($commentaire)
+    {
+        $this->commentaire = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * Get commentaire.
+     *
+     * @return string
+     */
+    public function getCommentaire()
+    {
+        return $this->commentaire;
     }
 
     /**

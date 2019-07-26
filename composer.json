@@ -81,7 +81,8 @@
         "artgris/filemanager-bundle": "^1.4",
         "ramsey/uuid-doctrine": "^1.5",
         "html2text/html2text": "^4.2",
-        "solvecrew/expo-notifications-bundle": "^1.2"
+        "solvecrew/expo-notifications-bundle": "^1.2",
+        "league/csv": "^8.0"
     },
     "repositories": [
         {

@@ -19,7 +19,7 @@ class SyncCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('etu:uv:sync')
+            ->setName('etu:ue:sync')
             ->setDescription('Synchronize imported information with the database');
     }
 
@@ -32,16 +32,16 @@ class SyncCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('
-	Welcome to the EtuUTT UV manager
+	Welcome to the EtuUTT UE manager
 
-This command helps you to syncronize downloaded UV with the database.
+This command helps you to syncronize downloaded UE with the database.
 
 If you did not import the guide previously, please use
 
 	etu:uv:import url
 
-This manager is very carfeul: it won\'t remove any UV from the
-databsse, it will only update them.
+This manager is very carfeul: it won\'t remove any UE from the
+database, it will only update them or create them.
 ');
 
         /*
@@ -62,7 +62,7 @@ databsse, it will only update them.
 
         if (!file_exists(__DIR__.'/../Resources/objects/registry.json')) {
             throw new \RuntimeException(
-                'The registry can not be loaded. Please run "etu:uv:import url" to create it.'
+                'The registry can not be loaded. Please run "etu:ue:import url" to create it.'
             );
         }
 
@@ -71,7 +71,7 @@ databsse, it will only update them.
 
         if (!$registry || !is_array($registry)) {
             throw new \RuntimeException(
-                'The registry can not be loaded as its file is corrupted. Please run "etu:uv:import url" to recreate it.'
+                'The registry can not be loaded as its file is corrupted. Please run "etu:ue:import url" to recreate it.'
             );
         }
 
@@ -123,9 +123,15 @@ databsse, it will only update them.
         $toRemoveCount = count($toRemove);
         $toUpdateCount = count($toUpdate);
 
-        $output->writeln(sprintf('%s UV to add', $toAddCount));
-        $output->writeln(sprintf('%s UV to update', $toUpdateCount));
-        $output->writeln(sprintf('%s UV to set as not existent anymore', $toRemoveCount));
+        $output->writeln(sprintf('%s UE to add', $toAddCount));
+        foreach ($toAdd as $ue) {
+          $output->write($ue." ");
+        }
+        $output->writeln(sprintf("\n%s UE to update", $toUpdateCount));
+        $output->writeln(sprintf("%s UE to set as not existent anymore", $toRemoveCount));
+        foreach ($toRemove as $ue) {
+          $output->write($ue." ");
+        }
 
         $output->write("\n");
 
@@ -188,9 +194,16 @@ databsse, it will only update them.
                     ->setTd($regEntity->getTd())
                     ->setTp($regEntity->getTp())
                     ->setThe($regEntity->getThe())
+                    ->setProjet($regEntity->getProjet())
+                    ->setStage($regEntity->getStage())
                     ->setAutomne($regEntity->getAutomne())
                     ->setPrintemps($regEntity->getPrintemps())
                     ->setCredits($regEntity->getCredits())
+                    ->setDiplomes($regEntity->getDiplomes())
+                    ->setMineurs($regEntity->getMineurs())
+                    ->setAntecedents($regEntity->getAntecedents())
+                    ->setLanguages($regEntity->getLanguages())
+                    ->setCommentaire($regEntity->getCommentaire())
                     ->setObjectifs($regEntity->getObjectifs())
                     ->setProgramme($regEntity->getProgramme());
 
@@ -254,9 +267,16 @@ databsse, it will only update them.
             'Td',
             'Tp',
             'The',
+            'Projet',
+            'Stage',
             'Automne',
             'Printemps',
             'Credits',
+            'Diplomes',
+            'Mineurs',
+            'Antecedents',
+            'Languages',
+            'Commentaire',
             'Objectifs',
             'Programme',
         ];
