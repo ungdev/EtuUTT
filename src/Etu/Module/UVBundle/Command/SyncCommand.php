@@ -125,12 +125,12 @@ database, it will only update them or create them.
 
         $output->writeln(sprintf('%s UE to add', $toAddCount));
         foreach ($toAdd as $ue) {
-          $output->write($ue." ");
+            $output->write($ue.' ');
         }
         $output->writeln(sprintf("\n%s UE to update", $toUpdateCount));
-        $output->writeln(sprintf("%s UE to set as not existent anymore", $toRemoveCount));
+        $output->writeln(sprintf('%s UE to set as not existent anymore', $toRemoveCount));
         foreach ($toRemove as $ue) {
-          $output->write($ue." ");
+            $output->write($ue.' ');
         }
 
         $output->write("\n");
