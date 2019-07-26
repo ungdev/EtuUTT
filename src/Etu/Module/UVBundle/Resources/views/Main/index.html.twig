@@ -22,7 +22,7 @@
                              class="uvs-list-icon"
                              alt="({{ uv.category|upper }})"
                              title="{{ uv.category|upper }}" />
-                        {{ uv.code }} - {{ uv.name }}
+                        {{ uv.code }} - {{ uv.name }} {{ uv.isOld ? 'uvs.main.search.old'|trans : '' }}
                     </a>
                 </li>
             {% else %}

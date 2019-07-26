@@ -4,7 +4,7 @@ uvs:
     ct: "Kultur und Technik"
     ec: "Kommunikation"
     me: "Betriebswissenschaft"
-    other: Andere
+    master: Master
     st: Praktikum
     tm: "Techniken und Methoden"
   main:
@@ -20,6 +20,7 @@ uvs:
     search:
       noResult: "Kein Ergebnis"
       title: "Einen Kurs suchen"
+      old: "(Kurs geschlossen)"
     sendReview:
       back: Zurück
       cancel: Abbrechen

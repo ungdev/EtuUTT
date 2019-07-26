@@ -87,6 +87,9 @@ This command helps you to import the official UTT UE guide from CSV file.');
             }
             $automne = $uv['periode1'] == 'Automne' || $uv['periode2'] == 'Automne';
             $printemps = $uv['periode1'] == 'Printemps' || $uv['periode2'] == 'Printemps';
+            $commentaire = join("\n", explode('|', $uv['commentaires']));
+            $commentaire = join("P", explode('Picto p', $commentaire));
+            $commentaire = join("UE en Anglais et en Français", explode('Drapeau anglais/français', $commentaire));
             $entity->setCode($uv['UV'])
                 ->setName($uv['titre'])
                 ->setCategory($this->parseCategory($uv['catégorie']))
@@ -97,7 +100,7 @@ This command helps you to import the official UTT UE guide from CSV file.');
                 ->setDiplomes($uv['diplome'])
                 ->setAntecedents($uv['antécédent'])
                 ->setLanguages($uv['langues'])
-                ->setCommentaire($uv['commentaires'])
+                ->setCommentaire($commentaire)
                 ->setObjectifs($objectif)
                 ->setProgramme($programme)
                 ->setCredits($this->parseCredits($uv['credits']))
@@ -122,7 +125,7 @@ This command helps you to import the official UTT UE guide from CSV file.');
     }
 
     protected function parseCredits(String $credit) {
-      return (int) substr($credit, 0, 1);
+      return (int) substr($credit, 0, strlen($credit));
     }
     protected function parseCategory(String $category) {
       $category = strtolower($category);
@@ -131,6 +134,6 @@ This command helps you to import the official UTT UE guide from CSV file.');
       return $category;
     }
     protected function parseHour(String $hour) {
-      return (int) substr($hour, strlen($hour) - 3, 2);
+      return (int) substr($hour, 0, strlen($hour) - 2);
     }
 }

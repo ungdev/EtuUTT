@@ -19,7 +19,7 @@ class UV
     public const CATEGORY_ME = 'me';
     public const CATEGORY_EC = 'ec';
     public const CATEGORY_ST = 'st';
-    public const CATEGORY_OTHER = 'other';
+    public const CATEGORY_MASTER = 'master';
 
     public static $categories = [
         self::CATEGORY_CS,
@@ -28,7 +28,7 @@ class UV
         self::CATEGORY_ME,
         self::CATEGORY_EC,
         self::CATEGORY_ST,
-        self::CATEGORY_OTHER,
+        self::CATEGORY_MASTER,
     ];
 
     /**
@@ -45,7 +45,7 @@ class UV
      *
      * @ORM\Column(type="string", length=20, nullable = true)
      */
-    protected $category = self::CATEGORY_OTHER;
+    protected $category = self::CATEGORY_CS;
 
     /**
      * @var string

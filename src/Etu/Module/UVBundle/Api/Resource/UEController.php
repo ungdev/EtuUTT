@@ -102,7 +102,7 @@ class UEController extends ApiController
      *          "name" = "category",
      *          "required" = false,
      *          "dataType" = "string",
-     *          "format" = "cs/tm/ec/me/ct/st/other",
+     *          "format" = "cs/tm/ec/me/ct/st/master",
      *          "description" = "Filter by the chosen category"
      *      },
      *      {

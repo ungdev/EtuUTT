@@ -22,7 +22,7 @@
             {% for uv in pagination %}
                 <li>
                     <a href="{{ path('uvs_view', {'slug': uv.slug, 'name': uv.name|slugify}) }}">
-                        {{ uv.code }} - {{ uv.name }}
+                        {{ uv.code }} - {{ uv.name }} {{ uv.isOld ? 'uvs.main.search.old'|trans : '' }}
                     </a>
                 </li>
             {% else %}
