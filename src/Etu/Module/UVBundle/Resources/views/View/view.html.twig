@@ -31,7 +31,7 @@
          alt="{{ ('uvs.categories.'~uv.category)|trans }}"
          title="{{ ('uvs.categories.'~uv.category)|trans }}" />
 
-    <h4>{{ uv.code }} - {{ uv.name }}</h4>
+    <h4>{{ uv.code }} - {{ uv.name }} {{ uv.isOld ? 'uvs.main.search.old'|trans : '' }}</h4>
 
     <div class="uv-view row-fluid">
         <div class="uv-view-infos span5">
@@ -58,6 +58,18 @@
                     <div class="uv-view-infos-value"></div>
                 </div>
             </div>
+            {% if uv.diplomes %}
+            <div class="uv-view-infos-category">
+                <div class="uv-view-infos-row">
+                    <div class="uv-view-infos-label">
+                        {{ 'uvs.main.view.diplome'|trans }}
+                    </div>
+                    <div class="uv-view-infos-value">
+                        {{ uv.diplomes }}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
             <div class="uv-view-infos-category">
                 <div class="uv-view-infos-row">
                     <div class="uv-view-infos-label">
@@ -74,13 +86,21 @@
                         {{ 'uvs.main.view.cm'|trans }}<br />
                         {{ 'uvs.main.view.td'|trans }}<br />
                         {{ 'uvs.main.view.tp'|trans }}<br />
-                        {{ 'uvs.main.view.the'|trans }}
+                        {{ 'uvs.main.view.the'|trans }}<br />
+                        {{ 'uvs.main.view.projet'|trans }}<br />
+                        {% if uv.stage > 0 %}
+                          {{ 'uvs.main.view.stage'|trans }}
+                        {% endif %}
                     </div>
                     <div class="uv-view-infos-value">
                         {{ uv.cm }}h<br />
                         {{ uv.td }}h<br />
                         {{ uv.tp }}h<br />
-                        {{ uv.the }}h
+                        {{ uv.the }}h<br />
+                        {{ uv.projet }}h
+                        {% if uv.stage > 0 %}
+                          <br />{{ uv.stage }} semaines
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -100,6 +120,42 @@
                     </div>
                 </div>
             </div>
+            {% if uv.mineurs %}
+            <div class="uv-view-infos-category">
+                <div class="uv-view-infos-row">
+                    <div class="uv-view-infos-label">
+                        {{ 'uvs.main.view.mineurs'|trans }}
+                    </div>
+                    <div class="uv-view-infos-value">
+                        {{ uv.mineurs }}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% if uv.antecedents %}
+            <div class="uv-view-infos-category">
+                <div class="uv-view-infos-row">
+                    <div class="uv-view-infos-label">
+                        {{ 'uvs.main.view.antecedents'|trans }}
+                    </div>
+                    <div class="uv-view-infos-value">
+                        {{ uv.antecedents }}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% if uv.languages %}
+            <div class="uv-view-infos-category">
+                <div class="uv-view-infos-row">
+                    <div class="uv-view-infos-label">
+                        {{ 'uvs.main.view.language'|trans }}
+                    </div>
+                    <div class="uv-view-infos-value">
+                        {{ ('uvs.main.languages.'~uv.languages)|trans }}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
         </div>
 
         <div class="uv-view-content span7">
@@ -115,6 +171,13 @@
 
                 <p>
                     {{ uv.objectifs|nl2br }}
+                </p>
+            {% endif %}
+            {% if uv.commentaire %}
+                <h4>{{ 'uvs.main.view.commentary'|trans }}</h4>
+
+                <p>
+                    {{ uv.commentaire|nl2br }}
                 </p>
             {% endif %}
         </div>

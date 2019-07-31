@@ -26,7 +26,7 @@ uvs:
     ct: "Culture and technology"
     ec: "Expression and communication"
     me: "Company management"
-    other: Other
+    master: Master
     st: Internships
     tm: "Technical subjects"
   main:
@@ -41,9 +41,13 @@ uvs:
       my: "My courses"
       noResult: "It appears you do not follow any course !"
       title: "Courses"
+    languages:
+      FRA: French
+      ANG, FRA: English and French
     search:
       noResult: "No result"
       title: "Search for a course"
+      old: "(Course closed)"
     sendReview:
       back: Go back
       cancel: Cancel
@@ -55,6 +59,7 @@ uvs:
       type: "Exam type"
     view:
       aims: Goals
+      antecedents: Requirement
       approuved: "Approved by the team"
       autumn: Fall
       autumnAndSpring: "Fall and spring"
@@ -62,15 +67,21 @@ uvs:
       body: "Add a review"
       cm: "Lecture"
       comments: Reviews
+      commentary: Comment
       content: Program
       countReviews: "%count% annal %count% annals"
       credits: Credits
+      diplome: Diploma
       dontExists: "This course does not exist anymore"
+      language: Language
+      mineurs: Mineurs
       noComment: "No reviews yet"
       pending: "Waiting for validation"
+      projet: Project
       reviews: Annals
       sendReview: "Send an annal"
       spring: Spring
+      stage: Internship
       submit: Comment
       td: "Tutorials"
       the: "Personnal work"

@@ -20,7 +20,7 @@
              alt="{{ ('uvs.categories.'~uv.category)|trans }}"
              title="{{ ('uvs.categories.'~uv.category)|trans }}" />
 
-        <h4>{{ uv.code }} - {{ uv.name }}</h4>
+        <h4>{{ uv.code }} - {{ uv.name }} {{ uv.isOld ? 'uvs.main.search.old'|trans : '' }}</h4>
 
         <hr />
 

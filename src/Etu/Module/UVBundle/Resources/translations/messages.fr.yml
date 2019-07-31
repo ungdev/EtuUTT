@@ -27,7 +27,7 @@ uvs:
     ct: "Humanités"
     ec: "Expression et communication"
     me: "Management de l'entreprise"
-    other: Autre
+    master: Master
     st: Stages
     tm: "Techniques et méthodes"
   main:
@@ -42,9 +42,13 @@ uvs:
       my: "Mes UE"
       noResult: "Vous semblez ne suivre aucune UE !"
       title: "Les UE"
+    languages:
+      FRA: Français
+      ANG, FRA: Anglais et Français
     search:
       noResult: "Aucun résultat"
       title: "Rechercher une UE"
+      old: "(UE fermée)"
     sendReview:
       back: Retour
       cancel: Annuler
@@ -56,6 +60,7 @@ uvs:
       type: "Type d'examen"
     view:
       aims: Objectifs
+      antecedents: Antécedents
       approuved: "Approuvées par l'équipe"
       autumn: Automne
       autumnAndSpring: "Automne et printemps"
@@ -63,16 +68,22 @@ uvs:
       body: "Ajouter un commentaire"
       cm: "Cours magistral"
       comments: Commentaires
+      commentary: Commentaire
       content: Programme
       countReviews: "%count% annale|%count% annales"
       credits: Crédits
+      diplome: Diplôme
       dontExists: "Cette UE n'existe plus"
+      language: Langue
+      mineurs: Mineurs
       noComment: "Aucun commentaire pour le moment"
       pending: "En attente de validation"
+      projet: Projets
       reviews: Annales
       sendReview: "Envoyer une annale"
       spring: Printemps
       submit: Commenter
+      stage: Stage
       td: "Travaux dirigés"
       the: "Travail personnel"
       title: "Détail d'une UE - %code%"
