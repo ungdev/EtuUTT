@@ -82,7 +82,7 @@
         "ramsey/uuid-doctrine": "^1.5",
         "html2text/html2text": "^4.2",
         "solvecrew/expo-notifications-bundle": "^1.2",
-        "league/csv": "^8.0"
+        "league/csv": "^9.3"
     },
     "repositories": [
         {
