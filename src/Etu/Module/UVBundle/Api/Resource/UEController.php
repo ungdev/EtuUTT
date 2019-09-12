@@ -32,10 +32,9 @@ class UEController extends ApiController
 
         /** @var $query QueryBuilder */
         $query = $em->createQueryBuilder()
-            ->select('u.slug, u.code, u.name, u.category, u.cm, u.td, u.tp, u.the, u.automne, u.printemps, u.credits, u.objectifs, u.programme')
+            ->select('u.slug, u.diplomes, u.code, u.mineurs, u.antecedents, u.name, u.category, u.cm, u.td, u.tp, u.the, u.stage, u.projet, u.automne, u.printemps, u.credits, u.objectifs, u.programme, u.languages, u.isOld')
             ->from('EtuModuleUVBundle:UV', 'u')
             ->where('u.deletedAt IS NULL')
-            ->andWhere('u.isOld = 0')
             ->andWhere('u.slug = :slug')
             ->setParameter('slug', $slug);
 
