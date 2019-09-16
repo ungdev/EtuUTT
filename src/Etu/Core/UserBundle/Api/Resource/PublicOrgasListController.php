@@ -76,6 +76,36 @@ class PublicOrgasListController extends ApiController
     }
 
     /**
+     * List of all the organizations in EtuUTT (display only some data).
+     *
+     * @ApiDoc(
+     *   section = "Organization - list",
+     *   description = "Simple list of the orgas (scope: public)"
+     * )
+     *
+     * @Route("/public/listorgas", name="api_public_orgas_simple_list", options={"expose"=true})
+     * @Method("GET")
+     */
+    public function simpleListAction(Request $request)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+
+        /** @var $query QueryBuilder */
+        $query = $em->createQueryBuilder()
+            ->select('o')
+            ->from('EtuUserBundle:Organization', 'o')
+            ->orderBy('o.name');
+
+        $orgas = $query->getQuery()->getResult();
+
+        return $this->format([
+          'data' => $this->get('etu.api.orga.list.transformer')->transform($orgas, null),
+      ], 200, [], $request);
+    }
+
+    /**
      * View a single organization informations, embeding members.
      *
      * @ApiDoc(

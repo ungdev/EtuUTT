@@ -79,6 +79,9 @@ services:
         class: Etu\Core\UserBundle\Api\Transformer\OrgaTransformer
         arguments: [ "@etu.api.user.transformer", "@etu.api.orga_member.transformer" ]
 
+    etu.api.orga.list.transformer:
+        class: Etu\Core\UserBundle\Api\Transformer\OrgaListTransformer
+
     etu.api.user.mapper:
         class: Etu\Core\UserBundle\Api\QueryMapper\UserListMapper
 
