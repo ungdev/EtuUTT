@@ -79,7 +79,7 @@ class PublicOrgasListController extends ApiController
      * List of all the organizations in EtuUTT (display only some data).
      *
      * @ApiDoc(
-     *   section = "Organization - list",
+     *   section = "Organization - Public data",
      *   description = "Simple list of the orgas (scope: public)"
      * )
      *
