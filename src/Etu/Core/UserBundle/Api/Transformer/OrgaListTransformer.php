@@ -8,7 +8,6 @@ use Etu\Core\UserBundle\Entity\Organization;
 
 class OrgaListTransformer extends AbstractTransformer
 {
-  
     /**
      * @param $orga
      * @param EmbedBag $includes

@@ -91,7 +91,6 @@ class PublicOrgasListController extends ApiController
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-
         /** @var $query QueryBuilder */
         $query = $em->createQueryBuilder()
             ->select('o')
