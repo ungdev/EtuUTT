@@ -27,6 +27,7 @@ class EventTransformer extends AbstractTransformer
     private function getData(Event $event, EmbedBag $includes)
     {
         $result = [];
+        $result = array_merge($result, ['id' => $event->getId()]);
 
         if ($includes->has('title')) {
             $result = array_merge($result, ['title' => $event->getTitle()]);

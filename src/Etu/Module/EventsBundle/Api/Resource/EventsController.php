@@ -198,7 +198,7 @@ class EventsController extends ApiController
             $query->andWhere('o.login = :orga')
            ->setParameter('orga', $organization);
         }
-        $fields = ['title', 'category', 'begin', 'end', 'isAllDay', 'privacy', 'orga'];
+        $fields = ['id', 'title', 'category', 'begin', 'end', 'isAllDay', 'privacy', 'orga'];
         if ($request->query->has('fields')) {
             $fields = explode(' ', $request->query->get('fields'));
         }
@@ -218,5 +218,60 @@ class EventsController extends ApiController
         return $this->format([
       'events' => $this->get('etu.api.event.transformer')->transform($events, new EmbedBag($fields)),
     ], 200, [], $request);
+    }
+
+    /**
+     * This endpoint gives you details of an event.
+     *
+     * @ApiDoc(
+     *   section = "Events",
+     *   description = "Get event details (scope: public)"
+     * )
+     *
+     * @Route("/events/{id}", name="api_event_details", options={"expose"=true})
+     * @Method("GET")
+     *
+     * @param mixed $id
+     */
+    public function viewAction($id, Request $request)
+    {
+        /** @var Event $event */
+        $event = $this->getDoctrine()
+        ->getRepository(Event::class)
+        ->find($id);
+
+        if ($event == null) {
+            return $this->format([
+              'error' => 'Unknown event',
+          ], 404, [], $request);
+        }
+        if ($event->getPrivacy() > Event::PRIVACY_MEMBERS) {
+            if (!$event->getOrga()->hasMembership($this->getUser())) {
+                return $this->format([
+                'error' => 'Unknown event',
+            ], 404, [], $request);
+            }
+        } elseif ($event->getPrivacy() > Event::PRIVACY_ORGAS) {
+            if (!count($this->getUser()->getMemberships()) > 0) {
+                return $this->format([
+                  'error' => 'Unknown event',
+              ], 404, [], $request);
+            }
+        }
+
+        return $this->format([
+          'event' => [
+            'id' => $event->getId(),
+            'title' => $event->getTitle(),
+            'orga' => $event->getOrga()->getLogin(),
+            'begin' => $event->getBegin(),
+            'end' => $event->getEnd(),
+            'category' => $event->getCategory(),
+            'description' => $event->getDescription(),
+            'isAllDay' => $event->getIsAllDay(),
+            'location' => $event->getLocation(),
+            'privacy' => $event->getPrivacy(),
+          ],
+        ], 200, [], $request);
     }
 }
