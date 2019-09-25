@@ -1,0 +1,36 @@
+{% extends 'EtuCoreBundle:Admin:layout.html.twig' %}
+
+{% block title %}
+  {{ 'badges.admin.index.title'|trans }}
+{% endblock %}
+
+{% block content %}
+  <div class="padding20-all">
+    <a href="{{ path('admin_badges_new') }}" class="btn">
+        {{ 'badges.admin.add.title'|trans }}
+    </a>
+    <div class="row-fluid">
+      <div class="block">
+        <div class="block-title">{{ 'badges.admin.index.badges'|trans }}</div>
+
+          {% for name, serie in series %}
+              <ul class="badges-list">
+                  {% for level, badge in serie %}
+                          <li>
+                              <a href="{{ path('admin_badges_edit', {'id': badge.id}) }}"><img src="{{ asset('uploads/badges/'~badge.picture~'.png') }}" class="tip"
+                                    title="<strong style='font-size: 13px;'>{{ badge.name }}</strong><br />{{ badge.description }}" /></a>
+                          </li>
+                  {% endfor %}
+                          <li>
+                              <a href="{{ path('admin_badges_new_in_serie', {'name': name}) }}"><img src="{{ asset('uploads/badges/riddle_00.png') }}" class="tip"
+                                    title="<strong style='font-size: 13px;'>Ajouter un badge à la série</strong>" /></a>
+                          </li>
+              </ul>
+              <div class="clear"></div>
+              <hr />
+          {% endfor %}
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

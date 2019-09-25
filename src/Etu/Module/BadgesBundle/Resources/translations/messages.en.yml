@@ -1,0 +1,25 @@
+
+badges:
+  admin:
+    menu_item: "Badges Management"
+    index:
+      title: "Handle badges"
+      badges: "Badges"
+    add:
+      title: "Add a Badge"
+      confirm: "The badge was successfully added. You should change it's image"
+    edit:
+      title: "Modify a Badge"
+      confirm: "The badge has been modified successfully"
+    delete:
+      title: 'Delete the Badge'
+    form:
+      back: "Back to badges' list"
+      description: "Badge's Description"
+      edit: "Modify"
+      add: "Add"
+      file: "Image"
+      level: "Badge Level"
+      name: "Badge name"
+      picture: "Modify image"
+      serie: "Badge serie"

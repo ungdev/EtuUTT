@@ -153,7 +153,7 @@
                         {% for level, userBadge in serie %}
                             {% if userBadge.owned %}
                                 <li>
-                                    <img src="{{ asset('assets/img/badges/'~userBadge.badge.picture~'.png') }}" class="tip"
+                                    <img src="{{ asset('uploads/badges/'~userBadge.badge.picture~'.png') }}" class="tip"
                                          title="<strong style='font-size: 13px;'>{{ userBadge.badge.name }}</strong><br />{{ userBadge.badge.description }}" />
                                 </li>
                             {% endif %}

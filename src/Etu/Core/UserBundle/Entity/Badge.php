@@ -7,6 +7,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Etu\Core\UserBundle\Model\BadgesManager;
+
+use Imagine\Gd\Image;
+use Imagine\Gd\Imagine;
+use Imagine\Image\Box;
+use Imagine\Image\Color;
+use Imagine\Image\Point;
 
 /**
  * @ORM\Table(name="etu_badges")
@@ -65,13 +72,6 @@ class Badge
     protected $level;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(type="smallint")
-     */
-    protected $countLevels;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime", nullable = true)
@@ -93,16 +93,14 @@ class Badge
      * @param $desc
      * @param $picture
      * @param int $level
-     * @param int $countLevels
      */
-    public function __construct($serie, $name, $desc, $picture, $level = 1, $countLevels = 1)
+    public function __construct($serie, $name, $desc, $picture, $level = 1)
     {
         $this->serie = $serie;
         $this->name = $name;
         $this->description = $desc;
         $this->picture = $picture;
         $this->level = $level;
-        $this->countLevels = $countLevels;
         $this->users = new ArrayCollection();
     }
 
@@ -115,34 +113,30 @@ class Badge
     }
 
     /**
-     * @param int $countLevels
-     *
-     * @return $this
-     */
-    public function setCountLevels($countLevels)
-    {
-        $this->countLevels = $countLevels;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCountLevels()
-    {
-        return $this->countLevels;
-    }
-
-    /**
      * @param \DateTime $deletedAt
      *
      * @return $this
      */
     public function setDeletedAt($deletedAt)
     {
+
+        $series = BadgesManager::findBadgesList();
+        foreach($series as $name => $badges) {
+            if($name == $this->serie) {
+              if(count($badges) != $this->level) {
+                foreach($badges as $level => $badge){
+                  if($level > $this->level) {
+                    $badge->setLevel($badge->getLevel() - 1);
+                    var_dump('changed level');
+                  }
+                }
+              }
+              
+              break;
+            }
         $this->deletedAt = $deletedAt;
 
+        }
         return $this;
     }
 
@@ -293,4 +287,46 @@ class Badge
     {
         return $this->users;
     }
+
+
+     /**
+     * Upload the picture.
+     *
+     * @return bool
+     */
+    public function upload()
+    {
+        if (null === $this->file) {
+            return false;
+        }
+
+        /*
+         * Upload and resize
+         */
+        $imagine = new Imagine();
+
+        // Create a transparent image
+        $image = $imagine->create(new Box(200, 200), new Color('000', 100));
+
+        // Create the logo thumbnail in a 200x200 box
+        $thumbnail = $imagine->open($this->file->getPathname())
+            ->thumbnail(new Box(200, 200), Image::THUMBNAIL_INSET);
+
+        // Paste point
+        $pastePoint = new Point(
+            (200 - $thumbnail->getSize()->getWidth()) / 2,
+            (200 - $thumbnail->getSize()->getHeight()) / 2
+        );
+
+        // Paste the thumbnail in the transparent image
+        $image->paste($thumbnail, $pastePoint);
+
+        // Save the result
+        $image->save(__DIR__.'/../../../../../web/uploads/badges/'.$this->getSerie().'_'.$this->getLevel().'.png');
+
+        $this->picture = $this->getSerie().'_'.$this->getLevel();
+
+        return $this->picture;
+    }
+
 }
