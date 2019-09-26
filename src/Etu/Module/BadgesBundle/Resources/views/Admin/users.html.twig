@@ -1,0 +1,60 @@
+{% extends 'EtuCoreBundle:Admin:layout.html.twig' %}
+
+{% block title %}
+  {{ 'badges.admin.users.title'|trans }} "{{ badge.name }}"
+{% endblock %}
+
+{% block content %}
+  <div class="badge-user-add-box">
+    <h5>{{ 'badges.admin.users.add'|trans }} "{{ badge.name }}"</h5>
+    <div class="form-inline add-member-form">
+
+      {% form_theme form 'form/theme-inline.html.twig' %}
+      {{ form_start(form) }}
+      {{ form_widget(form) }}
+      {# form_widget(form.user, {'attr': { 'placeholder': ''|trans } } ) }}
+                            {{ form_widget(form.role, {'attr': { 'class': 'span2' } } ) }}
+                            {{ form_rest(form) }}
+                            <button type="submit" class="btn">
+                                <i class="icon-plus"></i>
+                                {{ 'user.orga.members.add_member_btn'|trans }}
+                            </button>
+            
+                            <p>
+                                <span class="help-block">{{ form_errors(form.user) }}</span>
+                            </p>
+                            <p>
+                                <span class="help-block">{{ form_errors(form.role) }}</span>
+                            </p> #}
+      {{ form_end(form) }}
+    </div>
+  </div>
+
+  <div class="padding20-all">
+    <div class="navigation">
+      <p>
+        {{ memberships|length }}
+        {{ 'badges.admin.users.count'|trans }}
+      </p>
+    </div>
+    <ul id="search-results" class="badge-users">
+      {% for membership in memberships %}
+        <li class="badge-users-item">
+          <a href="{{ path('user_view', {'login': membership.user.login}) }}">
+            <img src="{{ asset('uploads/photos/'~membership.user.avatar) }}" alt="{{ membership.user.fullName }}" title="{{ membership.user.fullName }}"/>
+            <h5>{{ membership.user.fullName }}</h5>
+
+            <div class="clear"></div>
+          </a>
+          <a href="{{ path('admin_badges_user_delete', {'id': id, 'userId': membership.user.id }) }}" class="btn">
+            {{ 'badges.admin.users.delete'|trans }}
+          </a>
+        </li>
+      {% else %}
+        <p>{{ 'badges.admin.users.empty'|trans }}</p>
+      {% endfor %}
+    </ul>
+    <div class="clear"></div>
+
+  </div>
+{% endblock %}

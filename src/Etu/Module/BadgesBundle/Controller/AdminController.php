@@ -4,8 +4,10 @@ namespace Etu\Module\BadgesBundle\Controller;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\Badge;
-use Etu\Core\UserBundle\Model\BadgesManager;
+use Etu\Core\UserBundle\Entity\UserBadge;
+use Etu\Core\UserBundle\Form\UserAutocompleteType;
 // Import annotations
+use Etu\Core\UserBundle\Model\BadgesManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -207,5 +209,155 @@ class AdminController extends Controller
         $em->flush();
 
         return $this->redirect($this->generateUrl('admin_badges_index'));
+    }
+
+    /**
+     * @Route("/{id}/users", name="admin_badges_users")
+     * @Template()
+     *
+     * @param mixed $id
+     */
+    public function usersAction($id, Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_BADGE_ADMIN');
+
+        /** @var $em EntityManager */
+        $em = $this->getDoctrine()->getManager();
+        $badge = BadgesManager::findById($id);
+
+        $memberships = $em->createQueryBuilder()
+      ->select('m, u')
+      ->from('EtuUserBundle:UserBadge', 'm')
+      ->leftJoin('m.user', 'u')
+      ->where('m.badge = :badge')
+      ->setParameter('badge', $id)
+      ->getQuery()
+      ->getResult();
+
+        $form = $this->createFormBuilder()
+      ->add('user', UserAutocompleteType::class, ['label' => 'badges.admin.users.add_member_user'])
+      ->add('submit', SubmitType::class, ['label' => 'badges.admin.users.add_member_btn'])
+      ->getForm();
+
+        // User formulaire
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            /** @var $user User */
+            $user = $em->createQueryBuilder()
+        ->select('u')
+        ->from('EtuUserBundle:User', 'u')
+        ->where('u.fullName = :fullName')
+        ->setParameter('fullName', $data['user'])
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getOneOrNullResult();
+
+            if (!$user) {
+                $this->get('session')->getFlashBag()->set('message', [
+          'type' => 'error',
+          'message' => 'badges.admin.users.error_user_not_found',
+        ]);
+            } else {
+                // Keep the membership as unique
+                $membership = $em->getRepository('EtuUserBundle:UserBadge')->findOneBy([
+          'user' => $user,
+          'badge' => $badge,
+        ]);
+
+                if (!$membership) {
+                    $member = new UserBadge($badge, $user);
+
+                    //add badge to user ?
+
+                    $em->persist($member);
+                    $em->flush();
+
+                    $this->get('session')->getFlashBag()->set('message', [
+            'type' => 'success',
+            'message' => 'badges.admin.users.confirm_add',
+          ]);
+                } else {
+                    $this->get('session')->getFlashBag()->set('message', [
+            'type' => 'error',
+            'message' => 'badges.admin.users.error_exists',
+          ]);
+                }
+            }
+
+            return $this->redirect($this->generateUrl(
+        'admin_badges_users',
+        ['id' => $id, 'badge' => $badge]
+      ));
+        }
+
+        return [
+      'memberships' => $memberships,
+      'form' => $form->createView(),
+      'id' => $id,
+      'badge' => $badge,
+    ];
+    }
+
+    /**
+     * @Route("/{id}/users/{userId}/delete", name="admin_badges_user_delete")
+     *
+     * @param mixed $userId
+     * @param mixed $id
+     */
+    public function deleteUserAction($id, $userId)
+    {
+        $this->denyAccessUnlessGranted('ROLE_BADGE_ADMIN');
+
+        /** @var $em EntityManager */
+        $em = $this->getDoctrine()->getManager();
+        $badge = BadgesManager::findById($id);
+
+        $user = $em->createQueryBuilder()
+      ->select('u')
+      ->from('EtuUserBundle:User', 'u')
+      ->where('u.id = :id')
+      ->setParameter('id', $userId)
+      ->setMaxResults(1)
+      ->getQuery()
+      ->getOneOrNullResult();
+        if (!$user) {
+            $this->get('session')->getFlashBag()->set('message', [
+        'type' => 'error',
+        'message' => 'badges.admin.users.error_user_not_found',
+      ]);
+            $this->redirect($this->generateUrl('admin_badges_users', ['id' => $id]));
+        }
+        if (!$badge) {
+            $this->get('session')->getFlashBag()->set('message', [
+        'type' => 'error',
+        'message' => 'badges.admin.users.error_badge_no_exists',
+      ]);
+            $this->redirect($this->generateUrl('admin_badges_users', ['id' => $id]));
+        }
+
+        $membership = $em->createQueryBuilder()
+      ->select('m')
+      ->from('EtuUserBundle:UserBadge', 'm')
+      ->where('m.badge = :badge')
+      ->andWhere('m.user = :user')
+      ->setParameter('badge', $id)
+      ->setParameter('user', $userId)
+      ->getQuery()
+      ->getOneOrNullResult();
+
+        if (!$membership) {
+            $this->get('session')->getFlashBag()->set('message', [
+        'type' => 'error',
+        'message' => 'badges.admin.users.error_membership_no_exists',
+      ]);
+            $this->redirect($this->generateUrl('admin_badges_users', ['id' => $id]));
+        }
+        $membership->setDeletedAt(new \DateTime());
+
+        $em->persist($membership);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('admin_badges_users', ['id' => $id]));
     }
 }

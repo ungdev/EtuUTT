@@ -66,6 +66,9 @@
             </div>
 
         {{ form_end(form) }}
+        <a href="{{ path('admin_badges_users', {'id': id }) }}" class="btn">
+            {{ 'badges.admin.users.btn'|trans }}
+        </a>
         <a href="{{ path('admin_badges_delete', {'id': id }) }}" class="btn">
             {{ 'badges.admin.delete.title'|trans }}
         </a>

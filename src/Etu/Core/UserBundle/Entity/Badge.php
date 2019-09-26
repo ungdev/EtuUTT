@@ -125,7 +125,6 @@ class Badge
                     foreach ($badges as $level => $badge) {
                         if ($level > $this->level) {
                             $badge->setLevel($badge->getLevel() - 1);
-                            var_dump('changed level');
                         }
                     }
                 }
