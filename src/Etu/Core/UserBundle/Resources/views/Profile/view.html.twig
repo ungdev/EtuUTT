@@ -348,7 +348,7 @@
             <ul class="badges-list badges-list-big">
             {% for badge in user.lastBadges %}
                 <li>
-                    <img src="{{ asset('assets/img/badges/'~badge.picture~'.png') }}" class="tip"
+                    <img src="{{ asset('uploads/badges/'~badge.picture~'.png') }}" class="tip"
                          title="<strong style='font-size: 13px;'>{{ badge.name }}</strong><br />{{ badge.description }}" />
                 </li>
             {% endfor %}
