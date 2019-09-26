@@ -422,7 +422,7 @@
                         {% for level, userBadge in serie %}
                             {% if userBadge.owned %}
                                 <li>
-                                    <img src="{{ asset('uploads/badges/'~userBadge.badge.picture~'.png') }}" class="tip"
+                                    <img src="{{ asset('assets/img/badges/'~userBadge.badge.picture~'.png') }}" class="tip"
                                          title="<strong style='font-size: 13px;'>{{ userBadge.badge.name }}</strong><br />{{ userBadge.badge.description }}" />
                                 </li>
                             {% endif %}
@@ -437,7 +437,7 @@
                         {% for level, userBadge in serie %}
                             {% if not userBadge.owned %}
                                 <li>
-                                    <img src="{{ asset('uploads/badges/riddle_00.png') }}" class="tip not-owned"
+                                    <img src="{{ asset('assets/img/badges/riddle_00.png') }}" class="tip not-owned"
                                          title="<strong style='font-size: 13px;'>{{ userBadge.badge.name }}</strong>" />
                                 </li>
                             {% endif %}

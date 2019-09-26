@@ -30,6 +30,7 @@ class BadgeTransformer extends AbstractTransformer
             'name' => $badge->getName(),
             'serie' => $badge->getSerie(),
             'level' => $badge->getLevel(),
+            'levelMax' => $badge->getCountLevels(),
         ];
     }
 

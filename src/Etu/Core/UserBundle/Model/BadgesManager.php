@@ -98,27 +98,6 @@ class BadgesManager
     }
 
     /**
-     * @param $id
-     *
-     * @throws \InvalidArgumentException
-     *
-     * @return Badge
-     */
-    public static function findById($id)
-    {
-        if (!self::$initialized) {
-            self::initialize();
-        }
-
-        foreach(self::$badges as $badge) {
-          if($badge->getId() == $id) {
-            return $badge;
-          }
-        }
-        throw new \InvalidArgumentException('Invalid badge reference');
-    }
-
-    /**
      * @param User $user
      * @param      $serie
      * @param      $level
@@ -226,6 +205,7 @@ class BadgesManager
     {
         /** @var Badge[] $badges */
         $badges = self::$doctrine->getRepository('EtuUserBundle:Badge')->findBy([], [
+            'countLevels' => 'ASC',
             'serie' => 'ASC',
         ]);
 
