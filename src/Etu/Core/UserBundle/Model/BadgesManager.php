@@ -110,10 +110,10 @@ class BadgesManager
             self::initialize();
         }
 
-        foreach(self::$badges as $badge) {
-          if($badge->getId() == $id) {
-            return $badge;
-          }
+        foreach (self::$badges as $badge) {
+            if ($badge->getId() == $id) {
+                return $badge;
+            }
         }
         throw new \InvalidArgumentException('Invalid badge reference');
     }

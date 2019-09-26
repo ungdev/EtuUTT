@@ -4,16 +4,15 @@ namespace Etu\Core\UserBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Validator\Constraints as Assert;
 use Etu\Core\UserBundle\Model\BadgesManager;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Imagine\Image\Color;
 use Imagine\Image\Point;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="etu_badges")
@@ -119,24 +118,23 @@ class Badge
      */
     public function setDeletedAt($deletedAt)
     {
-
         $series = BadgesManager::findBadgesList();
-        foreach($series as $name => $badges) {
-            if($name == $this->serie) {
-              if(count($badges) != $this->level) {
-                foreach($badges as $level => $badge){
-                  if($level > $this->level) {
-                    $badge->setLevel($badge->getLevel() - 1);
-                    var_dump('changed level');
-                  }
+        foreach ($series as $name => $badges) {
+            if ($name == $this->serie) {
+                if (count($badges) != $this->level) {
+                    foreach ($badges as $level => $badge) {
+                        if ($level > $this->level) {
+                            $badge->setLevel($badge->getLevel() - 1);
+                            var_dump('changed level');
+                        }
+                    }
                 }
-              }
-              
-              break;
-            }
-        $this->deletedAt = $deletedAt;
 
+                break;
+            }
+            $this->deletedAt = $deletedAt;
         }
+
         return $this;
     }
 
@@ -288,8 +286,7 @@ class Badge
         return $this->users;
     }
 
-
-     /**
+    /**
      * Upload the picture.
      *
      * @return bool
@@ -328,5 +325,4 @@ class Badge
 
         return $this->picture;
     }
-
 }

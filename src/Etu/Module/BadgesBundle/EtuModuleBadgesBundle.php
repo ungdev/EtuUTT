@@ -6,7 +6,6 @@ use Etu\Core\CoreBundle\Framework\Definition\Module;
 
 class EtuModuleBadgesBundle extends Module
 {
-
     /**
      * At module boot, update the sidebar.
      */
@@ -21,8 +20,9 @@ class EtuModuleBadgesBundle extends Module
             ->setRole('ROLE_UV_REVIEW_ADMIN')
             ->end();
     }
+
     /**
-     * Module identifier (to be required by other modules)
+     * Module identifier (to be required by other modules).
      *
      * @return string
      */
@@ -32,7 +32,7 @@ class EtuModuleBadgesBundle extends Module
     }
 
     /**
-     * Module title (describe shortly its aim)
+     * Module title (describe shortly its aim).
      *
      * @return string
      */
@@ -42,7 +42,7 @@ class EtuModuleBadgesBundle extends Module
     }
 
     /**
-     * Module author
+     * Module author.
      *
      * @return string
      */
@@ -52,7 +52,7 @@ class EtuModuleBadgesBundle extends Module
     }
 
     /**
-     * Module description
+     * Module description.
      *
      * @return string
      */
@@ -62,14 +62,14 @@ class EtuModuleBadgesBundle extends Module
     }
 
     /**
-     * Define the modules requirements (the other required modules) using their identifiers
+     * Define the modules requirements (the other required modules) using their identifiers.
      *
      * @return array
      */
     public function getRequirements()
     {
-        return array(
+        return [
             // Insert your requirements here
-        );
+        ];
     }
 }

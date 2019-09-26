@@ -2376,7 +2376,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
             $badge = $userBadge->getBadge();
             $serieBadges = $all_badges[$badge->getSerie()];
 
-
             if (count($serieBadges) > 1) {
                 $list[$badge->getSerie()][$badge->getLevel()]['owned'] = true;
                 $list[$badge->getSerie()][$badge->getLevel()]['createdAt'] = $userBadge->getCreatedAt();
