@@ -12,7 +12,7 @@ badges:
       title: "Modifier un Badge"
       confirm: "Le badge a été modifié avec succès"
     delete:
-      title: 'Supprimer le badge'
+      title: 'Delete a Badge'
     form:
       back: "Retour à la liste des badges"
       description: "Description du badge"
