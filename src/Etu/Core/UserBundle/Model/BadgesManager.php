@@ -176,7 +176,6 @@ class BadgesManager
         if (!self::userHasBadge($user, $badgeSerie, $badgeLevel)) {
             $user->addBadge(new UserBadge($badge, $user));
             self::userPersistBadges($user);
-
         }
 
         return $user;

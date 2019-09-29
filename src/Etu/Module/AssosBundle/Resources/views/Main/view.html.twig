@@ -74,16 +74,19 @@
                     {{ orga.name }}
                 </p>
 
-                {% if orga.president %}
+                {% if presidents|length > 0 %}
                     <p>
                         <strong>{{ 'assos.main.members.president'|trans }}</strong><br />
-                        {% if is_granted('ROLE_ASSOS_MEMBERS') %}
-                            <a href="{{ path('user_view', {'login': orga.president.login}) }}">
-                                {{ orga.president.fullName }}
-                            </a>
-                        {% else %}
-                            {{ orga.president.fullName }}
-                        {% endif %}
+                        {% for president in presidents %}
+                          {% if is_granted('ROLE_ASSOS_MEMBERS') %}
+                              <a href="{{ path('user_view', {'login': president.login}) }}">
+                                  {{ president.fullName }}
+                              </a>
+                              <br />
+                          {% else %}
+                              {{ president.fullName }}
+                          {% endif %}
+                        {% endfor %}
                     </p>
                 {% endif %}
 

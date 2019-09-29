@@ -4,6 +4,7 @@ namespace Etu\Module\AssosBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
+use Etu\Core\UserBundle\Entity\Member;
 use Etu\Core\UserBundle\Entity\Organization;
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -94,8 +95,21 @@ class MainController extends Controller
             $rights = $this->get('etu.wiki.permissions_checker');
         }
 
+        $members = $orga->getMemberships();
+        $presidents = [];
+
+        /** @var $member Member */
+        foreach ($members as $member) {
+            if ($member->getRole() == Member::ROLE_PRESIDENT) {
+                if ($member->getGroup()->getName() == 'Bureau') {
+                    $presidents[] = $member->getUser();
+                }
+            }
+        }
+
         return [
             'orga' => $orga,
+            'presidents' => $presidents,
             'isElus' => $isElus,
             'wikirights' => $rights,
         ];
