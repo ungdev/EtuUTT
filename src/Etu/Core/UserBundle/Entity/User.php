@@ -2352,10 +2352,10 @@ class User implements UserInterface, EquatableInterface, \Serializable
          * Create a usable list
          */
         $list = [];
-
-        foreach ((array) BadgesManager::findBadgesList() as $serie => $badges) {
+        $all_badges = (array) BadgesManager::findBadgesList();
+        foreach ($all_badges as $serie => $badges) {
             foreach ((array) $badges as $level => $badge) {
-                if ($badge->getCountLevels() > 1) {
+                if (count($badges) > 1) {
                     $list[$serie][$level] = [
                         'owned' => false,
                         'badge' => $badge,
@@ -2369,13 +2369,14 @@ class User implements UserInterface, EquatableInterface, \Serializable
             }
         }
 
-        $badges = ($this->badges) ? $this->badges->toArray() : [];
+        $userBadges = ($this->badges) ? $this->badges->toArray() : [];
 
         /** @var $userBadge UserBadge */
-        foreach ($badges as $userBadge) {
+        foreach ($userBadges as $userBadge) {
             $badge = $userBadge->getBadge();
+            $serieBadges = $all_badges[$badge->getSerie()];
 
-            if ($badge->getCountLevels() > 1) {
+            if (count($serieBadges) > 1) {
                 $list[$badge->getSerie()][$badge->getLevel()]['owned'] = true;
                 $list[$badge->getSerie()][$badge->getLevel()]['createdAt'] = $userBadge->getCreatedAt();
             } else {

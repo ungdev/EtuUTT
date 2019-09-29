@@ -1,0 +1,77 @@
+{% extends 'EtuCoreBundle:Admin:layout.html.twig' %}
+
+{% block title %}
+  {{ 'badges.admin.edit.title'|trans }}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/bundles/badge.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+    {# Picture form #}
+    <div style="display: none;">
+        {{ form_start(pictureForm) }}
+        {{ form_widget(pictureForm) }}
+        {{ form_end(pictureForm) }}
+        <iframe id="picture-upload-frame" name="picture-upload-frame" src="#"></iframe>
+    </div>
+
+    <ul class="nav nav-tabs page-tabs">
+        <li>
+            <a href="{{ path('admin_badges_index') }}">
+                <i class="icon-chevron-left"></i>
+                {{ 'badges.admin.form.back'|trans }}
+            </a>
+        </li>
+    </ul>
+
+    <div class="padding20-all">
+        <div class="row-fluid">
+            <div class="span2 offset4">
+                <a href="#" id="picture-upload-link" title="{{ 'badges.admin.form.picture'|trans }}">
+                    <div class="badgeEdit-picture-actions">
+                        <i class="icon-pencil"></i>
+                    </div>
+                    <img src="{{ asset('uploads/badges/'~badge.picture~'.png') }}" class="badgeEdit-picture"
+                         alt="{{ badge }}" id="picture-image" />
+                </a>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="clear"></div>
+
+        {{ form_start(form) }}
+
+            <div class="row-fluid">
+                <div class="span6 privacy-layout">
+                    <div class="field">{{ form_row(form.name) }}</div>
+                </div>
+                <div class="span6 privacy-layout">
+                    <div class="field">{{ form_row(form.description) }}</div>
+                </div>
+            </div>
+
+            <hr/>
+
+            <div class="row-fluid">
+                <div class="span6 privacy-layout">
+                    <div class="field">{{ form_row(form.serie) }}</div>
+                </div>
+                <div class="span6 privacy-layout">
+                    <div class="field">{{ form_row(form.level) }}</div>
+                </div>
+            </div>
+
+        {{ form_end(form) }}
+        <a href="{{ path('admin_badges_users', {'id': id }) }}" class="btn">
+            {{ 'badges.admin.users.btn'|trans }}
+        </a>
+        <a href="{{ path('admin_badges_delete', {'id': id }) }}" class="btn">
+            {{ 'badges.admin.delete.title'|trans }}
+        </a>
+    </div>
+{% endblock %}
+

@@ -102,6 +102,7 @@ security:
             - ROLE_BUGS_ADMIN # Administrate bugs list
             - ROLE_FORUM_ADMIN # Can moderate forum
             - ROLE_UV_REVIEW_ADMIN # Can moderate and remove UV review and old exams
+            - ROLE_BADGE_ADMIN # Can create and attribute badges
             - ROLE_WIKI_ADMIN # Can lock, read and write on every admin page on the wiki
 
         ROLE_SUPERADMIN:
