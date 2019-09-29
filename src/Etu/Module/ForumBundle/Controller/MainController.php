@@ -752,19 +752,15 @@ class MainController extends Controller
 
         if ($nbThreads >= 1) {
             BadgesManager::userAddBadge($user, 'mysterion', 1);
-            BadgesManager::userPersistBadges($user);
         }
         if ($nbThreads >= 10) {
             BadgesManager::userAddBadge($user, 'mysterion', 2);
-            BadgesManager::userPersistBadges($user);
         }
         if ($nbThreads >= 20) {
             BadgesManager::userAddBadge($user, 'mysterion', 3);
-            BadgesManager::userPersistBadges($user);
         }
         if ($nbThreads >= 40) {
             BadgesManager::userAddBadge($user, 'mysterion', 4);
-            BadgesManager::userPersistBadges($user);
         }
 
         $messages = $em->createQueryBuilder()
@@ -779,23 +775,18 @@ class MainController extends Controller
 
         if ($nbMessages >= 1) {
             BadgesManager::userAddBadge($user, 'monkey', 1);
-            BadgesManager::userPersistBadges($user);
         }
         if ($nbMessages >= 20) {
             BadgesManager::userAddBadge($user, 'monkey', 2);
-            BadgesManager::userPersistBadges($user);
         }
         if ($nbMessages >= 50) {
             BadgesManager::userAddBadge($user, 'monkey', 3);
-            BadgesManager::userPersistBadges($user);
         }
         if ($nbMessages >= 100) {
             BadgesManager::userAddBadge($user, 'monkey', 4);
-            BadgesManager::userPersistBadges($user);
         }
         if ($nbMessages >= 500) {
             BadgesManager::userAddBadge($user, 'monkey', 5);
-            BadgesManager::userPersistBadges($user);
         }
     }
 }

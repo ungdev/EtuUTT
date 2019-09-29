@@ -224,7 +224,6 @@ class AdminController extends Controller
                 BadgesManager::userRemoveBadge($user, 'trombi_completed');
             }
 
-            BadgesManager::userPersistBadges($user);
             $em->persist($user);
             $em->flush();
 
@@ -554,7 +553,6 @@ class AdminController extends Controller
                 BadgesManager::userRemoveBadge($user, 'trombi_completed');
             }
 
-            BadgesManager::userPersistBadges($user);
             $user->setPassword($this->get('security.password_encoder')->encodePassword($user, $user->getPassword()));
             $user->setIsInLDAP(false);
 

@@ -175,6 +175,8 @@ class BadgesManager
 
         if (!self::userHasBadge($user, $badgeSerie, $badgeLevel)) {
             $user->addBadge(new UserBadge($badge, $user));
+            self::userPersistBadges($user);
+
         }
 
         return $user;
@@ -210,10 +212,11 @@ class BadgesManager
      *
      * @return User
      */
-    public static function userPersistBadges(User $user)
+    private static function userPersistBadges(User $user)
     {
         foreach ($user->getBadges() as $userBadge) {
             self::$doctrine->persist($userBadge);
+            self::$usersBadges[$userBadge->getUser()->getId().$userBadge->getBadge()->getSerie().$userBadge->getBadge()->getLevel()] = $userBadge;
         }
 
         self::$doctrine->flush();

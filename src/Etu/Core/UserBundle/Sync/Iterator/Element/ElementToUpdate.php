@@ -190,7 +190,6 @@ class ElementToUpdate
          */
         if (mb_substr($history['niveau'], 0, 2) == 'TC' && mb_substr($user->getNiveau(), 0, 2) != 'TC') {
             BadgesManager::userAddBadge($user, 'tc_survivor');
-            BadgesManager::userPersistBadges($user);
         }
 
         if ($persist) {

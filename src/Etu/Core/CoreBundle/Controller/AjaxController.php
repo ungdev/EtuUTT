@@ -73,7 +73,6 @@ class AjaxController extends Controller
             BadgesManager::userRemoveBadge($user, 'subscriber', 3);
         }
 
-        BadgesManager::userPersistBadges($user);
         $em->persist($user);
         $em->flush();
 
@@ -141,7 +140,6 @@ class AjaxController extends Controller
             BadgesManager::userRemoveBadge($user, 'subscriber', 3);
         }
 
-        BadgesManager::userPersistBadges($user);
         $em->persist($user);
         $em->flush();
 

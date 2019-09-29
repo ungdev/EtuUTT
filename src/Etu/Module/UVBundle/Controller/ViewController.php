@@ -340,7 +340,6 @@ class ViewController extends Controller
                 BadgesManager::userRemoveBadge($user, 'uvs_reviews', 4);
             }
 
-            BadgesManager::userPersistBadges($user);
             $em->persist($user);
             $em->flush();
 

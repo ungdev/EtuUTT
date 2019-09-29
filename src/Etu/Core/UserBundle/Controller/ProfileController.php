@@ -212,7 +212,6 @@ class ProfileController extends Controller
             } else {
                 BadgesManager::userRemoveBadge($user, 'profile_completed');
             }
-            BadgesManager::userPersistBadges($user);
 
             $em->persist($user);
             $em->flush();
@@ -321,7 +320,6 @@ class ProfileController extends Controller
                 BadgesManager::userRemoveBadge($user, 'trombi_completed');
             }
 
-            BadgesManager::userPersistBadges($user);
             $em->persist($user);
             $em->flush();
 

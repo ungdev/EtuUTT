@@ -2352,6 +2352,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
          * Create a usable list
          */
         $list = [];
+
         $all_badges = (array) BadgesManager::findBadgesList();
         foreach ($all_badges as $serie => $badges) {
             foreach ((array) $badges as $level => $badge) {
