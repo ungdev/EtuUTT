@@ -17,7 +17,7 @@ class EtuModuleBadgesBundle extends Module
             ->setIcon('briefcase.png')
             ->setUrl($this->getRouter()->generate('admin_badges_index'))
             ->setPosition(6)
-            ->setRole('ROLE_UV_REVIEW_ADMIN')
+            ->setRole('ROLE_BADGE_ADMIN')
             ->end();
     }
 
