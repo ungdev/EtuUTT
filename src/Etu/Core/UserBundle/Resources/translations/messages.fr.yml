@@ -93,7 +93,7 @@ user:
             create: Créer un accès
             no_results: Aucune association n'a d'accès au site étudiant pour le moment
             count: "%count% résultat|%count% résultats"
-            question: Voulez-vous vraiment supprimer l'accès de l'association "%orga%" au site étudiant ?
+            question: Voulez-vous vraiment supprimer l'association "%orga%" ?
             yes: Oui, supprimer
             no: Non, annuler
         orgasCreate:
