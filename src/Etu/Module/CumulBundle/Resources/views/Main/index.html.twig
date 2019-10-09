@@ -342,7 +342,10 @@
                             </a>
                             <div id="item-{{ day }}-{{ hour }}" style="display: none;">
                                 <p style="font-weight: bold; text-align: center">
-                                    {{ 'cumul.main.details.title'|trans({'%day%': ('user.schedule.days_lower.' ~ day)|trans, '%hour%': hour}) }}
+                                    {% set militaryHour = '%04d'|format(hour) %}
+                                    {% set hourString = militaryHour[0:2] ~ 'h' ~ militaryHour[2:2] %}
+                                    {{ 'cumul.main.details.title'|trans({'%day%': ('user.schedule.days_lower.' ~ day)|trans,
+                                        '%hour%': hourString}) }}
                                 </p>
                                 <p style="font-weight: bold">
                                     {{ 'cumul.main.details.present'|trans }}
