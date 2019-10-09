@@ -329,14 +329,27 @@
                 {% for day, hours in comparison %}
                     <div class="span2 schedule-col schedule-col-{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
                         {% for hour, avUsers in hours %}
-                            <div class="item item-void item1 tip {% if loop.index == 1 %} item-first{% endif %}"
-                                 style="background: #547b9d; color: #ffffff; opacity: {{ avUsers|length / countUsers }};"
-                                 title="<strong>Disponible(s) :</strong><br />{% for user in avUsers[0:5] %}
-                                    {{ users[user].fullName }}<br />
-                                    {% if avUsers|length > 5 and loop.index == 5 %}et {{ avUsers|length - 5 }} autres{% endif %}
-                                {% else %}Personne
-                                {% endfor %}">
-                                {{ avUsers|length }}
+                            <a href="javascript:void(0);"
+                            onclick="$('#item-{{ day }}-{{ hour }}').show(); return false;">
+                                <div class="item item-void item1 tip {% if loop.index == 1 %} item-first{% endif %}"
+                                    style="background: #547b9d; color: #ffffff; opacity: {{ avUsers|length / countUsers }};"
+                                    title="<strong>Disponible(s) :</strong><br />{% for user in avUsers[0:5] %}
+                                        {{ users[user].fullName }}<br />
+                                        {% if avUsers|length > 5 and loop.index == 5 %}et {{ avUsers|length - 5 }} autres{% endif %}
+                                    {% else %}Personne
+                                    {% endfor %}">
+                                    {{ avUsers|length }}
+                                </div>
+                            </a>
+                            <div id="item-{{ day }}-{{ hour }}" class="overlay">
+                                <p>
+                                    {{ 'cumul.main.details.title'|trans({'%day%': day, '%hour%': hour}) }}
+                                </p>
+                                <ul>
+                                    {% for user in avUsers %}
+                                        <li>{{ users[user].fullName  }}</li>
+                                    {% endfor %}
+                                </ul>
                             </div>
                         {% endfor %}
                     </div>

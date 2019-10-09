@@ -9,3 +9,5 @@ cumul:
       other: Autre
       title: "Cumul d'emploi du temps"
       warning_phones: "Votre résolution est trop petite pour utiliser le cumul d'emploi du temps"
+    details:
+      title: 'Voici la liste des présents le %day% à %hour%h :'
