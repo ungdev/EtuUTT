@@ -101,8 +101,12 @@ core:
             date: Le %date%
             allEvents: Tous les évènements
         redirect:
-            title: 'Vous allez être redirigé'
-            content: 'Merci de patienter...'
+            title: Vous allez être redirigé
+            content: Merci de patienter...
+            stucked: Si vous restez bloqué ici, essayer de recharger la page, sinon contacter le propriétaire de l'application.
+        appDowload:
+            title: Télécharger MyUTT
+            content: Pour télécharger l'application MyUTT, scannez le QRCode suivant, ou cliquez sur le logo Apple ou Android.
         changeLocale:
             confirm: Vous avez bien changé de langue
 

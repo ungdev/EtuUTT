@@ -237,9 +237,18 @@ class MainController extends Controller
      * @Route("/redirect", name="redirect_view")
      * @Template()
      *
-     * @param mixed $slug
      */
     public function redirectAction()
+    {
+        return [];
+    }
+
+    /**
+     * @Route("/app-download", name="app_download_view")
+     * @Template()
+     *
+     */
+    public function appDownloadAction()
     {
         return [];
     }
