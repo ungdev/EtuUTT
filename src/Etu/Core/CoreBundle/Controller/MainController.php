@@ -232,6 +232,18 @@ class MainController extends Controller
         return ['page' => $page];
     }
 
+
+    /**
+     * @Route("/redirect", name="redirect_view")
+     * @Template()
+     *
+     * @param mixed $slug
+     */
+    public function redirectAction()
+    {
+        return [];
+    }
+
     /**
      * @return Response
      */
