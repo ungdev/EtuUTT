@@ -342,7 +342,7 @@
                             </a>
                             <div id="item-{{ day }}-{{ hour }}" style="display: none;">
                                 <p>
-                                    {{ 'cumul.main.details.title'|trans({'%day%': day, '%hour%': hour}) }}
+                                    {{ 'cumul.main.details.title'|trans({'%day%': ('user.schedule.days_lower.' ~ day)|trans, '%hour%': hour}) }}
                                 </p>
                                 <ul>
                                     {% for user in avUsers %}
