@@ -329,14 +329,43 @@
                 {% for day, hours in comparison %}
                     <div class="span2 schedule-col schedule-col-{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
                         {% for hour, avUsers in hours %}
-                            <div class="item item-void item1 tip {% if loop.index == 1 %} item-first{% endif %}"
-                                 style="background: #547b9d; color: #ffffff; opacity: {{ avUsers|length / countUsers }};"
-                                 title="<strong>Disponible(s) :</strong><br />{% for user in avUsers[0:5] %}
-                                    {{ users[user].fullName }}<br />
-                                    {% if avUsers|length > 5 and loop.index == 5 %}et {{ avUsers|length - 5 }} autres{% endif %}
-                                {% else %}Personne
-                                {% endfor %}">
-                                {{ avUsers|length }}
+                            <a href="#item-{{ day }}-{{ hour }}" rel="facebox">
+                                <div class="item item-void item1 tip {% if loop.index == 1 %} item-first{% endif %}"
+                                    style="background: #547b9d; color: #ffffff; opacity: {{ avUsers|length / countUsers }};"
+                                    title="<strong>Disponible(s) :</strong><br />{% for user in avUsers[0:5] %}
+                                        {{ users[user].fullName }}<br />
+                                        {% if avUsers|length > 5 and loop.index == 5 %}et {{ avUsers|length - 5 }} autres{% endif %}
+                                    {% else %}Personne
+                                    {% endfor %}">
+                                    {{ avUsers|length }}
+                                </div>
+                            </a>
+                            <div id="item-{{ day }}-{{ hour }}" style="display: none;">
+                                <p style="font-weight: bold; text-align: center">
+                                    {% set militaryHour = '%04d'|format(hour) %}
+                                    {% set hourString = militaryHour[0:2] ~ 'h' ~ militaryHour[2:2] %}
+                                    {{ 'cumul.main.details.title'|trans({'%day%': ('user.schedule.days_lower.' ~ day)|trans,
+                                        '%hour%': hourString}) }}
+                                </p>
+                                <p style="font-weight: bold">
+                                    {{ 'cumul.main.details.present'|trans }}
+                                </p>
+                                <ul>
+                                    {% for user in avUsers %}
+                                        <li>{{ users[user].fullName }}</li>
+                                    {% else %} Personne
+                                    {% endfor %}
+                                </ul>
+                                <p style="font-weight: bold">
+                                    {{ 'cumul.main.details.missing'|trans }}
+                                </p>
+                                <ul>
+                                    {% for user in invertComparison[day][hour] %}
+                                        <li>{{ users[user].fullName }}</li>
+                                    {% else %} Personne
+                                    {% endfor %}
+                                </ul>
+
                             </div>
                         {% endfor %}
                     </div>
