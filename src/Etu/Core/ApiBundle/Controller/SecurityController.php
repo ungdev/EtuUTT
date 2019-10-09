@@ -253,14 +253,14 @@ class SecurityController extends ApiController
      * require to store the app_secret in the local code of the application wich would make it not really secret.
      *
      * To solve this problem, you can redirect the user to this page `https://etu.utt.fr/api/oauth/client-create?name=Name of your app&device=Android OnePlus 5&device_uid=ABCDEFGXYZ&scope=public private_user_account`
-     * (via a webview). User will authenticate and then be redirected to `http://etuutt.invalid/?client_id=XXXXX&client_secret=YYYY`.
+     * (via a webview). User will authenticate and then be redirected to `https://etu.utt.fr/redirect/?client_id=XXXXX&client_secret=YYYY`.
      * This URI is invalid and will show nothing, but you can easily detect it from you application, close the webview
      * and parse the uri to get the generated `client_id` and `client_secret`.
      *
      * Once you got those parameters you can send them to `/api/oauth/token` with `grant_type=client_credentials` to get
      * a token that you can use with the whole api
      *
-     * In case of failure, user will be redirected to: `http://etuutt.invalid/?error=authentification_canceled&error_message=L\'utilisateur a annulé l\'authentification.`
+     * In case of failure, user will be redirected to: `https://etu.utt.fr/redirect/?error=authentification_canceled&error_message=L\'utilisateur a annulé l\'authentification.`
      *
      * @ApiDoc(
      *   section = "OAuth",
@@ -389,7 +389,7 @@ class SecurityController extends ApiController
                         $client->addScope($scope);
                     }
 
-                    $client->setRedirectUri('http://etuutt.invalid'); //TODO change to valid url that say "you are going to be redirected"
+                    $client->setRedirectUri('https://etu.utt.fr/redirect'); //TODO change to valid url that say "you are going to be redirected"
                     $client->setName($formData['name']);
                     $client->setDevice($formData['device']);
                     $client->setDeviceUID($formData['device_uid']);
@@ -406,10 +406,10 @@ class SecurityController extends ApiController
 
                 $client->upload();
 
-                return $this->redirect('http://etuutt.invalid/?client_id='.$client->getClientId().'&client_secret='.$client->getClientSecret().'&state='.$formData['state']);
+                return $this->redirect('https://etu.utt.fr/redirect/?client_id='.$client->getClientId().'&client_secret='.$client->getClientSecret().'&state='.$formData['state']);
             }
 
-            return $this->redirect('http://etuutt.invalid/?error=authentification_canceled&error_message=L\'utilisateur a annulé l\'authentification.');
+            return $this->redirect('https://etu.utt.fr/redirect/?error=authentification_canceled&error_message=L\'utilisateur a annulé l\'authentification.');
         }
 
         return $this->render('EtuCoreApiBundle:Security:authorize.html.twig', [
