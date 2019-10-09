@@ -74,6 +74,7 @@ class ScheduleComparator
 
         // Availability
         $avWeek = [];
+        $unavWeek = [];
 
         $days = [
             Course::DAY_MONDAY,
@@ -88,10 +89,13 @@ class ScheduleComparator
 
         foreach ($days as $day) {
             $avWeek[$day] = [];
+            $unavWeek[$day] = [];
 
             foreach ($hours as $hour) {
                 $avWeek[$day][(int) $hour.'00'] = [];
                 $avWeek[$day][(int) $hour.'30'] = [];
+                $unavWeek[$day][(int) $hour.'00'] = [];
+                $unavWeek[$day][(int) $hour.'30'] = [];
             }
         }
 
@@ -101,11 +105,13 @@ class ScheduleComparator
                 foreach ($freeTime as $ftUser => $ftUserWeek) {
                     if (isset($ftUserWeek[$avDay][$avHour])) {
                         $avWeek[$avDay][$avHour][] = $ftUser;
+                    } else {
+                        $unavWeek[$avDay][$avHour][] = $ftUser;
                     }
                 }
             }
         }
 
-        return $avWeek;
+        return [$avWeek, $unavWeek];
     }
 }

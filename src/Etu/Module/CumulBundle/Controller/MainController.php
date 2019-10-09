@@ -177,11 +177,13 @@ class MainController extends Controller
         }
 
         $comparator = new ScheduleComparator($builders);
+        $availabilities = $comparator->compare();
 
         return [
             'comparating' => true,
             'courses' => $courses,
-            'comparison' => $comparator->compare(),
+            'comparison' => $availabilities[0],
+            'invertComparison' => $availabilities[1],
             'users' => $users,
             'countUsers' => count($users),
             'colSize' => round(14 / count($users), 2),

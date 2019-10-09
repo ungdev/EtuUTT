@@ -341,15 +341,28 @@
                                 </div>
                             </a>
                             <div id="item-{{ day }}-{{ hour }}" style="display: none;">
-                                <p>
+                                <p style="font-weight: bold; text-align: center">
                                     {{ 'cumul.main.details.title'|trans({'%day%': ('user.schedule.days_lower.' ~ day)|trans, '%hour%': hour}) }}
+                                </p>
+                                <p style="font-weight: bold">
+                                    {{ 'cumul.main.details.present'|trans }}
                                 </p>
                                 <ul>
                                     {% for user in avUsers %}
-                                        <li>{{ users[user].fullName  }}</li>
+                                        <li>{{ users[user].fullName }}</li>
                                     {% else %} Personne
                                     {% endfor %}
                                 </ul>
+                                <p style="font-weight: bold">
+                                    {{ 'cumul.main.details.missing'|trans }}
+                                </p>
+                                <ul>
+                                    {% for user in invertComparison[day][hour] %}
+                                        <li>{{ users[user].fullName }}</li>
+                                    {% else %} Personne
+                                    {% endfor %}
+                                </ul>
+
                             </div>
                         {% endfor %}
                     </div>
