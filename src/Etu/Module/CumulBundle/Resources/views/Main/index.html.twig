@@ -329,8 +329,7 @@
                 {% for day, hours in comparison %}
                     <div class="span2 schedule-col schedule-col-{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
                         {% for hour, avUsers in hours %}
-                            <a href="javascript:void(0);"
-                            onclick="$('#item-{{ day }}-{{ hour }}').show(); return false;">
+                            <a href="#item-{{ day }}-{{ hour }}" rel="facebox">
                                 <div class="item item-void item1 tip {% if loop.index == 1 %} item-first{% endif %}"
                                     style="background: #547b9d; color: #ffffff; opacity: {{ avUsers|length / countUsers }};"
                                     title="<strong>Disponible(s) :</strong><br />{% for user in avUsers[0:5] %}
@@ -341,7 +340,7 @@
                                     {{ avUsers|length }}
                                 </div>
                             </a>
-                            <div id="item-{{ day }}-{{ hour }}" class="overlay">
+                            <div id="item-{{ day }}-{{ hour }}" style="display: none;">
                                 <p>
                                     {{ 'cumul.main.details.title'|trans({'%day%': day, '%hour%': hour}) }}
                                 </p>
