@@ -232,6 +232,27 @@ class MainController extends Controller
         return ['page' => $page];
     }
 
+
+    /**
+     * @Route("/redirect", name="redirect_view")
+     * @Template()
+     *
+     */
+    public function redirectAction()
+    {
+        return [];
+    }
+
+    /**
+     * @Route("/app-download", name="app_download_view")
+     * @Template()
+     *
+     */
+    public function appDownloadAction()
+    {
+        return [];
+    }
+
     /**
      * @return Response
      */
