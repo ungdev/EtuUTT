@@ -103,7 +103,7 @@ core:
         redirect:
             title: Vous allez être redirigé
             content: Merci de patienter...
-            stucked: Si vous restez bloqué ici, essayer de recharger la page, sinon contacter le propriétaire de l'application.
+            stucked: Si vous restez bloqué ici, essayez de recharger la page, sinon contactez le propriétaire de l'application.
         appDowload:
             title: Télécharger MyUTT
             content: Pour télécharger l'application MyUTT, scannez le QRCode suivant, ou cliquez sur le logo Apple ou Android.
