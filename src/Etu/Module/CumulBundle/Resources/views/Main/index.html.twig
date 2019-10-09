@@ -352,7 +352,7 @@
                                 </p>
                                 <ul>
                                     {% for user in avUsers %}
-                                        <li>{{ users[user].fullName }}</li>
+                                        <li><a href="{{ path('user_view_schedule', {'login': user, 'day': day}) }}" target="_blank">{{ users[user].fullName }}</a></li>
                                     {% else %} Personne
                                     {% endfor %}
                                 </ul>
@@ -361,7 +361,7 @@
                                 </p>
                                 <ul>
                                     {% for user in invertComparison[day][hour] %}
-                                        <li>{{ users[user].fullName }}</li>
+                                        <li><a href="{{ path('user_view_schedule', {'login': user, 'day': day}) }}" target="_blank">{{ users[user].fullName }}</a></li>
                                     {% else %} Personne
                                     {% endfor %}
                                 </ul>
