@@ -33,6 +33,8 @@ class BugsController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_BUGS');
 
+        $order = (isset($_GET['order']) && !empty($_GET['order'])) ? $_GET['order'] : 'priority';
+
         /** @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
 
@@ -41,9 +43,14 @@ class BugsController extends Controller
             ->from('EtuModuleBugsBundle:Issue', 'i')
             ->leftJoin('i.user', 'u')
             ->leftJoin('i.assignee', 'a')
-            ->where('i.isOpened = 1')
-            ->orderBy('i.criticality', 'DESC')
-            ->addOrderBy('i.createdAt', 'DESC');
+            ->where('i.isOpened = 1');
+
+        if ($order == 'date') {
+            $query = $query->orderBy('i.createdAt', 'DESC');
+        } else {
+            $query = $query->orderBy('i.criticality', 'DESC')
+                            ->addOrderBy('i.createdAt', 'DESC');
+        }
 
         $pagination = $this->get('knp_paginator')->paginate($query, $page, 20);
 
