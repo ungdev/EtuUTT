@@ -31,8 +31,12 @@
 
     <div class="padding20-sides">
         <div class="span5">
-            <a href="{{ path('bugs_index', {'order': 'priority'}) }}"><button type="button" class="btn">Trier par criticité</button></a>
-            <a href="{{ path('bugs_index', {'order': 'date'}) }}"><button type="button" class="btn">Trier par date d'ouverture</button></a>
+            <a href="{{ path('bugs_index', {'order': 'priority'}) }}">
+                <button type="button" class="btn">{{ 'bugs.sort.criticality'|trans }}</button>
+            </a>
+            <a href="{{ path('bugs_index', {'order': 'date'}) }}">
+                <button type="button" class="btn">{{ 'bugs.sort.date'|trans }}</button>
+            </a>
         </div>
 
         {# display navigation #}

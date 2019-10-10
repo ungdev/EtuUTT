@@ -104,3 +104,6 @@ bugs:
       more_single: "%first%, %second% et 1 autre personne ont signalé de nouveaux bugs"
       one: "%userName% a signalé un nouveau bug (%bugName%)"
       two: "%first% et %second% ont signalé de nouveaux bugs"
+  sort:
+    date: "Trier par date d'ouverture"
+    criticality: "Trier par criticité"
