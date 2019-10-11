@@ -30,12 +30,10 @@
     </ul>
 
     <div class="padding20-sides">
-        <div class="span5">
-            <a href="{{ path('bugs_index', {'order': 'priority'}) }}">
-                <button type="button" class="btn">{{ 'bugs.sort.criticality'|trans }}</button>
-            </a>
-            <a href="{{ path('bugs_index', {'order': 'date'}) }}">
-                <button type="button" class="btn">{{ 'bugs.sort.date'|trans }}</button>
+        <div class="span8">
+            {% set newOrder = (order == 'criticality') ? 'date' : 'criticality' %}
+            <a href="{{ path('bugs_index', {'order': newOrder}) }}">
+                <button type="button" class="btn">{{ ('bugs.sort.' ~ newOrder)|trans }}</button>
             </a>
         </div>
 

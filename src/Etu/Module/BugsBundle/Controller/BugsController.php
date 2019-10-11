@@ -33,7 +33,7 @@ class BugsController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_BUGS');
 
-        $order = (isset($_GET['order']) && !empty($_GET['order'])) ? $_GET['order'] : 'priority';
+        $order = (isset($_GET['order']) && !empty($_GET['order'])) ? $_GET['order'] : 'criticality';
 
         /** @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
@@ -54,7 +54,7 @@ class BugsController extends Controller
 
         $pagination = $this->get('knp_paginator')->paginate($query, $page, 20);
 
-        return ['pagination' => $pagination];
+        return ['pagination' => $pagination, 'order' => $order];
     }
 
     /**
