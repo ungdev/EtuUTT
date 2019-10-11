@@ -30,6 +30,13 @@
     </ul>
 
     <div class="padding20-sides">
+        <div class="span8">
+            {% set newOrder = (order == 'criticality') ? 'date' : 'criticality' %}
+            <a href="{{ path('bugs_index', {'order': newOrder}) }}">
+                <button type="button" class="btn">{{ ('bugs.sort.' ~ newOrder)|trans }}</button>
+            </a>
+        </div>
+
         {# display navigation #}
         <div class="navigation">
             {{ 'bugs.bugs.index.count'|transchoice(pagination.totalItemCount, {'%count%': pagination.totalItemCount}) }}
