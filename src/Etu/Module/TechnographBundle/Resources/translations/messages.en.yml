@@ -1,0 +1,33 @@
+technograph:
+  sidebar:
+    service: Technograph's Blog
+  main:
+    article:
+      confirm: The article has been saved
+      confirmWarning: The article has been saved, do not forget to publish it !
+      confirmPublish: The article has been published !
+      confirmUnpublish: The article has been masked
+      dropdown: Other unpublished articles
+      delete: Delete article
+      edit: Edit article
+      labels:
+        title: Title
+        body: Content
+      new: Create an article
+      notFound: The article you are trying to see doesn't exist or doesn't exist anymore
+      publish: Publish this article
+      unpublish: Mask this article
+      saveandsee: Save and view
+    index:
+      head: Welcome to the Technograph's Blog !
+      new: Add an article
+      noResult: No articles for the moment
+      title: Technograph's Blog
+      notPublished: NOT PUBLISHED
+    logo:
+      alt: Technograph
+      title: Technograph's Blog
+    view:
+      back: Back to the list
+      edit: Edit article
+      notPublished: This article is not visible, you have to publish it

@@ -128,6 +128,7 @@ role:
     ROLE_EDITOR: Rédacteur des pages statiques
     ROLE_DEVELOPER: Administrateur des signalement de bugs
     ROLE_ARGENTIQUE: Membre d'Argentique pouvant mettre à jour les photos
+    ROLE_TECHNOGRAPH: Membre de Technograph pouvant mettre à jour le blog du club
 
     ROLE_CORE_ADMIN_HOME: Voir la page d'accueil d'administration
     ROLE_CORE_ADMIN_SERVER: Voir l'état du serveur
@@ -151,6 +152,8 @@ role:
 
     ROLE_ARGENTIQUE_ADMIN: Voir la documentation pour ajouter des photos au site
     ROLE_ARGENTIQUE_READ: Voir les photos du site
+    ROLE_TECHNOGRAPH_ADMIN: Peut ajouter des postes sur le blog de Technogaph
+    ROLE_TECHNOGRAPH_READ: Voir le blog de Technograph
 
     ROLE_ASSOS_MEMBERS: Voir la liste des membres d'une association
 

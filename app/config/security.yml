@@ -12,6 +12,7 @@ security:
             - ROLE_EVENTS_INTERNAL # can read Private/internal calendar and events
 
         ROLE_USER:
+            - ROLE_TECHNOGRAPH_READ # View technograph's blog
 
         ROLE_STUDENT:
             - ROLE_CORE_SUBSCRIBE # User can receive and use subscriptions
@@ -104,6 +105,7 @@ security:
             - ROLE_UV_REVIEW_ADMIN # Can moderate and remove UV review and old exams
             - ROLE_BADGE_ADMIN # Can create and attribute badges
             - ROLE_WIKI_ADMIN # Can lock, read and write on every admin page on the wiki
+            - ROLE_TECHNOGRAPH_ADMIN # Edit technograph's blog
 
         ROLE_SUPERADMIN:
             - ROLE_ADMIN
@@ -125,6 +127,9 @@ security:
             - ROLE_CORE_ADMIN_HOME # Can see admin homepage
             - ROLE_ARGENTIQUE_ADMIN
 
+        ROLE_TECHNOGRAPH:
+            - ROLE_TECHNOGRAPH_ADMIN # Edit technograph's blog
+
         # If readonly or ban is set, user will have only this role and :
         # - ROLE_USER
         # - ROLE_CAS
@@ -141,6 +146,7 @@ security:
             - ROLE_CORE_SCHEDULE_OWN # Can read his own schedule
             - ROLE_CORE_HOMEPAGE # Can see the private homepage
             - ROLE_ARGENTIQUE_READ # View pictures
+            - ROLE_TECHNOGRAPH_READ # View technograph's blog
             - ROLE_ASSOS_MEMBERS # Read assos member list
             - ROLE_BUGS # read bugs list
             - ROLE_COVOIT # Can read covoit bundle
