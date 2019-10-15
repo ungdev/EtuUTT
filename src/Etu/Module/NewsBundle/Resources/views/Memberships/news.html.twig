@@ -1,37 +1,29 @@
-{% extends '::page-2cols.html.twig' %}
+{% extends '@EtuUser/Memberships/layout.html.twig' %}
+{% set tab = 'memberships_orga_news' %}
 
-{% block title %}{{ 'technograph.main.index.title'|trans }}{% endblock %}
+{% block title %}{{ membership.organization.name }}{% endblock %}
 
 {% block titleIcon %}
-    <img src="{{ asset('assets/img/titles/uvs.png') }}" alt="{{ 'technograph.main.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+    <img src="{{ asset('assets/img/titles/orga.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
 {% endblock %}
 
-{% block content %}
-    <ul class="nav nav-tabs page-tabs">
-        <li>
-            <a href="{{ path('technograph_index') }}">
-                <i class="icon-chevron-left"></i>
-                {{ 'technograph.main.view.back'|trans }}
-            </a>
-        </li>
-    </ul>
-    <div class="padding20-all">
+{% block membership_content %}
         
         {{ form_start(form) }}
         {% if available|count > 0 %}
         <div class="control-group">
-            <label class="control-label">{{ 'technograph.main.article.dropdown'|trans }}</label>
+            <label class="control-label">{{ 'news.main.article.dropdown'|trans }}</label>
             <div class="controls">
                 <div class="btn-group">
                     <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                        Modifier un autre article
+                        Modifier une autre news
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         {% for article in available %}
                             {% if article == 'new' %}
                             <li>
-                                <a href="{{ path('technograph_article_edit', {'id': '0'}) }}">
+                                <a href="{{ path('memberships_orga_news', {'login': orga.login, 'id': '0'}) }}">
 
                                     Nouvelle publication
 
@@ -40,7 +32,7 @@
                             <li class="divider"></li>
                             {% else %}
                             <li>
-                                <a href="{{ path('technograph_article_edit', {'id': article.id}) }}">
+                                <a href="{{ path('memberships_orga_news', {'login': orga.login, 'id': article.id}) }}">
                                     <span>- {{ article.name }}</span>
                                 </a>
                             </li>
@@ -60,32 +52,31 @@
 
                 {% if article.id > 0 %}
                     <button type="submit" class="btn">
-                        {{ 'technograph.main.article.edit'|trans }}
+                        {{ 'news.main.article.edit'|trans }}
                     </button>
                     <button type="submit" class="btn" name="_saveandsee">
-                        {{ 'technograph.main.article.saveandsee'|trans }}
+                        {{ 'news.main.article.saveandsee'|trans }}
                     </button>
                     {% if article.publishedAt != null %}
                       <button type="submit" class="btn btn-danger" name="_unpublish">
-                          {{ 'technograph.main.article.unpublish'|trans }}
+                          {{ 'news.main.article.unpublish'|trans }}
                       </button>
                     {% else %}
                       <button type="submit" class="btn btn-primary" name="_publish">
-                          {{ 'technograph.main.article.publish'|trans }}
+                          {{ 'news.main.article.publish'|trans }}
                       </button>
                     {% endif %}
-                    <a href="{{ path('technograph_article_remove', {'id': article.id}) }}"
+                    <a href="{{ path('news_remove', {'login': orga.id, 'id': article.id}) }}"
                        class="btn btn-link pull-right">
-                        {{ 'technograph.main.article.delete'|trans }}
+                        {{ 'news.main.article.delete'|trans }}
                     </a>
                 {% else %}
                     <button type="submit" class="btn">
-                        {{ 'technograph.main.article.new'|trans }}
+                        {{ 'news.main.article.new'|trans }}
                     </button>
                 {% endif %}
             </div>
         </div>
         
     {{ form_end(form) }}
-    </div>
 {% endblock %}

@@ -1,9 +1,10 @@
 <?php
 
-namespace Etu\Module\TechnographBundle\Entity;
+namespace Etu\Module\NewsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Etu\Core\UserBundle\Entity\User;
+use Etu\Core\UserBundle\Entity\Organization;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -33,6 +34,14 @@ class Article
      * @ORM\JoinColumn()
      */
     protected $author;
+
+    /**
+     * @var Organization
+     *
+     * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\Organization")
+     * @ORM\JoinColumn()
+     */
+    protected $orga;
 
     /**
      * @var string
@@ -70,6 +79,13 @@ class Article
     /**
      * @var \DateTime
      *
+     * @ORM\Column(type="datetime", nullable = true)
+     */
+    protected $validatedAt;
+
+    /**
+     * @var \DateTime
+     *
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime")
      */
@@ -83,11 +99,13 @@ class Article
     protected $deletedAt;
 
     /**
+     * @param Organization $orga
      * @param \User $author
      */
-    public function __construct($author)
+    public function __construct(Organization $orga, User $author)
     {
-      $this->setAuthor($author);
+        $this->setOrga($orga);
+        $this->setAuthor($author);
     }
     /**
      * @param \DateTime $createdAt
@@ -115,6 +133,26 @@ class Article
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @param \Etu\Core\UserBundle\Entity\Organization $orga
+     *
+     * @return Article
+     */
+    public function setOrga($orga)
+    {
+        $this->orga = $orga;
+
+        return $this;
+    }
+
+    /**
+     * @return \Etu\Core\UserBundle\Entity\Organization
+     */
+    public function getOrga()
+    {
+        return $this->orga;
     }
 
     /**
@@ -243,5 +281,29 @@ class Article
     public function getPublishedAt()
     {
         return $this->publishedAt;
+    }
+
+     /**
+     * Set validatedAt.
+     *
+     * @param \DateTime $validatedAt
+     *
+     * @return Article
+     */
+    public function setValidatedAt($validatedAt)
+    {
+        $this->validatedAt = $validatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get validatedAt.
+     *
+     * @return \DateTime
+     */
+    public function getValidatedAt()
+    {
+        return $this->validatedAt;
     }
 }

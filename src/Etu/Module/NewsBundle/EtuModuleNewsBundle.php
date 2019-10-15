@@ -1,25 +1,34 @@
 <?php
 
-namespace Etu\Module\TechnographBundle;
+namespace Etu\Module\NewsBundle;
 
 use Etu\Core\CoreBundle\Framework\Definition\Module;
+use Etu\Core\CoreBundle\Framework\Definition\OrgaPermission;
 
-class EtuModuleTechnographBundle extends Module
+class EtuModuleNewsBundle extends Module
 {
 
-  /**
+    /**
      * At module boot, update the sidebar.
      */
     public function onModuleBoot()
     {
+        $this->getAdminMenuBuilder()
+            ->getBlock('base.admin_menu.title')
+            ->add('news.admin.menu_item')
+            ->setIcon('briefcase.png')
+            ->setUrl($this->getRouter()->generate('news_index'))
+            ->setPosition(7)
+            ->setRole('ROLE_NEWS_ADMIN')
+            ->end();
+
         $this->getSidebarBuilder()
             ->getBlock('base.sidebar.services.title')
-                ->add('technograph.sidebar.service')
-                    ->setPosition(100)
-                    ->setIcon('argentique.png')
-                    ->setUrl($this->router->generate('technograph_index'))
-                    ->setRole('ROLE_TECHNOGRAPH_READ')
-                ->end()
+            ->add('news.sidebar.service')
+            ->setPosition(100)
+            ->setIcon('briefcase.png')
+            ->setUrl($this->router->generate('news_index'))
+            ->setRole('ROLE_NEWS_READ')
             ->end();
     }
 
@@ -30,7 +39,7 @@ class EtuModuleTechnographBundle extends Module
      */
     public function getIdentifier()
     {
-        return 'technograph';
+        return 'news';
     }
 
     /**
@@ -40,7 +49,7 @@ class EtuModuleTechnographBundle extends Module
      */
     public function getTitle()
     {
-        return 'Technograph';
+        return 'News';
     }
 
     /**
@@ -60,7 +69,17 @@ class EtuModuleTechnographBundle extends Module
      */
     public function getDescription()
     {
-        return 'Module to handle Technograph\'s blog';
+        return 'Module to handle news';
+    }
+
+    /**
+     * @return array
+     */
+    public function getAvailablePermissions()
+    {
+        return [
+            new OrgaPermission('news', 'Peut modifier les news de l\'association'),
+        ];
     }
 
     /**
