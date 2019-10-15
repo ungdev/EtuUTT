@@ -81,9 +81,6 @@ class MainController extends Controller
             ->leftJoin('a.orga', 'o')
             ->where('a.id = :id')
             ->setParameter('id', $id);
-        if(!$this->isGranted('ROLE_NEWS_ADMIN')) { // TODO CHECK IF MEMBER OF ORGA AND HAS EDIT RIGHT
-          $query->andWhere('a.publishedAt is not NULL');
-        }
 
         /** @var $article Article */
         $article = $query
@@ -121,6 +118,12 @@ class MainController extends Controller
         $canEdit = false;
         if($this->isGranted('ROLE_NEWS_EDIT') && $membership != null) {
             $canEdit = $membership->hasPermission('news');
+        }
+        if(!$this->isGranted('ROLE_NEWS_ADMIN') && !$canEdit && $article->getValidatedAt() == null) {
+            $this->get('session')->getFlashBag()->set('message', [
+                'type' => 'error',
+                'message' => 'news.main.article.notFound',
+            return $this->redirect($this->generateUrl('news_index'));
         }
         return [
           'article' => $article,
