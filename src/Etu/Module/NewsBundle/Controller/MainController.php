@@ -123,6 +123,7 @@ class MainController extends Controller
             $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'error',
                 'message' => 'news.main.article.notFound',
+            ]);
             return $this->redirect($this->generateUrl('news_index'));
         }
         return [
