@@ -70,7 +70,13 @@ class ScheduleController extends Controller
             ->getQuery()
             ->getResult();
 
+        $users = [];
+        foreach ($students as $student) {
+            $users[] = $student->getUser()->getLogin();
+        }
+        $cumulLogins = implode(':', $users);
         return [
+            'cumulLogins' => $cumulLogins,
             'course' => $course,
             'students' => $students,
         ];

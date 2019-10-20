@@ -438,5 +438,6 @@ user:
             title: Créneau de cours
             desc: Créneau de %type% de %uv%, le %day% à %start%
             uv: Voir la description de l'UE
-            other: Voir les autre créneaux
+            other: Voir les autres créneaux
+            cumul: Comparer les emplois du temps
             students: "%count% étudiant inscrit à ce créneau|%count% étudiants inscrits à ce créneau"
