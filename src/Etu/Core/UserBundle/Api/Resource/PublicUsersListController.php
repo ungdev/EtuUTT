@@ -12,6 +12,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Etu\Core\UserBundle\Entity\Course;
 
 class PublicUsersListController extends ApiController
 {
@@ -127,6 +128,36 @@ class PublicUsersListController extends ApiController
         return $this->format([
             'data' => $this->get('etu.api.badge.transformer')->transform($badges),
         ], 200, [], $request);
+    }
+
+    /**
+     * @ApiDoc(
+     *   description = "Courses list of a given user (scope: public)",
+     *   section = "User - Public data",
+     *   parameters={
+     *      { "name"="login", "dataType"="string", "required"=true, "description"="User login" }
+     *   }
+     * )
+     *
+     * @Route("/public/users/{login}/courses", name="api_public_users_courses")
+     * @Method("GET")
+     */
+    public function coursesAction(User $user, Request $request)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var $courses Course[] */
+        $courses = $em->createQueryBuilder()
+            ->select('c.uv, c.day, c.start, c.end, c.week, c.type, c.room')
+            ->from('EtuUserBundle:Course', 'c')
+            ->where('c.deletedAt IS NULL')
+            ->andWhere('c.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+        return $this->format(['courses' => $courses], 200, [], $request);
+
     }
 
     /**
