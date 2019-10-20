@@ -22,6 +22,8 @@
 
             <br/>
             <a href="{{ path('uvs_goto_courses', {'code': course.uv}) }}">{{ 'user.schedule.course.other'|trans }}</a>
+            <br/>
+            <a href="{{ path('cumul_index') }}?q={{ cumulLogins }}">{{ 'user.schedule.course.cumul'|trans }}</a>
         </p>
 
         <p class="align-center">
