@@ -67,6 +67,9 @@ services:
     etu.api.event.transformer:
         class: Etu\Module\EventsBundle\Api\Transformer\EventTransformer
 
+    etu.api.review.transformer:
+        class: Etu\Module\UVBundle\Api\Transformer\ReviewTransformer
+
     etu.api.user.private_transformer:
         class: Etu\Core\UserBundle\Api\Transformer\UserPrivateTransformer
         arguments: [ "@etu.api.badge.transformer" ]
