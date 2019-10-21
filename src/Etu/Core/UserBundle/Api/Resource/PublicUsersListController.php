@@ -6,13 +6,13 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Etu\Core\ApiBundle\Framework\Controller\ApiController;
 use Etu\Core\ApiBundle\Framework\Embed\EmbedBag;
+use Etu\Core\UserBundle\Entity\Course;
 use Etu\Core\UserBundle\Entity\User;
 use Knp\Component\Pager\Pagination\SlidingPagination;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Etu\Core\UserBundle\Entity\Course;
 
 class PublicUsersListController extends ApiController
 {
@@ -156,8 +156,8 @@ class PublicUsersListController extends ApiController
             ->setParameter('user', $user)
             ->getQuery()
             ->getResult();
-        return $this->format(['courses' => $courses], 200, [], $request);
 
+        return $this->format(['courses' => $courses], 200, [], $request);
     }
 
     /**

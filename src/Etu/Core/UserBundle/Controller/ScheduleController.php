@@ -75,6 +75,7 @@ class ScheduleController extends Controller
             $users[] = $student->getUser()->getLogin();
         }
         $cumulLogins = implode(':', $users);
+
         return [
             'cumulLogins' => $cumulLogins,
             'course' => $course,

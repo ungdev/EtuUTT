@@ -4,6 +4,8 @@ namespace Etu\Module\UVBundle\Api\Resource;
 
 use Doctrine\ORM\EntityManager;
 use Etu\Core\ApiBundle\Framework\Controller\ApiController;
+use Etu\Module\UVBundle\Entity\Comment;
+use Etu\Module\UVBundle\Entity\Review;
 use Etu\Module\UVBundle\Entity\UV;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -62,14 +64,10 @@ class UEController extends ApiController
      */
     public function commentsAction($slug, Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_UV_REVIEW');
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('EtuUserBundle:User')->find($this->getAccessToken($request)->getUser());
-        if ($user->getIsStudent() == 0) {
-            return $this->format([
-            'error' => 'You are not allowed',
-        ], 403, [], $request);
-        }
+
         /** @var $query QueryBuilder */
         $query = $em->createQueryBuilder()
             ->select('uv.slug, u.fullName, c.body, c.createdAt')
@@ -81,10 +79,46 @@ class UEController extends ApiController
             ->setParameter('slug', $slug)
             ->orderBy('c.createdAt', 'DESC');
 
-        /** @var UV[] $uv */
+        /** @var Comment[] $comments */
         $comments = $query->getQuery()->getResult();
 
         return $this->format(['comments' => $comments], 200, [], $request);
+    }
+
+    /**
+     * You can get all UE's reviews with this endpoint, using the UE's slug.
+     *
+     * @ApiDoc(
+     *   section = "UEs",
+     *   description = "reviews of an UE (scope: public and is student)"
+     * )
+     *
+     * @Route("/ues/{slug}/reviews", name="api_ue_reviews", options={"expose"=true})
+     * @Method("GET")
+     *
+     * @param mixed $slug
+     */
+    public function reviewAction($slug, Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_UV_REVIEW');
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $uv = $em->getRepository('EtuModuleUVBundle:UV')
+        ->findOneBy(['slug' => $slug]);
+        /** @var Review[] $reviews */
+        $reviews = $em->createQueryBuilder()
+            ->select('r, s')
+            ->from('EtuModuleUVBundle:Review', 'r')
+            ->leftJoin('r.sender', 's')
+            ->where('r.uv = :uv')
+            ->andWhere('r.deletedAt IS NULL')
+            ->setParameter('uv', $uv->getId())
+            ->orderBy('r.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        return $this->format(['reviews' => $this->get('etu.api.review.transformer')->transform($reviews)], 200, [], $request);
     }
 
     /**
