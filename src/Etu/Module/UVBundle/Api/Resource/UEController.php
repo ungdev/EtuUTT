@@ -64,10 +64,15 @@ class UEController extends ApiController
      */
     public function commentsAction($slug, Request $request)
     {
-        $this->denyAccessUnlessGranted('ROLE_UV_REVIEW');
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
+        $user = $em->getRepository('EtuUserBundle:User')->find($this->getAccessToken($request)->getUser());
+        if ($user->getIsStudent() == 0) {
+            return $this->format([
+              'error' => 'You are not allowed',
+          ], 403, [], $request);
+        }
         /** @var $query QueryBuilder */
         $query = $em->createQueryBuilder()
             ->select('uv.slug, u.fullName, c.body, c.createdAt')
@@ -100,10 +105,15 @@ class UEController extends ApiController
      */
     public function reviewAction($slug, Request $request)
     {
-        $this->denyAccessUnlessGranted('ROLE_UV_REVIEW');
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
+        $user = $em->getRepository('EtuUserBundle:User')->find($this->getAccessToken($request)->getUser());
+        if ($user->getIsStudent() == 0) {
+            return $this->format([
+              'error' => 'You are not allowed',
+          ], 403, [], $request);
+        }
         $uv = $em->getRepository('EtuModuleUVBundle:UV')
         ->findOneBy(['slug' => $slug]);
         /** @var Review[] $reviews */
