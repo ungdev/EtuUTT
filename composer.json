@@ -69,7 +69,7 @@
         "bower-asset/tipsy": "0.1.*",
         "bower-asset/jquery-cycle2": "*",
         "bower-asset/html5shiv": "~3.7.2",
-        "bower-asset/Justified-Gallery": "~3.5.1",
+        "bower-asset/justified-gallery": "~3.5.1",
         "bower-asset/codemirror": "*",
         "bower-asset/font-awesome": "4.6.0",
         "bower-asset/highlightjs": "9.7.0",
