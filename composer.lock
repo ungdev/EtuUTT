@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "artgris/filemanager-bundle",
-            "version": "1.5.2",
+            "version": "1.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/artgris/FileManagerBundle.git",
-                "reference": "c698a18f2b9ebd7c4d029519061a8b203ed9cc59"
+                "reference": "e722f4e1ebe351c8d359d25f4d46ed00ad8ec3e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/artgris/FileManagerBundle/zipball/c698a18f2b9ebd7c4d029519061a8b203ed9cc59",
-                "reference": "c698a18f2b9ebd7c4d029519061a8b203ed9cc59",
+                "url": "https://api.github.com/repos/artgris/FileManagerBundle/zipball/e722f4e1ebe351c8d359d25f4d46ed00ad8ec3e6",
+                "reference": "e722f4e1ebe351c8d359d25f4d46ed00ad8ec3e6",
                 "shasum": ""
             },
             "require": {
@@ -68,7 +68,7 @@
                 "file manager",
                 "symfony"
             ],
-            "time": "2019-07-18T15:15:07+00:00"
+            "time": "2019-10-21T06:15:12+00:00"
         },
         {
             "name": "beberlei/doctrineextensions",
@@ -2539,7 +2539,7 @@
                     "homepage": "https://github.com/friendsofsymfony/FOSJsRoutingBundle/contributors"
                 },
                 {
-                    "name": "William Durand",
+                    "name": "William DURAND",
                     "email": "william.durand1@gmail.com"
                 }
             ],
@@ -5857,16 +5857,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v2.12.0",
+            "version": "v2.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "c7a85fd08348ca04b4d8f234f49583d9910906aa"
+                "reference": "ddd4134af9bfc6dba4eff7c8447444ecc45b9ee5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/c7a85fd08348ca04b4d8f234f49583d9910906aa",
-                "reference": "c7a85fd08348ca04b4d8f234f49583d9910906aa",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/ddd4134af9bfc6dba4eff7c8447444ecc45b9ee5",
+                "reference": "ddd4134af9bfc6dba4eff7c8447444ecc45b9ee5",
                 "shasum": ""
             },
             "require": {
@@ -5920,7 +5920,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2019-10-05T16:42:38+00:00"
+            "time": "2019-10-17T07:34:53+00:00"
         },
         {
             "name": "willdurand/jsonp-callback-validator",
