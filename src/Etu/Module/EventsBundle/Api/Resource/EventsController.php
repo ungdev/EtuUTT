@@ -204,12 +204,13 @@ class EventsController extends ApiController
         }
         $events = $query->getQuery()->getResult();
 
+        $thisuser = $this->getAccessToken($request)->getUser();
         /** @var Event $event */
-        $events = array_filter($events, function ($event) {
+        $events = array_filter($events, function ($event) use ($thisuser) {
             if ($event->getPrivacy() > 300) {
-                return $event->getOrga()->hasMembership($this->getUser());
+                return $event->getOrga()->hasMembership($thisuser);
             } elseif ($event->getPrivacy() > 200) {
-                return count($this->getUser()->getMemberships()) > 0;
+                return count($thisuser->getMemberships()) > 0;
             }
 
             return true;
