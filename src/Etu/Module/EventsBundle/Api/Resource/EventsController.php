@@ -247,13 +247,13 @@ class EventsController extends ApiController
           ], 404, [], $request);
         }
         if ($event->getPrivacy() > Event::PRIVACY_MEMBERS) {
-            if (!$event->getOrga()->hasMembership($this->getUser())) {
+            if (!$event->getOrga()->hasMembership($this->getAccessToken($request)->getUser())) {
                 return $this->format([
                 'error' => 'Unknown event',
             ], 404, [], $request);
             }
         } elseif ($event->getPrivacy() > Event::PRIVACY_ORGAS) {
-            if (!count($this->getUser()->getMemberships()) > 0) {
+            if (!count($this->getAccessToken($request)->getUser()->getMemberships()) > 0) {
                 return $this->format([
                   'error' => 'Unknown event',
               ], 404, [], $request);
