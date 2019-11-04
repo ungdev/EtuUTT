@@ -36,6 +36,11 @@ class UserListMapper implements QueryMapper
                 ->setParameter('lastname', '%'.$request->get('lastname').'%');
         }
 
+        if ($request->has('phone')) {
+            $query->andWhere('u.phoneNumber LIKE :phone')
+                ->setParameter('phone', '%'.$request->get('phone').'%');
+        }
+
         if ($request->has('name')) {
             $term = str_replace(' ', '%', trim($request->get('name')));
 

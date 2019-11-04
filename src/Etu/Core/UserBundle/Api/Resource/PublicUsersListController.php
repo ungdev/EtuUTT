@@ -23,6 +23,7 @@ class PublicUsersListController extends ApiController
      *   filters = {
      *      { "name"="firstname",       "dataType"="string"     },
      *      { "name"="lastname",        "dataType"="string"     },
+     *      { "name"="phone",           "dataType"="string"     },
      *      { "name"="name",            "dataType"="string", "description"="Search in firstname, lastname or fullname"     },
      *      { "name"="mail",            "dataType"="string", "description"="Search in mail or personalMail"     },
      *      { "name"="formation",       "dataType"="string", "description"="Search by diploma (master, engineer, ...)"     },
