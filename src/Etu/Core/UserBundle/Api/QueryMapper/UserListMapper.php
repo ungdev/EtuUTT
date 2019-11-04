@@ -43,6 +43,18 @@ class UserListMapper implements QueryMapper
                 ->setParameter('term', '%'.$term.'%');
         }
 
+        if ($request->has('mail')) {
+            $term = str_replace(' ', '%', trim($request->get('mail')));
+
+            $query->andWhere('u.personnalMail LIKE :term OR u.mail LIKE :term')
+                ->setParameter('term', '%'.$term.'%');
+        }
+
+        if ($request->has('formation')) {
+            $query->andWhere('u.formation = :formation')
+                ->setParameter('formation', $request->get('formation'));
+        }
+
         if ($request->has('branch')) {
             $query->andWhere('u.branch = :branch')
                 ->setParameter('branch', $request->get('branch'));

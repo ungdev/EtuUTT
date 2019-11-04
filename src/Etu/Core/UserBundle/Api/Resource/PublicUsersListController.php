@@ -24,6 +24,8 @@ class PublicUsersListController extends ApiController
      *      { "name"="firstname",       "dataType"="string"     },
      *      { "name"="lastname",        "dataType"="string"     },
      *      { "name"="name",            "dataType"="string", "description"="Search in firstname, lastname or fullname"     },
+     *      { "name"="mail",            "dataType"="string", "description"="Search in mail or personalMail"     },
+     *      { "name"="formation",       "dataType"="string", "description"="Search by diploma (master, engineer, ...)"     },
      *      { "name"="branch",          "dataType"="string"     },
      *      { "name"="level",           "dataType"="string"     },
      *      { "name"="speciality",      "dataType"="string"     },
