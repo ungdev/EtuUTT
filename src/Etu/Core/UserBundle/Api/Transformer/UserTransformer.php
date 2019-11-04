@@ -61,6 +61,7 @@ class UserTransformer extends AbstractTransformer
             'postalCode' => $user->getPostalCodePrivacy() == User::PRIVACY_PUBLIC ? $user->getPostalCode() : null,
             'city' => $user->getCityPrivacy() == User::PRIVACY_PUBLIC ? $user->getCity() : null,
             'sex' => $user->getSexPrivacy() == User::PRIVACY_PUBLIC ? $user->getSex() : null,
+            'formation' => $user->getFormation(),
             'branch' => $user->getBranch(),
             'level' => $user->getNiveau(),
             'speciality' => $user->getFiliere(),
