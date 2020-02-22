@@ -9,7 +9,6 @@ security:
             - ROLE_ASSOS_MEMBERS # Read assos member list
             - ROLE_EVENTS_INTERNAL # can read Private/internal calendar and events
             - ROLE_TROMBI # Can search on trombi
-            - ROLE_EVENTS_INTERNAL # can read Private/internal calendar and events
 
         ROLE_USER:
 
