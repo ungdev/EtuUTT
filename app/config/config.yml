@@ -173,7 +173,7 @@ etu_core:
 
 etu_user:
     ldap:
-        host: https://ldap.utt.fr
+        host: ldap.utt.fr
         port: 389
     dolibarr:
         host: https://picsou.uttnetgroup.fr
