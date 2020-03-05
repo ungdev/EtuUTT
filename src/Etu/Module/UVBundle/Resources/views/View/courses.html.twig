@@ -47,19 +47,85 @@
         </div>
 
         <div class="clear"></div>
-
         <div class="row-fluid course-courses">
             {% for day, dayCourses in courses %}
                 <div class="span2">
-                    <ul>
-                        {% for course in dayCourses %}
-                            <li class="course">
-                                <a href="{{ path('schedule_course', {'id': course.id}) }}">
-                                <span class="name">{{ course.type }} - {{ course.room }}</span></a><br />
-                                <span class="hours">{{ course.start }} - {{ course.end }}</span>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                    {% if day == 'monday' %}
+                        <ul>
+                            {% for course in dayCourses %}
+                                <li class="course">
+                                    <a href="{{ path('schedule_course', {'id': course.id}) }}">
+                                    <span class="name">{{ course.type }} - {{ course.room }}</span></a><br />
+                                    <span class="hours">{{ course.start }} - {{ course.end }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="span2">
+                    {% if day == 'tuesday' %}
+                        <ul>
+                            {% for course in dayCourses %}
+                                <li class="course">
+                                    <a href="{{ path('schedule_course', {'id': course.id}) }}">
+                                    <span class="name">{{ course.type }} - {{ course.room }}</span></a><br />
+                                    <span class="hours">{{ course.start }} - {{ course.end }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="span2">
+                    {% if day == 'wednesday' %}
+                        <ul>
+                            {% for course in dayCourses %}
+                                <li class="course">
+                                    <a href="{{ path('schedule_course', {'id': course.id}) }}">
+                                    <span class="name">{{ course.type }} - {{ course.room }}</span></a><br />
+                                    <span class="hours">{{ course.start }} - {{ course.end }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="span2">
+                    {% if day == 'thurday' %}
+                        <ul>
+                            {% for course in dayCourses %}
+                                <li class="course">
+                                    <a href="{{ path('schedule_course', {'id': course.id}) }}">
+                                    <span class="name">{{ course.type }} - {{ course.room }}</span></a><br />
+                                    <span class="hours">{{ course.start }} - {{ course.end }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="span2">
+                    {% if day == 'friday' %}
+                        <ul>
+                            {% for course in dayCourses %}
+                                <li class="course">
+                                    <a href="{{ path('schedule_course', {'id': course.id}) }}">
+                                    <span class="name">{{ course.type }} - {{ course.room }}</span></a><br />
+                                    <span class="hours">{{ course.start }} - {{ course.end }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="span2">
+                    {% if day == 'sathurday' %}
+                        <ul>
+                            {% for course in dayCourses %}
+                                <li class="course">
+                                    <a href="{{ path('schedule_course', {'id': course.id}) }}">
+                                    <span class="name">{{ course.type }} - {{ course.room }}</span></a><br />
+                                    <span class="hours">{{ course.start }} - {{ course.end }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
