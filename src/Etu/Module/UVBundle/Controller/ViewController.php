@@ -203,7 +203,6 @@ class ViewController extends Controller
             ->where('c.uv = :uv')
             ->setParameter('uv', mb_strtoupper($slug))
             ->orderBy('c.start')
-            ->groupBy('c.day, c.room')
             ->getQuery()
             ->getResult();
 
