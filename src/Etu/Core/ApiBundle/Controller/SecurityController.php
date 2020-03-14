@@ -103,7 +103,7 @@ class SecurityController extends ApiController
         if (!$client) {
             $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'error',
-                'message' => 'L\'application externe n\'a pas été trouvée. Vous avez été redirigé vers EtuUTT.',
+                'message' => 'L\'application externe n\'existe pas. Vous avez été redirigé vers EtuUTT.',
             ]);
 
             return $this->redirect($this->generateUrl('homepage'));
