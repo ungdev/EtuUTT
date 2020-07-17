@@ -36,6 +36,7 @@ ca.crt
 /web/uploads/photos/*
 !/web/uploads/photos/.gitkeep
 !/web/uploads/photos/default-avatar.png
+!/web/uploads/photos/.htaccess
 
 !/web/uploads/users_files
 /web/uploads/users_files/*

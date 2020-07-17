@@ -21,7 +21,7 @@
         {% for comment in pagination %}
             <div class="uv-view-comment">
                 <a href="{{ path('user_view', {'login': comment.user.login}) }}">
-                    <img src="{{ asset('uploads/photos/'~comment.user.avatar) }}" class="uv-view-comment-avatar" />
+                    <img src="{{ path('user_view_image_profil', {'login': comment.user.avatar}) }}" class="uv-view-comment-avatar" />
                 </a>
                 <div class="uv-view-comment-author">
                     <a href="{{ path('user_view', {'login': comment.user.login}) }}">

@@ -35,7 +35,7 @@
                     <div class="profileEdit-avatar-actions">
                         <i class="icon-pencil"></i>
                     </div>
-                    <img src="{{ asset('uploads/photos/'~app.user.avatar) }}" class="profileEdit-avatar"
+                    <img src="{{ path('user_view_image_profil', {'login': app.user.avatar}) }}" class="profileEdit-avatar"
                          alt="{{ app.user.fullName }}" id="avatar-image" />
                 </a>
             </div>

@@ -41,7 +41,7 @@
       {% for membership in memberships %}
         <li class="badge-users-item">
           <a href="{{ path('user_view', {'login': membership.user.login}) }}">
-            <img src="{{ asset('uploads/photos/'~membership.user.avatar) }}" alt="{{ membership.user.fullName }}" title="{{ membership.user.fullName }}"/>
+            <img src="{{ path('user_view_image_profil', {'login': membership.user.avatar}) }}" alt="{{ membership.user.fullName }}" title="{{ membership.user.fullName }}"/>
             <h5>{{ membership.user.fullName }}</h5>
 
             <div class="clear"></div>

@@ -126,7 +126,7 @@
         <div class="etu-comment" id="1">
             <div class="etu-comment-avatar">
                 <a href="{{ path('user_view', {'login': bug.user.login}) }}">
-                    <img src="{{ asset('uploads/photos/'~bug.user.avatar) }}" />
+                    <img src="{{ path('user_view_image_profil', {'login': bug.user.avatar}) }}" />
                 </a>
             </div>
             <div class="etu-comment-infos">
@@ -188,7 +188,7 @@
                 <div class="etu-comment" id="{{ count }}">
                     <div class="etu-comment-avatar">
                         <a href="{{ path('user_view', {'login': comment.user.login}) }}">
-                            <img src="{{ asset('uploads/photos/'~comment.user.avatar) }}" />
+                            <img src="{{ path('user_view_image_profil', {'login': comment.user.avatar}) }}" />
                         </a>
                     </div>
                     <div class="etu-comment-infos">

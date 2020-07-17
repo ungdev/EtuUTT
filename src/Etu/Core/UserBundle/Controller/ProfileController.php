@@ -21,6 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProfileController extends Controller
 {
@@ -370,6 +371,24 @@ class ProfileController extends Controller
             'user' => $user,
             'from' => $from,
         ];
+    }
+
+    /**
+     * @Route("/images/profil/{login}", name="user_view_image_profil")
+     * @param $login
+     * @return Response
+     */
+    public function viewImageProfil($login)
+    {
+        $this->denyAccessUnlessGranted('ROLE_CORE_PROFIL');
+        $path = $this->get('kernel')->getProjectDir().'/web/uploads/photos/' . $login;
+        if(!file_exists($path))
+            $path=$this->get('kernel')->getProjectDir().'/web/uploads/photos/default-avatar.png';
+        $file =    readfile($path);
+        $headers = array(
+            'Content-Type'     => 'image/png',
+            'Content-Disposition' => 'inline; filename="'.$login.'"');
+        return new Response($file, 200, $headers);
     }
 
     /**

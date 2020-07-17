@@ -102,7 +102,7 @@
                             {% for member in group.members %}
                                 <li class="asso-members-item asso-members-item-office">
                                     <a href="{{ path('user_view', {'login': member.user.login}) }}">
-                                        <img src="{{ asset('uploads/photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
+                                        <img src="{{ path('user_view_image_profil', {'login': member.user.avatar}) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
                                         <h5>{{ member.user.fullName }}</h5>
                                         <p>
                                             {{ ('user.orga.role.'~member.role)|trans }}<br />

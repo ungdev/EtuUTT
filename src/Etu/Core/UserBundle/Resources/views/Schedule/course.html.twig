@@ -35,7 +35,7 @@
                 {% for student in students %}
                     <li class="asso-members-item asso-members-item-member">
                         <a href="{{ path('user_view', {'login': student.user.login}) }}">
-                            <img src="{{ asset('uploads/photos/'~student.user.avatar) }}" alt="{{ student.user.fullName }}" title="{{ student.user.fullName }}" />
+                            <img src="{{ path('user_view_image_profil', {'login': student.user.avatar}) }}" alt="{{ student.user.fullName }}" title="{{ student.user.fullName }}" />
                             <h5>{{ student.user.fullName }}</h5>
                             <p>
                                 {{ student.user.branch~student.user.niveau }} {{ student.user.filiere }}
