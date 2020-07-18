@@ -208,7 +208,7 @@ class ProfileController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             // Badges
-            if ($user->getProfileCompletion() == 100) {
+            if (100 == $user->getProfileCompletion()) {
                 BadgesManager::userAddBadge($user, 'profile_completed');
             } else {
                 BadgesManager::userRemoveBadge($user, 'profile_completed');
@@ -315,7 +315,7 @@ class ProfileController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            if ($user->getTrombiCompletion() == 100) {
+            if (100 == $user->getTrombiCompletion()) {
                 BadgesManager::userAddBadge($user, 'trombi_completed');
             } else {
                 BadgesManager::userRemoveBadge($user, 'trombi_completed');
@@ -363,7 +363,7 @@ class ProfileController extends Controller
 
         $from = null;
 
-        if (in_array($request->get('from'), ['search', 'profile', 'trombi', 'admin'])) {
+        if (\in_array($request->get('from'), ['search', 'profile', 'trombi', 'admin'])) {
             $from = $request->get('from');
         }
 
@@ -375,19 +375,23 @@ class ProfileController extends Controller
 
     /**
      * @Route("/images/profil/{login}", name="user_view_image_profil")
+     *
      * @param $login
+     *
      * @return Response
      */
     public function viewImageProfil($login)
     {
         $this->denyAccessUnlessGranted('ROLE_CORE_PROFIL');
-        $path = $this->get('kernel')->getProjectDir().'/web/uploads/photos/' . $login;
-        if(!file_exists($path))
-            $path=$this->get('kernel')->getProjectDir().'/web/uploads/photos/default-avatar.png';
-        $file =    readfile($path);
-        $headers = array(
-            'Content-Type'     => 'image/png',
-            'Content-Disposition' => 'inline; filename="'.$login.'"');
+        $path = $this->get('kernel')->getProjectDir().'/web/uploads/photos/'.$login;
+        if (!file_exists($path) && mime_content_type($path)) {
+            $path = $this->get('kernel')->getProjectDir().'/web/uploads/photos/default-avatar.png';
+        }
+        $file = readfile($path);
+        $headers = [
+            'Content-Type' => mime_content_type($path),
+            'Content-Disposition' => 'inline; filename="'.$login.'"', ];
+
         return new Response($file, 200, $headers);
     }
 
@@ -424,7 +428,7 @@ class ProfileController extends Controller
 
         $from = null;
 
-        if (in_array($request->get('from'), ['search', 'profile', 'trombi', 'admin'])) {
+        if (\in_array($request->get('from'), ['search', 'profile', 'trombi', 'admin'])) {
             $from = $request->get('from');
         }
 
@@ -462,7 +466,7 @@ class ProfileController extends Controller
 
         $from = null;
 
-        if (in_array($request->get('from'), ['search', 'profile', 'trombi', 'admin'])) {
+        if (\in_array($request->get('from'), ['search', 'profile', 'trombi', 'admin'])) {
             $from = $request->get('from');
         }
 
@@ -481,8 +485,8 @@ class ProfileController extends Controller
             Course::DAY_THURSDAY, Course::DAY_FRIDAY, Course::DAY_SATHURDAY,
         ];
 
-        if (!in_array($day, $days)) {
-            if (date('w') == 0) { // Sunday
+        if (!\in_array($day, $days)) {
+            if (0 == date('w')) { // Sunday
                 $day = Course::DAY_MONDAY;
             } else {
                 $day = $days[date('w') - 1];
@@ -523,7 +527,7 @@ class ProfileController extends Controller
 
         $from = null;
 
-        if (in_array($request->get('from'), ['search', 'profile', 'trombi', 'admin'])) {
+        if (\in_array($request->get('from'), ['search', 'profile', 'trombi', 'admin'])) {
             $from = $request->get('from');
         }
 
