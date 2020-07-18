@@ -120,7 +120,9 @@ class PublicUsersListController extends ApiController
      *
      * @Route("/public/users/image/{login}", name="api_public_users_view")
      * @Method("GET")
+     *
      * @param $login
+     *
      * @return Response
      */
     public function viewImageAction($login)
