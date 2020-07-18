@@ -13,6 +13,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class PublicUsersListController extends ApiController
 {
@@ -106,6 +107,36 @@ class PublicUsersListController extends ApiController
             'embed' => ['badges' => true],
             'data' => $this->get('etu.api.user.transformer')->transform($user, new EmbedBag(['badges'])),
         ], 200, [], $request);
+    }
+
+    /**
+     * @ApiDoc(
+     *   description = "Renvoie la photo d'un utilisateur (scope: public)",
+     *   section = "User - Public data",
+     *   parameters={
+     *      { "name"="login", "dataType"="string", "required"=true, "description"="User login" }
+     *   }
+     * )
+     *
+     * @Route("/public/users/image/{login}", name="api_public_users_view")
+     * @Method("GET")
+     * @param $login
+     * @return Response
+     */
+    public function viewImageAction($login)
+    {
+        $cleanLogin = preg_replace('/[^a-zA-Z0-9.]/', '', $login);
+        $cleanLogin = str_replace('..', '', $cleanLogin);
+        $path = $this->get('kernel')->getProjectDir().'/web/uploads/photos/'.$cleanLogin;
+        if (!file_exists($path) && mime_content_type($path)) {
+            $path = $this->get('kernel')->getProjectDir().'/web/uploads/photos/default-avatar.png';
+        }
+        $file = readfile($path);
+        $headers = [
+            'Content-Type' => mime_content_type($path),
+            'Content-Disposition' => 'inline; filename="'.$cleanLogin.'"', ];
+
+        return new Response($file, 200, $headers);
     }
 
     /**
