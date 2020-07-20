@@ -10,7 +10,7 @@
 {% block membership_content %}
     <div class="row-fluid">
         <div class="span2">
-            <img src="{{ path('user_view_image_profil', {'login': member.user.avatar}) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
+            <img src="{{ path('user_view_image_profil', {'avatar': member.user.avatar}) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
         </div>
         <div class="span10">
             <p>

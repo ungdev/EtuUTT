@@ -203,7 +203,7 @@
                 <div class="etu-comment" id="{{ message.id }}">
                     <div class="etu-comment-avatar">
                         <a href="{{ path('user_view', {'login': message.author.login}) }}">
-                            <img src="{{ path('user_view_image_profil', {'login': message.author.avatar}) }}"
+                            <img src="{{ path('user_view_image_profil', {'avatar': message.author.avatar}) }}"
                                  alt="{{ message.author.getFullName() }}"
                                  title="{{ message.author.getFullName() }}"/>
                         </a>

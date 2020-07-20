@@ -374,16 +374,16 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Route("/images/profil/{login}", name="user_view_image_profil")
+     * @Route("/images/profil/{avatar}", name="user_view_image_profil")
      *
-     * @param $login
+     * @param $avatar
      *
      * @return Response
      */
-    public function viewImageProfil($login)
+    public function viewImageProfil($avatar)
     {
         $this->denyAccessUnlessGranted('ROLE_CORE_PROFIL');
-        $cleanLogin = preg_replace('/[^a-zA-Z0-9.]/', '', $login);
+        $cleanLogin = preg_replace('/[^a-zA-Z0-9.]/', '', $avatar);
         $cleanLogin = str_replace('..', '', $cleanLogin);
         $path = __DIR__.'/../../../../../web/uploads/photos/'.$cleanLogin;
         if (!file_exists($path) || !mime_content_type($path)) {

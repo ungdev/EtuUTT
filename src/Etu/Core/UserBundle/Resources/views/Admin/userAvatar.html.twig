@@ -17,7 +17,7 @@
     </ul>
 
     <div class="padding20-sides profile-avatar">
-        <img src="{{ path('user_view_image_profil', {'login': user.avatar}) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
+        <img src="{{ path('user_view_image_profil', {'avatar': user.avatar}) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
         <hr/>
         {{ form_start(form) }}
         {{ form_widget(form) }}
