@@ -118,22 +118,22 @@ class PublicUsersListController extends ApiController
      *   }
      * )
      *
-     * @Route("/public/users/image/{login}", name="api_public_users_view")
+     * @Route("/public/users/image/{avatar}", name="api_public_users_view_image")
      * @Method("GET")
      *
-     * @param $login
+     * @param $avatar
      *
      * @return Response
      */
-    public function viewImageAction($login)
+    public function viewImageAction($avatar)
     {
-        $cleanLogin = preg_replace('/[^a-zA-Z0-9.]/', '', $login);
+        $cleanLogin = preg_replace('/[^a-zA-Z0-9.]/', '', $avatar);
         $cleanLogin = str_replace('..', '', $cleanLogin);
-        $path = $this->get('kernel')->getProjectDir().'/web/uploads/photos/'.$cleanLogin;
-        if (!file_exists($path) && mime_content_type($path)) {
-            $path = $this->get('kernel')->getProjectDir().'/web/uploads/photos/default-avatar.png';
+        $path = __DIR__.'/../../../../../../web/uploads/photos/'.$cleanLogin;
+        if (!file_exists($path) || !mime_content_type($path)) {
+            $path = __DIR__.'/../../../../../../web/uploads/photos/default-avatar.png';
         }
-        $file = readfile($path);
+        $file = file_get_contents($path);
         $headers = [
             'Content-Type' => mime_content_type($path),
             'Content-Disposition' => 'inline; filename="'.$cleanLogin.'"', ];
