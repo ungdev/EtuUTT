@@ -383,16 +383,16 @@ class ProfileController extends Controller
     public function viewImageProfil($avatar)
     {
         $this->denyAccessUnlessGranted('ROLE_CORE_PROFIL');
-        $cleanLogin = preg_replace('/[^a-zA-Z0-9.]/', '', $avatar);
-        $cleanLogin = str_replace('..', '', $cleanLogin);
-        $path = __DIR__.'/../../../../../web/uploads/photos/'.$cleanLogin;
+        $cleanAvatar = preg_replace('/[^a-zA-Z0-9.]/', '', $avatar);
+        $cleanAvatar = str_replace('..', '', $cleanAvatar);
+        $path = __DIR__.'/../../../../../web/uploads/photos/'.$cleanAvatar;
         if (!file_exists($path) || !mime_content_type($path)) {
             $path = __DIR__.'/../../../../../web/uploads/photos/default-avatar.png';
         }
         $file = file_get_contents($path);
         $headers = [
             'Content-Type' => mime_content_type($path),
-            'Content-Disposition' => 'inline; filename="'.$cleanLogin.'"', ];
+            'Content-Disposition' => 'inline; filename="'.$cleanAvatar.'"', ];
 
         return new Response($file, 200, $headers);
     }
