@@ -127,7 +127,7 @@ class PublicUsersListController extends ApiController
      */
     public function viewImageAction($avatar)
     {
-        $cleanAvatar = preg_replace('/[^a-zA-Z0-9.]/', '', $avatar);
+        $cleanAvatar = preg_replace('/[^a-zA-Z0-9._]/', '', $avatar);
         $cleanAvatar = str_replace('..', '', $cleanAvatar);
         $path = __DIR__.'/../../../../../../web/uploads/photos/'.$cleanAvatar;
         if (!file_exists($path) || !mime_content_type($path)) {
