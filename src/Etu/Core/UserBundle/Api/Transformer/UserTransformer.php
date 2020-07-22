@@ -19,8 +19,7 @@ class UserTransformer extends AbstractTransformer
     protected $kernelRootDir;
 
     /**
-     * @param BadgeTransformer $badgeTransformer
-     * @param string           $kernelRootDir    path to app directory
+     * @param string $kernelRootDir path to app directory
      */
     public function __construct(BadgeTransformer $badgeTransformer, $kernelRootDir)
     {
@@ -30,7 +29,6 @@ class UserTransformer extends AbstractTransformer
 
     /**
      * @param $user
-     * @param EmbedBag $includes
      *
      * @return array
      */
@@ -40,8 +38,6 @@ class UserTransformer extends AbstractTransformer
     }
 
     /**
-     * @param User $user
-     *
      * @return array
      */
     private function getData(User $user)
@@ -53,14 +49,14 @@ class UserTransformer extends AbstractTransformer
             'firstName' => $user->getFirstName(),
             'lastName' => $user->getLastName(),
             'fullName' => $user->getFullName(),
-            'personalMail' => $user->getPersonnalMailPrivacy() == User::PRIVACY_PUBLIC ? $user->getPersonnalMail() : null,
-            'phone' => $user->getPhoneNumberPrivacy() == User::PRIVACY_PUBLIC ? $user->getPhoneNumber() : null,
-            'nationality' => $user->getNationalityPrivacy() == User::PRIVACY_PUBLIC ? $user->getNationality() : null,
-            'address' => $user->getAddressPrivacy() == User::PRIVACY_PUBLIC ? $user->getAddress() : null,
-            'country' => $user->getCountryPrivacy() == User::PRIVACY_PUBLIC ? $user->getCountry() : null,
-            'postalCode' => $user->getPostalCodePrivacy() == User::PRIVACY_PUBLIC ? $user->getPostalCode() : null,
-            'city' => $user->getCityPrivacy() == User::PRIVACY_PUBLIC ? $user->getCity() : null,
-            'sex' => $user->getSexPrivacy() == User::PRIVACY_PUBLIC ? $user->getSex() : null,
+            'personalMail' => User::PRIVACY_PUBLIC == $user->getPersonnalMailPrivacy() ? $user->getPersonnalMail() : null,
+            'phone' => User::PRIVACY_PUBLIC == $user->getPhoneNumberPrivacy() ? $user->getPhoneNumber() : null,
+            'nationality' => User::PRIVACY_PUBLIC == $user->getNationalityPrivacy() ? $user->getNationality() : null,
+            'address' => User::PRIVACY_PUBLIC == $user->getAddressPrivacy() ? $user->getAddress() : null,
+            'country' => User::PRIVACY_PUBLIC == $user->getCountryPrivacy() ? $user->getCountry() : null,
+            'postalCode' => User::PRIVACY_PUBLIC == $user->getPostalCodePrivacy() ? $user->getPostalCode() : null,
+            'city' => User::PRIVACY_PUBLIC == $user->getCityPrivacy() ? $user->getCity() : null,
+            'sex' => User::PRIVACY_PUBLIC == $user->getSexPrivacy() ? $user->getSex() : null,
             'formation' => $user->getFormation(),
             'branch' => $user->getBranch(),
             'level' => $user->getNiveau(),
@@ -68,7 +64,7 @@ class UserTransformer extends AbstractTransformer
             'surname' => $user->getSurnom(),
             'jadis' => $user->getJadis(),
             'passions' => $user->getPassions(),
-            'birthday' => ($user->getBirthdayPrivacy() == User::PRIVACY_PUBLIC && $user->getBirthday()) ? $user->getBirthday()->format(\DateTime::ISO8601) : null,
+            'birthday' => (User::PRIVACY_PUBLIC == $user->getBirthdayPrivacy() && $user->getBirthday()) ? $user->getBirthday()->format(\DateTime::ISO8601) : null,
             'website' => $user->getWebsite(),
             'facebook' => $user->getFacebook(),
             'uvs' => $user->getUvsList(),
@@ -82,8 +78,6 @@ class UserTransformer extends AbstractTransformer
     }
 
     /**
-     * @param User $user
-     *
      * @return array
      */
     private function getLinks(User $user)
@@ -99,17 +93,17 @@ class UserTransformer extends AbstractTransformer
             ],
             [
                 'rel' => 'user.image',
-                'uri' => '/uploads/photos/'.$user->getAvatar(),
+                'uri' => '/api/public/users/image/'.$user->getAvatar(),
             ],
         ];
 
         // add official image only if it exists
         $officialImage = [
             'rel' => 'user.official_image',
-            'uri' => '/uploads/photos/'.$user->getLogin().'_official.jpg',
+            'uri' => '/api/public/users/image/'.$user->getLogin().'_official.jpg',
         ];
 
-        if (file_exists($this->kernelRootDir.'/../web'.$officialImage['uri'])) {
+        if (file_exists($this->kernelRootDir.'/../web/uploads/photos/'.$user->getLogin().'_official.jpg')) {
             array_push($links, $officialImage);
         }
 
@@ -119,9 +113,6 @@ class UserTransformer extends AbstractTransformer
     }
 
     /**
-     * @param User     $user
-     * @param EmbedBag $includes
-     *
      * @return array
      */
     private function getIncludes(User $user, EmbedBag $includes)

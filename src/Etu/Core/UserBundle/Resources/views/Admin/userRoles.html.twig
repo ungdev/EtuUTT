@@ -35,7 +35,7 @@
             <div class="row-fluid">
                 <div class="span4">
                     <div class="profileEdit-avatar">
-                        <img src="{{ asset('uploads/photos/'~user.avatar) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
+                        <img src="{{ path('user_view_image_profil', {'avatar': user.avatar}) }}" alt="{{ user.fullName }}" title="{{ user.fullName }}" />
                     </div>
                 </div>
                 <div class="span8">

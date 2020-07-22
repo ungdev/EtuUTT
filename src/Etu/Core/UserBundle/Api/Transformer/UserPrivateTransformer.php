@@ -13,9 +13,6 @@ class UserPrivateTransformer extends AbstractTransformer
      */
     protected $badgeTransformer;
 
-    /**
-     * @param BadgeTransformer $badgeTransformer
-     */
     public function __construct(BadgeTransformer $badgeTransformer)
     {
         $this->badgeTransformer = $badgeTransformer;
@@ -23,7 +20,6 @@ class UserPrivateTransformer extends AbstractTransformer
 
     /**
      * @param $user
-     * @param EmbedBag $includes
      *
      * @return array
      */
@@ -33,8 +29,6 @@ class UserPrivateTransformer extends AbstractTransformer
     }
 
     /**
-     * @param User $user
-     *
      * @return array
      */
     private function getData(User $user)
@@ -82,8 +76,6 @@ class UserPrivateTransformer extends AbstractTransformer
     }
 
     /**
-     * @param User $user
-     *
      * @return array
      */
     private function getLinks(User $user)
@@ -100,20 +92,17 @@ class UserPrivateTransformer extends AbstractTransformer
                 ],
                 [
                     'rel' => 'user.image',
-                    'uri' => '/uploads/photos/'.$user->getAvatar(),
+                    'uri' => '/api/public/users/image/'.$user->getAvatar(),
                 ],
                 [
                     'rel' => 'user.official_image',
-                    'uri' => '/uploads/photos/'.$user->getLogin().'_official.jpg',
+                    'uri' => '/api/public/users/image/'.$user->getLogin().'_official.jpg',
                 ],
             ],
         ];
     }
 
     /**
-     * @param User     $user
-     * @param EmbedBag $includes
-     *
      * @return array
      */
     private function getIncludes(User $user, EmbedBag $includes)
@@ -139,7 +128,7 @@ class UserPrivateTransformer extends AbstractTransformer
 
     protected function displayPrivacy($privacy)
     {
-        if ($privacy == User::PRIVACY_PUBLIC) {
+        if (User::PRIVACY_PUBLIC == $privacy) {
             return 'public';
         }
 

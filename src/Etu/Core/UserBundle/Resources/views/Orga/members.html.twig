@@ -53,7 +53,7 @@
             {% for member in group.members %}
                 <li class="asso-members-item">
                     <a href="{{ path('orga_admin_members_edit', {'login': member.user.login}) }}">
-                        <img src="{{ asset('uploads/photos/'~member.user.avatar) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
+                        <img src="{{ path('user_view_image_profil', {'avatar': member.user.avatar}) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
                         <h5>{{ member.user.fullName }}</h5>
                         <p>
                             {{ ('user.orga.role.'~member.role)|trans }}

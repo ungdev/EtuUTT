@@ -225,7 +225,7 @@
             <div class="comparison-generator">
                 {% for user in users %}
                     <div class="comparison-generator-user">
-                        <img src="{{ asset('uploads/photos/' ~ user.avatar) }}" />
+                        <img src="{{ path('user_view_image_profil', {'avatar': user.avatar}) }}" />
                         {{ user.fullName|limit(18) }}
 
                         {% if countUsers > 1 %}
