@@ -34,8 +34,10 @@ class MainController extends Controller
             ->add('phoneNumber', null, ['required' => false])
             ->add('uvs', null, ['required' => false])
             ->add('branch', ChoiceType::class, ['choices' => User::$branches, 'required' => false])
+            ->add('filiere', ChoiceType::class, ['choices' => User::$filieres, 'required' => false])
             ->add('niveau', ChoiceType::class, ['choices' => User::$levels, 'required' => false])
             ->add('personnalMail', null, ['required' => false])
+            ->setAction($this->generateUrl('trombi_index'))
             ->getForm();
 
         $form->handleRequest($request);
@@ -85,14 +87,14 @@ class MainController extends Controller
                 $phone = $user->getPhoneNumber();
                 $parts = [];
 
-                if (mb_strpos($phone, '.') !== false) {
+                if (false !== mb_strpos($phone, '.')) {
                     $parts = explode('.', $phone);
-                } elseif (mb_strpos($phone, '-') !== false) {
+                } elseif (false !== mb_strpos($phone, '-')) {
                     $parts = explode('-', $phone);
-                } elseif (mb_strpos($phone, ' ') !== false) {
+                } elseif (false !== mb_strpos($phone, ' ')) {
                     $parts = explode(' ', $phone);
                 } else {
-                    $parts = str_split($phone, 2);
+                    $parts = mb_str_split($phone, 2);
                 }
 
                 $users->andWhere('u.phoneNumber LIKE :phone')
@@ -111,6 +113,18 @@ class MainController extends Controller
             if ($user->getBranch()) {
                 $users->andWhere('u.branch = :branch')
                     ->setParameter('branch', $user->getBranch());
+            }
+
+            if ($user->getFiliere()) {
+                if ('libre' === mb_strtolower($user->getFiliere())) {
+                    $users->andWhere('LOWER(u.filiere) = :filiere')
+                        ->setParameter('filiere', 'libre');
+                } elseif ('Aucune' === $user->getFiliere()) {
+                    $users->andWhere('u.filiere is NULL');
+                } else {
+                    $users->andWhere('u.filiere = :filiere')
+                        ->setParameter('filiere', $user->getFiliere());
+                }
             }
 
             if ($user->getNiveau()) {

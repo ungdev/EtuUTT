@@ -40,15 +40,44 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public const PRIVACY_PRIVATE = 200;
 
     public static $branches = [
-        'A2I' => 'A2I', 'GI' => 'GI',
-        'GM' => 'GM', 'ISI' => 'ISI',
-        'MTE' => 'MTE',  'MM' => 'MM',
-        'RT' => 'RT', 'TC' => 'TC',
+        'ING A2I' => 'A2I', 'ING GI' => 'GI',
+        'ING GM' => 'GM', 'ING ISI' => 'ISI',
+        'ING MTE' => 'MTE',  'ING MM' => 'MM',
+        'ING RT' => 'RT', 'ING TC' => 'TC',
+        'MST ISC' => 'ISC', 'MST PAIP' => 'PAIP',
+        'MST RE' => 'RE', 'LP ETN' => 'LP-ETN',
+        'LP MEER' => 'LP-MEER', 'LP MPHP' => 'LP-MPHP',
+        'DOC EXT' => 'EXT', 'DOC M2ON' => 'M2ON',
+        'DOC OSS' => 'OSS', 'DOC SST' => 'SST',
+        'MS MPTI' => 'MS-MPTI', 'MS EBAM' => 'MS-EBAM',
+        'MS EFC' => 'MS-EFC', 'MS EST' => 'MS-EST',
+        'CV ING' => ' CV ING', 'DU DPO' => 'DU-DPO',
+        'DU ARMC' => 'DU-ARMC', 'DU 3C' => 'DU-3C',
+        'DU DE' => 'DU-DE', 'DU IOBM' => 'DU-IOBM',
+        'FC' => 'FC',
     ];
 
     public static $levels = [
         '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5',
         '6' => '6', '7' => '7', '8' => '8', '9' => '9', '10' => '10',
+    ];
+
+    public static $filieres = [
+        'Aucune' => 'Aucune', 'Libre' => 'Libre', 'ING A2I SPI' => 'SPI',
+        'ING A2I TEI' => 'TEI', 'ING GI LET' => 'LET',
+        'ING GI LIP' => 'LIP', 'ING GI RAMS' => 'RAMS',
+        'ING GI SFERE (*)' => 'SFERE', 'ING GM CEISME' => 'CEISME',
+        'ING GM MDPI' => 'MDPI', 'ING GM SNM' => 'SNM',
+        'ING GM TIM (*)' => 'TIM', 'ING ISI ATN' => 'ATN',
+        'ING ISI IPL' => 'IPL', 'ING ISI VDC' => 'VDC',
+        'ING ISI MPL (*)' => 'MPL', 'ING ISI MRI (*)' => 'MRI',
+        'ING ISI MSI (*)' => 'MSI', 'ING MTE EME' => 'EME',
+        'ING MTE TCMC' => 'TCMC', 'ING MTE TQM' => 'TQM',
+        'ING RT CSR' => 'CSR', 'ING RT SSC' => 'SSC',
+        'ING RT TMOC' => 'TMOC', 'MST ISC OSS' => 'OSS',
+        'MST ISC SSI' => 'SSI', 'MST PAIP MMPA' => 'MMPA',
+        'MST PAIP ONT' => 'ONT', 'MST RE IMEDD' => 'IMEDD',
+        'MST RE IMSGA' => 'IMSGA',
     ];
 
     /**
@@ -820,7 +849,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function setStudentId($studentId)
     {
-        if ($studentId == 'NC') {
+        if ('NC' == $studentId) {
             $studentId = null;
         }
 
@@ -947,7 +976,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function setFormation($formation)
     {
-        if (mb_strtolower($formation) == 'nc') {
+        if ('nc' == mb_strtolower($formation)) {
             $formation = null;
         }
 
@@ -973,7 +1002,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function setBranch($branch)
     {
-        if ($branch == 'NC') {
+        if ('NC' == $branch) {
             $branch = null;
         }
 
@@ -997,7 +1026,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function setNiveau($niveau)
     {
-        if ($niveau == 'NC') {
+        if ('NC' == $niveau) {
             $niveau = null;
         }
 
@@ -1023,7 +1052,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function setFiliere($filiere)
     {
-        if ($filiere == 'NC') {
+        if ('NC' == $filiere) {
             $filiere = null;
         }
 
@@ -1049,7 +1078,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function setPhoneNumber($phoneNumber)
     {
-        if ($phoneNumber == 'NC') {
+        if ('NC' == $phoneNumber) {
             $phoneNumber = null;
         }
 
@@ -1099,7 +1128,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function setTitle($title)
     {
-        if ($title == 'NC') {
+        if ('NC' == $title) {
             $title = null;
         }
 
@@ -1125,7 +1154,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function setRoom($room)
     {
-        if ($room == 'NC') {
+        if ('NC' == $room) {
             $room = null;
         }
 
@@ -1842,8 +1871,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     /**
      * Retrieves the currently set isInLDAP.
-     *
-     * @return bool
      */
     public function getIsInLDAP(): bool
     {
@@ -1852,8 +1879,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     /**
      * Sets the isInLDAP to use.
-     *
-     * @param bool $isInLDAP
      *
      * @return $this
      */
@@ -1866,8 +1891,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     /**
      * Retrieves the currently set isStudent.
-     *
-     * @return bool
      */
     public function getIsStudent(): bool
     {
@@ -1876,8 +1899,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     /**
      * Sets the isStudent to use.
-     *
-     * @param bool $isStudent
      *
      * @return $this
      */
@@ -1890,8 +1911,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     /**
      * Retrieves the currently set isStaffUTT.
-     *
-     * @return bool
      */
     public function getIsStaffUTT(): bool
     {
@@ -1900,8 +1919,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     /**
      * Sets the isStaffUTT to use.
-     *
-     * @param bool $isStaffUTT
      *
      * @return $this
      */
@@ -1914,8 +1931,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     /**
      * Retrieves the currently set storedRoles.
-     *
-     * @return array
      */
     public function getStoredRoles(): array
     {
@@ -1924,8 +1939,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     /**
      * Sets the storedRoles to use.
-     *
-     * @param array $storedRoles
      *
      * @return $this
      */
@@ -2011,8 +2024,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     /**
      * Set options.
-     *
-     * @param UserOptionsCollection $options
      *
      * @return User
      */
@@ -2155,8 +2166,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * Add memberships.
      *
-     * @param Member $memberships
-     *
      * @return User
      */
     public function addMembership(Member $memberships)
@@ -2168,8 +2177,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     /**
      * Remove memberships.
-     *
-     * @param Member $memberships
      */
     public function removeMembership(Member $memberships)
     {
@@ -2239,8 +2246,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * Add badges.
      *
-     * @param UserBadge $badges
-     *
      * @return User
      */
     public function addBadge(UserBadge $badges)
@@ -2252,8 +2257,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     /**
      * Remove badges.
-     *
-     * @param UserBadge $badges
      */
     public function removeBadge(UserBadge $badges)
     {
@@ -2285,14 +2288,14 @@ class User implements UserInterface, EquatableInterface, \Serializable
             $badge = $badge->getBadge();
         }
 
-        $count = count($badges);
+        $count = \count($badges);
 
-        if ($this->getBranch() == 'TC' && $this->getNiveau() == '1') {
+        if ('TC' == $this->getBranch() && '1' == $this->getNiveau()) {
             BadgesManager::userAddBadge($this, 'tc01');
             ++$count;
         }
 
-        if ($this->getBranch() == 'TC' && $this->getNiveau() == '6') {
+        if ('TC' == $this->getBranch() && '6' == $this->getNiveau()) {
             BadgesManager::userAddBadge($this, 'tc06');
             ++$count;
         }
@@ -2307,7 +2310,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
         /** @var Member[] $memberships */
         $memberships = ($this->getMemberships()) ? $this->getMemberships()->toArray() : [];
 
-        if (count($memberships) > 0) {
+        if (\count($memberships) > 0) {
             BadgesManager::userAddBadge($this, 'orga_member', 1);
             ++$count;
         }
@@ -2318,11 +2321,11 @@ class User implements UserInterface, EquatableInterface, \Serializable
                 ++$count;
             }
 
-            if ($member->getRole() == Member::ROLE_PRESIDENT) {
+            if (Member::ROLE_PRESIDENT == $member->getRole()) {
                 BadgesManager::userAddBadge($this, 'orga_member', 3);
                 ++$count;
 
-                if ($member->getOrganization()->getLogin() == 'bde') {
+                if ('bde' == $member->getOrganization()->getLogin()) {
                     BadgesManager::userAddBadge($this, 'orga_member', 4);
                     ++$count;
                 }
@@ -2356,7 +2359,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
         $all_badges = (array) BadgesManager::findBadgesList();
         foreach ($all_badges as $serie => $badges) {
             foreach ((array) $badges as $level => $badge) {
-                if (count($badges) > 1) {
+                if (\count($badges) > 1) {
                     $list[$serie][$level] = [
                         'owned' => false,
                         'badge' => $badge,
@@ -2377,7 +2380,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
             $badge = $userBadge->getBadge();
             $serieBadges = $all_badges[$badge->getSerie()];
 
-            if (count($serieBadges) > 1) {
+            if (\count($serieBadges) > 1) {
                 $list[$badge->getSerie()][$badge->getLevel()]['owned'] = true;
                 $list[$badge->getSerie()][$badge->getLevel()]['createdAt'] = $userBadge->getCreatedAt();
             } else {
@@ -2498,7 +2501,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function isReadOnly()
     {
-        return $this->getReadOnlyExpirationDate() !== null
+        return null !== $this->getReadOnlyExpirationDate()
             && $this->getReadOnlyExpirationDate() instanceof \DateTime
             && $this->getReadOnlyExpirationDate() > new \DateTime();
     }
@@ -2510,7 +2513,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function isBanned()
     {
-        return $this->getBannedExpirationDate() !== null
+        return null !== $this->getBannedExpirationDate()
             && $this->getBannedExpirationDate() instanceof \DateTime
             && $this->getBannedExpirationDate() > new \DateTime();
     }
@@ -2642,8 +2645,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * The equality comparison is used to know when the token should be renewed.
      * So check only for equality of attributs that could change roles.
-     *
-     * @param UserInterface $user
      *
      * @return bool
      */
