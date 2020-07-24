@@ -59,9 +59,11 @@ class PrivateUserController extends ApiController
      *   section = "User - Private data",
      *   authentication = true,
      *   authenticationRoles = {"private_user_schedule"},
+     * )
      *
-     * @Route("/courses", name="api_private_user_courses")
+     * @Route("/courses", name="api_private_user_courses", options={"expose"=true})
      * @Method("GET")
+     * @Scope("private_user_schedule")
      */
     public function coursesAction(Request $request)
     {
