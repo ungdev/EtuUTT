@@ -158,7 +158,8 @@ class ProfileController extends Controller
             'required' => false,
             'label' => 'user.profile.profileEdit.privacy',
         ];
-
+        $privacyChoiceSchedule = $privacyChoice;
+        $privacyChoiceSchedule['label'] = 'user.profile.profile.schedule';
         $form = $this->createFormBuilder($user)
             ->add('phoneNumber', null, ['required' => false, 'label' => 'user.profile.profileEdit.phoneNumber'])
             ->add('phoneNumberPrivacy', ChoiceType::class, $privacyChoice)
@@ -192,7 +193,7 @@ class ProfileController extends Controller
                 ], ])
             ->add('personnalMail', EmailType::class, ['required' => false, 'label' => 'user.profile.profileEdit.personnalMail'])
             ->add('personnalMailPrivacy', ChoiceType::class, $privacyChoice)
-            ->add('schedulePrivacy', ChoiceType::class, $privacyChoice)
+            ->add('schedulePrivacy', ChoiceType::class, $privacyChoiceSchedule)
             ->add('website', null, ['required' => false, 'label' => 'user.profile.profileEdit.website'])
             ->add('facebook', null, ['required' => false, 'label' => 'user.profile.profileEdit.facebook'])
             ->add('twitter', null, ['required' => false, 'label' => 'user.profile.profileEdit.twitter'])
