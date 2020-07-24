@@ -475,8 +475,7 @@ class ProfileController extends Controller
 
         /** @var $courses Course[] */
         $courses = [];
-        if($user->getSchedulePrivacy() === $user::PRIVACY_PUBLIC || !$this->getUser()->getIsStudent())
-        {
+        if ($user->getSchedulePrivacy() === $user::PRIVACY_PUBLIC || !$this->getUser()->getIsStudent()) {
             $courses = $em->getRepository('EtuUserBundle:Course')->findByUser($user);
         }
 

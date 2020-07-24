@@ -68,8 +68,8 @@ class PrivateUserController extends ApiController
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-            /** @var $courses Course[] */
-            $courses = $em->createQueryBuilder()
+        /** @var $courses Course[] */
+        $courses = $em->createQueryBuilder()
                 ->select('c.uv, c.day, c.start, c.end, c.week, c.type, c.room')
                 ->from('EtuUserBundle:Course', 'c')
                 ->where('c.deletedAt IS NULL')
@@ -78,7 +78,7 @@ class PrivateUserController extends ApiController
                 ->getQuery()
                 ->getResult();
 
-            return $this->format(['courses' => $courses], 200, [], $request);
+        return $this->format(['courses' => $courses], 200, [], $request);
     }
 
     /**
@@ -105,17 +105,17 @@ class PrivateUserController extends ApiController
         $hours = [];
 
         foreach ($courses as $course) {
-            if ($course->getDay() == Course::DAY_MONDAY) {
+            if (Course::DAY_MONDAY == $course->getDay()) {
                 $days[] = 1;
-            } elseif ($course->getDay() == Course::DAY_TUESDAY) {
+            } elseif (Course::DAY_TUESDAY == $course->getDay()) {
                 $days[] = 2;
-            } elseif ($course->getDay() == Course::DAY_WENESDAY) {
+            } elseif (Course::DAY_WENESDAY == $course->getDay()) {
                 $days[] = 3;
-            } elseif ($course->getDay() == Course::DAY_THURSDAY) {
+            } elseif (Course::DAY_THURSDAY == $course->getDay()) {
                 $days[] = 4;
-            } elseif ($course->getDay() == Course::DAY_FRIDAY) {
+            } elseif (Course::DAY_FRIDAY == $course->getDay()) {
                 $days[] = 5;
-            } elseif ($course->getDay() == Course::DAY_SATHURDAY) {
+            } elseif (Course::DAY_SATHURDAY == $course->getDay()) {
                 $days[] = 6;
             } else {
                 $days[] = 7;

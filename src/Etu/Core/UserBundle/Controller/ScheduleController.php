@@ -73,8 +73,7 @@ class ScheduleController extends Controller
         $users = [];
         $studentsPublicSchedule = [];
         foreach ($students as $student) {
-            if($student->getUser()->getSchedulePrivacy() === $student->getUser()::PRIVACY_PUBLIC || !$this->getUser()->getIsStudent())
-            {
+            if ($student->getUser()->getSchedulePrivacy() === $student->getUser()::PRIVACY_PUBLIC || !$this->getUser()->getIsStudent()) {
                 $users[] = $student->getUser()->getLogin();
                 $studentsPublicSchedule[] = $student;
             }
@@ -136,11 +135,11 @@ class ScheduleController extends Controller
         $semesterEnd = SemesterManager::current()->getEnd()->format('Ymd\THis');
 
         foreach ($courses as $course) {
-            if ($course->getUv() == 'SPJE') {
+            if ('SPJE' == $course->getUv()) {
                 continue;
             }
 
-            if ($course->getDay() == Course::DAY_SATHURDAY) {
+            if (Course::DAY_SATHURDAY == $course->getDay()) {
                 $day = 'saturday';
             } else {
                 $day = $course->getDay();
@@ -156,7 +155,7 @@ class ScheduleController extends Controller
             $time = explode(':', $course->getEnd());
             $end->setTime($time[0], $time[1]);
 
-            $summary = ($course->getWeek() != 'T') ? $course->getUv().' ('.$course->getWeek().')' : $course->getUv();
+            $summary = ('T' != $course->getWeek()) ? $course->getUv().' ('.$course->getWeek().')' : $course->getUv();
 
             $vcalendar->add('VEVENT', [
                 'SUMMARY' => $summary.' - '.$course->getType(),
@@ -204,8 +203,8 @@ class ScheduleController extends Controller
             Course::DAY_THURSDAY, Course::DAY_FRIDAY, Course::DAY_SATHURDAY,
         ];
 
-        if (!in_array($day, $days)) {
-            if (date('w') == 0) { // Sunday
+        if (!\in_array($day, $days)) {
+            if (0 == date('w')) { // Sunday
                 $day = Course::DAY_MONDAY;
             } else {
                 $day = $days[date('w') - 1];

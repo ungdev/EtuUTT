@@ -183,8 +183,7 @@ class PublicUsersListController extends ApiController
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        if($user->getSchedulePrivacy() === $user::PRIVACY_PUBLIC)
-        {
+        if ($user->getSchedulePrivacy() === $user::PRIVACY_PUBLIC) {
             /** @var $courses Course[] */
             $courses = $em->createQueryBuilder()
                 ->select('c.uv, c.day, c.start, c.end, c.week, c.type, c.room')
@@ -197,10 +196,8 @@ class PublicUsersListController extends ApiController
 
             return $this->format(['courses' => $courses], 200, [], $request);
         }
-        else
-        {
-            return $this->format(['courses' => []], 200, [], $request);
-        }
+
+        return $this->format(['courses' => []], 200, [], $request);
     }
 
     /**

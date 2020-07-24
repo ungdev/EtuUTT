@@ -2725,20 +2725,15 @@ class User implements UserInterface, EquatableInterface, \Serializable
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getSchedulePrivacy() : int
+    public function getSchedulePrivacy(): int
     {
         return $this->schedulePrivacy;
     }
 
-    /**
-     * @param int $schedulePrivacy
-     */
     public function setSchedulePrivacy(int $schedulePrivacy)
     {
         $this->schedulePrivacy = $schedulePrivacy;
+
         return $this;
     }
 }
