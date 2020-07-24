@@ -55,6 +55,34 @@ class PrivateUserController extends ApiController
 
     /**
      * @ApiDoc(
+     *   description = "Courses list of a given user (scope: private), in case of private schedule",
+     *   section = "User - Private data",
+     *   authentication = true,
+     *   authenticationRoles = {"private_user_schedule"},
+     *
+     * @Route("/courses", name="api_private_user_courses")
+     * @Method("GET")
+     */
+    public function coursesAction(Request $request)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+            /** @var $courses Course[] */
+            $courses = $em->createQueryBuilder()
+                ->select('c.uv, c.day, c.start, c.end, c.week, c.type, c.room')
+                ->from('EtuUserBundle:Course', 'c')
+                ->where('c.deletedAt IS NULL')
+                ->andWhere('c.user = :user')
+                ->setParameter('user', $this->getAccessToken($request)->getUser())
+                ->getQuery()
+                ->getResult();
+
+            return $this->format(['courses' => $courses], 200, [], $request);
+    }
+
+    /**
+     * @ApiDoc(
      *   section = "User - Private data",
      *   authentication = true,
      *   authenticationRoles = {"private_user_schedule"},

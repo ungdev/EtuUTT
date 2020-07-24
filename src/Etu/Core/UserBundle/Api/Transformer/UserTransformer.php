@@ -74,6 +74,7 @@ class UserTransformer extends AbstractTransformer
             'isStudent' => $user->getIsStudent(),
             'bdeMember' => $user->isBdeMember(),
             'bdeMembershipEnd' => $user->getBdeMembershipEnd(),
+            'isSchedulePublic' => User::PRIVACY_PUBLIC === $user->getSchedulePrivacy(),
         ];
     }
 

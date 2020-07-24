@@ -192,6 +192,7 @@ class ProfileController extends Controller
                 ], ])
             ->add('personnalMail', EmailType::class, ['required' => false, 'label' => 'user.profile.profileEdit.personnalMail'])
             ->add('personnalMailPrivacy', ChoiceType::class, $privacyChoice)
+            ->add('schedulePrivacy', ChoiceType::class, $privacyChoice)
             ->add('website', null, ['required' => false, 'label' => 'user.profile.profileEdit.website'])
             ->add('facebook', null, ['required' => false, 'label' => 'user.profile.profileEdit.facebook'])
             ->add('twitter', null, ['required' => false, 'label' => 'user.profile.profileEdit.twitter'])
@@ -473,7 +474,11 @@ class ProfileController extends Controller
         }
 
         /** @var $courses Course[] */
-        $courses = $em->getRepository('EtuUserBundle:Course')->findByUser($user);
+        $courses = [];
+        if($user->getSchedulePrivacy() === $user::PRIVACY_PUBLIC || !$this->getUser()->getIsStudent())
+        {
+            $courses = $em->getRepository('EtuUserBundle:Course')->findByUser($user);
+        }
 
         // Builder to create the schedule
         $builder = new ScheduleBuilder();

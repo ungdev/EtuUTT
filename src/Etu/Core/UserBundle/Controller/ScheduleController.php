@@ -71,15 +71,20 @@ class ScheduleController extends Controller
             ->getResult();
 
         $users = [];
+        $studentsPublicSchedule = [];
         foreach ($students as $student) {
-            $users[] = $student->getUser()->getLogin();
+            if($student->getUser()->getSchedulePrivacy() === $student->getUser()::PRIVACY_PUBLIC || !$this->getUser()->getIsStudent())
+            {
+                $users[] = $student->getUser()->getLogin();
+                $studentsPublicSchedule[] = $student;
+            }
         }
         $cumulLogins = implode(':', $users);
 
         return [
             'cumulLogins' => $cumulLogins,
             'course' => $course,
-            'students' => $students,
+            'students' => $studentsPublicSchedule,
         ];
     }
 

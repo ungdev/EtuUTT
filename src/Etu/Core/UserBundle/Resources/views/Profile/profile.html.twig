@@ -210,6 +210,20 @@
                         <div class="clear"></div>
                     </div>
 
+                    <div class="subblock">
+                        <div class="profile-infos-label hidden-for-phones">
+                            {{ 'user.profile.profile.schedule'|trans }}
+                        </div>
+                        <div class="profile-infos-value">
+                            {% if is_private(app.user.schedulePrivacy) %}
+                                <i class="icon-lock tip" title="{{ 'user.privacy.private'|trans }}"></i>
+                            {% else %}
+                                <i class="icon-globe tip" title="{{ 'user.privacy.public'|trans }}"></i>
+                            {% endif %}
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+
                     <p class="profile-block-action">
                         <a href="{{ path('user_profile_edit') }}" class="btn">
                             {{ 'user.profile.profile.edit'|trans }}
