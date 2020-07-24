@@ -312,7 +312,7 @@ $(function() {
                 return $("<li style=\"margin-bottom: 3px;\">")
                     .append(
                         "<a>" +
-                            "<img src=\" "+ imageLink.uri + "\" style=\"float: left; max-height: 25px; max-width: 25px; margin-right: 5px;\" />" +
+                            "<img src=\"/images/profil/"+ imageLink.uri.split('/').slice(-1)[0] + "\" style=\"float: left; max-height: 25px; max-width: 25px; margin-right: 5px;\" />" +
                             "<span style=\"display: block; float: left; margin-top: 0;\">" + item.label + "</span>" +
                             "<div style=\"clear: both;\"></div>" +
                         "</a>"
