@@ -29,7 +29,7 @@ class MainController extends Controller
     {
         // Find organization
         $em = $this->getDoctrine()->getManager();
-        if ($organization && $organization != 'general') {
+        if ($organization && 'general' != $organization) {
             $organization = $em->getRepository('EtuUserBundle:Organization')
                 ->findOneBy(['login' => $request->get('organization')]);
             if (!$organization) {
@@ -47,7 +47,7 @@ class MainController extends Controller
         ], ['createdAt' => 'DESC']);
 
         // If not found
-        if (count($page) != 1) {
+        if (1 != \count($page)) {
             throw $this->createNotFoundException('Wiki page not found');
         }
 
@@ -114,7 +114,7 @@ class MainController extends Controller
     {
         // Find organization
         $em = $this->getDoctrine()->getManager();
-        if ($organization && $organization != 'general') {
+        if ($organization && 'general' != $organization) {
             $organization = $em->getRepository('EtuUserBundle:Organization')
                 ->findOneBy(['login' => $request->get('organization')]);
             if (!$organization) {
@@ -139,14 +139,14 @@ class MainController extends Controller
                 return $this->createAccessDeniedResponse();
             }
             // Check if subslug exist
-            if (!empty($slug) && count($page) != 1) {
+            if (!empty($slug) && 1 != \count($page)) {
                 return $this->createAccessDeniedResponse();
             }
             $page = new WikiPage();
             $page->setReadRight(WikiPage::RIGHT['STUDENT']);
             $page->setEditRight(WikiPage::RIGHT['STUDENT']);
         } else {
-            if (count($page) != 1) {
+            if (1 != \count($page)) {
                 throw $this->createNotFoundException('Wiki page not found');
             } elseif (!$rights->canEdit($page)) {
                 return $this->createAccessDeniedResponse();
@@ -183,7 +183,7 @@ class MainController extends Controller
             foreach ($result as $key => $value) {
                 if ($rights->has($value['readRight'], $organization)) {
                     $pagelist[$key] = $value['title'];
-                    if (mb_strpos($key, '/') !== false) {
+                    if (false !== mb_strpos($key, '/')) {
                         $pagelist[$key] = '↳'.$pagelist[$key];
                     }
                 }
@@ -217,7 +217,7 @@ class MainController extends Controller
         }
         $form = $form->add('readRight', ChoiceType::class, ['choices' => $choices, 'required' => true, 'label' => 'wiki.main.edit.readRight']);
         unset($choices['wiki.main.right.'.WikiPage::RIGHT['ALL']]);
-        if (count($choices) > 1) {
+        if (\count($choices) > 1) {
             $form = $form->add('editRight', ChoiceType::class, ['choices' => $choices, 'required' => true, 'label' => 'wiki.main.edit.editRight']);
         }
 
@@ -299,7 +299,7 @@ class MainController extends Controller
     {
         // Find organization
         $em = $this->getDoctrine()->getManager();
-        if ($organization && $organization != 'general') {
+        if ($organization && 'general' != $organization) {
             $organization = $em->getRepository('EtuUserBundle:Organization')
                 ->findOneBy(['login' => $request->get('organization')]);
             if (!$organization) {
@@ -353,7 +353,7 @@ class MainController extends Controller
      * @Route("/wiki/linklist/{organization}", name="wiki_linklist", options={"expose"=true})
      * @Template()
      *
-     * @param null|mixed $organization
+     * @param mixed|null $organization
      */
     public function editorAction(Request $request, $organization = null)
     {
@@ -402,7 +402,7 @@ class MainController extends Controller
     /**
      * Called by rich text editor to show a list of available links.
      *
-     * @Route("/wiki/list", name="wiki_list")
+     * @Route("/wiki", name="wiki_list")
      * @Template()
      */
     public function wikilistAction(Request $request)
@@ -440,7 +440,7 @@ class MainController extends Controller
     {
         // Find organization
         $em = $this->getDoctrine()->getManager();
-        if ($organization && $organization != 'general') {
+        if ($organization && 'general' != $organization) {
             $organization = $em->getRepository('EtuUserBundle:Organization')
                 ->findOneBy(['login' => $request->get('organization')]);
             if (!$organization) {
@@ -459,7 +459,7 @@ class MainController extends Controller
 
         // If not found
         $rights = $this->get('etu.wiki.permissions_checker');
-        if (count($page) != 1) {
+        if (1 != \count($page)) {
             throw $this->createNotFoundException('Wiki page not found');
         } elseif (!$rights->canDelete($page)) {
             return $this->createAccessDeniedResponse();
@@ -502,7 +502,7 @@ class MainController extends Controller
         }
 
         // Submit yes
-        if ($request->query->get('confirm') === 'yes' && !$childrenPages) {
+        if ('yes' === $request->query->get('confirm') && !$childrenPages) {
             // Force insertion
             $page = clone $page;
 
@@ -549,7 +549,7 @@ class MainController extends Controller
     {
         // Find organization
         $em = $this->getDoctrine()->getManager();
-        if ($organization && $organization != 'general') {
+        if ($organization && 'general' != $organization) {
             $organization = $em->getRepository('EtuUserBundle:Organization')
                 ->findOneBy(['login' => $request->get('organization')]);
             if (!$organization) {
@@ -568,7 +568,7 @@ class MainController extends Controller
 
         // If not found
         $rights = $this->get('etu.wiki.permissions_checker');
-        if (count($page) != 1) {
+        if (1 != \count($page)) {
             throw $this->createNotFoundException('Wiki page not found');
         } elseif (!$rights->canMove($page)) {
             return $this->createAccessDeniedResponse();
@@ -596,7 +596,7 @@ class MainController extends Controller
         $pagelist = [];
         foreach ($result as $key => $value) {
             if ($rights->has($value['readRight'], $organization)
-                && mb_strpos($key, $page->getSlug()) !== 0) {
+                && 0 !== mb_strpos($key, $page->getSlug())) {
                 $pagelist[$key] = $key.'/';
             }
         }
