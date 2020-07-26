@@ -66,7 +66,7 @@ class MainController extends Controller
         $usersIds = [];
 
         foreach ($users as $user) {
-            if ($user->getSchedulePrivacy() === $user::PRIVACY_PUBLIC || !$this->getUser()->getIsStudent()) {
+            if ($user->getSchedulePrivacy() === $user::PRIVACY_PUBLIC || !$this->getUser()->getIsStudent() || $user === $this->getUser()) {
                 $usersIds[] = $user->getId();
             }
         }
