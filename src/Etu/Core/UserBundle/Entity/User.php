@@ -619,6 +619,14 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     protected $privateToken;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     */
+    protected $schedulePrivacy;
+
     /*
      * Methods
      */
@@ -641,6 +649,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
         $this->cityPrivacy = self::PRIVACY_PUBLIC;
         $this->countryPrivacy = self::PRIVACY_PUBLIC;
         $this->birthdayPrivacy = self::PRIVACY_PUBLIC;
+        $this->schedulePrivacy = self::PRIVACY_PUBLIC;
         $this->birthdayDisplayOnlyAge = false;
         $this->personnalMailPrivacy = self::PRIVACY_PUBLIC;
         $this->options = new UserOptionsCollection();
@@ -2712,6 +2721,18 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public function generatePrivateToken()
     {
         $this->privateToken = Uuid::getFactory()->uuid4();
+
+        return $this;
+    }
+
+    public function getSchedulePrivacy(): int
+    {
+        return $this->schedulePrivacy;
+    }
+
+    public function setSchedulePrivacy(int $schedulePrivacy)
+    {
+        $this->schedulePrivacy = $schedulePrivacy;
 
         return $this;
     }

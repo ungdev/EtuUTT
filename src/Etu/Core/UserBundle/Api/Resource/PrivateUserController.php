@@ -55,6 +55,36 @@ class PrivateUserController extends ApiController
 
     /**
      * @ApiDoc(
+     *   description = "Courses list of a given user (scope: private), in case of private schedule",
+     *   section = "User - Private data",
+     *   authentication = true,
+     *   authenticationRoles = {"private_user_schedule"},
+     * )
+     *
+     * @Route("/courses", name="api_private_user_courses", options={"expose"=true})
+     * @Method("GET")
+     * @Scope("private_user_schedule")
+     */
+    public function coursesAction(Request $request)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var $courses Course[] */
+        $courses = $em->createQueryBuilder()
+                ->select('c.uv, c.day, c.start, c.end, c.week, c.type, c.room')
+                ->from('EtuUserBundle:Course', 'c')
+                ->where('c.deletedAt IS NULL')
+                ->andWhere('c.user = :user')
+                ->setParameter('user', $this->getAccessToken($request)->getUser())
+                ->getQuery()
+                ->getResult();
+
+        return $this->format(['courses' => $courses], 200, [], $request);
+    }
+
+    /**
+     * @ApiDoc(
      *   section = "User - Private data",
      *   authentication = true,
      *   authenticationRoles = {"private_user_schedule"},
@@ -77,17 +107,17 @@ class PrivateUserController extends ApiController
         $hours = [];
 
         foreach ($courses as $course) {
-            if ($course->getDay() == Course::DAY_MONDAY) {
+            if (Course::DAY_MONDAY == $course->getDay()) {
                 $days[] = 1;
-            } elseif ($course->getDay() == Course::DAY_TUESDAY) {
+            } elseif (Course::DAY_TUESDAY == $course->getDay()) {
                 $days[] = 2;
-            } elseif ($course->getDay() == Course::DAY_WENESDAY) {
+            } elseif (Course::DAY_WENESDAY == $course->getDay()) {
                 $days[] = 3;
-            } elseif ($course->getDay() == Course::DAY_THURSDAY) {
+            } elseif (Course::DAY_THURSDAY == $course->getDay()) {
                 $days[] = 4;
-            } elseif ($course->getDay() == Course::DAY_FRIDAY) {
+            } elseif (Course::DAY_FRIDAY == $course->getDay()) {
                 $days[] = 5;
-            } elseif ($course->getDay() == Course::DAY_SATHURDAY) {
+            } elseif (Course::DAY_SATHURDAY == $course->getDay()) {
                 $days[] = 6;
             } else {
                 $days[] = 7;

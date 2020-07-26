@@ -183,17 +183,21 @@ class PublicUsersListController extends ApiController
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        /** @var $courses Course[] */
-        $courses = $em->createQueryBuilder()
-            ->select('c.uv, c.day, c.start, c.end, c.week, c.type, c.room')
-            ->from('EtuUserBundle:Course', 'c')
-            ->where('c.deletedAt IS NULL')
-            ->andWhere('c.user = :user')
-            ->setParameter('user', $user)
-            ->getQuery()
-            ->getResult();
+        if ($user->getSchedulePrivacy() === $user::PRIVACY_PUBLIC) {
+            /** @var $courses Course[] */
+            $courses = $em->createQueryBuilder()
+                ->select('c.uv, c.day, c.start, c.end, c.week, c.type, c.room')
+                ->from('EtuUserBundle:Course', 'c')
+                ->where('c.deletedAt IS NULL')
+                ->andWhere('c.user = :user')
+                ->setParameter('user', $user)
+                ->getQuery()
+                ->getResult();
 
-        return $this->format(['courses' => $courses], 200, [], $request);
+            return $this->format(['courses' => $courses], 200, [], $request);
+        }
+
+        return $this->format(['courses' => []], 200, [], $request);
     }
 
     /**

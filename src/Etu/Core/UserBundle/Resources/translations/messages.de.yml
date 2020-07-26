@@ -256,6 +256,7 @@ user:
             address: Adresse
             birthday: Geburtsdatum
             age: %age% Jahre
+            schedule: Programme
             trombi: Jahrbuch
             surname: Spitzname
             jadis: Früher

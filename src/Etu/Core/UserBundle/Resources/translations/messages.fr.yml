@@ -305,6 +305,7 @@ user:
             address: Adresse
             birthday: Date de naissance
             age: "%age% ans"
+            schedule: Emploi du temps
             trombi: Trombinoscope
             surname: Surnom
             jadis: Jadis

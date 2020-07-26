@@ -44,7 +44,7 @@ class MainController extends Controller
             ->getQuery()
             ->getResult();
 
-        if (count($logins) != count($users)) {
+        if (\count($logins) != \count($users)) {
             $found = [];
 
             foreach ($users as $user) {
@@ -55,7 +55,7 @@ class MainController extends Controller
                 'type' => 'error',
                 'message' => $this->get('translator')->transChoice(
                         'cumul.main.errors.invalid_logins',
-                        count(array_diff($logins, $found)),
+                        \count(array_diff($logins, $found)),
                         ['%items%' => implode('", "', array_diff($logins, $found))]
                     ),
             ]);
@@ -66,7 +66,9 @@ class MainController extends Controller
         $usersIds = [];
 
         foreach ($users as $user) {
-            $usersIds[] = $user->getId();
+            if ($user->getSchedulePrivacy() === $user::PRIVACY_PUBLIC || !$this->getUser()->getIsStudent()) {
+                $usersIds[] = $user->getId();
+            }
         }
 
         /** @var $courses Course[] */
@@ -185,8 +187,8 @@ class MainController extends Controller
             'comparison' => $availabilities[0],
             'invertComparison' => $availabilities[1],
             'users' => $users,
-            'countUsers' => count($users),
-            'colSize' => round(14 / count($users), 2),
+            'countUsers' => \count($users),
+            'colSize' => round(14 / \count($users), 2),
             'logins' => json_encode($logins),
             'addBranchs' => $addBranchs,
             'removeUrlsLogins' => $removeUrlsLogins,
@@ -212,7 +214,7 @@ class MainController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        if ($type == 'file') {
+        if ('file' == $type) {
             /*
              * File import
              */
@@ -223,14 +225,14 @@ class MainController extends Controller
             // Data type
             $dataType = $post->get('import-data-type');
 
-            if (!in_array($dataType, ['fullName', 'login', 'studentId'])) {
+            if (!\in_array($dataType, ['fullName', 'login', 'studentId'])) {
                 $dataType = 'fullName';
             }
 
             // Separator
             $separator = "\n";
 
-            if ($post->get('separator-textarea') != 'new-line' && mb_strlen($post->get('separator-char')) >= 1) {
+            if ('new-line' != $post->get('separator-textarea') && mb_strlen($post->get('separator-char')) >= 1) {
                 $separator = $post->get('separator-char');
             }
 
@@ -246,14 +248,14 @@ class MainController extends Controller
             // Data type
             $dataType = $post->get('import-data-type');
 
-            if (!in_array($dataType, ['fullName', 'login', 'studentId'])) {
+            if (!\in_array($dataType, ['fullName', 'login', 'studentId'])) {
                 $dataType = 'fullName';
             }
 
             // Separator
             $separator = "\n";
 
-            if ($post->get('separator-textarea') != 'new-line' && mb_strlen($post->get('separator-char')) >= 1) {
+            if ('new-line' != $post->get('separator-textarea') && mb_strlen($post->get('separator-char')) >= 1) {
                 $separator = $post->get('separator-char');
             }
 
@@ -269,13 +271,13 @@ class MainController extends Controller
             ->getQuery()
             ->getResult();
 
-        if (count($dataItems) > count($users)) {
+        if (\count($dataItems) > \count($users)) {
             $dbItems = [];
 
             foreach ($users as $user) {
-                if ($dataType == 'fullName') {
+                if ('fullName' == $dataType) {
                     $dbItems[] = $user->getFullName();
-                } elseif ($dataType == 'studentId') {
+                } elseif ('studentId' == $dataType) {
                     $dbItems[] = $user->getStudentId();
                 } else {
                     $dbItems[] = $user->getLogin();
@@ -284,9 +286,9 @@ class MainController extends Controller
 
             $errorType = 'cumul.main.errors.invalid_logins';
 
-            if ($dataType == 'fullName') {
+            if ('fullName' == $dataType) {
                 $errorType = 'cumul.main.errors.invalid_names';
-            } elseif ($dataType == 'studentId') {
+            } elseif ('studentId' == $dataType) {
                 $errorType = 'cumul.main.errors.invalid_ids';
             }
 
@@ -294,7 +296,7 @@ class MainController extends Controller
                 'type' => 'error',
                 'message' => $this->get('translator')->transChoice(
                         $errorType,
-                        count(array_diff($dataItems, $dbItems)),
+                        \count(array_diff($dataItems, $dbItems)),
                         ['%items%' => implode('", "', array_diff($dataItems, $dbItems))]
                     ),
             ]);

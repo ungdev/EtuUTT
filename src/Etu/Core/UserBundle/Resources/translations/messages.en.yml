@@ -165,6 +165,7 @@ user:
             address: address
             birthday: Date of birth
             age: "%age% years old"
+            schedule: Schedule
             trombi: Group photo
             apps: Applications you allowed to access your informations
             surname: Nickname
