@@ -1,3 +1,10 @@
+app:
+    path: /app
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: 'http://onelink.to/myutt'
+        permanent: false
+
 
 # Load the core routes
 etu_core:
