@@ -76,9 +76,13 @@
                             <div class="control-group hidden-phone">
                                 {{ form_label(form.studentId, 'trombi.main.index.studentId'|trans) }}
                                 <div class="controls">
-                                    {{ form_widget(form.studentId) }}
+                                    {{ form_widget(form.studentId, {'attr': {'class': 'span6'} }) }}
+                                    {{ form_widget(form.isinldap, {'attr': {'class': 'span6'} }) }}
                                 </div>
-                                <span class="help-block">{{ form_errors(form.studentId) }}</span>
+                                <span class="help-block">
+                                    {{ form_errors(form.studentId) }}
+                                    {{ form_errors(form.isinldap) }}
+                                </span>
                             </div>
                             <div class="control-group hidden-phone">
                                 {{ form_label(form.branch, 'trombi.main.index.branche'|trans) }}
@@ -89,6 +93,7 @@
                                 </div>
                                 <span class="help-block">
                                     {{ form_errors(form.branch) }}
+                                    {{ form_errors(form.filiere) }}
                                     {{ form_errors(form.niveau) }}
                                 </span>
                             </div>

@@ -62,6 +62,10 @@ class User implements UserInterface, EquatableInterface, \Serializable
         '6' => '6', '7' => '7', '8' => '8', '9' => '9', '10' => '10',
     ];
 
+    public static $ldap = [
+        "Encore à l'UTT" => true, "N'est plus à l'UTT" => false,
+    ];
+
     public static $filieres = [
         'Aucune' => 'Aucune', 'Libre' => 'Libre', 'ING A2I SPI' => 'SPI',
         'ING A2I TEI' => 'TEI', 'ING GI LET' => 'LET',
@@ -472,7 +476,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      *
      * @var bool
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $isInLDAP;
 
@@ -1881,7 +1885,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * Retrieves the currently set isInLDAP.
      */
-    public function getIsInLDAP(): bool
+    public function getIsInLDAP()
     {
         return $this->isInLDAP;
     }
@@ -1889,9 +1893,11 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * Sets the isInLDAP to use.
      *
+     * @param mixed $isInLDAP
+     *
      * @return $this
      */
-    public function setIsInLDAP(bool $isInLDAP): self
+    public function setIsInLDAP($isInLDAP): self
     {
         $this->isInLDAP = $isInLDAP;
 
