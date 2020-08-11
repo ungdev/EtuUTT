@@ -31,6 +31,16 @@ allow from 192.168.0.0/16
     allow from all
 </Files>
 
+<Files "chauchet.png">
+    Order allow,deny
+    allow from all
+</Files>
+
+<Files "rabianad.png">
+    Order allow,deny
+    allow from all
+</Files>
+
 <Files "galopint.png">
     Order allow,deny
     allow from all
