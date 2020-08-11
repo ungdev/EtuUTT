@@ -6,6 +6,31 @@ allow from 172.16.0.0/12
 allow from 192.168.0.0/16
 
 #Autoriser l'accès aux images des contributeurs
+<Files "laruelli.png">
+    Order allow,deny
+    allow from all
+</Files>
+
+<Files "dufourar.png">
+    Order allow,deny
+    allow from all
+</Files>
+
+<Files "labateau.png">
+    Order allow,deny
+    allow from all
+</Files>
+
+<Files "guerreim.png">
+    Order allow,deny
+    allow from all
+</Files>
+
+<Files "d_autumc.png">
+    Order allow,deny
+    allow from all
+</Files>
+
 <Files "galopint.png">
     Order allow,deny
     allow from all
