@@ -19,9 +19,6 @@ class SidebarBuilder
      */
     protected $lastPosition;
 
-    /**
-     * @param Router $router
-     */
     public function __construct(Router $router)
     {
         $this->blocks = [];
@@ -32,6 +29,11 @@ class SidebarBuilder
                 ->add('base.user.menu.emails')
                     ->setIcon('mails.png')
                     ->setUrl('http://mail.utt.fr')
+                    ->setLinkAttribute('target', '_blank')
+                ->end()
+                ->add('Offres de logement')
+                    ->setIcon('logements.png')
+                    ->setUrl('https://logements.utt.fr')
                     ->setLinkAttribute('target', '_blank')
                 ->end()
             ->end()
