@@ -85,7 +85,7 @@ class MainController extends Controller
                     ->setParameter('id', $user->getStudentId());
             }
 
-            if ($user->getIsInLDAP()) {
+            if (null !== $user->getIsInLDAP()) {
                 $users->andWhere('u.isInLDAP = :isinldap')
                     ->setParameter('isinldap', $user->getIsInLDAP());
             }
