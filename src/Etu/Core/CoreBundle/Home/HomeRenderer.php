@@ -29,11 +29,6 @@ class HomeRenderer
      */
     protected $blocks;
 
-    /**
-     * @param HomeBuilder    $builder
-     * @param ModulesManager $modulesManager
-     * @param FormFactory    $formFactory
-     */
     public function __construct(HomeBuilder $builder,
                                 ModulesManager $modulesManager,
                                 FormFactory $formFactory)
@@ -80,6 +75,17 @@ class HomeRenderer
         return $block;
     }
 
+    public function createRechUEBlock()
+    {
+        $block = [
+            'template' => 'EtuCoreBundle:Main/index_blocks:rechue.html.twig',
+            'context' => [],
+            'role' => 'ROLE_UV',
+        ];
+
+        return $block;
+    }
+
     public function createNotificationsBlock()
     {
         $block = [
@@ -98,7 +104,7 @@ class HomeRenderer
         if ($this->modulesManager->getModuleByIdentifier('events')->isEnabled()) {
             $events = $this->builder->getEvents();
 
-            if (count($events) > 0) {
+            if (\count($events) > 0) {
                 $block = [
                     'template' => 'EtuCoreBundle:Main/index_blocks:events.html.twig',
                     'context' => [
@@ -116,7 +122,7 @@ class HomeRenderer
         if ($this->modulesManager->getModuleByIdentifier('uv')->isEnabled()) {
             $reviews = $this->builder->getUvReviews();
 
-            if (count($reviews) > 0) {
+            if (\count($reviews) > 0) {
                 $block = [
                     'template' => 'EtuCoreBundle:Main/index_blocks:reviews.html.twig',
                     'context' => [
@@ -135,7 +141,7 @@ class HomeRenderer
         if ($this->modulesManager->getModuleByIdentifier('argentique')->isEnabled()) {
             $photos = $this->builder->getPhotos();
 
-            if (isset($photos['list']) && count($photos['list']) > 0) {
+            if (isset($photos['list']) && \count($photos['list']) > 0) {
                 $block = [
                     'template' => 'EtuCoreBundle:Main/index_blocks:photos.html.twig',
                     'context' => [
@@ -155,7 +161,7 @@ class HomeRenderer
     {
         $birthdays = $this->builder->getBirthdays();
 
-        if (count($birthdays) > 0) {
+        if (\count($birthdays) > 0) {
             $block = [
                 'template' => 'EtuCoreBundle:Main/index_blocks:birthdays.html.twig',
                 'context' => [
@@ -177,6 +183,7 @@ class HomeRenderer
 
         $columns[0][] = $this->createCoursesBlock();
         $columns[0][] = $this->createTrombiBlock();
+        $columns[0][] = $this->createRechUEBlock();
 
         if ($eventsBlock = $this->createEventsBlock()) {
             $columns[0][] = $eventsBlock;

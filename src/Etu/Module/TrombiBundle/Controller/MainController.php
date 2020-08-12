@@ -24,6 +24,7 @@ class MainController extends Controller
         $this->denyAccessUnlessGranted('ROLE_TROMBI');
 
         $user = new User();
+        $user->setIsInLDAP(true);
         $search = false;
         $users = [];
 
@@ -36,6 +37,7 @@ class MainController extends Controller
             ->add('branch', ChoiceType::class, ['choices' => User::$branches, 'required' => false])
             ->add('filiere', ChoiceType::class, ['choices' => User::$filieres, 'required' => false])
             ->add('niveau', ChoiceType::class, ['choices' => User::$levels, 'required' => false])
+            ->add('isinldap', ChoiceType::class, ['choices' => User::$ldap, 'required' => false])
             ->add('personnalMail', null, ['required' => false])
             ->setAction($this->generateUrl('trombi_index'))
             ->getForm();
@@ -81,6 +83,11 @@ class MainController extends Controller
             if ($user->getStudentId()) {
                 $users->andWhere('u.studentId = :id')
                     ->setParameter('id', $user->getStudentId());
+            }
+
+            if ($user->getIsInLDAP()) {
+                $users->andWhere('u.isInLDAP = :isinldap')
+                    ->setParameter('isinldap', $user->getIsInLDAP());
             }
 
             if ($user->getPhoneNumber()) {

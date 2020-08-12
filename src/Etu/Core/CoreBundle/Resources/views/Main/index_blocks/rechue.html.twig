@@ -1,0 +1,21 @@
+<div class="home-block home-block-events">
+    <h4>Guide des UEs</h4>
+
+    <p>
+        Rechercher rapidement sur le guide des UEs :
+    </p>
+
+    <form method="get" class="form-inline" action="{{ path('uvs_search') }}">
+        <div class="input-append">
+                <input type="text" name="q" placeholder="Code de l'UE" value="">
+        </div>
+
+        <button type="submit" class="btn">{{ 'trombi.main.index.search'|trans }}</button>
+    </form>
+
+    <p class="more-link">
+        <a href="{{ path('uvs_index') }}">
+            Aller sur le guide des UEs
+        </a>
+    </p>
+</div>
