@@ -228,13 +228,12 @@ class Covoit
     }
 
     /**
-     * @param ExecutionContextInterface $context
      * @Assert\Callback
      */
     public function isBlaBlaCarUrlValid(ExecutionContextInterface $context)
     {
         if (!empty($this->blablacarUrl)) {
-            if (mb_strpos($this->blablacarUrl, 'http') === false) {
+            if (false === mb_strpos($this->blablacarUrl, 'http')) {
                 $this->blablacarUrl = 'https://'.$this->blablacarUrl;
             }
 
@@ -680,8 +679,6 @@ class Covoit
     /**
      * Add subscriptions.
      *
-     * @param CovoitSubscription $subscriptions
-     *
      * @return Covoit
      */
     public function addSubscription(CovoitSubscription $subscriptions)
@@ -693,8 +690,6 @@ class Covoit
 
     /**
      * Remove subscriptions.
-     *
-     * @param CovoitSubscription $subscriptions
      */
     public function removeSubscription(CovoitSubscription $subscriptions)
     {
@@ -712,8 +707,6 @@ class Covoit
     }
 
     /**
-     * @param User $user
-     *
      * @return bool
      */
     public function hasUser(User $user)
@@ -734,8 +727,6 @@ class Covoit
     /**
      * Add messages.
      *
-     * @param CovoitMessage $messages
-     *
      * @return Covoit
      */
     public function addMessage(CovoitMessage $messages)
@@ -747,8 +738,6 @@ class Covoit
 
     /**
      * Remove messages.
-     *
-     * @param CovoitMessage $messages
      */
     public function removeMessage(CovoitMessage $messages)
     {

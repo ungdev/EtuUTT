@@ -25,9 +25,6 @@ class GenerateModuleCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
      * @throws \RuntimeException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -55,9 +52,7 @@ For instance, the UVBundle module name is "UV".
         );
 
         if (file_exists($this->modulesDirectory.'/'.$name.'Bundle')) {
-            throw new \RuntimeException(sprintf(
-                'A module called %s already exists in Etu\\Module namespace', $name
-            ));
+            throw new \RuntimeException(sprintf('A module called %s already exists in Etu\\Module namespace', $name));
         }
 
         $output->writeln("\n\n".

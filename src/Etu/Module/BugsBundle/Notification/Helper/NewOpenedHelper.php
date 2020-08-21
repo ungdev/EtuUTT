@@ -15,9 +15,6 @@ class NewOpenedHelper implements HelperInterface
      */
     protected $twig;
 
-    /**
-     * @param \Twig_Environment $twig
-     */
     public function __construct(\Twig_Environment $twig)
     {
         $this->twig = $twig;
@@ -32,8 +29,6 @@ class NewOpenedHelper implements HelperInterface
     }
 
     /**
-     * @param Notification $notification
-     *
      * @return string
      */
     public function render(Notification $notification)
@@ -44,17 +39,15 @@ class NewOpenedHelper implements HelperInterface
     }
 
     /**
-     * @param Notification $notification
-     *
      * @return string
      */
     public function renderMobile(Notification $notification)
     {
-        if ($notification->countEntities() == 1) {
+        if (1 == $notification->countEntities()) {
             return ['title' => 'Nouveau bug de '.$notification->getFirstEntity()->getUser()->getFullName().'.', 'message' => $notification->getTitle()];
-        } elseif ($notification->countEntities() == 2) {
+        } elseif (2 == $notification->countEntities()) {
             return ['title' => 'Nouveau bug de '.$notification->getFirstEntity()->getUser()->getFullName().' et '.$notification->getEntities()[1]->getUser()->getFullName().'.', 'message' => $notification->getTitle()];
-        } elseif ($notification->countEntities() == 3) {
+        } elseif (3 == $notification->countEntities()) {
             return ['title' => 'Nouveau bug de '.$notification->getFirstEntity()->getUser()->getFullName().', '.$notification->getEntities()[1]->getUser()->getFullName().' et 1 autre personne', 'message' => $notification->getTitle()];
         }
 

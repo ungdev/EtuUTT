@@ -131,8 +131,6 @@ class Notification
     }
 
     /**
-     * @param array $entities
-     *
      * @return Notification
      */
     public function setEntities(array $entities)
@@ -365,8 +363,6 @@ class Notification
     }
 
     /**
-     * @param \DateTime $lastVisitHome
-     *
      * @return bool
      */
     public function isNew(\DateTime $lastVisitHome)

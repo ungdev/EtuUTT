@@ -20,10 +20,6 @@ class AdminMenuRendererExtension extends \Twig_Extension
      */
     protected $builder;
 
-    /**
-     * @param AdminBuilder    $builder
-     * @param SidebarRenderer $renderer
-     */
     public function __construct(AdminBuilder $builder, SidebarRenderer $renderer)
     {
         $this->builder = $builder;

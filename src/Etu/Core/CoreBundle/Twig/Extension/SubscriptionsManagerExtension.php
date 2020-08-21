@@ -22,10 +22,6 @@ class SubscriptionsManagerExtension extends \Twig_Extension
      */
     protected $twig;
 
-    /**
-     * @param SubscriptionsManager $manager
-     * @param \Twig_Environment    $twig
-     */
     public function __construct(SubscriptionsManager $manager, \Twig_Environment $twig)
     {
         $this->manager = $manager;
@@ -46,7 +42,6 @@ class SubscriptionsManagerExtension extends \Twig_Extension
     }
 
     /**
-     * @param User      $user
      * @param           $entityType
      * @param           $entityId
      * @param \DateTime $date
@@ -59,9 +54,8 @@ class SubscriptionsManagerExtension extends \Twig_Extension
     }
 
     /**
-     * @param User $user
-     * @param      $entityType
-     * @param      $entityId
+     * @param $entityType
+     * @param $entityId
      *
      * @return bool
      */
@@ -71,9 +65,8 @@ class SubscriptionsManagerExtension extends \Twig_Extension
     }
 
     /**
-     * @param User $user
-     * @param      $entityType
-     * @param      $entityId
+     * @param $entityType
+     * @param $entityId
      *
      * @return bool
      */

@@ -68,7 +68,7 @@ class UEController extends ApiController
         $em = $this->getDoctrine()->getManager();
 
         $user = $em->getRepository('EtuUserBundle:User')->find($this->getAccessToken($request)->getUser());
-        if ($user->getIsStudent() == 0) {
+        if (0 == $user->getIsStudent()) {
             return $this->format([
               'error' => 'You are not allowed',
           ], 403, [], $request);
@@ -109,7 +109,7 @@ class UEController extends ApiController
         $em = $this->getDoctrine()->getManager();
 
         $user = $em->getRepository('EtuUserBundle:User')->find($this->getAccessToken($request)->getUser());
-        if ($user->getIsStudent() == 0) {
+        if (0 == $user->getIsStudent()) {
             return $this->format([
               'error' => 'You are not allowed',
           ], 403, [], $request);

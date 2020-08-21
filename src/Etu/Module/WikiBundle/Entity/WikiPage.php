@@ -356,6 +356,6 @@ class WikiPage
      */
     public function isDeleted()
     {
-        return $this->content == '';
+        return '' == $this->content;
     }
 }

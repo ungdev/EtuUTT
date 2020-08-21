@@ -476,8 +476,6 @@ class OauthClient
     /**
      * Add scopes.
      *
-     * @param OauthScope $scopes
-     *
      * @return OauthClient
      */
     public function addScope(OauthScope $scopes)
@@ -489,8 +487,6 @@ class OauthClient
 
     /**
      * Remove scopes.
-     *
-     * @param OauthScope $scopes
      */
     public function removeScope(OauthScope $scopes)
     {

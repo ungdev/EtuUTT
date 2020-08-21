@@ -86,9 +86,9 @@ class MembershipsController extends Controller
             $categories[$category] = 'events.categories.'.$category;
         }
 
-        $day = ($day == 'current') ? (int) date('d') : (int) $day;
-        $month = ($month == 'current') ? (int) date('m') : (int) $month;
-        $year = ($year == 'current') ? (int) date('Y') : (int) $year;
+        $day = ('current' == $day) ? (int) date('d') : (int) $day;
+        $month = ('current' == $month) ? (int) date('m') : (int) $month;
+        $year = ('current' == $year) ? (int) date('Y') : (int) $year;
 
         return [
             'memberships' => $memberships,
@@ -247,7 +247,7 @@ class MembershipsController extends Controller
 
         $start = $request->query->get('s');
         $end = $request->query->get('e');
-        $allDay = ($request->query->get('a') == 'true') ? true : false;
+        $allDay = ('true' == $request->query->get('a')) ? true : false;
 
         if (!$start || !$end) {
             throw $this->createNotFoundException();
@@ -255,7 +255,7 @@ class MembershipsController extends Controller
 
         $orga = $membership->getOrganization();
 
-        if (mb_substr($start, 12) == '00-00' && mb_substr($end, 12) == '00-00') {
+        if ('00-00' == mb_substr($start, 12) && '00-00' == mb_substr($end, 12)) {
             $start = mb_substr($start, 0, 12).'12-00';
 
             $jour2 = str_pad((mb_substr($end, 0, 2) - 1), 2, '0', STR_PAD_LEFT);
@@ -563,7 +563,7 @@ class MembershipsController extends Controller
         $oldInterval = $event->getEnd()->diff($event->getBegin());
 
         if (isset($eventUpdate['allDay'])) {
-            $event->setIsAllDay($eventUpdate['allDay'] == 'true');
+            $event->setIsAllDay('true' == $eventUpdate['allDay']);
             $oldInterval = \DateInterval::createFromDateString('1 second');
         }
 

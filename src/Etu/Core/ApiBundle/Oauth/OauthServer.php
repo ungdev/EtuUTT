@@ -19,9 +19,6 @@ class OauthServer
      */
     protected $grantTypes;
 
-    /**
-     * @param EntityManager $manager
-     */
     public function __construct(EntityManager $manager)
     {
         $this->manager = $manager;
@@ -75,8 +72,7 @@ class OauthServer
     }
 
     /**
-     * @param string  $grantTypeName
-     * @param Request $request
+     * @param string $grantTypeName
      *
      * @return bool|\Etu\Core\ApiBundle\Entity\OauthAccessToken
      */
@@ -108,9 +104,6 @@ class OauthServer
         return false;
     }
 
-    /**
-     * @param GrantTypeInterface $grantType
-     */
     public function addGrantType(GrantTypeInterface $grantType)
     {
         $this->grantTypes[] = $grantType;

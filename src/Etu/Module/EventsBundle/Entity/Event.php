@@ -152,8 +152,6 @@ class Event extends AbstractEvent
      * Constructor.
      *
      * @param $uid
-     * @param \DateTime $start
-     * @param \DateTime $end
      */
     public function __construct($uid, \DateTime $start, \DateTime $end)
     {

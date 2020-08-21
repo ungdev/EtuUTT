@@ -15,9 +15,6 @@ class BugClosedHelper implements HelperInterface
      */
     protected $twig;
 
-    /**
-     * @param \Twig_Environment $twig
-     */
     public function __construct(\Twig_Environment $twig)
     {
         $this->twig = $twig;
@@ -32,8 +29,6 @@ class BugClosedHelper implements HelperInterface
     }
 
     /**
-     * @param Notification $notification
-     *
      * @return string
      */
     public function render(Notification $notification)
@@ -44,13 +39,11 @@ class BugClosedHelper implements HelperInterface
     }
 
     /**
-     * @param Notification $notification
-     *
      * @return string
      */
     public function renderMobile(Notification $notification)
     {
-        if ($notification->getFirstEntity()->getAssignee() != null) {
+        if (null != $notification->getFirstEntity()->getAssignee()) {
             return ['title' => $notification->getFirstEntity()->getAssignee()->getFullName().' a fermé un bug', 'message' => 'Le bug "'.$notification->getFirstEntity()->getTitle().'" est résolu'];
         }
 

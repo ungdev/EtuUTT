@@ -20,10 +20,6 @@ class UserMenuRendererExtension extends \Twig_Extension
      */
     protected $builder;
 
-    /**
-     * @param \Etu\Core\CoreBundle\Menu\UserMenu\UserMenuBuilder  $builder
-     * @param \Etu\Core\CoreBundle\Menu\UserMenu\UserMenuRenderer $renderer
-     */
     public function __construct(UserMenuBuilder $builder, UserMenuRenderer $renderer)
     {
         $this->builder = $builder;

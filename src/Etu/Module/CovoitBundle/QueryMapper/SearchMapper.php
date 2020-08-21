@@ -8,9 +8,6 @@ use Etu\Module\CovoitBundle\Model\Search;
 class SearchMapper
 {
     /**
-     * @param QueryBuilder $qb
-     * @param Search       $search
-     *
      * @return QueryBuilder
      */
     public function map(QueryBuilder $qb, Search $search)

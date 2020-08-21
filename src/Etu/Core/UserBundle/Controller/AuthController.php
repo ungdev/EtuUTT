@@ -40,7 +40,7 @@ class AuthController extends Controller
         }
 
         // Try to connect user automatically
-        if ($this->getKernel()->getEnvironment() != 'test') {
+        if ('test' != $this->getKernel()->getEnvironment()) {
             $this->initializeCAS();
             if (\phpCAS::isAuthenticated()) {
                 return $this->redirect($this->generateUrl('user_connect_cas'));

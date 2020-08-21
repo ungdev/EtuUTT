@@ -105,6 +105,6 @@ class EveryUserProvider implements UserProviderInterface
      */
     public function supportsClass($class)
     {
-        return $class === 'Etu\Core\UserBundle\Entity\User' || $class === 'Etu\Core\UserBundle\Entity\Organization';
+        return 'Etu\Core\UserBundle\Entity\User' === $class || 'Etu\Core\UserBundle\Entity\Organization' === $class;
     }
 }

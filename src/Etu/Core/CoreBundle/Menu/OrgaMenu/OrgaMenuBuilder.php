@@ -27,8 +27,6 @@ class OrgaMenuBuilder
     /**
      * Constructor
      * Initialize some default items.
-     *
-     * @param Router $router
      */
     public function __construct(Router $router)
     {

@@ -50,7 +50,7 @@ class OrgaController extends Controller
                 ->getQuery();
 
             foreach ($members as $member) {
-                if ($member->getRole() == Member::ROLE_PRESIDENT) {
+                if (Member::ROLE_PRESIDENT == $member->getRole()) {
                     $orga->setPresident($member->getUser());
                     $em->persist($orga);
                     $em->flush();
@@ -208,7 +208,7 @@ class OrgaController extends Controller
                 ]);
 
                 if (!$membership) {
-                    if ($member->getRole() == Member::ROLE_PRESIDENT) {
+                    if (Member::ROLE_PRESIDENT == $member->getRole()) {
                         $this->getUser()->setPresident($member->getUser());
                     }
 
@@ -439,7 +439,7 @@ class OrgaController extends Controller
                 $permission = ['definition' => $permission, 'checked' => false];
             }
 
-            if ($i == 0) {
+            if (0 == $i) {
                 $permissions1[] = $permission;
             } else {
                 $permissions2[] = $permission;
@@ -447,16 +447,16 @@ class OrgaController extends Controller
             }
         }
 
-        if ($request->getMethod() == 'POST') {
-            if ($request->get('role') != null && in_array((int) ($request->get('role')), Member::getAvailableRoles())) {
+        if ('POST' == $request->getMethod()) {
+            if (null != $request->get('role') && in_array((int) ($request->get('role')), Member::getAvailableRoles())) {
                 $member->setRole((int) ($request->get('role')));
             }
 
-            if ($request->get('group') != null || in_array((int) ($request->get('group')), array_keys($groups))) {
+            if (null != $request->get('group') || in_array((int) ($request->get('group')), array_keys($groups))) {
                 $member->setGroup($groups[(int) ($request->get('group'))]['identifier']);
             }
 
-            if ($member->getRole() == Member::ROLE_PRESIDENT) {
+            if (Member::ROLE_PRESIDENT == $member->getRole()) {
                 $this->getUser()->setPresident($member->getUser());
                 $em->persist($this->getUser());
                 $em->flush();
@@ -528,7 +528,7 @@ class OrgaController extends Controller
             throw $this->createNotFoundException(sprintf('Login %s or membership not found', $login));
         }
 
-        if ($confirm == 'confirm') {
+        if ('confirm' == $confirm) {
             $user = $member->getUser();
 
             $em->persist($user);

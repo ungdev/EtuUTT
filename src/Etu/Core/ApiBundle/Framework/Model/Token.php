@@ -29,9 +29,6 @@ class Token
      */
     protected $scopes;
 
-    /**
-     * @param array $requestToken
-     */
     public function __construct(array $requestToken)
     {
         $this->token = $requestToken['access_token'];

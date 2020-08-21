@@ -53,14 +53,12 @@ class ScheduleBuilder
     }
 
     /**
-     * @param Course $course
-     *
      * @return $this
      */
     public function addCourse(Course $course)
     {
         if ($this->useHalf) {
-            if ($course->getWeek() == 'T') {
+            if ('T' == $course->getWeek()) {
                 $this->courses[$course->getDay()][$course->getStart()] = [
                     'type' => 'course',
                     'size' => self::getBlockSize($course),
@@ -97,7 +95,7 @@ class ScheduleBuilder
             $deleteCount = 0;
 
             foreach ($dayCourses as $key => $course) {
-                if ($course['type'] == 'course' || $course['type'] == 'course_half') {
+                if ('course' == $course['type'] || 'course_half' == $course['type']) {
                     $deleteCount = $course['size'] - 1;
                 } elseif ($deleteCount > 0) {
                     --$deleteCount;
@@ -119,8 +117,6 @@ class ScheduleBuilder
     }
 
     /**
-     * @param Course $course
-     *
      * @return int
      */
     public static function getBlockSize(Course $course)
@@ -133,9 +129,9 @@ class ScheduleBuilder
 
         $size = $hours * 2;
 
-        if ($minutes == 30) {
+        if (30 == $minutes) {
             ++$size;
-        } elseif ($minutes == -30) {
+        } elseif (-30 == $minutes) {
             --$size;
         }
 

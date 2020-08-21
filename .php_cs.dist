@@ -8,27 +8,26 @@ $finder = PhpCsFixer\Finder::create()
 return PhpCsFixer\Config::create()
     ->setRules([
         '@Symfony' => true,
-        '@Symfony:risky' => true,
         'array_syntax' => ['syntax' => 'short'],
         'combine_consecutive_unsets' => true,
-        'dir_constant' => true,
-        'ereg_to_preg' => true,
+        'dir_constant' => true, //risky when the function ``dirname`` is overridden
+        'ereg_to_preg' => true, //risky if the ``ereg`` function is overridden
         'heredoc_to_nowdoc' => true,
-        'mb_str_functions' => true,
-        'modernize_types_casting' => true,
+        'mb_str_functions' => true, //Risky rule: risky when any of the functions are overridden
+        'modernize_types_casting' => true, //risky if any of the functions ``intval``, ``floatval``, ``doubleval``, ``strval`` or ``boolval`` are overridden
         'no_multiline_whitespace_before_semicolons' => true,
         'no_php4_constructor' => true,
         'no_short_echo_tag' => true,
-        'no_unreachable_default_argument_value' => true,
+    //    'no_unreachable_default_argument_value' => true,
         'no_useless_else' => true,
         'no_useless_return' => true,
         'ordered_imports' => true,
-        'php_unit_strict' => true,
+        'php_unit_strict' => true, //not risky for us
         'phpdoc_add_missing_param_annotation' => true,
         'phpdoc_order' => true,
         'protected_to_private' => true,
-        'psr0' => true,
-        'psr4' => true,
+    //    'psr0' => true,
+    //    'psr4' => true,
         '@PHP71Migration' => true,
         'semicolon_after_instruction' => true,
         'ternary_to_null_coalescing' => true,

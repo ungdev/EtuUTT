@@ -227,8 +227,6 @@ class OrganizationGroup
     /**
      * Add member.
      *
-     * @param \Etu\Core\UserBundle\Entity\Member $member
-     *
      * @return OrganizationGroup
      */
     public function addMember(\Etu\Core\UserBundle\Entity\Member $member)
@@ -240,8 +238,6 @@ class OrganizationGroup
 
     /**
      * Remove member.
-     *
-     * @param \Etu\Core\UserBundle\Entity\Member $member
      *
      * @return bool TRUE if this collection contained the specified element, FALSE otherwise
      */
@@ -262,8 +258,6 @@ class OrganizationGroup
 
     /**
      * Set organization.
-     *
-     * @param \Etu\Core\UserBundle\Entity\Organization|null $organization
      *
      * @return OrganizationGroup
      */
@@ -311,8 +305,6 @@ class OrganizationGroup
     /**
      * Add action.
      *
-     * @param \Etu\Core\UserBundle\Entity\OrganizationGroupAction $action
-     *
      * @return OrganizationGroup
      */
     public function addAction(\Etu\Core\UserBundle\Entity\OrganizationGroupAction $action)
@@ -324,8 +316,6 @@ class OrganizationGroup
 
     /**
      * Remove action.
-     *
-     * @param \Etu\Core\UserBundle\Entity\OrganizationGroupAction $action
      *
      * @return bool TRUE if this collection contained the specified element, FALSE otherwise
      */

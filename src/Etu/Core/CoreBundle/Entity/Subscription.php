@@ -108,8 +108,6 @@ class Subscription
     }
 
     /**
-     * @param \Etu\Core\UserBundle\Entity\User $user
-     *
      * @return Subscription
      */
     public function setUser(User $user)

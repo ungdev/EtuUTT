@@ -118,7 +118,7 @@ class MainController extends Controller
      * @Route("/collection/{directory}", requirements={"directory"=".+"}, name="argentique_directory")
      * @Template()
      *
-     * @param null|mixed $directory
+     * @param mixed|null $directory
      */
     public function indexAction($directory = null)
     {
@@ -133,7 +133,7 @@ class MainController extends Controller
 
         $directory = rtrim($directory, '/');
 
-        if (mb_strpos($directory, './') !== false) {
+        if (false !== mb_strpos($directory, './')) {
             return $this->redirect($this->generateUrl('argentique_index'));
         }
 
@@ -178,7 +178,7 @@ class MainController extends Controller
         $photos = [];
 
         foreach ($iterator as $file) {
-            if (mb_substr($file->getBasename(), 0, 1) == '.') {
+            if ('.' == mb_substr($file->getBasename(), 0, 1)) {
                 continue;
             }
 
@@ -190,8 +190,8 @@ class MainController extends Controller
                 if (!$directory) {
                     $score = (int) (mb_substr($basename, 1)) * 2;
 
-                    if (mb_substr($basename, 0, 1) == 'A') {
-                        $score += 1;
+                    if ('A' == mb_substr($basename, 0, 1)) {
+                        ++$score;
                     }
                 }
 

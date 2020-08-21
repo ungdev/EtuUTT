@@ -35,12 +35,6 @@ class Process
      */
     protected $doctrine;
 
-    /**
-     * @param Registry $doctrine
-     * @param array    $toAddInDb
-     * @param array    $toRemoveFromDb
-     * @param array    $toUpdate
-     */
     public function __construct(Registry $doctrine, array $toAddInDb, array $toRemoveFromDb, array $toUpdate)
     {
         $this->toAdd = [];

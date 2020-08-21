@@ -14,9 +14,6 @@ class EtuCoreApiBundle extends Module
      */
     protected $enabled = true;
 
-    /**
-     * @param ContainerBuilder $container
-     */
     public function build(ContainerBuilder $container)
     {
         parent::build($container);

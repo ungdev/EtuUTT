@@ -683,8 +683,6 @@ class Organization implements UserInterface, \Serializable
     /**
      * Add membership.
      *
-     * @param \Etu\Core\UserBundle\Entity\Member $membership
-     *
      * @return Organization
      */
     public function addMembership(\Etu\Core\UserBundle\Entity\Member $membership)
@@ -714,8 +712,6 @@ class Organization implements UserInterface, \Serializable
 
     /**
      * Remove membership.
-     *
-     * @param \Etu\Core\UserBundle\Entity\Member $membership
      */
     public function removeMembership(\Etu\Core\UserBundle\Entity\Member $membership)
     {
@@ -724,8 +720,6 @@ class Organization implements UserInterface, \Serializable
 
     /**
      * Add group.
-     *
-     * @param \Etu\Core\UserBundle\Entity\OrganizationGroup $group
      *
      * @return Organization
      */
@@ -738,8 +732,6 @@ class Organization implements UserInterface, \Serializable
 
     /**
      * Remove group.
-     *
-     * @param \Etu\Core\UserBundle\Entity\OrganizationGroup $group
      *
      * @return bool TRUE if this collection contained the specified element, FALSE otherwise
      */

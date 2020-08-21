@@ -182,8 +182,6 @@ class OrganizationGroupAction
     /**
      * Set group.
      *
-     * @param \Etu\Core\UserBundle\Entity\OrganizationGroup $group
-     *
      * @return OrganizationGroupAction
      */
     public function setGroup(\Etu\Core\UserBundle\Entity\OrganizationGroup $group)

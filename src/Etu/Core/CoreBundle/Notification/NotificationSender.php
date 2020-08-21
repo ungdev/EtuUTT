@@ -23,11 +23,6 @@ class NotificationSender
      */
     protected $helperManager;
 
-    /**
-     * @param Registry            $doctrine
-     * @param NotificationManager $notification_manager
-     * @param HelperManager       $helperManager
-     */
     public function __construct(Registry $doctrine, NotificationManager $notification_manager, HelperManager $helperManager)
     {
         $this->doctrine = $doctrine;
@@ -38,8 +33,7 @@ class NotificationSender
     /**
      * Send a notification.
      *
-     * @param Notification $notif
-     * @param bool         $tryCompile
+     * @param bool $tryCompile
      *
      * @return bool
      */
@@ -104,7 +98,7 @@ class NotificationSender
         $all_devices = $em->getRepository('EtuCoreApiBundle:OauthClient')->findBy(['native' => 1, 'deletedAt' => null]);
         $filter = [];
         foreach ($all_devices as $client) { //filter to get only devices with a push token
-            if ($client->getPushToken() != null) {
+            if (null != $client->getPushToken()) {
                 array_push($filter, $client);
             }
         }

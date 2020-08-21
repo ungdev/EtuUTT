@@ -14,9 +14,6 @@ class UrlBuilderExtension extends \Twig_Extension
      */
     protected $builder;
 
-    /**
-     * @param UrlBuilder $builder
-     */
     public function __construct(UrlBuilder $builder)
     {
         $this->builder = $builder;

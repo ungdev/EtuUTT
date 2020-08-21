@@ -36,13 +36,6 @@ class NewNotifsListener
      */
     protected $kernel;
 
-    /**
-     * @param TokenStorage         $tokenStorage
-     * @param AuthorizationChecker $authorizationChecker
-     * @param Registry             $doctrine
-     * @param GlobalAccessorObject $globalAccessor
-     * @param \AppKernel           $kernel
-     */
     public function __construct(TokenStorage $tokenStorage,
                                 AuthorizationChecker $authorizationChecker,
                                 Registry $doctrine,

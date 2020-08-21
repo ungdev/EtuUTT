@@ -83,7 +83,7 @@ class AdminController extends Controller
             }
         }
 
-        if ($request->getMethod() == 'POST') {
+        if ('POST' == $request->getMethod()) {
             if ($request->get('modules')) {
                 $enabledModules = array_keys((array) $request->get('modules'));
             } else {
@@ -115,8 +115,8 @@ class AdminController extends Controller
 
                 foreach ($iterator as $file) {
                     if ($file->isFile() &&
-                        (mb_strpos($file->getBasename(), 'UrlGenerator') !== false)
-                        || (mb_strpos($file->getBasename(), 'UrlMatcher') !== false)
+                        (false !== mb_strpos($file->getBasename(), 'UrlGenerator'))
+                        || (false !== mb_strpos($file->getBasename(), 'UrlMatcher'))
                     ) {
                         unlink($file->getPathname());
                     }
@@ -129,8 +129,8 @@ class AdminController extends Controller
 
                 foreach ($iterator as $file) {
                     if ($file->isFile() &&
-                        (mb_strpos($file->getBasename(), 'UrlGenerator') !== false)
-                        || (mb_strpos($file->getBasename(), 'UrlMatcher') !== false)
+                        (false !== mb_strpos($file->getBasename(), 'UrlGenerator'))
+                        || (false !== mb_strpos($file->getBasename(), 'UrlMatcher'))
                     ) {
                         unlink($file->getPathname());
                     }

@@ -15,9 +15,6 @@ class EditedHelper implements HelperInterface
      */
     protected $twig;
 
-    /**
-     * @param \Twig_Environment $twig
-     */
     public function __construct(\Twig_Environment $twig)
     {
         $this->twig = $twig;
@@ -32,8 +29,6 @@ class EditedHelper implements HelperInterface
     }
 
     /**
-     * @param Notification $notification
-     *
      * @return string
      */
     public function render(Notification $notification)
@@ -44,8 +39,6 @@ class EditedHelper implements HelperInterface
     }
 
     /**
-     * @param Notification $notification
-     *
      * @return string
      */
     public function renderMobile(Notification $notification)

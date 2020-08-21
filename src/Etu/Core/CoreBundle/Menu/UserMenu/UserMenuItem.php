@@ -53,8 +53,7 @@ class UserMenuItem
     protected $builder;
 
     /**
-     * @param UserMenuBuilder $builder
-     * @param string          $translation
+     * @param string $translation
      */
     public function __construct(UserMenuBuilder $builder, $translation = '')
     {
@@ -93,7 +92,7 @@ class UserMenuItem
      */
     public function hasIcon()
     {
-        return $this->icon !== false;
+        return false !== $this->icon;
     }
 
     /**

@@ -20,10 +20,6 @@ class SidebarRendererExtension extends \Twig_Extension
      */
     protected $builder;
 
-    /**
-     * @param \Etu\Core\CoreBundle\Menu\Sidebar\SidebarBuilder  $builder
-     * @param \Etu\Core\CoreBundle\Menu\Sidebar\SidebarRenderer $renderer
-     */
     public function __construct(SidebarBuilder $builder, SidebarRenderer $renderer)
     {
         $this->builder = $builder;

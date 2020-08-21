@@ -20,8 +20,6 @@ class EmbedBag
     }
 
     /**
-     * @param Request $request
-     *
      * @return EmbedBag
      */
     public static function createFromRequest(Request $request)

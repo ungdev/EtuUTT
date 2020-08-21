@@ -2,7 +2,6 @@
 
 namespace Etu\Module\SIABundle\Command;
 
-use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Core\UserBundle\Entity\OrganizationGroup;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,9 +20,6 @@ class SyncCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
      * @throws \RuntimeException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -45,7 +41,7 @@ class SyncCommand extends ContainerAwareCommand
         $etu_existing_groups = [];
 
         foreach ($ipa_groups as $group) {
-            if (isset($group->description) && mb_strpos($group->description[0], 'ETUSIA') !== false) {
+            if (isset($group->description) && false !== mb_strpos($group->description[0], 'ETUSIA')) {
                 $to_check_groups[$group->cn[0]] = $group;
             }
         }

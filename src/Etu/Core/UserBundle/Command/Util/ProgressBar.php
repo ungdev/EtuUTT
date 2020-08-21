@@ -153,10 +153,8 @@ class ProgressBar
      */
     public function reset($formatstring, $bar, $prefill, $width, $target_num, $options = [])
     {
-        if ($target_num == 0) {
-            throw new \ErrorException(
-                'ProgressBar: Using a target number equal to 0 is invalid, setting to 1 instead.'
-            );
+        if (0 == $target_num) {
+            throw new \ErrorException('ProgressBar: Using a target number equal to 0 is invalid, setting to 1 instead.');
             $this->_target_num = 1;
         } else {
             $this->_target_num = $target_num;
@@ -328,7 +326,7 @@ class ProgressBar
         // fix for php-versions where printf doesn't return anything
         if (null === $this->_rlen) {
             $this->_rlen = $this->_tlen;
-            // fix for php versions between 4.3.7 and 5.x.y(?)
+        // fix for php versions between 4.3.7 and 5.x.y(?)
         } elseif ($this->_rlen < $this->_tlen) {
             echo str_repeat(' ', $this->_tlen - $this->_rlen);
             $this->_rlen = $this->_tlen;
@@ -351,7 +349,7 @@ class ProgressBar
         $min = floor(($seconds - $hou * 3600) / 60);
         $sec = $seconds - $hou * 3600 - $min * 60;
 
-        if ($hou == 0) {
+        if (0 == $hou) {
             if (version_compare(PHP_VERSION, '4.3.7', 'ge')) {
                 $format = '%2$02d:%3$05.2f';
             } else {

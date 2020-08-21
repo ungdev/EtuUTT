@@ -11,8 +11,6 @@ use Etu\Core\CoreBundle\Framework\Definition\Permission;
 class PermissionsCollection extends ArrayCollection
 {
     /**
-     * @param array $permissions
-     *
      * @throws \RuntimeException
      */
     public function __construct(array $permissions = [])
@@ -21,9 +19,7 @@ class PermissionsCollection extends ArrayCollection
 
         foreach ($permissions as $permission) {
             if (!$permission instanceof Permission) {
-                throw new \RuntimeException(sprintf(
-                    'PermissionsCollection must contains only Permission objects (%s given)', gettype($permission)
-                ));
+                throw new \RuntimeException(sprintf('PermissionsCollection must contains only Permission objects (%s given)', gettype($permission)));
             }
 
             $constructed[$permission->getName()] = $permission;

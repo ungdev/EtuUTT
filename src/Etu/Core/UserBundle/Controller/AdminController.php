@@ -212,13 +212,13 @@ class AdminController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            if ($user->getProfileCompletion() == 100) {
+            if (100 == $user->getProfileCompletion()) {
                 BadgesManager::userAddBadge($user, 'profile_completed');
             } else {
                 BadgesManager::userRemoveBadge($user, 'profile_completed');
             }
 
-            if ($user->getTrombiCompletion() == 100) {
+            if (100 == $user->getTrombiCompletion()) {
                 BadgesManager::userAddBadge($user, 'trombi_completed');
             } else {
                 BadgesManager::userRemoveBadge($user, 'trombi_completed');
@@ -321,7 +321,7 @@ class AdminController extends Controller
             ];
         }
 
-        if ($request->getMethod() == 'POST') {
+        if ('POST' == $request->getMethod()) {
             $roles = [];
             $postedRoles = $request->get('role');
             if (empty($postedRoles)) {
@@ -541,13 +541,13 @@ class AdminController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            if ($user->getProfileCompletion() == 100) {
+            if (100 == $user->getProfileCompletion()) {
                 BadgesManager::userAddBadge($user, 'profile_completed');
             } else {
                 BadgesManager::userRemoveBadge($user, 'profile_completed');
             }
 
-            if ($user->getTrombiCompletion() == 100) {
+            if (100 == $user->getTrombiCompletion()) {
                 BadgesManager::userAddBadge($user, 'trombi_completed');
             } else {
                 BadgesManager::userRemoveBadge($user, 'trombi_completed');
@@ -606,7 +606,7 @@ class AdminController extends Controller
             throw $this->createNotFoundException('Login "'.$login.'" not found');
         }
 
-        if ($confirm == 'confirm') {
+        if ('confirm' == $confirm) {
             $user->setDeletedAt(new \DateTime());
 
             $em->persist($user);
@@ -753,7 +753,7 @@ class AdminController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        if ($request->getMethod() == 'POST') {
+        if ('POST' == $request->getMethod()) {
             if (!empty($request->get('orga'))) {
                 $orga = $em->createQueryBuilder()
                     ->select('o')

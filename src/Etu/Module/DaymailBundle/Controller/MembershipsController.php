@@ -67,7 +67,7 @@ class MembershipsController extends Controller
         $tomorrow = new \DateTime();
         $tomorrow->add(new \DateInterval('P1D'));
 
-        if ($day == 'current') {
+        if ('current' == $day) {
             $day = $tomorrow;
         } else {
             $day = \DateTime::createFromFormat('d-m-Y', $day);
@@ -112,7 +112,7 @@ class MembershipsController extends Controller
             $available[$part->getDate()->format('d-m-Y')]->name = $part->getTitle();
         }
 
-        if (count($available) == 1) {
+        if (1 == count($available)) {
             $available = [];
         }
 
@@ -222,7 +222,7 @@ class MembershipsController extends Controller
         $tomorrow = new \DateTime();
         $tomorrow->add(new \DateInterval('P1D'));
 
-        if ($day == 'current') {
+        if ('current' == $day) {
             $day = $tomorrow;
         } else {
             $day = \DateTime::createFromFormat('d-m-Y', $day);
@@ -307,7 +307,7 @@ class MembershipsController extends Controller
         $tomorrow = new \DateTime();
         $tomorrow->add(new \DateInterval('P1D'));
 
-        if ($day == 'current') {
+        if ('current' == $day) {
             $day = $tomorrow;
         } else {
             $day = \DateTime::createFromFormat('d-m-Y', $day);

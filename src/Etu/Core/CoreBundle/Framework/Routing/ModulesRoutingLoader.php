@@ -24,9 +24,6 @@ class ModulesRoutingLoader implements LoaderInterface
      */
     private $resolver;
 
-    /**
-     * @param \AppKernel $kernel
-     */
     public function __construct(\AppKernel $kernel)
     {
         $this->kernel = $kernel;
@@ -69,7 +66,7 @@ class ModulesRoutingLoader implements LoaderInterface
      */
     public function supports($resource, $type = null)
     {
-        return $type === 'modules';
+        return 'modules' === $type;
     }
 
     /**
@@ -81,8 +78,6 @@ class ModulesRoutingLoader implements LoaderInterface
     }
 
     /**
-     * @param \Symfony\Component\Config\Loader\LoaderResolverInterface $resolver
-     *
      * @return ModulesRoutingLoader
      */
     public function setResolver(LoaderResolverInterface $resolver)

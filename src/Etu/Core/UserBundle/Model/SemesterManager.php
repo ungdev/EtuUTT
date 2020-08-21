@@ -18,8 +18,6 @@ class SemesterManager
     public const FIRST_DAY_AUTUMN = 212;
 
     /**
-     * @param \DateTime $datetime
-     *
      * @return Semester
      */
     public static function find(\DateTime $datetime)

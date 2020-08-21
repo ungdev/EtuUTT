@@ -31,9 +31,6 @@ class ElementToUpdate
     protected $doctrine;
 
     /**
-     * @param Registry $doctrine
-     * @param array    $elements
-     *
      * @throws \RuntimeException
      */
     public function __construct(Registry $doctrine, array $elements)
@@ -45,9 +42,7 @@ class ElementToUpdate
                 $given = gettype($elements['ldap']);
             }
 
-            throw new \RuntimeException(sprintf(
-                'EtuUTT synchonizer can only update User objects (ldap: %s given)', $given
-            ));
+            throw new \RuntimeException(sprintf('EtuUTT synchonizer can only update User objects (ldap: %s given)', $given));
         }
 
         if (!$elements['database'] instanceof DbUser) {
@@ -57,9 +52,7 @@ class ElementToUpdate
                 $given = gettype($elements['database']);
             }
 
-            throw new \RuntimeException(sprintf(
-                'EtuUTT synchonizer can only update User objects (database: %s given)', $given
-            ));
+            throw new \RuntimeException(sprintf('EtuUTT synchonizer can only update User objects (database: %s given)', $given));
         }
 
         $this->database = $elements['database'];
@@ -156,7 +149,7 @@ class ElementToUpdate
             $user->setIsStaffUTT(!$this->ldap->getIsStudent());
         }
 
-        if (!empty($this->ldap->getPhoneNumber()) && $this->ldap->getPhoneNumber() != 'NC' && $this->ldap->getPhoneNumber() != $this->database->getPhoneNumber()) {
+        if (!empty($this->ldap->getPhoneNumber()) && 'NC' != $this->ldap->getPhoneNumber() && $this->ldap->getPhoneNumber() != $this->database->getPhoneNumber()) {
             $persist = true;
             $user->setPhoneNumber($this->ldap->getPhoneNumber());
         }
@@ -180,7 +173,7 @@ class ElementToUpdate
             $avatar = 'default-avatar.png';
         }
 
-        if ($this->database->getAvatar() === $avatar || $this->database->getAvatar() === 'default-avatar.png') {
+        if ($this->database->getAvatar() === $avatar || 'default-avatar.png' === $this->database->getAvatar()) {
             $persist = true;
             $user->setAvatar($avatar);
         }
@@ -188,7 +181,7 @@ class ElementToUpdate
         /*
          * Add badges
          */
-        if (mb_substr($history['niveau'], 0, 2) == 'TC' && mb_substr($user->getNiveau(), 0, 2) != 'TC') {
+        if ('TC' == mb_substr($history['niveau'], 0, 2) && 'TC' != mb_substr($user->getNiveau(), 0, 2)) {
             BadgesManager::userAddBadge($user, 'tc_survivor');
         }
 

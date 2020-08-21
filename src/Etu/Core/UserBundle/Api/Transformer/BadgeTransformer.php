@@ -9,8 +9,7 @@ use Etu\Core\UserBundle\Entity\Badge;
 class BadgeTransformer extends AbstractTransformer
 {
     /**
-     * @param Badge    $badge
-     * @param EmbedBag $includes
+     * @param Badge $badge
      *
      * @return array
      */
@@ -20,8 +19,6 @@ class BadgeTransformer extends AbstractTransformer
     }
 
     /**
-     * @param Badge $badge
-     *
      * @return array
      */
     private function getData(Badge $badge)
@@ -34,8 +31,6 @@ class BadgeTransformer extends AbstractTransformer
     }
 
     /**
-     * @param Badge $badge
-     *
      * @return array
      */
     private function getLinks(Badge $badge)

@@ -150,8 +150,6 @@ class Member
     }
 
     /**
-     * @param \DateTime $date
-     *
      * @return Member
      */
     public function setDate(\DateTime $date)
@@ -190,8 +188,6 @@ class Member
     }
 
     /**
-     * @param array $permissions
-     *
      * @return Member
      */
     public function setPermissions(array $permissions)
@@ -232,7 +228,7 @@ class Member
      */
     public function removePermission($permission)
     {
-        if (($key = array_search($permission, $this->permissions)) !== false) {
+        if (false !== ($key = array_search($permission, $this->permissions))) {
             unset($this->permissions[$key]);
         }
 
@@ -339,8 +335,6 @@ class Member
 
     /**
      * Set group.
-     *
-     * @param \Etu\Core\UserBundle\Entity\OrganizationGroup|null $group
      *
      * @return Member
      */

@@ -8,8 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ImageResponse extends Response
 {
     /**
-     * @param Image $image
-     * @param int   $format
+     * @param int $format
      */
     public function __construct(Image $image, $format)
     {

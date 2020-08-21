@@ -8,7 +8,6 @@ abstract class AbstractTransformer
 {
     /**
      * @param $object
-     * @param EmbedBag $includes
      *
      * @return mixed
      */
@@ -16,7 +15,6 @@ abstract class AbstractTransformer
 
     /**
      * @param $collection
-     * @param EmbedBag $includes
      *
      * @return array
      */

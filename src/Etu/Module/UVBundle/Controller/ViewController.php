@@ -117,7 +117,7 @@ class ViewController extends Controller
             // Order by semester: A13, P12, A12, P11, ...
             foreach ($results as $review) {
                 $semester = (int) mb_substr($review->getSemester(), 1);
-                $season = (mb_substr($review->getSemester(), 0, 1)) == 'A' ? 1 : 0;
+                $season = 'A' == (mb_substr($review->getSemester(), 0, 1)) ? 1 : 0;
                 $order[] = $semester * 2 + $season;
             }
 

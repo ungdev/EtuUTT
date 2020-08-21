@@ -123,8 +123,6 @@ class Message
     }
 
     /**
-     * @param User $author
-     *
      * @return $this
      */
     public function setAuthor(User $author)
@@ -183,8 +181,6 @@ class Message
     }
 
     /**
-     * @param \DateTime $createdAt
-     *
      * @return Message
      */
     public function setCreatedAt(\DateTime $createdAt)
@@ -212,9 +208,7 @@ class Message
     public function setState($state)
     {
         if (!in_array($state, [self::STATE_HIDDEN, self::STATE_VISIBLE])) {
-            throw new \InvalidArgumentException(
-                sprintf('Invalid thread state (%s given, Message constante expected).', $state)
-            );
+            throw new \InvalidArgumentException(sprintf('Invalid thread state (%s given, Message constante expected).', $state));
         }
 
         $this->state = $state;
@@ -251,8 +245,6 @@ class Message
     }
 
     /**
-     * @param \DateTime $updatedAt
-     *
      * @return Message
      */
     public function setUpdatedAt(\DateTime $updatedAt)

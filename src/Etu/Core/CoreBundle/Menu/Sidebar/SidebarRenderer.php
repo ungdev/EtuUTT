@@ -14,8 +14,6 @@ class SidebarRenderer
 
     /**
      * Constructor.
-     *
-     * @param \Twig_Environment $twig
      */
     public function __construct(\Twig_Environment $twig)
     {
@@ -24,8 +22,6 @@ class SidebarRenderer
 
     /**
      * Render the sidebar.
-     *
-     * @param SidebarBuilder $builder
      *
      * @return string
      */
@@ -55,8 +51,6 @@ class SidebarRenderer
     /**
      * Render the sidebar for mobile version.
      *
-     * @param SidebarBuilder $builder
-     *
      * @return string
      */
     public function renderMobile(SidebarBuilder $builder)
@@ -85,8 +79,6 @@ class SidebarRenderer
     /**
      * Render a block from the sidebar.
      *
-     * @param SidebarBlockBuilder $builder
-     *
      * @return string
      */
     public function renderBlock(SidebarBlockBuilder $builder)
@@ -111,8 +103,6 @@ class SidebarRenderer
 
     /**
      * Render a block from the sidebar (mobile version).
-     *
-     * @param SidebarBlockBuilder $builder
      *
      * @return string
      */

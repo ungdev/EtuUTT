@@ -25,8 +25,6 @@ class HelperManager
     }
 
     /**
-     * @param HelperInterface $helper
-     *
      * @return $this
      */
     public function addHelper(HelperInterface $helper)
@@ -49,9 +47,7 @@ class HelperManager
             return $this->helpers[$helperName];
         }
 
-        throw new \InvalidArgumentException(sprintf(
-            'Render helper "%s" not found', $helperName
-        ));
+        throw new \InvalidArgumentException(sprintf('Render helper "%s" not found', $helperName));
     }
 
     /**

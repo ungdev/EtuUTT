@@ -21,9 +21,6 @@ class SyncDaymailCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
      * @throws \RuntimeException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -42,7 +39,7 @@ However, note that this command cannot unregister user that are not in the ldap 
 so you will have to delete them manually on Sympa web UI.
 ');
 
-        $startNow = $helper->ask($input, $output, new Question('Start the synchronization now (y/n) [y]? ', 'y')) == 'y';
+        $startNow = 'y' == $helper->ask($input, $output, new Question('Start the synchronization now (y/n) [y]? ', 'y'));
 
         if (!$startNow) {
             $output->writeln("Aborted.\n");

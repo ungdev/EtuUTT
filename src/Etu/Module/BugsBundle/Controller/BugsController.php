@@ -45,7 +45,7 @@ class BugsController extends Controller
             ->leftJoin('i.assignee', 'a')
             ->where('i.isOpened = 1');
 
-        if ($order == 'date') {
+        if ('date' == $order) {
             $query = $query->orderBy('i.createdAt', 'DESC');
         } else {
             $query = $query->orderBy('i.criticality', 'DESC')

@@ -24,9 +24,6 @@ class ImportCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
      * @throws \RuntimeException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -74,18 +71,18 @@ This command helps you to import the official UTT UE guide from CSV file.');
 
             $j = 1;
             $programme = $uv['programme1'];
-            while ($j < 11 && $uv['programme'.$j] != '') {
+            while ($j < 11 && '' != $uv['programme'.$j]) {
                 ++$j;
                 $programme = $programme."\n".$uv['programme'.$j];
             }
             $j = 1;
             $objectif = $uv['objectif1'];
-            while ($j < 7 && $uv['objectif'.$j] != '') {
+            while ($j < 7 && '' != $uv['objectif'.$j]) {
                 ++$j;
                 $objectif = $objectif."\n".$uv['objectif'.$j];
             }
-            $automne = $uv['periode1'] == 'Automne' || $uv['periode2'] == 'Automne';
-            $printemps = $uv['periode1'] == 'Printemps' || $uv['periode2'] == 'Printemps';
+            $automne = 'Automne' == $uv['periode1'] || 'Automne' == $uv['periode2'];
+            $printemps = 'Printemps' == $uv['periode1'] || 'Printemps' == $uv['periode2'];
             $commentaire = implode("\n", explode('|', $uv['commentaires']));
             $commentaire = implode('P', explode('Picto p', $commentaire));
             $commentaire = implode('UE en Anglais et en Français', explode('Drapeau anglais/français', $commentaire));
@@ -123,24 +120,24 @@ This command helps you to import the official UTT UE guide from CSV file.');
         $output->writeln("Done.\n");
     }
 
-    protected function parseCredits(String $credit)
+    protected function parseCredits(string $credit)
     {
         str_replace(' crédits', '', $credit);
 
         return (int) $credit;
     }
 
-    protected function parseCategory(String $category)
+    protected function parseCategory(string $category)
     {
         $category = mb_strtolower($category);
-        if (mb_substr($category, 0, 2) == 'tc') {
+        if ('tc' == mb_substr($category, 0, 2)) {
             return mb_substr($category, 3);
         }
 
         return $category;
     }
 
-    protected function parseHour(String $hour)
+    protected function parseHour(string $hour)
     {
         return (int) mb_substr($hour, 0, mb_strlen($hour) - 2);
     }

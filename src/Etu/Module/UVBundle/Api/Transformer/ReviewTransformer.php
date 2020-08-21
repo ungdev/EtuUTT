@@ -9,8 +9,7 @@ use Etu\Module\UVBundle\Entity\Review;
 class ReviewTransformer extends AbstractTransformer
 {
     /**
-     * @param Review   $review
-     * @param EmbedBag $includes
+     * @param Review $review
      *
      * @return array
      */
@@ -20,8 +19,6 @@ class ReviewTransformer extends AbstractTransformer
     }
 
     /**
-     * @param Review $review
-     *
      * @return array
      */
     private function getData(Review $review)
@@ -37,8 +34,6 @@ class ReviewTransformer extends AbstractTransformer
     }
 
     /**
-     * @param Review $review
-     *
      * @return array
      */
     private function getLinks(Review $review)

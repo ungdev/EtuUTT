@@ -22,9 +22,6 @@ class OrgaMenuSeparator
      */
     protected $role;
 
-    /**
-     * @param OrgaMenuBuilder $builder
-     */
     public function __construct(OrgaMenuBuilder $builder)
     {
         $this->builder = $builder;

@@ -14,9 +14,6 @@ class SubscriptionsManager
      */
     protected $doctrine;
 
-    /**
-     * @param Registry $doctrine
-     */
     public function __construct(Registry $doctrine)
     {
         $this->doctrine = $doctrine;
@@ -25,7 +22,6 @@ class SubscriptionsManager
     /**
      * @param string    $entityType
      * @param int       $entityId
-     * @param User      $user
      * @param \DateTime $date
      *
      * @return bool
@@ -55,7 +51,6 @@ class SubscriptionsManager
     /**
      * @param string $entityType
      * @param int    $entityId
-     * @param User   $user
      *
      * @return bool
      */
@@ -85,7 +80,6 @@ class SubscriptionsManager
     /**
      * @param string $entityType
      * @param int    $entityId
-     * @param User   $user
      *
      * @return bool
      */

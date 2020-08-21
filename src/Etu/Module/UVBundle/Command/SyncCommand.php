@@ -24,9 +24,6 @@ class SyncCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
      * @throws \RuntimeException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -61,18 +58,14 @@ database, it will only update them or create them.
         $output->writeln('Loading registry ...');
 
         if (!file_exists(__DIR__.'/../Resources/objects/registry.json')) {
-            throw new \RuntimeException(
-                'The registry can not be loaded. Please run "etu:ue:import url" to create it.'
-            );
+            throw new \RuntimeException('The registry can not be loaded. Please run "etu:ue:import url" to create it.');
         }
 
         /** @var UV[] $registry */
         $registry = unserialize(file_get_contents(__DIR__.'/../Resources/objects/registry.json'));
 
         if (!$registry || !is_array($registry)) {
-            throw new \RuntimeException(
-                'The registry can not be loaded as its file is corrupted. Please run "etu:ue:import url" to recreate it.'
-            );
+            throw new \RuntimeException('The registry can not be loaded as its file is corrupted. Please run "etu:ue:import url" to recreate it.');
         }
 
         $regitryCodes = [];
@@ -135,13 +128,13 @@ database, it will only update them or create them.
 
         $output->write("\n");
 
-        if ($toAddCount + $toRemoveCount + $toUpdateCount == 0) {
+        if (0 == $toAddCount + $toRemoveCount + $toUpdateCount) {
             $output->writeln("Nothing to sync.\n");
 
             return;
         }
 
-        $startNow = $helper->ask($input, $output, new Question('Start the synchronization now (y/n) [y]? ', 'y')) == 'y';
+        $startNow = 'y' == $helper->ask($input, $output, new Question('Start the synchronization now (y/n) [y]? ', 'y'));
 
         if (!$startNow) {
             $output->writeln("Aborted.\n");
@@ -165,7 +158,7 @@ database, it will only update them or create them.
                 $bar->update($i);
                 ++$i;
 
-                if ($i % 10 == 0) {
+                if (0 == $i % 10) {
                     $em->flush();
                 }
             }
@@ -209,7 +202,7 @@ database, it will only update them or create them.
 
                 $em->persist($entity);
 
-                if ($i % 10 == 0) {
+                if (0 == $i % 10) {
                     $em->flush();
                 }
 
@@ -236,7 +229,7 @@ database, it will only update them or create them.
 
                 $em->persist($entity);
 
-                if ($i % 10 == 0) {
+                if (0 == $i % 10) {
                     $em->flush();
                 }
 
@@ -253,9 +246,6 @@ database, it will only update them or create them.
     }
 
     /**
-     * @param UV $registryUV
-     * @param UV $databaseUV
-     *
      * @return bool
      */
     protected function areEquals(UV $registryUV, UV $databaseUV)

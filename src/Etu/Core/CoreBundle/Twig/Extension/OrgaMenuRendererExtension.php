@@ -20,10 +20,6 @@ class OrgaMenuRendererExtension extends \Twig_Extension
      */
     protected $builder;
 
-    /**
-     * @param OrgaMenuBuilder  $builder
-     * @param OrgaMenuRenderer $renderer
-     */
     public function __construct(OrgaMenuBuilder $builder, OrgaMenuRenderer $renderer)
     {
         $this->builder = $builder;

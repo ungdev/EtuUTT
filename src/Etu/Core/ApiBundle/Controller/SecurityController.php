@@ -380,7 +380,7 @@ class SecurityController extends ApiController
                   ]
                 );
                 $client = null;
-                if (count($clients) == 0) {
+                if (0 == count($clients)) {
                     // Create a new one
                     $client = new OauthClient();
                     $client->setUser($this->getUser());

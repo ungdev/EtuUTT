@@ -48,8 +48,6 @@ class Answer
     protected $answer;
 
     /**
-     * @param Event  $event
-     * @param User   $user
      * @param string $answer
      */
     public function __construct(Event $event, User $user, $answer)

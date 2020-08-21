@@ -102,8 +102,6 @@ class LdapManager
     }
 
     /**
-     * @param array $values
-     *
      * @return User
      */
     private function map(array $values)

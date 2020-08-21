@@ -22,10 +22,6 @@ class Synchronizer
      */
     protected $doctrine;
 
-    /**
-     * @param LdapManager $ldap
-     * @param Doctrine    $doctrine
-     */
     public function __construct(LdapManager $ldap, Doctrine $doctrine)
     {
         $this->ldap = $ldap;

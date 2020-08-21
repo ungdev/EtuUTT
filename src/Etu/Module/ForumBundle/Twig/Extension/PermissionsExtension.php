@@ -30,7 +30,6 @@ class PermissionsExtension extends \Twig_Extension
 
     /**
      * @param UserInterface $user
-     * @param Category      $category
      *
      * @return bool
      */
@@ -43,7 +42,6 @@ class PermissionsExtension extends \Twig_Extension
 
     /**
      * @param UserInterface $user
-     * @param Category      $category
      *
      * @return bool
      */
@@ -56,7 +54,6 @@ class PermissionsExtension extends \Twig_Extension
 
     /**
      * @param UserInterface $user
-     * @param Category      $category
      *
      * @return bool
      */
@@ -69,7 +66,6 @@ class PermissionsExtension extends \Twig_Extension
 
     /**
      * @param UserInterface $user
-     * @param Category      $category
      *
      * @return bool
      */
@@ -82,7 +78,6 @@ class PermissionsExtension extends \Twig_Extension
 
     /**
      * @param UserInterface $user
-     * @param Category      $category
      *
      * @return bool
      */
@@ -95,7 +90,6 @@ class PermissionsExtension extends \Twig_Extension
 
     /**
      * @param UserInterface $user
-     * @param Category      $category
      *
      * @return bool
      */
@@ -108,7 +102,6 @@ class PermissionsExtension extends \Twig_Extension
 
     /**
      * @param UserInterface $user
-     * @param Category      $category
      *
      * @return bool
      */
@@ -121,7 +114,6 @@ class PermissionsExtension extends \Twig_Extension
 
     /**
      * @param UserInterface $user
-     * @param Category      $category
      *
      * @return bool
      */

@@ -45,8 +45,6 @@ abstract class EtuKernel extends Kernel
     }
 
     /**
-     * @param \Etu\Core\CoreBundle\Framework\Definition\Module $module
-     *
      * @return \AppKernel
      */
     public function registerModuleDefinition(Module $module)

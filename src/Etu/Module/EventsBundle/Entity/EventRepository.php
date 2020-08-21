@@ -8,10 +8,6 @@ use Doctrine\ORM\EntityRepository;
 class EventRepository extends EntityRepository implements ProviderInterface
 {
     /**
-     * @param \DateTime $begin
-     * @param \DateTime $end
-     * @param array     $options
-     *
      * @return array
      */
     public function getEvents(\DateTime $begin, \DateTime $end, array $options = [])

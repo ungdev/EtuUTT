@@ -18,10 +18,6 @@ class OrgaTransformer extends AbstractTransformer
      */
     protected $orgaMemberTransformer;
 
-    /**
-     * @param UserTransformer       $userTransformer
-     * @param OrgaMemberTransformer $orgaMemberTransformer
-     */
     public function __construct(UserTransformer $userTransformer, OrgaMemberTransformer $orgaMemberTransformer)
     {
         $this->userTransformer = $userTransformer;
@@ -30,7 +26,6 @@ class OrgaTransformer extends AbstractTransformer
 
     /**
      * @param $orga
-     * @param EmbedBag $includes
      *
      * @return array
      */
@@ -40,8 +35,6 @@ class OrgaTransformer extends AbstractTransformer
     }
 
     /**
-     * @param Organization $orga
-     *
      * @return array
      */
     private function getData(Organization $orga)
@@ -58,8 +51,6 @@ class OrgaTransformer extends AbstractTransformer
     }
 
     /**
-     * @param Organization $orga
-     *
      * @return array
      */
     private function getLinks(Organization $orga)
@@ -87,9 +78,6 @@ class OrgaTransformer extends AbstractTransformer
     }
 
     /**
-     * @param Organization $orga
-     * @param EmbedBag     $includes
-     *
      * @return array
      */
     private function getIncludes(Organization $orga, EmbedBag $includes)

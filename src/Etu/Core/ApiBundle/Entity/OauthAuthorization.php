@@ -57,8 +57,6 @@ class OauthAuthorization
     /**
      * Constructor.
      *
-     * @param OauthClient      $client
-     * @param User             $user
      * @param array|Collection $scopes
      */
     public function __construct(OauthClient $client, User $user, $scopes)
@@ -70,8 +68,6 @@ class OauthAuthorization
     }
 
     /**
-     * @param OauthAuthorizationCode $code
-     *
      * @return OauthAuthorization
      */
     public static function createFromAuthorizationCode(OauthAuthorizationCode $code)
@@ -164,8 +160,6 @@ class OauthAuthorization
     /**
      * Add scopes.
      *
-     * @param OauthScope $scopes
-     *
      * @return OauthAuthorization
      */
     public function addScope(OauthScope $scopes)
@@ -177,8 +171,6 @@ class OauthAuthorization
 
     /**
      * Remove scopes.
-     *
-     * @param OauthScope $scopes
      */
     public function removeScope(OauthScope $scopes)
     {

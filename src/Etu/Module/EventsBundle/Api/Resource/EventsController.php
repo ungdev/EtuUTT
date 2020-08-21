@@ -241,7 +241,7 @@ class EventsController extends ApiController
         ->getRepository(Event::class)
         ->find($id);
 
-        if ($event == null) {
+        if (null == $event) {
             return $this->format([
               'error' => 'Unknown event',
           ], 404, [], $request);

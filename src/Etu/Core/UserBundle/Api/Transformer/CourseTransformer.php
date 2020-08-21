@@ -9,8 +9,7 @@ use Etu\Core\UserBundle\Entity\Course;
 class CourseTransformer extends AbstractTransformer
 {
     /**
-     * @param Course   $course
-     * @param EmbedBag $includes
+     * @param Course $course
      *
      * @return array
      */
@@ -20,8 +19,6 @@ class CourseTransformer extends AbstractTransformer
     }
 
     /**
-     * @param Course $course
-     *
      * @return array
      */
     private function getData(Course $course)

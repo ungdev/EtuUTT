@@ -69,27 +69,27 @@ class Course
         $this->studentId = $values->etu_id;
         $this->room = $values->code_salle_cru;
 
-        if ($values->weekname == 'T') {
+        if ('T' == $values->weekname) {
             $this->week = self::WEEK_ALL;
-        } elseif ($values->weekname == 'A') {
+        } elseif ('A' == $values->weekname) {
             $this->week = self::WEEK_A;
-        } elseif ($values->weekname == 'B') {
+        } elseif ('B' == $values->weekname) {
             $this->week = self::WEEK_B;
         }
 
-        if ($values->jour == 'lundi') {
+        if ('lundi' == $values->jour) {
             $this->day = self::DAY_MONDAY;
-        } elseif ($values->jour == 'mardi') {
+        } elseif ('mardi' == $values->jour) {
             $this->day = self::DAY_TUESDAY;
-        } elseif ($values->jour == 'mercredi') {
+        } elseif ('mercredi' == $values->jour) {
             $this->day = self::DAY_WENESDAY;
-        } elseif ($values->jour == 'jeudi') {
+        } elseif ('jeudi' == $values->jour) {
             $this->day = self::DAY_THURSDAY;
-        } elseif ($values->jour == 'vendredi') {
+        } elseif ('vendredi' == $values->jour) {
             $this->day = self::DAY_FRIDAY;
-        } elseif ($values->jour == 'samedi') {
+        } elseif ('samedi' == $values->jour) {
             $this->day = self::DAY_SATHURDAY;
-        } elseif ($values->jour == 'dimanche') {
+        } elseif ('dimanche' == $values->jour) {
             $this->day = self::DAY_SUNDAY;
         }
 
@@ -167,7 +167,7 @@ class Course
         $hour = (int) $parts[0];
         $minutes = (int) $parts[1];
 
-        if ($minutes == 60) {
+        if (60 == $minutes) {
             ++$hour;
             $minutes = 0;
         }

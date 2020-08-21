@@ -17,9 +17,6 @@ class NotificationHelperExtension extends \Twig_Extension
      */
     protected $helperManager;
 
-    /**
-     * @param HelperManager $helperManager
-     */
     public function __construct(HelperManager $helperManager)
     {
         $this->helperManager = $helperManager;
@@ -38,8 +35,6 @@ class NotificationHelperExtension extends \Twig_Extension
     }
 
     /**
-     * @param Notification $notification
-     *
      * @return string
      */
     public function render(Notification $notification)
@@ -62,6 +57,6 @@ class NotificationHelperExtension extends \Twig_Extension
      */
     public function duck_catched()
     {
-        return file_get_contents(__DIR__.'/../../../../../../duck_catched.txt') != 0;
+        return 0 != file_get_contents(__DIR__.'/../../../../../../duck_catched.txt');
     }
 }

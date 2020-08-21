@@ -26,9 +26,6 @@ class ElementToImport
     protected $doctrine;
 
     /**
-     * @param Registry $doctrine
-     * @param User     $element
-     *
      * @throws \RuntimeException
      */
     public function __construct(Registry $doctrine, User $element)
@@ -40,9 +37,7 @@ class ElementToImport
                 $type = gettype($element);
             }
 
-            throw new \RuntimeException(sprintf(
-                'EtuUTT synchonizer can only import User objects (%s given)', $type
-            ));
+            throw new \RuntimeException(sprintf('EtuUTT synchonizer can only import User objects (%s given)', $type));
         }
 
         $this->element = $element;
@@ -53,7 +48,7 @@ class ElementToImport
      * Import the element in the database.
      *
      * @param mixed      $flush
-     * @param null|mixed $bdeOrga
+     * @param mixed|null $bdeOrga
      */
     public function import($flush = false, $bdeOrga = null)
     {
@@ -118,7 +113,7 @@ class ElementToImport
         $user->setIsStudent($this->element->getIsStudent());
         $user->setIsStaffUTT(!$this->element->getIsStudent());
         $user->setIsInLDAP(true);
-        $user->setDaymail($this->element->getIsStudent() && mb_substr($this->element->getMail(), -7) == '@utt.fr'); // Filter by email to remove epf students
+        $user->setDaymail($this->element->getIsStudent() && '@utt.fr' == mb_substr($this->element->getMail(), -7)); // Filter by email to remove epf students
         $user->setUvs(implode('|', $this->element->getUvs()));
 
         $this->doctrine->getManager()->persist($user);

@@ -24,11 +24,6 @@ class SecurityListener
      */
     protected $formatter;
 
-    /**
-     * @param OauthServer   $server
-     * @param Reader        $reader
-     * @param DataFormatter $formatter
-     */
     public function __construct(OAuthServer $server, Reader $reader, DataFormatter $formatter)
     {
         $this->server = $server;
@@ -37,15 +32,13 @@ class SecurityListener
     }
 
     /**
-     * @param GetResponseEvent $event
-     *
      * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      *
      * @return bool
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
-        if (mb_strpos($event->getRequest()->attributes->get('_controller'), 'Api\\Resource') !== false) {
+        if (false !== mb_strpos($event->getRequest()->attributes->get('_controller'), 'Api\\Resource')) {
             $controller = explode('::', $event->getRequest()->attributes->get('_controller'));
             $reflection = new \ReflectionMethod($controller[0], $controller[1]);
 
@@ -60,7 +53,7 @@ class SecurityListener
             if (!$requiredScope) {
                 $requiredScope = 'public';
             }
-            if ($requiredScope == 'external') {
+            if ('external' == $requiredScope) {
                 return true;
             }
             $request = $event->getRequest();

@@ -9,8 +9,7 @@ use Etu\Module\EventsBundle\Entity\Event;
 class EventTransformer extends AbstractTransformer
 {
     /**
-     * @param Event    $event
-     * @param EmbedBag $includes
+     * @param Event $event
      *
      * @return array
      */
@@ -20,8 +19,6 @@ class EventTransformer extends AbstractTransformer
     }
 
     /**
-     * @param Event $event
-     *
      * @return array
      */
     private function getData(Event $event, EmbedBag $includes)

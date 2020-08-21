@@ -16,17 +16,12 @@ class AuthorizationCodeGrantType implements GrantTypeInterface
      */
     protected $manager;
 
-    /**
-     * @param EntityManager $manager
-     */
     public function __construct(EntityManager $manager)
     {
         $this->manager = $manager;
     }
 
     /**
-     * @param Request $request
-     *
      * @return OauthAccessToken
      */
     public function createToken(Request $request)
@@ -82,8 +77,6 @@ class AuthorizationCodeGrantType implements GrantTypeInterface
     }
 
     /**
-     * @param OauthAccessToken $token
-     *
      * @return array
      */
     public function format(OauthAccessToken $token)

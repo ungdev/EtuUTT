@@ -24,10 +24,6 @@ class NotificationsDispatcher
      */
     protected $sender;
 
-    /**
-     * @param Registry           $doctrine
-     * @param NotificationSender $sender
-     */
     public function __construct(Registry $doctrine, NotificationSender $sender)
     {
         $this->doctrine = $doctrine;
@@ -37,8 +33,6 @@ class NotificationsDispatcher
     /**
      * Dispatch a covoit using database alerts.
      * Find matching alerts, create notifications and send them.
-     *
-     * @param Covoit $covoit
      */
     public function dispatch(Covoit $covoit)
     {
@@ -90,9 +84,6 @@ class NotificationsDispatcher
     /**
      * Does the given alert match the given covoit.
      *
-     * @param CovoitAlert $alert
-     * @param Covoit      $covoit
-     *
      * @return bool
      */
     private function match(CovoitAlert $alert, Covoit $covoit)
@@ -127,8 +118,6 @@ class NotificationsDispatcher
     }
 
     /**
-     * @param Covoit $covoit
-     *
      * @return Notification
      */
     private function createNotification(Covoit $covoit)

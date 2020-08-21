@@ -17,8 +17,6 @@ interface HelperInterface
     public function getName();
 
     /**
-     * @param Notification $notification
-     *
      * @return string
      */
     public function render(Notification $notification);

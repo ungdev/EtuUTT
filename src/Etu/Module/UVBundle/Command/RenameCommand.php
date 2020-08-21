@@ -3,7 +3,6 @@
 namespace Etu\Module\UVBundle\Command;
 
 use Doctrine\ORM\EntityManager;
-use Etu\Module\UVBundle\Entity\UV;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -25,9 +24,6 @@ class RenameCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
      * @throws \RuntimeException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -45,9 +41,7 @@ class RenameCommand extends ContainerAwareCommand
         $em = $container->get('doctrine')->getManager();
         $ue = $em->getRepository('EtuModuleUVBundle:UV')->findOneBy(['code' => $old]);
         if (!$ue) {
-            throw new \RuntimeException(
-                'That UE could not be found.'
-            );
+            throw new \RuntimeException('That UE could not be found.');
         }
 
         $ue->setCode($new);

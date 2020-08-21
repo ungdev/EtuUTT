@@ -230,9 +230,6 @@ class OauthAccessToken
         return $this->refreshToken;
     }
 
-    /**
-     * @param OauthRefreshToken $refreshToken
-     */
     public function setRefreshToken(OauthRefreshToken $refreshToken)
     {
         $this->refreshToken = $refreshToken;
@@ -240,8 +237,6 @@ class OauthAccessToken
 
     /**
      * Add scopes.
-     *
-     * @param OauthScope $scopes
      *
      * @return OauthAccessToken
      */
@@ -254,8 +249,6 @@ class OauthAccessToken
 
     /**
      * Remove scopes.
-     *
-     * @param OauthScope $scopes
      */
     public function removeScope(OauthScope $scopes)
     {

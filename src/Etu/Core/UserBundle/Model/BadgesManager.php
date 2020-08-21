@@ -40,9 +40,6 @@ class BadgesManager
      */
     protected static $initializedUsers = false;
 
-    /**
-     * @param Registry $doctrine
-     */
     public function __construct(Registry $doctrine)
     {
         $this->em = $doctrine->getManager();
@@ -119,9 +116,8 @@ class BadgesManager
     }
 
     /**
-     * @param User $user
-     * @param      $serie
-     * @param      $level
+     * @param $serie
+     * @param $level
      *
      * @return bool|UserBadge
      */
@@ -139,9 +135,8 @@ class BadgesManager
     }
 
     /**
-     * @param User $user
-     * @param      $serie
-     * @param int  $level
+     * @param     $serie
+     * @param int $level
      *
      * @return bool
      */
@@ -155,7 +150,6 @@ class BadgesManager
     }
 
     /**
-     * @param User   $user
      * @param string $badgeSerie
      * @param int    $badgeLevel
      *
@@ -182,7 +176,6 @@ class BadgesManager
     }
 
     /**
-     * @param User   $user
      * @param string $badgeSerie
      * @param int    $badgeLevel
      *
@@ -207,8 +200,6 @@ class BadgesManager
     }
 
     /**
-     * @param User $user
-     *
      * @return User
      */
     private static function userPersistBadges(User $user)

@@ -21,9 +21,6 @@ class SyncBDEMembersCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
      * @throws \RuntimeException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -73,7 +70,7 @@ This command helps you to synchronise database with BDE member db.
                 $em->persist($user);
 
                 // Flush every X to not reach memory limit
-                if ($i % 25 == 0) {
+                if (0 == $i % 25) {
                     $em->flush();
                 }
             }

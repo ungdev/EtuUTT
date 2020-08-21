@@ -10,10 +10,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CovoitMessageType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

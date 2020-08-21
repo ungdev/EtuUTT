@@ -24,10 +24,6 @@ class ImportCitiesCommand extends ContainerAwareCommand
             ->setDescription('Import cities');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();

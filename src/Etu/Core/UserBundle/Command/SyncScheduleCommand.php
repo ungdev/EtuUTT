@@ -25,9 +25,6 @@ class SyncScheduleCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
      * @throws \RuntimeException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -106,7 +103,7 @@ This command helps you to synchronise database\'s with officials schedules.
             $course->setUv($criCourse->getUv());
             $course->setType($criCourse->getType());
 
-            if ($criCourse->getWeek() !== null) {
+            if (null !== $criCourse->getWeek()) {
                 $course->setWeek($criCourse->getWeek());
             } else {
                 $course->setWeek('T');

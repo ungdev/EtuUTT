@@ -39,10 +39,7 @@ class HomeBuilder
     protected $stopwatch;
 
     /**
-     * @param EntityManager        $manager
-     * @param TokenStorage         $tokenStorage
-     * @param GlobalAccessorObject $globalAccessorObject
-     * @param Stopwatch            $stopwatch
+     * @param Stopwatch $stopwatch
      */
     public function __construct(EntityManager $manager,
                                 TokenStorage $tokenStorage,
@@ -279,7 +276,7 @@ class HomeBuilder
         // Select collection
         while (count($collectionsRegistry) && empty($photos)) {
             $collection = array_shift($collectionsRegistry);
-            if ($collection === null) {
+            if (null === $collection) {
                 break;
             }
 
@@ -297,7 +294,7 @@ class HomeBuilder
             // Select 'set'
             while (count($setsRegistry) && empty($photos)) {
                 $set = array_shift($setsRegistry);
-                if ($set === null) {
+                if (null === $set) {
                     break;
                 }
 

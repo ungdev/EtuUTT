@@ -30,7 +30,6 @@ class UrlBuilder
 
     /**
      * @param $secret
-     * @param ContainerInterface $container
      */
     public function __construct($secret, ContainerInterface $container)
     {

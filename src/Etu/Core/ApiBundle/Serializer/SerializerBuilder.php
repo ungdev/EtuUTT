@@ -11,9 +11,6 @@ class SerializerBuilder
      */
     protected $collection;
 
-    /**
-     * @param SerializerCollection $collection
-     */
     public function __construct(SerializerCollection $collection)
     {
         $this->collection = $collection;

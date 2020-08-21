@@ -88,10 +88,6 @@ class DaymailPart
      */
     protected $deletedAt;
 
-    /**
-     * @param Organization $orga
-     * @param \DateTime    $date
-     */
     public function __construct(Organization $orga, \DateTime $date)
     {
         $this->orga = $orga;

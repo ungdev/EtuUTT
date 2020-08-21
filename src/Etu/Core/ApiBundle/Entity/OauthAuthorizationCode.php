@@ -218,8 +218,6 @@ class OauthAuthorizationCode
     /**
      * Add scopes.
      *
-     * @param OauthScope $scopes
-     *
      * @return OauthAuthorizationCode
      */
     public function addScope(OauthScope $scopes)
@@ -231,8 +229,6 @@ class OauthAuthorizationCode
 
     /**
      * Remove scopes.
-     *
-     * @param OauthScope $scopes
      */
     public function removeScope(OauthScope $scopes)
     {

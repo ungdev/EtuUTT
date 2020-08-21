@@ -29,17 +29,11 @@ class SerializerCollection
         $this->normalizers = new ArrayCollection();
     }
 
-    /**
-     * @param EncoderInterface $encoder
-     */
     public function addEncoder(EncoderInterface $encoder)
     {
         $this->encoders->add($encoder);
     }
 
-    /**
-     * @param NormalizerInterface $normalizer
-     */
     public function addNormalizer(NormalizerInterface $normalizer)
     {
         $this->normalizers->add($normalizer);

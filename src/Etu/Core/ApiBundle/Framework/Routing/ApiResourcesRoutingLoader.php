@@ -19,9 +19,6 @@ class ApiResourcesRoutingLoader implements LoaderInterface
      */
     private $resolver;
 
-    /**
-     * @param \AppKernel $kernel
-     */
     public function __construct(\AppKernel $kernel)
     {
         $this->kernel = $kernel;
@@ -78,7 +75,7 @@ class ApiResourcesRoutingLoader implements LoaderInterface
      */
     public function supports($resource, $type = null)
     {
-        return $type === 'api';
+        return 'api' === $type;
     }
 
     /**
@@ -90,8 +87,6 @@ class ApiResourcesRoutingLoader implements LoaderInterface
     }
 
     /**
-     * @param \Symfony\Component\Config\Loader\LoaderResolverInterface $resolver
-     *
      * @return ApiResourcesRoutingLoader
      */
     public function setResolver(LoaderResolverInterface $resolver)

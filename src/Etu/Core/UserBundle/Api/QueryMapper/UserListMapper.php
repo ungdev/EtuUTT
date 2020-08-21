@@ -9,9 +9,6 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 class UserListMapper implements QueryMapper
 {
     /**
-     * @param QueryBuilder $query
-     * @param ParameterBag $request
-     *
      * @return QueryBuilder
      */
     public function map(QueryBuilder $query, ParameterBag $request)

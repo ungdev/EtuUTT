@@ -21,9 +21,6 @@ class SessionUpdater
      */
     protected $container;
 
-    /**
-     * @param AuthorizationChecker $authorizationChecker
-     */
     public function __construct(AuthorizationChecker $authorizationChecker, ContainerInterface $container)
     {
         $this->authorizationChecker = $authorizationChecker;

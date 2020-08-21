@@ -137,8 +137,6 @@ abstract class Module extends Bundle
     }
 
     /**
-     * @param \Symfony\Component\Routing\Router $router
-     *
      * @return Module
      */
     public function setRouter(Router $router)

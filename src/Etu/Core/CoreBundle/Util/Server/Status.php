@@ -103,7 +103,7 @@ class Status
     {
         exec('free -m', $output);
 
-        if (count($output) != 4) {
+        if (4 != count($output)) {
             return;
         }
 
@@ -189,7 +189,7 @@ class Status
         $i = 0;
 
         foreach ($output as $line) {
-            if ($i == 10) {
+            if (10 == $i) {
                 break;
             }
 

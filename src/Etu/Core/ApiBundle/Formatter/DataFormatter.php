@@ -53,7 +53,7 @@ class DataFormatter
 
         $response = new Response($this->serializer->encode($data, $format), $status);
 
-        if ($format == 'json') {
+        if ('json' == $format) {
             $response->headers->set('Content-Type', 'application/json');
         } else {
             $response->headers->set('Content-Type', 'text/'.$format);

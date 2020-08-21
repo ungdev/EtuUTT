@@ -9,8 +9,6 @@ use Etu\Core\UserBundle\Entity\User;
 class CourseRepository extends EntityRepository
 {
     /**
-     * @param User $user
-     *
      * @return Course[]
      */
     public function getUserNextCourses(User $user)

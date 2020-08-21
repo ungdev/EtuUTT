@@ -30,9 +30,6 @@ class SyncProcessCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
      * @throws \RuntimeException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -75,7 +72,7 @@ but if they want to connect, you will have to set a password for them.
 
         $output->write("\n");
 
-        $startNow = $helper->ask($input, $output, new Question('Start the synchronization now (y/n) [y]? ', 'y')) == 'y';
+        $startNow = 'y' == $helper->ask($input, $output, new Question('Start the synchronization now (y/n) [y]? ', 'y'));
 
         if (!$startNow) {
             $output->writeln("Aborted.\n");
@@ -160,7 +157,7 @@ but if they want to connect, you will have to set a password for them.
         $output->write("\n\n");
 
         if ($usersRemoveIterator->count() > 0) {
-            if ($usersRemoveIterator->count() == 1) {
+            if (1 == $usersRemoveIterator->count()) {
                 $item = $usersRemoveIterator->get(0);
 
                 $output->writeln(sprintf(

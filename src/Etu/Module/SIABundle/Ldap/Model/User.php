@@ -71,7 +71,6 @@ class User
     /**
      * EtuUttID.
      *
-     *
      * @var int
      */
     protected $etuUttId;

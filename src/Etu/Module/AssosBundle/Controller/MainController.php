@@ -84,7 +84,7 @@ class MainController extends Controller
 
         $isElus = false;
 
-        if (mb_strpos($orga->getName(), 'Elus') !== false) {
+        if (false !== mb_strpos($orga->getName(), 'Elus')) {
             $isElus = true;
         }
 
@@ -100,8 +100,8 @@ class MainController extends Controller
 
         /** @var $member Member */
         foreach ($members as $member) {
-            if ($member->getRole() == Member::ROLE_PRESIDENT) {
-                if ($member->getGroup()->getName() == 'Bureau') {
+            if (Member::ROLE_PRESIDENT == $member->getRole()) {
+                if ('Bureau' == $member->getGroup()->getName()) {
                     $presidents[] = $member->getUser();
                 }
             }

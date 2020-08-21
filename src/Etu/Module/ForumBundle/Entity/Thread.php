@@ -147,8 +147,6 @@ class Thread
     }
 
     /**
-     * @param User $author
-     *
      * @return $this
      */
     public function setAuthor(User $author)
@@ -207,8 +205,6 @@ class Thread
     }
 
     /**
-     * @param \DateTime $createdAt
-     *
      * @return Thread
      */
     public function setCreatedAt(\DateTime $createdAt)
@@ -276,9 +272,7 @@ class Thread
     public function setState($state)
     {
         if (!in_array($state, [self::STATE_HIDDEN, self::STATE_CLOSED, self::STATE_OPEN])) {
-            throw new \InvalidArgumentException(
-                sprintf('Invalid thread state (%s given, Thread constante expected).', $state)
-            );
+            throw new \InvalidArgumentException(sprintf('Invalid thread state (%s given, Thread constante expected).', $state));
         }
 
         $this->state = $state;
@@ -303,13 +297,11 @@ class Thread
      */
     public function setWeight($weight)
     {
-        if ($weight == null) {
+        if (null == $weight) {
             $weight = self::WEIGHT_BASIC;
         }
         if (!in_array($weight, [self::WEIGHT_BASIC, self::WEIGHT_STICKY])) {
-            throw new \InvalidArgumentException(
-                sprintf('Invalid thread weight (%s given, Thread constante expected).', $weight)
-            );
+            throw new \InvalidArgumentException(sprintf('Invalid thread weight (%s given, Thread constante expected).', $weight));
         }
 
         $this->weight = $weight;

@@ -12,39 +12,33 @@ class ResponseListener
      */
     protected $session;
 
-    /**
-     * @param Session $session
-     */
     public function __construct(Session $session)
     {
         $this->session = $session;
     }
 
-    /**
-     * @param FilterResponseEvent $event
-     */
     public function onKernelResponse(FilterResponseEvent $event)
     {
         $request = $event->getRequest();
         $response = $event->getResponse();
 
-        if (mb_substr($request->get('_controller'), 0, 3) != 'Etu') {
+        if ('Etu' != mb_substr($request->get('_controller'), 0, 3)) {
             return;
         }
 
-        if ($request->get('_route') == 'notifs_new') {
+        if ('notifs_new' == $request->get('_route')) {
             return;
         }
 
-        if ($response->headers->get('Content-Type') == 'application/json') {
+        if ('application/json' == $response->headers->get('Content-Type')) {
             return;
         }
 
-        if ($response->headers->get('Content-Type') == 'application/js') {
+        if ('application/js' == $response->headers->get('Content-Type')) {
             return;
         }
 
-        if ($response->headers->get('Content-Type') == 'application/xml') {
+        if ('application/xml' == $response->headers->get('Content-Type')) {
             return;
         }
 

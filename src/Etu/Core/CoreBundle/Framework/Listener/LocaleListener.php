@@ -18,19 +18,12 @@ class LocaleListener
      */
     protected $translator;
 
-    /**
-     * @param Session    $session
-     * @param Translator $translator
-     */
     public function __construct(Session $session, Translator $translator)
     {
         $this->session = $session;
         $this->translator = $translator;
     }
 
-    /**
-     * @param GetResponseEvent $event
-     */
     public function onKernelRequest(GetResponseEvent $event)
     {
         if ($this->session->has('_locale')) {

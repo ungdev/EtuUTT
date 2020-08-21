@@ -26,9 +26,6 @@ class ModulesManager
      */
     protected $modulesDirectory;
 
-    /**
-     * @param \Etu\Core\CoreBundle\Framework\EtuKernel $kernel
-     */
     public function __construct(EtuKernel $kernel)
     {
         $this->modules = $kernel->getModulesDefinitions();
@@ -115,7 +112,7 @@ class ModulesManager
         foreach ($iterator as $dir) {
             if (!$dir->isDot() && $dir->isDir()) {
                 // Check validity
-                if (mb_substr($dir->getBasename(), -6) == 'Bundle') {
+                if ('Bundle' == mb_substr($dir->getBasename(), -6)) {
                     $module = 'Etu\\Module\\'.$dir->getBasename().'\\EtuModule'.$dir->getBasename();
 
                     if (in_array($module, $this->modulesList)) {

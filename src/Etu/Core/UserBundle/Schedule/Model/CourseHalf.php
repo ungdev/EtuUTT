@@ -14,14 +14,11 @@ class CourseHalf
      */
     protected $courses;
 
-    /**
-     * @param Course $course
-     */
     public function addCourse(Course $course)
     {
-        if ($course->getWeek() == 'A') {
+        if ('A' == $course->getWeek()) {
             $this->courses['A'] = $course;
-        } elseif ($course->getWeek() == 'B') {
+        } elseif ('B' == $course->getWeek()) {
             $this->courses['B'] = $course;
         }
     }

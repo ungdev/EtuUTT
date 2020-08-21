@@ -48,8 +48,7 @@ class SidebarItem
     protected $builder;
 
     /**
-     * @param SidebarBlockBuilder $builder
-     * @param string              $translation
+     * @param string $translation
      */
     public function __construct(SidebarBlockBuilder $builder, $translation = '')
     {
@@ -87,7 +86,7 @@ class SidebarItem
      */
     public function hasIcon()
     {
-        return $this->icon !== false;
+        return false !== $this->icon;
     }
 
     /**

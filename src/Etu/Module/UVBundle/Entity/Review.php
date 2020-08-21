@@ -158,15 +158,15 @@ class Review
             mkdir(__DIR__.'/../../../../../web/uploads/uvs', 0777, true);
         }
 
-        if ($this->type == self::TYPE_FINAL) {
+        if (self::TYPE_FINAL == $this->type) {
             $name = 'final';
-        } elseif ($this->type == self::TYPE_MIDTERM) {
+        } elseif (self::TYPE_MIDTERM == $this->type) {
             $name = 'median';
-        } elseif ($this->type == self::TYPE_PARTIEL_1) {
+        } elseif (self::TYPE_PARTIEL_1 == $this->type) {
             $name = 'partiel-1';
-        } elseif ($this->type == self::TYPE_PARTIEL_2) {
+        } elseif (self::TYPE_PARTIEL_2 == $this->type) {
             $name = 'partiel-2';
-        } elseif ($this->type == self::TYPE_DM) {
+        } elseif (self::TYPE_DM == $this->type) {
             $name = 'dm';
         } else {
             $name = 'partiel';

@@ -44,9 +44,9 @@ class LdapManager
 
         foreach ($infos as $values) {
             if (!is_numeric($values)) {
-                if (($user = $this->map($values)) !== false) {
+                if (false !== ($user = $this->map($values))) {
                     $users[] = $user;
-                } elseif (($orga = $this->mapOrga($values)) !== false) {
+                } elseif (false !== ($orga = $this->mapOrga($values))) {
                     $users[] = $orga;
                 }
             }
@@ -154,8 +154,6 @@ class LdapManager
     }
 
     /**
-     * @param array $values
-     *
      * @return Model\User
      */
     private function map(array $values)
@@ -228,8 +226,6 @@ class LdapManager
     }
 
     /**
-     * @param array $values
-     *
      * @return Model\Organization
      */
     private function mapOrga(array $values)

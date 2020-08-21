@@ -33,7 +33,6 @@ class SidebarBlockBuilder
     protected $builder;
 
     /**
-     * @param SidebarBuilder $builder
      * @param $title
      */
     public function __construct(SidebarBuilder $builder, $title)

@@ -2,7 +2,6 @@
 
 namespace Etu\Core\UserBundle\Command;
 
-use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Core\UserBundle\Entity\OrganizationGroup;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,9 +20,6 @@ class OrganizationGroupMigrationCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
      * @throws \RuntimeException
      */
     protected function execute(InputInterface $input, OutputInterface $output)

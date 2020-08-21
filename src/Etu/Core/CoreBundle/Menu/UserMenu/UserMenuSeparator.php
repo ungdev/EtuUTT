@@ -22,9 +22,6 @@ class UserMenuSeparator
      */
     protected $role;
 
-    /**
-     * @param UserMenuBuilder $builder
-     */
     public function __construct(UserMenuBuilder $builder)
     {
         $this->builder = $builder;

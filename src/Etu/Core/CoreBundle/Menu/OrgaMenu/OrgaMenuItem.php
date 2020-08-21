@@ -53,8 +53,7 @@ class OrgaMenuItem
     protected $builder;
 
     /**
-     * @param OrgaMenuBuilder $builder
-     * @param string          $translation
+     * @param string $translation
      */
     public function __construct(OrgaMenuBuilder $builder, $translation = '')
     {
@@ -93,7 +92,7 @@ class OrgaMenuItem
      */
     public function hasIcon()
     {
-        return $this->icon !== false;
+        return false !== $this->icon;
     }
 
     /**

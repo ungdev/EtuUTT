@@ -36,10 +36,7 @@ class PermissionsChecker
     protected $memberships;
 
     /**
-     * @param User                          $user
-     * @param TokenStorage                  $tokenStorage
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param EntityManager                 $em
+     * @param User $user
      */
     public function __construct(TokenStorage $tokenStorage, AuthorizationCheckerInterface $authorizationChecker, EntityManager $em)
     {
@@ -180,7 +177,7 @@ class PermissionsChecker
     public function has($right, Organization $organization = null)
     {
         if ($this->authorizationChecker->isGranted('ROLE_WIKI_ADMIN')
-            && ($organization != null || !in_array($right, [WikiPage::RIGHT['ORGA_ADMIN'], WikiPage::RIGHT['ORGA_MEMBER']]))) {
+            && (null != $organization || !in_array($right, [WikiPage::RIGHT['ORGA_ADMIN'], WikiPage::RIGHT['ORGA_MEMBER']]))) {
             return true;
         }
 

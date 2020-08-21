@@ -56,7 +56,7 @@ class TVController extends Controller
             }
         }
 
-        if ($image === false) {
+        if (false === $image) {
             throw $this->createNotFoundException('Image not found');
         }
 

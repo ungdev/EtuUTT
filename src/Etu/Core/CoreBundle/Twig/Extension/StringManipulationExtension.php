@@ -100,19 +100,19 @@ class StringManipulationExtension extends \Twig_Extension
             if (ord($string[$i]) < 0x80) {
                 continue;
             } // 0bbbbbbb
-            elseif ((ord($string[$i]) & 0xE0) == 0xC0) {
+            elseif (0xC0 == (ord($string[$i]) & 0xE0)) {
                 $n = 1;
             } // 110bbbbb
-            elseif ((ord($string[$i]) & 0xF0) == 0xE0) {
+            elseif (0xE0 == (ord($string[$i]) & 0xF0)) {
                 $n = 2;
             } // 1110bbbb
-            elseif ((ord($string[$i]) & 0xF8) == 0xF0) {
+            elseif (0xF0 == (ord($string[$i]) & 0xF8)) {
                 $n = 3;
             } // 11110bbb
-            elseif ((ord($string[$i]) & 0xFC) == 0xF8) {
+            elseif (0xF8 == (ord($string[$i]) & 0xFC)) {
                 $n = 4;
             } // 111110bb
-            elseif ((ord($string[$i]) & 0xFE) == 0xFC) {
+            elseif (0xFC == (ord($string[$i]) & 0xFE)) {
                 $n = 5;
             } // 1111110b
             else {
@@ -121,7 +121,7 @@ class StringManipulationExtension extends \Twig_Extension
 
             for ($j = 0; $j < $n; ++$j) {
                 // n bytes matching 10bbbbbb follow ?
-                if ((++$i == mb_strlen($string)) || ((ord($string[$i]) & 0xC0) != 0x80)) {
+                if ((++$i == mb_strlen($string)) || (0x80 != (ord($string[$i]) & 0xC0))) {
                     return false;
                 }
             }

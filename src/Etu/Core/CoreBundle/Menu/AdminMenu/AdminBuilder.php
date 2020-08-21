@@ -10,9 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
  */
 class AdminBuilder extends SidebarBuilder
 {
-    /**
-     * @param Router $router
-     */
     public function __construct(Router $router)
     {
         $this->blocks = [];

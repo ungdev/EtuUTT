@@ -129,7 +129,7 @@ class AdminController extends Controller
         /** @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         $serie = '';
-        if ($name == 'undefined') {
+        if ('undefined' == $name) {
             $serie = '';
         } else {
             $serie = $name;
@@ -137,14 +137,14 @@ class AdminController extends Controller
         $form = $this->createFormBuilder()
       ->add('name', null, ['required' => true, 'label' => 'badges.admin.form.name'])
       ->add('description', null, ['required' => true, 'label' => 'badges.admin.form.description'])
-      ->add('serie', null, ['required' => false, 'label' => 'badges.admin.form.serie', 'disabled' => $serie != '', 'data' => $serie])
+      ->add('serie', null, ['required' => false, 'label' => 'badges.admin.form.serie', 'disabled' => '' != $serie, 'data' => $serie])
       ->add('submit', SubmitType::class, ['label' => 'badges.admin.form.add'])
       ->getForm();
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $form_data = $form->getData();
-            if ($name == 'undefined') {
+            if ('undefined' == $name) {
                 $serie = $form_data['serie'];
             } else {
                 $serie = $name;

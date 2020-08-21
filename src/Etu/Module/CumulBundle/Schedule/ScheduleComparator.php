@@ -21,8 +21,6 @@ class ScheduleComparator
     }
 
     /**
-     * @param ScheduleBuilder $builder
-     *
      * @return $this
      */
     public function addBuilder(ScheduleBuilder $builder)
@@ -65,7 +63,7 @@ class ScheduleComparator
 
             foreach ($week as $day => $hours) {
                 foreach ($hours as $hour => $course) {
-                    if ($course['type'] == 'void') {
+                    if ('void' == $course['type']) {
                         $freeTime[$key][$day][$hour] = 'T';
                     }
                 }

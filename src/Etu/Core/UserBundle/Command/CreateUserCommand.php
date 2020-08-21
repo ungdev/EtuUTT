@@ -31,9 +31,6 @@ class CreateUserCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
      * @throws \RuntimeException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -43,13 +40,13 @@ class CreateUserCommand extends ContainerAwareCommand
         /** @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine')->getManager();
 
-        $firstName = ($input->getOption('firstName') !== null) ? $input->getOption('firstName') : $helper->ask($input, $output, new Question('First name: '));
-        $lastName = ($input->getOption('lastName') !== null) ? $input->getOption('lastName') : $helper->ask($input, $output, new Question('Last name: '));
-        $password = ($input->getOption('password') !== null) ? $input->getOption('password') : $helper->ask($input, $output, new Question('Password: '));
-        $email = ($input->getOption('email') !== null) ? $input->getOption('email') : $helper->ask($input, $output, new Question('Public e-mail: '));
-        $branch = ($input->getOption('branch') !== null) ? $input->getOption('branch') : $helper->ask($input, $output, new Question('Branch: '));
-        $isStudent = ($input->getOption('isStudent') !== null) ? $input->getOption('isStudent') === 'y' : $helper->ask($input, $output, new ConfirmationQuestion('Is it a student (Y/n)', true));
-        $isStaffUTT = ($input->getOption('isStaffUTT') !== null) ? $input->getOption('isStaffUTT') === 'y' : $helper->ask($input, $output, new ConfirmationQuestion('Is it a staff of UTT (y/N)', false));
+        $firstName = (null !== $input->getOption('firstName')) ? $input->getOption('firstName') : $helper->ask($input, $output, new Question('First name: '));
+        $lastName = (null !== $input->getOption('lastName')) ? $input->getOption('lastName') : $helper->ask($input, $output, new Question('Last name: '));
+        $password = (null !== $input->getOption('password')) ? $input->getOption('password') : $helper->ask($input, $output, new Question('Password: '));
+        $email = (null !== $input->getOption('email')) ? $input->getOption('email') : $helper->ask($input, $output, new Question('Public e-mail: '));
+        $branch = (null !== $input->getOption('branch')) ? $input->getOption('branch') : $helper->ask($input, $output, new Question('Branch: '));
+        $isStudent = (null !== $input->getOption('isStudent')) ? 'y' === $input->getOption('isStudent') : $helper->ask($input, $output, new ConfirmationQuestion('Is it a student (Y/n)', true));
+        $isStaffUTT = (null !== $input->getOption('isStaffUTT')) ? 'y' === $input->getOption('isStaffUTT') : $helper->ask($input, $output, new ConfirmationQuestion('Is it a staff of UTT (y/N)', false));
 
         $user = new User();
         $user->setFirstName($firstName);

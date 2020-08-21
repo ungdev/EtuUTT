@@ -222,11 +222,11 @@ class BugsAdminController extends Controller
         // Comment genration: before update
         $label = 'label';
 
-        if ($bug->getCriticality() == Issue::CRITICALITY_SECURITY) {
+        if (Issue::CRITICALITY_SECURITY == $bug->getCriticality()) {
             $label .= ' label-important';
-        } elseif ($bug->getCriticality() == Issue::CRITICALITY_CRITICAL || $bug->getCriticality() == Issue::CRITICALITY_MAJOR) {
+        } elseif (Issue::CRITICALITY_CRITICAL == $bug->getCriticality() || Issue::CRITICALITY_MAJOR == $bug->getCriticality()) {
             $label .= ' label-warning';
-        } elseif ($bug->getCriticality() == Issue::CRITICALITY_MINOR) {
+        } elseif (Issue::CRITICALITY_MINOR == $bug->getCriticality()) {
             $label .= ' label-info';
         }
 
@@ -244,11 +244,11 @@ class BugsAdminController extends Controller
             // Comment genration: after update
             $label = 'label';
 
-            if ($bug->getCriticality() == Issue::CRITICALITY_SECURITY) {
+            if (Issue::CRITICALITY_SECURITY == $bug->getCriticality()) {
                 $label .= ' label-important';
-            } elseif ($bug->getCriticality() == Issue::CRITICALITY_CRITICAL || $bug->getCriticality() == Issue::CRITICALITY_MAJOR) {
+            } elseif (Issue::CRITICALITY_CRITICAL == $bug->getCriticality() || Issue::CRITICALITY_MAJOR == $bug->getCriticality()) {
                 $label .= ' label-warning';
-            } elseif ($bug->getCriticality() == Issue::CRITICALITY_MINOR) {
+            } elseif (Issue::CRITICALITY_MINOR == $bug->getCriticality()) {
                 $label .= ' label-info';
             }
 

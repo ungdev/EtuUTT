@@ -43,9 +43,6 @@ class ModulesBootListener
         $this->container = $container;
     }
 
-    /**
-     * @param GetResponseEvent $event
-     */
     public function onKernelRequest(GetResponseEvent $event)
     {
         $modules = $this->modulesManager->getEnabledModules();

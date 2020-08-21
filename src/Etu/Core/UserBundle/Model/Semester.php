@@ -39,7 +39,7 @@ class Semester
         $this->type = $type;
         $this->year = (int) $year;
 
-        if ($type == SemesterManager::SPRING) {
+        if (SemesterManager::SPRING == $type) {
             $this->begin = \DateTime::createFromFormat('z', SemesterManager::FIRST_DAY_SPRING);
             $this->begin->setTime(0, 0, 1);
 

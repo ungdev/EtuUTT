@@ -25,7 +25,7 @@ class MainController extends Controller
      * @Route("/upload/index/{organization}", name="upload_index", options={"expose"=true})
      * @Template()
      *
-     * @param null|mixed $organization
+     * @param mixed|null $organization
      */
     public function indexAction(Request $request, $organization = null)
     {
@@ -151,7 +151,7 @@ class MainController extends Controller
 
         // "Print" content
         $response = new BinaryFileResponse($this->getKernel()->getRootDir().'/../web/uploads/users_files/'.$file->getId());
-        if ($download == 'download' || $file->getExtension() == 'html') {
+        if ('download' == $download || 'html' == $file->getExtension()) {
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $file->getName().'.'.$file->getExtension());
         }
 
@@ -304,7 +304,7 @@ class MainController extends Controller
      * @Route("/upload/editor/{organization}", name="upload_editor", options={"expose"=true})
      * @Template()
      *
-     * @param null|mixed $organization
+     * @param mixed|null $organization
      */
     public function editorAction(Request $request, $organization = null)
     {
@@ -411,7 +411,7 @@ class MainController extends Controller
 
         // Check for http/https
         $scheme = parse_url($url, PHP_URL_SCHEME);
-        if ($scheme === false || in_array($scheme, ['http', 'https']) === false) {
+        if (false === $scheme || false === in_array($scheme, ['http', 'https'])) {
             throw new \Exception('Invalid protocol');
         }
 
@@ -419,7 +419,7 @@ class MainController extends Controller
         $info = getimagesizefromstring($content);
 
         $validMimeTypes = ['image/gif', 'image/jpeg', 'image/png'];
-        if ($info === false || in_array($info['mime'], $validMimeTypes) === false) {
+        if (false === $info || false === in_array($info['mime'], $validMimeTypes)) {
             throw new \Exception('Url doesn\'t seem to be a valid image.');
         }
 

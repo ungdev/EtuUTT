@@ -340,7 +340,7 @@ class MembershipsController extends Controller
             }
         }
 
-        if ($request->getMethod() == 'POST') {
+        if ('POST' == $request->getMethod()) {
             if (is_array($request->get('permissions'))) {
                 $userPermissions = [];
 

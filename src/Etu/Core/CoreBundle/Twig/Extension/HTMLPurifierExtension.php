@@ -40,7 +40,7 @@ class HTMLPurifierExtension extends \Twig_Extension
      */
     public function purify($string, $profile = 'default')
     {
-        if ($profile == 'email') {
+        if ('email' == $profile) {
             $config = \HTMLPurifier_Config::createDefault();
             $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
             $config->set('Cache.SerializerPath', '/tmp');
@@ -67,7 +67,7 @@ class HTMLPurifierExtension extends \Twig_Extension
         $string = (new \HTMLPurifier($config))->purify($string);
 
         // Additionnal rules
-        if ($profile == 'email') {
+        if ('email' == $profile) {
             // Add max-width:100% for all images on emails
             $string = str_replace('<img', '<img style="max-width:100%;max-height:400px;"', $string);
         }

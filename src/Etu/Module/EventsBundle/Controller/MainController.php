@@ -91,13 +91,13 @@ class MainController extends Controller
 
         /** @var Event $event */
         foreach ($events->all() as $event) {
-            if ($category != 'all' && $event->getCategory() != $category) {
+            if ('all' != $category && $event->getCategory() != $category) {
                 continue;
             }
-            if ($event->getPrivacy() == Event::PRIVACY_ORGAS && $this->getUser()->getMemberships()->count() <= 0) {
+            if (Event::PRIVACY_ORGAS == $event->getPrivacy() && $this->getUser()->getMemberships()->count() <= 0) {
                 continue;
             }
-            if ($event->getPrivacy() == Event::PRIVACY_MEMBERS) {
+            if (Event::PRIVACY_MEMBERS == $event->getPrivacy()) {
                 $continue = true;
                 foreach ($this->getUser()->getMemberships() as $membership) {
                     if ($membership->getOrganization()->getId() == $event->getOrga()->getId()) {
@@ -153,14 +153,14 @@ class MainController extends Controller
             throw $this->createNotFoundException('Event #'.$id.' not found');
         }
 
-        if ($event->getPrivacy() != Event::PRIVACY_PUBLIC) {
+        if (Event::PRIVACY_PUBLIC != $event->getPrivacy()) {
             $this->denyAccessUnlessGranted('ROLE_EVENTS_INTERNAL');
         }
 
-        if ($event->getPrivacy() == Event::PRIVACY_ORGAS && $this->getUser()->getMemberships()->count() <= 0) {
+        if (Event::PRIVACY_ORGAS == $event->getPrivacy() && $this->getUser()->getMemberships()->count() <= 0) {
             throw new AccessDeniedHttpException();
         }
-        if ($event->getPrivacy() == Event::PRIVACY_MEMBERS) {
+        if (Event::PRIVACY_MEMBERS == $event->getPrivacy()) {
             $error = true;
             foreach ($this->getUser()->getMemberships() as $membership) {
                 if ($membership->getOrganization()->getId() == $event->getOrga()->getId()) {
@@ -194,9 +194,9 @@ class MainController extends Controller
         $userAnswer = false;
 
         foreach ($answers as $answer) {
-            if ($answer->getAnswer() == Answer::ANSWER_YES) {
+            if (Answer::ANSWER_YES == $answer->getAnswer()) {
                 $answersYes[] = $answer;
-            } elseif ($answer->getAnswer() == Answer::ANSWER_PROBABLY) {
+            } elseif (Answer::ANSWER_PROBABLY == $answer->getAnswer()) {
                 $answersProbably[] = $answer;
             }
 
@@ -205,7 +205,7 @@ class MainController extends Controller
             }
         }
 
-        if ($event->getBegin() == $event->getEnd() && $event->getBegin()->format('H:i') == '00:00') {
+        if ($event->getBegin() == $event->getEnd() && '00:00' == $event->getBegin()->format('H:i')) {
             $useOn = true;
         } else {
             $useOn = false;
@@ -270,9 +270,9 @@ class MainController extends Controller
         $answersNo = [];
 
         foreach ($answers as $answer) {
-            if ($answer->getAnswer() == Answer::ANSWER_YES) {
+            if (Answer::ANSWER_YES == $answer->getAnswer()) {
                 $answersYes[] = $answer;
-            } elseif ($answer->getAnswer() == Answer::ANSWER_PROBABLY) {
+            } elseif (Answer::ANSWER_PROBABLY == $answer->getAnswer()) {
                 $answersProbably[] = $answer;
             } else {
                 $answersNo[] = $answer;
@@ -350,7 +350,7 @@ class MainController extends Controller
         $em->persist($userAnswer);
         $em->flush();
 
-        if ($answer == Answer::ANSWER_YES || $answer == Answer::ANSWER_PROBABLY) {
+        if (Answer::ANSWER_YES == $answer || Answer::ANSWER_PROBABLY == $answer) {
             $this->getSubscriptionsManager()->subscribe($this->getUser(), 'event', $event->getId());
         } else {
             $this->getSubscriptionsManager()->unsubscribe($this->getUser(), 'event', $event->getId());
@@ -384,10 +384,10 @@ class MainController extends Controller
 
         $array = [];
         foreach ($events->all() as $event) {
-            if ($event->getPrivacy() == Event::PRIVACY_ORGAS && (!($this->getUser() instanceof User) || $this->getUser()->getMemberships()->count() <= 0)) {
+            if (Event::PRIVACY_ORGAS == $event->getPrivacy() && (!($this->getUser() instanceof User) || $this->getUser()->getMemberships()->count() <= 0)) {
                 continue;
             }
-            if ($event->getPrivacy() == Event::PRIVACY_MEMBERS) {
+            if (Event::PRIVACY_MEMBERS == $event->getPrivacy()) {
                 $continue = true;
                 if (!($this->getUser() instanceof User)) {
                     foreach ($this->getUser()->getMemberships() as $membership) {
@@ -473,10 +473,10 @@ class MainController extends Controller
 
         /** @var Event $event */
         foreach ($events->all() as $event) {
-            if ($event->getPrivacy() == Event::PRIVACY_ORGAS && $user->getMemberships()->count() <= 0) {
+            if (Event::PRIVACY_ORGAS == $event->getPrivacy() && $user->getMemberships()->count() <= 0) {
                 continue;
             }
-            if ($event->getPrivacy() == Event::PRIVACY_MEMBERS) {
+            if (Event::PRIVACY_MEMBERS == $event->getPrivacy()) {
                 $continue = true;
                 foreach ($user->getMemberships() as $membership) {
                     if ($membership->getOrganization()->getId() == $event->getOrga()->getId()) {

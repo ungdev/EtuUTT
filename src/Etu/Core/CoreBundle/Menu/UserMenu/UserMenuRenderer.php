@@ -14,8 +14,6 @@ class UserMenuRenderer
 
     /**
      * Constructor.
-     *
-     * @param \Twig_Environment $twig
      */
     public function __construct(\Twig_Environment $twig)
     {

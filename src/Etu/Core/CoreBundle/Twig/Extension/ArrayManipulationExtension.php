@@ -22,8 +22,6 @@ class ArrayManipulationExtension extends \Twig_Extension
     /**
      * Shuffle an array.
      *
-     * @param array $array
-     *
      * @return array
      */
     public static function shuffle(array $array)

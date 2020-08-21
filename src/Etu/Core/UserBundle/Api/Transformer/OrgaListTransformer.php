@@ -10,7 +10,6 @@ class OrgaListTransformer extends AbstractTransformer
 {
     /**
      * @param $orga
-     * @param EmbedBag $includes
      *
      * @return array
      */
@@ -20,8 +19,6 @@ class OrgaListTransformer extends AbstractTransformer
     }
 
     /**
-     * @param Organization $orga
-     *
      * @return array
      */
     private function getData(Organization $orga)
@@ -34,8 +31,6 @@ class OrgaListTransformer extends AbstractTransformer
     }
 
     /**
-     * @param Organization $orga
-     *
      * @return array
      */
     private function getLinks(Organization $orga)

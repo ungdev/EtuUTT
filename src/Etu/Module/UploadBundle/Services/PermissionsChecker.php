@@ -37,10 +37,7 @@ class PermissionsChecker
     protected $memberships;
 
     /**
-     * @param User                          $user
-     * @param TokenStorage                  $tokenStorage
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param EntityManager                 $em
+     * @param User $user
      */
     public function __construct(TokenStorage $tokenStorage, AuthorizationCheckerInterface $authorizationChecker, EntityManager $em)
     {
@@ -68,7 +65,7 @@ class PermissionsChecker
     public function has($right, $organization_id = null)
     {
         if ($this->authorizationChecker->isGranted('ROLE_WIKI_ADMIN')
-            && ($organization_id != null || !in_array($right, [UploadedFile::RIGHT['ORGA_ADMIN'], UploadedFile::RIGHT['ORGA_MEMBER']]))) {
+            && (null != $organization_id || !in_array($right, [UploadedFile::RIGHT['ORGA_ADMIN'], UploadedFile::RIGHT['ORGA_MEMBER']]))) {
             return true;
         }
 
