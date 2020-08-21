@@ -326,7 +326,7 @@ class ProgressBar
         // fix for php-versions where printf doesn't return anything
         if (null === $this->_rlen) {
             $this->_rlen = $this->_tlen;
-        // fix for php versions between 4.3.7 and 5.x.y(?)
+            // fix for php versions between 4.3.7 and 5.x.y(?)
         } elseif ($this->_rlen < $this->_tlen) {
             echo str_repeat(' ', $this->_tlen - $this->_rlen);
             $this->_rlen = $this->_tlen;

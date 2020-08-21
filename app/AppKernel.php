@@ -92,11 +92,7 @@ class AppKernel extends EtuKernel
                     if (file_exists($this->getRootDir().'/../'.$bundleFile)) {
                         require $this->getRootDir().'/../'.$bundleFile;
                     } else {
-                        throw new \RuntimeException(
-                            sprintf(
-                                'Module "%s" can not be loaded (file "%s" not found)', $module, $bundleFile
-                            )
-                        );
+                        throw new \RuntimeException(sprintf('Module "%s" can not be loaded (file "%s" not found)', $module, $bundleFile));
                     }
                 }
 
@@ -108,14 +104,10 @@ class AppKernel extends EtuKernel
                         $bundles[] = $module;
                         $this->registerModuleDefinition($module);
                     } else {
-                        throw new \ErrorException(
-                            sprintf('Module "%s" must be an instance of Etu\Core\CoreBundle\Framework\Definition\Module.', get_class($module))
-                        );
+                        throw new \ErrorException(sprintf('Module "%s" must be an instance of Etu\Core\CoreBundle\Framework\Definition\Module.', get_class($module)));
                     }
                 } else {
-                    throw new \RuntimeException(
-                        sprintf('Module "%s" can not be loaded (class not found)', get_class($module))
-                    );
+                    throw new \RuntimeException(sprintf('Module "%s" can not be loaded (class not found)', get_class($module)));
                 }
             }
         } else {
