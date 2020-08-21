@@ -4,10 +4,13 @@ uvs:
     back: Retour
     deleteReview:
       confirm: "Vous avez bien supprimé cette annale"
+    deleteComment:
+      confirm: "Vous avez bien supprimé ce commentaire"
     index:
       actions: Actions
       comments: "Tous les commentaires"
       delete: Supprimer
+      edit: Editer
       lastsComments: "Derniers commentaires"
       lastsReviews: "Dernières annales"
       review: Annale
@@ -22,6 +25,10 @@ uvs:
       confirm: "Vous avez bien dévalidé cette annale"
     validateReview:
       confirm: "Vous avez bien validé cette annale"
+    unvalidateComment:
+      confirm: "Vous avez bien dévalidé ce commentaire"
+    validateComment:
+      confirm: "Vous avez bien validé ce commentaire"
   categories:
     cs: "Connaissances scientifiques"
     ct: "Humanités"
@@ -31,6 +38,9 @@ uvs:
     st: Stages
     tm: "Techniques et méthodes"
   main:
+    date:
+      createdAt: "Créé le"
+      updatedAt: "Modifié le"
     category:
       noResult: "Aucune UE dans cette catégorie"
       title: "Catégorie d'UE"
@@ -66,6 +76,7 @@ uvs:
       autumnAndSpring: "Automne et printemps"
       available: Disponibilité
       body: "Ajouter un commentaire"
+      anon: "Anonyme (sauf pour les étudiants admins du site etu)"
       cm: "Cours magistral"
       comments: Commentaires
       commentary: Commentaire
@@ -90,6 +101,7 @@ uvs:
       tp: "Travaux pratiques"
       viewCourses: "Voir les créneaux de cette UE"
       winBadges: "Envoyez des annales pour gagner des badges !"
+      warning: "ATTENTION : Pour être publié, votre commentaire devra être validé par un membre de l'équipe étudiante d'administration du site etu. Restez courtois et respectueux de vos enseignants, ce n'est pas un défouloir."
   notifs:
     newComment: "Nouveau commentaire dans l'UE %uv% (par %user%)"
     newReview: "Nouvelle annale dans l'UE %uv% (par %user%)"

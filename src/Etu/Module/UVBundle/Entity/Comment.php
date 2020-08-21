@@ -32,6 +32,20 @@ class Comment
     protected $user;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $valide;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $anonyme;
+
+    /**
      * @var UV
      *
      * @ORM\ManyToOne(targetEntity="UV", inversedBy="comments")
@@ -223,5 +237,53 @@ class Comment
     public function getUv()
     {
         return $this->uv;
+    }
+
+    /**
+     * Set valide.
+     *
+     * @param bool $valide
+     *
+     * @return Comment
+     */
+    public function setValide($valide)
+    {
+        $this->valide = $valide;
+
+        return $this;
+    }
+
+    /**
+     * Get vapide.
+     *
+     * @return bool
+     */
+    public function getValide()
+    {
+        return $this->valide;
+    }
+
+    /**
+     * Set anonyme.
+     *
+     * @param bool $anonyme
+     *
+     * @return Comment
+     */
+    public function setAnonyme($anonyme)
+    {
+        $this->anonyme = $anonyme;
+
+        return $this;
+    }
+
+    /**
+     * Get anonyme.
+     *
+     * @return bool
+     */
+    public function getAnonyme()
+    {
+        return $this->anonyme;
     }
 }

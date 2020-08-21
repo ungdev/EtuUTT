@@ -1,4 +1,5 @@
 {% extends 'EtuCoreBundle:Admin:layout.html.twig' %}
+{% import '@EtuModuleUV/Main/comment.twig' as viewComment %}
 
 {% block title %}{{ 'uvs.admin.index.title'|trans }}{% endblock %}
 
@@ -54,31 +55,7 @@
                 <hr />
 
                 {% for comment in comments %}
-                    <div class="uv-view-comment">
-                        <a href="{{ path('user_view', {'login': comment.user.login}) }}">
-                            <img src="{{ path('user_view_image_profil', {'avatar': comment.user.avatar}) }}" class="uv-view-comment-avatar" />
-                        </a>
-                        <div class="uv-view-comment-author">
-                            <a href="{{ path('user_view', {'login': comment.user.login}) }}">
-                                {{ comment.user.fullName }}
-                            </a>
-                            -
-                            <a href="{{ path('uvs_view', {'slug': comment.uv.slug, 'name': comment.uv.name|slugify}) }}">
-                                {{ comment.uv.code }}
-                            </a>
-
-                            <a href="{{ path('admin_uvs_comment_delete', {'id': comment.id}) }}"
-                               class="pull-right" style="font-weight: lighter;">
-                                {{ 'uvs.admin.index.delete'|trans }}
-                            </a>
-                        </div>
-                        <div class="uv-view-comment-date">
-                            {{ comment.createdAt|date('d/m/Y H:i') }}
-                        </div>
-                        <div class="uv-view-comment-content">
-                            {{ comment.body|purify }}
-                        </div>
-                    </div>
+                    {{ viewComment.commentaire(comment) }}
                 {% endfor %}
             </div>
         </div>

@@ -15,6 +15,8 @@ use Etu\Module\UVBundle\Entity\Review;
 use Etu\Module\UVBundle\Entity\UV;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 // Import annotations
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -61,15 +63,18 @@ class ViewController extends Controller
         if ($this->isGranted('ROLE_UV_REVIEW_POST')) {
             $comment = new Comment();
             $comment->setUv($uv)
-                ->setUser($this->getUser());
+                ->setUser($this->getUser())
+                ->setValide(false);
 
             $commentForm = $this->createFormBuilder($comment)
                 ->add('body', EditorType::class, ['label' => 'uvs.main.view.body'])
+                ->add('anonyme', CheckboxType::class, ['label' => 'uvs.main.view.anon', 'required' => false])
                 ->add('submit', SubmitType::class, ['label' => 'uvs.main.view.submit'])
                 ->getForm();
 
             $commentForm->handleRequest($request);
             if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+                $comment->setValide(false);
                 $em->persist($comment);
                 $em->flush();
 
@@ -155,7 +160,8 @@ class ViewController extends Controller
                 ->leftJoin('c.user', 'u')
                 ->where('c.uv = :uv')
                 ->setParameter('uv', $uv->getId())
-                ->orderBy('c.createdAt', 'DESC')
+                ->addOrderBy('c.valide', 'ASC')
+                ->addOrderBy('c.createdAt', 'DESC')
                 ->getQuery();
 
             $pagination = $this->get('knp_paginator')->paginate($query, $page, 10);
@@ -163,9 +169,45 @@ class ViewController extends Controller
             $rtn['semesters'] = $reviews;
             $rtn['reviewsCount'] = $reviewsCount;
             $rtn['pagination'] = $pagination;
+            $rtn['user'] = $this->getUser();
         }
 
         return $rtn;
+    }
+
+    /**
+     * @Route("/editUEComment/{id}", name="uvs_edit_comment")
+     * @Template()
+     *
+     * @param Request       $request
+     * @param EntityManager $em
+     * @param Comment       $comment
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function editUEComment(Request $request, Comment $comment)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if (($this->getUser() === $comment->getUser() && $this->isGranted('ROLE_UV_REVIEW_POST')) || $this->isGranted('ROLE_UV_REVIEW_ADMIN')) {
+            $commentForm = $this->createFormBuilder($comment)
+                ->add('body', EditorType::class, ['label' => 'uvs.main.view.body'])
+                ->add('anonyme', CheckboxType::class, ['label' => 'uvs.main.view.anon', 'required' => false])
+                ->add('submit', SubmitType::class, ['label' => 'uvs.main.view.submit'])
+                ->getForm();
+            $commentForm->handleRequest($request);
+            if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+                $comment->setValide(false);
+                $em->persist($comment);
+                $em->flush();
+
+                return $this->redirectToRoute('uvs_view', ['slug' => $comment->getUv()->getSlug(), 'name' => $comment->getUv()->getName()]);
+            }
+
+            return $this->render('@EtuModuleUV/View/editComment.html.twig', ['commentForm' => $commentForm->createView()]);
+        }
+
+        throw new AccessDeniedException("Vous n'avez pas l'autorisation de modifier ce commentaire");
     }
 
     /**

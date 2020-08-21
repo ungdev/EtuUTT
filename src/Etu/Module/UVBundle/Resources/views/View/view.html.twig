@@ -1,4 +1,5 @@
 {% extends '::page-2cols.html.twig' %}
+{% import '@EtuModuleUV/Main/comment.twig' as viewComment %}
 
 {% block title %}{{ 'uvs.main.view.title'|trans({'%code%': uv.code}) }}{% endblock %}
 
@@ -239,22 +240,7 @@
             <h4>{{ 'uvs.main.view.comments'|trans }} ({{ pagination.totalItemCount }})</h4>
 
             {% for comment in pagination %}
-                <div class="uv-view-comment">
-                    <a href="{{ path('user_view', {'login': comment.user.login}) }}">
-                        <img src="{{ path('user_view_image_profil', {'avatar': comment.user.avatar}) }}" class="uv-view-comment-avatar" />
-                    </a>
-                    <div class="uv-view-comment-author">
-                        <a href="{{ path('user_view', {'login': comment.user.login}) }}">
-                            {{ comment.user.fullName }}
-                        </a>
-                    </div>
-                    <div class="uv-view-comment-date">
-                        {{ comment.createdAt|date('d/m/Y H:i') }}
-                    </div>
-                    <div class="uv-view-comment-content">
-                        {{ comment.body|purify }}
-                    </div>
-                </div>
+                {{ viewComment.commentaire(comment) }}
             {% else %}
                 <p>{{ 'uvs.main.view.noComment'|trans }}</p>
             {% endfor %}
@@ -266,6 +252,7 @@
             <hr />
 
             {% if is_granted('ROLE_UV_REVIEW_POST') %}
+                {{ 'uvs.main.view.warning'|trans }}
                 {{ form_start(commentForm) }}
                     {{ form_widget(commentForm) }}
                 {{ form_end(commentForm) }}

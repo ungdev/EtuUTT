@@ -2,6 +2,7 @@
 
 namespace Etu\Module\UVBundle\Command;
 
+use Doctrine\ORM\EntityManager;
 use Etu\Core\UserBundle\Command\Util\ProgressBar;
 use Etu\Module\UVBundle\Entity\UV;
 use League\Csv\Reader;
@@ -66,6 +67,10 @@ This command helps you to import the official UTT UE guide from CSV file.');
 
         $entities = [];
 
+        $container = $this->getContainer();
+
+        /** @var EntityManager $em */
+        $em = $container->get('doctrine')->getManager();
         foreach ($ues as $uv) {
             $entity = new UV();
 
@@ -107,11 +112,13 @@ This command helps you to import the official UTT UE guide from CSV file.');
                 ->setProjet($this->parseHour($uv['PRJvolume']))
                 ->setStage($this->parseHour($uv['STGvolume']));
 
+            //$em->persist($entity);
             $entities[] = $entity;
 
             $bar->update($i);
             ++$i;
         }
+        $em->flush();
 
         $output->writeln("\nWriting registry ...");
 
