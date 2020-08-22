@@ -23,6 +23,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 // Import annotations
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @Route("/uvs")
@@ -107,6 +108,17 @@ class ViewController extends Controller
                         'text' => [
                             'type' => 'mrkdwn',
                             'text' => $converter->convert($comment->getBody()),
+                        ],
+                    ],
+                    [
+                        'type' => 'divider',
+                    ],
+                    [
+                        'type' => 'section',
+                        'text' => [
+                            'type' => 'mrkdwn',
+                            'text' => 'Vous pouvez également <'.$this->generateUrl('uvs_edit_comment', ['id' => $comment->getId()], UrlGeneratorInterface::ABSOLUTE_URL).
+                                "|éditer ce commentaire> ou ignorer ce message.\nVous pouvez vous rendre sur <".$this->generateUrl('admin_uvs_comments', [], UrlGeneratorInterface::ABSOLUTE_URL)."|sur le panneau d'administration du site etu> pour identifier la personne qui a commenté si elle est anonyme.\nCe message disparaitra après avoir choisi une action. ",
                         ],
                     ],
                     [
@@ -273,6 +285,17 @@ class ViewController extends Controller
                         'text' => [
                             'type' => 'mrkdwn',
                             'text' => $converter->convert($comment->getBody()),
+                        ],
+                    ],
+                    [
+                        'type' => 'divider',
+                    ],
+                    [
+                        'type' => 'section',
+                        'text' => [
+                            'type' => 'mrkdwn',
+                            'text' => 'Vous pouvez également <'.$this->generateUrl('uvs_edit_comment', ['id' => $comment->getId()], UrlGeneratorInterface::ABSOLUTE_URL).
+                                "|éditer ce commentaire> ou ignorer ce message.\nVous pouvez vous rendre sur <".$this->generateUrl('admin_uvs_comments', [], UrlGeneratorInterface::ABSOLUTE_URL)."|sur le panneau d'administration du site etu> pour identifier la personne qui a commenté si elle est anonyme.\nCe message disparaitra après avoir choisi une action. ",
                         ],
                     ],
                     [
