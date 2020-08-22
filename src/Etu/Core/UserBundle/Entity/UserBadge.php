@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Table(name="etu_users_badges")
  * @ORM\Entity()
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
+ *
  */
 class UserBadge
 {

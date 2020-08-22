@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Table(name="etu_covoits_alerts")
  * @ORM\Entity
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
+ *
  */
 class CovoitAlert
 {

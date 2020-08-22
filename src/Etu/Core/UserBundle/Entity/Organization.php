@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="etu_organizations")
  * @ORM\Entity()
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
+ *
  * @ORM\HasLifecycleCallbacks()
  */
 class Organization implements UserInterface, \Serializable

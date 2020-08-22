@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="oauth_clients", indexes={ @ORM\Index(name="client_index", columns={ "clientId" }) })
  * @ORM\Entity
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
+ *
  */
 class OauthClient
 {

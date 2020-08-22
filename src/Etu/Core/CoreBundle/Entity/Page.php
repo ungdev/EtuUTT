@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Table(name="etu_pages")
  * @ORM\Entity()
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
+ *
  */
 class Page
 {

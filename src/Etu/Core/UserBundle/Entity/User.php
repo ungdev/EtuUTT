@@ -29,7 +29,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *    indexes={@ORM\Index(name="mail_index", columns={"mail"})}
  * )
  * @ORM\Entity()
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
+ *
  */
 class User implements UserInterface, EquatableInterface, \Serializable
 {

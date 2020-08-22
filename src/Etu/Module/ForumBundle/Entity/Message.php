@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Table(name="etu_forum_messages")
  * @ORM\Entity
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
+ *
  */
 class Message
 {

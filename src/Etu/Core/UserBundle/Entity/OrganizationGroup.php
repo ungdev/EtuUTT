@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="etu_organization_groups", indexes={@Index(name="sk_groupename", columns={"name", "organization_id"})})
  * @ORM\Entity()
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
+ *
  */
 class OrganizationGroup
 {
