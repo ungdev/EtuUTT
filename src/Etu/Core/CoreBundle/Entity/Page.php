@@ -9,7 +9,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Table(name="etu_pages")
  * @ORM\Entity()
- *
  */
 class Page
 {

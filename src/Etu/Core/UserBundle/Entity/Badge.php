@@ -5,7 +5,6 @@ namespace Etu\Core\UserBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Etu\Core\UserBundle\Model\BadgesManager;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
@@ -17,7 +16,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Table(name="etu_badges")
  * @ORM\Entity()
- *
  */
 class Badge
 {

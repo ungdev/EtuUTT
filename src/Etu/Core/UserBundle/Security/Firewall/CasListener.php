@@ -17,5 +17,4 @@ class CasListener implements ListenerInterface
     public function handle(GetResponseEvent $event)
     {
     }
-
 }

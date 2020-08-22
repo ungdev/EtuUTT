@@ -29,7 +29,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *    indexes={@ORM\Index(name="mail_index", columns={"mail"})}
  * )
  * @ORM\Entity()
- *
  */
 class User implements UserInterface, EquatableInterface, \Serializable
 {
@@ -481,7 +480,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     protected $isInLDAP;
 
     /**
-     * Keeps its account even if not in LDAP anymore
+     * Keeps its account even if not in LDAP anymore.
      *
      * @var bool
      *
@@ -1957,18 +1956,20 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * @return bool
      */
-    public function getIsKeepingAccount() : bool
+    public function getIsKeepingAccount(): bool
     {
         return $this->isKeepingAccount;
     }
 
     /**
      * @param bool $isKeepingAccount
+     *
      * @return User
      */
-    public function setIsKeepingAccount(bool $isKeepingAccount) : self
+    public function setIsKeepingAccount(bool $isKeepingAccount): self
     {
         $this->isKeepingAccount = $isKeepingAccount;
+
         return $this;
     }
 

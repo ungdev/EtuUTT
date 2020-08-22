@@ -216,14 +216,10 @@ class ProfileController extends Controller
             } else {
                 BadgesManager::userRemoveBadge($user, 'profile_completed');
             }
-            if($user->getIsKeepingAccount() && empty($user->getPersonnalMail()))
-            {
-                if (empty($user->getPersonnalMail()) && !empty($cloneUser->getPersonnalMail()))
-                {
+            if ($user->getIsKeepingAccount() && empty($user->getPersonnalMail())) {
+                if (empty($user->getPersonnalMail()) && !empty($cloneUser->getPersonnalMail())) {
                     $user->setPersonnalMail($cloneUser->getPersonnalMail());
-                }
-                else
-                {
+                } else {
                     $user->setIsKeepingAccount(false);
                 }
             }

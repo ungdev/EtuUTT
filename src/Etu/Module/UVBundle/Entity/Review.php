@@ -11,7 +11,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="Etu\Module\UVBundle\Entity\Repository\ReviewRepository")
  * @ORM\Table(name="etu_uvs_reviews")
- *
  */
 class Review
 {

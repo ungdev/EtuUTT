@@ -24,5 +24,4 @@ class InteractiveLoginListener
         $this->entityManager->persist($user);
         $this->entityManager->flush();
     }
-    
 }

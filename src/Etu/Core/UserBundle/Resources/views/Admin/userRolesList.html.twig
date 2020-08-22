@@ -22,7 +22,9 @@
 
     <div class="padding20-sides">
         <h3>{{ 'user.admin.userRolesList.assignedTitle' |trans}}</h3>
+        {% if is_granted("ROLE_CORE_ADMIN_ROLES") %}
         <p>{{ 'user.admin.userRolesList.assignedDesc' |trans}}</p>
+        {% endif %}
         <hr/>
         {% for user in users %}
             <div class="row-fluid">
@@ -52,7 +54,9 @@
     </div>
     <div class="padding20-sides">
         <h3>{{ 'user.admin.userRolesList.hierarchyTitle' |trans}}</h3>
+        {% if is_granted("ROLE_CORE_ADMIN_ROLES") %}
         <p>{{ 'user.admin.userRolesList.hierarchyDesc' |trans}}</p>
+        {% endif %}
             <div class="row-fluid">
                 <div class="span12">
                     <div class="accordion" id="roleParent">

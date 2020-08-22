@@ -128,7 +128,7 @@ user:
             back: Retour
             edit: Modifier
             assignedTitle: Permissions assignées
-            assignedDesc: Pour assigner des permissions à une nouvelle personne, rendez-vous sur son profile et cliquez sur 'Modifier ses permissions'.
+            assignedDesc: Pour assigner des permissions à une nouvelle personne, rendez-vous sur son profil et cliquez sur 'Modifier ses permissions'.
             hierarchyTitle: Groupes de permission
             hierarchyDesc: Pour ajouter ou modifier les groupes de permissions définis, editez le fichier app/config/security.yml. Pour plus d'informations, reportez vous à la documentation sur Github.
         userRoles:

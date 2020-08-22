@@ -11,7 +11,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="etu_users_courses")
  * @ORM\Entity(repositoryClass="Etu\Core\UserBundle\Entity\Repository\CourseRepository")
- *
  */
 class Course
 {

@@ -35,12 +35,12 @@ class DeleteOldUsersCommand extends ContainerAwareCommand
         /** @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine')->getManager();
 
-        $dateActuelle = New DateTime();
-        $basePhotosDir = "../../../../../web/uploads/photos/";
-        $i=0;
+        $dateActuelle = new DateTime();
+        $basePhotosDir = '../../../../../web/uploads/photos/';
+        $i = 0;
         /** @var User[] $users */
-        $users = $em->getRepository("EtuUserBundle:User")->findAll();
-        $deleted_user = $em->getRepository("EtuUserBundle:User")->findOneBy(["login"=>"deleted_user"]);
+        $users = $em->getRepository('EtuUserBundle:User')->findAll();
+        $deleted_user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => 'deleted_user']);
         $bar = new ProgressBar('%fraction% [%bar%] %percent%', '=>', ' ', 80, count($users));
         foreach ($users as $user) {
             $toDelete = $user->getId() != $deleted_user->getId() &&
@@ -48,70 +48,56 @@ class DeleteOldUsersCommand extends ContainerAwareCommand
                     (!$user->getIsKeepingAccount() && !$user->getIsInLDAP()) ||
                     ($user->getIsKeepingAccount() && date_diff($user->getLastVisitHome(), $dateActuelle, true)->y > 2)
                 );
-            if($toDelete)
-            {
-                foreach ($em->getRepository("EtuModuleUVBundle:Comment") as $comment)
-                {
+            if ($toDelete) {
+                foreach ($em->getRepository('EtuModuleUVBundle:Comment') as $comment) {
                     $comment->setUser($deleted_user);
                     $em->persist($comment);
                 }
-                foreach ($em->getRepository("EtuModuleUVBundle:Review")->findBy(["sender"=>$user]) as $review)
-                {
+                foreach ($em->getRepository('EtuModuleUVBundle:Review')->findBy(['sender' => $user]) as $review) {
                     $review->setSender($deleted_user);
                     $em->persist($review);
                 }
-                foreach ($em->getRepository("EtuUserBundle:Organization")->findBy(["president"=>$user]) as $organization)
-                {
+                foreach ($em->getRepository('EtuUserBundle:Organization')->findBy(['president' => $user]) as $organization) {
                     $organization->setPresident($deleted_user);
                     $em->persist($organization);
                 }
-                foreach ($em->getRepository("EtuModuleBugsBundle:Issue")->findBy(["assignee"=>$user]) as $issue)
-                {
+                foreach ($em->getRepository('EtuModuleBugsBundle:Issue')->findBy(['assignee' => $user]) as $issue) {
                     $issue->setAssignee($deleted_user);
                     $em->persist($issue);
                 }
-                foreach ($em->getRepository("EtuModuleBugsBundle:Issue")->findBy(["user"=>$user]) as $issue)
-                {
+                foreach ($em->getRepository('EtuModuleBugsBundle:Issue')->findBy(['user' => $user]) as $issue) {
                     $issue->setUser($deleted_user);
                     $em->persist($issue);
                 }
-                foreach ($em->getRepository("EtuModuleWikiBundle:WikiPage")->findBy(["author"=>$user]) as $wikiPage)
-                {
+                foreach ($em->getRepository('EtuModuleWikiBundle:WikiPage')->findBy(['author' => $user]) as $wikiPage) {
                     $wikiPage->setAuthor($deleted_user);
                     $em->persist($wikiPage);
                 }
-                foreach ($em->getRepository("EtuModuleForumBundle:Thread")->findBy(["author"=>$user]) as $thread)
-                {
-                    /** @var Issue $issue */
+                foreach ($em->getRepository('EtuModuleForumBundle:Thread')->findBy(['author' => $user]) as $thread) {
+                    /* @var Issue $issue */
                     $thread->setAuthor($deleted_user);
                     $em->persist($thread);
                 }
-                foreach ($em->getRepository("EtuModuleForumBundle:Message")->findBy(["author"=>$user]) as $message)
-                {
+                foreach ($em->getRepository('EtuModuleForumBundle:Message')->findBy(['author' => $user]) as $message) {
                     $message->setAuthor($deleted_user);
                     $em->persist($message);
                 }
-                foreach ($em->getRepository("EtuModuleBugsBundle:Comment")->findBy(["user"=>$user]) as $comment)
-                {
+                foreach ($em->getRepository('EtuModuleBugsBundle:Comment')->findBy(['user' => $user]) as $comment) {
                     $comment->setUser($deleted_user);
                     $em->persist($comment);
                 }
 
-                if($user->getAvatar() != "default-avatar.png" && file_exists($basePhotosDir.$user->getAvatar()))
-                {
+                if ($user->getAvatar() != 'default-avatar.png' && file_exists($basePhotosDir.$user->getAvatar())) {
                     unlink($basePhotosDir.$user->getAvatar());
                 }
-                if(file_exists($basePhotosDir.$user->getLogin()."_official.jpg"))
-                {
-                    unlink($basePhotosDir.$user->getLogin()."_official.jpg");
+                if (file_exists($basePhotosDir.$user->getLogin().'_official.jpg')) {
+                    unlink($basePhotosDir.$user->getLogin().'_official.jpg');
                 }
                 $em->remove($user);
-
             }
 
             //Si l'utilisateur veut encore son compte, qu'il n'est plus à l'UTT mais qu'il n'a pas de mot de passe
-            if($user->getIsKeepingAccount() && !$user->getIsInLDAP() && empty($user->getPassword()))
-            {
+            if ($user->getIsKeepingAccount() && !$user->getIsInLDAP() && empty($user->getPassword())) {
                 $jsonData = json_encode(['blocks' => [
                     [
                         'type' => 'header',
@@ -127,16 +113,15 @@ class DeleteOldUsersCommand extends ContainerAwareCommand
                         'type' => 'section',
                         'text' => [
                             'type' => 'mrkdwn',
-                            'text' => "Vous pouvez taper la commande `php bin/console etu:users:set-password` en fournissant le login : `".$user->getLogin()."` puis lui envoyer par mail à ".$user->getPersonnalMail(),
+                            'text' => 'Vous pouvez taper la commande `php bin/console etu:users:set-password` en fournissant le login : `'.$user->getLogin().'` puis lui envoyer par mail à '.$user->getPersonnalMail(),
                         ],
                     ],
-                ]
+                ],
                 ]);
                 SendSlack::curl_send($this->getContainer()->getParameter('slack_webhook_moderation'), $jsonData);
-
             }
 
-            $i++;
+            ++$i;
             $bar->update($i);
         }
 

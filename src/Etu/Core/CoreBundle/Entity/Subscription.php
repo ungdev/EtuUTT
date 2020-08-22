@@ -9,7 +9,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Table(name="etu_subscriptions")
  * @ORM\Entity()
- *
  */
 class Subscription
 {

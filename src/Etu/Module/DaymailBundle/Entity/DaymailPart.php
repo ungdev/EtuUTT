@@ -12,7 +12,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="etu_daymail_parts")
  * @ORM\Entity()
- *
  */
 class DaymailPart
 {

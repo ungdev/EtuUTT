@@ -15,7 +15,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  *
  * @ORM\Table(name="etu_covoits")
  * @ORM\Entity
- *
  */
 class Covoit
 {

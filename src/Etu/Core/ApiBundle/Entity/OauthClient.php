@@ -5,7 +5,6 @@ namespace Etu\Core\ApiBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Etu\Core\UserBundle\Entity\User;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
@@ -17,7 +16,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="oauth_clients", indexes={ @ORM\Index(name="client_index", columns={ "clientId" }) })
  * @ORM\Entity
- *
  */
 class OauthClient
 {

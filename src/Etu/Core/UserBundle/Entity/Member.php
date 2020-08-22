@@ -11,7 +11,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="etu_organizations_members")
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
- *
  */
 class Member
 {

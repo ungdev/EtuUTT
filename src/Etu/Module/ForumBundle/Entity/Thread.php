@@ -9,7 +9,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Table(name="etu_forum_threads")
  * @ORM\Entity
- *
  */
 class Thread
 {

@@ -11,7 +11,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="etu_organization_group_actions")
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
- *
  */
 class OrganizationGroupAction
 {
