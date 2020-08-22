@@ -20,8 +20,8 @@
         {% endif %}
                 <div class="pull-right" style="font-weight: lighter;">
                 {% if is_granted("ROLE_UV_REVIEW_ADMIN") or comment.user.id == app.user.id %}
-                    <a href="{{ path('uvs_edit_comment', {'id': comment.id}) }}">Editer</a>
-                            <a href="{{ path('admin_uvs_review_delete', {'id': comment.id}) }}">Supprimer</a>
+                    <a href="{{ path('uvs_edit_comment', {'id': comment.id}) }}">{{ 'uvs.admin.index.edit'|trans }}</a>
+                            <a href="{{ path('admin_uvs_comment_delete', {'id': comment.id}) }}">{{ 'uvs.admin.index.delete'|trans }}</a>
                 {% endif %}
                 {% if is_granted("ROLE_UV_REVIEW_ADMIN") %}
                     {% if not comment.valide %}

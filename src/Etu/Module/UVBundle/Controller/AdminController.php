@@ -3,6 +3,7 @@
 namespace Etu\Module\UVBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\UVBundle\Entity\Comment;
 use Etu\Module\UVBundle\Entity\Review;
@@ -137,7 +138,7 @@ class AdminController extends Controller
      * @Route("/comment/{id}/validate", name="admin_uvs_comment_validate")
      * @Template()
      */
-    public function validateCommentAction(Comment $comment)
+    public function validateCommentAction(Request $request, Comment $comment)
     {
         $this->denyAccessUnlessGranted('ROLE_UV_REVIEW_ADMIN');
 
@@ -149,10 +150,23 @@ class AdminController extends Controller
         $em->persist($comment);
         $em->flush();
 
+        // Notify subscribers
+        $notif = new Notification();
+
+        $notif
+            ->setModule('uv')
+            ->setHelper('uv_new_comment')
+            ->setAuthorId($comment->getUser()->getId())
+            ->setEntityType('uv')
+            ->setEntityId($comment->getId())
+            ->addEntity($comment);
+
+        $this->getNotificationsSender()->send($notif);
+
         $this->get('session')->getFlashBag()->set('message', [
-            'type' => 'success',
-            'message' => 'uvs.admin.validateComment.confirm',
-        ]);
+                'type' => 'success',
+                'message' => 'uvs.admin.validateComment.confirm',
+            ]);
 
         return $this->redirect($this->generateUrl('admin_uvs_comments'));
     }

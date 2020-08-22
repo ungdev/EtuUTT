@@ -7,12 +7,14 @@ use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Form\EditorType;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
+use Etu\Core\CoreBundle\Util\SendSlack;
 use Etu\Core\UserBundle\Entity\Course;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Model\BadgesManager;
 use Etu\Module\UVBundle\Entity\Comment;
 use Etu\Module\UVBundle\Entity\Review;
 use Etu\Module\UVBundle\Entity\UV;
+use League\HTMLToMarkdown\HtmlConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
@@ -78,18 +80,62 @@ class ViewController extends Controller
                 $em->persist($comment);
                 $em->flush();
 
-                // Notify subscribers
-                $notif = new Notification();
+                $converter = new HtmlConverter();
 
-                $notif
-                    ->setModule('uv')
-                    ->setHelper('uv_new_comment')
-                    ->setAuthorId($this->getUser()->getId())
-                    ->setEntityType('uv')
-                    ->setEntityId($uv->getId())
-                    ->addEntity($comment);
-
-                $this->getNotificationsSender()->send($notif);
+                $jsonData = json_encode(['blocks' => [
+                    [
+                        'type' => 'header',
+                        'text' => [
+                            'type' => 'plain_text',
+                            'text' => 'Nouveau commentaire',
+                        ],
+                    ],
+                    [
+                        'type' => 'context',
+                        'elements' => [
+                            [
+                                'type' => 'mrkdwn',
+                                'text' => 'Soumis par *'.($comment->getAnonyme() ? 'anonyme' : $comment->getUser()->getFullName().' ('.$comment->getUser()->getLogin().')').'* pour *'.mb_strtoupper($comment->getUv()->getSlug()).'*',
+                            ],
+                        ],
+                    ],
+                    [
+                        'type' => 'divider',
+                    ],
+                    [
+                        'type' => 'section',
+                        'text' => [
+                            'type' => 'mrkdwn',
+                            'text' => $converter->convert($comment->getBody()),
+                        ],
+                    ],
+                    [
+                        'type' => 'actions',
+                        'block_id' => 'comment_'.$comment->getId(),
+                        'elements' => [
+                            [
+                                'type' => 'button',
+                                'action_id' => 'ok',
+                                'text' => [
+                                    'type' => 'plain_text',
+                                    'text' => 'Approuver',
+                                ],
+                                'style' => 'primary',
+                            ],
+                            [
+                                'type' => 'button',
+                                'text' => [
+                                    'type' => 'plain_text',
+                                    'text' => 'Supprimer',
+                                ],
+                                'action_id' => 'delete',
+                                'style' => 'danger',
+                            ],
+                        ],
+                    ],
+                ],
+                ]);
+                SendSlack::curl_send($this->container->getParameter('slack_webhook_moderation'), $jsonData);
 
                 $this->get('session')->getFlashBag()->set('message', [
                     'type' => 'success',
@@ -200,6 +246,62 @@ class ViewController extends Controller
                 $comment->setValide(false);
                 $em->persist($comment);
                 $em->flush();
+                $converter = new HtmlConverter();
+
+                $jsonData = json_encode(['blocks' => [
+                    [
+                        'type' => 'header',
+                        'text' => [
+                            'type' => 'plain_text',
+                            'text' => 'Nouveau commentaire',
+                        ],
+                    ],
+                    [
+                        'type' => 'context',
+                        'elements' => [
+                            [
+                                'type' => 'mrkdwn',
+                                'text' => 'Soumis par *'.($comment->getAnonyme() ? 'anonyme' : $comment->getUser()->getFullName().' ('.$comment->getUser()->getLogin().')').'* pour *'.mb_strtoupper($comment->getUv()->getSlug()).'*',
+                            ],
+                        ],
+                    ],
+                    [
+                        'type' => 'divider',
+                    ],
+                    [
+                        'type' => 'section',
+                        'text' => [
+                            'type' => 'mrkdwn',
+                            'text' => $converter->convert($comment->getBody()),
+                        ],
+                    ],
+                    [
+                        'type' => 'actions',
+                        'block_id' => 'comment_'.$comment->getId(),
+                        'elements' => [
+                            [
+                                'type' => 'button',
+                                'action_id' => 'ok',
+                                'text' => [
+                                    'type' => 'plain_text',
+                                    'text' => 'Approuver',
+                                ],
+                                'style' => 'primary',
+                            ],
+                            [
+                                'type' => 'button',
+                                'text' => [
+                                    'type' => 'plain_text',
+                                    'text' => 'Supprimer',
+                                ],
+                                'action_id' => 'delete',
+                                'style' => 'danger',
+                            ],
+                        ],
+                    ],
+                ],
+                ]);
+                SendSlack::curl_send($this->container->getParameter('slack_webhook_moderation'), $jsonData);
 
                 return $this->redirectToRoute('uvs_view', ['slug' => $comment->getUv()->getSlug(), 'name' => $comment->getUv()->getName()]);
             }

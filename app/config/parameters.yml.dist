@@ -25,3 +25,5 @@ parameters:
     sia_ipa_host: ipa.uttnetgroup.net
     sia_ipa_user: ~
     sia_ipa_password: ~
+    slack_webhook_moderation: ~
+    slack_token_moderation: ~
