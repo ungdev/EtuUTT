@@ -102,9 +102,9 @@
         <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 
-        <!-- Piwik -->
+        <!-- Matomo -->
 	    <script type="text/javascript">
-	        var _paq = _paq || [];
+            var _paq = window._paq = window._paq || [];
 	        _paq.push(["setDomains", ["*.etu.utt.fr"]]);
 	        // you can set up to 5 custom variables for each visitor
 	        {% if is_granted('ROLE_STUDENT') %}
@@ -120,16 +120,15 @@
 	        {% endif %}
 	        _paq.push(['trackPageView']);
 	        _paq.push(['enableLinkTracking']);
-	        (function() {
-	            var u="//piwik.uttnetgroup.fr/";
-	            _paq.push(['setTrackerUrl', u+'piwik.php']);
-	            _paq.push(['setSiteId', 1]);
-	            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-	            g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-	        })();
+            (function() {
+                var u="//matomo.uttnetgroup.fr/";
+                _paq.push(['setTrackerUrl', u+'matomo.php']);
+                _paq.push(['setSiteId', '1']);
+                var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+                g.type='text/javascript'; g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+            })();
 	    </script>
-	    <noscript><p><img src="//piwik.uttnetgroup.fr/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
-	    <!-- End Piwik Code -->
+	    <!-- End Matomo Code -->
 
 	    {% block js_libs %}{% endblock %}
 
