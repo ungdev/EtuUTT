@@ -101,7 +101,7 @@ uvs:
       tp: "Travaux pratiques"
       viewCourses: "Voir les créneaux de cette UE"
       winBadges: "Envoyez des annales pour gagner des badges !"
-      warning: "ATTENTION : Pour être publié, votre commentaire devra être validé par un membre de l'équipe étudiante d'administration du site etu. Restez courtois et respectueux de vos enseignants, ce n'est pas un défouloir."
+      warning: "Pour être publié, votre commentaire devra être validé par un membre de l'équipe étudiante d'administration du site etu. Vous pouvez faire des remarques sur le comportement de vos enseignants, mais n'évoquez que les faits, de façon la plus neutre possible. Les insultes et attaques personnelles ne seront pas permises."
   notifs:
     newComment: "Nouveau commentaire dans l'UE %uv% (par %user%)"
     newReview: "Nouvelle annale dans l'UE %uv% (par %user%)"
