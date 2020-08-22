@@ -45,8 +45,9 @@ class DeleteOldUsersCommand extends ContainerAwareCommand
         foreach ($users as $user) {
             $toDelete = $user->getId() != $deleted_user->getId() &&
                 (
-                    (!$user->getIsKeepingAccount() && !$user->getIsInLDAP()) ||
-                    ($user->getIsKeepingAccount() && date_diff($user->getLastVisitHome(), $dateActuelle, true)->y > 2)
+                    !$user->getIsInLDAP() &&
+                    (!$user->getIsKeepingAccount() ||
+                    ($user->getIsKeepingAccount() && date_diff($user->getLastVisitHome(), $dateActuelle, true)->y >= 2))
                 );
             if ($toDelete) {
                 foreach ($em->getRepository('EtuModuleUVBundle:Comment') as $comment) {
