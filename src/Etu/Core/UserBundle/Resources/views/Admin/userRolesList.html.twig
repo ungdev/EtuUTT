@@ -41,9 +41,11 @@
                     {% endfor %}
                     </ul>
                 </div>
+                {% if is_granted("ROLE_CORE_ADMIN_ROLES") %}
                 <p class="pull-right">
                     <a href="{{ path('admin_user_roles', {'login': user.login, 'from': 'admin'}) }}" class="btn btn-primary">{{ 'user.admin.userRolesList.edit'|trans }}</a>
                 </p>
+                {% endif %}
             </div>
             <hr/>
         {% endfor %}
