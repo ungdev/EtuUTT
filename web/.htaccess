@@ -4,6 +4,39 @@
 # start page (path "/") because otherwise Apache will apply the rewriting rules
 # to each configured DirectoryIndex file (e.g. index.php, index.html, index.pl).
 DirectoryIndex app.php
+PassEnv ETUUTT_APP_ENV
+PassEnv ETUUTT_APP_SECRET
+#TRUSTED_PROXIES=127.0.0.1,127.0.0.2
+#TRUSTED_HOSTS='^(localhost|example\.com)$'
+###< symfony/framework-bundle ###
+
+PassEnv ETUUTT_DOMAIN
+PassEnv ETUUTT_VERSION_ID
+
+PassEnv ETUUTT_LDAP_UTT_HOST
+PassEnv ETUUTT_LDAP_UTT_PORT
+
+PassEnv ETUUTT_ARGENTIQUE_JWT
+PassEnv ETUUTT_DOLIBARR_HOST
+PassEnv ETUUTT_DOLIBARR_KEY
+PassEnv ETUUTT_IPA_USER
+PassEnv ETUUTT_IPA_PASSWORD
+PassEnv ETUUTT_IPA_HOST
+PassEnv ETUUTT_SLACK_TOKEN
+PassEnv ETUUTT_SLACK_WEBHOOK_MODERATION
+
+PassEnv ETUUTT_MAILER_TRANSPORT
+PassEnv ETUUTT_MAILER_HOST
+PassEnv ETUUTT_MAILER_PORT
+PassEnv ETUUTT_MAILER_USER
+PassEnv ETUUTT_MAILER_PASSWORD
+
+PassEnv ETUUTT_DATABASE_DRIVER
+PassEnv ETUUTT_DATABASE_HOST
+PassEnv ETUUTT_DATABASE_PORT
+PassEnv ETUUTT_DATABASE_NAME
+PassEnv ETUUTT_DATABASE_USER
+PassEnv ETUUTT_DATABASE_PASSWORD
 
 # By default, Apache does not evaluate symbolic links if you did not enable this
 # feature in your server configuration. Uncomment the following line if you

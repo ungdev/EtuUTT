@@ -11,7 +11,7 @@ parameters:
     mailer_port: "%env(ETUUTT_MAILER_PORT)%"
     mailer_user: "%env(ETUUTT_MAILER_USER)%"
     mailer_password: "%env(ETUUTT_MAILER_PASSWORD)%"
-    secret: "%env(APP_SECRET)%"
+    secret: "%env(ETUUTT_APP_SECRET)%"
     domain: "%env(ETUUTT_DOMAIN)%"
     dolibarr_host: "%env(ETUUTT_DOLIBARR_HOST)%"
     dolibarr_key: "%env(ETUUTT_DOLIBARR_KEY)%"
