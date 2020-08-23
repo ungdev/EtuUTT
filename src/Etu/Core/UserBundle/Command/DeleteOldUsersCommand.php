@@ -36,7 +36,7 @@ class DeleteOldUsersCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getManager();
 
         $dateActuelle = new DateTime();
-        $basePhotosDir = '../../../../../web/uploads/photos/';
+        $basePhotosDir = __DIR__.'../../../../../web/uploads/photos/';
         $i = 0;
         /** @var User[] $users */
         $users = $em->getRepository('EtuUserBundle:User')->findAll();

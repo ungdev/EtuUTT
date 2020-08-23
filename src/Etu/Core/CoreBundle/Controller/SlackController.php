@@ -32,7 +32,7 @@ class SlackController extends Controller
                 throw $this->createNotFoundException();
             }
             if ($data['actions'][0]['action_id'] === 'ok') {
-                $comment->setValide(true);
+                $comment->setIsValide(true);
                 $em->persist($comment);
                 $em->flush();
                 // Notify subscribers

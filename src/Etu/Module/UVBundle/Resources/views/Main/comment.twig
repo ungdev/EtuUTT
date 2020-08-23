@@ -1,6 +1,6 @@
 {% macro commentaire(comment) %}
-{% if comment.valide or comment.user.id == app.user.id or is_granted('ROLE_UV_REVIEW_ADMIN') %}
-    <div class="uv-view-comment uv-view-reviews-reviews-{% if comment.valide %}validated{% else %}pending{% endif %}" style="display: block;">
+{% if comment.isValide or comment.user.id == app.user.id or is_granted('ROLE_UV_REVIEW_ADMIN') %}
+    <div class="uv-view-comment uv-view-reviews-reviews-{% if comment.isValide %}validated{% else %}pending{% endif %}" style="display: block;">
         {% if not comment.isAnonyme or is_granted("ROLE_UV_REVIEW_ADMIN") or comment.user.id == app.user.id %}
             <a href="{{ path('user_view', {'login': comment.user.login}) }}">
                 <img src="{{ path('user_view_image_profil', {'avatar': comment.user.avatar}) }}" class="uv-view-comment-avatar" />
@@ -24,7 +24,7 @@
                             <a href="{{ path('admin_uvs_comment_delete', {'id': comment.id}) }}">{{ 'uvs.admin.index.delete'|trans }}</a>
                 {% endif %}
                 {% if is_granted("ROLE_UV_REVIEW_ADMIN") %}
-                    {% if not comment.valide %}
+                    {% if not comment.isValide %}
                         <a href="{{ path('admin_uvs_comment_validate', {'id': comment.id}) }}">{{ 'uvs.admin.index.validate'|trans }}</a>
                     {% else %}
                         <a href="{{ path('admin_uvs_comment_unvalidate', {'id': comment.id}) }}">{{ 'uvs.admin.index.unvalidate'|trans }}</a>

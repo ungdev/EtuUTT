@@ -67,7 +67,7 @@ class ViewController extends Controller
             $comment = new Comment();
             $comment->setUv($uv)
                 ->setUser($this->getUser())
-                ->setValide(false);
+                ->setIsValide(false);
 
             $commentForm = $this->createFormBuilder($comment)
                 ->add('body', EditorType::class, ['label' => 'uvs.main.view.body'])
@@ -77,7 +77,7 @@ class ViewController extends Controller
 
             $commentForm->handleRequest($request);
             if ($commentForm->isSubmitted() && $commentForm->isValid()) {
-                $comment->setValide(false);
+                $comment->setIsValide(false);
                 $em->persist($comment);
                 $em->flush();
 
@@ -218,7 +218,7 @@ class ViewController extends Controller
                 ->leftJoin('c.user', 'u')
                 ->where('c.uv = :uv')
                 ->setParameter('uv', $uv->getId())
-                ->addOrderBy('c.valide', 'ASC')
+                ->addOrderBy('c.isValide', 'ASC')
                 ->addOrderBy('c.createdAt', 'DESC')
                 ->getQuery();
 
@@ -255,7 +255,7 @@ class ViewController extends Controller
                 ->getForm();
             $commentForm->handleRequest($request);
             if ($commentForm->isSubmitted() && $commentForm->isValid()) {
-                $comment->setValide(false);
+                $comment->setIsValide(false);
                 $em->persist($comment);
                 $em->flush();
                 $converter = new HtmlConverter();

@@ -605,9 +605,7 @@ class AdminController extends Controller
         }
 
         if ('confirm' == $confirm) {
-            $user->setDeletedAt(new \DateTime());
-
-            $em->persist($user);
+            $em->remove($user);
             $em->flush();
 
             $logger = $this->get('monolog.logger.admin');
@@ -721,13 +719,10 @@ class AdminController extends Controller
                 ->findBy(['organization' => $orga]);
 
         foreach ($members as $member) {
-            $member->setDeletedAt(new \DateTime());
-            $em->persist($member);
+            $em->remove($member);
         }
 
-        $orga->setDeletedAt(new \DateTime());
-
-        $em->persist($orga);
+        $em->remove($orga);
         $em->flush();
 
         $logger = $this->get('monolog.logger.admin');

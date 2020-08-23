@@ -2,6 +2,7 @@
 
 namespace Etu\Module\BadgesBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\Badge;
 use Etu\Core\UserBundle\Entity\UserBadge;
@@ -203,9 +204,7 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
         $badge = BadgesManager::findById($id);
 
-        $badge->setDeletedAt(new \DateTime());
-
-        $em->persist($badge);
+        $em->remove($badge);
         $em->flush();
 
         return $this->redirect($this->generateUrl('admin_badges_index'));
@@ -353,9 +352,8 @@ class AdminController extends Controller
       ]);
             $this->redirect($this->generateUrl('admin_badges_users', ['id' => $id]));
         }
-        $membership->setDeletedAt(new \DateTime());
 
-        $em->persist($membership);
+        $em->remove($membership);
         $em->flush();
 
         return $this->redirect($this->generateUrl('admin_badges_users', ['id' => $id]));
