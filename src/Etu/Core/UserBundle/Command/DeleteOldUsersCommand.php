@@ -8,8 +8,6 @@ use Etu\Core\CoreBundle\Util\SendSlack;
 use Etu\Core\UserBundle\Command\Util\ProgressBar;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Module\BugsBundle\Entity\Issue;
-use Etu\Module\UVBundle\Entity\Comment;
-use Etu\Module\UVBundle\Entity\Review;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -88,7 +86,7 @@ class DeleteOldUsersCommand extends ContainerAwareCommand
                     $em->persist($comment);
                 }
 
-                if ($user->getAvatar() != 'default-avatar.png' && file_exists($basePhotosDir.$user->getAvatar())) {
+                if ('default-avatar.png' != $user->getAvatar() && file_exists($basePhotosDir.$user->getAvatar())) {
                     unlink($basePhotosDir.$user->getAvatar());
                 }
                 if (file_exists($basePhotosDir.$user->getLogin().'_official.jpg')) {

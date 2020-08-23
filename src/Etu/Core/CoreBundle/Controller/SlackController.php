@@ -25,13 +25,13 @@ class SlackController extends Controller
         }
         $data = json_decode($request->getBody());
         $objetEtID = explode('_', $data['actions'][0]['block_id']);
-        if ($objetEtID[0] === 'comment') {
+        if ('comment' === $objetEtID[0]) {
             $em = $this->getDoctrine()->getManager();
             $comment = $em->getRepository('EtuModuleUVBundle:Comment')->find($objetEtID[1]);
             if (empty($comment)) {
                 throw $this->createNotFoundException();
             }
-            if ($data['actions'][0]['action_id'] === 'ok') {
+            if ('ok' === $data['actions'][0]['action_id']) {
                 $comment->setIsValide(true);
                 $em->persist($comment);
                 $em->flush();
@@ -49,7 +49,7 @@ class SlackController extends Controller
                 $this->getNotificationsSender()->send($notif);
 
                 return new Response(json_encode(['delete_original' => true]));
-            } elseif ($data['actions'][0]['action_id'] === 'delete') {
+            } elseif ('delete' === $data['actions'][0]['action_id']) {
                 $em->remove($comment);
                 $em->flush();
 
