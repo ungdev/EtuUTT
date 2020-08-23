@@ -35,7 +35,7 @@ class Comment
      *
      * @ORM\Column(type="boolean")
      */
-    protected $valide;
+    protected $isValide;
 
     /**
      * @var bool
@@ -241,13 +241,13 @@ class Comment
     /**
      * Set valide.
      *
-     * @param bool $valide
+     * @param bool $isValide
      *
      * @return Comment
      */
-    public function setValide($valide)
+    public function setIsValide($isValide)
     {
-        $this->valide = $valide;
+        $this->isValide = $isValide;
 
         return $this;
     }
@@ -257,9 +257,9 @@ class Comment
      *
      * @return bool
      */
-    public function getValide()
+    public function getIsValide()
     {
-        return $this->valide;
+        return $this->isValide;
     }
 
     /**

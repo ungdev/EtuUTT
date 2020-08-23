@@ -33,7 +33,7 @@ class AdminController extends Controller
             ->leftJoin('c.uv', 'u')
             ->leftJoin('c.user', 'a')
             ->where('c.valide = :valide')
-            ->setParameter('valide', false)
+            ->setParameter('isValide', false)
             ->orderBy('c.createdAt', 'DESC')
             ->setMaxResults(10)
             ->getQuery()
@@ -137,15 +137,19 @@ class AdminController extends Controller
     /**
      * @Route("/comment/{id}/validate", name="admin_uvs_comment_validate")
      * @Template()
+     *
+     * @param Comment $comment
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function validateCommentAction(Request $request, Comment $comment)
+    public function validateCommentAction(Comment $comment)
     {
         $this->denyAccessUnlessGranted('ROLE_UV_REVIEW_ADMIN');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $comment->setValide(true);
+        $comment->setIsValide(true);
 
         $em->persist($comment);
         $em->flush();
@@ -182,7 +186,7 @@ class AdminController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $comment->setValide(false);
+        $comment->setIsValide(false);
 
         $em->persist($comment);
         $em->flush();
@@ -205,10 +209,12 @@ class AdminController extends Controller
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+        $path = __DIR__.'/../../../../../web/uploads/uvs/'.$review->getFilename();
+        if (file_exists($path)) {
+            unlink($path);
+        }
 
-        $review->setDeletedAt(new \DateTime());
-
-        $em->persist($review);
+        $em->remove($review);
         $em->flush();
 
         $this->get('session')->getFlashBag()->set('message', [
@@ -261,16 +267,17 @@ class AdminController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $comment->setDeletedAt(new \DateTime());
-
-        $em->persist($comment);
+        $em->remove($comment);
         $em->flush();
 
         $this->get('session')->getFlashBag()->set('message', [
             'type' => 'success',
             'message' => 'uvs.admin.deleteComment.confirm',
         ]);
+        if (!$this->isGranted('ROLE_UV_REVIEW_ADMIN')) {
+            return $this->redirectToRoute('uvs_goto', ['code' => $comment->getUv()->getCode()]);
+        }
 
-        return $this->redirect($this->generateUrl('admin_uvs_comments'));
+        return $this->redirectToRoute('admin_uvs_comments');
     }
 }
