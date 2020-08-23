@@ -42,7 +42,7 @@ class Comment
      *
      * @ORM\Column(type="boolean")
      */
-    protected $anonyme;
+    protected $isAnonyme;
 
     /**
      * @var UV
@@ -265,13 +265,13 @@ class Comment
     /**
      * Set anonyme.
      *
-     * @param bool $anonyme
+     * @param bool $isAnonyme
      *
      * @return Comment
      */
-    public function setAnonyme($anonyme)
+    public function setIsAnonyme($isAnonyme)
     {
-        $this->anonyme = $anonyme;
+        $this->isAnonyme = $isAnonyme;
 
         return $this;
     }
@@ -281,8 +281,8 @@ class Comment
      *
      * @return bool
      */
-    public function getAnonyme()
+    public function getIsAnonyme()
     {
-        return $this->anonyme;
+        return $this->isAnonyme;
     }
 }

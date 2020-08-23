@@ -1,13 +1,13 @@
 {% macro commentaire(comment) %}
 {% if comment.valide or comment.user.id == app.user.id or is_granted('ROLE_UV_REVIEW_ADMIN') %}
     <div class="uv-view-comment uv-view-reviews-reviews-{% if comment.valide %}validated{% else %}pending{% endif %}" style="display: block;">
-        {% if not comment.anonyme or is_granted("ROLE_UV_REVIEW_ADMIN") or comment.user.id == app.user.id %}
+        {% if not comment.isAnonyme or is_granted("ROLE_UV_REVIEW_ADMIN") or comment.user.id == app.user.id %}
             <a href="{{ path('user_view', {'login': comment.user.login}) }}">
                 <img src="{{ path('user_view_image_profil', {'avatar': comment.user.avatar}) }}" class="uv-view-comment-avatar" />
             </a>
             <div class="uv-view-comment-author">
                 <a href="{{ path('user_view', {'login': comment.user.login}) }}">
-                    {{ comment.user.fullName }}{% if comment.anonyme and (is_granted("ROLE_UV_REVIEW_ADMIN") or comment.user.id == app.user.id) %} - ANONYME{% endif %}
+                    {{ comment.user.fullName }}{% if comment.isAnonyme and (is_granted("ROLE_UV_REVIEW_ADMIN") or comment.user.id == app.user.id) %} - ANONYME{% endif %}
                 </a>
         {% else %}
             <a>

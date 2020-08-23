@@ -96,7 +96,7 @@ class ViewController extends Controller
                         'elements' => [
                             [
                                 'type' => 'mrkdwn',
-                                'text' => 'Soumis par *'.($comment->getAnonyme() ? 'anonyme' : $comment->getUser()->getFullName().' ('.$comment->getUser()->getLogin().')').'* pour *'.mb_strtoupper($comment->getUv()->getSlug()).'*',
+                                'text' => 'Soumis par *'.($comment->getIsAnonyme() ? 'anonyme' : $comment->getUser()->getFullName().' ('.$comment->getUser()->getLogin().')').'* pour *'.mb_strtoupper($comment->getUv()->getSlug()).'*',
                             ],
                         ],
                     ],
@@ -273,7 +273,7 @@ class ViewController extends Controller
                         'elements' => [
                             [
                                 'type' => 'mrkdwn',
-                                'text' => 'Soumis par *'.($comment->getAnonyme() ? 'anonyme' : $comment->getUser()->getFullName().' ('.$comment->getUser()->getLogin().')').'* pour *'.mb_strtoupper($comment->getUv()->getSlug()).'*',
+                                'text' => 'Soumis par *'.($comment->getIsAnonyme() ? 'anonyme' : $comment->getUser()->getFullName().' ('.$comment->getUser()->getLogin().')').'* pour *'.mb_strtoupper($comment->getUv()->getSlug()).'*',
                             ],
                         ],
                     ],
