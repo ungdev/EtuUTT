@@ -16,6 +16,7 @@ parameters:
 
     domain:            etu.utt.fr
 
+    dolibarr_host: ~
     dolibarr_key:      ~
 
     version_id: local

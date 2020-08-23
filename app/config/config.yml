@@ -42,12 +42,12 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   "%database_driver%"
-        host:     "%database_host%"
-        port:     "%database_port%"
-        dbname:   "%database_name%"
-        user:     "%database_user%"
-        password: "%database_password%"
+        driver:   "%env(ETUUTT_DATABASE_DRIVER)%"
+        host:     "%env(ETUUTT_DATABASE_HOST)%"
+        port:     "%env(ETUUTT_DATABASE_PORT)%"
+        dbname:   "%env(ETUUTT_DATABASE_NAME)%"
+        user:     "%env(ETUUTT_DATABASE_USER)%"
+        password: "%env(ETUUTT_DATABASE_PASSWORD)%"
         charset:  UTF8
 
         # if using pdo_sqlite as your database driver:
@@ -101,10 +101,10 @@ assetic:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
+    transport: "%env(ETUUTT_MAILER_TRANSPORT)%"
+    host:      "%env(ETUUTT_DATABASE_HOST)%"
+    username:  "%env(ETUUTT_MAILER_USER)%"
+    password:  "%env(ETUUTT_MAILER_PASSWORD)%"
     spool:     { type: memory }
 
 
@@ -167,20 +167,20 @@ nelmio_cors:
 
 # EtuUTT
 etu_core:
-    domain: "%domain%"
+    domain: "%env(ETUUTT_DATABASE_PASSWORD)%"
     translation:
         languages: ['en', 'fr', 'de']
 
 etu_user:
     ldap:
-        host: ldap.utt.fr
-        port: 389
+        host: "%env(ETUUTT_LDAP_UTT_HOST)%"
+        port: 389 #when using env : Invalid type for path "etu_user.ldap.port". Expected int, but got string
     dolibarr:
-        host: https://picsou.uttnetgroup.fr
-        key: "%dolibarr_key%"
+        host: "%env(ETUUTT_DOLIBARR_HOST)%"
+        key: "%env(ETUUTT_DOLIBARR_KEY)%"
 
     cas:
-        version: '1.0'
+        version: '2.0'
         host: cas.utt.fr
         port: 443
         path: '/cas/'
@@ -193,9 +193,9 @@ etu_module_argentique:
 
 etu_module_sia:
     ipa:
-        user: "%sia_ipa_user%"
-        password: "%sia_ipa_password%"
-        host: "%sia_ipa_host%"
+        user: "%env(ETUUTT_IPA_USER)%"
+        password: "%env(ETUUTT_IPA_PASSWORD)%"
+        host: "%env(ETUUTT_IPA_HOST)%"
         certificat: "%kernel.root_dir%/../ca.crt"
 
 # Logger
