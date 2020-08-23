@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 // Import annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/uvs")
@@ -174,5 +175,28 @@ class MainController extends Controller
             'slug' => $uv->getSlug(),
             'name' => StringManipulationExtension::slugify($uv->getName()),
         ]), 301);
+    }
+
+    /**
+     * @Route("/reviews/file/{filename}", name="user_view_fichier_annale")
+     *
+     * @param $filename
+     *
+     * @return Response
+     */
+    public function viewFichierAnnale($filename)
+    {
+        $this->denyAccessUnlessGranted('ROLE_UV_REVIEW');
+        $cleanFilename = str_replace('..', '', $filename);
+        $path = __DIR__.'/../../../../../web/uploads/uvs/'.$cleanFilename;
+        if (!file_exists($path) || !mime_content_type($path)) {
+            throw $this->createNotFoundException();
+        }
+        $file = file_get_contents($path);
+        $headers = [
+            'Content-Type' => mime_content_type($path),
+            'Content-Disposition' => 'inline; filename="'.$cleanFilename.'"', ];
+
+        return new Response($file, 200, $headers);
     }
 }

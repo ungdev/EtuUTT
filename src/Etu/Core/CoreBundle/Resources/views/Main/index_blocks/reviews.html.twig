@@ -4,7 +4,7 @@
     <ul>
         {% for review in reviews %}
             <li>
-                <a href="{{ asset('uploads/uvs/'~review.filename) }}">
+                <a href="{{ path("user_view_fichier_annale", {'filename': review.filename}) }}">
                     {{ review.typeTransKey|trans }}
                     <span class="muted">
                             de

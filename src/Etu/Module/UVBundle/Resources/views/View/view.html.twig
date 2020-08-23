@@ -203,7 +203,7 @@
                     <div class="uv-view-reviews-reviews-validated">
                         <small class="muted">{{ 'uvs.main.view.approuved'|trans }}</small>
                         {% for review in reviews.validated %}
-                            <a href="{{ asset('uploads/uvs/'~review.filename) }}">
+                            <a href="{{ path("user_view_fichier_annale", {'filename': review.filename}) }}">
                                 {{ ('uvs.reviews.'~review.type)|trans }}
                                 <span class="pull-right muted">{{ review.sender.fullName }}</span>
                             </a>
@@ -215,7 +215,7 @@
                     <div class="uv-view-reviews-reviews-pending">
                         <small class="muted">{{ 'uvs.main.view.pending'|trans }}</small>
                         {% for review in reviews.pending %}
-                            <a href="{{ asset('uploads/uvs/'~review.filename) }}">
+                            <a href="{{ path("user_view_fichier_annale", {'filename': review.filename}) }}">
                                 {{ ('uvs.reviews.'~review.type)|trans }}
                                 <span class="pull-right muted">{{ review.sender.fullName }}</span>
                             </a>

@@ -29,7 +29,7 @@ class SlackController extends Controller
             $em = $this->getDoctrine()->getManager();
             $comment = $em->getRepository('EtuModuleUVBundle:Comment')->find($objetEtID[1]);
             if (empty($comment)) {
-                return $this->createNotFoundException();
+                throw $this->createNotFoundException();
             }
             if ($data['actions'][0]['action_id'] === 'ok') {
                 $comment->setValide(true);
@@ -57,6 +57,6 @@ class SlackController extends Controller
             }
         }
 
-        return $this->createNotFoundException();
+        throw $this->createNotFoundException();
     }
 }

@@ -31,7 +31,7 @@
             {% for review in pagination %}
                 <tr class="{% if review.validated %}alert-success{% else %}alert-error{% endif %}">
                     <td>
-                        <a href="{{ asset('uploads/uvs/'~review.filename) }}">
+                        <a href="{{ path("user_view_fichier_annale", {'filename': review.filename}) }}">
                             {{ ('uvs.reviews.'~review.type)|trans }}
                             {{ review.semester }}
                         </a>
