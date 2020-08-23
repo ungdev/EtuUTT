@@ -20,6 +20,7 @@ cache:
         - $HOME/.composer/cache
 
 before_script:
+    - source .env
     - phpenv config-rm xdebug.ini
     - cp app/config/parameters.yml.dist app/config/parameters.yml
     - cp app/config/modules.yml.dist app/config/modules.yml
