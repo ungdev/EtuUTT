@@ -17,7 +17,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Table(name="etu_events")
  * @ORM\Entity(repositoryClass="EventRepository")
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Event extends AbstractEvent
 {

@@ -22,7 +22,9 @@
 
     <div class="padding20-sides">
         <h3>{{ 'user.admin.userRolesList.assignedTitle' |trans}}</h3>
+        {% if is_granted("ROLE_CORE_ADMIN_ROLES") %}
         <p>{{ 'user.admin.userRolesList.assignedDesc' |trans}}</p>
+        {% endif %}
         <hr/>
         {% for user in users %}
             <div class="row-fluid">
@@ -41,16 +43,20 @@
                     {% endfor %}
                     </ul>
                 </div>
+                {% if is_granted("ROLE_CORE_ADMIN_ROLES") %}
                 <p class="pull-right">
                     <a href="{{ path('admin_user_roles', {'login': user.login, 'from': 'admin'}) }}" class="btn btn-primary">{{ 'user.admin.userRolesList.edit'|trans }}</a>
                 </p>
+                {% endif %}
             </div>
             <hr/>
         {% endfor %}
     </div>
     <div class="padding20-sides">
         <h3>{{ 'user.admin.userRolesList.hierarchyTitle' |trans}}</h3>
+        {% if is_granted("ROLE_CORE_ADMIN_ROLES") %}
         <p>{{ 'user.admin.userRolesList.hierarchyDesc' |trans}}</p>
+        {% endif %}
             <div class="row-fluid">
                 <div class="span12">
                     <div class="accordion" id="roleParent">

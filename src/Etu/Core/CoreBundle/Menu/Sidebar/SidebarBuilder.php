@@ -50,6 +50,10 @@ class SidebarBuilder
                     ->setIcon('users.png')
                     ->setUrl($router->generate('contributors'))
                 ->end()
+                ->add('RGPD')
+                    ->setIcon('exclamation-red.png')
+                    ->setUrl($router->generate('rgpd'))
+                ->end()
             ->end();
     }
 

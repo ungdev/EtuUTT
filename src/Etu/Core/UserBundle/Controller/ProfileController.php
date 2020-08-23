@@ -145,6 +145,7 @@ class ProfileController extends Controller
 
         /** @var $user User */
         $user = $this->getUser();
+        $cloneUser = clone $this->getUser();
 
         $privacyChoice = [
             'choices' => [
@@ -193,6 +194,7 @@ class ProfileController extends Controller
                 ], ])
             ->add('personnalMail', EmailType::class, ['required' => false, 'label' => 'user.profile.profileEdit.personnalMail'])
             ->add('personnalMailPrivacy', ChoiceType::class, $privacyChoice)
+            ->add('isKeepingAccount', CheckboxType::class, ['required' => false, 'label' => 'user.profile.profileEdit.keepingAccount'])
             ->add('schedulePrivacy', ChoiceType::class, $privacyChoiceSchedule)
             ->add('website', null, ['required' => false, 'label' => 'user.profile.profileEdit.website'])
             ->add('facebook', null, ['required' => false, 'label' => 'user.profile.profileEdit.facebook'])
@@ -208,12 +210,18 @@ class ProfileController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-
             // Badges
             if (100 == $user->getProfileCompletion()) {
                 BadgesManager::userAddBadge($user, 'profile_completed');
             } else {
                 BadgesManager::userRemoveBadge($user, 'profile_completed');
+            }
+            if (($user->getIsKeepingAccount() || !empty($user->getPassword())) && empty($user->getPersonnalMail())) {
+                if (empty($user->getPersonnalMail()) && !empty($cloneUser->getPersonnalMail())) {
+                    $user->setPersonnalMail($cloneUser->getPersonnalMail());
+                } else {
+                    $user->setIsKeepingAccount(false);
+                }
             }
 
             $em->persist($user);
@@ -236,7 +244,6 @@ class ProfileController extends Controller
                     $result = $mailer->send($message);
                 }
             }
-
             $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
                 'message' => 'user.profile.profileEdit.confirm',

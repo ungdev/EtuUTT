@@ -11,7 +11,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="etu_covoits_subscriptions")
  * @ORM\Entity
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class CovoitSubscription
 {

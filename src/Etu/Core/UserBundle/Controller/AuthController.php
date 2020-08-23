@@ -75,6 +75,11 @@ class AuthController extends Controller
                 $login = \phpCAS::getUser();
                 $authToken = $this->get('security.authentication.manager')->authenticate(new CasToken($login));
                 $this->get('security.token_storage')->setToken($authToken);
+                $user = $authToken->getUser();
+                $user->setLastVisitHome(new \DateTime());
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
             }
         } catch (OrganizationNotAuthorizedException $e) {
             // Organization found on the LDAP, but not authorized by an admin

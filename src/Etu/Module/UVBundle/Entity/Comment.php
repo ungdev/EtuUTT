@@ -10,7 +10,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
  * @ORM\Table(name="etu_uvs_comments")
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Comment
 {
@@ -30,6 +29,20 @@ class Comment
      * @ORM\JoinColumn()
      */
     protected $user;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $valide;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $isAnonyme;
 
     /**
      * @var UV
@@ -223,5 +236,53 @@ class Comment
     public function getUv()
     {
         return $this->uv;
+    }
+
+    /**
+     * Set valide.
+     *
+     * @param bool $valide
+     *
+     * @return Comment
+     */
+    public function setValide($valide)
+    {
+        $this->valide = $valide;
+
+        return $this;
+    }
+
+    /**
+     * Get vapide.
+     *
+     * @return bool
+     */
+    public function getValide()
+    {
+        return $this->valide;
+    }
+
+    /**
+     * Set anonyme.
+     *
+     * @param bool $isAnonyme
+     *
+     * @return Comment
+     */
+    public function setIsAnonyme($isAnonyme)
+    {
+        $this->isAnonyme = $isAnonyme;
+
+        return $this;
+    }
+
+    /**
+     * Get anonyme.
+     *
+     * @return bool
+     */
+    public function getIsAnonyme()
+    {
+        return $this->isAnonyme;
     }
 }

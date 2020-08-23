@@ -35,7 +35,7 @@ class MainController extends Controller
             $organization = $em->getRepository('EtuUserBundle:Organization')
                 ->findOneBy(['login' => $request->get('organization')]);
             if (!$organization) {
-                return $this->createNotFoundException('Organization not found');
+                throw $this->createNotFoundException('Organization not found');
             }
         }
 
@@ -131,7 +131,7 @@ class MainController extends Controller
         $em = $this->getDoctrine()->getManager();
         $file = $em->getRepository('EtuModuleUploadBundle:UploadedFile')->find($id);
         if (!$file) {
-            return $this->createNotFoundException('File not found');
+            throw $this->createNotFoundException('File not found');
         }
 
         // Check rights
@@ -314,7 +314,7 @@ class MainController extends Controller
             $organization = $em->getRepository('EtuUserBundle:Organization')
                 ->findOneBy(['login' => $request->get('organization')]);
             if (!$organization) {
-                return $this->createNotFoundException('Organization not found');
+                throw $this->createNotFoundException('Organization not found');
             }
         }
 

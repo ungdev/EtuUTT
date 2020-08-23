@@ -1,0 +1,21 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}Editer un commentaire{% endblock %}
+
+{% block titleIcon %}
+    <img src="{{ asset('assets/img/titles/uvs.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+<div class="padding20-all">
+        <div class="uv-view-comments span7">
+            {% if is_granted('ROLE_UV_REVIEW_POST') %}
+                {{ 'uvs.main.view.warning'|trans }}
+                {{ form_start(commentForm) }}
+                    {{ form_widget(commentForm) }}
+                {{ form_end(commentForm) }}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

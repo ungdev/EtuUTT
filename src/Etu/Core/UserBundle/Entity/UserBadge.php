@@ -3,12 +3,10 @@
 namespace Etu\Core\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Table(name="etu_users_badges")
  * @ORM\Entity()
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class UserBadge
 {

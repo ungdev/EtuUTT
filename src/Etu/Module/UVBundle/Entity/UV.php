@@ -9,7 +9,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Entity
  * @ORM\Table(name="etu_uvs")
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class UV
 {

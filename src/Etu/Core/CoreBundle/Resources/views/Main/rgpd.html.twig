@@ -1,0 +1,122 @@
+{% extends '::page-2cols.html.twig' %}
+
+{% block title %}RGPD{% endblock %}
+
+{% block titleIcon %}
+    <img src="{{ asset('assets/img/titles/page.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
+{% endblock %}
+
+{% block content %}
+    <div class="padding20-all">
+        <h4 class="align-center">
+            Cette page résume différents aspects du traitement de vos données.
+        </h4>
+        <hr />
+        <h5>Vos droits</h5>
+        <p>Conformément à la loi « Informatique et Libertés » modifiée en 2018 par le règlement européen général sur la protection des données (RGPD), vous pouvez exercer vos droits d'accès, d’opposition, de rectification et d’effacement des données vous concernant en vous adressant à l'UNG (contact dans la section responsable des données).</p>
+        <hr />
+        <h5>Responsable du traitement des données</h5>
+        <p>Le site etu est un service fourni par l'UTT Net Group, association loi 1901 sous convention avec l'Université de Technologie de Troyes et domiciliée dans ses locaux.</p>
+        <div class="row-fluid align-center">
+            <div class="span4"></div>
+            <div class="span4">
+                <img src="https://etu.utt.fr/uploads/photos/laruelli.png" style="width: 100px;" />
+                <p>
+                    <strong>Ivann LARUELLE</strong><br />
+                    Responsable RGPD du site etu à l'UNG en 2020
+                </p>
+            </div>
+            <div class="span4"></div>
+        </div>
+        <p>N'hésitez pas à contacter le responsable RGPD du site afin d'exercer vos droits, ou si vous estimez que vos droits sur vos données sont bafoués, à l'adresse <a href="mailto:ung+rgpd@utt.fr">ung+rgpd@utt.fr</a> ou par courrier à<br>Utt Net Group - Protection des données personnelles<br>12 rue Marie Curie<br>CS 42060<br>10004 Troyes cedex</p>
+        <p>En dernier ressort, vous pouvez contacter le Data Protection Officer de l'UTT à l'adresse <a href="mailto:dpo@utt.fr">dpo@utt.fr</a> ou par courrier à <br>Université de Technologie de Troyes - Data Protection Officer<br>12 rue Marie Curie<br>CS 42060<br>10004 Troyes cedex</p>
+        <p>Enfin, si après nous avoir contactés, ni l'UNG ni l'UTT n'ont pu vous donner satisfaction, et que vos droits Informatique et Libertés ne sont pas respectés ou que le dispositif n’est pas conforme aux règles de protection des données, vous pouvez adresser une réclamation en ligne à la CNIL ou par voie postale.</p>
+        <hr />
+        <h5>Finalité du traitement</h5>
+        <p>Les informations recueillies sur le site etu ont pour but :
+            <ul>
+                <li>D'améliorer les échanges et l'entraide entre étudiants, notamment grâce au trombi, au forum, les commentaires du guide des UEs, au covoiturage ou encore au wiki.</li>
+                <li>Le deuxième objectif est la vie étudiante, notamment grâce à la liste des associations, et des membres de celles-ci, ou le daymail (lettre quotidienne d'information).</li>
+                <li>Le troisième objectif est la fourniture de services personnalisés, comme l'accès à l'emploi du temps, ou à la superposition d'emplois du temps</li>
+                <li>Le dernier objectif est le bon fonctionnement du site, nous stockons donc par exemples des identifiants qui vous sont uniques (numéro d'étudiant, ...) pour vous identifier dans nos systèmes.</li>
+            </ul>
+        </p>
+        <hr />
+        <h5>Le code source</h5>
+        <p>
+            Le site Etu est un logiciel open source, distribué sous licence MIT. Vous êtes libre de télécharger, consulter, modifier et réutiliser le code source du site etu, à la seule et unique condition de créditer <a href="{{ path("contributors") }}">les auteurs</a> et de transmettre lien du repo où se trouve le code source d'origine.
+            <br>
+            Le code source peut être retrouvé sur <a href="https://github.com/ungdev/etuutt">le repo github ungdev/etuutt</a> !
+            <br>
+            Le site etu est exécuté (le traitement de vos données est fait) en France, dans le datacenter de l'UNG, dans les locaux de l'UTT.
+        </p>
+        <hr />
+        <h5>Les applications externes</h5>
+        <p>
+            Des utilisateurs peuvent créer des applications externes utilisant vos données sur le site etu via le standard OAuth2, après que vous ayez consenti au transfert de vos données.<br>
+            La liste des applications que vous avez acceptées apparait dans votre profil, dans la section "Applications externes", et vous pouvez révoquer vos autorisations à tout moment.
+        </p>
+        <p>
+            En aucun cas l'UNG n'est responsable du code source, du traitement ou du stockage de vos données transférées de ces applications extérieures.<br>
+            Si une application vous parait frauduleuse, nous pouvons cependant désactiver toutes ses possibilités de transfert. Vous pouvez nous la signaler en contactant le responsable du traitement cité plus haut.
+        </p>
+
+        <hr />
+        <h5>Le stockage des données</h5>
+        <p>
+            Vos données (nom, prénom, liste des UEs suivies, ...) sont soit récupérés depuis le LDAP de l'UTT, un annuaire informatique librement accessible sur le réseau de l'UTT, soit saisies directement par vous.
+            <br>>
+            Nous bénéficions d'un accord spécifique avec l'UTT pour récupérer la liste de vos créneaux de cours (emploi du temps), vous avez donc la possibilité de masquer votre emploi du temps aux autres étudiants.
+        </p>
+        <p>
+            Le site etu stocke ses données sous deux formes :
+            <ul>
+                <li>Fichiers, par exemple vos photos de profil</li>
+                <li>Données en base de données, comme vos commentaires, vos informations utilisateur, ...</li>
+            </ul>
+        Toutes ces données sont stockées en France, dans le datacenter de l'UNG présent dans les locaux de l'UTT.
+        </p>
+        <hr/>
+        <h5>Tracking avec Matomo</h5>
+        <p>
+            Nous utilisons le trackeur open source Matomo que nous hébergeons sur nos serveurs à l'UTT de la même manière que le site etu, qui nous permet d'accéder à des statistiques concernant le site etu (visites, clics sur des liens ...).
+            <br><br>
+            Ces données de tracking sont transmises de manière anonyme et sont uniquement traitées et stockées à l'UTT dans notre datacenter. Elles nous servent à connaitre les fonctionnalités les plus utilisées afin d'orienter le développement du site sur les choses les plus utiles pour vous.
+            <br><br>
+            Nous respectons vos choix. Si vous activez dans votre navigateur la fonctionnalité "Do No Track" ou équivalent, Matomo cessera de nous transmettre vos actions.
+        </p>
+        <hr />
+        <h5>Politique de conservation des données</h5>
+        <p>
+            Si vous avez la possibilité de supprimer une donnée du site, via un bouton par exemple, celle-ci est immédiatement détruite de nos serveurs (données comme fichiers) sans délai. Il n'y a pas de soft delete sur nos serveurs.<br>
+
+            Concernant votre compte, ce dernier est supprimé du site etu dès que vous quittez l'UTT (techniquement quand le service informatique vous supprime de son LDAP (annuaire informatique)). Nous considérons cependant que, malgré que votre compte soit effacé, les données suivantes restent utiles à la communauté :
+            <ul>
+            <li>Vos commentaires d'UEs</li>
+            <li>Vos annales déposées</li>
+            <li>Vos posts sur le forum</li>
+            <li>Les associations dont vous êtes le président</li>
+            <li>Vos signalements de bugs et vos commentaires de bugs</li>
+            <li>Vos pages de wiki</li>
+            </ul>
+            Ces données ne sont pas supprimées. Seule l'association avec votre profil est supprimée, les données ne sont juste plus associées dans notre base à votre profil. La mention "Utilisateur supprimé" apparait alors.<br>
+            Toutes les autres données vous concernant (covoiturage, ...), ainsi que votre photo de profil, sont définitivement effacées de notre base et de nos fichiers.
+        </p>
+        <p>
+            Si vous souhaitez conserver votre compte après votre départ afin de bénéficier de tous les services associatifs de l'UTT, vous devez simplement cocher la case "Conserver mon compte" dans votre profil et indiquer une adresse mail personnelle différente de celle de l'UTT.<br>
+            Nous l'utiliserons afin de vous communiquer votre nouveau mot de passe, et vous pourrez vous connecter en sélectionnant l'authentification externe.
+            <br>
+            Si vous n'utilisez pas votre compte pendant plus de deux ans (aucune connexion) et que vous n'êtes plus à l'UTT, nous supprimerons votre profil de la même manière citée plus haut.
+        </p>
+
+        <hr />
+        <h5>Les administrateurs</h5>
+        <p>
+            Il y a deux types d'administrateurs.
+            <ul>
+            <li>Les administrateurs définis dans le site etu. Ces derniers peuvent, via l'interface du site, effectuer des actions de modération et accéder en lecture et écriture à vos données. <a href="{{ path("admin_user_roles_list") }}">La liste des admins et de leurs droits se trouve ici.</a></li>
+            <li>Les administrateurs du Service Informatique aux Associations de l'UNG : ces derniers peuvent avoir un accès direct à la base de donnée du site etu et aux commandes d'administration (listées <a href="https://github.com/ungdev/EtuUTT/tree/master/src/Etu/Core/UserBundle/Command">dans le code source</a>), ainsi que dans le dossier Command de chaque <a href="https://github.com/ungdev/EtuUTT/tree/master/src/Etu/Module">Module</a></li>
+            </ul>
+        </p>
+    </div>
+{% endblock %}

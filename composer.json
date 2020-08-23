@@ -82,7 +82,11 @@
         "ramsey/uuid-doctrine": "^1.5",
         "html2text/html2text": "^4.2",
         "solvecrew/expo-notifications-bundle": "^1.2",
-        "league/csv": "^8.0"
+        "league/csv": "^8.0",
+        "ext-json": "*",
+        "league/html-to-markdown": "^4.10",
+        "ext-http": "*",
+      "ext-fileinfo": "*"
     },
     "repositories": [
         {
@@ -139,7 +143,9 @@
                     "argentique_jwt_key": "ETUUTT_ARGENTIQUE_JWT",
                     "sia_ipa_host": "ETUUTT_IPA_HOST",
                     "sia_ipa_user": "ETUUTT_IPA_USER",
-                    "sia_ipa_password": "ETUUTT_IPA_PASSWORD"
+                    "sia_ipa_password": "ETUUTT_IPA_PASSWORD",
+                    "slack_webhook_moderation": "ETUUTT_SLACK_WEBHOOK_MODERATION",
+                    "slack_token": "ETUUTT_SLACK_TOKEN"
                 }
             },
             {

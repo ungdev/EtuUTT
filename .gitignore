@@ -44,6 +44,7 @@ ca.crt
 
 !/web/uploads/uvs
 /web/uploads/uvs/*
+!/web/uploads/uvs/.htaccess
 !/web/uploads/uvs/.gitkeep
 
 

@@ -201,6 +201,15 @@ class MainController extends Controller
     }
 
     /**
+     * @Route("/rgpd", name="rgpd")
+     * @Template()
+     */
+    public function rgpd()
+    {
+        return $this->render('@EtuCore/Main/rgpd.html.twig');
+    }
+
+    /**
      * @Route("/page/{slug}", name="page_view")
      * @Template()
      *

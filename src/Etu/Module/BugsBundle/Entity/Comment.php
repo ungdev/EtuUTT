@@ -12,7 +12,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="etu_issues_comments")
  * @ORM\Entity()
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Comment
 {

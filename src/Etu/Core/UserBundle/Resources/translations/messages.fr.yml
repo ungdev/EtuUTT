@@ -69,6 +69,7 @@ user:
             birthday_only_age_desc: Afficher seulement l'âge sur le profil (si la date de naissance est privée)
             confirm: Vous avez bien modifié le profil de cet utilisateur
             back: Retour sur le profil
+            personnalMailMandatory: Vous devez impérativment indiquer une adresse mail personnelle si vous souhaiter garder votre compte après votre départ de l'UTT
         userIndex:
             title: Utilisateurs
             search_title: Rechercher un étudiant
@@ -127,7 +128,7 @@ user:
             back: Retour
             edit: Modifier
             assignedTitle: Permissions assignées
-            assignedDesc: Pour assigner des permissions à une nouvelle personne, rendez-vous sur son profile et cliquez sur 'Modifier ses permissions'.
+            assignedDesc: Pour assigner des permissions à une nouvelle personne, rendez-vous sur son profil et cliquez sur 'Modifier ses permissions'.
             hierarchyTitle: Groupes de permission
             hierarchyDesc: Pour ajouter ou modifier les groupes de permissions définis, editez le fichier app/config/security.yml. Pour plus d'informations, reportez vous à la documentation sur Github.
         userRoles:
@@ -291,6 +292,7 @@ user:
             badges: Badges
         profile:
             title: Mon profil
+            keepingAccount: Compte conservé après le départ de l'UTT
             edit: Modifier
             completed: Votre profil est complet. Merci de votre participation !
             completion: Votre profil est incomplet. Complètez-le entièrement pour obtenir un badge !
@@ -335,6 +337,7 @@ user:
             title: Modifier mes informations
             confirm: Vous avez bien modifié vos informations
             back: Retour sur mon compte
+            keepingAccount: Cochez cette case si vous souhaitez garder l'accès à votre compte Etu après votre départ de l'UTT (vous devez spécifier un mail personnel différent de celui de l'UTT)
             avatar: Modifier ma photo
             edit: Modifier
             website: Site web (public)

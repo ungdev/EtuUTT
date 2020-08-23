@@ -3,6 +3,7 @@
 namespace Etu\Module\UVBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Module\UVBundle\Entity\Comment;
 use Etu\Module\UVBundle\Entity\Review;
@@ -31,6 +32,8 @@ class AdminController extends Controller
             ->from('EtuModuleUVBundle:Comment', 'c')
             ->leftJoin('c.uv', 'u')
             ->leftJoin('c.user', 'a')
+            ->where('c.valide = :valide')
+            ->setParameter('valide', false)
             ->orderBy('c.createdAt', 'DESC')
             ->setMaxResults(10)
             ->getQuery()
@@ -41,6 +44,8 @@ class AdminController extends Controller
             ->from('EtuModuleUVBundle:Review', 'r')
             ->leftJoin('r.uv', 'u')
             ->leftJoin('r.sender', 's')
+            ->where('r.validated = :valide')
+            ->setParameter('valide', false)
             ->orderBy('r.createdAt', 'DESC')
             ->setMaxResults(20)
             ->getQuery()
@@ -70,7 +75,8 @@ class AdminController extends Controller
             ->from('EtuModuleUVBundle:Review', 'r')
             ->leftJoin('r.uv', 'u')
             ->leftJoin('r.sender', 's')
-            ->orderBy('r.createdAt', 'DESC')
+            ->addOrderBy('r.validated', 'ASC')
+            ->addOrderBy('r.createdAt', 'DESC')
             ->getQuery();
 
         $pagination = $this->get('knp_paginator')->paginate($query, $page, 40);
@@ -129,6 +135,67 @@ class AdminController extends Controller
     }
 
     /**
+     * @Route("/comment/{id}/validate", name="admin_uvs_comment_validate")
+     * @Template()
+     */
+    public function validateCommentAction(Request $request, Comment $comment)
+    {
+        $this->denyAccessUnlessGranted('ROLE_UV_REVIEW_ADMIN');
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $comment->setValide(true);
+
+        $em->persist($comment);
+        $em->flush();
+
+        // Notify subscribers
+        $notif = new Notification();
+
+        $notif
+            ->setModule('uv')
+            ->setHelper('uv_new_comment')
+            ->setAuthorId($comment->getUser()->getId())
+            ->setEntityType('uv')
+            ->setEntityId($comment->getId())
+            ->addEntity($comment);
+
+        $this->getNotificationsSender()->send($notif);
+
+        $this->get('session')->getFlashBag()->set('message', [
+                'type' => 'success',
+                'message' => 'uvs.admin.validateComment.confirm',
+            ]);
+
+        return $this->redirect($this->generateUrl('admin_uvs_comments'));
+    }
+
+    /**
+     * @Route("/comment/{id}/unvalidate", name="admin_uvs_comment_unvalidate")
+     * @Template()
+     */
+    public function unvalidateCommentAction(Comment $comment)
+    {
+        $this->denyAccessUnlessGranted('ROLE_UV_REVIEW_ADMIN');
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $comment->setValide(false);
+
+        $em->persist($comment);
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->set('message', [
+            'type' => 'success',
+            'message' => 'uvs.admin.unvalidateComment.confirm',
+        ]);
+
+        return $this->redirect($this->generateUrl('admin_uvs_comments'));
+    }
+
+    /**
      * @Route("/review/{id}/delete", name="admin_uvs_review_delete")
      * @Template()
      */
@@ -170,7 +237,8 @@ class AdminController extends Controller
             ->from('EtuModuleUVBundle:Comment', 'c')
             ->leftJoin('c.uv', 'u')
             ->leftJoin('c.user', 'a')
-            ->orderBy('c.createdAt', 'DESC')
+            ->addOrderBy('c.valide', 'ASC')
+            ->addOrderBy('c.createdAt', 'DESC')
             ->getQuery();
 
         $pagination = $this->get('knp_paginator')->paginate($query, $page, 20);
@@ -186,7 +254,9 @@ class AdminController extends Controller
      */
     public function deleteCommentAction(Comment $comment)
     {
-        $this->denyAccessUnlessGranted('ROLE_UV_REVIEW_ADMIN');
+        if ($comment->getUser() != $this->getUser()) {
+            $this->denyAccessUnlessGranted('ROLE_UV_REVIEW_ADMIN');
+        }
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();

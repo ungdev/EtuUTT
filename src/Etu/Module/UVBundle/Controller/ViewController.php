@@ -7,18 +7,23 @@ use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Form\EditorType;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\CoreBundle\Twig\Extension\StringManipulationExtension;
+use Etu\Core\CoreBundle\Util\SendSlack;
 use Etu\Core\UserBundle\Entity\Course;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Model\BadgesManager;
 use Etu\Module\UVBundle\Entity\Comment;
 use Etu\Module\UVBundle\Entity\Review;
 use Etu\Module\UVBundle\Entity\UV;
+use League\HTMLToMarkdown\HtmlConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 // Import annotations
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @Route("/uvs")
@@ -61,30 +66,88 @@ class ViewController extends Controller
         if ($this->isGranted('ROLE_UV_REVIEW_POST')) {
             $comment = new Comment();
             $comment->setUv($uv)
-                ->setUser($this->getUser());
+                ->setUser($this->getUser())
+                ->setValide(false);
 
             $commentForm = $this->createFormBuilder($comment)
                 ->add('body', EditorType::class, ['label' => 'uvs.main.view.body'])
+                ->add('isAnonyme', CheckboxType::class, ['label' => 'uvs.main.view.anon', 'required' => false])
                 ->add('submit', SubmitType::class, ['label' => 'uvs.main.view.submit'])
                 ->getForm();
 
             $commentForm->handleRequest($request);
             if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+                $comment->setValide(false);
                 $em->persist($comment);
                 $em->flush();
 
-                // Notify subscribers
-                $notif = new Notification();
+                $converter = new HtmlConverter();
 
-                $notif
-                    ->setModule('uv')
-                    ->setHelper('uv_new_comment')
-                    ->setAuthorId($this->getUser()->getId())
-                    ->setEntityType('uv')
-                    ->setEntityId($uv->getId())
-                    ->addEntity($comment);
-
-                $this->getNotificationsSender()->send($notif);
+                $jsonData = json_encode(['blocks' => [
+                    [
+                        'type' => 'header',
+                        'text' => [
+                            'type' => 'plain_text',
+                            'text' => 'Nouveau commentaire',
+                        ],
+                    ],
+                    [
+                        'type' => 'context',
+                        'elements' => [
+                            [
+                                'type' => 'mrkdwn',
+                                'text' => 'Soumis par *'.($comment->getIsAnonyme() ? 'anonyme' : $comment->getUser()->getFullName().' ('.$comment->getUser()->getLogin().')').'* pour *'.mb_strtoupper($comment->getUv()->getSlug()).'*',
+                            ],
+                        ],
+                    ],
+                    [
+                        'type' => 'divider',
+                    ],
+                    [
+                        'type' => 'section',
+                        'text' => [
+                            'type' => 'mrkdwn',
+                            'text' => $converter->convert($comment->getBody()),
+                        ],
+                    ],
+                    [
+                        'type' => 'divider',
+                    ],
+                    [
+                        'type' => 'section',
+                        'text' => [
+                            'type' => 'mrkdwn',
+                            'text' => 'Vous pouvez également <'.$this->generateUrl('uvs_edit_comment', ['id' => $comment->getId()], UrlGeneratorInterface::ABSOLUTE_URL).
+                                "|éditer ce commentaire> ou ignorer ce message.\nVous pouvez vous rendre sur <".$this->generateUrl('admin_uvs_comments', [], UrlGeneratorInterface::ABSOLUTE_URL)."|sur le panneau d'administration du site etu> pour identifier la personne qui a commenté si elle est anonyme.\nCe message disparaitra après avoir choisi une action. ",
+                        ],
+                    ],
+                    [
+                        'type' => 'actions',
+                        'block_id' => 'comment_'.$comment->getId(),
+                        'elements' => [
+                            [
+                                'type' => 'button',
+                                'action_id' => 'ok',
+                                'text' => [
+                                    'type' => 'plain_text',
+                                    'text' => 'Approuver',
+                                ],
+                                'style' => 'primary',
+                            ],
+                            [
+                                'type' => 'button',
+                                'text' => [
+                                    'type' => 'plain_text',
+                                    'text' => 'Supprimer',
+                                ],
+                                'action_id' => 'delete',
+                                'style' => 'danger',
+                            ],
+                        ],
+                    ],
+                ],
+                ]);
+                SendSlack::curl_send($this->container->getParameter('slack_webhook_moderation'), $jsonData);
 
                 $this->get('session')->getFlashBag()->set('message', [
                     'type' => 'success',
@@ -155,7 +218,8 @@ class ViewController extends Controller
                 ->leftJoin('c.user', 'u')
                 ->where('c.uv = :uv')
                 ->setParameter('uv', $uv->getId())
-                ->orderBy('c.createdAt', 'DESC')
+                ->addOrderBy('c.valide', 'ASC')
+                ->addOrderBy('c.createdAt', 'DESC')
                 ->getQuery();
 
             $pagination = $this->get('knp_paginator')->paginate($query, $page, 10);
@@ -163,9 +227,112 @@ class ViewController extends Controller
             $rtn['semesters'] = $reviews;
             $rtn['reviewsCount'] = $reviewsCount;
             $rtn['pagination'] = $pagination;
+            $rtn['user'] = $this->getUser();
         }
 
         return $rtn;
+    }
+
+    /**
+     * @Route("/editUEComment/{id}", name="uvs_edit_comment")
+     * @Template()
+     *
+     * @param Request       $request
+     * @param EntityManager $em
+     * @param Comment       $comment
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function editUEComment(Request $request, Comment $comment)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if (($this->getUser() === $comment->getUser() && $this->isGranted('ROLE_UV_REVIEW_POST')) || $this->isGranted('ROLE_UV_REVIEW_ADMIN')) {
+            $commentForm = $this->createFormBuilder($comment)
+                ->add('body', EditorType::class, ['label' => 'uvs.main.view.body'])
+                ->add('isAnonyme', CheckboxType::class, ['label' => 'uvs.main.view.anon', 'required' => false])
+                ->add('submit', SubmitType::class, ['label' => 'uvs.main.view.submit'])
+                ->getForm();
+            $commentForm->handleRequest($request);
+            if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+                $comment->setValide(false);
+                $em->persist($comment);
+                $em->flush();
+                $converter = new HtmlConverter();
+
+                $jsonData = json_encode(['blocks' => [
+                    [
+                        'type' => 'header',
+                        'text' => [
+                            'type' => 'plain_text',
+                            'text' => 'Nouveau commentaire',
+                        ],
+                    ],
+                    [
+                        'type' => 'context',
+                        'elements' => [
+                            [
+                                'type' => 'mrkdwn',
+                                'text' => 'Soumis par *'.($comment->getIsAnonyme() ? 'anonyme' : $comment->getUser()->getFullName().' ('.$comment->getUser()->getLogin().')').'* pour *'.mb_strtoupper($comment->getUv()->getSlug()).'*',
+                            ],
+                        ],
+                    ],
+                    [
+                        'type' => 'divider',
+                    ],
+                    [
+                        'type' => 'section',
+                        'text' => [
+                            'type' => 'mrkdwn',
+                            'text' => $converter->convert($comment->getBody()),
+                        ],
+                    ],
+                    [
+                        'type' => 'divider',
+                    ],
+                    [
+                        'type' => 'section',
+                        'text' => [
+                            'type' => 'mrkdwn',
+                            'text' => 'Vous pouvez également <'.$this->generateUrl('uvs_edit_comment', ['id' => $comment->getId()], UrlGeneratorInterface::ABSOLUTE_URL).
+                                "|éditer ce commentaire> ou ignorer ce message.\nVous pouvez vous rendre sur <".$this->generateUrl('admin_uvs_comments', [], UrlGeneratorInterface::ABSOLUTE_URL)."|sur le panneau d'administration du site etu> pour identifier la personne qui a commenté si elle est anonyme.\nCe message disparaitra après avoir choisi une action. ",
+                        ],
+                    ],
+                    [
+                        'type' => 'actions',
+                        'block_id' => 'comment_'.$comment->getId(),
+                        'elements' => [
+                            [
+                                'type' => 'button',
+                                'action_id' => 'ok',
+                                'text' => [
+                                    'type' => 'plain_text',
+                                    'text' => 'Approuver',
+                                ],
+                                'style' => 'primary',
+                            ],
+                            [
+                                'type' => 'button',
+                                'text' => [
+                                    'type' => 'plain_text',
+                                    'text' => 'Supprimer',
+                                ],
+                                'action_id' => 'delete',
+                                'style' => 'danger',
+                            ],
+                        ],
+                    ],
+                ],
+                ]);
+                SendSlack::curl_send($this->container->getParameter('slack_webhook_moderation'), $jsonData);
+
+                return $this->redirectToRoute('uvs_view', ['slug' => $comment->getUv()->getSlug(), 'name' => $comment->getUv()->getName()]);
+            }
+
+            return $this->render('@EtuModuleUV/View/editComment.html.twig', ['commentForm' => $commentForm->createView()]);
+        }
+
+        throw new AccessDeniedException("Vous n'avez pas l'autorisation de modifier ce commentaire");
     }
 
     /**

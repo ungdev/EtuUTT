@@ -42,7 +42,7 @@ class ReviewTransformer extends AbstractTransformer
             '_links' => [
                 [
                     'rel' => 'self',
-                    'uri' => '/uploads/uvs/'.$review->getFilename(),
+                    'uri' => '/uvs/reviews/file/'.$review->getFilename(),
                 ],
             ],
         ];

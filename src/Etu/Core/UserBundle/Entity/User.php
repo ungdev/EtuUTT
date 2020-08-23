@@ -29,7 +29,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *    indexes={@ORM\Index(name="mail_index", columns={"mail"})}
  * )
  * @ORM\Entity()
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class User implements UserInterface, EquatableInterface, \Serializable
 {
@@ -481,6 +480,15 @@ class User implements UserInterface, EquatableInterface, \Serializable
     protected $isInLDAP;
 
     /**
+     * Keeps its account even if not in LDAP anymore.
+     *
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $isKeepingAccount;
+
+    /**
      * Read-only expiration date.
      *
      * @var mixed
@@ -654,6 +662,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
         $this->countryPrivacy = self::PRIVACY_PUBLIC;
         $this->birthdayPrivacy = self::PRIVACY_PUBLIC;
         $this->schedulePrivacy = self::PRIVACY_PUBLIC;
+        $this->isKeepingAccount = false;
         $this->birthdayDisplayOnlyAge = false;
         $this->personnalMailPrivacy = self::PRIVACY_PUBLIC;
         $this->options = new UserOptionsCollection();
@@ -1940,6 +1949,26 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public function setIsStaffUTT(bool $isStaffUTT): self
     {
         $this->isStaffUTT = $isStaffUTT;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsKeepingAccount(): bool
+    {
+        return $this->isKeepingAccount;
+    }
+
+    /**
+     * @param bool $isKeepingAccount
+     *
+     * @return User
+     */
+    public function setIsKeepingAccount(bool $isKeepingAccount): self
+    {
+        $this->isKeepingAccount = $isKeepingAccount;
 
         return $this;
     }
