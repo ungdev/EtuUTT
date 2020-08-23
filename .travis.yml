@@ -25,8 +25,8 @@ before_script:
     - cp app/config/parameters.yml.dist app/config/parameters.yml
     - cp app/config/modules.yml.dist app/config/modules.yml
     - composer self-update
-    - composer global require "fxp/composer-asset-plugin:~1.2" --ignore-platform-reqs --no-interaction --prefer-dist
-    - composer install --ignore-platform-reqs --no-interaction --prefer-dist
+    - composer global require "fxp/composer-asset-plugin:~1.2" --ignore-platform-reqs --no-interaction --prefer-dist || true
+    - composer install --ignore-platform-reqs --no-interaction --prefer-dist || true
 
 script:
     - vendor/bin/php-cs-fixer fix --config=.php_cs.dist -v --dry-run --using-cache=no
