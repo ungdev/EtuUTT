@@ -21,6 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity()
  *
  * @ORM\HasLifecycleCallbacks()
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Organization implements UserInterface, \Serializable
 {
