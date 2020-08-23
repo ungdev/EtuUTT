@@ -71,7 +71,7 @@ class ViewController extends Controller
 
             $commentForm = $this->createFormBuilder($comment)
                 ->add('body', EditorType::class, ['label' => 'uvs.main.view.body'])
-                ->add('anonyme', CheckboxType::class, ['label' => 'uvs.main.view.anon', 'required' => false])
+                ->add('isAnonyme', CheckboxType::class, ['label' => 'uvs.main.view.anon', 'required' => false])
                 ->add('submit', SubmitType::class, ['label' => 'uvs.main.view.submit'])
                 ->getForm();
 
@@ -250,7 +250,7 @@ class ViewController extends Controller
         if (($this->getUser() === $comment->getUser() && $this->isGranted('ROLE_UV_REVIEW_POST')) || $this->isGranted('ROLE_UV_REVIEW_ADMIN')) {
             $commentForm = $this->createFormBuilder($comment)
                 ->add('body', EditorType::class, ['label' => 'uvs.main.view.body'])
-                ->add('anonyme', CheckboxType::class, ['label' => 'uvs.main.view.anon', 'required' => false])
+                ->add('isAnonyme', CheckboxType::class, ['label' => 'uvs.main.view.anon', 'required' => false])
                 ->add('submit', SubmitType::class, ['label' => 'uvs.main.view.submit'])
                 ->getForm();
             $commentForm->handleRequest($request);
