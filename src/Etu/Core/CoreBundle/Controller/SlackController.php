@@ -2,7 +2,6 @@
 
 namespace Etu\Core\CoreBundle\Controller;
 
-use Etu\Core\CoreBundle\Entity\Notification;
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use http\Env\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +20,7 @@ class SlackController extends Controller
     public function slackEndpoint(Request $request, string $token)
     {
         if ($token != $this->container->getParameter('slack_token')) {
-            return new Response('Incroyable',200);
+            return new Response('Incroyable', 200);
         }
         $data = json_decode($request->getBody());
         $objetEtID = explode('_', $data['actions'][0]['block_id']);
@@ -35,18 +34,6 @@ class SlackController extends Controller
                 $comment->setIsValide(true);
                 $em->persist($comment);
                 $em->flush();
-                // Notify subscribers
-                $notif = new Notification();
-
-                $notif
-                    ->setModule('uv')
-                    ->setHelper('uv_new_comment')
-                    ->setAuthorId($comment->getUser()->getId())
-                    ->setEntityType('uv')
-                    ->setEntityId($comment->getId())
-                    ->addEntity($comment);
-
-                $this->getNotificationsSender()->send($notif);
 
                 return new Response(json_encode(['delete_original' => true]));
             } elseif ('delete' === $data['actions'][0]['action_id']) {
