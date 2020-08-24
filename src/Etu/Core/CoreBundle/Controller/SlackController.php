@@ -21,7 +21,7 @@ class SlackController extends Controller
     public function slackEndpoint(Request $request, string $token)
     {
         if ($token != $this->container->getParameter('slack_token')) {
-            throw $this->createAccessDeniedException('');
+            return new Response('Incroyable',200);
         }
         $data = json_decode($request->getBody());
         $objetEtID = explode('_', $data['actions'][0]['block_id']);
