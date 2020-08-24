@@ -118,7 +118,7 @@ class ViewController extends Controller
                         'text' => [
                             'type' => 'mrkdwn',
                             'text' => 'Vous pouvez également <'.$this->generateUrl('uvs_edit_comment', ['id' => $comment->getId()], UrlGeneratorInterface::ABSOLUTE_URL).
-                                "|éditer ce commentaire> ou ignorer ce message.\nVous pouvez vous rendre sur <".$this->generateUrl('admin_uvs_comments', [], UrlGeneratorInterface::ABSOLUTE_URL)."|sur le panneau d'administration du site etu> pour identifier la personne qui a commenté si elle est anonyme.\nCe message disparaitra après avoir choisi une action. ",
+                                "|éditer ce commentaire> ou ignorer ce message.\nVous pouvez vous rendre sur <".$this->generateUrl('admin_uvs_comments', [], UrlGeneratorInterface::ABSOLUTE_URL)."|sur le panneau d'administration du site etu> pour identifier la personne qui a commenté si elle est anonyme.",
                         ],
                     ],
                     [
@@ -297,7 +297,7 @@ class ViewController extends Controller
                         'text' => [
                             'type' => 'mrkdwn',
                             'text' => 'Vous pouvez également <'.$this->generateUrl('uvs_edit_comment', ['id' => $comment->getId()], UrlGeneratorInterface::ABSOLUTE_URL).
-                                "|éditer ce commentaire> ou ignorer ce message.\nVous pouvez vous rendre sur <".$this->generateUrl('admin_uvs_comments', [], UrlGeneratorInterface::ABSOLUTE_URL)."|sur le panneau d'administration du site etu> pour identifier la personne qui a commenté si elle est anonyme.\nCe message disparaitra après avoir choisi une action. ",
+                                "|éditer ce commentaire> ou ignorer ce message.\nVous pouvez vous rendre sur <".$this->generateUrl('admin_uvs_comments', [], UrlGeneratorInterface::ABSOLUTE_URL)."|sur le panneau d'administration du site etu> pour identifier la personne qui a commenté si elle est anonyme.",
                         ],
                     ],
                     [

@@ -23,6 +23,7 @@ class RemoveSoftDeleteCommand extends ContainerAwareCommand
     {
         /** @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine')->getManager();
+        $em->getFilters()->disable('softdeleteable');
 
         $elements = $em->getRepository('EtuCoreApiBundle:OauthClient')
             ->createQueryBuilder('u')
@@ -251,5 +252,6 @@ class RemoveSoftDeleteCommand extends ContainerAwareCommand
             }
             $em->flush();
         }
+        $em->getFilters()->enable('softdeleteable');
     }
 }
