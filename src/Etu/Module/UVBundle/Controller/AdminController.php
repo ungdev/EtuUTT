@@ -243,7 +243,7 @@ class AdminController extends Controller
             ->from('EtuModuleUVBundle:Comment', 'c')
             ->leftJoin('c.uv', 'u')
             ->leftJoin('c.user', 'a')
-            ->addOrderBy('c.valide', 'ASC')
+            ->addOrderBy('c.isValide', 'ASC')
             ->addOrderBy('c.createdAt', 'DESC')
             ->getQuery();
 
