@@ -3,7 +3,6 @@
 require_once '../app/autoload.php';
 use Etu\Module\ArgentiqueBundle\Glide\ImageBuilder;
 use Firebase\JWT\JWT;
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * This file is the entrypoint for argentique images
@@ -11,10 +10,9 @@ use Symfony\Component\Yaml\Yaml;
  */
 
 // Config
-$parameterFile = '../app/config/parameters.yml';
 $regex = '/^\/argentique\/photo\/([^\?]+)\??.*$/';
 $jwtAlgo = 'HS256';
-$jwtKey = Yaml::parse(file_get_contents($parameterFile))['parameters']['argentique_jwt_key'];
+$jwtKey = $_ENV['ETUUTT_ARGENTIQUE_JWT'];
 
 // Check config
 if (empty($jwtKey)) {
