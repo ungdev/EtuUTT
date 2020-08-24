@@ -5,7 +5,6 @@ namespace Etu\Core\UserBundle\Command;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Etu\Core\CoreBundle\Util\SendSlack;
-use Etu\Core\UserBundle\Command\Util\ProgressBar;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Module\BugsBundle\Entity\Issue;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -34,12 +33,12 @@ class DeleteOldUsersCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getManager();
 
         $dateActuelle = new DateTime();
-        $basePhotosDir = __DIR__.'../../../../../web/uploads/photos/';
+        $basePhotosDir = __DIR__.'/../../../../../web/uploads/photos/';
         $i = 0;
         /** @var User[] $users */
         $users = $em->getRepository('EtuUserBundle:User')->findAll();
         $deleted_user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => 'deleted_user']);
-        $bar = new ProgressBar('%fraction% [%bar%] %percent%', '=>', ' ', 80, count($users));
+
         foreach ($users as $user) {
             $toDelete = $user->getId() != $deleted_user->getId() &&
                 (
@@ -48,6 +47,7 @@ class DeleteOldUsersCommand extends ContainerAwareCommand
                     ($user->getIsKeepingAccount() && date_diff($user->getLastVisitHome(), $dateActuelle, true)->y >= 2))
                 );
             if ($toDelete) {
+                $output->writeln('Deleting '.$user->getId().' - '.$user->getStudentId().' - '.$user->getLogin());
                 foreach ($em->getRepository('EtuModuleUVBundle:Comment') as $comment) {
                     $comment->setUser($deleted_user);
                     $em->persist($comment);
@@ -93,6 +93,8 @@ class DeleteOldUsersCommand extends ContainerAwareCommand
                     unlink($basePhotosDir.$user->getLogin().'_official.jpg');
                 }
                 $em->remove($user);
+                $em->flush();
+                ++$i;
             }
 
             //Si l'utilisateur veut encore son compte, qu'il n'est plus à l'UTT mais qu'il n'a pas de mot de passe
@@ -119,13 +121,10 @@ class DeleteOldUsersCommand extends ContainerAwareCommand
                 ]);
                 SendSlack::curl_send($this->getContainer()->getParameter('slack_webhook_moderation'), $jsonData);
             }
-
-            ++$i;
-            $bar->update($i);
         }
 
         $em->flush();
 
-        $output->writeln("\nDone.\n");
+        $output->writeln("\nDone, ".$i." users deleted.\n");
     }
 }
