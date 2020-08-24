@@ -132,6 +132,7 @@ class ViewController extends Controller
                                     'type' => 'plain_text',
                                     'text' => 'Approuver',
                                 ],
+                                'url' => $this->generateUrl('admin_uvs_comment_validate', ['id' => $comment->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
                                 'style' => 'primary',
                             ],
                             [
@@ -141,6 +142,7 @@ class ViewController extends Controller
                                     'text' => 'Supprimer',
                                 ],
                                 'action_id' => 'delete',
+                                'url' => $this->generateUrl('admin_uvs_comment_delete', ['id' => $comment->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
                                 'style' => 'danger',
                             ],
                         ],
@@ -309,6 +311,7 @@ class ViewController extends Controller
                                     'type' => 'plain_text',
                                     'text' => 'Approuver',
                                 ],
+                                'url' => $this->generateUrl('admin_uvs_comment_validate', ['id' => $comment->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
                                 'style' => 'primary',
                             ],
                             [
@@ -318,6 +321,7 @@ class ViewController extends Controller
                                     'text' => 'Supprimer',
                                 ],
                                 'action_id' => 'delete',
+                                'url' => $this->generateUrl('admin_uvs_comment_delete', ['id' => $comment->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
                                 'style' => 'danger',
                             ],
                         ],

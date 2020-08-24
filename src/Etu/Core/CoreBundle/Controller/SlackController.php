@@ -57,6 +57,6 @@ class SlackController extends Controller
             }
         }
 
-        throw $this->createNotFoundException();
+        return new Response('Not found', 200);
     }
 }
