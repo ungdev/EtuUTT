@@ -103,7 +103,7 @@ assetic:
 # Swiftmailer Configuration
 swiftmailer:
     transport: "%env(ETUUTT_MAILER_TRANSPORT)%"
-    host:      "%env(ETUUTT_DATABASE_HOST)%"
+    host:      "%env(ETUUTT_MAILER_HOST)%"
     username:  "%env(ETUUTT_MAILER_USER)%"
     password:  "%env(ETUUTT_MAILER_PASSWORD)%"
     spool:     { type: memory }
