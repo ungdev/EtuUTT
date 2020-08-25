@@ -15,8 +15,8 @@ class RemoveSoftDeleteCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('etu:removesoftdelete')
-            ->setDescription('Remove soft delete');
+            ->setName('etu:cleandb')
+            ->setDescription('Remove soft deleteable elements and remove expired elements');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -25,19 +25,23 @@ class RemoveSoftDeleteCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getManager();
         $em->getFilters()->disable('softdeleteable');
 
+
+        $output->writeln("============================");
+        $output->writeln("Supression des clients OAuth");
+        $output->writeln("============================");
         $elements = $em->getRepository('EtuCoreApiBundle:OauthClient')
             ->createQueryBuilder('u')
             ->where('u.deletedAt IS NOT NULL')
             ->getQuery()->getResult();
         foreach ($elements as $todelete) {
-            $output->writeln('Deleting Client '.$todelete->getId());
+            $output->writeln('Suppression du client '.$todelete->getId());
             $elementsInside = $em->getRepository('EtuCoreApiBundle:OauthAuthorization')
                 ->createQueryBuilder('u')
                 ->where('u.client = :org')
                 ->setParameter('org', $todelete)
                 ->getQuery()->getResult();
             foreach ($elementsInside as $delete) {
-                $output->writeln('Deleting Auth '.$delete->getId());
+                $output->writeln('Deleting authorization '.$delete->getId());
                 $em->remove($delete);
                 $em->flush();
             }
@@ -48,7 +52,7 @@ class RemoveSoftDeleteCommand extends ContainerAwareCommand
                 ->setParameter('org', $todelete)
                 ->getQuery()->getResult();
             foreach ($elementsInside as $delete) {
-                $output->writeln('Deleting Code '.$delete->getId());
+                $output->writeln('Deleting auth code '.$delete->getId());
                 $em->remove($delete);
                 $em->flush();
             }
@@ -59,7 +63,7 @@ class RemoveSoftDeleteCommand extends ContainerAwareCommand
                 ->setParameter('org', $todelete)
                 ->getQuery()->getResult();
             foreach ($elementsInside as $delete) {
-                $output->writeln('Deleting Token '.$delete->getId());
+                $output->writeln('Deleting access token '.$delete->getId());
                 $em->remove($delete);
                 $em->flush();
             }
@@ -70,7 +74,7 @@ class RemoveSoftDeleteCommand extends ContainerAwareCommand
                 ->setParameter('org', $todelete)
                 ->getQuery()->getResult();
             foreach ($elementsInside as $delete) {
-                $output->writeln('Deleting Refresh '.$delete->getId());
+                $output->writeln('Deleting refresh token '.$delete->getId());
                 $em->remove($delete);
                 $em->flush();
             }
@@ -78,19 +82,24 @@ class RemoveSoftDeleteCommand extends ContainerAwareCommand
             $em->flush();
         }
 
+        $output->writeln("\n\n=========================");
+        $output->writeln("Supression des utilisateurs");
+        $output->writeln("===========================");
+
         $elements = $em->getRepository('EtuUserBundle:User')
             ->createQueryBuilder('u')
             ->where('u.deletedAt IS NOT NULL')
             ->getQuery()->getResult();
 
         foreach ($elements as $todelete) {
-            $output->writeln('Deleting User '.$todelete->getId());
+            $output->writeln('Suppression de l\'utilisateur '.$todelete->getId());
             $elementsInside = $em->getRepository('EtuCoreApiBundle:OauthAuthorization')
                 ->createQueryBuilder('u')
                 ->where('u.user = :org')
                 ->setParameter('org', $todelete)
                 ->getQuery()->getResult();
             foreach ($elementsInside as $delete) {
+                $output->writeln("Suppression de l'auth ".$delete->getId());
                 $em->remove($delete);
                 $em->flush();
             }
@@ -101,6 +110,7 @@ class RemoveSoftDeleteCommand extends ContainerAwareCommand
                 ->setParameter('org', $todelete)
                 ->getQuery()->getResult();
             foreach ($elementsInside as $delete) {
+                $output->writeln("Suppression de l'auth code ".$delete->getId());
                 $em->remove($delete);
                 $em->flush();
             }
@@ -110,6 +120,7 @@ class RemoveSoftDeleteCommand extends ContainerAwareCommand
                 ->setParameter('org', $todelete)
                 ->getQuery()->getResult();
             foreach ($elementsInside as $delete) {
+                $output->writeln("Suppression de l'access token ".$delete->getId());
                 $em->remove($delete);
                 $em->flush();
             }
@@ -120,7 +131,9 @@ class RemoveSoftDeleteCommand extends ContainerAwareCommand
                 ->setParameter('org', $todelete)
                 ->getQuery()->getResult();
             foreach ($elementsInside as $delete) {
+                $output->writeln("Suppression du refresh token ".$delete->getId());
                 $em->remove($delete);
+                $em->flush();
             }
             $elementsInside = $em->getRepository('EtuModuleUploadBundle:UploadedFile')
                 ->createQueryBuilder('u')
@@ -128,7 +141,7 @@ class RemoveSoftDeleteCommand extends ContainerAwareCommand
                 ->setParameter('org', $todelete)
                 ->getQuery()->getResult();
             foreach ($elementsInside as $delete) {
-                $path = __DIR__.'../../../../../web/uploads/users_files/'.$delete->getId();
+                $path = __DIR__.'/../../../../../web/uploads/users_files/'.$delete->getId();
                 if (file_exists($path)) {
                     unlink($path);
                 } else {
@@ -141,6 +154,9 @@ class RemoveSoftDeleteCommand extends ContainerAwareCommand
             $em->flush();
         }
 
+        $output->writeln("\n\n===========================");
+        $output->writeln("Supression des associations");
+        $output->writeln("===========================");
         $elements = $em->getRepository('EtuUserBundle:Organization')
             ->createQueryBuilder('u')
             ->where('u.deletedAt IS NOT NULL')
@@ -189,7 +205,7 @@ class RemoveSoftDeleteCommand extends ContainerAwareCommand
                 ->setParameter('org', $todelete)
                 ->getQuery()->getResult();
             foreach ($elementsInside as $delete) {
-                $path = __DIR__.'../../../../../web/uploads/users_files/'.$delete->getId();
+                $path = __DIR__.'/../../../../../web/uploads/users_files/'.$delete->getId();
                 if (file_exists($path)) {
                     unlink($path);
                 } else {
