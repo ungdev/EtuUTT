@@ -37,6 +37,7 @@ class DeleteOldUsersCommand extends ContainerAwareCommand
         $i = 0;
         /** @var User[] $users */
         $users = $em->getRepository('EtuUserBundle:User')->findAll();
+        //14180
         $deleted_user = $em->getRepository('EtuUserBundle:User')->findOneBy(['login' => 'deleted_user']);
 
         foreach ($users as $user) {
@@ -48,43 +49,59 @@ class DeleteOldUsersCommand extends ContainerAwareCommand
                 );
             if ($toDelete) {
                 $output->writeln('Deleting '.$user->getId().' - '.$user->getStudentId().' - '.$user->getLogin());
-                foreach ($em->getRepository('EtuModuleUVBundle:Comment') as $comment) {
+                foreach ($em->getRepository('EtuModuleUVBundle:Comment')->findBy(['user' => $user]) as $comment) {
                     $comment->setUser($deleted_user);
                     $em->persist($comment);
                 }
+                $em->flush();
                 foreach ($em->getRepository('EtuModuleUVBundle:Review')->findBy(['sender' => $user]) as $review) {
                     $review->setSender($deleted_user);
                     $em->persist($review);
                 }
+                $em->flush();
                 foreach ($em->getRepository('EtuUserBundle:Organization')->findBy(['president' => $user]) as $organization) {
                     $organization->setPresident($deleted_user);
                     $em->persist($organization);
                 }
+                $em->flush();
                 foreach ($em->getRepository('EtuModuleBugsBundle:Issue')->findBy(['assignee' => $user]) as $issue) {
                     $issue->setAssignee($deleted_user);
                     $em->persist($issue);
                 }
+                $em->flush();
                 foreach ($em->getRepository('EtuModuleBugsBundle:Issue')->findBy(['user' => $user]) as $issue) {
                     $issue->setUser($deleted_user);
                     $em->persist($issue);
                 }
+                $em->flush();
                 foreach ($em->getRepository('EtuModuleWikiBundle:WikiPage')->findBy(['author' => $user]) as $wikiPage) {
                     $wikiPage->setAuthor($deleted_user);
                     $em->persist($wikiPage);
                 }
+                $em->flush();
                 foreach ($em->getRepository('EtuModuleForumBundle:Thread')->findBy(['author' => $user]) as $thread) {
                     /* @var Issue $issue */
                     $thread->setAuthor($deleted_user);
                     $em->persist($thread);
                 }
+                $em->flush();
                 foreach ($em->getRepository('EtuModuleForumBundle:Message')->findBy(['author' => $user]) as $message) {
                     $message->setAuthor($deleted_user);
                     $em->persist($message);
                 }
+                $em->flush();
                 foreach ($em->getRepository('EtuModuleBugsBundle:Comment')->findBy(['user' => $user]) as $comment) {
                     $comment->setUser($deleted_user);
                     $em->persist($comment);
                 }
+                $em->flush();
+                foreach ($em->getRepository('EtuModuleUploadBundle:UploadedFile')->findBy(['author' => $user, 'organization' => null]) as $file) {
+                    if (file_exists(__DIR__.'/../../../../../web/uploads/users_files/'.$file->getId())) {
+                        unlink(__DIR__.'/../../../../../web/uploads/users_files/'.$file->getId());
+                    }
+                    $em->remove($file);
+                }
+                $em->flush();
 
                 if ('default-avatar.png' != $user->getAvatar() && file_exists($basePhotosDir.$user->getAvatar())) {
                     unlink($basePhotosDir.$user->getAvatar());

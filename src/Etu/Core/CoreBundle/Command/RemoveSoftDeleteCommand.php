@@ -25,10 +25,9 @@ class RemoveSoftDeleteCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getManager();
         $em->getFilters()->disable('softdeleteable');
 
-
-        $output->writeln("============================");
-        $output->writeln("Supression des clients OAuth");
-        $output->writeln("============================");
+        $output->writeln('============================');
+        $output->writeln('Supression des clients OAuth');
+        $output->writeln('============================');
         $elements = $em->getRepository('EtuCoreApiBundle:OauthClient')
             ->createQueryBuilder('u')
             ->where('u.deletedAt IS NOT NULL')
@@ -83,8 +82,8 @@ class RemoveSoftDeleteCommand extends ContainerAwareCommand
         }
 
         $output->writeln("\n\n=========================");
-        $output->writeln("Supression des utilisateurs");
-        $output->writeln("===========================");
+        $output->writeln('Supression des utilisateurs');
+        $output->writeln('===========================');
 
         $elements = $em->getRepository('EtuUserBundle:User')
             ->createQueryBuilder('u')
@@ -131,7 +130,7 @@ class RemoveSoftDeleteCommand extends ContainerAwareCommand
                 ->setParameter('org', $todelete)
                 ->getQuery()->getResult();
             foreach ($elementsInside as $delete) {
-                $output->writeln("Suppression du refresh token ".$delete->getId());
+                $output->writeln('Suppression du refresh token '.$delete->getId());
                 $em->remove($delete);
                 $em->flush();
             }
@@ -155,8 +154,8 @@ class RemoveSoftDeleteCommand extends ContainerAwareCommand
         }
 
         $output->writeln("\n\n===========================");
-        $output->writeln("Supression des associations");
-        $output->writeln("===========================");
+        $output->writeln('Supression des associations');
+        $output->writeln('===========================');
         $elements = $em->getRepository('EtuUserBundle:Organization')
             ->createQueryBuilder('u')
             ->where('u.deletedAt IS NOT NULL')
