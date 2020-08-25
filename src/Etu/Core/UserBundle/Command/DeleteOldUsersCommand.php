@@ -95,11 +95,13 @@ class DeleteOldUsersCommand extends ContainerAwareCommand
                     $em->persist($comment);
                 }
                 $em->flush();
-                foreach ($em->getRepository('EtuModuleUploadBundle:UploadedFile')->findBy(['author' => $user, 'organization' => null]) as $file) {
-                    if (file_exists(__DIR__.'/../../../../../web/uploads/users_files/'.$file->getId())) {
+                foreach ($em->getRepository('EtuModuleUploadBundle:UploadedFile')->findBy(['author' => $user]) as $file) {
+                    /**if (file_exists(__DIR__.'/../../../../../web/uploads/users_files/'.$file->getId())) {
                         unlink(__DIR__.'/../../../../../web/uploads/users_files/'.$file->getId());
                     }
-                    $em->remove($file);
+                    $em->remove($file);**/
+                    $file->setAuthor($deleted_user);
+                    $em->persist($file);
                 }
                 $em->flush();
 
