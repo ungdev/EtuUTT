@@ -27,7 +27,7 @@ class CovoitSubscription
      * @var Covoit
      *
      * @ORM\ManyToOne(targetEntity="Covoit", inversedBy="subscriptions")
-     * @ORM\JoinColumn()
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $covoit;
 
@@ -35,7 +35,7 @@ class CovoitSubscription
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
-     * @ORM\JoinColumn()
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $user;
 

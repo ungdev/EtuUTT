@@ -54,7 +54,7 @@ class Member
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User", inversedBy="memberships")
-     * @ORM\JoinColumn()
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $user;
 
@@ -62,7 +62,7 @@ class Member
      * @var Organization
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\Organization", inversedBy="memberships")
-     * @ORM\JoinColumn()
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $organization;
 
@@ -70,7 +70,7 @@ class Member
      * @var OrganizationGroup
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\OrganizationGroup", inversedBy="members")
-     * @ORM\JoinColumn()
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $group;
 

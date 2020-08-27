@@ -25,7 +25,7 @@ class OauthAccessToken
      * @var OauthClient
      *
      * @ORM\ManyToOne(targetEntity="OauthClient")
-     * @ORM\JoinColumn()
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $client;
 
@@ -33,7 +33,7 @@ class OauthAccessToken
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
-     * @ORM\JoinColumn()
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $user;
 
@@ -41,7 +41,7 @@ class OauthAccessToken
      * @var OauthRefreshToken
      *
      * @ORM\ManyToOne(targetEntity="Etu\Core\ApiBundle\Entity\OauthRefreshToken")
-     * @ORM\JoinColumn()
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $refreshToken;
 

@@ -26,7 +26,7 @@ class OauthAuthorizationCode
      * @var OauthClient
      *
      * @ORM\ManyToOne(targetEntity="OauthClient")
-     * @ORM\JoinColumn()
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $client;
 
@@ -34,7 +34,7 @@ class OauthAuthorizationCode
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
-     * @ORM\JoinColumn()
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $user;
 

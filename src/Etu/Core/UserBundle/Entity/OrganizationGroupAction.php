@@ -39,7 +39,7 @@ class OrganizationGroupAction
      * @var OrganizationGroup
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\OrganizationGroup", inversedBy="actions")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     protected $group;
 

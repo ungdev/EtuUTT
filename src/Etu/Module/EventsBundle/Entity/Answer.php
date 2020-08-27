@@ -28,7 +28,7 @@ class Answer
      * @var Event
      *
      * @ORM\ManyToOne(targetEntity="Event")
-     * @ORM\JoinColumn()
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $event;
 
@@ -36,7 +36,7 @@ class Answer
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
-     * @ORM\JoinColumn()
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $user;
 

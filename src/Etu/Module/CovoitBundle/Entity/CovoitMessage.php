@@ -27,7 +27,7 @@ class CovoitMessage
      * @var Covoit
      *
      * @ORM\ManyToOne(targetEntity="Covoit", inversedBy="messages")
-     * @ORM\JoinColumn()
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $covoit;
 
@@ -35,7 +35,7 @@ class CovoitMessage
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="\Etu\Core\UserBundle\Entity\User")
-     * @ORM\JoinColumn()
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $author;
 

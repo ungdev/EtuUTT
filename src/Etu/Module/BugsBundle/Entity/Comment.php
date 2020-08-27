@@ -36,7 +36,7 @@ class Comment
      * @var Issue
      *
      * @ORM\ManyToOne(targetEntity="Issue")
-     * @ORM\JoinColumn()
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $issue;
 
