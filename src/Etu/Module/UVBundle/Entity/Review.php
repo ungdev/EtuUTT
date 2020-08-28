@@ -425,4 +425,21 @@ class Review
     {
         return $this->sender;
     }
+
+    /**
+     * Remove file, return true on success
+     *
+     * @return bool
+     *
+     */
+    public function deleteFile()
+    {
+        $path = __DIR__.'/../../../../../web/uploads/uvs/'.$this->filename;
+        if(file_exists($path))
+        {
+            unlink($path);
+            return true;
+        }
+        return false;
+    }
 }

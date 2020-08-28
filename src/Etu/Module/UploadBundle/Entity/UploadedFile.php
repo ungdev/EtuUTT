@@ -391,4 +391,21 @@ class UploadedFile
     {
         return $this->file;
     }
+
+    /**
+     * Remove file, return true on success
+     *
+     * @return bool
+     *
+     */
+    public function deleteFile()
+    {
+        $path = __DIR__.'/../../../../../web/uploads/users_files/'.$this->id;
+        if(file_exists($path))
+        {
+            unlink($path);
+            return true;
+        }
+        return false;
+    }
 }
