@@ -490,6 +490,15 @@ class User implements UserInterface, EquatableInterface, \Serializable
     protected $isKeepingAccount;
 
     /**
+     * Ask to delete everything.
+     *
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $isDeletingEverything;
+
+    /**
      * Read-only expiration date.
      *
      * @var mixed
@@ -1970,6 +1979,26 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public function setIsKeepingAccount(bool $isKeepingAccount): self
     {
         $this->isKeepingAccount = $isKeepingAccount;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsDeletingEverything(): bool
+    {
+        return $this->isDeletingEverything;
+    }
+
+    /**
+     * @param bool $isDeletingEverything
+     *
+     * @return User
+     */
+    public function setIsDeletingEverything(bool $isDeletingEverything): self
+    {
+        $this->isDeletingEverything = $isDeletingEverything;
 
         return $this;
     }

@@ -338,6 +338,7 @@ user:
             confirm: Vous avez bien modifié vos informations
             back: Retour sur mon compte
             keepingAccount: Cochez cette case si vous souhaitez garder l'accès à votre compte Etu après votre départ de l'UTT (vous devez spécifier un mail personnel différent de celui de l'UTT)
+            deletingEverything: "Lorsque que votre compte est supprimé, nous gardons et anonymisons certains de vos contenus qui restent utiles pour les autres étudiants : commentaires d'UEs, ... (voir page RGPD). Cochez cette case pour demander également leur suppression."
             avatar: Modifier ma photo
             edit: Modifier
             website: Site web (public)

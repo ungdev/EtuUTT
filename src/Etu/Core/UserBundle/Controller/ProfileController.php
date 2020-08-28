@@ -195,6 +195,7 @@ class ProfileController extends Controller
             ->add('personnalMail', EmailType::class, ['required' => false, 'label' => 'user.profile.profileEdit.personnalMail'])
             ->add('personnalMailPrivacy', ChoiceType::class, $privacyChoice)
             ->add('isKeepingAccount', CheckboxType::class, ['required' => false, 'label' => 'user.profile.profileEdit.keepingAccount'])
+            ->add('isDeletingEverything', CheckboxType::class, ['required' => false, 'label' => 'user.profile.profileEdit.deletingEverything'])
             ->add('schedulePrivacy', ChoiceType::class, $privacyChoiceSchedule)
             ->add('website', null, ['required' => false, 'label' => 'user.profile.profileEdit.website'])
             ->add('facebook', null, ['required' => false, 'label' => 'user.profile.profileEdit.facebook'])
