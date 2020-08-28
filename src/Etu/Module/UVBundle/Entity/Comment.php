@@ -48,7 +48,7 @@ class Comment
      * @var UV
      *
      * @ORM\ManyToOne(targetEntity="UV", inversedBy="comments")
-     * @ORM\JoinColumn()
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $uv;
 
