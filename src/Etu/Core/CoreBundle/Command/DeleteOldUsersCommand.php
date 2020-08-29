@@ -187,17 +187,15 @@ class DeleteOldUsersCommand extends ContainerAwareCommand
             ->createQueryBuilder('u')
             ->setMaxResults($limite)
             ->getQuery();
-        while (count($query->getResult()) > 0) {
-            $elementsInside = $query->getResult();
-            foreach ($elementsInside as $delete) {
-                if (date_diff($delete->getExpiration(), $dateActuelle, true)->m > 4) {
-                    $output->writeln('Deleting Notification '.$delete->getId());
-                    $em->remove($delete);
-                    $em->flush();
-                }
+        $elementsInside = $query->getResult();
+        foreach ($elementsInside as $delete) {
+            if (date_diff($delete->getExpiration(), $dateActuelle, true)->m > 4) {
+                $output->writeln('Deleting Notification '.$delete->getId());
+                $em->remove($delete);
+                $em->flush();
             }
-            $em->flush();
         }
+        $em->flush();
         $query = $em->getRepository('EtuCoreApiBundle:OauthAuthorizationCode')
             ->createQueryBuilder('u')
             ->where('u.expireAt < :org')
