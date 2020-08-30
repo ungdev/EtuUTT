@@ -209,10 +209,7 @@ class AdminController extends Controller
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $path = __DIR__.'/../../../../../web/uploads/uvs/'.$review->getFilename();
-        if (file_exists($path)) {
-            unlink($path);
-        }
+        $review->deleteFile();
 
         $em->remove($review);
         $em->flush();

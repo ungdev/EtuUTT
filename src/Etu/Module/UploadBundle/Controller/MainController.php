@@ -221,7 +221,7 @@ class MainController extends Controller
         $organization = $file->getOrganization();
 
         // Delete file
-        unlink($this->getKernel()->getRootDir().'/../web/uploads/users_files/'.$file->getId());
+        $file->deleteFile();
         $em->remove($file);
         $em->flush();
 
