@@ -189,7 +189,7 @@ class DeleteOldUsersCommand extends ContainerAwareCommand
             ->getQuery();
         $elementsInside = $query->getResult();
         foreach ($elementsInside as $delete) {
-            if (date_diff($delete->getExpiration(), $dateActuelle, true)->m > 4) {
+            if (date_diff($delete->getExpiration(), $dateActuelle, true)->days > 4 * 30) {
                 $output->writeln('Deleting Notification '.$delete->getId());
                 $em->remove($delete);
                 $em->flush();
