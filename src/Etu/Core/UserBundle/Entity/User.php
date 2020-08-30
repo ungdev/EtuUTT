@@ -673,6 +673,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
         $this->birthdayPrivacy = self::PRIVACY_PUBLIC;
         $this->schedulePrivacy = self::PRIVACY_PUBLIC;
         $this->isKeepingAccount = false;
+        $this->isDeletingEverything = false;
         $this->birthdayDisplayOnlyAge = false;
         $this->personnalMailPrivacy = self::PRIVACY_PUBLIC;
         $this->options = new UserOptionsCollection();
