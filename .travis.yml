@@ -8,6 +8,17 @@ env:
     global:
         - SYMFONY_ENV=test
         - SYMFONY_DEBUG=1
+        - ETUUTT_DATABASE_DRIVER=pdo_mysql
+        - ETUUTT_DATABASE_HOST=db
+        - ETUUTT_DATABASE_PORT=
+        - ETUUTT_DATABASE_NAME=etuutt
+        - ETUUTT_DATABASE_USER=etuutt
+        - ETUUTT_DATABASE_PASSWORD=abcdef
+        - ETUUTT_APP_ENV=dev
+        - ETUUTT_APP_SECRET=27bc50e30a22f453e087ec7d3c88b3f0
+        - ETUUTT_MAILER_TRANSPORT=smtp
+        - ETUUTT_MAILER_HOST=smtp.utt.fr
+        - ETUUTT_MAILER_PORT=25
 
 matrix:
     fast_finish: true
@@ -20,10 +31,7 @@ cache:
         - $HOME/.composer/cache
 
 before_script:
-    - source .env
     - phpenv config-rm xdebug.ini
-    - cp app/config/parameters.yml.dist app/config/parameters.yml
-    - cp app/config/modules.yml.dist app/config/modules.yml
     - composer self-update
     - composer global require "fxp/composer-asset-plugin:~1.2" --ignore-platform-reqs --no-interaction --prefer-dist || true
     - composer install --ignore-platform-reqs --no-interaction --prefer-dist || true
