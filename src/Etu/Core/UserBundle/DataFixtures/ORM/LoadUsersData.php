@@ -33,6 +33,8 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
         $admin->setIsStudent(true);
         $admin->setPassword('$2a$12$2DKCL27MlY0KvDnI.Fofme7wRQU6AuU2kEvcemM2PbqNu.ixNY4JK'); // = 'admin'
         $admin->setAvatar('admin.png');
+        $admin->setIsKeepingAccount(true);
+        $admin->setIsDeletingEverything(false);
         $admin->setBirthday(new \DateTime());
         $admin->setLastVisitHome(new \DateTime());
         $admin->setReadOnlyExpirationDate(new \DateTime());
@@ -46,6 +48,8 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
         $user->setPassword('$2a$12$NRBE4VdkpnngzVFZ.BA3uOTvLM/tlY54XteSi6/GK0ymEgHR2Euli'); // = 'user'
         $user->setMail('user@utt.fr');
         $user->setAvatar('user.png');
+        $user->setIsDeletingEverything(true);
+        $user->setIsKeepingAccount(true);
         $user->setBirthday(new \DateTime());
         $user->setLastVisitHome(new \DateTime());
         $user->setReadOnlyExpirationDate(new \DateTime());

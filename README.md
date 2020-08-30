@@ -18,13 +18,16 @@ De la documentation est aussi disponible sur le site étudiant directement : htt
 Lancement du serveur en local
 -------------
 
-Après avoir suivit le tutoriel du lien précédent, au lieu d'utiliser nginx il est possible de lancer le serveur directement dans la console avec la commande suivante :
+1. Il vous suffit d'avoir `docker` et `docker-compose` d'installés
+2. Copiez le .env en .env.local et éditez ses caractéristiques. Pensez à éditer le UID et à mettre le votre afin de pouvoir monter correctement votre code source dans le container.
+3. Lancez le tout : `docker-compose up -d`
+4. Connectez-vous dans le container : `docker exec -it etuutt_etuutt_1 bash` puis initiez le site
 ```
-
-php bin/console server:run
-
+composer install
+php bin/console doctrine:schema:update --force
+php bin/console doctrine:fixtures:load -n
 ```
-
+5. Rendez-vous sur http://127.0.0.1:8000 pour voir le site (avec l'id user/user ou admin/admin) et sur http://127.0.0.1:8080 pour voir adminer.
 Cela permet d'éviter d'installer nginx et de devoir tout configurer
 
 Traduction
@@ -37,7 +40,7 @@ Déploiement continu
 -------------------
 
 Ce projet utilise l'intégration continue (TravisCI), et la branche `master` est directement à jour avec la production.
-Depuis peu, ce dernier est déployé sur un cluster openshift. Chaque push déclenche une reconstruction de l'image et la mise à jour automatique de la version en prod (Rolling Update)
+Ce dernier est déployé sur un cluster openshift. Chaque push déclenche une reconstruction de l'image et la mise à jour automatique de la version en prod (Rolling Update)
 
 Branche `dev` (développement) :
 [![Build Status](https://travis-ci.org/ungdev/EtuUTT.svg?branch=dev)](https://travis-ci.org/ungdev/EtuUTT)

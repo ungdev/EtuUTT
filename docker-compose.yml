@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  etuutt:
+    image: larueli/php-base-image:7.1
+    ports:
+    - 8000:8080
+    user: "${UID}:0"
+    volumes:
+    - .:/var/www/html/:rw
+    depends_on:
+      - db
+    env_file:
+      - .env.local
+
+  db:
+    image: mariadb
+    env_file:
+      - .env.local
+
+  adminer:
+    image: adminer
+    depends_on:
+      - db
+    ports:
+    - 8080:8080
