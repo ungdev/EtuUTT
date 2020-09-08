@@ -110,7 +110,7 @@ but if they want to connect, you will have to set a password for them.
             /** @var $user ElementToImport */
             foreach ($usersImportIterator as $user) {
                 $newUser = $user->import(false, $bde);
-                if ($newUser instanceof User && $newUser->getDaymail()) {
+                if ($newUser instanceof User && $newUser->getDaymail() && (false !== mb_strpos($newUser->getMail(), '@utt.fr'))) {
                     $sympaCommands .= 'QUIET ADD daymail '.$newUser->getMail().' '.$newUser->getFullName()."\n";
                     $message->setTo($newUser->getMail());
                     $container->get('mailer')->send($message);
