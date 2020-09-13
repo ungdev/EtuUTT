@@ -26,6 +26,7 @@ Lancement du serveur en local
 composer install
 php bin/console doctrine:schema:update --force
 php bin/console doctrine:fixtures:load -n
+php bin/console etu:ue:import
 ```
 5. Rendez-vous sur http://127.0.0.1:8000 pour voir le site (avec l'id user/user ou admin/admin) et sur http://127.0.0.1:8080 pour voir adminer.
 Cela permet d'éviter d'installer nginx et de devoir tout configurer

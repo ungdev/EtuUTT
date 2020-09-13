@@ -112,7 +112,9 @@ This command helps you to import the official UTT UE guide from CSV file.');
                 ->setProjet($this->parseHour($uv['PRJvolume']))
                 ->setStage($this->parseHour($uv['STGvolume']));
 
-            //$em->persist($entity);
+            if ('dev' === $this->getContainer()->getParameter('kernel.environment')) {
+                $em->persist($entity);
+            }
             $entities[] = $entity;
 
             $bar->update($i);
