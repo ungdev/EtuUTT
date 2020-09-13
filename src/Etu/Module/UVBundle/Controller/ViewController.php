@@ -117,8 +117,14 @@ class ViewController extends Controller
                         'type' => 'section',
                         'text' => [
                             'type' => 'mrkdwn',
-                            'text' => 'Vous pouvez également <'.$this->generateUrl('uvs_edit_comment', ['id' => $comment->getId()], UrlGeneratorInterface::ABSOLUTE_URL).
-                                "|éditer ce commentaire> ou ignorer ce message.\nVous pouvez vous rendre sur <".$this->generateUrl('admin_uvs_comments', [], UrlGeneratorInterface::ABSOLUTE_URL)."|sur le panneau d'administration du site etu> pour identifier la personne qui a commenté si elle est anonyme.",
+                            'text' => 'Vous pouvez vous rendre sur <'.$this->generateUrl('admin_uvs_comments', [], UrlGeneratorInterface::ABSOLUTE_URL)."|sur le panneau d'administration du site etu> pour identifier la personne qui a commenté si elle est anonyme. Vous pouvez aussi ignorer ce message.",
+                        ],
+                    ],
+                    [
+                        'type' => 'section',
+                        'text' => [
+                            'type' => 'mrkdwn',
+                            'text' => 'Pensez à mettre un emoji coche pour signaler que vous avez traité ce message.',
                         ],
                     ],
                     [
@@ -249,7 +255,7 @@ class ViewController extends Controller
     public function editUEComment(Request $request, Comment $comment)
     {
         $em = $this->getDoctrine()->getManager();
-        if (($this->getUser() === $comment->getUser() && $this->isGranted('ROLE_UV_REVIEW_POST')) || $this->isGranted('ROLE_UV_REVIEW_ADMIN')) {
+        if ($this->getUser() === $comment->getUser() && $this->isGranted('ROLE_UV_REVIEW_POST')) {
             $commentForm = $this->createFormBuilder($comment)
                 ->add('body', EditorType::class, ['label' => 'uvs.main.view.body'])
                 ->add('isAnonyme', CheckboxType::class, ['label' => 'uvs.main.view.anon', 'required' => false])
@@ -296,8 +302,14 @@ class ViewController extends Controller
                         'type' => 'section',
                         'text' => [
                             'type' => 'mrkdwn',
-                            'text' => 'Vous pouvez également <'.$this->generateUrl('uvs_edit_comment', ['id' => $comment->getId()], UrlGeneratorInterface::ABSOLUTE_URL).
-                                "|éditer ce commentaire> ou ignorer ce message.\nVous pouvez vous rendre sur <".$this->generateUrl('admin_uvs_comments', [], UrlGeneratorInterface::ABSOLUTE_URL)."|sur le panneau d'administration du site etu> pour identifier la personne qui a commenté si elle est anonyme.",
+                            'text' => 'Vous pouvez vous rendre sur <'.$this->generateUrl('admin_uvs_comments', [], UrlGeneratorInterface::ABSOLUTE_URL)."|sur le panneau d'administration du site etu> pour identifier la personne qui a commenté si elle est anonyme. Vous pouvez aussi ignorer ce message.",
+                        ],
+                    ],
+                    [
+                        'type' => 'section',
+                        'text' => [
+                            'type' => 'mrkdwn',
+                            'text' => 'Pensez à mettre un emoji coche pour signaler que vous avez traité ce message.',
                         ],
                     ],
                     [
