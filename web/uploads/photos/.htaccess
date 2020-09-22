@@ -21,11 +21,6 @@ allow from 192.168.0.0/16
     allow from all
 </Files>
 
-<Files "guerreim.png">
-    Order allow,deny
-    allow from all
-</Files>
-
 <Files "d_autumc.png">
     Order allow,deny
     allow from all
@@ -41,27 +36,12 @@ allow from 192.168.0.0/16
     allow from all
 </Files>
 
-<Files "galopint.png">
-    Order allow,deny
-    allow from all
-</Files>
-
 <Files "soulierl.jpg">
     Order allow,deny
     allow from all
 </Files>
 
-<Files "chabanop.jpg">
-    Order allow,deny
-    allow from all
-</Files>
-
 <Files "prouxale.png">
-    Order allow,deny
-    allow from all
-</Files>
-
-<Files "schultzn.jpg">
     Order allow,deny
     allow from all
 </Files>
