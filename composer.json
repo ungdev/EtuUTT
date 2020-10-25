@@ -84,7 +84,8 @@
         "league/csv": "^8.0",
         "ext-json": "*",
         "league/html-to-markdown": "^4.10",
-      "ext-fileinfo": "*"
+      "ext-fileinfo": "*",
+        "sentry/sentry-symfony": "^3.0"
     },
     "repositories": [
         {

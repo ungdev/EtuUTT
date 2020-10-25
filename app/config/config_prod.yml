@@ -7,6 +7,9 @@ imports:
 #        result_cache_driver: apc
 #        query_cache_driver: apc
 
+sentry:
+    dsn: "%env(ETUUTT_SENTRY_DSN)%"
+
 monolog:
     handlers:
         main:
