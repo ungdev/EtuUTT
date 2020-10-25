@@ -9,6 +9,11 @@ imports:
 
 sentry:
     dsn: "%env(ETUUTT_SENTRY_DSN)%"
+    options:
+        environment: '%kernel.environment%'
+        excluded_exceptions: #exclude validation errors
+            - App\Exception\UserNotFoundException
+            - Symfony\Component\Security\Core\Exception\AccessDeniedException
 
 monolog:
     handlers:
