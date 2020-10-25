@@ -65,6 +65,8 @@ class AppKernel extends EtuKernel
 
             // Push Notifications for mobile app
             new Solvecrew\ExpoNotificationsBundle\SCExpoNotificationsBundle(),
+
+            new Sentry\SentryBundle\SentryBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
