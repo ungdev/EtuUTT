@@ -201,13 +201,17 @@ but if they want to connect, you will have to set a password for them.
         }
 
         // Update daymail list
-        $mailer = $this->getContainer()->get('mailer');
-        $output->writeln("Commands sent to sympa to update daymail list: \n".$sympaCommands."\n\n");
-        $message = \Swift_Message::newInstance('Daymail subscription')
-           ->setFrom(['ung@utt.fr' => 'UNG'])
-           ->setTo(['sympa@utt.fr'])
-           ->setBody($sympaCommands);
-        $result = $mailer->send($message);
+        if (!empty($sympaCommands)) {
+            $mailer = $this->getContainer()->get('mailer');
+            $output->writeln("Commands sent to sympa to update daymail list: \n".$sympaCommands."\n\n");
+            $message = \Swift_Message::newInstance('Daymail subscription')
+                ->setFrom(['ung@utt.fr' => 'UNG'])
+                ->setTo(['sympa@utt.fr'])
+                ->setBody($sympaCommands);
+            $result = $mailer->send($message);
+        } else {
+            $output->writeln("No commands to send to sympa to update daymail.\n\n");
+        }
 
         $output->writeln("Done.\n");
     }
