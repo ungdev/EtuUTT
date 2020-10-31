@@ -3,6 +3,7 @@
 namespace Etu\Core\UserBundle\Controller;
 
 use Etu\Core\CoreBundle\Framework\Definition\Controller;
+use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Exception\OrganizationNotAuthorizedException;
 use Etu\Core\UserBundle\Security\Authentication\Token\CasToken;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -76,10 +77,13 @@ class AuthController extends Controller
                 $authToken = $this->get('security.authentication.manager')->authenticate(new CasToken($login));
                 $this->get('security.token_storage')->setToken($authToken);
                 $user = $authToken->getUser();
-                $user->setLastVisitHome(new \DateTime());
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
-                $em->flush();
+                if($user instanceof User)
+                {
+                    $user->setLastVisitHome(new \DateTime());
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($user);
+                    $em->flush();
+                }
             }
         } catch (OrganizationNotAuthorizedException $e) {
             // Organization found on the LDAP, but not authorized by an admin
