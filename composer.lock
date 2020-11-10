@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "da2c95b6a09fe190b77d06c79e0d8f16",
+    "content-hash": "88f74ae0fb8296ac775e5a9b00318d98",
     "packages": [
         {
             "name": "artgris/filemanager-bundle",
@@ -2430,6 +2430,7 @@
                 "reflection",
                 "static"
             ],
+            "abandoned": "roave/better-reflection",
             "time": "2020-03-27T11:06:43+00:00"
         },
         {
@@ -2742,7 +2743,7 @@
                     "homepage": "https://github.com/friendsofsymfony/FOSJsRoutingBundle/contributors"
                 },
                 {
-                    "name": "William Durand",
+                    "name": "William DURAND",
                     "email": "william.durand1@gmail.com"
                 }
             ],
@@ -2803,6 +2804,7 @@
                 "faker",
                 "fixtures"
             ],
+            "abandoned": true,
             "time": "2019-12-12T13:22:17+00:00"
         },
         {
@@ -5453,26 +5455,83 @@
             "time": "2020-01-27T05:09:17+00:00"
         },
         {
-            "name": "sabre/vobject",
-            "version": "3.5.3",
+            "name": "sabre/uri",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/sabre-io/vobject.git",
-                "reference": "129d80533a9ec0d9cacfb50b51180c34edb6874c"
+                "url": "https://github.com/sabre-io/uri.git",
+                "reference": "f502edffafea8d746825bd5f0b923a60fd2715ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sabre-io/vobject/zipball/129d80533a9ec0d9cacfb50b51180c34edb6874c",
-                "reference": "129d80533a9ec0d9cacfb50b51180c34edb6874c",
+                "url": "https://api.github.com/repos/sabre-io/uri/zipball/f502edffafea8d746825bd5f0b923a60fd2715ff",
+                "reference": "f502edffafea8d746825bd5f0b923a60fd2715ff",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1 || ^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~2.16.1",
+                "phpstan/phpstan": "^0.12",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "lib/functions.php"
+                ],
+                "psr-4": {
+                    "Sabre\\Uri\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Evert Pot",
+                    "email": "me@evertpot.com",
+                    "homepage": "http://evertpot.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Functions for making sense out of URIs.",
+            "homepage": "http://sabre.io/uri/",
+            "keywords": [
+                "rfc3986",
+                "uri",
+                "url"
+            ],
+            "time": "2020-10-03T10:33:23+00:00"
+        },
+        {
+            "name": "sabre/vobject",
+            "version": "4.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sabre-io/vobject.git",
+                "reference": "58f9f9b46a1080c0130bd86f4df9a568aacb9c79"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sabre-io/vobject/zipball/58f9f9b46a1080c0130bd86f4df9a568aacb9c79",
+                "reference": "58f9f9b46a1080c0130bd86f4df9a568aacb9c79",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
-                "php": ">=5.3.1"
+                "php": "^7.1 || ^8.0",
+                "sabre/xml": "^2.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "*",
-                "squizlabs/php_codesniffer": "*"
+                "friendsofphp/php-cs-fixer": "~2.16.7",
+                "phpstan/phpstan": "^0.12",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.0"
+            },
+            "suggest": {
+                "hoa/bench": "If you would like to run the benchmark scripts"
             },
             "bin": [
                 "bin/vobject",
@@ -5481,7 +5540,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.2.x-dev"
+                    "dev-master": "4.0.x-dev"
                 }
             },
             "autoload": {
@@ -5505,18 +5564,109 @@
                     "email": "dominik@fruux.com",
                     "homepage": "http://tobschall.de/",
                     "role": "Developer"
+                },
+                {
+                    "name": "Ivan Enderlin",
+                    "email": "ivan.enderlin@hoa-project.net",
+                    "homepage": "http://mnt.io/",
+                    "role": "Developer"
                 }
             ],
             "description": "The VObject library for PHP allows you to easily parse and manipulate iCalendar and vCard objects",
             "homepage": "http://sabre.io/vobject/",
             "keywords": [
-                "VObject",
+                "availability",
+                "freebusy",
                 "iCalendar",
+                "ical",
+                "ics",
                 "jCal",
                 "jCard",
-                "vCard"
+                "recurrence",
+                "rfc2425",
+                "rfc2426",
+                "rfc2739",
+                "rfc4770",
+                "rfc5545",
+                "rfc5546",
+                "rfc6321",
+                "rfc6350",
+                "rfc6351",
+                "rfc6474",
+                "rfc6638",
+                "rfc6715",
+                "rfc6868",
+                "vCalendar",
+                "vCard",
+                "vcf",
+                "xCal",
+                "xCard"
             ],
-            "time": "2016-10-07T03:20:40+00:00"
+            "time": "2020-11-09T04:31:38+00:00"
+        },
+        {
+            "name": "sabre/xml",
+            "version": "2.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sabre-io/xml.git",
+                "reference": "c3b959f821c19b36952ec4a595edd695c216bfc6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sabre-io/xml/zipball/c3b959f821c19b36952ec4a595edd695c216bfc6",
+                "reference": "c3b959f821c19b36952ec4a595edd695c216bfc6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-xmlreader": "*",
+                "ext-xmlwriter": "*",
+                "lib-libxml": ">=2.6.20",
+                "php": "^7.1 || ^8.0",
+                "sabre/uri": ">=1.0,<3.0.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~2.16.1",
+                "phpstan/phpstan": "^0.12",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sabre\\Xml\\": "lib/"
+                },
+                "files": [
+                    "lib/Deserializer/functions.php",
+                    "lib/Serializer/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Evert Pot",
+                    "email": "me@evertpot.com",
+                    "homepage": "http://evertpot.com/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Markus Staab",
+                    "email": "markus.staab@redaxo.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "sabre/xml is an XML library that you may not hate.",
+            "homepage": "https://sabre.io/xml/",
+            "keywords": [
+                "XMLReader",
+                "XMLWriter",
+                "dom",
+                "xml"
+            ],
+            "time": "2020-10-03T10:08:14+00:00"
         },
         {
             "name": "sensio/distribution-bundle",
