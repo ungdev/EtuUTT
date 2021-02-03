@@ -135,7 +135,7 @@ class Review
             $semesters['A'.$i] = 'A'.$i;
         }
 
-        if (User::currentSemester() == 'P'.date('Y')) {
+        if (User::currentSemester() == 'P'.date('Y') || User::currentSemester() == 'A'.((int)date('Y')-1) ) {
             unset($semesters['A'.date('Y')]);
         }
 
