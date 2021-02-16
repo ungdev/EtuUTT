@@ -17,7 +17,7 @@ class SearchMapper
             ->leftJoin('c.subscriptions', 's');
 
         if (!$search->olds) {
-            $qb->andWhere('c.date > CURRENT_DATE()');
+            $qb->andWhere('c.date >= CURRENT_DATE()');
         }
 
         if ($search->startCity) {
