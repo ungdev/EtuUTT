@@ -292,9 +292,6 @@ class PrivateController extends Controller
             $covoit->getStartCity();
             $covoit->getEndCity();
 
-            $em->remove($covoit);
-            $em->flush();
-
             $notif = new Notification();
 
             $notif
@@ -307,6 +304,8 @@ class PrivateController extends Controller
 
             $this->getNotificationsSender()->send($notif);
 
+            $em->remove($covoit);
+            $em->flush();
             // Flash message
             $this->get('session')->getFlashBag()->set('message', [
                 'type' => 'success',
