@@ -44,13 +44,13 @@ class NewOpenedHelper implements HelperInterface
     public function renderMobile(Notification $notification)
     {
         if (1 == $notification->countEntities()) {
-            return ['title' => 'Nouveau bug de '.$notification->getFirstEntity()->getUser()->getFullName().'.', 'message' => $notification->getTitle()];
+            return ['title' => 'Nouveau bug de '.$notification->getFirstEntity()->getUser()->getFullName().'.', 'message' => $notification->getFirstEntity()->getTitle()];
         } elseif (2 == $notification->countEntities()) {
-            return ['title' => 'Nouveau bug de '.$notification->getFirstEntity()->getUser()->getFullName().' et '.$notification->getEntities()[1]->getUser()->getFullName().'.', 'message' => $notification->getTitle()];
+            return ['title' => 'Nouveau bug de '.$notification->getFirstEntity()->getUser()->getFullName().' et '.$notification->getEntities()[1]->getUser()->getFullName().'.', 'message' => $notification->getFirstEntity()->getTitle()];
         } elseif (3 == $notification->countEntities()) {
-            return ['title' => 'Nouveau bug de '.$notification->getFirstEntity()->getUser()->getFullName().', '.$notification->getEntities()[1]->getUser()->getFullName().' et 1 autre personne', 'message' => $notification->getTitle()];
+            return ['title' => 'Nouveau bug de '.$notification->getFirstEntity()->getUser()->getFullName().', '.$notification->getEntities()[1]->getUser()->getFullName().' et 1 autre personne', 'message' => $notification->getFirstEntity()->getTitle()];
         }
 
-        return ['title' => 'Nouveau bug de '.$notification->getFirstEntity()->getUser()->getFullName().', '.$notification->getEntities()[1]->getUser()->getFullName().' et '.($notification->countEntities() - 2).' autres personnes', 'message' => $notification->getTitle()];
+        return ['title' => 'Nouveau bug de '.$notification->getFirstEntity()->getUser()->getFullName().', '.$notification->getEntities()[1]->getUser()->getFullName().' et '.($notification->countEntities() - 2).' autres personnes', 'message' => $notification->getFirstEntity()->getTitle()];
     }
 }
