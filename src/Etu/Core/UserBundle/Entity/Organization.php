@@ -562,7 +562,16 @@ class Organization implements UserInterface, \Serializable
      */
     public function getPresident()
     {
-        return $this->president;
+        $presidents = [];
+        foreach ($this->memberships as $member) {
+            if (Member::ROLE_PRESIDENT == $member->getRole()) {
+                if ('Bureau' == $member->getGroup()->getName()) {
+                    $presidents[] = $member->getUser();
+                }
+            }
+        }
+        return $presidents[0] ? $presidents[0] : NULL;
+        //return $this->president;
     }
 
     /**
