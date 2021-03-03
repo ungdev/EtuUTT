@@ -570,7 +570,7 @@ class Organization implements UserInterface, \Serializable
                 }
             }
         }
-        return $presidents[0] ? $presidents[0] : NULL;
+        return count($presidents) > 0 ? $presidents[0] : NULL;
         //return $this->president;
     }
 
