@@ -389,7 +389,7 @@ class OrgaController extends Controller
         $slugToDelete = $group->getSlug();
 
         $em->remove($group);
-        $em->persist();
+        $em->flush();
 
         $ipa = $this->get('etu.sia.ldap');
         $ipa->deleteGroup($slugToDelete);
