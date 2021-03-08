@@ -47,7 +47,7 @@
             </p>
         </div>
         {% for group in groups %}
-        <h4>{{ group.name }} <a href="{{ url('orga_admin_group_edit', { slug: group.slug}) }}"><i class="icon-edit"></i></a></h4>
+        <h4>{{ group.name }} <a href="{{ url('orga_admin_group_edit', { slug: group.slug}) }}"><i class="icon-edit"></i></a>{% if group.name != "Bureau" and group.name != "Membres" %} <a href="{{ url('orga_admin_group_delete', { slug: group.slug}) }}"><i class="icon-remove"></i></a>{% endif %}</h4>
             {% if group.members.count > 0 %}
         <ul id="search-results" class="asso-members">
             {% for member in group.members %}

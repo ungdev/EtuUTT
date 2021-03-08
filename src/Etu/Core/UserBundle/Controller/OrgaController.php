@@ -287,6 +287,11 @@ class OrgaController extends Controller
             throw $this->createNotFoundException('Group not found');
         }
 
+        if(!$this->getUser()->getIsOrga() && $group->getOrganization()->getId() !== $this->getUser()->getId())
+        {
+            throw $this->createAccessDeniedException("Bien tenté jeune padawan... - Autorisation d'accès au groupe refusée");
+        }
+
         /**
          * GROUP EDITION.
          */
@@ -340,6 +345,62 @@ class OrgaController extends Controller
             'group' => $group,
             'user' => $this->getUser(),
         ];
+    }
+
+    /**
+     * @Route("/orga/group/{slug}/delete", name="orga_admin_group_delete")
+     *
+     * @param mixed $slug
+     */
+    public function groupDeleteAction($slug, Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ORGA');
+
+        /** @var $em EntityManager */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var $group OrganizationGroup */
+        $group = $em->createQueryBuilder()
+            ->select('o')
+            ->from('EtuUserBundle:OrganizationGroup', 'o')
+            ->where('o.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if ( !$group) {
+            throw $this->createNotFoundException('Group not found');
+        }
+
+        if ( !$this->getUser()->getIsOrga() && $group->getOrganization()->getId() !== $this->getUser()->getId()) {
+            throw $this->createAccessDeniedException("Bien tenté jeune padawan... - Autorisation d'accès au groupe refusée");
+        }
+
+        if($group->getName() === "Bureau" || $group->getName() === "Membres") {
+            $this->get('session')->getFlashBag()->set('message', [
+                'type' => 'danger',
+                'message' => 'Vous ne pouvez pas supprimer le groupe bureau ou membres !',
+            ]);
+
+            return $this->redirectToRoute('orga_admin_group_edit', ['slug' => $group->getSlug()]);
+        }
+
+        $slugToDelete = $group->getSlug();
+
+        $em->remove($group);
+        $em->persist();
+
+        $ipa = $this->get('etu.sia.ldap');
+        $ipa->deleteGroup($slugToDelete);
+
+        $this->get('session')->getFlashBag()->set('message', [
+            'type' => 'success',
+            'message' => 'Vous avez supprimé le groupe '.$slugToDelete,
+        ]);
+
+        return $this->redirectToRoute('orga_admin_members');
+
     }
 
     /**

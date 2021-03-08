@@ -84,6 +84,12 @@ class LdapManager
         return $this->map(get_object_vars($infos[0]));
     }
 
+    public function deleteGroup($slug) {
+        $this->connect();
+        $this->getConnection()->group()->del($slug);
+
+    }
+
     /**
      * @param $studentId
      *
