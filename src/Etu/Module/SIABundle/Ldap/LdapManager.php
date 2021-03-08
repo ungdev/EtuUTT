@@ -38,7 +38,7 @@ class LdapManager
         $this->user = $user;
         $this->user_password = $pass;
         $this->ldap = ldap_connect($host, 389);
-        ldap_bind($this->ldap, $user, $pass);
+        ldap_bind($this->ldap, "uid=".$user.",cn=users,cn=accounts,dc=uttnetgroup,dc=net", $pass);
     }
 
     /**
