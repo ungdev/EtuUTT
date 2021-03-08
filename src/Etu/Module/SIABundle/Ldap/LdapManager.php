@@ -16,6 +16,7 @@ class LdapManager
     protected $kernel;
     protected $user;
     protected $user_password;
+    private $ldap;
     public $logs;
 
     /**
@@ -36,6 +37,8 @@ class LdapManager
         $this->logs = [];
         $this->user = $user;
         $this->user_password = $pass;
+        $this->ldap = ldap_connect($host, 389);
+        ldap_bind($this->ldap, $user, $pass);
     }
 
     /**
@@ -87,7 +90,8 @@ class LdapManager
     public function deleteGroup($slug) {
         //$this->connect();
         //$this->connection->group()->del("cn=".$slug.",cn=groups,cn=accounts,dc=uttnetgroup,dc=net");
-        $this->getConnection()->group()->del($slug);
+        //$this->getConnection()->group()->del($slug);
+        ldap_delete($this->ldap, "cn=".$slug.",cn=groups,cn=accounts,dc=uttnetgroup,dc=net");
     }
 
     /**

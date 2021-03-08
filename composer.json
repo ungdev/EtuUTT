@@ -85,7 +85,8 @@
         "ext-json": "*",
         "league/html-to-markdown": "^4.10",
       "ext-fileinfo": "*",
-        "sentry/sentry-symfony": "^3.0"
+        "sentry/sentry-symfony": "^3.0",
+      "ext-ldap": "*"
     },
     "repositories": [
         {
