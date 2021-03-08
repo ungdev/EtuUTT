@@ -86,7 +86,7 @@ class LdapManager
 
     public function deleteGroup($slug) {
         $this->connect();
-        $this->getConnection()->group()->del($slug);
+        $this->connection->group()->del($slug);
 
     }
 
