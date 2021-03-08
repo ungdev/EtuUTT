@@ -391,8 +391,13 @@ class OrgaController extends Controller
         $em->remove($group);
         $em->flush();
 
-        $ipa = $this->get('etu.sia.ldap');
-        $ipa->deleteGroup($slugToDelete);
+        try {
+            $ipa = $this->get('etu.sia.ldap');
+            $ipa->deleteGroup($slugToDelete);
+        } catch (\Exception $e) {
+            $logger = $this->get('logger');
+            $logger->error('IPA Group deletion fail: '.$e->getMessage());
+        }
 
         $this->get('session')->getFlashBag()->set('message', [
             'type' => 'success',
