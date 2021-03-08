@@ -85,8 +85,9 @@ class LdapManager
     }
 
     public function deleteGroup($slug) {
-        $this->connect();
-        $this->connection->group()->del("cn=".$slug.",cn=groups,cn=accounts,dc=uttnetgroup,dc=net");
+        //$this->connect();
+        //$this->connection->group()->del("cn=".$slug.",cn=groups,cn=accounts,dc=uttnetgroup,dc=net");
+        $this->getConnection()->group()->del($slug);
     }
 
     /**
