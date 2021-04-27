@@ -186,6 +186,9 @@ class ProfileController extends Controller
                 'label' => 'user.profile.profileEdit.birthday',
             ])
             ->add('birthdayPrivacy', ChoiceType::class, $privacyChoice)
+            ->add('wantsJoinUTTDiscord', CheckboxType::class, ['required' => false, 'label' => 'user.profile.profileEdit.wantsJoinUTTDiscord'])
+            ->add('discordTag', null, ["required"=>false, 'label'=>'user.profile.profile.discord'])
+            ->add('discordTagPrivacy', ChoiceType::class, $privacyChoice)
             ->add('birthdayDisplayOnlyAge', null, [
                 'required' => false,
                 'label' => 'user.profile.profileEdit.birthdayOnlyAge.label',
@@ -223,6 +226,9 @@ class ProfileController extends Controller
                 } else {
                     $user->setIsKeepingAccount(false);
                 }
+            }
+            if($user->wantsJoinUTTDiscord && !$user->getDiscordTag()) {
+                $user->setWantsJoinUTTDiscord(false);
             }
 
             $em->persist($user);
