@@ -305,6 +305,8 @@ user:
             personnalMail: E-mail perso.
             phoneNumber: Numéro de tél.
             address: Adresse
+            discord: Tag discord
+            wantsJoinUTTDiscord: Veut rejoindre le discord UTT
             birthday: Date de naissance
             age: "%age% ans"
             schedule: Emploi du temps

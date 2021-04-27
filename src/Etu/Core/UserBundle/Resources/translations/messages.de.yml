@@ -247,6 +247,7 @@ user:
             completion: Ihr Profil ist nicht vollständig. Vollständig ausfüllen um einen Pin zu gewinnen !
             viewPublic: Mein Öffentliches Profil sehen
             informations: Meine Informationen
+            discord: Discord
             unknown: Unbekannt
             name: Name
             mail: E-mail Adresse

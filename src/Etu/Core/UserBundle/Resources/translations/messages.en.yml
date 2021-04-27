@@ -157,6 +157,8 @@ user:
             completion: Your profile has been completed up to %completion% %. Complete your prorfile to get a badge !
             viewPublic: Show my public profile
             informations: About me
+            discord: Discord tag
+            wantsJoinUTTDiscord: Wants to join UTT Discord
             name: Name
             mail: E-mail
             sex: Sex

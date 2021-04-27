@@ -213,6 +213,26 @@
                     </div>
                 {% endif %}
 
+                {% if is_public(user.discordTagPrivacy) and user.discordTag %}
+                    <div class="view-group">
+                        <div class="view-label">{{ 'user.profile.profile.discord'|trans }}</div>
+                        <div class="view-value">
+                            {{ user.discordTag }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="view-group">
+                    <div class="view-label">{{ 'user.profile.profile.wantsJoinUTTDiscord'|trans }}</div>
+                    <div class="view-value">
+                        {% if user.wantsJoinUTTDiscord %}
+                        {{ 'user.profile.profile.daymail_yes'|trans }}
+                        {% else %}
+                        {{ 'user.profile.profile.daymail_no'|trans }}
+                        {% endif %}
+                    </div>
+                </div>
+
                 {% if is_public(user.personnalMailPrivacy) and user.personnalMail %}
                     <div class="view-group">
                         <div class="view-icon"><i class="icon-envelope"></i></div>
