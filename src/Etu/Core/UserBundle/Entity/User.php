@@ -649,6 +649,31 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     protected $schedulePrivacy;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=100, nullable=true)
+     * @Assert\Regex(
+     *      pattern = "/^.*#[0-9]{4}$/",
+     *      message = "user.validation.discordTag"
+     * )
+     */
+    protected $discordTag;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @var bool
+     */
+    public $wantsJoinUTTDiscord;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     */
+    protected $discordTagPrivacy;
+
     /*
      * Methods
      */
@@ -672,7 +697,9 @@ class User implements UserInterface, EquatableInterface, \Serializable
         $this->countryPrivacy = self::PRIVACY_PUBLIC;
         $this->birthdayPrivacy = self::PRIVACY_PUBLIC;
         $this->schedulePrivacy = self::PRIVACY_PUBLIC;
+        $this->discordTagPrivacy = self::PRIVACY_PUBLIC;
         $this->isKeepingAccount = false;
+        $this->wantsJoinUTTDiscord = false;
         $this->isDeletingEverything = false;
         $this->birthdayDisplayOnlyAge = false;
         $this->personnalMailPrivacy = self::PRIVACY_PUBLIC;
@@ -2799,6 +2826,43 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public function setSchedulePrivacy(int $schedulePrivacy)
     {
         $this->schedulePrivacy = $schedulePrivacy;
+
+        return $this;
+    }
+
+
+    public function setDiscordTag(string $discordTag)
+    {
+        $this->discordTag = $discordTag;
+
+        return $this;
+    }
+
+    public function getDiscordTag()
+    {
+        return $this->discordTag;
+    }
+
+    public function getDiscordTagPrivacy(): int
+    {
+        return $this->discordTagPrivacy;
+    }
+
+    public function setDiscordTagPrivacy(int $discordTagPrivacy)
+    {
+        $this->discordTagPrivacy = $discordTagPrivacy;
+
+        return $this;
+    }
+
+    public function getWantsJoinUTTDiscord(): bool
+    {
+        return $this->wantsJoinUTTDiscord;
+    }
+
+    public function setWantsJoinUTTDiscord(bool $wantsJoinUTTDiscord)
+    {
+        $this->wantsJoinUTTDiscord = $wantsJoinUTTDiscord;
 
         return $this;
     }

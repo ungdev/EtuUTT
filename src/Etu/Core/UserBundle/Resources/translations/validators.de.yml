@@ -2,6 +2,7 @@
 user:
     validation:
         phoneNumber: Die Telefonnummer ist nicht gültig
+        discordTag: Die Discord Tag ist nicht gültig / user#1234
         firstname:
             length_min: Der Vorname muss minimum {{ limit }} Charakter enthalten
             length_max: Der Vorname muss maximum {{ limit }} Charakter enthalten
