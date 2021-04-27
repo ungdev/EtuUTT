@@ -57,6 +57,8 @@ class UserTransformer extends AbstractTransformer
             'postalCode' => User::PRIVACY_PUBLIC == $user->getPostalCodePrivacy() ? $user->getPostalCode() : null,
             'city' => User::PRIVACY_PUBLIC == $user->getCityPrivacy() ? $user->getCity() : null,
             'sex' => User::PRIVACY_PUBLIC == $user->getSexPrivacy() ? $user->getSex() : null,
+            'discordTag' => User::PRIVACY_PUBLIC == $user->getDiscordTagPrivacy() ? $user->getDiscordTag() : null,
+            'wantsJoinUTTDiscord' => $user->getWantsJoinUTTDiscord(),
             'formation' => $user->getFormation(),
             'branch' => $user->getBranch(),
             'level' => $user->getNiveau(),

@@ -18,6 +18,11 @@ class UserListMapper implements QueryMapper
                 ->setParameter('firstname', '%'.$request->get('firstname').'%');
         }
 
+        if ($request->has('wantsJoinUTTDiscord')) {
+            $query->andWhere('u.wantsJoinUTTDiscord = :wantsJoinUTTDiscord')
+                ->setParameter('wantsJoinUTTDiscord', (bool) $request->get('wantsJoinUTTDiscord'));
+        }
+
         if ($request->has('login')) {
             $query->andWhere('u.login = :login')
                 ->setParameter('login', $request->get('login'));

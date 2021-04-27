@@ -32,6 +32,7 @@ class PublicUsersListController extends ApiController
      *      { "name"="level",           "dataType"="string"     },
      *      { "name"="speciality",      "dataType"="string"     },
      *      { "name"="is_student",      "dataType"="boolean"    },
+     *      { "name"="wantsJoinUTTDiscord",      "dataType"="boolean"    },
      *      { "name"="bde_member",      "dataType"="boolean"    },
      *      { "name"="student_id",      "dataType"="integer"    },
      *      { "name"="multifield",      "dataType"="string", "description"="Search between firstname, lastname, fullname, login, student_id, nickname, and emails"     }
