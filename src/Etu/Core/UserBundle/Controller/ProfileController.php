@@ -227,7 +227,7 @@ class ProfileController extends Controller
                     $user->setIsKeepingAccount(false);
                 }
             }
-            if($user->wantsJoinUTTDiscord && !$user->getDiscordTag()) {
+            if($user->wantsJoinUTTDiscord && (!$user->getDiscordTag() || $user->getDiscordTagPrivacy() === $user::PRIVACY_PRIVATE)) {
                 $user->setWantsJoinUTTDiscord(false);
             }
 

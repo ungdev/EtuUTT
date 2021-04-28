@@ -184,7 +184,7 @@ user:
             edit: Edit
         profileEdit:
             privacy: Privacy
-            wantsJoinUTTDiscord: Check this box to ask the sync to the UTT Discord. Join it with the link above and fill in your discord tag before checking this box.
+            wantsJoinUTTDiscord: Check this box to ask the sync to the UTT Discord. Join it with the link above and fill in your discord tag publicly before checking this box.
             title: Edit About Me
             confirm: You have successfully edited About Me
             back: Back to my account
