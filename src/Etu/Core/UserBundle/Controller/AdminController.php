@@ -257,6 +257,8 @@ class AdminController extends Controller
      */
     public function userRolesListAction()
     {
+
+        $this->denyAccessUnlessGranted('ROLE_USER');
         /** @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
 
