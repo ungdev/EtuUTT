@@ -44,6 +44,7 @@ class OrgaTransformer extends AbstractTransformer
             'name' => $orga->getName(),
             'mail' => $orga->getContactMail(),
             'phone' => $orga->getContactPhone(),
+            'presidentWanted' => $orga->getPresidentWanted(),
             'description' => $orga->getDescription(),
             'descriptionShort' => $orga->getDescriptionShort(),
             'website' => $orga->getWebsite(),

@@ -26,6 +26,7 @@ class OrgaListTransformer extends AbstractTransformer
         return [
             'login' => $orga->getLogin(),
             'name' => $orga->getName(),
+            'presidentWanted' => $orga->getPresidentWanted(),
             'descriptionShort' => $orga->getDescriptionShort(),
         ];
     }
