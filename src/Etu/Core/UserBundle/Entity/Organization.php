@@ -153,6 +153,13 @@ class Organization implements UserInterface, \Serializable
     protected $memberships;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $presidentWanted;
+
+    /**
      * @var OrganizationGroup[]
      *
      * @ORM\OneToMany(targetEntity="\Etu\Core\UserBundle\Entity\OrganizationGroup", mappedBy="organization", cascade={"persist", "remove"})
@@ -193,6 +200,7 @@ class Organization implements UserInterface, \Serializable
         $this->logo = 'default-logo.png';
         $this->countMembers = 0;
         $this->testingContext = false;
+        $this->presidentWanted = false;
         $this->createdAt = new \DateTime();
     }
 
@@ -277,6 +285,30 @@ class Organization implements UserInterface, \Serializable
     public function getIsStudent()
     {
         return false;
+    }
+
+    /**
+     * Set presidentWanted.
+     *
+     * @param bool $presidentWanted
+     *
+     * @return Organization
+     */
+    public function setPresidentWanted($presidentWanted)
+    {
+        $this->presidentWanted = $presidentWanted;
+
+        return $this;
+    }
+
+    /**
+     * Get presidentWanted.
+     *
+     * @return bool
+     */
+    public function getPresidentWanted()
+    {
+        return $this->presidentWanted;
     }
 
     /**

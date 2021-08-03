@@ -12,6 +12,7 @@ use Etu\Core\UserBundle\Entity\User;
 use Etu\Core\UserBundle\Form\UserAutocompleteType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -62,6 +63,7 @@ class OrgaController extends Controller
         // Classic form
         $form = $this->createFormBuilder($orga)
             ->add('name', TextType::class, ['label' => 'user.orga.index.name.label'])
+            ->add('presidentWanted', CheckboxType::class, ['required' => false, 'label'=>'user.orga.index.presidentWanted.label'])
             ->add('contactMail', EmailType::class, ['label' => 'user.orga.index.contactMail.label'])
             ->add('contactPhone', null, ['required' => false, 'label' => 'user.orga.index.contactPhone.label'])
             ->add('website', null, ['required' => false, 'label' => 'user.orga.index.website.label'])

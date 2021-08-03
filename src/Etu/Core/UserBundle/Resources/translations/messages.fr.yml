@@ -243,6 +243,8 @@ user:
             contactMail:
                 label: E-mail de contact
                 desc: E-mail de contact de l'association
+            presidentWanted:
+                label: Cette association cherche un repreneur
             contactPhone:
                 label: Téléphone de contact
                 desc: Numéro de téléphone de contact de l'association

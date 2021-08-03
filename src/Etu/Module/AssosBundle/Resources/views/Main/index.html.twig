@@ -37,7 +37,9 @@
                     {{ orga.name }}
                 </h5>
 
-                {% if orga.president %}
+                {% if orga.presidentWanted %}
+                    <p class="asso-info">{{ 'assos.main.index.presidentWanted'|trans }}</p>
+                {% elseif orga.president %}
                     <p class="muted asso-info">{{ 'assos.main.index.president'|trans }}: {{ orga.president.fullName }}</p>
                 {% endif %}
 

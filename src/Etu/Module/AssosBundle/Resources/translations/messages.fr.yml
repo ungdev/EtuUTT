@@ -7,6 +7,8 @@ assos:
     index:
       meta: "Découvrez les associations étudiantes de l'UTT !"
       president: Président
+      presidentWanted: Club à reprendre - à voir avec le BDE
+      elusWanted: Poste à reprendre - à voir avec les élus CE
       title: "Les associations"
     members:
       back: "Retour à la liste"
