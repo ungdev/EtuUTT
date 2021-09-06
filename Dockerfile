@@ -2,4 +2,8 @@ FROM larueli/php-base-image:7.1
 
 COPY . /var/www/html
 
-RUN /var/www/html/composer install
+USER 0:0
+
+RUN /var/www/html/composer install && chmod -R g+rwx /var/www/html
+
+USER 875864:0
