@@ -53,10 +53,6 @@ ca.crt
 ############
 /.vagrant
 
-# Composer #
-############
-/composer.phar
-
 # Symfony #
 ###########
 /build/
