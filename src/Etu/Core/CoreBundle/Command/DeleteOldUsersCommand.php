@@ -241,6 +241,21 @@ class DeleteOldUsersCommand extends ContainerAwareCommand
             }
             $em->flush();
         }
+
+        $query = $em->getRepository('EtuModuleDaymailBundle:DaymailPart')
+            ->createQueryBuilder('u')
+            ->setMaxResults($limite)
+            ->getQuery();
+        $elementsInside = $query->getResult();
+        foreach ($elementsInside as $delete) {
+            if (date_diff($delete->getDate(), $dateActuelle, true)->days > 14) {
+                $output->writeln('Deleting Daymail Part '.$delete->getId().' - '.$delete->getTitle());
+                $em->remove($delete);
+                $em->flush();
+            }
+        }
+        $em->flush();
+
         $em->getFilters()->enable('softdeleteable');
     }
 }
