@@ -61,11 +61,13 @@ class ScheduleController extends Controller
             ->andWhere('c.end = :end')
             ->andWhere('c.week = :week')
             ->andWhere('c.room = :room')
+            ->andWhere('c.day = :day')
             ->setParameter('uv', $course->getUv())
             ->setParameter('start', $course->getStart())
             ->setParameter('end', $course->getEnd())
             ->setParameter('week', $course->getWeek())
             ->setParameter('room', $course->getRoom())
+            ->setParameter('day', $course->getDay())
             ->orderBy('u.lastName', 'ASC')
             ->getQuery()
             ->getResult();
