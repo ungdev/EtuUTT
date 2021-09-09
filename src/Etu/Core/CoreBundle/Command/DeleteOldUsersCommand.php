@@ -248,7 +248,7 @@ class DeleteOldUsersCommand extends ContainerAwareCommand
             ->getQuery();
         $elementsInside = $query->getResult();
         foreach ($elementsInside as $delete) {
-            if (date_diff($delete->getDate(), $dateActuelle, true)->days > 14) {
+            if (date_diff($delete->getDate(), $dateActuelle, false)->days > 14) {
                 $output->writeln('Deleting Daymail Part '.$delete->getId().' - '.$delete->getTitle());
                 $em->remove($delete);
                 $em->flush();
