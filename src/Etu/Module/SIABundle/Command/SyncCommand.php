@@ -3,6 +3,7 @@
 namespace Etu\Module\SIABundle\Command;
 
 use Etu\Core\UserBundle\Entity\OrganizationGroup;
+use Etu\Core\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -50,6 +51,9 @@ class SyncCommand extends ContainerAwareCommand
                 preg_match('/^etu:([0-9]+)$/', $match[0], $m);
                 $user->etu_id = $m[1];
                 $ipa_users[$user->uid[0]] = $user;
+                if(!$em->getRepository(User::class)->findOneBy(["id"=>$user->etu_id])) {
+                    $output->writeln($user->cn[0].' should be deleted - no longer on EtuUTT');
+                }
             }
         }
 
