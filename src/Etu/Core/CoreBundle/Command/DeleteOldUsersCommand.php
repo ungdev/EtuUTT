@@ -100,6 +100,10 @@ class DeleteOldUsersCommand extends ContainerAwareCommand
                         $em->persist($thread);
                     }
                     $em->flush();
+                    foreach ($em->getRepository('EtuUserBundle:Member')->findBy(["user"=>$user]) as $member) {
+                        $em->remove($member);
+                    }
+                    $em->flush();
                     foreach ($em->getRepository('EtuModuleForumBundle:Message')->findBy(['author' => $user]) as $message) {
                         $message->setAuthor($deleted_user);
                         $em->persist($message);
