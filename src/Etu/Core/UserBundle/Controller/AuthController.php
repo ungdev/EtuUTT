@@ -43,6 +43,16 @@ class AuthController extends Controller
             }
         }
 
+        // get the login error if there is one
+        $authenticationUtils = $this->get('security.authentication_utils');
+        $error = $authenticationUtils->getLastAuthenticationError();
+        if ($error) {
+            $this->get('session')->getFlashBag()->set('message', [
+                'type' => 'error',
+                'message' => 'user.auth.connect.error',
+            ]);
+        }
+
         // If we can't auto-connect, we ask for the method
         return [];
     }
