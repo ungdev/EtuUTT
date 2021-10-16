@@ -190,12 +190,14 @@ security:
             form_login:
                 login_path: user_connect
                 check_path: user_connect_external
+                failure_path: user_connect_external
                 provider: passwords
             form_login_ldap:
                 service: ldap
                 dn_string: "uid={username},cn=users,cn=accounts,dc=uttnetgroup,dc=net"
                 login_path: user_connect
                 check_path: user_connect_freeipa
+                failure_path: user_connect_freeipa
                 #filter: '(&({uid_key}={username})(carlicense=*etu*))'
             remember_me:
                 secret:   '%secret%'

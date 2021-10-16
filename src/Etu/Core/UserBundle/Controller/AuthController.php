@@ -28,11 +28,6 @@ class AuthController extends Controller
             return $this->redirect($this->generateUrl('homepage'));
         }
 
-        // If we are here because we fail to fill the external login form
-        if (!empty($this->get('security.authentication_utils')->getLastUsername())) {
-            return $this->redirect($this->generateUrl('user_connect_external'));
-        }
-
         // Save login target if we have the precedent page
         if ($this->get('session')->has('etu.last_url')) {
             $this->get('session')->set('etu.login_target', $this->get('session')->get('etu.last_url'));
