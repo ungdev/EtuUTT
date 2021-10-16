@@ -145,6 +145,7 @@ user:
             desc: "Veuillez choisir une méthode d'authentification pour EtuUTT :"
             cas: En utilisant un compte UTT
             external: En utilisant un compte exterieur
+            freeipa: En utilisant un compte SIA
             confirm: Vous êtes bien connecté
             error: La connexion a échoué, vos identifiants semblent incorrects
             unknownError: Une erreur sauvage est apparue, veuillez réessayer.
@@ -161,6 +162,10 @@ user:
             password: Mot de passe
             submit: Connexion
             change: Changer de méthode de connexion
+        connectFreeIPA:
+            title: Connexion via un compte SIA
+            meta: Se connecter au site étudiant via un compte SIA
+            desc: "Connectez-vous en utilisant l'identifiant et le mot de passe de votre compte du Système d'Information des Associations :"
         disconnect:
             confirm: Vous êtes bien déconnecté
 

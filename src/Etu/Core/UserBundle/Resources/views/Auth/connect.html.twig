@@ -21,7 +21,7 @@
             {% endif %}
 
             <div class="content content-connect">
-                <div class="padding20-all">
+                <p class="padding20-all">
                     <p>
                         <strong>
                         Vous pouvez retrouver sur ces liens : <a href="{{ path("page_view", {'slug':'mentions-legales'}) }}">nos mentions légales</a>, notre <a href="{{ path("rgpd") }}">page sur le RGPD (traitement de vos données)</a>, <a href="{{ path("contributors") }}">l'équipe de développeurs</a> ou encore <a href="https://github.com/ungdev/etuutt">les dernières mises à jour du site etu</a>.
@@ -41,6 +41,12 @@
                             <a href="{{ path('user_connect_external') }}">
                                 <img src="{{ asset('assets/img/connect/external.png') }}" /><br />
                                 {{ 'user.auth.connect.external'|trans }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('user_connect_freeipa') }}">
+                                <img src="{{ asset('assets/img/connect/external.png') }}" /><br />
+                                {{ 'user.auth.connect.freeipa'|trans }}
                             </a>
                         </li>
                     </ul>

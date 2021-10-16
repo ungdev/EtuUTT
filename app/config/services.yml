@@ -22,3 +22,16 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
+
+    ldap:
+        class: Symfony\Component\Ldap\Ldap
+        arguments: [ '@ext_ldap_adapter' ]
+    ext_ldap_adapter:
+        class: Symfony\Component\Ldap\Adapter\ExtLdap\Adapter
+        arguments:
+            - host: "%env(ETUUTT_IPA_HOST)%"
+              port: 389
+              encryption: none
+              options:
+                  protocol_version: 3
+                  referrals: false

@@ -98,6 +98,7 @@ user:
             desc: "Please choose an authentification method for EtuUTT"
             cas: With a UTT accountEn utilisant un compte UTT
             external: With a guest account
+            freeipa: with a SIA account
             confirm: You are logged in
             error: Authentification failed, your login / password is incorrect
             loggedOut: Bye !
@@ -109,6 +110,10 @@ user:
             password: Password
             submit: Log in
             change: Change authentification method
+        connectFreeIPA:
+            title: Log in with SIA account
+            meta: Log in with SIA account
+            desc: "Use the login and the password from your Système d'Information des Associations account to log in :"
         disconnect:
             confirm: You have logged out
 

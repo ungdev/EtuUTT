@@ -23,7 +23,7 @@ Lancement du serveur en local
 3. Lancez le tout : `docker-compose up -d`
 4. Connectez-vous dans le container : `docker exec -it etuutt_etuutt_1 bash` puis initiez le site
 ```
-composer install
+./composer install
 php bin/console doctrine:schema:update --force
 php bin/console doctrine:fixtures:load -n
 php bin/console etu:ue:import

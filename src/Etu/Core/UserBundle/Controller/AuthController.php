@@ -148,6 +148,40 @@ class AuthController extends Controller
     }
 
     /**
+     * Show a form to let external user login. If submitted,
+     * authentication_utils will log in the user automatically.
+     * Cannot be used to log organization or user without password.
+     *
+     * @Route("/user/freeipa", name="user_connect_freeipa")
+     * @Template()
+     */
+    public function connectFreeIPAAction()
+    {
+        // Redirect to home if user is already authenticated
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY') || $this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('homepage'));
+        }
+
+        $authenticationUtils = $this->get('security.authentication_utils');
+
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        if ($error) {
+            $this->get('session')->getFlashBag()->set('message', [
+                'type' => 'error',
+                'message' => 'user.auth.connect.error',
+            ]);
+        }
+
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return [
+            'last_username' => $lastUsername,
+        ];
+    }
+
+    /**
      * Redirect user to the right logout way for him : CAS or external.
      *
      * @Route("/user/logout", name="user_logout")

@@ -168,6 +168,14 @@ security:
                 property: login
         every_user:
             id: etu.user.every_user.provider
+        freeipa:
+            ldap:
+                service: ldap
+                base_dn: "cn=users,cn=accounts,dc=uttnetgroup,dc=net"
+                search_dn: "uid=%env(ETUUTT_IPA_USER)%,cn=users,cn=accounts,dc=uttnetgroup,dc=net"
+                search_password: "%env(ETUUTT_IPA_PASSWORD)%"
+                default_roles: ROLE_USER
+                uid_key: uid
 
     firewalls:
         default:
@@ -183,6 +191,12 @@ security:
                 login_path: user_connect
                 check_path: user_connect_external
                 provider: passwords
+            form_login_ldap:
+                service: ldap
+                dn_string: "uid={username},cn=users,cn=accounts,dc=uttnetgroup,dc=net"
+                login_path: user_connect
+                check_path: user_connect_freeipa
+                #filter: '(&({uid_key}={username})(carlicense=*etu*))'
             remember_me:
                 secret:   '%secret%'
                 lifetime: 604800 # 1 week in seconds
