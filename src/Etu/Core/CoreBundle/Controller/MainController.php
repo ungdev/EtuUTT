@@ -142,7 +142,7 @@ class MainController extends Controller
 
         $url = $request->server->get('HTTP_REFERER');
 
-        $this->get('session')->getFlashBag()->set('message', [
+        $this->get('session')->getFlashBag()->add('message', [
             'type' => 'success',
             'message' => 'core.main.changeLocale.confirm',
         ]);

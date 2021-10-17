@@ -77,10 +77,8 @@ class OrgaController extends Controller
             $em->persist($orga);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'success',
-                'message' => 'user.orga.index.confirm',
-            ]);
+            $this->addFlash('success',
+                'user.orga.index.confirm');
 
             return $this->redirect($this->generateUrl('orga_admin'));
         }
@@ -124,10 +122,8 @@ class OrgaController extends Controller
             $em->persist($orga);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'success',
-                'message' => 'user.orga.avatar.confirm',
-            ]);
+            $this->addFlash('success',
+                'user.orga.avatar.confirm');
 
             return $this->redirect($this->generateUrl('orga_admin'));
         }
@@ -196,10 +192,8 @@ class OrgaController extends Controller
                 ->getOneOrNullResult();
 
             if (!$user) {
-                $this->get('session')->getFlashBag()->set('message', [
-                    'type' => 'error',
-                    'message' => 'user.orga.members.error_user_not_fount',
-                ]);
+                $this->addFlash('error',
+                    'user.orga.members.error_user_not_found');
             } else {
                 $member->setUser($user);
 
@@ -222,15 +216,11 @@ class OrgaController extends Controller
                     $em->persist($member);
                     $em->flush();
 
-                    $this->get('session')->getFlashBag()->set('message', [
-                        'type' => 'success',
-                        'message' => 'user.orga.members.confirm_add',
-                    ]);
+                    $this->addFlash('success',
+                        'user.orga.members.confirm_add');
                 } else {
-                    $this->get('session')->getFlashBag()->set('message', [
-                        'type' => 'error',
-                        'message' => 'user.orga.members.error_exists',
-                    ]);
+                    $this->addFlash('error',
+                        'user.orga.members.error_exists');
                 }
             }
 
@@ -244,10 +234,8 @@ class OrgaController extends Controller
             $em->persist($orgaGroup);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'success',
-                'message' => 'Groupe créer !',
-            ]);
+            $this->addFlash('success',
+                'Groupe créé !');
 
             return $this->redirect($this->generateUrl(
                 'orga_admin_group_edit', ['slug' => $orgaGroup->getSlug()]
@@ -307,10 +295,8 @@ class OrgaController extends Controller
 
         $groupEditForm->handleRequest($request);
         if ($groupEditForm->isSubmitted() && $groupEditForm->isValid()) {
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'success',
-                'message' => 'Groupe édité !',
-            ]);
+            $this->addFlash('success',
+                'Groupe édité !');
             $em->persist($group);
             $em->flush();
         }
@@ -333,10 +319,8 @@ class OrgaController extends Controller
             $em->persist($mailistAction);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'success',
-                'message' => 'Ajout de la souscription automatique reussit !',
-            ]);
+            $this->addFlash('success',
+                'Ajout de la souscription automatique reussi !');
 
             return $this->redirectToRoute('orga_admin_group_edit', ['slug' => $group->getSlug()]);
         }
@@ -380,10 +364,8 @@ class OrgaController extends Controller
         }
 
         if($group->getName() === "Bureau" || $group->getName() === "Membres") {
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'danger',
-                'message' => 'Vous ne pouvez pas supprimer le groupe bureau ou membres !',
-            ]);
+            $this->addFlash('danger',
+                'Vous ne pouvez pas supprimer le groupe bureau ou membres !');
 
             return $this->redirectToRoute('orga_admin_group_edit', ['slug' => $group->getSlug()]);
         }
@@ -401,10 +383,8 @@ class OrgaController extends Controller
             $logger->error('IPA Group deletion fail: '.$e->getMessage());
         }
 
-        $this->get('session')->getFlashBag()->set('message', [
-            'type' => 'success',
-            'message' => 'Vous avez supprimé le groupe '.$slugToDelete,
-        ]);
+        $this->addFlash('success',
+            'Vous avez supprimé le groupe '.$slugToDelete);
 
         return $this->redirectToRoute('orga_admin_members');
 
@@ -434,10 +414,8 @@ class OrgaController extends Controller
         $em->remove($action);
         $em->flush();
 
-        $this->get('session')->getFlashBag()->set('message', [
-            'type' => 'success',
-            'message' => 'Action supprimé !',
-        ]);
+        $this->addFlash('success',
+           'Action supprimé !');
 
         return $this->redirectToRoute('orga_admin_group_edit', ['slug' => $action->getGroup()->getSlug()]);
     }
@@ -545,10 +523,8 @@ class OrgaController extends Controller
             $em->persist($member);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'success',
-                'message' => 'user.orga.memberEdit.confirm',
-            ]);
+            $this->addFlash('success',
+               'user.orga.memberEdit.confirm');
 
             return $this->redirect($this->generateUrl(
                 'orga_admin_members_edit', ['login' => $member->getUser()->getLogin()]
@@ -603,10 +579,8 @@ class OrgaController extends Controller
             $em->remove($member);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'success',
-                'message' => 'user.orga.memberDelete.confirm',
-            ]);
+            $this->addFlash('success',
+               'user.orga.memberDelete.confirm');
 
             return $this->redirect($this->generateUrl('orga_admin_members'));
         }

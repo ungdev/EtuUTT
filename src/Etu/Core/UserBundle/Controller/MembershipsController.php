@@ -170,10 +170,8 @@ class MembershipsController extends Controller
             $em->persist($orga);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'success',
-                'message' => 'user.memberships.desc.confirm',
-            ]);
+            $this->addFlash('success',
+                'user.memberships.desc.confirm');
 
             return $this->redirect($this->generateUrl('memberships_orga_desc', ['login' => $login]));
         }
@@ -356,10 +354,8 @@ class MembershipsController extends Controller
             $em->persist($member);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'success',
-                'message' => 'user.memberships.permissionsEdit.confirm',
-            ]);
+            $this->addFlash('success',
+                'user.memberships.permissionsEdit.confirm');
 
             return $this->redirect($this->generateUrl(
                 'memberships_orga_permissions_edit', ['login' => $login, 'user' => $user]
@@ -445,10 +441,8 @@ class MembershipsController extends Controller
 
             $this->getNotificationsSender()->send($notification, false);
 
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'success',
-                'message' => 'user.memberships.notification.confirm',
-            ]);
+            $this->addFlash('success',
+                'user.memberships.notification.confirm');
 
             return $this->redirect($this->generateUrl('memberships_orga_notifications', ['login' => $login]));
         }

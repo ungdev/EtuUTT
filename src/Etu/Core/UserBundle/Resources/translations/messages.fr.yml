@@ -69,8 +69,6 @@ user:
             birthday_only_age_desc: Afficher seulement l'âge sur le profil (si la date de naissance est privée)
             confirm: Vous avez bien modifié le profil de cet utilisateur
             back: Retour sur le profil
-            personnalMailMandatory: Vous devez impérativement indiquer une adresse mail personnelle si vous souhaitez garder votre compte après votre départ de l'UTT
-            ipaMandatory: Vous devez impérativement avoir un compte SIA (sur la droite) si vous souhaitez garder votre compte après votre départ de l'UTT
         userIndex:
             title: Utilisateurs
             search_title: Rechercher un étudiant
@@ -272,7 +270,7 @@ user:
             add_member_btn: Ajouter un membre
             add_member_user: Utilisateur
             add_member_role: Rôle
-            error_user_not_fount: L'utilisateur n'a pas été trouvé
+            error_user_not_found: L'utilisateur n'a pas été trouvé
             confirm_add: Le membre a bien été ajouté
             error_exists: Ce membre fait déjà partie de l'association
         memberEdit:
@@ -350,6 +348,8 @@ user:
             wantsJoinUTTDiscord: Cochez cette case pour demander votre synchronisation avec le serveur discord UTT. Rejoignez-le avec le lien ci-dessus et indiquez votre tag discord en public avant de cocher cette case. En cochant cette case, vous consentez au traitement de vos données conformément à ce qui est indiqué sur la page du bot discord UTT (https://discord-bot-roles.uttnetgroup.fr).
             keepingAccount: Cochez cette case si vous souhaitez garder l'accès à votre compte Etu après votre départ de l'UTT (vous devez spécifier un mail personnel différent de celui de l'UTT et vous créer un compte SIA sur la droite)
             deletingEverything: "Lorsque que votre compte est supprimé, nous gardons et anonymisons certains de vos contenus qui restent utiles pour les autres étudiants : commentaires d'UEs, ... (voir page RGPD). Cochez cette case pour demander également leur suppression."
+            personnalMailMandatory: Vous devez impérativement indiquer une adresse mail personnelle si vous souhaitez garder votre compte après votre départ de l'UTT
+            ipaMandatory: Vous devez impérativement avoir un compte SIA (sur la droite) si vous souhaitez garder votre compte après votre départ de l'UTT
             avatar: Modifier ma photo
             edit: Modifier
             website: Site web (public)

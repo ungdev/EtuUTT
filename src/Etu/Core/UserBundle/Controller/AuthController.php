@@ -47,10 +47,8 @@ class AuthController extends Controller
         $authenticationUtils = $this->get('security.authentication_utils');
         $error = $authenticationUtils->getLastAuthenticationError();
         if ($error) {
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'error',
-                'message' => 'user.auth.connect.error',
-            ]);
+            $this->addFlash('error',
+                'user.auth.connect.error');
         }
 
         // If we can't auto-connect, we ask for the method
@@ -92,18 +90,14 @@ class AuthController extends Controller
             }
         } catch (OrganizationNotAuthorizedException $e) {
             // Organization found on the LDAP, but not authorized by an admin
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'error',
-                'message' => 'user.auth.connect.orga_exists_ldap',
-            ]);
+            $this->addFlash('error',
+                'user.auth.connect.orga_exists_ldap');
 
             return $this->redirect($this->generateUrl('homepage'));
         } catch (AuthenticationException $e) {
             // If user is authorized by cas, we shouldn't have an exception
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'error',
-                'message' => 'user.auth.connect.unknownError',
-            ]);
+            $this->addFlash('error',
+                'user.auth.connect.unknownError');
 
             return $this->redirect($this->generateUrl('homepage'));
         }
@@ -138,10 +132,8 @@ class AuthController extends Controller
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         if ($error) {
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'error',
-                'message' => 'user.auth.connect.error',
-            ]);
+            $this->addFlash('error',
+                'user.auth.connect.error');
         }
 
         // last username entered by the user
@@ -172,10 +164,8 @@ class AuthController extends Controller
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         if ($error) {
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'error',
-                'message' => 'user.auth.connect.error',
-            ]);
+            $this->addFlash('error',
+                'user.auth.connect.error');
         }
 
         // last username entered by the user
@@ -205,10 +195,8 @@ class AuthController extends Controller
         }
 
         // Yeah ! We are logged out !
-        $this->get('session')->getFlashBag()->set('message', [
-            'type' => 'success',
-            'message' => 'user.auth.connect.loggedOut',
-        ]);
+        $this->addFlash('success',
+            'user.auth.connect.loggedOut');
 
         return $this->redirect($this->generateUrl('homepage'));
     }
@@ -234,10 +222,8 @@ class AuthController extends Controller
      */
     public function forbidden()
     {
-        $this->get('session')->getFlashBag()->set('message', [
-            'type' => 'error',
-            'message' => 'user.denied',
-        ]);
+        $this->addFlash('error',
+            'user.denied');
 
         return $this->redirect($this->generateUrl('homepage'));
     }

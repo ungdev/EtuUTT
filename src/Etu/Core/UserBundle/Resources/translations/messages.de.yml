@@ -216,7 +216,7 @@ user:
             add_member_btn: Mitglied addieren
             add_member_user: User
             add_member_role: Rolle
-            error_user_not_fount: User wurde nicht gefunden
+            error_user_not_found: User wurde nicht gefunden
             confirm_add: Mitglied wurde hinzugefügt
             error_exists: Mitglied ist schon registriert
         memberEdit:

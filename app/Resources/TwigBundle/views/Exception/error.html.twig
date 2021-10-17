@@ -17,6 +17,13 @@
                     {{ message.message|trans }}
                 </div>
             {% endif %}
+            {% for label, messages in app.session.flashbag.all %}
+                {% for message in messages %}
+                    <div class="page-alert-mobile alert alert-{{ label }} dispay-for-1024">
+                        {{ message|trans }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
 
             <div class="content-error">
                 <img src="{{ asset('assets/img/homer-suprised.png') }}" />

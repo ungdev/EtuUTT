@@ -230,10 +230,9 @@ class AdminController extends Controller
             $logger = $this->get('monolog.logger.admin');
             $logger->info('`'.$this->getUser()->getLogin().'` update profil of `'.$user->getLogin().'`');
 
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'success',
-                'message' => 'user.admin.userEdit.confirm',
-            ]);
+            $this->addFlash('success',
+                'user.admin.userEdit.confirm'
+            );
 
             return $this->redirect($this->generateUrl('user_view', ['login' => $user->getLogin()]));
         }
@@ -340,10 +339,8 @@ class AdminController extends Controller
             $logger = $this->get('monolog.logger.admin');
             $logger->warn('`'.$this->getUser()->getLogin().'` update roles of `'.$user->getLogin().'`');
 
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'success',
-                'message' => 'user.admin.userRoles.confirm',
-            ]);
+            $this->addFlash('success',
+                'user.admin.userRoles.confirm');
 
             return $this->redirect($this->generateUrl('admin_user_roles', ['login' => $user->getLogin(), 'from' => $from]));
         }
@@ -392,10 +389,8 @@ class AdminController extends Controller
             $logger = $this->get('monolog.logger.admin');
             $logger->info('`'.$this->getUser()->getLogin().'` update avatar of `'.$user->getLogin().'`');
 
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'success',
-                'message' => 'user.admin.userEdit.confirm',
-            ]);
+            $this->addFlash('success',
+                'user.admin.userEdit.confirm');
 
             return $this->redirect($this->generateUrl('user_view', ['login' => $user->getLogin()]));
         }
@@ -434,20 +429,16 @@ class AdminController extends Controller
             $logger = $this->get('monolog.logger.admin');
             $logger->warn('`'.$this->getUser()->getLogin().'` put `'.$user->getLogin().'` on read only ');
 
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'success',
-                'message' => 'user.admin.userReadOnly.confirm_set',
-            ]);
+            $this->addFlash('success',
+                'user.admin.userReadOnly.confirm_set');
         } else {
             $user->setReadOnlyExpirationDate(null);
 
             $logger = $this->get('monolog.logger.admin');
             $logger->warn('`'.$this->getUser()->getLogin().'` remove `'.$user->getLogin().'` from read only');
 
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'success',
-                'message' => 'user.admin.userReadOnly.confirm_unset',
-            ]);
+            $this->addFlash('success',
+                'user.admin.userReadOnly.confirm_unset');
         }
 
         $em->persist($user);
@@ -571,10 +562,8 @@ class AdminController extends Controller
             $logger = $this->get('monolog.logger.admin');
             $logger->info('`'.$this->getUser()->getLogin().'` create an user `'.$user->getLogin().'`');
 
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'success',
-                'message' => 'user.admin.userCreate.confirm',
-            ]);
+            $this->addFlash('success',
+                'user.admin.userCreate.confirm');
 
             return $this->redirect($this->generateUrl('user_view', ['login' => $user->getLogin()]));
         }
@@ -613,10 +602,8 @@ class AdminController extends Controller
             $logger = $this->get('monolog.logger.admin');
             $logger->warn('`'.$this->getUser()->getLogin().'` delete an user `'.$user->getLogin().'`');
 
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'success',
-                'message' => 'user.admin.userDelete.confirm',
-            ]);
+            $this->addFlash('success',
+                'user.admin.userDelete.confirm');
 
             return $this->redirect($this->generateUrl('admin_users_index'));
         }
@@ -682,10 +669,8 @@ class AdminController extends Controller
             $logger = $this->get('monolog.logger.admin');
             $logger->info('`'.$this->getUser()->getLogin().'` create organization `'.$orga->getLogin().'`');
 
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'success',
-                'message' => 'user.admin.orgasCreate.confirm',
-            ]);
+            $this->addFlash('success',
+                'user.admin.orgasCreate.confirm');
 
             return $this->redirect($this->generateUrl('admin_orgas_index'));
         }
@@ -730,10 +715,8 @@ class AdminController extends Controller
         $logger = $this->get('monolog.logger.admin');
         $logger->warn('`'.$this->getUser()->getLogin().'` delete organization `'.$orga->getLogin().'`');
 
-        $this->get('session')->getFlashBag()->set('message', [
-            'type' => 'success',
-            'message' => 'user.admin.orgasDelete.confirm',
-        ]);
+        $this->addFlash('success',
+            'user.admin.orgasDelete.confirm');
 
         return $this->redirect($this->generateUrl('admin_orgas_index'));
     }
@@ -761,18 +744,14 @@ class AdminController extends Controller
                     ->getOneOrNullResult();
 
                 if (!$orga) {
-                    $this->get('session')->getFlashBag()->set('message', [
-                        'type' => 'error',
-                        'message' => 'user.admin.logAs.orga_not_found',
-                    ]);
+                    $this->addFlash('error',
+                        'user.admin.logAs.orga_not_found');
                 } else {
                     $logger = $this->get('monolog.logger.admin');
                     $logger->warn('`'.$this->getUser()->getLogin().'` login as organization `'.$orga->getLogin().'`');
 
-                    $this->get('session')->getFlashBag()->set('message', [
-                        'type' => 'success',
-                        'message' => 'user.auth.connect.confirm',
-                    ]);
+                    $this->addFlash('success',
+                        'user.auth.connect.confirm');
 
                     return $this->redirect($this->generateUrl('homepage', ['_switch_user' => $orga->getLogin()]));
                 }
@@ -788,18 +767,14 @@ class AdminController extends Controller
                     ->getOneOrNullResult();
 
                 if (!$user) {
-                    $this->get('session')->getFlashBag()->set('message', [
-                        'type' => 'error',
-                        'message' => 'user.admin.logAs.user_not_found',
-                    ]);
+                    $this->addFlash('error',
+                        'user.admin.logAs.user_not_found');
                 } else {
                     $logger = $this->get('monolog.logger.admin');
                     $logger->warn('`'.$this->getUser()->getLogin().'` login as an user `'.$user->getLogin().'`');
 
-                    $this->get('session')->getFlashBag()->set('message', [
-                        'type' => 'success',
-                        'message' => 'user.auth.connect.confirm',
-                    ]);
+                    $this->addFlash('success',
+                        'user.auth.connect.confirm');
 
                     return $this->redirect($this->generateUrl('homepage', ['_switch_user' => $user->getLogin()]));
                 }
@@ -815,10 +790,8 @@ class AdminController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_PREVIOUS_ADMIN');
 
-        $this->get('session')->getFlashBag()->set('message', [
-            'type' => 'success',
-            'message' => 'user.admin.logAs.welcomeBack',
-        ]);
+        $this->addFlash('success',
+            'user.admin.logAs.welcomeBack');
 
         return $this->redirect($this->generateUrl('homepage', ['_switch_user' => '_exit']));
     }

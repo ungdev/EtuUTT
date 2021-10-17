@@ -58,6 +58,13 @@
                     {{ message.message|trans }}
                 </div>
             {% endif %}
+            {% for label, messages in app.session.flashbag.all %}
+                {% for message in messages %}
+                    <div class="page-alert-mobile alert alert-{{ label }}">
+                        {{ message|trans }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
 
             <div class="content content-dev" style="min-height: 0;">
                 {% block content %}{% endblock %}

@@ -226,10 +226,8 @@ class ProfileController extends Controller
                         $user->setPersonnalMail($cloneUser->getPersonnalMail());
                     } else {
                         $user->setIsKeepingAccount(false);
-                        $this->get('session')->getFlashBag()->set('message', [
-                            'type' => 'error',
-                            'message' => 'user.profile.profileEdit.personnalMailMandatory',
-                        ]);
+                        $this->addFlash('error',
+                            'user.profile.profileEdit.personnalMailMandatory');
                     }
                 }
                 // Test if user have an account
@@ -240,18 +238,15 @@ class ProfileController extends Controller
                     $logger = $this->get('logger');
                     $logger->error('IPA Init fail: '.$e->getMessage());
                     // Emit flash message
-                    $this->get('session')->getFlashBag()->set('message', [
-                        'type' => 'error',
-                        'message' => 'Impossible de se connecter au serveur d\'authentification du SIA !',
-                    ]);
+                    $this->addFlash('error',
+                        'Impossible de se connecter au serveur d\'authentification du SIA !'
+                    );
                 }
 
                 if (!$userIPA) {
                     $user->setIsKeepingAccount(false);
-                    $this->get('session')->getFlashBag()->set('message', [
-                        'type' => 'error',
-                        'message' => 'user.profile.profileEdit.ipaMandatory',
-                    ]);
+                    $this->addFlash('error',
+                        'user.profile.profileEdit.ipaMandatory');
                 }
             }
             if($user->wantsJoinUTTDiscord && (!$user->getDiscordTag() || $user->getDiscordTagPrivacy() === $user::PRIVACY_PRIVATE)) {
@@ -278,10 +273,8 @@ class ProfileController extends Controller
                     $result = $mailer->send($message);
                 }
             }
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'success',
-                'message' => 'user.profile.profileEdit.confirm',
-            ]);
+            $this->addFlash('success',
+                'user.profile.profileEdit.confirm');
 
             return $this->redirect($this->generateUrl('user_profile_edit'));
         }
@@ -323,10 +316,8 @@ class ProfileController extends Controller
             $em->persist($user);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'success',
-                'message' => 'user.profile.profileAvatar.confirm',
-            ]);
+            $this->addFlash('success',
+                'user.profile.profileAvatar.confirm');
 
             return $this->redirect($this->generateUrl('user_profile_edit'));
         }
@@ -367,10 +358,8 @@ class ProfileController extends Controller
             $em->persist($user);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->set('message', [
-                'type' => 'success',
-                'message' => 'user.profile.trombiEdit.confirm',
-            ]);
+            $this->addFlash('success',
+                'user.profile.trombiEdit.confirm');
 
             return $this->redirect($this->generateUrl('user_profile'));
         }
