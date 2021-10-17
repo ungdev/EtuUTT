@@ -220,11 +220,38 @@ class ProfileController extends Controller
             } else {
                 BadgesManager::userRemoveBadge($user, 'profile_completed');
             }
-            if (($user->getIsKeepingAccount() || !empty($user->getPassword())) && empty($user->getPersonnalMail())) {
-                if (empty($user->getPersonnalMail()) && !empty($cloneUser->getPersonnalMail())) {
-                    $user->setPersonnalMail($cloneUser->getPersonnalMail());
-                } else {
+            if($user->getIsKeepingAccount()) {
+                if(empty($user->getPersonnalMail())) {
+                    if (empty($user->getPersonnalMail()) && !empty($cloneUser->getPersonnalMail())) {
+                        $user->setPersonnalMail($cloneUser->getPersonnalMail());
+                    } else {
+                        $user->setIsKeepingAccount(false);
+                        $this->get('session')->getFlashBag()->set('message', [
+                            'type' => 'error',
+                            'message' => 'user.profile.profileEdit.personnalMailMandatory',
+                        ]);
+                    }
+                }
+                // Test if user have an account
+                try {
+                    $ipa = $this->get('etu.sia.ldap');
+                    $userIPA = $ipa->getUserByEtuId($this->getUser()->getId());
+                } catch (\Exception $e) {
+                    $logger = $this->get('logger');
+                    $logger->error('IPA Init fail: '.$e->getMessage());
+                    // Emit flash message
+                    $this->get('session')->getFlashBag()->set('message', [
+                        'type' => 'error',
+                        'message' => 'Impossible de se connecter au serveur d\'authentification du SIA !',
+                    ]);
+                }
+
+                if (!$userIPA) {
                     $user->setIsKeepingAccount(false);
+                    $this->get('session')->getFlashBag()->set('message', [
+                        'type' => 'error',
+                        'message' => 'user.profile.profileEdit.ipaMandatory',
+                    ]);
                 }
             }
             if($user->wantsJoinUTTDiscord && (!$user->getDiscordTag() || $user->getDiscordTagPrivacy() === $user::PRIVACY_PRIVATE)) {

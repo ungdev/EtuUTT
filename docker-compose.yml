@@ -6,7 +6,7 @@ services:
     - 8000:8080
     user: "${UID}:0"
     volumes:
-    - .:/var/www/html/:rw
+    - .:/var/www/html:rw
     depends_on:
       - db
     env_file:
