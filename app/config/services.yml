@@ -10,6 +10,10 @@ services:
             - 'mysql:host=%database_host%;dbname=%database_name%'
             - { db_username: '%database_user%', db_password: '%database_password%' }
 
+    auth.form_login_external:
+        class: Etu\Core\UserBundle\Security\LoginFormAuthenticator
+        arguments: ['@router','@security.csrf.token_manager','@security.password_encoder']
+
     auth.login.listener:
         class: Etu\Core\UserBundle\Security\Firewall\InteractiveLoginListener
         arguments: ['@doctrine.orm.entity_manager']

@@ -187,11 +187,10 @@ security:
                 path:   /user/logout/external
                 target: /user/logout
             cas: true
-            form_login:
-                login_path: user_connect
-                check_path: user_connect_external
-                failure_path: user_connect_external
+            guard:
                 provider: passwords
+                authenticators:
+                    - auth.form_login_external
             form_login_ldap:
                 service: ldap
                 dn_string: "uid={username},cn=users,cn=accounts,dc=uttnetgroup,dc=net"
@@ -204,3 +203,5 @@ security:
                 lifetime: 604800 # 1 week in seconds
                 path:     /
                 always_remember_me: false
+    access_control:
+        - { path: ^/user/external, roles: IS_AUTHENTICATED_ANONYMOUSLY }

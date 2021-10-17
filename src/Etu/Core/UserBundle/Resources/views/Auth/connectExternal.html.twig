@@ -46,11 +46,14 @@
                     <div class="row-fluid">
                         <div class="span2"></div>
                         <div class="span4">
-                            <form method="post" class="form-horizontal">
+                            <form method="post" action="{{ path('user_connect_external') }}" class="form-horizontal">
                                 <div class="control-group">
                                     <label class="control-label">
                                         <label for="username">{{ 'user.auth.connectExternal.identifier'|trans }}</label>
                                     </label>
+                                    <input type="hidden" name="_csrf_token"
+                                           value="{{ csrf_token('authenticate') }}"
+                                    >
                                     <div class="controls">
                                         <input type="text" id="username" name="_username" value="{{ last_username }}" required/>
                                     </div>
