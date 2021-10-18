@@ -4,7 +4,6 @@ namespace Etu\Core\CoreBundle\Command;
 
 use DateTime;
 use Doctrine\ORM\EntityManager;
-use Etu\Core\CoreBundle\Util\SendSlack;
 use Etu\Core\UserBundle\Entity\User;
 use Etu\Module\BugsBundle\Entity\Issue;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -37,7 +36,7 @@ class DeleteOldUsersCommand extends ContainerAwareCommand
         $limite = 5000;
 
         $output->writeln("\n\n===========================");
-        $output->writeln('Supression des utilisateurs');
+        $output->writeln('Suppression des utilisateurs');
         $output->writeln('===========================');
 
         $basePhotosDir = __DIR__.'/../../../../../web/uploads/photos/';
@@ -130,31 +129,6 @@ class DeleteOldUsersCommand extends ContainerAwareCommand
                 $em->flush();
                 ++$i;
             }
-
-            //Si l'utilisateur veut encore son compte, qu'il n'est plus à l'UTT mais qu'il n'a pas de mot de passe
-            if ($user->getIsKeepingAccount() && !$user->getIsInLDAP() && empty($user->getPassword())) {
-                $jsonData = json_encode(['blocks' => [
-                    [
-                        'type' => 'header',
-                        'text' => [
-                            'type' => 'plain_text',
-                            'text' => 'Un utilisateur a besoin de créer son mot de passe',
-                        ],
-                    ],
-                    [
-                        'type' => 'divider',
-                    ],
-                    [
-                        'type' => 'section',
-                        'text' => [
-                            'type' => 'mrkdwn',
-                            'text' => 'Vous pouvez taper la commande `php bin/console etu:users:set-password` en fournissant le login : `'.$user->getLogin().'` puis lui envoyer par mail à '.$user->getPersonnalMail(),
-                        ],
-                    ],
-                ],
-                ]);
-                SendSlack::curl_send($this->getContainer()->getParameter('slack_webhook_moderation'), $jsonData);
-            }
         }
 
         $em->flush();
@@ -181,6 +155,24 @@ class DeleteOldUsersCommand extends ContainerAwareCommand
                 $em->flush();
             }
             $em->remove($todelete);
+
+            $elementsInside = $em->getRepository('EtuUserBundle:OrganizationGroup')
+                ->createQueryBuilder('u')
+                ->where('u.organization = :org')
+                ->setParameter('org', $todelete)
+                ->getQuery()->getResult();
+            foreach ($elementsInside as $delete) {
+                try {
+                    $ipa = $this->getContainer()->get('etu.sia.ldap');
+                    $ipa->deleteGroup($delete->getSlug());
+                } catch (\Exception $e) {
+                    $output->writeln('IPA Group deletion fail: '.$e->getMessage());
+                }
+                $em->remove($delete);
+                $em->flush();
+            }
+            $em->remove($todelete);
+
         }
 
         $output->writeln("\n\n==============================");
