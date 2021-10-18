@@ -3,6 +3,7 @@ user:
     validation:
         phoneNumber: Le numéro de téléphone n'est pas valide
         discordTag: Votre tag discord est sous la forme user#1234
+        new_password: Les mots de passe ne correspondent pas
         firstname:
             length_min: Le prénom doit contenir au minimum {{ limit }} caractères
             length_max: Le prénom doit contenir au maximum {{ limit }} caractères

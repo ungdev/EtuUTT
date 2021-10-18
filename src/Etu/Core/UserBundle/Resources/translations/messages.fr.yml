@@ -350,6 +350,9 @@ user:
             deletingEverything: "Lorsque que votre compte est supprimé, nous gardons et anonymisons certains de vos contenus qui restent utiles pour les autres étudiants : commentaires d'UEs, ... (voir page RGPD). Cochez cette case pour demander également leur suppression."
             personnalMailMandatory: Vous devez impérativement indiquer une adresse mail personnelle si vous souhaitez garder votre compte après votre départ de l'UTT
             ipaMandatory: Vous devez impérativement avoir un compte SIA (dans le menu à droite) si vous souhaitez garder votre compte après votre départ de l'UTT
+            passwordChanged: Votre mot de passe du site etu (pour la connexion via compte extérieur) a été changé !
+            newPassword: Saisissez votre nouveau mot de passe, laissez vide pour aucun changement
+            newPasswordConfirm: Confirmez votre mot de passe
             avatar: Modifier ma photo
             edit: Modifier
             website: Site web (public)

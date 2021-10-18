@@ -194,6 +194,9 @@ user:
             keepingAccount: Check this box if you want to keep your EtuUTT account after you left UTT (you must specify a personnal mail adress different from UTT and create a SIA account on the right menu, this account will be used for your connection after you left UTT)
             personnalMailMandatory: You must add a personnal mail if you want to keep your account after you left UTT.
             ipaMandatory: You must create a SIA account (on the right menu) if you want to keep your account after you left UTT.
+            passwordChanged: Your external connection password has been changed successfully !
+            newPassword: Type in your new password, leave blank for no change
+            newPasswordConfirm: Confirm your new password
             title: Edit About Me
             confirm: You have successfully edited About Me
             back: Back to my account

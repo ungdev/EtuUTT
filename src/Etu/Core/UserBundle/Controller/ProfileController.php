@@ -19,9 +19,12 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ProfileController extends Controller
 {
@@ -201,6 +204,13 @@ class ProfileController extends Controller
             ->add('isDeletingEverything', CheckboxType::class, ['required' => false, 'label' => 'user.profile.profileEdit.deletingEverything'])
             ->add('schedulePrivacy', ChoiceType::class, $privacyChoiceSchedule)
             ->add('website', null, ['required' => false, 'label' => 'user.profile.profileEdit.website'])
+            ->add('new_password', RepeatedType::class,
+                ['required'=>false,'mapped'=>false,
+                    'type' => PasswordType::class,
+                    'invalid_message'=>'user.validation.new_password',
+                    'first_options'=>['label'=>'user.profile.profileEdit.newPassword'],
+                    'second_options'=>['label'=>'user.profile.profileEdit.newPasswordConfirm']
+                ])
             ->add('facebook', null, ['required' => false, 'label' => 'user.profile.profileEdit.facebook'])
             ->add('twitter', null, ['required' => false, 'label' => 'user.profile.profileEdit.twitter'])
             ->add('linkedin', null, ['required' => false, 'label' => 'user.profile.profileEdit.linkedin'])
@@ -220,6 +230,12 @@ class ProfileController extends Controller
             } else {
                 BadgesManager::userRemoveBadge($user, 'profile_completed');
             }
+            if(!empty($form["new_password"]->getData())) {
+                $new_password = $form["new_password"]->getData();
+                dump($this->container->get('security.password_encoder')->encodePassword($user, $new_password));
+                $user->setPassword($this->container->get('security.password_encoder')->encodePassword($user, $new_password));
+                $this->addFlash("success", 'user.profile.profileEdit.passwordChanged');
+            }
             if($user->getIsKeepingAccount()) {
                 if(empty($user->getPersonnalMail())) {
                     if (empty($user->getPersonnalMail()) && !empty($cloneUser->getPersonnalMail())) {
@@ -234,6 +250,11 @@ class ProfileController extends Controller
                 try {
                     $ipa = $this->get('etu.sia.ldap');
                     $userIPA = $ipa->getUserByEtuId($this->getUser()->getId());
+                    if (!$userIPA) {
+                        $user->setIsKeepingAccount(false);
+                        $this->addFlash('error',
+                            'user.profile.profileEdit.ipaMandatory');
+                    }
                 } catch (\Exception $e) {
                     $logger = $this->get('logger');
                     $logger->error('IPA Init fail: '.$e->getMessage());
@@ -241,12 +262,6 @@ class ProfileController extends Controller
                     $this->addFlash('error',
                         'Impossible de se connecter au serveur d\'authentification du SIA !'
                     );
-                }
-
-                if (!$userIPA) {
-                    $user->setIsKeepingAccount(false);
-                    $this->addFlash('error',
-                        'user.profile.profileEdit.ipaMandatory');
                 }
             }
             if($user->wantsJoinUTTDiscord && (!$user->getDiscordTag() || $user->getDiscordTagPrivacy() === $user::PRIVACY_PRIVATE)) {
