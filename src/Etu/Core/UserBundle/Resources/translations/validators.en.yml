@@ -2,6 +2,7 @@ user:
     validation:
         phoneNumber: The phone number is not valid
         discordTag: Your discord tag is like user#1234
+        new_password: Passwords don't match
         firstname:
             length_min: First name must contain at least {{ limit }} caracters
             length_max: First name must contain {{ limit }} caracters maximum

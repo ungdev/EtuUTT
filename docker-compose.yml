@@ -16,6 +16,8 @@ services:
     image: mariadb
     env_file:
       - .env.local
+    volumes:
+      - db:/var/lib/mysql
 
   adminer:
     image: adminer
@@ -23,3 +25,6 @@ services:
       - db
     ports:
     - 8080:8080
+
+volumes:
+  db:
