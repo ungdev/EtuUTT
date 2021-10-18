@@ -96,7 +96,7 @@ user:
         connect:
             title: Log in
             desc: "Please choose an authentification method for EtuUTT"
-            cas: With a UTT accountEn utilisant un compte UTT
+            cas: With a UTT account (CAS)
             external: With a guest account
             freeipa: with a SIA account
             confirm: You are logged in
@@ -105,7 +105,7 @@ user:
             orga_exists_ldap: This association exist but must be authorized to log in by the UNG
         connectExternal:
             title: Log in as a guest
-            desc: "Use the login and the password given to you by the UNG to log in :"
+            desc: "Use the login and the password given to you by the UNG to log in. In the case of an account created from the UTT CAS, use the same login as the CAS."
             identifier: Login
             password: Password
             submit: Log in
@@ -113,7 +113,7 @@ user:
         connectFreeIPA:
             title: Log in with SIA account
             meta: Log in with SIA account
-            desc: "Use the login and the password from your Système d'Information des Associations account to log in :"
+            desc: "Use the login and the password from your Système d'Information des Associations account to log in. In the case of an account created from the UTT CAS, use the same login as the CAS."
         disconnect:
             confirm: You have logged out
 

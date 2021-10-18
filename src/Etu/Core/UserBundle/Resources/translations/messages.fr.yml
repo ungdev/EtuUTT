@@ -142,7 +142,7 @@ user:
             title: Connexion
             meta: Se connecter au site étudiant, en tant que membre de l'UTT ou qu'exterieur
             desc: "Veuillez choisir une méthode d'authentification pour EtuUTT :"
-            cas: En utilisant un compte UTT
+            cas: En utilisant un compte UTT (CAS)
             external: En utilisant un compte exterieur
             freeipa: En utilisant un compte SIA
             confirm: Vous êtes bien connecté
@@ -156,7 +156,7 @@ user:
         connectExternal:
             title: Connexion d'un exterieur
             meta: Se connecter au site étudiant en tant qu'exterieur
-            desc: "Connectez-vous en utilisant l'identifiant et le mot de passe qui vous ont été fournis par l'UNG :"
+            desc: "Connectez-vous en utilisant l'identifiant et le mot de passe qui vous ont été fournis par l'UNG. Dans le cas d'un compte issu du CAS, l'identifiant est identique à celui du CAS."
             identifier: Identifiant
             password: Mot de passe
             submit: Connexion
@@ -164,7 +164,7 @@ user:
         connectFreeIPA:
             title: Connexion via un compte SIA
             meta: Se connecter au site étudiant via un compte SIA
-            desc: "Connectez-vous en utilisant l'identifiant et le mot de passe de votre compte du Système d'Information des Associations :"
+            desc: "Connectez-vous en utilisant l'identifiant et le mot de passe de votre compte du Système d'Information des Associations. Dans le cas d'un compte issu du CAS, l'identifiant est identique à celui du CAS."
         disconnect:
             confirm: Vous êtes bien déconnecté
 

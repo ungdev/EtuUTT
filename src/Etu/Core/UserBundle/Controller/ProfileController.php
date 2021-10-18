@@ -232,7 +232,6 @@ class ProfileController extends Controller
             }
             if(!empty($form["new_password"]->getData())) {
                 $new_password = $form["new_password"]->getData();
-                dump($this->container->get('security.password_encoder')->encodePassword($user, $new_password));
                 $user->setPassword($this->container->get('security.password_encoder')->encodePassword($user, $new_password));
                 $this->addFlash("success", 'user.profile.profileEdit.passwordChanged');
             }
