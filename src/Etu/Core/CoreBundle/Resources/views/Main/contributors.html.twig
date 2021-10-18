@@ -13,7 +13,7 @@
             de grande ampleur et d'y consacrer du temps. La liste complète des contributeurs est accessible <a href="https://github.com/ungdev/EtuUTT/graphs/contributors">ici</a>. Merci à eux !
         </p>
         <p class="text-success">
-            Retrouvez et suivez toute l'actualité du site etu sur <a href="https://github.com/ungdev/etuutt">le repo github ungdev/etuutt</a> !
+            Retrouvez et suivez toute l'actualité du site etu sur <a href="https://github.com/ungdev/etuutt">le repo github ungdev/etuutt</a>, notamment le <a href="https://github.com/ungdev/EtuUTT/blob/master/CHANGELOG.md">changelog</a> !
         </p>
 
         <hr />
@@ -34,7 +34,9 @@
                 </p>
             </div>
             <div class="span4">
+                {% if app.user %}
                 <img src="{{ path('user_view_image_profil', {'avatar': app.user.avatar}) }}" style="width: 100px;" />
+                {% endif %}
                 <p>
                     <strong>Vous ?</strong><br />
                     Regardez <a href="https://github.com/ungdev/etuutt">le repo github ungdev/etuutt</a> et/ou <a href="mailto:ung@utt.fr">contactez l'UNG</a>
