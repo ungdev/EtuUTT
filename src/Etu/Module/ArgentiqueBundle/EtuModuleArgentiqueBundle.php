@@ -23,7 +23,7 @@ class EtuModuleArgentiqueBundle extends Module
 
         $this->getSidebarBuilder()
             ->getBlock('base.sidebar.services.title')
-                ->add('Administration galerie photo')
+                ->add('argentique.sidebar.admin')
                     ->setPosition(99)
                     ->setIcon('argentique.png')
                     ->setUrl($this->router->generate('argentique_admin'))

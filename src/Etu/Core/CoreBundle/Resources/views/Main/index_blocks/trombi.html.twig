@@ -6,7 +6,7 @@
     </p>
 
     <form method="get" class="form-inline" action="{{ path('trombi_index') }}">
-        {{ form_widget(trombiForm.fullName, { 'attr': { 'placeholder': 'Nom, prénom ou surnom ...' } } ) }}
+        {{ form_widget(trombiForm.fullName, { 'attr': { 'placeholder': 'trombi.main.index.name' } } ) }}
         {{ form_rest(trombiForm) }}
 
         <button type="submit" class="btn">{{ 'trombi.main.index.search'|trans }}</button>

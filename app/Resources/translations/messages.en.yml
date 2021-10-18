@@ -41,6 +41,11 @@ base:
             pages: Static pages
             nutt: NUTT
             wiki: Wiki
+            realEstate: Real estate rental
+            discord: UTT Discord
+            tickets: Organization tickets
+            ungStatus: UNG services status
+            gdpr: GDPR
 
         # Sex
         sex:

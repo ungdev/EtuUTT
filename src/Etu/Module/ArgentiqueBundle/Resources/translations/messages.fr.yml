@@ -20,3 +20,4 @@ argentique:
       title: "Importation en cours"
   sidebar:
     service: "Galerie photos (Argentique)"
+    admin: "Administration galerie photo"

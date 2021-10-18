@@ -15,7 +15,7 @@ class EtuModuleSIABundle extends Module
     {
         $this->getSidebarBuilder()
                 ->getBlock('base.sidebar.services.title')
-                    ->add('Mon compte SIA')
+                    ->add('sia.main.sidebar.account')
                     ->setIcon('gear.png')
                     ->setUrl($this->getRouter()->generate('sia_index'))
                 ->end()

@@ -19,3 +19,4 @@ argentique:
       title: "Importing"
   sidebar:
     service: "Photo gallery (Argentique)"
+    admin: "Photo gallery administration"

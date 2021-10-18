@@ -46,6 +46,11 @@ base:
             orgas: Mes associations
             nutt: Le NUTT
             wiki: Wiki
+            realEstate: Offres de logement
+            discord: Discord UTT
+            tickets: Tickets asso
+            ungStatus: Etat des services UNG
+            gdpr: RGPD
 
         # Sex
         sex:
