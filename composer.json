@@ -1,57 +1,115 @@
 {
-    "name": "etuutt/etuutt",
+    "name": "ungdev/etuutt",
     "license": "MIT",
     "type": "project",
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
     "autoload": {
         "psr-4": {
-            "": "src/"
-        },
-        "classmap": [
-            "app/AppKernel.php",
-            "app/AppCache.php"
-        ]
+            "App\\": "src/",
+            "Etu\\": "Etu/"
+        }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "App\\Tests\\": "tests/"
         }
+    },
+    "replace": {
+        "paragonie/random_compat": "2.*",
+        "symfony/polyfill-ctype": "*",
+        "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-php70": "*",
+        "symfony/polyfill-php56": "*"
+    },
+    "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd",
+            "security-checker security:check": "script"
+        },
+        "post-install-cmd": [
+            "@auto-scripts"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts"
+        ]
+    },
+    "conflict": {
+        "symfony/symfony": "*"
     },
     "require": {
         "php": ">=7.1",
         "ext-mbstring": "*",
         "ext-curl": "*",
         "ext-xml": "*",
-        "symfony/symfony": "3.2.*",
-        "doctrine/orm": "^2.5",
-        "doctrine/doctrine-bundle": "^1.6",
-        "doctrine/doctrine-cache-bundle": "^1.2",
-        "symfony/swiftmailer-bundle": "^2.3",
-        "symfony/monolog-bundle": "^2.8",
-        "symfony/polyfill-apcu": "^1.0",
+        "ext-json": "*",
+        "ext-fileinfo": "*",
+        "ext-ldap": "*",
+        "ext-iconv": "*",
+
+        "composer/package-versions-deprecated": "1.11.99.4",
+        "doctrine/annotations": "^1.0",
+        "doctrine/doctrine-bundle": "^1.12",
+        "doctrine/doctrine-migrations-bundle": "^2.2",
+        "doctrine/orm": "^2.7",
+
+        "phpdocumentor/reflection-docblock": "^4.3",
+        "sensio/framework-extra-bundle": "^5.1",
+        "symfony/asset": "3.4.*",
+        "symfony/console": "3.4.*",
+        "symfony/dotenv": "3.4.*",
+        "symfony/expression-language": "3.4.*",
+        "symfony/flex": "^1.3.1",
+        "symfony/form": "3.4.*",
+        "symfony/framework-bundle": "3.4.*",
+        "symfony/monolog-bundle": "^3.1",
+        "symfony/process": "3.4.*",
+        "symfony/property-access": "3.4.*",
+        "symfony/property-info": "3.4.*",
+        "symfony/proxy-manager-bridge": "3.4.*",
+        "symfony/security-bundle": "3.4.*",
+        "symfony/serializer": "3.4.*",
+        "symfony/swiftmailer-bundle": "^3.1",
+        "symfony/translation": "3.4.*",
+        "symfony/twig-bundle": "3.4.*",
+        "symfony/validator": "3.4.*",
+        "symfony/web-link": "3.4.*",
+        "symfony/yaml": "3.4.*",
+
         "sensio/distribution-bundle": "^5.0",
-        "sensio/framework-extra-bundle": "^3.0.2",
+
+        "sonata-project/intl-bundle": "^2.2",
+
+        "imagine/imagine": "^0.5",
+
+        "nelmio/api-doc-bundle": "^2.9",
+
+        "stof/doctrine-extensions-bundle": "^1.2",
+        "doctrine/doctrine-fixtures-bundle": "^2.2",
+
+        "twig/extensions": "1.4.*",
+
+        "fzaninotto/faker": "^1.5",
+        "symfony/assetic-bundle": "^2.3",
+
+
         "frequence-web/calendr-bundle": "^1.1",
         "league/glide-symfony": "^1.0",
         "league/glide": "^1.0",
-        "sonata-project/intl-bundle": "^2.2",
-        "imagine/imagine": "^0.5",
-        "jasig/phpcas": "^1.3.4",
-        "nelmio/api-doc-bundle": "^2.9",
+        "leafo/scssphp": "^0.6.6",
+        "patchwork/jsqueeze": "^2.0",
+        "nelmio/cors-bundle": "^1.4",
+        "liip/imagine-bundle": "^1.3",
         "knplabs/knp-paginator-bundle": "^2.5",
         "sabre/vobject": "^3.4",
         "knplabs/knp-time-bundle": "^1.4",
         "friendsofsymfony/jsrouting-bundle": "^1.5",
-        "stof/doctrine-extensions-bundle": "^1.2",
-        "doctrine/doctrine-fixtures-bundle": "^2.2",
-        "beberlei/doctrineextensions": "*",
-        "twig/extensions": "1.4.*",
-        "liip/imagine-bundle": "^1.3",
-        "fzaninotto/faker": "^1.5",
-        "symfony/assetic-bundle": "^2.3",
-        "leafo/scssphp": "^0.6.6",
-        "patchwork/jsqueeze": "^2.0",
-        "nelmio/cors-bundle": "^1.4",
-        "ezyang/htmlpurifier": "^4.8",
+        "oomphinc/composer-installers-extender": "^2.0",
 
         "bower-asset/bootstrap": "2.3.*",
         "bower-asset/facebox": "*",
@@ -64,7 +122,7 @@
         "bower-asset/jquery-ui-touch-punch-improved": "*",
         "bower-asset/jquery-impromptu": "5.2.*",
         "bower-asset/moment": "2.9.*",
-        "bower-asset/swipebox": "1.2.*",
+        "bower-asset/swipebox": "*",
         "bower-asset/tipsy": "0.1.*",
         "bower-asset/jquery-cycle2": "*",
         "bower-asset/html5shiv": "~3.7.2",
@@ -72,64 +130,59 @@
         "bower-asset/codemirror": "*",
         "bower-asset/font-awesome": "4.6.0",
         "bower-asset/highlightjs": "9.7.0",
-        "bower-asset/videojs": "5.11.7",
+        "bower-asset/videojs": "*",
         "bower-asset/selectize": "0.12.*",
+        "artgris/filemanager-bundle": "*",
 
         "firebase/php-jwt": "^5.0",
+
         "gnumoksha/php-freeipa": "dev-master",
-        "artgris/filemanager-bundle": "^1.4",
+        "jasig/phpcas": "^1.3.4",
+
         "ramsey/uuid-doctrine": "^1.5",
-        "html2text/html2text": "^4.2",
+        "beberlei/doctrineextensions": "*",
+
         "solvecrew/expo-notifications-bundle": "^1.2",
+
         "league/csv": "^8.0",
-        "ext-json": "*",
+        "html2text/html2text": "^4.2",
         "league/html-to-markdown": "^4.10",
-      "ext-fileinfo": "*",
-        "sentry/sentry-symfony": "^3.0",
-      "ext-ldap": "*",
-        "symfony/ldap": "^3"
+        "ezyang/htmlpurifier": "^4.8",
+
+        "sentry/sentry-symfony": "^3.0"
     },
     "repositories": [
         {
             "url": "https://github.com/ChrisdAutume/php-freeipa.git",
             "type": "git"
+        },
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
         }
     ],
     "minimum-stability": "stable",
     "require-dev": {
-        "fxp/composer-asset-plugin": "^1.4",
-        "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^3.0",
-        "elao/web-profiler-extra-bundle": "^2.3",
+        "phpunit/phpunit": "^7.5",
+        "symfony/browser-kit": "3.4.*",
+        "symfony/css-selector": "3.4.*",
+        "symfony/debug-bundle": "3.4.*",
+        "symfony/maker-bundle": "^1.0",
+        "symfony/phpunit-bridge": "^5.3",
+        "symfony/stopwatch": "3.4.*",
+        "symfony/web-profiler-bundle": "3.4.*",
+        "symfony/web-server-bundle": "3.4.*",
         "friendsofphp/php-cs-fixer": "^2.1"
     },
-    "scripts": {
-        "symfony-scripts": [
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
-            "php bin/console assetic:dump"
-
-        ],
-        "post-install-cmd": [
-            "@symfony-scripts"
-        ],
-        "post-update-cmd": [
-            "@symfony-scripts"
-        ]
-    },
     "extra": {
-        "symfony-app-dir": "app",
-        "symfony-bin-dir": "bin",
-        "symfony-var-dir": "var",
-        "symfony-web-dir": "web",
-        "symfony-tests-dir": "tests",
-        "symfony-assets-install": "relative",
-        "asset-installer-paths": {
-            "bower-asset-library": "web/assets/vendor",
-            "npm-asset-library": "web/assets/npm-vendor"
+        "symfony": {
+            "allow-contrib": false,
+            "require": "3.4.*"
+        },
+        "installer-types": ["bower-asset", "npm-asset"],
+        "installer-paths": {
+            "web/assets/vendor/{$vendor}/{$name}/": ["type:bower-asset"],
+            "web/assets/npm-vendor/{$vendor}/{$name}/": ["type:npm-asset"]
         }
     }
 }
