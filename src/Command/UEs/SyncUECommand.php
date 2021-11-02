@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\DependencyInjection\Container;
 
-class SyncCommand extends ContainerAwareCommand
+class SyncUECommand extends ContainerAwareCommand
 {
     /**
      * Configure the command.
