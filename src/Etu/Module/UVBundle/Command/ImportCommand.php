@@ -71,9 +71,23 @@ This command helps you to import the official UTT UE guide from CSV file.');
 
         /** @var EntityManager $em */
         $em = $container->get('doctrine')->getManager();
+
+        // We list UEs before import and prepare the arrays
+        $uesInDBBeforeImport = $em->getRepository('EtuModuleUVBundle:UV')->findAll();
+        $codesUEsInDBBeforeImport = [];
+        $codesUEsInDBAfterImport = [];
+        for ($uesInDBBeforeImport as $ue) {
+            $codesUEsInDBBeforeImport[] = $ue["code"];
+            $codesUEsInDBAfterImport[] = $ue["code"];
+        }
+
+        $codesUEsInCSV = [];
+
+
         foreach ($ues as $uv) {
             $entity = new UV();
 
+            // We import data from csv line
             $j = 1;
             $programme = $uv['programme1'];
             while ($j < 11 && '' != $uv['programme'.$j]) {
@@ -91,6 +105,12 @@ This command helps you to import the official UTT UE guide from CSV file.');
             $commentaire = implode("\n", explode('|', $uv['commentaires']));
             $commentaire = implode('P', explode('Picto p', $commentaire));
             $commentaire = implode('UE en Anglais et en Français', explode('Drapeau anglais/français', $commentaire));
+
+
+            // We add the UE to the array of UE in CSV
+            $codesUEsInCSV[] = $uv['UV'];
+
+            // We prepare the entity
             $entity->setCode($uv['UV'])
                 ->setName($uv['titre'])
                 ->setCategory($this->parseCategory($uv['catégorie']))
@@ -104,6 +124,7 @@ This command helps you to import the official UTT UE guide from CSV file.');
                 ->setCommentaire($commentaire)
                 ->setObjectifs($objectif)
                 ->setProgramme($programme)
+                ->setIsOld(false)
                 ->setCredits($this->parseCredits($uv['credits']))
                 ->setCm($this->parseHour($uv['Cvolume']))
                 ->setTd($this->parseHour($uv['TDvolume']))
@@ -112,14 +133,34 @@ This command helps you to import the official UTT UE guide from CSV file.');
                 ->setProjet($this->parseHour($uv['PRJvolume']))
                 ->setStage($this->parseHour($uv['STGvolume']));
 
-            if ('dev' === $this->getContainer()->getParameter('kernel.environment')) {
-                $em->persist($entity);
+            // If the UV is not currently in DB, we add it
+            if(!in_array($uv['UV'], $codesUEsInDBBeforeImport)) {
+                if ('dev' === $this->getContainer()->getParameter('kernel.environment')) {
+                    $em->persist($entity);
+                    $codesUEsInDBAfterImport[] = $uv['UV'];
+                }
             }
             $entities[] = $entity;
 
             $bar->update($i);
             ++$i;
         }
+
+        // We ensure all UEs imported are not old (in cas of : UE is not old -> UE is old -> UE is no longer old)
+        for ($codesUEsInDBAfterImport as $code) {
+            $ue = $em->getRepository('EtuModuleUVBundle:UV')->findOneBy(["code"=>$code]);
+            $ue->setIsOld(false);
+            $em->persist($ue);
+        }
+
+        // We ensure that all codes which are not in csv but in the db after import are old
+        $oldCodes = array_diff($codesUEsInDBAfterImport, $codesUEsInCSV);
+        for ($oldCodes as $oldCode) {
+            $ue = $em->getRepository('EtuModuleUVBundle:UV')->findOneBy(["code"=>$code]);
+            $ue->setIsOld(true);
+            $em->persist($ue);
+        }
+
         $em->flush();
 
         $output->writeln("\nWriting registry ...");
