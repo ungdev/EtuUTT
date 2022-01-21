@@ -216,7 +216,7 @@ class LdapManager
         $user->setIsStaffUTT(
             in_array('employee', $values['edupersonaffiliation'])
             || in_array('faculty', $values['edupersonaffiliation'])
-        )
+        );
 
         $uvs = [];
 
