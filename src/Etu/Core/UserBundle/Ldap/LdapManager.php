@@ -210,6 +210,7 @@ class LdapManager
             in_array('student', $values['edupersonaffiliation'])
             || in_array('epf', $values['edupersonaffiliation']) // EPF students but not EPF staff
             || in_array('student', $values['employeetype'])
+            || !in_array('NC', $values['formation'])
         );
 
         $uvs = [];
