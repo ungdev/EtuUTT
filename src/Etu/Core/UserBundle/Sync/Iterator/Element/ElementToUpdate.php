@@ -146,7 +146,11 @@ class ElementToUpdate
         if ($this->ldap->getIsStudent() != $this->database->getIsStudent()) {
             $persist = true;
             $user->setIsStudent($this->ldap->getIsStudent());
-            $user->setIsStaffUTT(!$this->ldap->getIsStudent());
+        }
+
+        if ($this->ldap->getIsStaffUTT() != $this->database->getIsStaffUTT() {
+            $persist = true;
+            $user->setIsStaffUTT($this->ldap->getIsStaffUTT());
         }
 
         if (!empty($this->ldap->getPhoneNumber()) && 'NC' != $this->ldap->getPhoneNumber() && $this->ldap->getPhoneNumber() != $this->database->getPhoneNumber()) {

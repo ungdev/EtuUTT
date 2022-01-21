@@ -125,6 +125,14 @@ class User
     protected $isStudent;
 
     /**
+     * Is a staff ?
+     *      => ldap[user][employeetype].
+     *
+     * @var bool
+     */
+    protected $isStaffUTT;
+
+    /**
      * @param string $filiere
      *
      * @return User
@@ -202,6 +210,26 @@ class User
     public function getFullName()
     {
         return $this->fullName;
+    }
+
+    /**
+     * @param bool $isStaffUTT
+     *
+     * @return User
+     */
+    public function setIsStaffUTT($isStaffUTT)
+    {
+        $this->isStaffUTT = $isStaffUTT;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsStaffUTT()
+    {
+        return $this->isStaffUTT;
     }
 
     /**

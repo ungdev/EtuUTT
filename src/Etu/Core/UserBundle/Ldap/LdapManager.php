@@ -213,6 +213,11 @@ class LdapManager
             || !in_array('NC', $values['formation'])
         );
 
+        $user->setIsStaffUTT(
+            in_array('employee', $values['edupersonaffiliation'])
+            || in_array('faculty', $values['edupersonaffiliation'])
+        )
+
         $uvs = [];
 
         foreach ((array) $values['uv'] as $key => $uv) {
