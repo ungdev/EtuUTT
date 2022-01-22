@@ -5,11 +5,12 @@ Actuelle
 ### Fonctionnalités
 
 * Mise à jour de la liste des UEs
+* * La commande etu:ue:import synchronise désormais les UEs de la DB avec le CSV (pas d'ajout brut). Les UEs pas dans le CSV sont marquées dépréciées.
+* Les étudiants salariés de l'UTT sont également considérés comme étudiants et non plus juste salariés (accès aux commentaires, ...)
 
 ### Fix
 
-* La commande etu:ue:import synchronise désormais les UEs de la DB avec le CSV (pas d'ajout brut). Les UEs pas dans le CSV sont marquées dépréciées.
-* Les étudiants salariés de l'UTT sont également considérés comme étudiants et non plus juste salariés (accès aux commentaires, ...)
+
 
 ## 10.3
 
