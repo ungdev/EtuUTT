@@ -148,7 +148,7 @@ class ElementToUpdate
             $user->setIsStudent($this->ldap->getIsStudent());
         }
 
-        if ($this->ldap->getIsStaffUTT() != $this->database->getIsStaffUTT() {
+        if ($this->ldap->getIsStaffUTT() != $this->database->getIsStaffUTT()) {
             $persist = true;
             $user->setIsStaffUTT($this->ldap->getIsStaffUTT());
         }
