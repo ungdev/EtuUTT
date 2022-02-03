@@ -166,9 +166,10 @@ class ElementToUpdate
         // Update official avatar
         $imagine = new Imagine();
         $webDirectory = __DIR__.'/../../../../../../../web';
+        $profilePicturesDirectory = __DIR__.'/../../../../../../../profilePictures';
         $avatar = $this->ldap->getLogin().'_official.jpg';
         try {
-            $image = $imagine->open('https://local-sig.utt.fr/Pub/trombi/individu/'.$this->ldap->getStudentId().'.jpg');
+            $image = $imagine->open($profilePicturesDirectory.'/'.$this->ldap->getStudentId().'.jpg');
 
             $image->copy()
                 ->thumbnail(new Box(200, 200), Image::THUMBNAIL_OUTBOUND)
