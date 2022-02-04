@@ -44,14 +44,14 @@ class MainController extends Controller
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             if($form->getData()["name"]) {
-                $where = 'a.description LIKE :keyword OR a.name LIKE :keyword';
+                $where = 'a.description LIKE :keyword OR a.name LIKE :keyword OR a.descriptionShort LIKE :keyword';
                 $query->setParameter("keyword", '%'.$form->getData()["name"].'%');
                 $query->andWhere($where);
             }
 
             if($form->getData()["contactmail"]) {
-                $query->andWhere('a.contactMail = :contactMail')
-                    ->setParameter('contactMail', $form->getData()["contactmail"]);
+                $query->andWhere('a.contactMail LIKE :contactMail')
+                    ->setParameter('contactMail', '%'.$form->getData()["contactmail"].'%');
             }
 
             if(null != $form->getData()["presidentwanted"]) {
@@ -98,14 +98,14 @@ class MainController extends Controller
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             if($form->getData()["name"]) {
-                $where = 'a.description LIKE :keyword OR a.name LIKE :keyword';
+                $where = 'a.description LIKE :keyword OR a.name LIKE :keyword OR a.descriptionShort LIKE :keyword';
                 $query->setParameter("keyword", '%'.$form->getData()["name"].'%');
                 $query->andWhere($where);
             }
 
             if($form->getData()["contactmail"]) {
-                $query->andWhere('a.contactMail = :contactMail')
-                    ->setParameter('contactMail', $form->getData()["contactmail"]);
+                $query->andWhere('a.contactMail LIKE :contactMail')
+                    ->setParameter('contactMail', '%'.$form->getData()["contactmail"].'%');
             }
 
             if(null != $form->getData()["presidentwanted"]) {
