@@ -36,6 +36,8 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     cache:            "%kernel.cache_dir%/twig"
+    date:
+        timezone: Europe/Paris
     form_themes:
         - 'form/theme-default.html.twig'
 

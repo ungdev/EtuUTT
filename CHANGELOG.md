@@ -12,7 +12,7 @@ Actuelle
 
 ### Fix
 
-
+* Forçage du timezone à Europe/Paris
 
 ## 10.3
 
