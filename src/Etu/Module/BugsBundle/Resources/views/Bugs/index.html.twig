@@ -30,11 +30,39 @@
     </ul>
 
     <div class="padding20-sides">
-        <div class="span8">
-            {% set newOrder = (order == 'criticality') ? 'date' : 'criticality' %}
-            <a href="{{ path('bugs_index', {'order': newOrder}) }}">
-                <button type="button" class="btn">{{ ('bugs.sort.' ~ newOrder)|trans }}</button>
-            </a>
+        <div class="trombi-search-box">
+            {{ form_start(form) }}
+            <div class="row-fluid">
+                <div class="span4">
+                    <div class="form-vertical">
+                        <div class="control-group">
+                            {{ form_label(form.field) }}
+                            <div class="controls">
+                                {{ form_widget(form.field) }}
+                            </div>
+                            <span class="help-block">{{ form_errors(form.field) }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="form-vertical">
+                        <div class="control-group">
+                            {{ form_label(form.order) }}
+                            <div class="controls">
+                                {{ form_widget(form.order) }}
+                            </div>
+                            <span class="help-block">{{ form_errors(form.order) }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    {{ form_rest(form) }}
+                    <button type="submit" class="btn">
+                        Trier !
+                    </button>
+                </div>
+            </div>
+            {{ form_end(form) }}
         </div>
 
         {# display navigation #}

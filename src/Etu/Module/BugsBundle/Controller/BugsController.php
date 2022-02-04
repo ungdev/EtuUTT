@@ -29,11 +29,16 @@ class BugsController extends Controller
      *
      * @param mixed $page
      */
-    public function indexAction($page = 1)
+    public function indexAction($page = 1, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_BUGS');
 
-        $order = (isset($_GET['order']) && !empty($_GET['order'])) ? $_GET['order'] : 'criticality';
+        $filterForm = $this->createFormBuilder()
+            ->setMethod('get')
+            ->setAction($this->generateUrl('bugs_index'))
+            ->add('field',ChoiceType::class, ["label"=>"Tri par", "choices"=>["Date"=>"date", "Criticité"=>"criticality"], "required"=>true])
+            ->add("order", ChoiceType::class, ["label"=>"Ordre","choices"=>["Croissant"=>"ASC", "Decroissant"=>"DESC"], "required"=>true])
+            ->getForm();
 
         /** @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
@@ -45,16 +50,22 @@ class BugsController extends Controller
             ->leftJoin('i.assignee', 'a')
             ->where('i.isOpened = 1');
 
-        if ('date' == $order) {
-            $query = $query->orderBy('i.createdAt', 'DESC');
-        } else {
-            $query = $query->orderBy('i.criticality', 'DESC')
-                            ->addOrderBy('i.createdAt', 'DESC');
+        $filterForm->handleRequest($request);
+        if($filterForm->isSubmitted() && $filterForm->isValid())
+        {
+            $field = $filterForm->getData()['field'];
+            $order = $filterForm->getData()['order'];
+            if("date" === $field) {
+                $query = $query->orderBy('i.createdAt', $order);
+            }
+            else {
+                $query = $query->orderBy('i.criticality', $order);
+            }
         }
 
         $pagination = $this->get('knp_paginator')->paginate($query, $page, 20);
 
-        return ['pagination' => $pagination, 'order' => $order];
+        return ['pagination' => $pagination, 'form'=>$filterForm->createView()];
     }
 
     /**

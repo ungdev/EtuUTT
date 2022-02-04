@@ -4,6 +4,7 @@ Actuelle
 
 ### Fonctionnalités
 
+* Ajout de filtre et de tri dans la liste des bugs
 * Ajout de la possibilité de proposer des nouvelles fonctionnalités
 * Ajout des personnels UTT dans le trombi et de filtre sur le statut étudiant / enseignant
 * Les photos officielles des utilisateurs sont désormais récupérées via un script externe [utt-profile-pictures](https://github.com/ungdev/utt-profile-pictures) (développé grâce à la lib python [pyutttils](http://github.com/larueli/pyutttils/)) puis placées dans un dossier et récupérées par le site etu.
