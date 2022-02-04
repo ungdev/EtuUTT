@@ -149,16 +149,20 @@ This command helps you to import the official UTT UE guide from CSV file.');
         // We ensure all UEs imported are not old (in cas of : UE is not old -> UE is old -> UE is no longer old)
         foreach ($codesUEsInDBAfterImport as $code) {
             $ue = $em->getRepository('EtuModuleUVBundle:UV')->findOneBy(["code"=>$code]);
-            $ue->setIsOld(false);
-            $em->persist($ue);
+            if(!empty($ue)) {
+                $ue->setIsOld(false);
+                $em->persist($ue);
+            }
         }
 
         // We ensure that all codes which are not in csv but in the db after import are old
         $oldCodes = array_diff($codesUEsInDBAfterImport, $codesUEsInCSV);
         foreach ($oldCodes as $oldCode) {
             $ue = $em->getRepository('EtuModuleUVBundle:UV')->findOneBy(["code"=>$oldCode]);
-            $ue->setIsOld(true);
-            $em->persist($ue);
+            if(!empty($ue)) {
+                $ue->setIsOld(true);
+                $em->persist($ue);
+            }
         }
 
         $em->flush();
