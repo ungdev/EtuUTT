@@ -38,8 +38,8 @@ class MainController extends Controller
             ->add('filiere', ChoiceType::class, ['choices' => User::$filieres, 'required' => false])
             ->add('niveau', ChoiceType::class, ['choices' => User::$levels, 'required' => false])
             ->add('isinldap', ChoiceType::class, ['choices' => User::$ldap, 'required' => false])
-            ->add('isStudent', ChoiceType::class, ['choices'=>["Oui"=>true, "Non"=>false], "required"=>false])
-            ->add('isStaffUTT', ChoiceType::class, ['choices'=>["Oui"=>true, "Non"=>false], "required"=>false])
+            ->add('isStudent', ChoiceType::class, ['choices'=>["Oui"=>true, "Non"=>false], "required"=>false, "mapped"=>false])
+            ->add('isStaffUTT', ChoiceType::class, ['choices'=>["Oui"=>true, "Non"=>false], "required"=>false, "mapped"=>false])
             ->add('personnalMail', null, ['required' => false])
             ->setAction($this->generateUrl('trombi_index'))
             ->getForm();
@@ -91,14 +91,14 @@ class MainController extends Controller
                     ->setParameter('isinldap', $user->getIsInLDAP());
             }
 
-            if (null !== $user->getIsStudent()) {
+            if (null !== $form["isStudent"]->getData()) {
                 $users->andWhere('u.isStudent = :isstudent')
-                    ->setParameter('isstudent', $user->getIsStudent());
+                    ->setParameter('isstudent', $form["isStudent"]->getData());
             }
 
-            if (null !== $user->getIsStaffUTT()) {
+            if (null !== $form["isStaffUTT"]->getData()) {
                 $users->andWhere('u.isStaffUTT = :isstaffutt')
-                    ->setParameter('isstaffutt', $user->getIsStaffUTT());
+                    ->setParameter('isstaffutt', $form["isStaffUTT"]->getData());
             }
 
             if ($user->getPhoneNumber()) {
