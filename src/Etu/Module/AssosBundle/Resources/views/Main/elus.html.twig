@@ -25,7 +25,63 @@
     </ul>
 
     <div class="padding20-sides">
+        <div class="trombi-search-box">
+            {{ form_start(form) }}
+            <div class="row-fluid">
+                <div class="span4">
+                    <div class="form-vertical">
+                        <div class="control-group">
+                            {{ form_label(form.name) }}
+                            <div class="controls">
+                                {{ form_widget(form.name) }}
+                            </div>
+                            <span class="help-block">{{ form_errors(form.name) }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="form-vertical">
+                        <div class="control-group">
+                            {{ form_label(form.contactmail) }}
+                            <div class="controls">
+                                {{ form_widget(form.contactmail) }}
+                            </div>
+                            <span class="help-block">{{ form_errors(form.contactmail) }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="span4">
+                    <div class="form-vertical">
+                        <div class="control-group">
+                            {{ form_label(form.presidentwanted) }}
+                            <div class="controls">
+                                {{ form_widget(form.presidentwanted) }}
+                            </div>
+                            <span class="help-block">{{ form_errors(form.presidentwanted) }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="trombi-search-submit">
+                {{ form_rest(form) }}
+                <button type="submit" class="btn">
+                    Rechercher
+                </button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+
+        {% if pagination.count == 0 %}
+        <p class="muted trombi-search-explainations">
+            {{ 'trombi.main.index.no_results'|trans }}
+        </p>
+        {% else %}
         <div class="navigation">
+            <br />
+            <p>
+                {{ 'trombi.main.index.count'|transchoice(pagination.totalItemCount, {'%count%': pagination.totalItemCount}) }}
+            </p>
             {{ knp_pagination_render(pagination) }}
         </div>
 
@@ -53,5 +109,6 @@
         <div class="navigation">
             {{ knp_pagination_render(pagination) }}
         </div>
+        {% endif %}
     </div>
 {% endblock %}

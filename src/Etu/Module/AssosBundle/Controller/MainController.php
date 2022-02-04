@@ -7,8 +7,10 @@ use Etu\Core\CoreBundle\Framework\Definition\Controller;
 use Etu\Core\UserBundle\Entity\Member;
 use Etu\Core\UserBundle\Entity\Organization;
 // Import annotations
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class MainController extends Controller
 {
@@ -18,23 +20,51 @@ class MainController extends Controller
      *
      * @param mixed $page
      */
-    public function indexAction($page)
+    public function indexAction($page, Request $request)
     {
         /** @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
+
+        $form = $this->createFormBuilder(null)
+            ->setMethod('get')
+            ->setAction($this->generateUrl('orgas_index'))
+            ->add('name', null, ['required' => false, "label"=>"Recherche dans le nom ou la description"])
+            ->add('contactmail', null, ["required"=>false, "label"=>"Adresse mail"])
+            ->add('presidentwanted', ChoiceType::class, ["choices"=>["Oui"=>true, "Non"=>false], "required"=>false, "label"=>"Cherche repreneur"])
+            ->getForm();
+
 
         $query = $em->createQueryBuilder()
             ->select('a, p')
             ->from('EtuUserBundle:Organization', 'a')
             ->leftJoin('a.president', 'p')
             ->where('a.name NOT LIKE \'Elus%\'')
-            ->orderBy('a.name')
-            ->getQuery();
+            ->orderBy('a.name');
 
-        $orgas = $this->get('knp_paginator')->paginate($query, $page, 10);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            if($form->getData()["name"]) {
+                $where = 'a.description LIKE :keyword OR a.name LIKE :keyword';
+                $query->setParameter("keyword", '%'.$form->getData()["name"].'%');
+                $query->andWhere($where);
+            }
+
+            if($form->getData()["contactmail"]) {
+                $query->andWhere('a.contactMail = :contactMail')
+                    ->setParameter('contactMail', $form->getData()["contactmail"]);
+            }
+
+            if(null != $form->getData()["presidentwanted"]) {
+                $query->andWhere('a.presidentWanted = :presidentWanted')
+                    ->setParameter('presidentWanted', $form->getData()["presidentwanted"]);
+            }
+        }
+
+        $orgas = $this->get('knp_paginator')->paginate($query->getQuery(), $page, 10);
 
         return [
             'pagination' => $orgas,
+            'form' => $form->createView()
         ];
     }
 
@@ -44,7 +74,7 @@ class MainController extends Controller
      *
      * @param mixed $page
      */
-    public function elusAction($page)
+    public function elusAction($page, Request $request)
     {
         /** @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
@@ -54,13 +84,40 @@ class MainController extends Controller
             ->from('EtuUserBundle:Organization', 'a')
             ->leftJoin('a.president', 'p')
             ->where('a.name LIKE \'Elus%\'')
-            ->orderBy('a.name')
-            ->getQuery();
+            ->orderBy('a.name');
 
-        $orgas = $this->get('knp_paginator')->paginate($query, $page, 10);
+        $form = $this->createFormBuilder(null)
+            ->setMethod('get')
+            ->setAction($this->generateUrl('elus_index'))
+            ->add('name', null, ['required' => false, "label"=>"Recherche dans le nom ou la description"])
+            ->add('contactmail', null, ["required"=>false, "label"=>"Adresse mail"])
+            ->add('presidentwanted', ChoiceType::class, ["choices"=>["Oui"=>true, "Non"=>false], "required"=>false, "label"=>"Cherche repreneur"])
+            ->getForm();
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            if($form->getData()["name"]) {
+                $where = 'a.description LIKE :keyword OR a.name LIKE :keyword';
+                $query->setParameter("keyword", '%'.$form->getData()["name"].'%');
+                $query->andWhere($where);
+            }
+
+            if($form->getData()["contactmail"]) {
+                $query->andWhere('a.contactMail = :contactMail')
+                    ->setParameter('contactMail', $form->getData()["contactmail"]);
+            }
+
+            if(null != $form->getData()["presidentwanted"]) {
+                $query->andWhere('a.presidentWanted = :presidentWanted')
+                    ->setParameter('presidentWanted', $form->getData()["presidentwanted"]);
+            }
+        }
+
+        $orgas = $this->get('knp_paginator')->paginate($query->getQuery(), $page, 10);
 
         return [
             'pagination' => $orgas,
+            "form"=>$form->createView()
         ];
     }
 
