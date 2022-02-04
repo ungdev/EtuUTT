@@ -10,8 +10,8 @@ bugs:
       confirm: "The issue has been reported. Thank you for your input !"
       criticality: Criticality
       name: Title
-      submit: Report
-      title: "Report a bug"
+      submit: Send
+      title: "Report a bug or suggest something"
     edit:
       body: Description
       confirm: "The issue has successfully been edited"
@@ -74,6 +74,7 @@ bugs:
       message: "%adminName% has unassigned %userName% from the bug"
       success: "The user has been unassigned from the bug"
   criticality:
+    5: Suggestion
     10: Typo
     20: "Visual issue"
     30: "Minor issue"
@@ -82,7 +83,7 @@ bugs:
     60: "Security issue"
   menu:
     sidebar:
-      bugs: "Report a bug"
+      bugs: "Report a bug or suggest enhancements"
   notifs:
     closed:
       anyone: "Bug %bugName% was resolved"

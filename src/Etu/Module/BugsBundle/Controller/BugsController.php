@@ -181,6 +181,7 @@ class BugsController extends Controller
                     'bugs.criticality.30' => Issue::CRITICALITY_MINOR,
                     'bugs.criticality.20' => Issue::CRITICALITY_VISUAL,
                     'bugs.criticality.10' => Issue::CRITICALITY_TYPO,
+                    'bugs.criticality.5' => Issue::CRITICALITY_SUGGESTION,
                 ],
             ])
             ->add('submit', SubmitType::class, ['label' => 'bugs.bugs.view.admin_edit'])
@@ -215,6 +216,7 @@ class BugsController extends Controller
                     'bugs.criticality.30' => Issue::CRITICALITY_MINOR,
                     'bugs.criticality.20' => Issue::CRITICALITY_VISUAL,
                     'bugs.criticality.10' => Issue::CRITICALITY_TYPO,
+                    'bugs.criticality.5' => Issue::CRITICALITY_SUGGESTION,
                 ],
                 'label' => 'bugs.bugs.create.criticality',
             ])
@@ -310,6 +312,7 @@ class BugsController extends Controller
                     'bugs.criticality.30' => Issue::CRITICALITY_MINOR,
                     'bugs.criticality.20' => Issue::CRITICALITY_VISUAL,
                     'bugs.criticality.10' => Issue::CRITICALITY_TYPO,
+                    'bugs.criticality.5' => Issue::CRITICALITY_SUGGESTION,
                 ],
                 'label' => 'bugs.bugs.edit.criticality',
             ])

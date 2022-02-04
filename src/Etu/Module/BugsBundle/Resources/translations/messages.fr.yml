@@ -11,8 +11,8 @@ bugs:
       confirm: "Votre problème a été signalé. Merci de votre participation !"
       criticality: Criticité
       name: Titre
-      submit: Signaler
-      title: "Signaler un bug"
+      submit: Envoyer
+      title: "Signaler ou proposer quelque chose"
     edit:
       body: Explications
       confirm: "Votre problème a bien été modifié"
@@ -75,6 +75,7 @@ bugs:
       message: "%adminName% a supprimé l'assignation de %userName% au bug"
       success: "L'utilisateur a bien été désassigné du bug"
   criticality:
+    5: Suggestion
     10: Coquille
     20: "Problème visuel"
     30: "Problème mineur"
@@ -83,7 +84,7 @@ bugs:
     60: "Problème de sécurité"
   menu:
     sidebar:
-      bugs: "Signaler un bug"
+      bugs: "Signaler un bug ou proposer une amélioration"
   notifs:
     closed:
       anyone: "Le bug %bugName% a été résolu"

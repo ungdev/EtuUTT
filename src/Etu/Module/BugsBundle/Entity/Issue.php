@@ -18,6 +18,7 @@ class Issue
     /**
      * Issues criticalities.
      */
+    public const CRITICALITY_SUGGESTION = 5;
     public const CRITICALITY_TYPO = 10;
     public const CRITICALITY_VISUAL = 20;
     public const CRITICALITY_MINOR = 30;
@@ -358,6 +359,7 @@ class Issue
             self::CRITICALITY_SECURITY,
             self::CRITICALITY_VISUAL,
             self::CRITICALITY_TYPO,
+            self::CRITICALITY_SUGGESTION
         ])) {
             $this->criticality = $criticality;
         }
