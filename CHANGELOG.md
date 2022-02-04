@@ -15,6 +15,7 @@ Actuelle
 ### Fix
 
 * Forçage du timezone à Europe/Paris
+* Affichage de tous les présidents d'une asso dans la liste des assos
 
 ## 10.3
 

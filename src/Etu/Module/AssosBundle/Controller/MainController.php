@@ -64,6 +64,7 @@ class MainController extends Controller
 
         return [
             'pagination' => $orgas,
+            "president_code" => Member::ROLE_PRESIDENT,
             'form' => $form->createView()
         ];
     }
@@ -117,6 +118,7 @@ class MainController extends Controller
 
         return [
             'pagination' => $orgas,
+            "president_code" => Member::ROLE_PRESIDENT,
             "form"=>$form->createView()
         ];
     }

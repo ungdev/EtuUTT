@@ -95,8 +95,16 @@
 
                 {% if orga.presidentWanted %}
                 <p class="asso-info">{{ 'assos.main.index.elusWanted'|trans }}</p>
-                {% elseif orga.president %}
-                    <p class="muted asso-info">{{ 'assos.main.index.president'|trans }}: {{ orga.president.fullName }}</p>
+                {% else %}
+                    {% set presidents = [] %}
+                    {% for member in orga.memberships %}
+                        {% if member.role == president_code %}
+                            {% set presidents = presidents | merge([member.user.fullName]) %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if presidents|length > 0 %}
+                        <p class="muted asso-info">{{ 'assos.main.index.president'|trans }}: {{ presidents|join(", ") }}</p>
+                    {% endif %}
                 {% endif %}
 
                 <p class="muted asso-info hidden-phone">{{ orga.descriptionShort }}</p>
