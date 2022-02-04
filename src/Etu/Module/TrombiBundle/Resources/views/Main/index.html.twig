@@ -119,6 +119,30 @@
                     </div>
                 </div>
 
+                <div class="row-fluid">
+                    <div class="span4">
+                        <div class="form-vertical">
+                            <div class="control-group hidden-phone">
+                                {{ form_label(form.isStudent, 'trombi.main.index.isStudent'|trans) }}
+                                <div class="controls">
+                                    {{ form_widget(form.isStudent) }}
+                                </div>
+                                <span class="help-block">{{ form_errors(form.isStudent) }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span4"></div>
+                    <div class="span4">
+                        <div class="control-group hidden-phone">
+                            {{ form_label(form.isStaffUTT, 'trombi.main.index.isStaffUTT'|trans) }}
+                            <div class="controls">
+                                {{ form_widget(form.isStaffUTT) }}
+                            </div>
+                            <span class="help-block">{{ form_errors(form.isStaffUTT) }}</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="trombi-search-submit">
                     {{ form_rest(form) }}
 

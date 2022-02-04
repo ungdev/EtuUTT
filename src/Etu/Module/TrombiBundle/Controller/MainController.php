@@ -38,6 +38,8 @@ class MainController extends Controller
             ->add('filiere', ChoiceType::class, ['choices' => User::$filieres, 'required' => false])
             ->add('niveau', ChoiceType::class, ['choices' => User::$levels, 'required' => false])
             ->add('isinldap', ChoiceType::class, ['choices' => User::$ldap, 'required' => false])
+            ->add('isStudent', ChoiceType::class, ['choices'=>["Oui"=>true, "Non"=>false], "required"=>false])
+            ->add('isStaffUTT', ChoiceType::class, ['choices'=>["Oui"=>true, "Non"=>false], "required"=>false])
             ->add('personnalMail', null, ['required' => false])
             ->setAction($this->generateUrl('trombi_index'))
             ->getForm();
@@ -53,7 +55,6 @@ class MainController extends Controller
             $users = $em->createQueryBuilder()
                 ->select('u')
                 ->from('EtuUserBundle:User', 'u')
-                ->where('u.isStudent = 1')
                 ->orderBy('u.lastName');
 
             if (!$user->getFullName() && !$user->getStudentId() && !$user->getPhoneNumber() && !$user->getUvs() &&
@@ -88,6 +89,16 @@ class MainController extends Controller
             if (null !== $user->getIsInLDAP()) {
                 $users->andWhere('u.isInLDAP = :isinldap')
                     ->setParameter('isinldap', $user->getIsInLDAP());
+            }
+
+            if (null !== $user->getIsStudent()) {
+                $users->andWhere('u.isStudent = :isstudent')
+                    ->setParameter('isstudent', $user->getIsStudent());
+            }
+
+            if (null !== $user->getIsStaffUTT()) {
+                $users->andWhere('u.isStaffUTT = :isstaffutt')
+                    ->setParameter('isstaffutt', $user->getIsStaffUTT());
             }
 
             if ($user->getPhoneNumber()) {

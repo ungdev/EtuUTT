@@ -12,8 +12,10 @@ trombi:
       personnalMail: "Personal e-mail"
       phone: "Phone number"
       search: Search
-      search_title: "Search for a student"
-      studentId: "Student ID"
+      search_title: "Search for a student or employee"
+      isStudent: "Is student"
+      isStaffUTT: "Is a staff member"
+      studentId: "UTT number ID"
       title: Directory
       uncomplete_profile:
         desc: "Your profile must be complete (private or public) in order to use the directory"

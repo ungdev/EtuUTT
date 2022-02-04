@@ -13,8 +13,10 @@ trombi:
       personnalMail: "E-mail personnel"
       phone: "Numéro de téléphone"
       search: Rechercher
-      search_title: "Rechercher un étudiant"
-      studentId: "Numéro d'étudiant"
+      search_title: "Rechercher un étudiant ou un personnel"
+      studentId: "Numéro UTT"
+      isStudent: "Est étudiant"
+      isStaffUTT: "Est employé ou enseignant"
       title: Trombinoscope
       uncomplete_profile:
         desc: "Votre profil doit être complet (privé ou public) pour pouvoir utiliser le trombinoscope"
