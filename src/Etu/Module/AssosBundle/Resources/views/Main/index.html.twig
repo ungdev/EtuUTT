@@ -12,14 +12,14 @@
 
 {% block content %}
     <ul class="nav nav-tabs page-tabs">
-        <li class="pull-right">
-            <a href="{{ path('elus_index') }}">
-                {{ 'assos.main.menu.elus'|trans }}
-            </a>
-        </li>
-        <li class="pull-right active page-tabs-resolved-active">
+        <li class="active page-tabs-resolved-active">
             <a href="{{ path('orgas_index') }}">
                 {{ 'assos.main.menu.orgas'|trans }}
+            </a>
+        </li>
+        <li class="">
+            <a href="{{ path('elus_index') }}">
+                {{ 'assos.main.menu.elus'|trans }}
             </a>
         </li>
     </ul>
