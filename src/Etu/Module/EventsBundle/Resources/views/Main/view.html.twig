@@ -168,9 +168,9 @@
                         {% if useOn %}
                             {{ event.begin|date('d/m/Y') }}
                         {% else %}
-                            {{ event.begin|date('d/m/Y H:i') }}
+                            {{ event.begin.format('d/m/Y H:i') }}
                             <br />
-                            {{ event.end|date('d/m/Y H:i') }}
+                            {{ event.end.format('d/m/Y H:i') }}
                         {% endif %}
                         <br />
                         {{ event.location }}
