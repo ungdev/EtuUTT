@@ -163,11 +163,11 @@
                         </div>
                         <h2>{{ event.title }}</h2>
                         <span class="date">
-                            {{ ('events.main.days.' ~ (event.begin|date('D')|lower)) | trans }}
-                            {{ event.begin|date('j') }}
-                            {{ ('events.main.months.' ~ (event.begin|date('M')|lower)) | trans }}
+                            {{ ('events.main.days.' ~ (event.begin.format('D')|lower)) | trans }}
+                            {{ event.begin.format('j') }}
+                            {{ ('events.main.months.' ~ (event.begin.format('M')|lower)) | trans }}
                             -
-                            {{ event.begin|date('G') }}h{{ event.begin|date('i') }}
+                            {{ event.begin.format('G') }}h{{ event.begin.format('i') }}
                         </span>
                         <span class="location">{{ event.location }}</span>
                     </div>

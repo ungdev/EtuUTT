@@ -58,7 +58,7 @@
                                 <h5>{{ event.title }}</h5>
 
                                 <small class="muted">
-                                    {{ 'core.main.indexAnonymous.date'|trans({'%date%': event.begin|date('d/m/Y')}) }}
+                                    {{ 'core.main.indexAnonymous.date'|trans({'%date%': event.begin.format('d/m/Y')}) }}
                                 </small>
                             </div>
 

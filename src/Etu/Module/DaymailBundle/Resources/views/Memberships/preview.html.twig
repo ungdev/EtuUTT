@@ -5,9 +5,9 @@
 
     <title>
         Daymail du
-        {{ ('daymail.memberships.daymail.days.'~daymail.date|date('D')|lower)|trans }}
-        {{ daymail.date|date('d') }}
-        {{ ('daymail.memberships.daymail.months.'~daymail.date|date('M')|lower)|trans }}
+        {{ ('daymail.memberships.daymail.days.'~daymail.date.format('D')|lower)|trans }}
+        {{ daymail.date.format('d') }}
+        {{ ('daymail.memberships.daymail.months.'~daymail.date.format('M')|lower)|trans }}
     </title>
 </head>
 <body style="padding: 0; margin: 0;">
@@ -21,9 +21,9 @@
                         </td>
                         <td style="text-align: right; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; color: white;">
                             Daymail du
-                            {{ ('daymail.memberships.daymail.days.'~daymail.date|date('D')|lower)|trans }}
-                            {{ daymail.date|date('d') }}
-                            {{ ('daymail.memberships.daymail.months.'~daymail.date|date('M')|lower)|trans }}
+                            {{ ('daymail.memberships.daymail.days.'~daymail.date.format('D')|lower)|trans }}
+                            {{ daymail.date.format('d') }}
+                            {{ ('daymail.memberships.daymail.months.'~daymail.date.format('M')|lower)|trans }}
                         </td>
                     </tr>
                 </table>

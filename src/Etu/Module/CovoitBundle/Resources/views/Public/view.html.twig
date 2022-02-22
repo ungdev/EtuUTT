@@ -89,10 +89,10 @@
                     <div class="info-value">
                         {{ 'covoit.public_view.startHour.value.start'|trans({
                             '%date%': covoit.date|date('d/m/Y'),
-                            '%startHour%': covoit.startHour|date('H\\\hi')
+                            '%startHour%': covoit.startHour.format('H\\\hi')
                         }) }}<br />
                         {{ 'covoit.public_view.startHour.value.end'|trans({
-                            '%endHour%': covoit.endHour|date('H\\\hi'),
+                            '%endHour%': covoit.endHour.format('H\\\hi'),
                             '%endCity%': covoit.endCity.name
                         }) }}
                     </div>

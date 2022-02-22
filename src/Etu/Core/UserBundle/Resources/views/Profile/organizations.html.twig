@@ -168,7 +168,7 @@
                 <hr/>
                 {% if user.isBdeMember() %}
                     <p>
-                        {{ 'user.profile.organizations.bde_member'|trans({'%name%': user.fullName, '%end%': user.bdeMembershipEnd|date('d/m/Y')}) }}
+                        {{ 'user.profile.organizations.bde_member'|trans({'%name%': user.fullName, '%end%': user.bdeMembershipEnd.format('d/m/Y')}) }}
                     </p>
                 {% else %}
                     <p>

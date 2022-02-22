@@ -2,7 +2,7 @@
 
 {% block title %}{{ 'events.main.view.title'|trans }}{% endblock %}
 
-{% block meta_desc %}{{ event.title }}, le {{ event.begin|date('d/m/Y à H:i') }}, {{ event.location }}{% endblock %}
+{% block meta_desc %}{{ event.title }}, le {{ event.begin.format('d/m/Y à H:i') }}, {{ event.location }}{% endblock %}
 
 {% block titleIcon %}
     <img src="{{ asset('assets/img/titles/events.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="page-title-icon" />
@@ -166,7 +166,7 @@
                 <div class="span3">
                     <p>
                         {% if useOn %}
-                            {{ event.begin|date('d/m/Y') }}
+                            {{ event.begin.format('d/m/Y') }}
                         {% else %}
                             {{ event.begin.format('d/m/Y H:i') }}
                             <br />

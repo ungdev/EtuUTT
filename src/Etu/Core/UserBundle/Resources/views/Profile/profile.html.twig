@@ -193,7 +193,7 @@
                         </div>
                         <div class="profile-infos-value">
                             {% if app.user.birthday %}
-                                {{ app.user.birthday|date('d/m/Y') }}
+                                {{ app.user.birthday.format('d/m/Y') }}
 
                                 {% if is_private(app.user.birthdayPrivacy) %}
                                     <i class="icon-lock tip" title="{{ 'user.privacy.private'|trans }}"></i>

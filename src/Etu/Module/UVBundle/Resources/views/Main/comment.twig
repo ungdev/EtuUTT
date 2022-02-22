@@ -35,10 +35,10 @@
                 </div>
             </div>
         <div class="uv-view-comment-date">
-            {{ 'uvs.main.date.createdAt'|trans }} : {{ comment.createdAt|date('d/m/Y H:i') }}
+            {{ 'uvs.main.date.createdAt'|trans }} : {{ comment.createdAt.format('d/m/Y H:i') }}
         </div>
         <div class="uv-view-comment-date">
-            {{ 'uvs.main.date.updatedAt'|trans }} : {{ comment.updatedAt|date('d/m/Y H:i') }}
+            {{ 'uvs.main.date.updatedAt'|trans }} : {{ comment.updatedAt.format('d/m/Y H:i') }}
         </div>
         <div class="uv-view-comment-content">
             {{ comment.body|purify }}

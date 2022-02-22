@@ -13,7 +13,7 @@
         <strong>{{ ('user.orga.role.'~membership.role)|trans }}</strong>.
     </p>
     <p>
-        {{ 'user.memberships.orga.since'|trans({'%date%': membership.date|date('d/m/Y')}) }}
+        {{ 'user.memberships.orga.since'|trans({'%date%': membership.date.format('d/m/Y')}) }}
     </p>
 
     <hr />

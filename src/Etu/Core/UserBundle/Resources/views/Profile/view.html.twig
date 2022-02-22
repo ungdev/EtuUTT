@@ -313,7 +313,7 @@
                         <div class="view-icon"><i class="icon-map-marker"></i></div>
                         <div class="view-label">{{ 'user.profile.view.birthday'|trans }}</div>
                         <div class="view-value">
-                            {{ user.birthday|date('d/m/Y') }}
+                            {{ user.birthday.format('d/m/Y') }}
                         </div>
                     </div>
                 {% elseif user.birthdayDisplayOnlyAge and user.birthday %}

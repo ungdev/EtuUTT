@@ -65,8 +65,8 @@
                 </div>
                 <div class="span3">
                     <p>
-                        {{ event.begin|date('d/m/Y H:i') }}<br />
-                        {{ event.end|date('d/m/Y H:i') }}<br />
+                        {{ event.begin.format('d/m/Y H:i') }}<br />
+                        {{ event.end.format('d/m/Y H:i') }}<br />
                         {{ event.location }}
                     </p>
                 </div>
