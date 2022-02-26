@@ -30,6 +30,11 @@ class ElementToUpdate
      */
     protected $doctrine;
 
+    protected function array_different($array1, $array2)
+    {
+        return count(array_diff($array1, $array2)) > 0 || count(array_diff($array2, $array1)) > 0;
+    }
+
     /**
      * @throws \RuntimeException
      */
@@ -82,10 +87,25 @@ class ElementToUpdate
             $niveau = str_replace($branch, '', $this->ldap->getNiveau());
         }
 
+        $branchList = [];
+        $niveauList = [];
+        foreach ($this->ldap->getNiveauList() as $niveau) {
+            preg_match('/^(.+)[0-9]$/i', $niveau, $match);
+            if (isset($match[1])) {
+                $branchList[] = $match[1];
+                $niveauList[] = str_replace($match[1], '', $niveau);
+            }
+        }
+
         // Updates
         if (ucfirst(mb_strtolower($this->ldap->getFormation())) != $this->database->getFormation()) {
             $persist = true;
             $user->setFormation(ucfirst(mb_strtolower($this->ldap->getFormation())));
+        }
+
+        if ($this->array_different($this->ldap->getFormationList(), $this->database->getFormationList())) {
+            $persist = true;
+            $user->setFormationList($this->ldap->getFormationList());
         }
 
         if ($niveau != $this->database->getNiveau()) {
@@ -93,14 +113,29 @@ class ElementToUpdate
             $user->setNiveau($niveau);
         }
 
+        if ($this->array_different($niveauList, $this->database->getNiveauList())) {
+            $persist = true;
+            $user->setNiveauList($niveauList);
+        }
+
         if ($branch != $this->database->getBranch()) {
             $persist = true;
             $user->setBranch($branch);
         }
 
+        if($this->array_different($branchList, $this->database->getBranchList())) {
+            $persist = true;
+            $user->setBranchList($branchList);
+        }
+
         if ($this->ldap->getFiliere() != $this->database->getFiliere()) {
             $persist = true;
             $user->setFiliere($this->ldap->getFiliere());
+        }
+
+        if ($this->array_different($this->ldap->getFiliereList(), $this->database->getFiliereList())) {
+            $persist = true;
+            $user->setFiliereList($this->ldap->getFiliereList());
         }
 
         if (implode('|', $this->ldap->getUvs()) != $this->database->getUvs()) {

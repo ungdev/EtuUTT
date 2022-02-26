@@ -162,11 +162,25 @@ class User implements UserInterface, EquatableInterface, \Serializable
     protected $formation;
 
     /**
+     * @var string[]
+     *
+     * @ORM\Column(type="array", nullable=true)
+     */
+    protected $formationList;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string", length=10, nullable=true)
      */
     protected $branch;
+
+    /**
+     * @var string[]
+     *
+     * @ORM\Column(type="array", nullable=true)
+     */
+    protected $brancheList;
 
     /**
      * @var string
@@ -176,11 +190,25 @@ class User implements UserInterface, EquatableInterface, \Serializable
     protected $niveau;
 
     /**
+     * @var string[]
+     *
+     * @ORM\Column(type="array", nullable=true)
+     */
+    protected $niveauList;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $filiere;
+
+    /**
+     * @var string[]
+     *
+     * @ORM\Column(type="array", nullable=true)
+     */
+    protected $filiereList;
 
     /**
      * @var string
@@ -1046,6 +1074,25 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
+     * @param string $formationList[]
+     *
+     * @return User
+     */
+    public function setFormationList($formationList)
+    {
+        $formations = [];
+        foreach ($formationList as $formation) {
+            if ('nc' !== mb_strtolower($formation)) {
+                $formations[] = $formation;
+            }
+        }
+
+        $this->formationList = $formations;
+
+        return $this;
+    }
+
+    /**
      * Get formation.
      *
      * @return string
@@ -1053,6 +1100,16 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public function getFormation()
     {
         return $this->formation;
+    }
+
+    /**
+     * Get formation.
+     *
+     * @return string[]
+     */
+    public function getFormationList()
+    {
+        return $this->formationList;
     }
 
     /**
@@ -1072,11 +1129,38 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
+     * @param string[] $brancheList
+     *
+     * @return $this
+     */
+    public function setBranchList($brancheList)
+    {
+        $branches = [];
+        foreach ($brancheList as $branch) {
+            if ('NC' !== $branch) {
+                $branches[] = $branch;
+            }
+        }
+
+        $this->brancheList = $branches;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getBranch()
     {
         return $this->branch;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getBranchList()
+    {
+        return $this->brancheList;
     }
 
     /**
@@ -1096,6 +1180,25 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
+     * @param string[] $niveauList
+     *
+     * @return User
+     */
+    public function setNiveauList($niveauList)
+    {
+        $niveaux = [];
+        foreach ($niveauList as $niveau) {
+            if("NC" !== $niveauList) {
+                $niveaux[] = $niveau;
+            }
+        }
+
+        $this->niveauList = $niveaux;
+
+        return $this;
+    }
+
+    /**
      * Get niveau.
      *
      * @return string
@@ -1103,6 +1206,16 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public function getNiveau()
     {
         return $this->niveau;
+    }
+
+    /**
+     * Get niveau.
+     *
+     * @return string[]
+     */
+    public function getNiveauList()
+    {
+        return $this->niveauList;
     }
 
     /**
@@ -1122,6 +1235,25 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
+     * @param string[] $filiereList
+     *
+     * @return User
+     */
+    public function setFiliereList($filiereList)
+    {
+        $filieres = [];
+        foreach ($filiereList as $filiere) {
+            if ("NC" !== $filiere) {
+                $filieres[] = $filiere;
+            }
+        }
+
+        $this->filiereList = $filieres;
+
+        return $this;
+    }
+
+    /**
      * Get filiere.
      *
      * @return string
@@ -1129,6 +1261,16 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public function getFiliere()
     {
         return $this->filiere;
+    }
+
+    /**
+     * Get filiere.
+     *
+     * @return string[]
+     */
+    public function getFiliereList()
+    {
+        return $this->filiereList;
     }
 
     /**

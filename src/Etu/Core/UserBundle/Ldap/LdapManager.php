@@ -199,8 +199,44 @@ class LdapManager
         $user->setFirstName($values['givenname'][0]);
         $user->setLastName($values['sn'][0]);
         $user->setFormation($values['formation'][0]);
+        $formations = [];
+        foreach ((array) $values['formation'] as $key => $formation) {
+            if (is_numeric($key)) {
+                $formations[] = ucfirst(mb_strtolower($formation));
+            }
+        }
+        $user->setFormationList($formations);
+
         $user->setNiveau($values['niveau'][0]);
+        $niveaux = [];
+        foreach ((array) $values['niveau'] as $key => $niveau) {
+            if (is_numeric($key)) {
+                $niveaux[] = $niveau;
+            }
+        }
+        // Les champs niveaux sont inverses dans le LDAP
+        if(count($niveaux) == 2) {
+            $niveaux = array_reverse($niveaux);
+        }
+        $user->setNiveauList($niveaux);
+
         $user->setFiliere($values['filiere'][0]);
+        $filieres = [];
+        foreach ((array) $values['filiere'] as $key => $filiere) {
+            if (is_numeric($key)) {
+                if(count($values['filiere']) > 1 && $filiere == "NC") {
+                    // Garder ordre même si pas encore de filière
+                    $filiere = "";
+                }
+                $filieres[] = $filiere;
+            }
+        }
+        // Les champs filieres sont inverses dans le LDAP
+        if(count($filieres) == 2) {
+            $filieres = array_reverse($filieres);
+        }
+        $user->setFiliereList($filieres);
+
         $user->setPhoneNumber($values['telephonenumber'][0]);
         $user->setTitle($values['title'][0]);
         $user->setRoom($values['roomnumber'][0]);

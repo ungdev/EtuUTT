@@ -61,6 +61,14 @@ class User
     protected $formation;
 
     /**
+     * Formation
+     *      => ldap[user][formation].
+     *
+     * @var string[]
+     */
+    protected $formationList;
+
+    /**
      * Level
      *      => ldap[user][niveau].
      *
@@ -69,12 +77,28 @@ class User
     protected $niveau;
 
     /**
+     * Level
+     *      => ldap[user][niveau].
+     *
+     * @var string[]
+     */
+    protected $niveauList;
+
+    /**
      * Filiere
      *      => ldap[user][filiere].
      *
      * @var string
      */
     protected $filiere;
+
+    /**
+     * Filiere
+     *      => ldap[user][filiere].
+     *
+     * @var string[]
+     */
+    protected $filiereList;
 
     /**
      * UVs
@@ -145,11 +169,31 @@ class User
     }
 
     /**
+     * @param string[] $filiereList
+     *
+     * @return User
+     */
+    public function setFiliereList($filierelist)
+    {
+        $this->filiereList = $filiereList;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getFiliere()
     {
         return $this->filiere;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getFiliereList()
+    {
+        return $this->filiereList;
     }
 
     /**
@@ -185,11 +229,31 @@ class User
     }
 
     /**
+     * @param string[] $formationList
+     *
+     * @return User
+     */
+    public function setFormationList($formationList)
+    {
+        $this->formationList = $formationList;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getFormation()
     {
         return $this->formation;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getFormationList()
+    {
+        return $this->formationList;
     }
 
     /**
@@ -345,11 +409,31 @@ class User
     }
 
     /**
+     * @param string[] $niveauList
+     *
+     * @return User
+     */
+    public function setNiveauList($niveauList)
+    {
+        $this->niveauList = $niveauList;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getNiveau()
     {
         return $this->niveau;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getNiveauList()
+    {
+        return $this->niveauList;
     }
 
     /**
