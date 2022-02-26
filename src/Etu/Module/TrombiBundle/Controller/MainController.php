@@ -129,24 +129,24 @@ class MainController extends Controller
             }
 
             if ($user->getBranch()) {
-                $users->andWhere('u.branch = :branch')
+                $users->andWhere('u.branch = :branch OR u.branchList LIKE %":branch"%')
                     ->setParameter('branch', $user->getBranch());
             }
 
             if ($user->getFiliere()) {
                 if ('libre' === mb_strtolower($user->getFiliere())) {
-                    $users->andWhere('LOWER(u.filiere) = :filiere')
+                    $users->andWhere('LOWER(u.filiere) = :filiere OR LOWER(u.filiere) LIKE %":filiere"%')
                         ->setParameter('filiere', 'libre');
                 } elseif ('Aucune' === $user->getFiliere()) {
-                    $users->andWhere('u.filiere is NULL');
+                    $users->andWhere('u.filiere is NULL OR u.filiereList LIKE %""%');
                 } else {
-                    $users->andWhere('u.filiere = :filiere')
+                    $users->andWhere('u.filiere = :filiere OR u.filiereList LIKE %":filiere"%')
                         ->setParameter('filiere', $user->getFiliere());
                 }
             }
 
             if ($user->getNiveau()) {
-                $users->andWhere('u.niveau = :niveau')
+                $users->andWhere('u.niveau = :niveau OR u.niveauList LIKE %":niveau"%')
                     ->setParameter('niveau', $user->getNiveau());
             }
 
