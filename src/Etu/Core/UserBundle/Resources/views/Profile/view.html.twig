@@ -23,6 +23,10 @@
 {% endblock %}
 
 {% block content %}
+    {% set formationArray = [] %}
+    {% for key, value in user.formationList %}
+        {%  set formationArray = formationArray|merge([user.branchList[key]~user.niveauList[key]~' '~user.filiereList[key]~' '~'('~user.formationList[key]~')'] %}
+    {% endfor %}
     <ul class="nav nav-tabs page-tabs">
         {% if from == 'search' %}
             <li>
@@ -86,7 +90,7 @@
 
                     <strong>{{ user.fullName }}</strong><br />
                     {% if user.formation %}
-                    <em>{{ user.branch~user.niveau }} {{ user.filiere }} ({{ user.formation }})</em>
+                    <em>{{ formationArray | join('<br />') }}</em>
                     {% endif %}
                 </div>
 
@@ -248,7 +252,7 @@
                     <div class="view-icon"><i class="icon-book"></i></div>
                     <div class="view-label">{{ 'user.profile.view.formation'|trans }}</div>
                     <div class="view-value">
-                        {{ user.branch~user.niveau }} {{ user.filiere }} ({{ user.formation }})
+                        {{ formationArray | join('<br />') }}
                     </div>
                 </div>
                 {% endif %}
