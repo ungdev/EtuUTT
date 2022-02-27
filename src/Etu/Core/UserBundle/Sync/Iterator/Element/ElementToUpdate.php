@@ -126,11 +126,6 @@ class ElementToUpdate
             $user->setBranch($branch);
         }
 
-        if($this->database->getUsername() === "laruelli") {
-            dump($this->ldap->getFiliereList());
-            dump($branchList);
-        }
-
         // On remet les branches dans l'ordre
         if(count($this->ldap->getFormationList()) == count($branchList)) {
             for ($position = 0; $position < count($branchList); $position++) {
@@ -161,10 +156,6 @@ class ElementToUpdate
                     }
                 }
             }
-        }
-
-        if($this->database->getUsername() === "laruelli") {
-            dump($filiereList);
         }
 
         if ($this->ldap->getFiliere() !== $this->database->getFiliere()) {
