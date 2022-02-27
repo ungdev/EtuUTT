@@ -202,7 +202,7 @@ class LdapManager
         $formations = [];
         foreach ((array) $values['formation'] as $key => $formation) {
             if (is_numeric($key)) {
-                $formations[] = ucfirst(mb_strtolower($formation));
+                $formations[] = $formation;
             }
         }
         $user->setFormationList($formations);

@@ -57,6 +57,13 @@ class User implements UserInterface, EquatableInterface, \Serializable
         'FC' => 'FC',
     ];
 
+    public static $branchToFormation = [
+        "RE" => "Master Sciences et Technologies", "ISC" => "Master Sciences et Technologies",
+        "PAIP" => "Master Sciences et Technologies", "RT" => "Ingénieur", "ISI" => "Ingénieur",
+        "MTE" => "Ingénieur", "GM" => "Ingénieur", "A2I" => "Ingénieur", "GI" => "Ingénieur", "TC" => "Ingénieur",
+        "MM" => "Ingénieur"
+    ];
+
     public static $levels = [
         '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5',
         '6' => '6', '7' => '7', '8' => '8', '9' => '9', '10' => '10',
@@ -82,6 +89,24 @@ class User implements UserInterface, EquatableInterface, \Serializable
         'MST ISC SSI' => 'SSI', 'MST PAIP MMPA' => 'MMPA',
         'MST PAIP ONT' => 'ONT', 'MST RE IMEDD' => 'IMEDD',
         'MST RE IMSGA' => 'IMSGA',
+    ];
+
+    public static $filieresToBranch = [
+        'SPI' => 'A2I',
+        'TEI' => 'A2I', 'LET' => 'GI',
+        'LIP' => 'GI', 'RAMS' => 'GI',
+        'SFERE' => 'GI', 'CEISME' => 'GM',
+        'MDPI' => 'GM', 'SNM' => 'GM',
+        'TIM' => 'GM', 'ATN' => 'ISI',
+        'IPL' => 'ISI', 'VDC' => 'ISI',
+        'MPL' => 'ISI', 'MRI' => 'ISI',
+        'MSI' => 'ISI', 'EME' => 'MTE',
+        'TCMC' => 'MTE', 'TQM' => 'MTE',
+        'CSR' => 'RT', 'SSC' => 'RT',
+        'TMOC' => 'RT', 'OSS' => 'ISC',
+        'SSI' => 'ISC', 'MMPA' => 'PAIP',
+        'ONT' => 'PAIP', 'IMEDD' => 'RE',
+        'IMSGA' => 'RE'
     ];
 
     /**
@@ -180,7 +205,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      *
      * @ORM\Column(type="array", nullable=true)
      */
-    protected $brancheList;
+    protected $branchList;
 
     /**
      * @var string
@@ -1074,7 +1099,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @param string $formationList[]
+     * @param string[] $formationList
      *
      * @return User
      */
@@ -1129,20 +1154,20 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @param string[] $brancheList
+     * @param string[] $branchList
      *
      * @return $this
      */
-    public function setBranchList($brancheList)
+    public function setBranchList($branchList)
     {
         $branches = [];
-        foreach ($brancheList as $branch) {
+        foreach ($branchList as $branch) {
             if ('NC' !== $branch) {
                 $branches[] = $branch;
             }
         }
 
-        $this->brancheList = $branches;
+        $this->branchList = $branches;
 
         return $this;
     }
@@ -1160,7 +1185,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function getBranchList()
     {
-        return $this->brancheList;
+        return $this->branchList;
     }
 
     /**

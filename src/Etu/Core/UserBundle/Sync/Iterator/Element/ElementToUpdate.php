@@ -32,7 +32,10 @@ class ElementToUpdate
 
     protected function array_different($array1, $array2)
     {
-        return count(array_diff($array1, $array2)) > 0 || count(array_diff($array2, $array1)) > 0;
+        if(is_null($array1) !== is_null($array2)) {
+            return True;
+        }
+        return $array1 !== $array2;
     }
 
     /**
@@ -123,19 +126,60 @@ class ElementToUpdate
             $user->setBranch($branch);
         }
 
-        if($this->array_different($branchList, $this->database->getBranchList())) {
-            $persist = true;
-            $user->setBranchList($branchList);
+        if($this->database->getUsername() === "laruelli") {
+            dump($this->ldap->getFiliereList());
+            dump($branchList);
         }
 
-        if ($this->ldap->getFiliere() != $this->database->getFiliere()) {
+        // On remet les branches dans l'ordre
+        if(count($this->ldap->getFormationList()) == count($branchList)) {
+            for ($position = 0; $position < count($branchList); $position++) {
+                $branch = $branchList[$position];
+                if(array_key_exists($branch, DbUser::$branchToFormation) && in_array(DbUser::$branchToFormation[$branch], $this->ldap->getFormationList())) {
+                    $positionInBranch = array_search(DbUser::$branchToFormation[$branch], $this->ldap->getFormationList());
+                    if($position != $positionInBranch) {
+                        $temp = $branchList[$positionInBranch];
+                        $branchList[$positionInBranch] = $branch;
+                        $branchList[$position] = $temp;
+                    }
+                }
+            }
+        }
+
+
+        // On remet les filieres dans l'ordre
+        $filiereList = $this->ldap->getFiliereList();
+        if(count($filiereList) == count($branchList)) {
+            for ($position = 0; $position < count($filiereList); $position++) {
+                $filiere = $filiereList[$position];
+                if(array_key_exists($filiere, DbUser::$filieresToBranch) && in_array(DbUser::$filieresToBranch[$filiere], $branchList)) {
+                    $positionInBranch = array_search(DbUser::$filieresToBranch[$filiere], $branchList);
+                    if($position != $positionInBranch) {
+                        $temp = $filiereList[$positionInBranch];
+                        $filiereList[$positionInBranch] = $filiere;
+                        $filiereList[$position] = $temp;
+                    }
+                }
+            }
+        }
+
+        if($this->database->getUsername() === "laruelli") {
+            dump($filiereList);
+        }
+
+        if ($this->ldap->getFiliere() !== $this->database->getFiliere()) {
             $persist = true;
             $user->setFiliere($this->ldap->getFiliere());
         }
 
-        if ($this->array_different($this->ldap->getFiliereList(), $this->database->getFiliereList())) {
+        if ($this->array_different($filiereList, $this->database->getFiliereList())) {
             $persist = true;
-            $user->setFiliereList($this->ldap->getFiliereList());
+            $user->setFiliereList($filiereList);
+        }
+
+        if($this->array_different($branchList, $this->database->getBranchList())) {
+            $persist = true;
+            $user->setBranchList($branchList);
         }
 
         if (implode('|', $this->ldap->getUvs()) != $this->database->getUvs()) {

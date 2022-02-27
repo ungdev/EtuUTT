@@ -173,7 +173,7 @@ class User
      *
      * @return User
      */
-    public function setFiliereList($filierelist)
+    public function setFiliereList($filiereList)
     {
         $this->filiereList = $filiereList;
 

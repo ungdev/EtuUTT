@@ -4,7 +4,10 @@ Actuelle
 
 ### Fonctionnalités
 
-* La gestion des étudiants en double-diplôme est désormais possible. De nouveaux champs sont exposés dans l'API : `formation_list`, `branch_list`, `level_list` et `speciality_list`. Les champs précédents ont été laissés pour permettre la rétrocompatibilité.
+* Gestion des étudiants en double-diplôme
+  * De nouveaux champs sont exposés dans l'API : `formation_list`, `branch_list`, `level_list` et `speciality_list`. Les champs précédents ont été laissés pour permettre la rétrocompatibilité. Garantie de la consistance des données entre ces tableaux (même taille, et la position x dans tous les tableaux correspond au même diplôme)
+  * Affichage des doubles diplôme dans le trombi et sur les profils individuels
+  * Prise en compte de tous les diplômes lors d'une recherche dans le trombi
 * Ajout de filtre et de tri dans la liste des bugs
 * Ajout de la possibilité de proposer des nouvelles fonctionnalités
 * Ajout des personnels UTT dans le trombi et de filtre sur le statut étudiant / enseignant

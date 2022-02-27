@@ -29,6 +29,11 @@ php bin/console doctrine:fixtures:load -n
 php bin/console etu:ue:import
 php bin/console etu:badges:import
 ```
+
+Pour créer les scopes API : `php bin/console etu:oauth:create-scope`. Les différents scopes : `public`, `private_user_organizations`, `private_user_schedule`, `private_user_account`
+
+Pour lancer une synchro avec le LDAP UTT (nécessite d'être sur le réseau UTT), **ASSUREZ-VOUS QUE LES MAILS SONT DESACTIVES** (env `ETUUTT_MAILER_HOST` vide), `php bin/console etu:users:sync`
+
 5. Rendez-vous sur http://127.0.0.1:8000 pour voir le site (avec l'id user/user ou admin/admin) et sur http://127.0.0.1:8080 pour voir adminer.
 Cela permet d'éviter d'installer nginx et de devoir tout configurer
 

@@ -129,25 +129,30 @@ class MainController extends Controller
             }
 
             if ($user->getBranch()) {
-                $users->andWhere('u.branch = :branch OR u.branchList LIKE %":branch"%')
-                    ->setParameter('branch', $user->getBranch());
+                $users->andWhere('u.branch = :branch OR u.branchList LIKE :branchLike')
+                    ->setParameter('branch', $user->getBranch())
+                    ->setParameter('branchLike', '%"'.$user->getBranch().'"%');
             }
 
             if ($user->getFiliere()) {
                 if ('libre' === mb_strtolower($user->getFiliere())) {
-                    $users->andWhere('LOWER(u.filiere) = :filiere OR LOWER(u.filiere) LIKE %":filiere"%')
-                        ->setParameter('filiere', 'libre');
+                    $users->andWhere('LOWER(u.filiere) = :filiere OR LOWER(u.filiere) LIKE :filiereLike')
+                        ->setParameter('filiere', 'libre')
+                        ->setParameter('filiereLike', '%"libre"%');
                 } elseif ('Aucune' === $user->getFiliere()) {
-                    $users->andWhere('u.filiere is NULL OR u.filiereList LIKE %""%');
+                    $users->andWhere('u.filiere is NULL OR u.filiereList LIKE :filiereLike')
+                        ->setParameter('filiereLike', '%""%');;
                 } else {
-                    $users->andWhere('u.filiere = :filiere OR u.filiereList LIKE %":filiere"%')
-                        ->setParameter('filiere', $user->getFiliere());
+                    $users->andWhere('u.filiere = :filiere OR u.filiereList LIKE :filiereLike')
+                        ->setParameter('filiere', $user->getFiliere())
+                        ->setParameter('filiereLike', '%"'.$user->getFiliere().'"%');
                 }
             }
 
             if ($user->getNiveau()) {
-                $users->andWhere('u.niveau = :niveau OR u.niveauList LIKE %":niveau"%')
-                    ->setParameter('niveau', $user->getNiveau());
+                $users->andWhere('u.niveau = :niveau OR u.niveauList LIKE :niveauLike')
+                    ->setParameter('niveau', $user->getNiveau())
+                    ->setParameter('niveauLike', '%"'.$user->getNiveau().'"%');
             }
 
             if ($user->getPersonnalMail()) {
