@@ -100,13 +100,17 @@
                         <p>{{ group.description }}</p>
                         <ul class="asso-members">
                             {% for member in group.members %}
+                                {% set formationArray = [] %}
+                                {% for key, value in user.formationList %}
+                                    {%  set formationArray = formationArray|merge([member.user.branchList[key]~member.user.niveauList[key]~' '~member.user.filiereList[key]~' '~'('~member.user.formationList[key]~')']) %}
+                                {% endfor %}
                                 <li class="asso-members-item asso-members-item-office">
                                     <a href="{{ path('user_view', {'login': member.user.login}) }}">
                                         <img src="{{ path('user_view_image_profil', {'avatar': member.user.avatar}) }}" alt="{{ member.user.fullName }}" title="{{ member.user.fullName }}" />
                                         <h5>{{ member.user.fullName }}</h5>
                                         <p>
                                             {{ ('user.orga.role.'~member.role)|trans }}<br />
-                                            {{ member.user.branch~member.user.niveau }} {{ member.user.filiere }}
+                                            {{ formationArray | join('\n') | nl2br }}
                                         </p>
 
                                         <div class="clear"></div>
