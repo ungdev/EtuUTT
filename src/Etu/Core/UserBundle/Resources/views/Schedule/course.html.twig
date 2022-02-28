@@ -34,7 +34,7 @@
             <ul class="asso-members">
                 {% for student in students %}
                     {% set formationArray = [] %}
-                    {% for key, value in user.formationList %}
+                    {% for key, value in student.user.formationList %}
                         {%  set formationArray = formationArray|merge([student.user.branchList[key]~student.user.niveauList[key]~' '~student.user.filiereList[key]~' '~'('~student.user.formationList[key]~')']) %}
                     {% endfor %}
                     <li class="asso-members-item asso-members-item-member">

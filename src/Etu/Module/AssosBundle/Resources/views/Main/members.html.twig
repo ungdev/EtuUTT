@@ -101,7 +101,7 @@
                         <ul class="asso-members">
                             {% for member in group.members %}
                                 {% set formationArray = [] %}
-                                {% for key, value in user.formationList %}
+                                {% for key, value in member.user.formationList %}
                                     {%  set formationArray = formationArray|merge([member.user.branchList[key]~member.user.niveauList[key]~' '~member.user.filiereList[key]~' '~'('~member.user.formationList[key]~')']) %}
                                 {% endfor %}
                                 <li class="asso-members-item asso-members-item-office">
