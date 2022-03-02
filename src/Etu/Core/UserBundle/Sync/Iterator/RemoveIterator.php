@@ -25,6 +25,7 @@ class RemoveIterator implements \Iterator
     public function __construct(array $elements)
     {
         $this->position = 0;
+        $this->elements = [];
 
         foreach ($elements as $element) {
             $this->elements[] = $element;

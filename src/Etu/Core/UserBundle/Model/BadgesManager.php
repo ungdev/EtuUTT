@@ -45,6 +45,11 @@ class BadgesManager
         $this->em = $doctrine->getManager();
     }
 
+    public static function setDoctrine(EntityManager $entityManager)
+    {
+        self::$doctrine = $entityManager;
+    }
+
     /**
      * Freeze badges from the database.
      */

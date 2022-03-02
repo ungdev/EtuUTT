@@ -187,7 +187,7 @@ class PermissionsChecker
             case WikiPage::RIGHT['ORGA_ADMIN']:
                 if ($organization) {
                     $membership = $this->memberships[$organization->getId()] ?? null;
-                    if ($organization && count($membership) && $membership->hasPermission('wiki')) {
+                    if ($organization && !is_null($membership) && count($membership) && $membership->hasPermission('wiki')) {
                         return true;
                     }
                 }
@@ -195,7 +195,7 @@ class PermissionsChecker
             case WikiPage::RIGHT['ORGA_MEMBER']:
                 if ($organization) {
                     $membership = $this->memberships[$organization->getId()] ?? null;
-                    if (count($membership)) {
+                    if (!is_null($membership) && count($membership)) {
                         return true;
                     }
                 }

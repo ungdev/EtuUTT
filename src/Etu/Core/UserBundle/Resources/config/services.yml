@@ -45,6 +45,7 @@ services:
         arguments: ["@doctrine"]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+            - { name: console.event_listener, event: console.command, method: onKernelRequest }
 
     # Notifications helper
     etu.notifs.new_badge:
