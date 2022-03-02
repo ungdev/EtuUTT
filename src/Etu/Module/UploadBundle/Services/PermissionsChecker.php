@@ -74,13 +74,13 @@ class PermissionsChecker
                 return false;
             case UploadedFile::RIGHT['ORGA_ADMIN']:
                 $membership = $this->memberships[$organization_id] ?? null;
-                if (!is_null($membership) && count($membership) && $membership->hasPermission('wiki')) {
+                if (!is_null($membership) && $membership->hasPermission('wiki')) {
                     return true;
                 }
                 break;
             case UploadedFile::RIGHT['ORGA_MEMBER']:
                 $membership = $this->memberships[$organization_id] ?? null;
-                if (!is_null($membership) && count($membership)) {
+                if (!is_null($membership)) {
                     return true;
                 }
                 break;
