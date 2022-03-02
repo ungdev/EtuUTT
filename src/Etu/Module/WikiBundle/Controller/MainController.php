@@ -47,7 +47,7 @@ class MainController extends Controller
         ], ['createdAt' => 'DESC']);
 
         // If not found
-        if (1 != \count($page)) {
+        if (!is_null($page) && 1 != \count($page)) {
             throw $this->createNotFoundException('Wiki page not found');
         }
 
@@ -139,14 +139,14 @@ class MainController extends Controller
                 return $this->createAccessDeniedResponse();
             }
             // Check if subslug exist
-            if (!empty($slug) && 1 != \count($page)) {
+            if (!empty($slug) && !is_null($page) && 1 != \count($page)) {
                 return $this->createAccessDeniedResponse();
             }
             $page = new WikiPage();
             $page->setReadRight(WikiPage::RIGHT['STUDENT']);
             $page->setEditRight(WikiPage::RIGHT['STUDENT']);
         } else {
-            if (1 != \count($page)) {
+            if (!is_null($page) && 1 != \count($page)) {
                 throw $this->createNotFoundException('Wiki page not found');
             } elseif (!$rights->canEdit($page)) {
                 return $this->createAccessDeniedResponse();
@@ -459,7 +459,7 @@ class MainController extends Controller
 
         // If not found
         $rights = $this->get('etu.wiki.permissions_checker');
-        if (1 != \count($page)) {
+        if (!is_null($page) && 1 != \count($page)) {
             throw $this->createNotFoundException('Wiki page not found');
         } elseif (!$rights->canDelete($page)) {
             return $this->createAccessDeniedResponse();
@@ -568,7 +568,7 @@ class MainController extends Controller
 
         // If not found
         $rights = $this->get('etu.wiki.permissions_checker');
-        if (1 != \count($page)) {
+        if (!is_null($page) && 1 != \count($page)) {
             throw $this->createNotFoundException('Wiki page not found');
         } elseif (!$rights->canMove($page)) {
             return $this->createAccessDeniedResponse();
