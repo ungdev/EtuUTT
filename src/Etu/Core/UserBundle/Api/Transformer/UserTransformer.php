@@ -63,6 +63,7 @@ class UserTransformer extends AbstractTransformer
             'formation_list' => $user->getFormationList(),
             'branch' => $user->getBranch(),
             'branch_list' => $user->getBranchList(),
+            'branch_level_list' => $user->getBranchNiveauList(),
             'level' => $user->getNiveau(),
             'level_list' => $user->getNiveauList(),
             'speciality' => $user->getFiliere(),

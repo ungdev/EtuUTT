@@ -57,24 +57,33 @@ class UserListMapper implements QueryMapper
                 ->setParameter('term', '%'.$term.'%');
         }
 
-        if ($request->has('formation')) {
-            $query->andWhere('u.formation = :formation')
-                ->setParameter('formation', $request->get('formation'));
-        }
-
-        if ($request->has('branch')) {
-            $query->andWhere('u.branch = :branch')
-                ->setParameter('branch', $request->get('branch'));
-        }
-
-        if ($request->has('level')) {
-            $query->andWhere('u.niveau = :level')
-                ->setParameter('level', $request->get('level'));
-        }
-
         if ($request->has('speciality')) {
-            $query->andWhere('u.filiere = :speciality')
-                ->setParameter('speciality', $request->get('speciality'));
+            $query->andWhere('u.filiere = :filiere OR u.filiereList LIKE :filiereLike')
+                ->setParameter('filiere', $request->get('speciality'))
+                ->setParameter('filiereLike', '%"'.$request->get('speciality').'"%');
+        }
+
+        if($request->has('branch') && $request->has('level')) {
+            $query->andWhere('u.branchNiveauList LIKE :branchNiveauLike')
+                ->setParameter('branchNiveauLike', '%"'.$request->get('branch').$request->get('level').'"%');
+        }
+        else {
+            if ($request->has('branch')) {
+                $query->andWhere('u.branch = :branch OR u.branchList LIKE :branchLike')
+                    ->setParameter('branch', $request->get('branch'))
+                    ->setParameter('branchLike', '%"'.$request->get('branch').'"%');
+            }
+
+            if ($request->has('level')) {
+                $query->andWhere('u.niveau = :niveau OR u.niveauList LIKE :niveauLike')
+                    ->setParameter('niveau', $request->get('level'))
+                    ->setParameter('niveauLike', '%"'.$request->get('level').'"%');
+            }
+        }
+
+        if ($request->has('formation')) {
+            $query->andWhere('u.formationList LIKE :formation')
+                ->setParameter('formation', '%'.$request->get('formation').'%');
         }
 
         if ($request->has('is_student')) {
