@@ -208,6 +208,13 @@ class User implements UserInterface, EquatableInterface, \Serializable
     protected $branchList;
 
     /**
+     * @var string[]
+     *
+     * @ORM\Column(type="array", nullable=true)
+     */
+    protected $branchNiveauList;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string", length=10, nullable=true)
@@ -1173,6 +1180,18 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
+     * @param string[] $branchList
+     *
+     * @return $this
+     */
+    public function setBranchNiveauList($branchNiveauList)
+    {
+        $this->branchNiveauList = $branchNiveauList;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getBranch()
@@ -1186,6 +1205,14 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public function getBranchList()
     {
         return $this->branchList;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getBranchNiveauList()
+    {
+        return $this->branchNiveauList;
     }
 
     /**

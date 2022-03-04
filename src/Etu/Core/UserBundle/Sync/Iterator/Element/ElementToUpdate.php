@@ -53,6 +53,8 @@ class ElementToUpdate
             throw new \RuntimeException(sprintf('EtuUTT synchonizer can only update User objects (ldap: %s given)', $given));
         }
 
+        BadgesManager::setDoctrine($doctrine->getEntityManager());
+
         if (!$elements['database'] instanceof DbUser) {
             if (is_object($elements['database'])) {
                 $given = get_class($elements['database']);
@@ -109,6 +111,11 @@ class ElementToUpdate
         if ($this->array_different($this->ldap->getFormationList(), $this->database->getFormationList())) {
             $persist = true;
             $user->setFormationList($this->ldap->getFormationList());
+        }
+
+        if ($this->array_different($this->ldap->getNiveauList(), $this->database->getBranchNiveauList())) {
+            $persist = true;
+            $user->setBranchNiveauList($this->ldap->getNiveauList());
         }
 
         if ($niveau != $this->database->getNiveau()) {

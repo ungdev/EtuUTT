@@ -6,6 +6,7 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 use Etu\Core\CoreBundle\Entity\Subscription;
 use Etu\Core\UserBundle\Entity\Organization;
 use Etu\Core\UserBundle\Ldap\Model\User;
+use Etu\Core\UserBundle\Model\BadgesManager;
 use Imagine\Gd\Image;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
@@ -39,6 +40,8 @@ class ElementToImport
 
             throw new \RuntimeException(sprintf('EtuUTT synchonizer can only import User objects (%s given)', $type));
         }
+
+        BadgesManager::setDoctrine($doctrine->getEntityManager());
 
         $this->element = $element;
         $this->doctrine = $doctrine;

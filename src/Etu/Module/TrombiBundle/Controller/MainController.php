@@ -128,12 +128,6 @@ class MainController extends Controller
                 }
             }
 
-            if ($user->getBranch()) {
-                $users->andWhere('u.branch = :branch OR u.branchList LIKE :branchLike')
-                    ->setParameter('branch', $user->getBranch())
-                    ->setParameter('branchLike', '%"'.$user->getBranch().'"%');
-            }
-
             if ($user->getFiliere()) {
                 if ('libre' === mb_strtolower($user->getFiliere())) {
                     $users->andWhere('LOWER(u.filiere) = :filiere OR LOWER(u.filiere) LIKE :filiereLike')
@@ -149,10 +143,22 @@ class MainController extends Controller
                 }
             }
 
-            if ($user->getNiveau()) {
-                $users->andWhere('u.niveau = :niveau OR u.niveauList LIKE :niveauLike')
-                    ->setParameter('niveau', $user->getNiveau())
-                    ->setParameter('niveauLike', '%"'.$user->getNiveau().'"%');
+            if($user->getBranch() && $user->getNiveau()) {
+                $users->andWhere('u.branchNiveauList LIKE :branchNiveauLike')
+                    ->setParameter('branchNiveauLike', '%"'.$user->getBranch().$user->getNiveau().'"%');
+            }
+            else {
+                if ($user->getBranch()) {
+                    $users->andWhere('u.branch = :branch OR u.branchList LIKE :branchLike')
+                        ->setParameter('branch', $user->getBranch())
+                        ->setParameter('branchLike', '%"'.$user->getBranch().'"%');
+                }
+
+                if ($user->getNiveau()) {
+                    $users->andWhere('u.niveau = :niveau OR u.niveauList LIKE :niveauLike')
+                        ->setParameter('niveau', $user->getNiveau())
+                        ->setParameter('niveauLike', '%"'.$user->getNiveau().'"%');
+                }
             }
 
             if ($user->getPersonnalMail()) {
