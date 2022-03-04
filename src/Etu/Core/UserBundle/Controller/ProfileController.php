@@ -235,6 +235,13 @@ class ProfileController extends Controller
                 $user->setPassword($this->container->get('security.password_encoder')->encodePassword($user, $new_password));
                 $this->addFlash("success", 'user.profile.profileEdit.passwordChanged');
             }
+            if($user->getPersonnalMail()) {
+                $endsWithUTT = substr( $user->getPersonnalMail(), -strlen("@utt.fr") ) === "@utt.fr";
+                if($endsWithUTT) {
+                    $user->setPersonnalMail($cloneUser->getPersonnalMail());
+                    $this->addFlash("danger", 'user.profile.profileEdit.personnalMailNoUTT');
+                }
+            }
             if($user->getIsKeepingAccount()) {
                 if(empty($user->getPersonnalMail())) {
                     if (empty($user->getPersonnalMail()) && !empty($cloneUser->getPersonnalMail())) {

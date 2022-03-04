@@ -190,6 +190,7 @@ user:
             edit: Edit
         profileEdit:
             privacy: Privacy
+            personnalMailNoUTT: "Your personnal mail can't end with @utt.fr"
             wantsJoinUTTDiscord: Check this box to ask the sync to the UTT Discord. Join it with the link above and fill in your discord tag publicly before checking this box. By checking this box, you accept that your data will be processed according to what is said on the UTT discord webpage (https://discord-bot-roles.uttnetgroup.fr).
             keepingAccount: Check this box if you want to keep your EtuUTT account after you left UTT (you must specify a personnal mail adress different from UTT and create a SIA account on the right menu, this account will be used for your connection after you left UTT)
             personnalMailMandatory: You must add a personnal mail if you want to keep your account after you left UTT.

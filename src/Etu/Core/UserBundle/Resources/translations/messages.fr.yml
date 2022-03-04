@@ -345,6 +345,7 @@ user:
             title: Modifier mes informations
             confirm: Vous avez bien modifié vos informations
             back: Retour sur mon compte
+            personnalMailNoUTT: "Votre mail personnel ne peut pas se finir en @utt.fr"
             wantsJoinUTTDiscord: Cochez cette case pour demander votre synchronisation avec le serveur discord UTT. Rejoignez-le avec le lien ci-dessus et indiquez votre tag discord en public avant de cocher cette case. En cochant cette case, vous consentez au traitement de vos données conformément à ce qui est indiqué sur la page du bot discord UTT (https://discord-bot-roles.uttnetgroup.fr).
             keepingAccount: Cochez cette case si vous souhaitez garder l'accès à votre compte Etu après votre départ de l'UTT (vous devez spécifier un mail personnel différent de celui de l'UTT et vous créer un compte SIA via le menu à droite, il sera utilisé pour vous connecter après votre départ)
             deletingEverything: "Lorsque que votre compte est supprimé, nous gardons et anonymisons certains de vos contenus qui restent utiles pour les autres étudiants : commentaires d'UEs, ... (voir page RGPD). Cochez cette case pour demander également leur suppression."
