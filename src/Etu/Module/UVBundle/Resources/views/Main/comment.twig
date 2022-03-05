@@ -34,7 +34,7 @@
                 {% endif %}
                 </div>
             </div>
-        {% is_granted("ROLE_UV_REVIEW_ADMIN") %}
+        {% if is_granted("ROLE_UV_REVIEW_ADMIN") %}
                 <div class="uv-view-comment-date">
                     UE : <a href="{{ path('uvs_goto', {'code': comment.uv.code}) }}">{{ comment.uv.code }}</a>
                 </div>
