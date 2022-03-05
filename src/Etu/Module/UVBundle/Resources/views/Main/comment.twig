@@ -26,6 +26,8 @@
                             <a href="{{ path('admin_uvs_comment_delete', {'id': comment.id}) }}">{{ 'uvs.admin.index.delete'|trans }}</a>
                 {% endif %}
                 {% if is_granted("ROLE_UV_REVIEW_ADMIN") %}
+                    <a href="{{ path('uvs_goto', {'code': comment.uv.code}) }}">{{ comment.uv.code }}</a>
+                    {% endif %}
                     {% if not comment.isValide %}
                         <a href="{{ path('admin_uvs_comment_validate', {'id': comment.id}) }}">{{ 'uvs.admin.index.validate'|trans }}</a>
                     {% else %}
@@ -34,11 +36,6 @@
                 {% endif %}
                 </div>
             </div>
-        {% if is_granted("ROLE_UV_REVIEW_ADMIN") %}
-                <div class="uv-view-comment-date">
-                    UE : <a href="{{ path('uvs_goto', {'code': comment.uv.code}) }}">{{ comment.uv.code }}</a>
-                </div>
-        {% endif %}
         <div class="uv-view-comment-date">
             {{ 'uvs.main.date.createdAt'|trans }} : {{ comment.createdAt.format('d/m/Y H:i') }}
         </div>
