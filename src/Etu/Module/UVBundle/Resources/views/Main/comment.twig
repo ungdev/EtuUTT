@@ -27,7 +27,6 @@
                 {% endif %}
                 {% if is_granted("ROLE_UV_REVIEW_ADMIN") %}
                     <a href="{{ path('uvs_goto', {'code': comment.uv.code}) }}">{{ comment.uv.code }}</a>
-                    {% endif %}
                     {% if not comment.isValide %}
                         <a href="{{ path('admin_uvs_comment_validate', {'id': comment.id}) }}">{{ 'uvs.admin.index.validate'|trans }}</a>
                     {% else %}
