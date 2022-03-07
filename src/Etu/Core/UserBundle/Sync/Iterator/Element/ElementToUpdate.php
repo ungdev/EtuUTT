@@ -82,14 +82,14 @@ class ElementToUpdate
         $user = $this->database;
         $history = $user->addCureentSemesterToHistory();
 
-        $niveau = null;
+        $level = null;
         $branch = $this->ldap->getNiveau();
 
         preg_match('/^(.+)[0-9]$/i', $this->ldap->getNiveau(), $match);
 
         if (isset($match[1])) {
             $branch = $match[1];
-            $niveau = str_replace($branch, '', $this->ldap->getNiveau());
+            $level = str_replace($branch, '', $this->ldap->getNiveau());
         }
 
         $branchList = [];
@@ -118,9 +118,9 @@ class ElementToUpdate
             $user->setBranchNiveauList($this->ldap->getNiveauList());
         }
 
-        if ($niveau != $this->database->getNiveau()) {
+        if ($level != $this->database->getNiveau()) {
             $persist = true;
-            $user->setNiveau($niveau);
+            $user->setNiveau($level);
         }
 
         if ($this->array_different($niveauList, $this->database->getNiveauList())) {
