@@ -7,6 +7,18 @@
     z-index: 220;
 }
 
+.ukraine {
+    padding: 10px;
+    background-color: black;
+    color: white;
+    a {
+        color: white;
+    }
+    .ukraine-col {
+        display: inline-block;
+    }
+}
+
 /* Title to hide using CSS, for accessibility */
 .seo-title {
     display: none;

@@ -9,6 +9,7 @@ Actuelle
   * Affichage des doubles diplôme dans le trombi et sur les profils individuels
   * Prise en compte de tous les diplômes lors d'une recherche dans le trombi
 * Ajout de filtre et de tri dans la liste des bugs
+* Ajout d'une bannière sur le conflit Ukraine / Russie
 * Affichage du nom de l'UE dans la page de validation des commentaires
 * Ajout de la possibilité de proposer des nouvelles fonctionnalités
 * Ajout des personnels UTT dans le trombi et de filtre sur le statut étudiant / enseignant
