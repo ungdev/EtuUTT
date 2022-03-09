@@ -4,6 +4,6 @@ COPY . /var/www/html
 
 USER 0:0
 
-RUN /var/www/html/composer install && chmod -R g+rwx /var/www/html && php bin/console assetic:dump
+RUN /var/www/html/composer install && chmod -R g+rwx /var/www/html
 
 USER 875864:0
