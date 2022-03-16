@@ -50,7 +50,10 @@ doctrine:
         dbname:   "%env(ETUUTT_DATABASE_NAME)%"
         user:     "%env(ETUUTT_DATABASE_USER)%"
         password: "%env(ETUUTT_DATABASE_PASSWORD)%"
-        charset:  UTF8
+        charset: utf8mb4
+        default_table_options:
+            charset: utf8mb4
+            collate: utf8mb4_unicode_ci
         server_version: 5.7
 
         # if using pdo_sqlite as your database driver:
