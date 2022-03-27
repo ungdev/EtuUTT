@@ -1,0 +1,37 @@
+@import "global/global";
+@import "global/form";
+@import "global/icons";
+@import "global/head";
+@import "global/menu";
+@import "global/page-p";
+@import "global/content";
+
+@import "bundles/api";
+@import "bundles/argentique";
+@import "bundles/assos";
+@import "bundles/bugs";
+@import "bundles/core";
+@import "bundles/covoit";
+@import "bundles/cumul";
+@import "bundles/daymail";
+@import "bundles/events";
+@import "bundles/forum";
+@import "bundles/logs";
+@import "bundles/trombi";
+@import "bundles/tv";
+@import "bundles/upload";
+@import "bundles/user";
+@import "bundles/uvs";
+@import "bundles/wiki";
+
+.userbox-display-for-1024 {
+  line-height: 13px;
+  background: #fef9db;
+  padding: 10px;
+}
+.display-for-1024 {
+  display: none;
+}
+.display-for-phones {
+  display: none;
+}

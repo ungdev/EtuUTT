@@ -25,33 +25,64 @@
         <link rel="icon" type="image/png" href="{{ asset('favicon-32x32.png') }}" sizes="32x32">
         <link rel="icon" type="image/png" href="{{ asset('favicon-96x96.png') }}" sizes="96x96">
 
-        {% stylesheets
-            'assets/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css'
-            'assets/vendor/bootstrap/docs/assets/css/bootstrap.css'
-            'assets/vendor/bootstrap/docs/assets/css/bootstrap-responsive.css'
-            'assets/vendor/tipsy/src/stylesheets/tipsy.css'
-            'assets/vendor/facebox/src/facebox.css'
-            'assets/vendor/swipebox/src/css/swipebox.min.css'
-            'assets/vendor/jquery-impromptu/dist/jquery-impromptu.min.css'
-            'assets/vendor/highlightjs/styles/solarized-dark.css'
-            'assets/vendor/videojs/dist/video-js.css'
-            'assets/scss/boot.scss'
-			'assets/scss/developpers.scss'
-            'assets/vendor/selectize/dist/css/selectize.bootstrap2.css'
+        {% if is_granted('ROLE_STUDENT') %}
+            {% stylesheets
+                'assets/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css'
+                'assets/vendor/bootstrap/docs/assets/css/bootstrap.css'
+                'assets/vendor/bootstrap/docs/assets/css/bootstrap-responsive.css'
+                'assets/vendor/tipsy/src/stylesheets/tipsy.css'
+                'assets/vendor/facebox/src/facebox.css'
+                'assets/vendor/swipebox/src/css/swipebox.min.css'
+                'assets/vendor/jquery-impromptu/dist/jquery-impromptu.min.css'
+                'assets/vendor/highlightjs/styles/solarized-dark.css'
+                'assets/vendor/videojs/dist/video-js.css'
+                'assets/scss/boot-p.scss'
+                'assets/scss/developpers.scss'
+                'assets/vendor/selectize/dist/css/selectize.bootstrap2.css'
 
-            filter='scssphp'
-            output='assets/min/etuutt.css'
-        %}
-            <link rel="stylesheet" href="{{ asset_url }}" />
-        {% endstylesheets %}
-
-        {% if not app.request.cookies.has('disable_responsive') %}
-            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
-            {% stylesheets 'assets/scss/responsive.scss' filter='scssphp' output='assets/min/responsive.css' %}
-                <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+                filter='scssphp'
+                output='assets/min/etuutt-p.css'
+            %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+                <!-- ETUDIANT -->
             {% endstylesheets %}
+            {% if not app.request.cookies.has('disable_responsive') %}
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+                {% stylesheets 'assets/scss/responsive-p.scss' filter='scssphp' output='assets/min/responsive-p.css' %}
+                    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+                {% endstylesheets %}
+            {% endif %}
+        {% else %}
+            {% stylesheets
+                'assets/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css'
+                'assets/vendor/bootstrap/docs/assets/css/bootstrap.css'
+                'assets/vendor/bootstrap/docs/assets/css/bootstrap-responsive.css'
+                'assets/vendor/tipsy/src/stylesheets/tipsy.css'
+                'assets/vendor/facebox/src/facebox.css'
+                'assets/vendor/swipebox/src/css/swipebox.min.css'
+                'assets/vendor/jquery-impromptu/dist/jquery-impromptu.min.css'
+                'assets/vendor/highlightjs/styles/solarized-dark.css'
+                'assets/vendor/videojs/dist/video-js.css'
+                'assets/scss/boot.scss'
+                'assets/scss/developpers.scss'
+                'assets/vendor/selectize/dist/css/selectize.bootstrap2.css'
+
+                filter='scssphp'
+                output='assets/min/etuutt.css'
+            %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+                <!-- PAS ETUDIANT -->
+            {% endstylesheets %}
+            {% if not app.request.cookies.has('disable_responsive') %}
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+                {% stylesheets 'assets/scss/responsive.scss' filter='scssphp' output='assets/min/responsive.css' %}
+                    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+                {% endstylesheets %}
+            {% endif %}
         {% endif %}
+
 
         {# CSS CDN #}
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
