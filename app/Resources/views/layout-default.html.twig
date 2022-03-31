@@ -7,7 +7,11 @@
                 <h1 class="seo-title">{{ block('title') }} - {{ 'base.title'|trans }}</h1>
 
                 <a href="{{ path('homepage') }}">
+                    {% if is_granted('ROLE_STUDENT') %}
+                        <img src="{{ asset('assets/img/pornhutt.png') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="logo" />
+                    {% else %}
                     <img src="{{ asset('assets/img/logo.jpg') }}" alt="{{ 'base.logo.alt'|trans }}" title="{{ 'base.logo.title'|trans }}" class="logo" />
+                    {% endif %}
                 </a>
             </div>
 
