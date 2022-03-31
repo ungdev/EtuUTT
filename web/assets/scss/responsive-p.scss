@@ -1,3 +1,8 @@
+.logo {
+  max-height: 48px;
+  margin-top: 3px;
+}
+
 /* 1024px */
 @media screen and (max-width: 1230px) {
   .container {
@@ -36,6 +41,7 @@
   }
   .logo {
     max-height: 48px;
+    margin-top: 3px;
   }
   .userbox {
     float: right;
@@ -63,7 +69,7 @@
   }
   .userbox-menu-clicked {
     position: absolute;
-    background: white;
+    background: #3b3b3b;
     margin-left: -117px;
     width: 204px;
     border: 1px solid #cecece;
@@ -434,7 +440,7 @@
   }
   .userbox-menu-clicked {
     position: absolute;
-    background: white;
+    background: #3b3b3b;
     margin-left: -105px;
     width: 175px;
     border: 1px solid #cecece;
