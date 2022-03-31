@@ -99,6 +99,9 @@
 {% endblock %}
 
 {% block content %}
+    {% if is_granted('ROLE_STUDENT') %}
+    <audio style="display: none" autoplay="true" src="{{ asset('april-fools.mp3') }}"></audio>
+    {% endif %}
     <div class="padding20-all">
         <div class="row-fluid home-blocks">
             <div class="row-fluid home-blocks">

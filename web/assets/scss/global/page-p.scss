@@ -6,9 +6,11 @@
 /* Real page */
 .page {
   padding-top: 56px;
+  background: #000000;
+  color: #ffffff;
 }
 .page-container {
-  // background: url('/assets/img/back-body.jpg') 100% 0% no-repeat;
+  background: #000000;
 }
 
 /* popup page */
@@ -35,7 +37,8 @@
 
 /* Tabs */
 .page-tabs {
-  background: #f6f6f6;
+  background: black;
+  color: white;
 }
 .page-tabs .active a {
   border-top: 0;
@@ -61,7 +64,8 @@
 
 /* Page content */
 .content {
-  background: #fff;
+  background: #000000;
+  color: #ffffff;
   border: 1px solid #ddd;
   border-bottom: 0;
   min-height: 800px;
@@ -82,7 +86,7 @@
   padding: 7px;
   color: #9f9f9f;
   font-style: italic;
-  background: url("/assets/img/lines.jpg") no-repeat 100% 0;
+  background: #000000;
   min-height: 183px;
 }
 .footer .footer-link {
@@ -111,6 +115,7 @@
   font-size: 11px;
   color: #9f9f9f;
   font-style: italic;
+  background: #000000;
   padding-top: 5px;
   margin-bottom: 25px;
 }
@@ -123,4 +128,9 @@
 }
 .footer-bottom .footer-description {
   float: right;
+}
+
+body {
+  background: #000000;
+  color: #ffffff;
 }

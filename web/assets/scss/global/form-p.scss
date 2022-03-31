@@ -1,0 +1,154 @@
+.form-default {
+
+  .form-field-width {
+    input, select, textarea {
+      width: 100%;
+    }
+  }
+
+  .form-field {
+    // display: block;
+    // padding:5px 0;
+    // box-sizing: border-box;
+    border-radius: 4px;
+    margin: 0 0 10px 0;
+
+    input, select, textarea {
+      box-sizing: border-box;
+      min-height: 35px;
+    }
+
+    .add-on {
+      box-sizing: border-box;
+      height: 35px;
+      width: 40px;
+      padding: 6px 8px;
+      vertical-align: middle;
+    }
+
+    label {
+      // font-weight: bold;
+    }
+    label.required:after {
+      color: #e32;
+      font-size:1.6em;
+      content: '*';
+      display: inline;
+    }
+
+    .field-checkbox {
+      label {
+        display: inline;
+        font-weight: normal;
+      }
+      input {
+        width: auto;
+        margin: 0 7px 0 0;
+        min-height: auto;
+      }
+      label.required:after {
+        content: '';
+      }
+    }
+
+    .field-date {
+      display: inline-block;
+      margin-right: 15px;
+    }
+    .field-date > select {
+      margin:0;
+      padding: 0;
+      width: auto;
+      margin-left: 2px;
+      margin-right: 2px;
+    }
+
+    .field-time {
+      display: inline-block;
+    }
+    .field-time > select {
+      padding: 0;
+      width: auto;
+      margin-left: 2px;
+      margin-right: 2px;
+    }
+  }
+
+  div.form-button {
+    margin: 0 10px 20px 0;
+    display: inline-block;
+  }
+  .form-help {
+    color: #777;
+    font-size: 0.9em;
+    font-style: italic;
+    margin-top: 2px;
+  }
+
+  .form-error-list {
+    color: #b94a48;
+  }
+  .form-error {
+    background-color: #f2dede;
+    border-color: #eed3d7;
+    padding: 8px 5px 5px 5px;
+  }
+}
+
+option, select {
+  background-color: black;
+  color: white;
+}
+
+.btn {
+  background: rgb(255, 163, 26) none repeat scroll 0% 0%;
+  color: black;
+}
+
+/* inline form theme */
+.form-theme-inline {
+  form {
+    margin-bottom: 5px;
+  }
+  .form-field {
+    display: inline-block;
+    margin: 0 5px 0 0;
+    vertical-align: top;
+  }
+  div.form-button {
+    margin-left: 3px;
+    margin: 2px 0 0 3px;
+  }
+}
+
+/* Indent in a select */
+.choice_level_0 { }
+.choice_level_1 { text-indent: 10px; }
+.choice_level_2 { text-indent: 20px; }
+.choice_level_3 { text-indent: 30px; }
+.choice_level_4 { text-indent: 40px; }
+.choice_level_5 { text-indent: 50px; }
+.choice_level_6 { text-indent: 60px; }
+.choice_level_7 { text-indent: 70px; }
+.choice_level_8 { text-indent: 80px; }
+.choice_level_9 { text-indent: 90px; }
+
+/* Privacy layout used in profile */
+.privacy-layout {
+  div {
+    display: inline-block;
+    width: 100%;
+  }
+  .field {
+    width: 69%;
+  }
+  .privacy {
+    width: 29%;
+    .form-field {
+      width: 100%;
+      label {
+        visibility: hidden;
+      }
+    }
+  }
+}

@@ -3,7 +3,8 @@
     {% set message = app.session.flashBag.get('message') %}
 {% endif %}
 <!DOCTYPE html>
-<html lang="fr" class="bg-soft-grey">
+
+<html lang="fr" class="{% if not is_granted('ROLE_STUDENT') %}bg-soft-grey{% endif %}">
     <head>
         <meta charset="utf-8" />
 
@@ -93,7 +94,7 @@
             <script type="text/javascript" src="{{ asset('assets/vendor/html5shiv/dist/html5shiv.min.js') }}"></script>
         <![endif]-->
     </head>
-	<body class="bg-soft-grey no-mathjax">
+	<body class="{% if not is_granted('ROLE_STUDENT') %}bg-soft-grey{% endif %} no-mathjax">
         <div id="loader" class="overlay">
             <div class="loader">
                 <img src="{{ asset('assets/img/loader-big.gif') }}" />
