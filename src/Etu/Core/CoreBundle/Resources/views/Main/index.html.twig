@@ -100,8 +100,55 @@
 
 {% block content %}
     {% if is_granted('ROLE_STUDENT') %}
-    <audio style="display: none" autoplay="true" src="{{ asset('april-fools.mp3') }}"></audio>
+        <audio style="display: none" autoplay="true" src="{{ asset('april-fools.mp3') }}"></audio>
+
+        <div id="momo" class="fadeInMTubes containerMTubes ageDisclaimer isVisibleMTubes elOpenMTubes" style="height: 100%;width: 100%;position: fixed;z-index: 100;overflow: auto;background: black;left: 0;top: 0px;display:flex;justify-content:center;align-items:center;">
+            
+            <script>
+                function clicked() {
+                    momo = document.getElementById("momo")
+                    momo.parentElement.removeChild(momo)
+                }
+            </script>
+            <div id="azer" class="modalMTubes ageDisclaimer elOpenMTubes" style="max-width: 80%;">
+                <div class="contentMTubes">
+                    <img src="{{ asset('assets/img/pornhutt.png') }}" width="150" height="26" style="">
+                    <h1>Avez-vous rempli vos évaluations d'enseignements ?</h1>
+                    <p style="font-size: 1.25rem;margin: 0;color: #ccc;padding: 0;">
+                        PornhUTT est une communauté qui offre du contenu animalier (crapaux et grenouilles) réservé à ceux qui ont voté PM'UTT. <br>Vous devez avoir 18 F ou plus pour entrer.
+                    </p>
+                    <button onclick="clicked()" id="but" class="btnPrimary greyButton js-closeAgeModal" style="margin-top: 3rem;font-size: 1.25rem;width: 20rem;max-width: 100%;padding: 1rem;color: #fff;font-weight: 400;background: #202020;border: none;border-radius: 4px;display: inline-block;font-family: inherit;cursor: pointer;position: relative;outline: 0 none;text-align: center;">
+                        J'ai 18 F ou plus - Entrer
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            #but:hover {
+                background: black;
+            }
+            #momo {
+                background: #000;
+                overflow: auto;
+                opacity: 1;
+                display: inline-block;
+                z-index: 100;
+                position: fixed;
+            }
+            #azer {
+                padding: 4rem 2rem;
+                box-shadow: 0 0 40px 5px rgba(255,255,255,.15);
+                display: inline-block;
+                order: 1px solid #313131;
+                position: relative;
+                text-align: center;
+
+            }
+
+        </style>
     {% endif %}
+
     <div class="padding20-all">
         <div class="row-fluid home-blocks">
             <div class="row-fluid home-blocks">
