@@ -100,14 +100,17 @@
 
 {% block content %}
     {% if is_granted('ROLE_STUDENT') %}
-        <audio style="display: none" autoplay="true" src="{{ asset('april-fools.mp3') }}"></audio>
+        <audio id="audio" style="display: none" src="{{ asset('april-fools.mp3') }}"></audio>
 
         <div id="momo" class="fadeInMTubes containerMTubes ageDisclaimer isVisibleMTubes elOpenMTubes" style="height: 100%;width: 100%;position: fixed;z-index: 100;overflow: auto;background: black;left: 0;top: 0px;display:flex;justify-content:center;align-items:center;">
             
             <script>
                 function clicked() {
                     momo = document.getElementById("momo")
+                    audio = document.getElementById("audio")
+                    audio.play()
                     momo.parentElement.removeChild(momo)
+
                 }
             </script>
             <div id="azer" class="modalMTubes ageDisclaimer elOpenMTubes" style="max-width: 80%;">
