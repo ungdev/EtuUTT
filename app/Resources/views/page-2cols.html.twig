@@ -2,7 +2,7 @@
 
 {% block page %}
     <section class="page">
-        <div class="container-fluid text-center ukraine"><div class="ukraine-col"><img src="{{ asset('ukraine.jpeg') }}" width="50" height="50" />&nbsp;&nbsp;</div><div class="ukraine-col">La guerre en Ukraine nous concerne tous. <em><a href="https://www.service-public.fr/particuliers/actualites/A15542">Comment aider ?</a> - <a href="https://www.youtube.com/playlist?list=PLCwXWOyIR22uIyapIsBAk5uARuWHqtVM1">Comprendre le conflit et ses enjeux</a> - <a href="https://www.utt.fr/actualites/solidarite-de-la-communaute-utt-envers-la-population-ukrainienne">Communiqué de l'UTT</a></em></div></div>
+        <div class="container-fluid text-center ukraine"><div class="ukraine-col"><img src="{{ asset('ukraine.jpeg') }}" width="50" height="50" />&nbsp;&nbsp;</div><div class="ukraine-col">{{ 'base.ukraine.text' | trans}} <em><a href="https://www.service-public.fr/particuliers/actualites/A15542">{{ 'base.ukraine.help' | trans }}</a> - <a href="https://www.youtube.com/playlist?list=PLCwXWOyIR22uIyapIsBAk5uARuWHqtVM1">{{ 'base.ukraine.understand' | trans }}</a> - <a href="https://www.utt.fr/actualites/solidarite-de-la-communaute-utt-envers-la-population-ukrainienne">{{ 'base.ukraine.utt' | trans }}</a></em></div></div>
         <div class="container page-container">
 
             <h2 class="page-title source-sans-pro">

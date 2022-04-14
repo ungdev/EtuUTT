@@ -3,6 +3,12 @@ base:
     title: UTT's student website
     description: Website created and designed by the students of the University of Technology of Troyes
 
+    ukraine:
+        text: The war in Ukraine concerns us all.
+        help: How to help ?
+        understand: Understanding the conflict and its issues
+        utt: UTT Press release
+
     # Logo
     logo:
         alt: Website logo

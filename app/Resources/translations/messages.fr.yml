@@ -6,6 +6,12 @@ base:
         Le site étudiant de l'UTT connecte la communauté des UTTiens et offre de multiples
         services pour faciliter leur vie étudiante
 
+    ukraine:
+        text: La guerre en Ukraine nous concerne tous.
+        help: Comment aider ?
+        understand: Comprendre le conflit et ses enjeux
+        utt: Communiqué de l'UTT
+
     # Logo
     logo:
         alt: Logo du site
