@@ -123,17 +123,12 @@ class ElementToUpdate
             $user->setNiveau($level);
         }
 
-        if ($this->array_different($niveauList, $this->database->getNiveauList())) {
-            $persist = true;
-            $user->setNiveauList($niveauList);
-        }
-
         if ($branch != $this->database->getBranch()) {
             $persist = true;
             $user->setBranch($branch);
         }
 
-        // On remet les branches dans l'ordre
+        // On remet les branches et niveaux dans l'ordre
         if(count($this->ldap->getFormationList()) == count($branchList)) {
             for ($position = 0; $position < count($branchList); $position++) {
                 $branch = $branchList[$position];
@@ -141,13 +136,15 @@ class ElementToUpdate
                     $positionInBranch = array_search(DbUser::$branchToFormation[$branch], $this->ldap->getFormationList());
                     if($position != $positionInBranch) {
                         $temp = $branchList[$positionInBranch];
+                        $temp2 = $niveauList[$positionInBranch];
                         $branchList[$positionInBranch] = $branch;
+                        $niveauList[$positionInBranch] = $niveauList[$position];
                         $branchList[$position] = $temp;
+                        $niveauList[$position] = $temp2;
                     }
                 }
             }
         }
-
 
         // On remet les filieres dans l'ordre
         $filiereList = $this->ldap->getFiliereList();
@@ -178,6 +175,11 @@ class ElementToUpdate
         if($this->array_different($branchList, $this->database->getBranchList())) {
             $persist = true;
             $user->setBranchList($branchList);
+        }
+
+        if ($this->array_different($niveauList, $this->database->getNiveauList())) {
+            $persist = true;
+            $user->setNiveauList($niveauList);
         }
 
         if (implode('|', $this->ldap->getUvs()) != $this->database->getUvs()) {
