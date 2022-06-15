@@ -6,12 +6,6 @@ base:
         Die UTT Studenten Webseite verbindet die Gemeinschaft der "UTTiens", Studenten der UTT, und bietet
         mehrfache Dienste um deren Leben zu vereinfachen.
 
-    ukraine:
-        text: Der Krieg in der Ukraine geht uns alle an.
-        help: Wie kann ich helfen?
-        understand: Verstehen des Konflikts und seiner Probleme
-        utt: UTT Pressemitteilung
-
     # Logo
     logo:
         alt: Logo der Webseite
