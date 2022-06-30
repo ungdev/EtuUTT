@@ -35,23 +35,119 @@ class ImportCommand extends ContainerAwareCommand
 This command helps you to import the official UTT UE guide from CSV file.');
 
         $registry = __DIR__.'/../Resources/objects/registry.json';
-        $csv = __DIR__.'/../Resources/objects/ues.csv';
-        $reader = Reader::createFromPath($csv);
-        // Download the guide
-        // $url = $input->getArgument('url');
-        // file_put_contents($file, fopen($url, 'r'));
-        // $output->writeln("\nDownloading ...");
 
-        /*
-         * Convert te file to xml to parse it
-         */
-        //$output->writeln('Converting to XML ...');
-        //shell_exec('pdftohtml -i -noframes -xml "'.$file.'" "'.$xml.'"');
-        //$xml = file_get_contents($xml);
+        ini_set("allow_url_fopen", 1);
+        $arrContextOptions=array(
+            "ssl"=>array(
+                'ciphers' => 'DEFAULT:!DH'
+            ),
+        );
+        $output->writeln('Getting data from API');
+        $json = file_get_contents('https://api-guideue.utt.fr/uvs/fr/2022?q=', false, stream_context_create($arrContextOptions));
+        $obj = json_decode($json, true);
 
-        $output->writeln('YOLO');
-        $ues = $reader->fetchAssoc();
-        $output->writeln('YOLO');
+        $ues = [];
+
+        $convertCategorie = [
+            "HUMANITES" => "CT",
+            "MANAGEMENT DE L'ENTREPRISE" => "ME",
+            "CONNAISSANCES SCIENTIFIQUES" => "CS",
+            "TECHNIQUES ET METHODES" => "TM",
+            "EXPRESSION ET COMMUNICATION" => "EC",
+            "STAGE" => "ST"
+        ];
+
+        $formationsING = ["TC", "MTE", "RT", "GI", "MM", "GM", "ISI"];
+
+        $codes = [];
+
+        foreach ($obj as $ue) {
+            $json = file_get_contents('https://api-guideue.utt.fr/uv/fr/2022/'.$ue["code"].'/1', false, stream_context_create($arrContextOptions));
+            $ueAPI = json_decode($json, true);
+            $ueToStore = [];
+            if(!in_array($ueAPI["code"], $codes)) {
+                $codes[] = $ueAPI["code"];
+            }
+            else {
+                continue;
+            }
+            $ueToStore["UV"] = $ueAPI["code"];
+            $periode = "";
+            if ($ueAPI["automne"] && $ueAPI["automne"]["ouvert"] && $ueAPI["automne"] && $ueAPI["automne"]["ouvert"]) {
+                $ueToStore["periode1"] = "Automne";
+                $ueToStore["periode2"] = "Printemps";
+                $periode = "automne";
+            }
+            elseif ($ueAPI["automne"] && $ueAPI["automne"]["ouvert"]) {
+                $ueToStore["periode1"] = "Automne";
+                $ueToStore["periode2"] = "";
+                $periode = "automne";
+            }
+            elseif ($ueAPI["printemps"] && $ueAPI["printemps"]["ouvert"]) {
+                $ueToStore["periode1"] = "Printemps";
+                $ueToStore["periode2"] = "";
+                $periode = "printemps";
+            }
+            else {
+                continue;
+            }
+            $ueToStore["catégorie"] = $convertCategorie[$ueAPI[$periode]["profils"][0]["categorie"]];
+            $ueToStore["titre"] = $ueAPI["libelle"];
+
+            $isMaster = false;
+            $isIng = false;
+            foreach ($ueAPI[$periode]["profils"] as $profil) {
+                if (in_array($profil["libelleCourtFormation"], $formationsING)) {
+                    $isIng = true;
+                }
+                else {
+                    $isMaster = true;
+                }
+            }
+            if ($isIng && $isMaster) {
+                $ueToStore["diplome"] = "UV ing. ou UV mast.";
+            }
+            elseif ($isIng) {
+                $ueToStore["diplome"] = "UV ing.";
+            }
+            else {
+                $ueToStore["diplome"] = "UV mast.";
+            }
+            if(strpos($ueAPI["acquisitionNotions"], "Mineur") !== false) {
+                $ueToStore["mineur"] = substr($ueAPI["acquisitionNotions"], strlen("Mineur : "));
+            }
+            else {
+                $ueToStore["mineur"] = "";
+            }
+
+            $ueToStore["antécédent"] = $ueAPI["prerequis"] ?: "";
+
+            $types = ["THE", "C", "STG", "ENT", "TD", "PRJ", "TP"];
+            foreach ($types as $type) {
+                $ueToStore[$type] = "";
+                $ueToStore[$type."volume"] = "";
+            }
+
+            foreach ($ueAPI["activites"] as $activite) {
+                $ueToStore[$activite["libelle"]] = $activite["libelle"];
+                $ueToStore[$activite["libelle"]."volume"] = $activite["nbVal"].$activite["nbType"];
+            }
+            $ueToStore["commentaires"] = $ueAPI["acquisitionNotions"] ?: "";
+            $objectifs = explode("\n", $ueAPI["objectifs"]);
+            foreach (range(1, 8) as $number) {
+                $ueToStore["objectif".$number] = $number - 1 < count($objectifs) ? $objectifs[$number - 1] : "";
+            }
+            $programmes = explode("\n", $ueAPI["programme"]);
+            foreach (range(1, 12) as $number) {
+                $ueToStore["programme".$number] = $number - 1 < count($programmes) ? $programmes[$number - 1] : "";
+            }
+            $ueToStore["langues"] = "FRA";
+            $ueToStore["credits"] = $ueAPI["creditsEcts"]." crédits";
+            $ues[] = $ueToStore;
+        }
+
+        $output->writeln('Processing data');
+
         $count = 0;
         foreach ($ues as $ue) {
             $output->writeln($ue['UV']);

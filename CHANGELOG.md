@@ -5,6 +5,7 @@ Actuelle
 ### Fonctionnalités
 
 * Ajout de la gestion complète du jeu de caractères `utf8mb4` (emojis, ...)
+* Synchronisation avec l'API du guide des UEs en ligne
 * Ajout d'un raccourci vers la plateforme de tickets de la scolarité
 * Gestion des étudiants en double-diplôme
   * De nouveaux champs sont exposés dans l'API : `formation_list`, `branch_list`, `level_list` et `speciality_list`. Les champs précédents ont été laissés pour permettre la rétrocompatibilité. Garantie de la consistance des données entre ces tableaux (même taille, et la position x dans tous les tableaux correspond au même diplôme)
