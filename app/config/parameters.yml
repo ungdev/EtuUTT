@@ -21,3 +21,4 @@ parameters:
     sia_ipa_password: "%env(ETUUTT_IPA_PASSWORD)%"
     slack_webhook_moderation: "%env(ETUUTT_SLACK_WEBHOOK_MODERATION)%"
     slack_token: "%env(ETUUTT_SLACK_TOKEN)%"
+    ues_year: "%env(ETUUTT_UES_YEAR)%"

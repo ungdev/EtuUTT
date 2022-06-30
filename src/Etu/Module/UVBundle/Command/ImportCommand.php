@@ -42,8 +42,9 @@ This command helps you to import the official UTT UE guide from CSV file.');
                 'ciphers' => 'DEFAULT:!DH'
             ),
         );
+        $container = $this->getContainer();
         $output->writeln('Getting data from API');
-        $json = file_get_contents('https://api-guideue.utt.fr/uvs/fr/2022?q=', false, stream_context_create($arrContextOptions));
+        $json = file_get_contents('https://api-guideue.utt.fr/uvs/fr/'.$container->getParameter('ues_year').'?q=', false, stream_context_create($arrContextOptions));
         $obj = json_decode($json, true);
 
         $ues = [];
@@ -62,7 +63,7 @@ This command helps you to import the official UTT UE guide from CSV file.');
         $codes = [];
 
         foreach ($obj as $ue) {
-            $json = file_get_contents('https://api-guideue.utt.fr/uv/fr/2022/'.$ue["code"].'/1', false, stream_context_create($arrContextOptions));
+            $json = file_get_contents('https://api-guideue.utt.fr/uv/fr/'.$container->getParameter('ues_year').'/'.$ue["code"].'/1', false, stream_context_create($arrContextOptions));
             $ueAPI = json_decode($json, true);
             $ueToStore = [];
             if(!in_array($ueAPI["code"], $codes)) {
