@@ -25,6 +25,7 @@ Actuelle
 
 * Forçage du timezone à Europe/Paris
 * Affichage de tous les présidents d'une asso dans la liste des assos
+* Suppressions des `-` dans les slugs des codes d'UEs
 * Il est désormais impossible de saisir une adresse en @utt.fr dans le champ adresse mail personnelle.
 
 ## 10.3

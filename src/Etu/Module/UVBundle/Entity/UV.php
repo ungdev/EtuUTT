@@ -253,7 +253,8 @@ class UV
     public function setCode($code)
     {
         $this->code = $code;
-        $this->slug = StringManipulationExtension::slugify($this->code);
+        $slug = StringManipulationExtension::slugify($code);
+        $this->slug = str_replace("-", "", $slug);
 
         return $this;
     }
