@@ -140,11 +140,12 @@ class PublicOrgasListController extends ApiController
      * @Route("/public/orgas/{login}/members", name="api_public_orgas_members")
      * @Method("GET")
      */
-    public function membersAction(Organization $orga)
+    public function membersAction(Organization $orga, Request $request)
     {
         return $this->format([
+            'embed' => ['user' => true],
             'data' => $this->get('etu.api.orga_member.transformer')->transform($orga->getMemberships()->toArray(), new EmbedBag(['user'])),
-        ]);
+        ], 200, [], $request);
     }
 
     /**
