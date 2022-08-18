@@ -43,7 +43,7 @@ class MailistSubscription implements EventSubscriber
             return;
         }
 
-        if ($entity instanceof Member && $entity->getGroup()) {
+        if ($entity instanceof Member && $entity->getGroup() && !empty($entity->getGroup()->getActions())) {
             foreach ($entity->getGroup()->getActions() as $action) {
                 if (OrganizationGroupAction::ACTION_MAILIST_ADD_MEMBER == $action->getAction()) {
                     if ($entity->getUser()->getMail()) {

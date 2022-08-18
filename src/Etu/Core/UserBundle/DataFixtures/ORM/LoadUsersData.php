@@ -66,12 +66,14 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($orga);
 
         $membership = new Member();
-
         $membership->setOrganization($orga);
         $membership->setUser($user);
+        $membership->setGroup($orga->getGroups()[0]);
         $membership->addPermission('daymail');
 
+        $orga->addCountMembers();
         $manager->persist($membership);
+        $manager->persist($orga);
 
         $manager->flush();
 

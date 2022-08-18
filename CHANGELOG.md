@@ -24,6 +24,8 @@ Actuelle
 ### Fix
 
 * Forçage du timezone à Europe/Paris
+* Lors de l'application des fixtures, l'ajout de l'utilisateur `user` dans une asso se fait bien avec un groupe
+* La route API `/public/orgas/{login}/members` fonctionne (merci @AlbanSdl, PR #272)
 * Affichage de tous les présidents d'une asso dans la liste des assos
 * Suppressions des `-` dans les slugs des codes d'UEs
 * Il est désormais impossible de saisir une adresse en @utt.fr dans le champ adresse mail personnelle.
