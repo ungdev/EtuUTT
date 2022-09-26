@@ -11,7 +11,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ImageBuilder
 {
-    public static function createImageResponse($path, $mode = '')
+    /**
+     * Create glide image generator server.
+     *
+     * @param mixed $path
+     *
+     * @return League\Glide\Server the glide server
+     */
+    protected static function getGlideServer($path)
     {
         /** @var string $root */
         $root = EtuModuleArgentiqueBundle::getPhotosRoot();
@@ -21,7 +28,7 @@ class ImageBuilder
             throw new NotFoundHttpException('Picture not found');
         }
 
-        $glide = CustomServerFactory::create(
+        return CustomServerFactory::create(
             [
                 'source' => $root,
                 'cache' => $cache_root,
@@ -29,6 +36,20 @@ class ImageBuilder
                 'driver' => 'imagick',
             ]
         );
+    }
+
+    /**
+     * Create an image response for the given mode. Image will be pulled from
+     * cache or created if needed.
+     *
+     * @param string $path Image path
+     * @param string $mode Generation mode between 'thumbnail', 'slideshow' or empty
+     *
+     * @return Reponse The image reponse
+     */
+    public static function createImageResponse($path, $mode = '')
+    {
+        $glideServer = ImageBuilder::getGlideServer($path);
 
         switch ($mode) {
             case 'thumbnail':
@@ -41,6 +62,17 @@ class ImageBuilder
                 $param = ['q' => 90, 'fm' => 'pjpg'];
         }
 
-        return $glide->getImageResponse($path, $param);
+        return $glideServer->getImageResponse($path, $param);
+    }
+
+    /**
+     * Clear all caches (all modes) for the given image path.
+     *
+     * @param $path Image path
+     */
+    public static function deleteCache($path)
+    {
+        $glideServer = ImageBuilder::getGlideServer($path);
+        $glideServer->deleteCache($path);
     }
 }
