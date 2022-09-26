@@ -4,7 +4,6 @@ namespace Etu\Module\ArgentiqueBundle\Glide;
 
 use Etu\Module\ArgentiqueBundle\EtuModuleArgentiqueBundle;
 use League\Glide\Responses\SymfonyResponseFactory;
-use League\Glide\ServerFactory;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -22,11 +21,12 @@ class ImageBuilder
             throw new NotFoundHttpException('Picture not found');
         }
 
-        $glide = ServerFactory::create(
+        $glide = CustomServerFactory::create(
             [
                 'source' => $root,
                 'cache' => $cache_root,
                 'response' => new SymfonyResponseFactory(),
+                'driver' => 'imagick',
             ]
         );
 
