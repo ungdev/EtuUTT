@@ -8,6 +8,7 @@ use Etu\Module\ArgentiqueBundle\EtuModuleArgentiqueBundle;
 use Etu\Module\ArgentiqueBundle\Glide\ImageBuilder;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,7 +21,13 @@ class WarmupCacheCommand extends ContainerAwareCommand
     {
         $this
             ->setName('etu:argentique:warmup')
-            ->setDescription('Warm-up the argentique galery cache.');
+            ->setDescription('Warm-up the argentique galery cache.')
+            ->addOption(
+                'force-rebuild',
+                'f',
+                InputOption::VALUE_NONE,
+                'Force rebuild of already created cache for all images'
+            );
     }
 
     /**
@@ -44,6 +51,11 @@ class WarmupCacheCommand extends ContainerAwareCommand
 
             // Keep only relative path
             $image = mb_substr($image, mb_strlen($root));
+
+            // Clear cache if rebuild is requested
+            if ($input->getOption('force-rebuild')) {
+                ImageBuilder::deleteCache($image);
+            }
 
             // Generate each type of image
             ImageBuilder::createImageResponse($image, '');
