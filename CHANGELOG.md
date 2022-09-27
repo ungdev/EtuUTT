@@ -18,6 +18,7 @@ Actuelle
 * Ajout des personnels UTT dans le trombi et de filtre sur le statut étudiant / enseignant
 * Les photos officielles des utilisateurs sont désormais récupérées via un script externe [utt-profile-pictures](https://github.com/ungdev/utt-profile-pictures) (développé grâce à la lib python [pyutttils](http://github.com/larueli/pyutttils/)) puis placées dans un dossier et récupérées par le site etu.
 * Mise à jour de la liste des UEs
+* Migration vers Imagick, conservation des métadonnées des images, optimisation du traitement des images (#273, merci @Alabate)
 * La commande etu:ue:import synchronise désormais les UEs de la DB avec le CSV (pas d'ajout brut). Les UEs pas dans le CSV sont marquées dépréciées.
 * Les étudiants salariés de l'UTT sont également considérés comme étudiants et non plus juste salariés (accès aux commentaires, ...)
 
