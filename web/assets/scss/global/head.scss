@@ -1,10 +1,11 @@
 
 /* Header banner */
 .head {
-    -moz-box-shadow: 0 0 5px #888;
-    -webkit-box-shadow: 0 0 5px#888;
-    box-shadow: 0 0 5px #888;
+    // -moz-box-shadow: 0 0 5px #888;
+    // -webkit-box-shadow: 0 0 5px#888;
+    // box-shadow: 0 0 5px #888;
     z-index: 220;
+    border-bottom: 1px solid #313944;
 }
 
 .ukraine {
@@ -183,4 +184,33 @@
     -moz-box-shadow: 0 0 5px #606060;
     -webkit-box-shadow: 0 0 5px#606060;
     box-shadow: 0 0 5px #606060;
+}
+
+/* Poll banner */
+.poll {
+    padding: 10px;
+    color: white;
+    display: flex;
+    gap: 2em;
+    justify-content: center;
+    align-items: center;
+    flex-flow: row nowrap;
+    border-top: 1px solid #414b5c;
+    margin-top: 1px;
+
+    img {
+        width: 32px !important;
+        height: 32px !important;
+    }
+
+    & > .button {
+        display: block;
+        padding: 3px 6px;
+        border-radius: 3px;
+        background-color: white;
+        color: #363e4a;
+        text-decoration: none;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
 }

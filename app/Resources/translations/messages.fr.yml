@@ -21,6 +21,11 @@ base:
         more: Plus
         connexion: Connexion
 
+    # Poll
+    poll:
+        text: Vote pour les fonctionnalités du prochain site étu !
+        link: Voter
+
     # User account box
     user:
         # Users types
