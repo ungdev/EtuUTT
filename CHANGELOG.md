@@ -13,6 +13,7 @@ Actuelle
   * Prise en compte de tous les diplômes lors d'une recherche dans le trombi
 * Ajout de filtre et de tri dans la liste des bugs
 * Ajout temporaire d'une bannière sur le conflit Ukraine / Russie
+* Ajout temporaire d'une bannière de vote sur les fonctionnalités du prochain site étu
 * Affichage du nom de l'UE dans la page de validation des commentaires
 * Ajout de la possibilité de proposer des nouvelles fonctionnalités
 * Ajout des personnels UTT dans le trombi et de filtre sur le statut étudiant / enseignant

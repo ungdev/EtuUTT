@@ -17,6 +17,10 @@ base:
         search: Search
         more: More
         connexion: Log in
+    # Poll
+    poll:
+        text: Vote for the features of the next version of EtuUTT !
+        link: Vote
 
     # User account box
     user:

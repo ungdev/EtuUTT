@@ -385,6 +385,11 @@
     .display-for-phones {
         display: block !important;
     }
+    .poll {
+        flex-flow: column nowrap;
+        gap: 2px;
+        margin-top: 10px;
+    }
 
     #menu-mobile {
         margin-top: 50px;
