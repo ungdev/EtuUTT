@@ -75,7 +75,7 @@
         "bower-asset/videojs": "5.11.7",
         "bower-asset/selectize": "0.12.*",
 
-        "firebase/php-jwt": "^5.0",
+        "firebase/php-jwt": "^6.0",
         "gnumoksha/php-freeipa": "dev-master",
         "artgris/filemanager-bundle": "^1.4",
         "ramsey/uuid-doctrine": "^1.5",
