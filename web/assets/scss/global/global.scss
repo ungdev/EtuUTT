@@ -8,14 +8,14 @@ a, a:active, a:hover, a:visited, a:focus {
 /* Overwrite Boostrap Helvetica Neue (problem with Chrome on Windows 7) */
 body {
     margin: 0;
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: 'Comic Sans MS', sans-serif;
     font-size: 14px;
     line-height: 20px;
     color: #333;
     background-color: #fff;
 }
 input, textarea, select {
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: 'Comic Sans MS', sans-serif;
 }
 
 /* Default syles */
@@ -44,7 +44,7 @@ textarea {
 
 /* Police */
 .source-sans-pro {
-    font-family: 'Source Sans Pro', Arial, serif, sans-serif;
+    font-family: 'Comic Sans MS', sans-serif;
     font-weight: lighter;
 }
 

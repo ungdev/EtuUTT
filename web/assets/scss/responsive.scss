@@ -524,6 +524,21 @@
     .fc-header-title h2 {
         font-size: 20px;
     }
+    
+    .external-link-popup {
+        .ext-logo {
+            display: none;
+        }
+
+        div {
+            justify-content: flex-end;
+        }
+
+        .button {
+            font-size: 25px;
+        }
+    }
+
 }
 
 @media screen and (max-width: 500px) {

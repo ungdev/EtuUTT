@@ -396,3 +396,20 @@ $('.upload-popup').click(function() {
         window.open(Routing.generate('upload_index', {'organization': null}), '', 'width=1000, height=700, top='+((screen.height/2)-(700/2))+', left='+((screen.width/2)-(1000/2))+', toolbar=no, location=yes, directories=no, status=no, menubar=yes, scrollbars=yes, copyhistory=no, resizable=yes');
     }
 })
+
+const externalLinkProtection = function (event) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    const el = $('<div class="external-link-popup"><div><div class="ext-logo"><span>Ad</span>utt</div><div class="button disabled">Skip ad in 5 secs</div></div><iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1&loop=1&controls=0&rel=0&modestbranding=1" frameborder="0" allow="autoplay loop"></iframe></div>');
+    $('body').append(el);
+    let remainingTime = 5;
+    const intervalId = setInterval(() => {
+        remainingTime--;
+        if (remainingTime) el.find('.button').text(`Skip ad in ${remainingTime} secs`);
+        else {
+            el.find('.button').removeClass('disabled').text('Skip ad').click(() => (window.location = event.target.attributes['href'].value));
+            clearInterval(intervalId);
+        }
+    }, 1000, 1000);
+}
+$('[class|="uv-view-reviews-reviews"]>a,a[href^=\'http\'],a[href=\'/user/cas\']').click(externalLinkProtection).on("auxclick", externalLinkProtection).on("contextmenu", externalLinkProtection);

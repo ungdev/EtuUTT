@@ -100,3 +100,64 @@ figure.align-center {
     margin-left: auto;
     margin-right: auto;
 }
+
+.external-link-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 220;
+    background-color: white;
+    display: flex;
+    flex-flow: column nowrap;
+
+    iframe {
+        aspect-ratio: 560/315;
+        min-width: 100%;
+        margin-left: 50%;
+        transform: translateX(-50%);
+        flex: 1 1 auto;
+        pointer-events: none;
+    }
+
+    div {
+        background-color: #153756;
+        padding: 1em;
+        color: white;
+        font-weight: bold;
+        flex: 0 0 auto;
+        user-select: none;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        align-content: center;
+
+        .ext-logo {
+            font-size: 60px;
+            padding: 0 1em;
+            font-family: 'Comic Sans Ms';
+
+            span {
+                color: #f4eb2c;
+            }
+        }
+
+        .button {
+            background-color: #f4eb2c;
+            color: black;
+            border: 5px solid black;
+            border-radius: 10px;
+            font-size: 30px;
+            text-transform: uppercase;
+            padding: 0.8em 1em;
+            display: inline-block;
+            cursor: pointer;
+
+            &.disabled {
+                cursor: not-allowed;
+                background-color: #9c9c9c;
+            }
+        }
+    }
+}
