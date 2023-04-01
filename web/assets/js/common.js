@@ -407,7 +407,7 @@ const externalLinkProtection = function (event) {
         remainingTime--;
         if (remainingTime) el.find('.button').text(`Skip ad in ${remainingTime} secs`);
         else {
-            el.find('.button').removeClass('disabled').text('Skip ad').click(() => (window.location = event.target.attributes['href'].value));
+            el.find('.button').removeClass('disabled').text('Skip ad').click(() => (window.location = this.attributes['href'].value));
             clearInterval(intervalId);
         }
     }, 1000, 1000);
