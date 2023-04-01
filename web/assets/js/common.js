@@ -400,7 +400,7 @@ $('.upload-popup').click(function() {
 const externalLinkProtection = function (event) {
     event.preventDefault();
     event.stopImmediatePropagation();
-    const el = $('<div class="external-link-popup"><div><div class="ext-logo"><span>Ad</span>utt</div><div class="button disabled">Skip ad in 5 secs</div></div><iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1&loop=1&controls=0&rel=0&modestbranding=1" frameborder="0" allow="autoplay loop"></iframe></div>');
+    const el = $('<div class="external-link-popup"><div><div class="ext-logo"><span>Ad</span>utt</div><div class="button disabled">Skip ad in 5 secs</div></div><iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1&loop=1&disablekb=1&controls=0&rel=0&modestbranding=1" frameborder="0" allow="autoplay; loop"></iframe></div>');
     $('body').append(el);
     let remainingTime = 5;
     const intervalId = setInterval(() => {
