@@ -714,7 +714,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      *
      * @ORM\Column(type="string", length=100, nullable=true)
      * @Assert\Regex(
-     *      pattern = "/^.*#[0-9]{4}$|^[a-z0-9\._]*(?<!\.\..*)$/",
+     *      pattern = "/^.*#[0-9]{4}$|^(?:\.?[a-z0-9_]+)*\.?$/",
      *      message = "user.validation.discordTag"
      * )
      */
