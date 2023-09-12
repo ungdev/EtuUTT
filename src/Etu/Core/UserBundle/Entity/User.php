@@ -42,26 +42,26 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public static $branches = [
         'ING A2I' => 'A2I', 'ING GI' => 'GI',
         'ING GM' => 'GM', 'ING ISI' => 'ISI',
-        'ING MTE' => 'MTE',  'ING MM' => 'MM',
-        'ING RT' => 'RT', 'ING TC' => 'TC',
-        'MST ISC' => 'ISC', 'MST PAIP' => 'PAIP',
-        'MST RE' => 'RE', 'LP ETN' => 'LP-ETN',
-        'LP MEER' => 'LP-MEER', 'LP MPHP' => 'LP-MPHP',
-        'DOC EXT' => 'EXT', 'DOC M2ON' => 'M2ON',
-        'DOC OSS' => 'OSS', 'DOC SST' => 'SST',
-        'MS MPTI' => 'MS-MPTI', 'MS EBAM' => 'MS-EBAM',
-        'MS EFC' => 'MS-EFC', 'MS EST' => 'MS-EST',
-        'CV ING' => ' CV ING', 'DU DPO' => 'DU-DPO',
-        'DU ARMC' => 'DU-ARMC', 'DU 3C' => 'DU-3C',
-        'DU DE' => 'DU-DE', 'DU IOBM' => 'DU-IOBM',
-        'FC' => 'FC',
+        'ING MTE' => 'MTE', 'ING MM' => 'MM',
+        'ING RT' => 'RT', 'ING SN' => 'SN',
+        'ING TC' => 'TC', 'MST ISC' => 'ISC',
+        'MST PAIP' => 'PAIP', 'MST RE' => 'RE',
+        'LP ETN' => 'LP-ETN', 'LP MEER' => 'LP-MEER',
+        'LP MPHP' => 'LP-MPHP', 'DOC EXT' => 'EXT',
+        'DOC M2ON' => 'M2ON', 'DOC OSS' => 'OSS',
+        'DOC SST' => 'SST', 'MS MPTI' => 'MS-MPTI',
+        'MS EBAM' => 'MS-EBAM', 'MS EFC' => 'MS-EFC',
+        'MS EST' => 'MS-EST', 'CV ING' => ' CV ING',
+        'DU DPO' => 'DU-DPO', 'DU ARMC' => 'DU-ARMC',
+        'DU 3C' => 'DU-3C', 'DU DE' => 'DU-DE',
+        'DU IOBM' => 'DU-IOBM', 'FC' => 'FC',
     ];
 
     public static $branchToFormation = [
         "RE" => "Master Sciences et Technologies", "ISC" => "Master Sciences et Technologies",
         "PAIP" => "Master Sciences et Technologies", "RT" => "Ingénieur", "ISI" => "Ingénieur",
-        "MTE" => "Ingénieur", "GM" => "Ingénieur", "A2I" => "Ingénieur", "GI" => "Ingénieur", "TC" => "Ingénieur",
-        "MM" => "Ingénieur"
+        "MTE" => "Ingénieur", "GM" => "Ingénieur", "A2I" => "Ingénieur", "GI" => "Ingénieur",
+        "TC" => "Ingénieur", "MM" => "Ingénieur", "SN" => "Ingénieur"
     ];
 
     public static $levels = [

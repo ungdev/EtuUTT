@@ -58,7 +58,7 @@ This command helps you to import the official UTT UE guide from CSV file.');
             "STAGE" => "ST"
         ];
 
-        $formationsING = ["TC", "MTE", "RT", "GI", "MM", "GM", "ISI"];
+        $formationsING = ["TC", "MTE", "RT", "GI", "MM", "GM", "ISI", "SN"];
 
         $codes = [];
 
