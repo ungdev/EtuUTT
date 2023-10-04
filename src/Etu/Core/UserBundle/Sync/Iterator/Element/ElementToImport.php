@@ -115,6 +115,7 @@ class ElementToImport
         $user->setTitle($this->element->getTitle());
         $user->setIsStudent($this->element->getIsStudent());
         $user->setIsStaffUTT(!$this->element->getIsStudent());
+        $user->setSchedulePrivacy(200); //public const PRIVACY_PRIVATE = 200;
         $user->setIsInLDAP(true);
         $user->setDaymail($this->element->getIsStudent() && '@utt.fr' == mb_substr($this->element->getMail(), -7)); // Filter by email to remove epf students
         $user->setUvs(implode('|', $this->element->getUvs()));
