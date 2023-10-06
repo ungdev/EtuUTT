@@ -20,9 +20,17 @@
         },
         tourStates = [
             {
-                title: 'Bienvenue !',
+                title: 'Bienvenue sur le site étu !',
+                html: 'En utilisant le site étu, vous acceptez nos <a href="/page/mentions-legales">mentions légales</a>. Vous pouvez en savoir plus sur notre page <a href="/rgpd">RGPD</a>.',
+                buttons: { Accepter: 1 },
+                focus: 0,
+                position: { container: '.page-container', x: 400, y: 30, width: 500, arrow: 'tc' },
+                submit: tourSubmitFunc
+            },
+            {
+                title: 'Tutoriel',
                 html: 'Prêt à découvrir le nouveau site étu ? C\'est parti !',
-                buttons: { Suivant: 1 },
+                buttons: { Précédent: -1, Suivant: 1 },
                 focus: 0,
                 position: { container: '.page-container', x: 25, y: 15, width: 200, arrow: 'tc' },
                 submit: tourSubmitFunc
