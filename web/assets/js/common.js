@@ -402,6 +402,6 @@ const countdown = $('.poll .countdown');
 if (countdown.length) {
     setInterval(() => {
         const delay = ((new Date('2024/04/01')).getTime() - Date.now()) / 1000;
-        countdown.text(`${`${Math.floor(delay / 86400)}`.padStart(2, '0')}:${`${Math.floor(delay / 3600) % 24}`.padStart(2, '0')}:${`${Math.floor(delay) % 60}`.padStart(2, '0')}`);
+        countdown.text(`${`${Math.floor(delay / 86400)}`.padStart(2, '0')}:${`${Math.floor(delay / 3600) % 24}`.padStart(2, '0')}:${`${Math.floor(delay / 60) % 60}`.padStart(2, '0')}:${`${Math.floor(delay) % 60}`.padStart(2, '0')}`);
     }, 1000);
 }
