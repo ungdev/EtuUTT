@@ -396,3 +396,12 @@ $('.upload-popup').click(function() {
         window.open(Routing.generate('upload_index', {'organization': null}), '', 'width=1000, height=700, top='+((screen.height/2)-(700/2))+', left='+((screen.width/2)-(1000/2))+', toolbar=no, location=yes, directories=no, status=no, menubar=yes, scrollbars=yes, copyhistory=no, resizable=yes');
     }
 })
+
+// Countdown
+const countdown = $('.poll .countdown');
+if (countdown.length) {
+    setInterval(() => {
+        const delay = ((new Date('2024/04/01')).getTime() - Date.now()) / 1000;
+        countdown.text(`${`${Math.floor(delay / 86400)}`.padStart(2, '0')}:${`${Math.floor(delay / 3600) % 24}`.padStart(2, '0')}:${`${Math.floor(delay) % 60}`.padStart(2, '0')}`);
+    }, 1000);
+}
