@@ -19,8 +19,7 @@ base:
         connexion: Log in
     # Poll
     poll:
-        text: Vote for the features of the next version of EtuUTT !
-        link: Vote
+        text: The new EtuUTT will be released in
 
     # User account box
     user:

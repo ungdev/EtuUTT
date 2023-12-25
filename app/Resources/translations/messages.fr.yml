@@ -23,8 +23,7 @@ base:
 
     # Poll
     poll:
-        text: Vote pour les fonctionnalités du prochain site étu !
-        link: Voter
+        text: Le tout nouveau EtuUTT sera disponible dans
 
     # User account box
     user:

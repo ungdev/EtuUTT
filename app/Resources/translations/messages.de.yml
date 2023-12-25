@@ -23,8 +23,7 @@ base:
 
     # Poll
     poll:
-        text: Stimmen Sie für die Funktionen der nächsten Version von EtuUTT ab
-        link: Abstimmen
+        text: Das neue EtuUTT wird in veröffentlicht
 
     # User account box
     user:

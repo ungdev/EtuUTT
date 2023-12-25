@@ -199,8 +199,8 @@
     margin-top: 1px;
 
     img {
-        width: 32px !important;
-        height: 32px !important;
+        width: 24px !important;
+        height: 24px !important;
     }
 
     & > .button {
@@ -211,5 +211,9 @@
         text-decoration: none;
         font-weight: bold;
         text-transform: uppercase;
+    }
+
+    .countdown {
+        font-weight: bold;
     }
 }
