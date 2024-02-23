@@ -92,6 +92,10 @@ This command helps you to import the official UTT UE guide from CSV file.');
             else {
                 continue;
             }
+            if ($ueAPI[$periode]["profils"][0]["categorie"] == "") {
+                $output->writeln("Skipping UE ".$ueAPI["code"]." because it has no category");
+                continue;
+            }
             $ueToStore["catégorie"] = $convertCategorie[$ueAPI[$periode]["profils"][0]["categorie"]];
             $ueToStore["titre"] = $ueAPI["libelle"];
 
