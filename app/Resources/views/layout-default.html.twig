@@ -1,7 +1,49 @@
 {% extends '::base.html.twig' %}
 
 {% block layout %}
-    <header class="bg-dark-blue fixed head">
+    <script>
+        (() => {
+            const messageToWrite = "Nous rencontrons des difficultés lors de la mise en production de la bêta du nouveau site étu. Cela devrait être résolu aux alentours de minuit.";
+            let i = 1;
+            let cursorVisible = true;
+            const fishyMessageAnimation = () => {
+                if (i === 1) {
+                    console.log(document.getElementsByClassName('fishy-message')[0].clientHeight)
+                    document.getElementsByClassName('fishy-message')[0].style.minHeight = `${document.getElementsByClassName('fishy-message')[0].clientHeight - 60}px`;
+                }
+                document.getElementsByClassName('fishy-message')[0].firstChild.textContent = messageToWrite.slice(0, i);
+                if (++i <= messageToWrite.length) {
+                    setTimeout(() => requestAnimationFrame(fishyMessageAnimation), messageToWrite[i-2] === '.' ? 1500 : Math.random() * 60);
+                } else {
+                    document.getElementsByClassName('fishy-message')[0].style.minHeight = 'unset';
+                }
+            };
+            const cursorAnimation = () => {
+                cursorVisible = !cursorVisible;
+                document.getElementsByClassName('fishy-message')[0].lastChild.style.visibility = cursorVisible ? 'visible' : 'hidden';
+                setTimeout(() => requestAnimationFrame(cursorAnimation), 500);
+            }
+            requestAnimationFrame(fishyMessageAnimation);
+            requestAnimationFrame(cursorAnimation);
+        })();
+    </script>
+    <div class="fishy-addition">
+        <div class="header">
+            <div class="buttons">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="title">Terminal</div>
+            <div></div>
+        </div>
+        <p class="fishy-message">
+            Un problème s'est produit durant la mise en production de la bêta du nouveau site étu. Le problème devrait
+            être résolu aux alentours de minuit.
+            <span class="cursor" />
+        </p>
+    </div>
+    <header class="bg-dark-blue head">
         <div class="container" id="top">
             <div class="pull-left title">
                 <h1 class="seo-title">{{ block('title') }} - {{ 'base.title'|trans }}</h1>
