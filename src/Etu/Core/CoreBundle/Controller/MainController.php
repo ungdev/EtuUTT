@@ -330,4 +330,12 @@ class MainController extends Controller
 
         return $view;
     }
+
+    /**
+     * @Route("/beta-cas-redirect", name="beta_cas_redirect")
+     */
+    public function betaCasRedirectAction(Request $request)
+    {
+        return $this->redirect('https://beta.etu.utt.fr/login?'.$request->getQueryString());
+    }
 }
