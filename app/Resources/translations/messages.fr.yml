@@ -23,7 +23,7 @@ base:
 
     # Poll
     poll:
-        text: Le tout nouveau EtuUTT sera disponible dans
+        text: Une bêta du tout nouveau EtuUTT va être mise en ligne dans peu de temps. Si tout se passe bien, aujourd'hui ou demain.
 
     # User account box
     user:
