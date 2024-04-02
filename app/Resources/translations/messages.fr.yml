@@ -23,7 +23,7 @@ base:
 
     # Poll
     poll:
-        text: Une bêta du tout nouveau EtuUTT va être mise en ligne dans peu de temps. Si tout se passe bien, aujourd'hui ou demain.
+        text: Ok, on a peut-être été un peu optimistes pour la date de sortie de la bêta du nouveau EtuUTT. Nous ne voulons pas publier la version que nous avons actuellement, même en bêta. On voudrait vous sortir une version un minimum propre, et que vous pourrez commencer à utiliser. Cette fois-ci, on ne va pas se donner de deadline, mais promis, ça arrive.
 
     # User account box
     user:
