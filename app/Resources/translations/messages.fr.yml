@@ -56,6 +56,7 @@ base:
             tickets_scol: Tickets Admissions Scolarité
             ungStatus: Etat des services UNG
             gdpr: RGPD
+            turboSwitch: Emprunter des Switch
 
         # Sex
         sex:

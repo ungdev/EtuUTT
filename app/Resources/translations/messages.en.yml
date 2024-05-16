@@ -50,6 +50,7 @@ base:
             tickets_scol: Administrative helpdesk
             ungStatus: UNG services status
             gdpr: GDPR
+            turboSwitch: Borrow Switch
 
         # Sex
         sex:

@@ -54,3 +54,8 @@ Branche `dev` (développement) :
 
 Branche `master` (production) :
 [![Build Status](https://travis-ci.org/ungdev/EtuUTT.svg?branch=master)](https://travis-ci.org/ungdev/EtuUTT)
+
+Crédits
+-------
+
+- Icône Nintendo Switch : [par Smashicons](https://www.iconfinder.com/icons/3154549/console_game_games_nintendo_switch_icon)
