@@ -21,10 +21,6 @@ base:
         more: Mehr
         connexion: Anmelden
 
-    # Poll
-    poll:
-        text: Das neue EtuUTT wird in veröffentlicht
-
     # User account box
     user:
         # Users types

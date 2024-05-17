@@ -17,9 +17,6 @@ base:
         search: Search
         more: More
         connexion: Log in
-    # Poll
-    poll:
-        text: The new EtuUTT will be released in
 
     # User account box
     user:

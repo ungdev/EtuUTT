@@ -21,10 +21,6 @@ base:
         more: Plus
         connexion: Connexion
 
-    # Poll
-    poll:
-        text: Ok, on a peut-être été un peu optimistes pour la date de sortie de la bêta du nouveau EtuUTT. Nous ne voulons pas publier la version que nous avons actuellement, même en bêta. On voudrait vous sortir une version un minimum propre, et que vous pourrez commencer à utiliser. Cette fois-ci, on ne va pas se donner de deadline, mais promis, ça arrive.
-
     # User account box
     user:
         # Users types
