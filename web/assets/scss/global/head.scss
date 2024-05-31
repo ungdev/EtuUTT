@@ -186,30 +186,41 @@
     box-shadow: 0 0 5px #606060;
 }
 
-/* Poll banner */
-.poll {
-    padding: 10px;
-    color: white;
+/* Message banner */
+.banner {
     display: flex;
-    gap: 2em;
-    justify-content: center;
-    align-items: center;
-    flex-flow: row nowrap;
+    flex-direction: column;
     border-top: 1px solid #414b5c;
     margin-top: 1px;
+    height: 50px;
+    width: 100%;
+    padding: 0;
 
-    img {
-        width: 24px !important;
-        height: 24px !important;
+    > * {
+        flex-grow: 1;
     }
 
-    & > .button {
-        display: block;
-        padding: 3px 6px;
-        border-radius: 3px;
-        background-color: white;
-        text-decoration: none;
-        font-weight: bold;
-        text-transform: uppercase;
+    .background-red {
+        background-color: #e60000;
+    }
+
+    .background-orange {
+        background-color: #ff8e00;
+    }
+
+    .background-yellow {
+        background-color: #ffef00;
+    }
+
+    .background-green {
+        background-color: #00811b;
+    }
+
+    .background-blue {
+        background-color: #004bff;
+    }
+
+    .background-purple {
+        background-color: #780089;
     }
 }
