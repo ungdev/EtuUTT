@@ -8,18 +8,6 @@
     border-bottom: 1px solid #313944;
 }
 
-.ukraine {
-    padding: 10px;
-    background-color: black;
-    color: white;
-    a {
-        color: white;
-    }
-    .ukraine-col {
-        display: inline-block;
-    }
-}
-
 /* Title to hide using CSS, for accessibility */
 .seo-title {
     display: none;
@@ -190,8 +178,6 @@
 .banner {
     display: flex;
     flex-direction: column;
-    border-top: 1px solid #414b5c;
-    margin-top: 1px;
     height: 50px;
     width: 100%;
     padding: 0;
