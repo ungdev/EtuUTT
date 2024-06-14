@@ -176,6 +176,7 @@ user:
             notifications: Notifications
             event: Evènements
             daymail: Daymail
+            news: News
             wiki: Wiki
             public: Page publique
             sia: Gestionnaire SIA
