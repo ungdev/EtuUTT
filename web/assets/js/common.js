@@ -5,8 +5,8 @@
 var fontsCss = $('<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro" type="text/css" />'),
     head = $('head');
 
-$(function() {
-    setTimeout(function() { head.append(fontsCss); });
+$(function () {
+    setTimeout(function () { head.append(fontsCss); });
 });
 
 /*
@@ -63,25 +63,25 @@ function removeCountTitle() {
         title = title.split(') ');
         document.title = title[1];
     } else {
-        document.title =title;
+        document.title = title;
     }
 }
 
-userbox.avatar.click(function() {
+userbox.avatar.click(function () {
     userbox.link.click();
     return false;
 });
 
-userbox.link.click(function() {
+userbox.link.click(function () {
     userbox.box.toggleClass('userbox-clicked');
     userbox.menu.toggleClass('userbox-menu-clicked');
     userbox.menu.toggle();
     return false;
 });
 
-more.click(function() {
-    if (! $(this).hasClass('active')) {
-        menu.head.items.each(function() {
+more.click(function () {
+    if (!$(this).hasClass('active')) {
+        menu.head.items.each(function () {
             if ($(this).hasClass('active')) {
                 $(this).removeClass('active').addClass('old-active');
             }
@@ -89,7 +89,7 @@ more.click(function() {
 
         $(this).addClass('active');
     } else {
-        menu.head.items.each(function() {
+        menu.head.items.each(function () {
             if ($(this).hasClass('old-active')) {
                 $(this).removeClass('old-active').addClass('active');
             }
@@ -104,8 +104,8 @@ more.click(function() {
     return false;
 });
 
-changeLocale.link.click(function() {
-    menu.head.items.each(function() {
+changeLocale.link.click(function () {
+    menu.head.items.each(function () {
         if ($(this).hasClass('old-active')) {
             $(this).removeClass('old-active').addClass('active');
         }
@@ -120,12 +120,12 @@ changeLocale.link.click(function() {
     return false;
 });
 
-page.on('click', function(e) {
+page.on('click', function (e) {
     userbox.box.removeClass('userbox-clicked');
     userbox.menu.removeClass('userbox-menu-clicked');
     userbox.menu.hide();
 
-    menu.head.items.each(function() {
+    menu.head.items.each(function () {
         if ($(this).hasClass('old-active')) {
             $(this).removeClass('old-active').addClass('active');
         }
@@ -138,13 +138,13 @@ page.on('click', function(e) {
     changeLocale.box.hide();
 });
 
-$(document).keypress(function(event) {
+$(document).keypress(function (event) {
     if (event.keyCode == 27) {
         userbox.box.removeClass('userbox-clicked');
         userbox.menu.removeClass('userbox-menu-clicked');
         userbox.menu.hide();
 
-        menu.head.items.each(function() {
+        menu.head.items.each(function () {
             if ($(this).hasClass('old-active')) {
                 $(this).removeClass('old-active').addClass('active');
             }
@@ -158,12 +158,12 @@ $(document).keypress(function(event) {
     }
 });
 
-$('.userbox a, #menu-mobile a, #change-locale-choices a').click(function() {
+$('.userbox a, #menu-mobile a, #change-locale-choices a').click(function () {
     return true;
 });
 
 // Suscribe
-subscriptions.follow.click(function() {
+subscriptions.follow.click(function () {
     var url = Routing.generate('notifs_subscribe', {
         'entityType': $(this).attr('data-entityType'),
         'entityId': $(this).attr('data-entityId')
@@ -171,16 +171,16 @@ subscriptions.follow.click(function() {
 
     var id = $(this).attr('id').replace('-subscribe', '');
 
-    $('#'+ id +'-subscribe').hide();
-    $('#'+ id +'-loader').show();
+    $('#' + id + '-subscribe').hide();
+    $('#' + id + '-loader').show();
 
-    $.getJSON(url, function(data) {
-        $('#'+ id +'-loader').hide();
+    $.getJSON(url, function (data) {
+        $('#' + id + '-loader').hide();
 
         if (typeof data.status != 'undefined' && data.status == 200) {
-            $('#'+ id +'-unsubscribe').show();
+            $('#' + id + '-unsubscribe').show();
         } else {
-            $('#'+ id +'-subscribe').show();
+            $('#' + id + '-subscribe').show();
 
             alert('Une erreur s\'est produite. Veuillez réessayer ou signaler le problème.');
         }
@@ -191,7 +191,7 @@ subscriptions.follow.click(function() {
 
 
 // Unsubscribe
-subscriptions.unfollow.click(function() {
+subscriptions.unfollow.click(function () {
     var url = Routing.generate('notifs_unsubscribe', {
         'entityType': $(this).attr('data-entityType'),
         'entityId': $(this).attr('data-entityId')
@@ -199,16 +199,16 @@ subscriptions.unfollow.click(function() {
 
     var id = $(this).attr('id').replace('-unsubscribe', '');
 
-    $('#'+ id +'-unsubscribe').hide();
-    $('#'+ id +'-loader').show();
+    $('#' + id + '-unsubscribe').hide();
+    $('#' + id + '-loader').show();
 
-    $.getJSON(url, function(data) {
-        $('#'+ id +'-loader').hide();
+    $.getJSON(url, function (data) {
+        $('#' + id + '-loader').hide();
 
         if (typeof data.status != 'undefined' && data.status == 200) {
-            $('#'+ id +'-subscribe').show();
+            $('#' + id + '-subscribe').show();
         } else {
-            $('#'+ id +'-unsubscribe').show();
+            $('#' + id + '-unsubscribe').show();
 
             alert('Une erreur s\'est produite. Veuillez réessayer ou signaler le problème.');
         }
@@ -222,8 +222,8 @@ $('.date-picker').datepicker({
     dateFormat: 'dd/mm/yy',
     changeMonth: true,
     changeYear: true,
-    dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
-    monthNamesShort: [ "Jan", "Fev", "Mar", "Avr", "Mai", "Juin", "Juil", "Aou", "Sep", "Oct", "Nov", "Dec" ]
+    dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+    monthNamesShort: ["Jan", "Fev", "Mar", "Avr", "Mai", "Juin", "Juil", "Aou", "Sep", "Oct", "Nov", "Dec"]
 });
 
 $('.datetime-picker input:first-of-type').datepicker({
@@ -231,8 +231,8 @@ $('.datetime-picker input:first-of-type').datepicker({
     dateFormat: 'dd/mm/yy',
     changeMonth: true,
     changeYear: true,
-    dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
-    monthNamesShort: [ "Jan", "Fev", "Mar", "Avr", "Mai", "Juin", "Juil", "Aou", "Sep", "Oct", "Nov", "Dec" ]
+    dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+    monthNamesShort: ["Jan", "Fev", "Mar", "Avr", "Mai", "Juin", "Juil", "Aou", "Sep", "Oct", "Nov", "Dec"]
 });
 
 $('.birthday-picker').datepicker({
@@ -241,12 +241,12 @@ $('.birthday-picker').datepicker({
     changeMonth: true,
     changeYear: true,
     yearRange: "-100:-10",
-    dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
-    monthNamesShort: [ "Jan", "Fev", "Mar", "Avr", "Mai", "Juin", "Juil", "Aou", "Sep", "Oct", "Nov", "Dec" ]
+    dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+    monthNamesShort: ["Jan", "Fev", "Mar", "Avr", "Mai", "Juin", "Juil", "Aou", "Sep", "Oct", "Nov", "Dec"]
 });
 
 
-$(function() {
+$(function () {
     $.facebox.settings.closeImage = '/vendor/facebox/src/closelabel.png'
     $.facebox.settings.loadingImage = '/vendor/facebox/src/loading.gif'
     facebox.facebox();
@@ -269,17 +269,16 @@ $(function() {
     if (usersAutocomplete) {
         usersAutocomplete.autocomplete({
             minLength: 3,
-            source: function(request, response) {
+            source: function (request, response) {
                 $.getJSON(
                     Routing.generate('user_ajax_search'),
                     {
                         term: request.term
                     },
-                    function(data)
-                    {
+                    function (data) {
                         var users = data.response.users;
 
-                        response($.map(users, function(item) {
+                        response($.map(users, function (item) {
                             return {
                                 label: item.firstName + ' ' + item.lastName,
                                 value: item.firstName + ' ' + item.lastName,
@@ -289,7 +288,7 @@ $(function() {
                     }
                 );
             },
-            select: function( event, ui ) {
+            select: function (event, ui) {
                 var input = $(event.target);
 
                 input.attr('data-login', ui.item.user.login);
@@ -298,7 +297,7 @@ $(function() {
         });
 
         if (usersAutocomplete.data("ui-autocomplete")) {
-            usersAutocomplete.data("ui-autocomplete")._renderItem = function(ul, item) {
+            usersAutocomplete.data("ui-autocomplete")._renderItem = function (ul, item) {
                 var imageLink, link;
 
                 for (var i = 0; i < item.user._links.length; i++) {
@@ -312,9 +311,9 @@ $(function() {
                 return $("<li style=\"margin-bottom: 3px;\">")
                     .append(
                         "<a>" +
-                            "<img src=\"/images/profil/"+ imageLink.uri.split('/').slice(-1)[0] + "\" style=\"float: left; max-height: 25px; max-width: 25px; margin-right: 5px;\" />" +
-                            "<span style=\"display: block; float: left; margin-top: 0;\">" + item.label + "</span>" +
-                            "<div style=\"clear: both;\"></div>" +
+                        "<img src=\"/images/profil/" + imageLink.uri.split('/').slice(-1)[0] + "\" style=\"float: left; max-height: 25px; max-width: 25px; margin-right: 5px;\" />" +
+                        "<span style=\"display: block; float: left; margin-top: 0;\">" + item.label + "</span>" +
+                        "<div style=\"clear: both;\"></div>" +
                         "</a>"
                     )
                     .appendTo(ul);
@@ -326,17 +325,16 @@ $(function() {
     if (orgasAutocomplete) {
         orgasAutocomplete.autocomplete({
             minLength: 1,
-            source: function(request, response) {
+            source: function (request, response) {
                 $.getJSON(
                     Routing.generate('orga_ajax_search'),
                     {
                         term: request.term
                     },
-                    function(data)
-                    {
+                    function (data) {
                         var orgas = data.response.orgas;
 
-                        response($.map(orgas, function(item) {
+                        response($.map(orgas, function (item) {
                             return {
                                 label: item.name,
                                 value: item.name,
@@ -346,7 +344,7 @@ $(function() {
                     }
                 );
             },
-            select: function( event, ui ) {
+            select: function (event, ui) {
                 var input = $(event.target);
                 input.attr('data-login', ui.item.orga.login);
                 input.attr('data-name', ui.item.orga.name);
@@ -354,7 +352,7 @@ $(function() {
         });
 
         if (orgasAutocomplete.data("ui-autocomplete")) {
-            orgasAutocomplete.data("ui-autocomplete")._renderItem = function(ul, item) {
+            orgasAutocomplete.data("ui-autocomplete")._renderItem = function (ul, item) {
                 var imageLink, link;
 
                 for (var i = 0; i < item.orga._links.length; i++) {
@@ -368,9 +366,9 @@ $(function() {
                 return $("<li style=\"margin-bottom: 3px;\">")
                     .append(
                         "<a>" +
-                            "<img src=\" "+ imageLink.uri + "\" style=\"float: left; max-height: 25px; max-width: 25px; margin-right: 5px;\" />" +
-                            "<span style=\"display: block; float: left; margin-top: 0;\">" + item.label + "</span>" +
-                            "<div style=\"clear: both;\"></div>" +
+                        "<img src=\" " + imageLink.uri + "\" style=\"float: left; max-height: 25px; max-width: 25px; margin-right: 5px;\" />" +
+                        "<span style=\"display: block; float: left; margin-top: 0;\">" + item.label + "</span>" +
+                        "<div style=\"clear: both;\"></div>" +
                         "</a>"
                     )
                     .appendTo(ul);
@@ -380,19 +378,40 @@ $(function() {
 });
 
 // Syntax highlighting
-$(document).ready(function() {
-    $('pre code').each(function(i, block) {
+$(document).ready(function () {
+    $('pre code').each(function (i, block) {
         hljs.highlightBlock(block);
     });
+
+    setInterval(() => {
+        const page = $('section.page').first();
+        const header = $('header').first();
+        if (header && page) page.css('margin-top', header.innerHeight())
+    }, 500);
+
+    const lgbt = $('#lgbt');
+    const vote = $('#vote');
+    if (vote) vote.hide();
+    let voteHidden = true;
+    if (vote && lgbt) setInterval(() => {
+        if (voteHidden) {
+            vote.show();
+            lgbt.hide();
+        } else {
+            vote.hide();
+            lgbt.show();
+        }
+        voteHidden = !voteHidden;
+    }, 5000);
 });
 $('.language-auto').addClass('language-').removeClass('language-auto');
 
 // Upload popup link
-$('.upload-popup').click(function() {
-    if($(this).data('organization')) {
-        window.open(Routing.generate('upload_index', {'organization': $(this).data('organization')}), '', 'width=1000, height=700, top='+((screen.height/2)-(700/2))+', left='+((screen.width/2)-(1000/2))+', toolbar=no, location=yes, directories=no, status=no, menubar=yes, scrollbars=yes, copyhistory=no, resizable=yes');
+$('.upload-popup').click(function () {
+    if ($(this).data('organization')) {
+        window.open(Routing.generate('upload_index', { 'organization': $(this).data('organization') }), '', 'width=1000, height=700, top=' + ((screen.height / 2) - (700 / 2)) + ', left=' + ((screen.width / 2) - (1000 / 2)) + ', toolbar=no, location=yes, directories=no, status=no, menubar=yes, scrollbars=yes, copyhistory=no, resizable=yes');
     }
     else {
-        window.open(Routing.generate('upload_index', {'organization': null}), '', 'width=1000, height=700, top='+((screen.height/2)-(700/2))+', left='+((screen.width/2)-(1000/2))+', toolbar=no, location=yes, directories=no, status=no, menubar=yes, scrollbars=yes, copyhistory=no, resizable=yes');
+        window.open(Routing.generate('upload_index', { 'organization': null }), '', 'width=1000, height=700, top=' + ((screen.height / 2) - (700 / 2)) + ', left=' + ((screen.width / 2) - (1000 / 2)) + ', toolbar=no, location=yes, directories=no, status=no, menubar=yes, scrollbars=yes, copyhistory=no, resizable=yes');
     }
 })

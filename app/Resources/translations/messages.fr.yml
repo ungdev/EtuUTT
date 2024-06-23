@@ -1,189 +1,198 @@
 ---
 base:
+  title: Site étudiant de l'UTT
+  description: Site créé et géré par les étudiants de l'Université de Technologie de Troyes
+  meta: |
+    Le site étudiant de l'UTT connecte la communauté des UTTiens et offre de multiples
+    services pour faciliter leur vie étudiante
+
+  # Logo
+  logo:
+    alt: Logo du site
     title: Site étudiant de l'UTT
-    description: Site créé et géré par les étudiants de l'Université de Technologie de Troyes
-    meta: |
-        Le site étudiant de l'UTT connecte la communauté des UTTiens et offre de multiples
-        services pour faciliter leur vie étudiante
 
-    # Logo
-    logo:
-        alt: Logo du site
-        title: Site étudiant de l'UTT
+  # Header menu
+  menu:
+    home: Accueil
+    events: Evènements
+    forums: Forums
+    associations: Vie étudiante
+    search: Recherche
+    more: Plus
+    connexion: Connexion
 
-    # Header menu
+  # User account box
+  user:
+    # Users types
+    types:
+      student: Etudiant
+      orga: Association
+      staffutt: Personnel UTT
+      external: Exterieur
+
+    # User menu
     menu:
-        home: Accueil
-        events: Evènements
-        forums: Forums
-        associations: Vie étudiante
-        search: Recherche
-        more: Plus
-        connexion: Connexion
+      flux: Mon flux
+      account: Mon compte
+      buckutt: BuckUTT
+      dailymail: Mon daymail
+      emails: E-mails
+      table: Mon emploi du temps
+      logout: Déconnexion
+      help: Aide
+      admin: Administration
+      members: Membres
+      pages: Pages statiques
+      orgas: Mes associations
+      nutt: Le NUTT
+      wiki: Wiki
+      realEstate: Offres de logement
+      discord: Discord UTT
+      tickets: Tickets asso
+      tickets_scol: Tickets Admissions Scolarité
+      ungStatus: Etat des services UNG
+      gdpr: RGPD
+      turboSwitch: Emprunter des Switch
 
-    # User account box
-    user:
-        # Users types
-        types:
-            student: Etudiant
-            orga: Association
-            staffutt: Personnel UTT
-            external: Exterieur
+    # Sex
+    sex:
+      male: Homme
+      female: Femme
 
-        # User menu
-        menu:
-            flux: Mon flux
-            account: Mon compte
-            buckutt: BuckUTT
-            dailymail: Mon daymail
-            emails: E-mails
-            table: Mon emploi du temps
-            logout: Déconnexion
-            help: Aide
-            admin: Administration
-            members: Membres
-            pages: Pages statiques
-            orgas: Mes associations
-            nutt: Le NUTT
-            wiki: Wiki
-            realEstate: Offres de logement
-            discord: Discord UTT
-            tickets: Tickets asso
-            tickets_scol: Tickets Admissions Scolarité
-            ungStatus: Etat des services UNG
-            gdpr: RGPD
-            turboSwitch: Emprunter des Switch
+  # Sidebar
+  sidebar:
+    services:
+      title: Services
+      items:
+        uvs: Guide des UE
+        trombi: Trombinoscope
+        table: Cumul d'emplois du temps
+        wiki: Wiki des associations
+    etu:
+      title: EtuUTT
+      items:
+        team: L'équipe
 
-        # Sex
-        sex:
-            male: Homme
-            female: Femme
+  # Admin
+  admin_menu:
+    title: Administration générale
+    items:
+      dashboard: Tableau de bord
+      modules: Modules
+      pages: Pages statiques
+      users: Utilisateurs
+      orgas: Associations
+      stats: Statistiques
+      logger: Logs
+      server: État du serveur
 
-    # Sidebar
-    sidebar:
-        services:
-            title: Services
-            items:
-                uvs: Guide des UE
-                trombi: Trombinoscope
-                table: Cumul d'emplois du temps
-                wiki: Wiki des associations
-        etu:
-            title: EtuUTT
-            items:
-                team: L'équipe
+  # Logo
+  page_icon:
+    alt: Icône de la page
+    title: Icône de la page
 
-    # Admin
-    admin_menu:
-        title: Administration générale
-        items:
-            dashboard: Tableau de bord
-            modules: Modules
-            pages: Pages statiques
-            users: Utilisateurs
-            orgas: Associations
-            stats: Statistiques
-            logger: Logs
-            server: État du serveur
+  # Footer
+  footer:
+    # Links
+    legalities: Mentions légales
+    help_us: Nous aider
+    developers: Développeurs
+    change_locale: Changer de langue
+    desktop_version: Version ordinateur
+    mobile_version: Version mobile
 
-    # Logo
-    page_icon:
-        alt: Icône de la page
-        title: Icône de la page
+    # Authors and version
+    text: "Réalisé par l’UNG<br />Propulsé par Symfony 3"
+    1col_text: "Réalisé par l’UNG - Propulsé par Symfony 3"
+    mobile_text: "Réalisé par l’UNG"
+    version: Version
 
-    # Footer
-    footer:
-        # Links
-        legalities: Mentions légales
-        help_us: Nous aider
-        developers: Développeurs
-        change_locale: Changer de langue
-        desktop_version: Version ordinateur
-        mobile_version: Version mobile
+  maintenance:
+    text: En raison d'une intervention sur le réseau électrique, EtuUTT sera indisponible mercredi 26 juin pendant une durée indéterminée.
+    action: Téléchargez en amont les annales dont vous avez besoin pour réviser !
 
-        # Authors and version
-        text: "Réalisé par l’UNG<br />Propulsé par Symfony 3"
-        1col_text: "Réalisé par l’UNG - Propulsé par Symfony 3"
-        mobile_text: "Réalisé par l’UNG"
-        version: Version
+  vote:
+    text: N'oublie pas d'aller voter aux élections législatives ces dimanches 30 juin et 7 juillet.
+    link: Lire le programme des candidats
+    procu: Faire une procuration
 
 # Errors pages:
 error:
-    404:
-        title: Hum ... 404 !
-        subtitle: D'oh !
-        content: Désolé, la page que vous avez demandée semble introuvable !
-    other:
-        title: Hum ... Erreur !
-        subtitle: Hum ...
-        content: Une erreur s'est produite sur le serveur ...
+  404:
+    title: Hum ... 404 !
+    subtitle: D'oh !
+    content: Désolé, la page que vous avez demandée semble introuvable !
+  other:
+    title: Hum ... Erreur !
+    subtitle: Hum ...
+    content: Une erreur s'est produite sur le serveur ...
 
 # Role descriptions
 role:
-    ROLE_USER: Utilisateur connecté du site, peu importe le type de connexion
-    ROLE_ORGA: Association connectée au site
-    ROLE_STUDENT: Etudiant ou ancien étudiant à l'UTT
-    ROLE_STAFFUTT: Membre du personnel ou ancien membre du personnel de l'UTT
-    ROLE_CAS: Peut se connecter via le CAS car encore dans le LDAP, donc pas un ancien
-    ROLE_EXTERNAL: Peut se connecter via un compte externe (un mot de passe est présent)
-    ROLE_READONLY: Utilisateur ne pouvant plus écrire sur le site (sanction)
-    ROLE_BANNED: Utilisateur ne pouvant plus lire le site (sanction)
+  ROLE_USER: Utilisateur connecté du site, peu importe le type de connexion
+  ROLE_ORGA: Association connectée au site
+  ROLE_STUDENT: Etudiant ou ancien étudiant à l'UTT
+  ROLE_STAFFUTT: Membre du personnel ou ancien membre du personnel de l'UTT
+  ROLE_CAS: Peut se connecter via le CAS car encore dans le LDAP, donc pas un ancien
+  ROLE_EXTERNAL: Peut se connecter via un compte externe (un mot de passe est présent)
+  ROLE_READONLY: Utilisateur ne pouvant plus écrire sur le site (sanction)
+  ROLE_BANNED: Utilisateur ne pouvant plus lire le site (sanction)
 
-    ROLE_SUPERADMIN: Super-Administrateur global du site
-    ROLE_ADMIN: Administrateur global du site
-    ROLE_MODERATOR: Modérateur du forum et des annales d'UVs
-    ROLE_EDITOR: Rédacteur des pages statiques
-    ROLE_DEVELOPER: Administrateur des signalement de bugs
-    ROLE_ARGENTIQUE: Membre d'Argentique pouvant mettre à jour les photos
+  ROLE_SUPERADMIN: Super-Administrateur global du site
+  ROLE_ADMIN: Administrateur global du site
+  ROLE_MODERATOR: Modérateur du forum et des annales d'UVs
+  ROLE_EDITOR: Rédacteur des pages statiques
+  ROLE_DEVELOPER: Administrateur des signalement de bugs
+  ROLE_ARGENTIQUE: Membre d'Argentique pouvant mettre à jour les photos
 
-    ROLE_CORE_ADMIN_HOME: Voir la page d'accueil d'administration
-    ROLE_CORE_ADMIN_SERVER: Voir l'état du serveur
-    ROLE_CORE_ADMIN_ROLES: Modifier les droits des utilisateurs
-    ROLE_CORE_ADMIN_PROFIL: Modifier le profil et bannir des utilisateurs
-    ROLE_ALLOWED_TO_SWITCH: Se connecter en tant que quelqu'un d'autre sans mot de passe
-    ROLE_CORE_ADMIN_MODULES: Modifier les modules (bundles) actuelement chargés par le site
-    ROLE_CORE_ADMIN_PAGES: Ajouter, Modifier et supprimer des pages statiques.
+  ROLE_CORE_ADMIN_HOME: Voir la page d'accueil d'administration
+  ROLE_CORE_ADMIN_SERVER: Voir l'état du serveur
+  ROLE_CORE_ADMIN_ROLES: Modifier les droits des utilisateurs
+  ROLE_CORE_ADMIN_PROFIL: Modifier le profil et bannir des utilisateurs
+  ROLE_ALLOWED_TO_SWITCH: Se connecter en tant que quelqu'un d'autre sans mot de passe
+  ROLE_CORE_ADMIN_MODULES: Modifier les modules (bundles) actuelement chargés par le site
+  ROLE_CORE_ADMIN_PAGES: Ajouter, Modifier et supprimer des pages statiques.
 
-    ROLE_CORE_SUBSCRIBE: Recevoir des notifications et utiliser les abonnements
-    ROLE_CORE_PROFIL: Voir les profils publiques (sauf Surnom, Passions et Jadis)
-    ROLE_CORE_PROFIL_HOBBIES: Voir Surnom, Passions et Jadis sur les profils publiques
-    ROLE_CORE_MEMBERSHIPS: Faire partie d'une association
-    ROLE_CORE_ORGAS: Voir la liste des associations d'un profil
-    ROLE_CORE_SCHEDULE: Voir les emplois des autres utilisateurs
-    ROLE_CORE_SCHEDULE_OWN: Voir son propre emplois du temps
-    ROLE_CORE_HOMEPAGE: Voir la page d'accueil pour utilisateur connecté
+  ROLE_CORE_SUBSCRIBE: Recevoir des notifications et utiliser les abonnements
+  ROLE_CORE_PROFIL: Voir les profils publiques (sauf Surnom, Passions et Jadis)
+  ROLE_CORE_PROFIL_HOBBIES: Voir Surnom, Passions et Jadis sur les profils publiques
+  ROLE_CORE_MEMBERSHIPS: Faire partie d'une association
+  ROLE_CORE_ORGAS: Voir la liste des associations d'un profil
+  ROLE_CORE_SCHEDULE: Voir les emplois des autres utilisateurs
+  ROLE_CORE_SCHEDULE_OWN: Voir son propre emplois du temps
+  ROLE_CORE_HOMEPAGE: Voir la page d'accueil pour utilisateur connecté
 
-    ROLE_API_USE: Utiliser des applications externes via l'API
-    ROLE_API_CREATE: Créer une application externe via l'API
+  ROLE_API_USE: Utiliser des applications externes via l'API
+  ROLE_API_CREATE: Créer une application externe via l'API
 
-    ROLE_ARGENTIQUE_ADMIN: Voir la documentation pour ajouter des photos au site
-    ROLE_ARGENTIQUE_READ: Voir les photos du site
+  ROLE_ARGENTIQUE_ADMIN: Voir la documentation pour ajouter des photos au site
+  ROLE_ARGENTIQUE_READ: Voir les photos du site
 
-    ROLE_ASSOS_MEMBERS: Voir la liste des membres d'une association
+  ROLE_ASSOS_MEMBERS: Voir la liste des membres d'une association
 
-    ROLE_BUGS_POST: Signaler un bug
-    ROLE_BUGS_ADMIN: Administrer les signalement de bug
+  ROLE_BUGS_POST: Signaler un bug
+  ROLE_BUGS_ADMIN: Administrer les signalement de bug
 
-    ROLE_COVOIT: Voir les covoiturages proposés
-    ROLE_COVOIT_EDIT: Proposer et se joindre aux covoiturages
-    ROLE_CUMUL: Cumuler des emplois du temps
+  ROLE_COVOIT: Voir les covoiturages proposés
+  ROLE_COVOIT_EDIT: Proposer et se joindre aux covoiturages
+  ROLE_CUMUL: Cumuler des emplois du temps
 
-    ROLE_DAYMAIL_EDIT: Editer le daymail si son association l'autorise
+  ROLE_DAYMAIL_EDIT: Editer le daymail si son association l'autorise
 
-    ROLE_EVENTS_INTERNAL: Voir les événements à destination des UTTiens uniquement
-    ROLE_EVENTS_ANSWER: Lire la liste des participants à un événement
-    ROLE_EVENTS_ANSWER_POST: Envoyer sa participation à un événement
-    ROLE_EVENTS_EDIT: Modifier un événement si son association l'autorise
+  ROLE_EVENTS_INTERNAL: Voir les événements à destination des UTTiens uniquement
+  ROLE_EVENTS_ANSWER: Lire la liste des participants à un événement
+  ROLE_EVENTS_ANSWER_POST: Envoyer sa participation à un événement
+  ROLE_EVENTS_EDIT: Modifier un événement si son association l'autorise
 
-    ROLE_FORUM: Lire le forum
-    ROLE_FORUM_POST: Poster sur le forum
-    ROLE_FORUM_ADMIN: Modérer le forum
+  ROLE_FORUM: Lire le forum
+  ROLE_FORUM_POST: Poster sur le forum
+  ROLE_FORUM_ADMIN: Modérer le forum
 
-    ROLE_TROMBI: Rechercher sur le trombi
+  ROLE_TROMBI: Rechercher sur le trombi
 
-    ROLE_UPLOAD: Mettre en lignes des images pour les daymails par exemple
+  ROLE_UPLOAD: Mettre en lignes des images pour les daymails par exemple
 
-    ROLE_UV: Voir le guide des UE
-    ROLE_UV_REVIEW: Voir les annales et commentaires des UE
-    ROLE_UV_REVIEW_POST: Poster des annnales et commenter les UE
-    ROLE_UV_REVIEW_ADMIN: Modérer les annales et commentaires d'UE
+  ROLE_UV: Voir le guide des UE
+  ROLE_UV_REVIEW: Voir les annales et commentaires des UE
+  ROLE_UV_REVIEW_POST: Poster des annnales et commenter les UE
+  ROLE_UV_REVIEW_ADMIN: Modérer les annales et commentaires d'UE

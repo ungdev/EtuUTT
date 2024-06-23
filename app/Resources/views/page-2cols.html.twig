@@ -2,13 +2,19 @@
 
 {% block page %}
     <section class="page">
-        <div class="container-fluid text-center banner bg-dark-blue">
+        <div class="container-fluid text-center banner bg-dark-blue" id="pride-month">
             <div class="background-red"></div>
             <div class="background-orange"></div>
             <div class="background-yellow"></div>
             <div class="background-green"></div>
             <div class="background-blue"></div>
             <div class="background-purple"></div>
+        </div>
+        <div class="container-fluid text-center vote bg-dark-blue" id="vote">
+            <img src="{{ asset('assets/img/icons/vote.svg') }}" />
+            <div>{{ 'base.vote.text' | trans}}</div>
+            <a href="https://programme-candidats.interieur.gouv.fr/" target="_blank" rel="noopener noreferrer" class="button">{{ 'base.vote.link' | trans }}</a>
+            <a href="https://www.maprocuration.gouv.fr/" target="_blank" rel="noopener noreferrer" class="button">{{ 'base.vote.procu' | trans }}</a>
         </div>
         <div class="container page-container">
 

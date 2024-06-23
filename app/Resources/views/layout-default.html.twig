@@ -2,6 +2,10 @@
 
 {% block layout %}
     <header class="bg-dark-blue fixed head">
+        <div class="container-fluid bg-dark-blue banner background-alert">
+            <img src="{{ asset('assets/img/icons/warning.svg') }}" />
+            <div>{{ 'base.maintenance.text' | trans}}<br/>{{ 'base.maintenance.action' | trans}}</div>
+        </div>
         <div class="container" id="top">
             <div class="pull-left title">
                 <h1 class="seo-title">{{ block('title') }} - {{ 'base.title'|trans }}</h1>
