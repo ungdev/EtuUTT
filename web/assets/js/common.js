@@ -386,10 +386,10 @@ $(document).ready(function () {
     setInterval(() => {
         const page = $('section.page').first();
         const header = $('header').first();
-        if (header && page) page.css('margin-top', header.innerHeight())
+        if (header && page) page.css('padding-top', header.innerHeight())
     }, 500);
 
-    const lgbt = $('#lgbt');
+    const lgbt = $('#pride-month');
     const vote = $('#vote');
     if (vote) vote.hide();
     let voteHidden = true;
