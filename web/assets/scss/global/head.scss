@@ -178,7 +178,7 @@
 .banner {
   display: flex;
   flex-direction: column;
-  height: 50px;
+  height: 30px;
   width: 100%;
   padding: 0;
   background: #222;
@@ -203,30 +203,6 @@
     > * {
       flex-grow: 0;
     }
-  }
-
-  .background-red {
-    background-color: #e60000;
-  }
-
-  .background-orange {
-    background-color: #ff8e00;
-  }
-
-  .background-yellow {
-    background-color: #ffef00;
-  }
-
-  .background-green {
-    background-color: #00811b;
-  }
-
-  .background-blue {
-    background-color: #004bff;
-  }
-
-  .background-purple {
-    background-color: #780089;
   }
 }
 

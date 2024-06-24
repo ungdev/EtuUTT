@@ -388,21 +388,6 @@ $(document).ready(function () {
         const header = $('header').first();
         if (header && page) page.css('padding-top', header.innerHeight())
     }, 500);
-
-    const lgbt = $('#pride-month');
-    const vote = $('#vote');
-    if (vote) vote.hide();
-    let voteHidden = true;
-    if (vote && lgbt) setInterval(() => {
-        if (voteHidden) {
-            vote.show();
-            lgbt.hide();
-        } else {
-            vote.hide();
-            lgbt.show();
-        }
-        voteHidden = !voteHidden;
-    }, 5000);
 });
 $('.language-auto').addClass('language-').removeClass('language-auto');
 
