@@ -107,10 +107,6 @@ base:
     mobile_text: "Réalisé par l’UNG"
     version: Version
 
-  maintenance:
-    text: En raison d'une intervention sur le réseau électrique, EtuUTT sera indisponible mercredi 26 juin pendant une durée indéterminée.
-    action: Téléchargez en amont les annales dont vous avez besoin pour réviser !
-
   vote:
     text: N'oublie pas d'aller voter aux élections législatives ces dimanches 30 juin et 7 juillet.
     link: Lire le programme des candidats
